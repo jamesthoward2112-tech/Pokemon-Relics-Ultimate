@@ -94,6 +94,25 @@ jobs:
           python3 tools/pru/check_valkiri_sound.py
           python3 tools/pru/check_skarmet_tourmaline.py
           python3 tools/pru/check_steevee_neevee_encounters.py
+      - name: Restore pinned PJR multiboot binary build inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          # These files are original build inputs, NOT distributed ROMs.
+          # The original PJR source branch included them, but the bootstrap
+          # import excluded all *.gba files, including these dependencies.
+          donor_commit="6f26a381a13821fd63688cd53dd59de682148bab"
+          for file in mb_berry_fix.gba mb_colosseum.gba mb_ereader.gba; do
+            if test -s "data/$file"; then
+              echo "Build input present: data/$file"
+              continue
+            fi
+            curl --fail --location --retry 3 --connect-timeout 20 \
+              "https://raw.githubusercontent.com/jamesthoward2112-tech/Pokemon-Johto-Relics/$donor_commit/data/$file" \
+              --output "data/$file"
+            test -s "data/$file"
+            echo "Restored pinned PJR build input: data/$file"
+          done
       - name: Build the original PJR-derived PRU source
         run: |
           set -euo pipefail
