@@ -19,12 +19,11 @@ found = {o["graphics_id"]: (o["x"], o["y"]) for o in nine["object_events"] if o.
 assert found == expected, f"Final trio misplaced on 9F: {found}"
 assert all(o["script"] == "TinTower_9F_EventScript_JessieJamesInteract" for o in nine["object_events"] if o.get("flag") == flag)
 warps = {(w["x"], w["y"]) for w in nine["warp_events"]}
-# Jessie deliberately stands on the existing 9F staircase tile (9,5) to make
-# this last encounter unavoidable. The original warp remains intact; defeating
-# the duo sets the shared defeated flag and removes the trio, reopening the stairs.
-# No other finale sprite may overlap a warp.
-assert warps.intersection(expected.values()) == {(9, 5)}, "Unexpected staircase obstruction"
-assert any(w["x"] == 9 and w["y"] == 5 and w["dest_map"] == "MAP_TIN_TOWER_8F_HNS" for w in nine["warp_events"]), "Original stair warp lost"
+# The legacy map defines a warp EVENT at (9,5). That does not establish that a
+# visible staircase is at Jessie's sprite. Check for unexpected overlaps without
+# making a claim about physical stairs or in-game encounter behaviour.
+assert warps.intersection(expected.values()) == {(9, 5)}, "Unexpected map warp overlap"
+assert any(w["x"] == 9 and w["y"] == 5 and w["dest_map"] == "MAP_TIN_TOWER_8F_HNS" for w in nine["warp_events"]), "Legacy map warp changed"
 assert all(o.get("flag") == flag for o in nine["object_events"] if o["graphics_id"] in expected), "Finale objects must disappear after battle"
 # 9F (NOT 8F): 9 and 16 are the two statues seen in the user's final video frames.
 layout = Path("data/layouts/TinTower_9F_hns/map.bin").read_bytes()
@@ -42,4 +41,4 @@ assert "setflag FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED" in script9
 assert "removeobject 4" in script9 and "removeobject 5" in script9
 assert "TinTower_9F_EventScript_JessieJamesBattle" in script9
 assert "JessieJamesBattle" not in script8
-print("PASS: Bell Tower 9F trio at 9/10/11, Jessie guards original stair warp and disappears after battle")
+print("PASS: Bell Tower 9F trio at 9/10/11, with declared map-warp overlap; gameplay still needs testing")
