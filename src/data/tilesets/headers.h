@@ -2117,29 +2117,6 @@ const struct Tileset gTileset_JohtoBikeShop_Hns =
 };
 
 
-/* PJR: Azul Agua / Water Blue donor tilesets for the Ecruteak Rock Shop. */
-const struct Tileset gTileset_AzulAguaBuilding_Hns =
-{
-    .isCompressed = TRUE,
-    .isSecondary = FALSE,
-    .tiles = gTilesetTiles_AzulAguaBuilding_Hns,
-    .palettes = (const u16 (*)[16])gTilesetPalettes_AzulAguaBuilding_Hns,
-    .metatiles = gMetatiles_AzulAguaBuilding_Hns,
-    .metatileAttributes = gMetatileAttributes_AzulAguaBuilding_Hns,
-    .callback = NULL,
-};
-
-const struct Tileset gTileset_AzulAguaRockShop_Hns =
-{
-    .isCompressed = TRUE,
-    .isSecondary = TRUE,
-    .tiles = gTilesetTiles_AzulAguaRockShop_Hns,
-    .palettes = (const u16 (*)[16])gTilesetPalettes_AzulAguaRockShop_Hns,
-    .metatiles = gMetatiles_AzulAguaRockShop_Hns,
-    .metatileAttributes = gMetatileAttributes_AzulAguaRockShop_Hns,
-    .callback = NULL,
-};
-
 const struct Tileset gTileset_JohtoMart_Hns =
 {
     .isCompressed = TRUE,
