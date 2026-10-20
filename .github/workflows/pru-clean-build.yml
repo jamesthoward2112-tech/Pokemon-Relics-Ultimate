@@ -98,7 +98,6 @@ jobs:
           set -euo pipefail
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_bld_status_icon.py
-          python3 tools/pru/check_rocket_donor_walk_frames.py
           python3 tools/pru/check_valkiri_sound.py
           python3 tools/pru/check_skarmet_tourmaline.py
           python3 tools/pru/check_steevee_neevee_encounters.py
@@ -114,6 +113,8 @@ jobs:
             tail -n 70 /tmp/pru-build.log
             exit 1
           fi
+      - name: Check original Team Rocket compiled walking sprite frames
+        run: python3 tools/pru/check_rocket_donor_walk_frames.py
       - name: Verify full original PRU binary and direct ROM
         run: |
           set -euo pipefail
