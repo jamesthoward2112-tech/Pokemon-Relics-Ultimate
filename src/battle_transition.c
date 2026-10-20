@@ -1425,16 +1425,16 @@ static bool8 PRL_Emblem_Init(struct Task *task)
     task->tEndDelay = 60;
     InitPatternWeaveTransition(task);
     GetBg0TilesDst(&tilemap, &tileset);
-    CpuFill16(15 << 12, tilemap, BG_SCREEN_SIZE);
+    CpuFill16(13 << 12, tilemap, BG_SCREEN_SIZE);
     if (task->func == Task_PRL_JessieJames)
     {
         CpuCopy16(sPRL_jessie_james_Tiles, tileset, sizeof(sPRL_jessie_james_Tiles));
-        LoadPalette(sPRL_jessie_james_Palette, BG_PLTT_ID(15), sizeof(sPRL_jessie_james_Palette));
+        LoadPalette(sPRL_jessie_james_Palette, BG_PLTT_ID(13), sizeof(sPRL_jessie_james_Palette));
     }
     else
     {
         CpuCopy16(sPRL_eevee_twins_Tiles, tileset, sizeof(sPRL_eevee_twins_Tiles));
-        LoadPalette(sPRL_eevee_twins_Palette, BG_PLTT_ID(15), sizeof(sPRL_eevee_twins_Palette));
+        LoadPalette(sPRL_eevee_twins_Palette, BG_PLTT_ID(13), sizeof(sPRL_eevee_twins_Palette));
     }
     task->tState++;
     return FALSE;
