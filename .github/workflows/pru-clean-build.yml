@@ -90,6 +90,8 @@ jobs:
       - name: Import pinned PRL-approved existing sprites and palettes
         run: python3 tools/pru/sync_prl_authoritative_sprites.py
       - name: Restore proven Hoenn Last Wish and Noxichu title boot sequence
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: python3 tools/pru/build_noxichu_intro_trial.py
       - name: Run source regression tests
         run: |
