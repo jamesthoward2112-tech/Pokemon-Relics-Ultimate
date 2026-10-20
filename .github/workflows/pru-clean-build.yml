@@ -9,52 +9,122 @@ permissions:
   contents: read
 
 concurrency:
-  group: pru-canonical-build-${{ github.ref }}
+  group: pru-canonical-build
   cancel-in-progress: false
 
 jobs:
   build-rom:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
-      - name: Confirm original approved transition assets are committed
-        shell: bash
-        run: |
-          set -euo pipefail
-          missing=0
-          for name in jessie_james eevee_twins; do
-            for ext in png bin pal; do
-              file="graphics/battle_transitions/prl/${name}.${ext}"
-              if [[ ! -f "$file" ]]; then
-                echo "::error file=$file::Approved original trainer transition asset missing (see issue #1)"
-                missing=1
-              fi
-            done
-          done
-          if [[ "$missing" != 0 ]]; then
-            echo 'See GitHub issue #1 and docs/LIBRARY_MIGRATION.md. Never substitute placeholder art.'
-            exit 1
-          fi
-      - name: Install GBA toolchain
+      - name: Install proven PJR GBA build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
-      - name: Compile canonical PRU
-        run: make -j2 hns
-      - name: Verify direct ROM
-        shell: bash
+          sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil
+      - name: Install original working PJR Jessie James and Steevee Neevee production transition art
         run: |
           set -euo pipefail
-          mapfile -t roms < <(find . -maxdepth 1 -type f -name '*.gba' | sort)
-          test "${#roms[@]}" -eq 1
-          test "$(stat -c%s "${roms[0]}")" -eq 33554432
-          sha256sum "${roms[0]}" | tee pru-rom.sha256
-      - name: Upload test build artifact (not a release)
+          test -s assets/prl_duo_20261011.json
+          python3 tools/pru/install_prl_duo_assets.py
+          python3 tools/pru/check_prl_duo_palette.py
+      - name: Restore original approved PJR rock shop tiles
+        run: |
+          set -euo pipefail
+          base64 -d assets/pjr_azul_agua/building_tiles.png.b64 > data/tilesets/primary/azul_agua_building_hns/tiles.png
+          base64 -d assets/pjr_azul_agua/rock_shop_tiles.png.b64 > data/tilesets/secondary/azul_agua_rock_shop_hns/tiles.png
+          echo "19d1988dc7426e0be5957918de876e7a500ae327cc99bf53ef55d172d6a0f240  data/tilesets/primary/azul_agua_building_hns/tiles.png" | sha256sum -c -
+          echo "5dac0833356b45617e3321e3686a15460a4f88d3f631cd1697071802f21bcc6a  data/tilesets/secondary/azul_agua_rock_shop_hns/tiles.png" | sha256sum -c -
+      - name: Restore original PJR Infinity donor sprites from checked-in pack
+        run: |
+          set -euo pipefail
+          cat \
+            assets/pjr_infinity/parts/part00.txt \
+            assets/pjr_infinity/parts/part01.txt \
+            assets/pjr_infinity/parts/part02.txt \
+            assets/pjr_infinity/fixed/part030.txt \
+            assets/pjr_infinity/fixed/part031.txt \
+            assets/pjr_infinity/fixed/part032.txt \
+            assets/pjr_infinity/fixed/part0330.txt \
+            assets/pjr_infinity/fixed/part0331.txt \
+            assets/pjr_infinity/fixed/part0332.txt \
+            assets/pjr_infinity/fixed/part0333.txt \
+            assets/pjr_infinity/parts/part04.txt \
+            assets/pjr_infinity/parts/part05.txt \
+            assets/pjr_infinity/parts/part06.txt \
+            | base64 -d > /tmp/pjr-infinity-assets.zip
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil, zipfile
+          src = Path('/tmp/pjr-infinity-assets')
+          with zipfile.ZipFile('/tmp/pjr-infinity-assets.zip') as zf:
+              zf.extractall(src)
+          approved_non_core = {
+              'alphoracle', 'champeon', 'guardeon', 'lepideon', 'obsideon',
+              'omeon', 'toxeon', 'sphynxeon', 'jollibird', 'grimfowl',
+              'kablowfish', 'sunflorid',
+          }
+          for species_dir in src.iterdir():
+              if not species_dir.is_dir() or species_dir.name not in approved_non_core:
+                  continue
+              dst = Path('graphics/pokemon') / species_dir.name
+              dst.mkdir(parents=True, exist_ok=True)
+              # Preserve the working source's palette-normalized party icons.
+              for name in ('front.png', 'back.png'):
+                  shutil.copy2(species_dir / name, dst / name)
+          PY
+      - name: Prepare existing approved RGBA donor sprites for GBA 4bpp without redrawing
+        run: python3 tools/pru/prepare_external_donor_art.py
+      - name: Install exact approved PJR Chansey Twins sprite from its pinned source
+        run: |
+          set -euo pipefail
+          base64 -d assets/pru_chansey/approved_natural_64.png.b64 > graphics/trainers/front_pics/pru_chansey_twins.png
+          echo "aabcca878b1e775d67886aa869e386fc9af99176945af1c377924654393123b1  graphics/trainers/front_pics/pru_chansey_twins.png" | sha256sum -c -
+          python3 - <<'PY'
+          from PIL import Image
+          a = Image.open('graphics/trainers/front_pics/pru_chansey_twins.png')
+          assert a.size == (64, 64) and a.mode == 'P' and a.info.get('transparency') == 0
+          assert len(a.getcolors()) <= 16
+          print('Exact proven PJR Chansey artwork verified')
+          PY
+      - name: Import pinned PRL-approved existing sprites and palettes
+        run: python3 tools/pru/sync_prl_authoritative_sprites.py
+      - name: Restore proven Hoenn Last Wish and Noxichu title boot sequence
+        run: python3 tools/pru/build_noxichu_intro_trial.py
+      - name: Run source regression tests
+        run: |
+          set -euo pipefail
+          python3 tools/pru/check_444_species_dex.py
+          python3 tools/pru/check_bld_status_icon.py
+          python3 tools/pru/check_rocket_donor_walk_frames.py
+          python3 tools/pru/check_valkiri_sound.py
+          python3 tools/pru/check_skarmet_tourmaline.py
+          python3 tools/pru/check_steevee_neevee_encounters.py
+      - name: Build the original PJR-derived PRU source
+        run: |
+          set -euo pipefail
+          if make hns -j2 -O > /tmp/pru-build.log 2>&1; then
+            echo 'ROM compilation completed successfully'
+          else
+            echo 'First source/compiler/linker errors:'
+            grep -n -m 60 -E 'error:|Error:|Failed to open|unsupported color|undefined reference|make: \*\*\*' /tmp/pru-build.log || true
+            echo 'Build log tail:'
+            tail -n 70 /tmp/pru-build.log
+            exit 1
+          fi
+      - name: Verify full original PRU binary and direct ROM
+        run: |
+          set -euo pipefail
+          arm-none-eabi-nm -n pokehns.elf > PRU-QA-symbols.sym
+          python3 tools/pru/verify_compiled_rom.py
+          test -f pokehns.gba
+          test "$(stat -c%s pokehns.gba)" -eq 33554432
+          sha256sum pokehns.gba | tee pru-rom.sha256
+      - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4
         with:
-          name: PRU-CANONICAL-UNTESTED
+          name: PRU-CANONICAL-SOURCE-VALIDATED
           path: |
-            ./*.gba
+            pokehns.gba
             pru-rom.sha256
           if-no-files-found: error
