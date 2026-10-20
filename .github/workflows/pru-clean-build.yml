@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: pru-canonical-build
@@ -28,13 +28,6 @@ jobs:
           test -s assets/prl_duo_20261011.json
           python3 tools/pru/install_prl_duo_assets.py
           python3 tools/pru/check_prl_duo_palette.py
-      - name: Restore original approved PJR rock shop tiles
-        run: |
-          set -euo pipefail
-          base64 -d assets/pjr_azul_agua/building_tiles.png.b64 > data/tilesets/primary/azul_agua_building_hns/tiles.png
-          base64 -d assets/pjr_azul_agua/rock_shop_tiles.png.b64 > data/tilesets/secondary/azul_agua_rock_shop_hns/tiles.png
-          echo "19d1988dc7426e0be5957918de876e7a500ae327cc99bf53ef55d172d6a0f240  data/tilesets/primary/azul_agua_building_hns/tiles.png" | sha256sum -c -
-          echo "5dac0833356b45617e3321e3686a15460a4f88d3f631cd1697071802f21bcc6a  data/tilesets/secondary/azul_agua_rock_shop_hns/tiles.png" | sha256sum -c -
       - name: Restore original PJR Infinity donor sprites from checked-in pack
         run: |
           set -euo pipefail
@@ -123,6 +116,47 @@ jobs:
           test -f pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           sha256sum pokehns.gba | tee pru-rom.sha256
+      - name: Boot the compiled ROM in mGBA
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get install -y --no-install-recommends xvfb mgba-sdl
+          Xvfb :99 -screen 0 1024x768x24 -nolisten tcp >/tmp/pru-xvfb.log 2>&1 &
+          export DISPLAY=:99 SDL_VIDEODRIVER=x11 SDL_AUDIODRIVER=dummy
+          sleep 2
+          mgba -3 pokehns.gba >/tmp/pru-mgba.log 2>&1 &
+          EMU_PID=$!
+          sleep 8
+          if ! kill -0 "$EMU_PID" 2>/dev/null; then
+            cat /tmp/pru-mgba.log
+            exit 1
+          fi
+          kill "$EMU_PID" || true
+          echo 'PRU emulator boot smoke check passed'
+      - name: Publish confirmed raw GBA to GitHub prerelease
+        shell: bash
+        env:
+          GH_TOKEN: \${{ github.token }}
+        run: |
+          set -euo pipefail
+          test -s pokehns.gba
+          test "$(stat -c%s pokehns.gba)" -eq 33554432
+          tag="pru-bell-tower-$(git rev-parse --short=10 HEAD)"
+          file="Pokemon-Relics-Ultimate-Bell-Tower-2026-10-20.gba"
+          cp pokehns.gba "$RUNNER_TEMP/$file"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "$RUNNER_TEMP/$file" --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$tag" "$RUNNER_TEMP/$file" \
+              --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" \
+              --title 'Pokémon Relics Ultimate — Bell Tower Jessie & James test ROM' \
+              --notes 'Direct GBA test release compiled and binary-audited from the canonical PRU main branch with existing PJR and PRL artwork. Bell Tower Jessie & James encounter on 8F, max Lv58. Save-game playtesting not yet completed.' \
+              --prerelease
+          fi
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+            --jq '.assets[].name' | grep -Fx "$file"
+          echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/$file"
       - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4
         with:
