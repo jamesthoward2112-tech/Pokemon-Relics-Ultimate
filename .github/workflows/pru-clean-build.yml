@@ -86,6 +86,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 tools/pru/build_noxichu_intro_trial.py
+      - name: Restore proven PJR early Route 30 encounter overlay
+        run: python3 tools/pru/add_route30_poochyena.py
       - name: Run source regression tests
         run: |
           set -euo pipefail
