@@ -1,0 +1,413 @@
+GoldenrodCity_RadioTower_4F_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesTransition
+	map_script MAP_SCRIPT_ON_LOAD, GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesLoad
+	.byte 0
+
+// Legacy temporary hide flag does not affect the trio: native trainers use persistent victory flags.
+GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesLoad::
+	setflag FLAG_TEMP_1
+	end
+
+// A victory on an old build must not be erased on re-entry.
+GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesTransition::
+	setflag FLAG_TEMP_1
+	setvar VAR_TEMP_3, 1
+	goto_if_set FLAG_PJR_JESSIE_JAMES_3_DEFEATED, GoldenrodCity_RadioTower_4F4_EventScript_TransitionDone
+	checktrainerflag TRAINER_GRUNT_9_HNS
+	goto_if_eq TRUE, GoldenrodCity_RadioTower_4F4_EventScript_MarkPreviousWin
+	setvar VAR_TEMP_3, 0
+	end
+GoldenrodCity_RadioTower_4F4_EventScript_MarkPreviousWin::
+	setflag FLAG_PJR_JESSIE_JAMES_3_DEFEATED
+GoldenrodCity_RadioTower_4F4_EventScript_TransitionDone::
+	end
+
+GoldenrodCity_RadioTower_4F4_EventScript_Sign1::
+	lock
+	msgbox GoldenrodCity_RadioTower_4F4_Text_Studio2Sign, MSGBOX_SIGN
+	closemessage
+	release
+	end
+
+GoldenrodCity_RadioTower_4F4_EventScript_Sign2::
+	lock
+	msgbox GoldenrodCity_RadioTower_4F4_Text_ProductionSign, MSGBOX_SIGN
+	closemessage
+	release
+	end
+
+// LEFT STAIRCASE: Jessie, James and Meowth walk to the player's actual tile.
+// Spawn positions: Jessie (13,11), James (14,11), Meowth (15,11).
+// All three take the same two-stage collision-safe route: north to one row
+// below the player, then west until Jessie or James is directly in front.
+// This covers every stair trigger (x=9..11, y=5..7) without teleporting or
+// letting the battle begin from the other side of the room.
+GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesStairIntercept::
+	goto_if_set FLAG_PJR_JESSIE_JAMES_3_DEFEATED, GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesAlreadyDefeated
+	lockall
+	special HasEnoughMonsForDoubleBattle
+	goto_if_ne VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS, GoldenrodCity_RadioTower_4F4_EventScript_NeedTwoPokemon
+	setvar VAR_TEMP_3, 1
+	getplayerxy VAR_0x8000, VAR_0x8001
+	goto_if_eq VAR_0x8001, 5, GoldenrodCity_RadioTower_4F4_EventScript_ApproachNorthFive
+	goto_if_eq VAR_0x8001, 6, GoldenrodCity_RadioTower_4F4_EventScript_ApproachNorthFour
+	goto GoldenrodCity_RadioTower_4F4_EventScript_ApproachNorthThree
+
+GoldenrodCity_RadioTower_4F4_EventScript_ApproachNorthFive::
+	applymovement 5, GoldenrodCity_RadioTower_4F4_Movement_NorthFive
+	applymovement 2, GoldenrodCity_RadioTower_4F4_Movement_NorthFive
+	applymovement 7, GoldenrodCity_RadioTower_4F4_Movement_NorthFive
+	goto GoldenrodCity_RadioTower_4F4_EventScript_ApproachAfterNorth
+GoldenrodCity_RadioTower_4F4_EventScript_ApproachNorthFour::
+	applymovement 5, GoldenrodCity_RadioTower_4F4_Movement_NorthFour
+	applymovement 2, GoldenrodCity_RadioTower_4F4_Movement_NorthFour
+	applymovement 7, GoldenrodCity_RadioTower_4F4_Movement_NorthFour
+	goto GoldenrodCity_RadioTower_4F4_EventScript_ApproachAfterNorth
+GoldenrodCity_RadioTower_4F4_EventScript_ApproachNorthThree::
+	applymovement 5, GoldenrodCity_RadioTower_4F4_Movement_NorthThree
+	applymovement 2, GoldenrodCity_RadioTower_4F4_Movement_NorthThree
+	applymovement 7, GoldenrodCity_RadioTower_4F4_Movement_NorthThree
+
+GoldenrodCity_RadioTower_4F4_EventScript_ApproachAfterNorth::
+	waitmovementall
+	goto_if_eq VAR_0x8000, 11, GoldenrodCity_RadioTower_4F4_EventScript_ApproachWestThree
+	applymovement 5, GoldenrodCity_RadioTower_4F4_Movement_WestFour
+	applymovement 2, GoldenrodCity_RadioTower_4F4_Movement_WestFour
+	applymovement 7, GoldenrodCity_RadioTower_4F4_Movement_WestFour
+	goto GoldenrodCity_RadioTower_4F4_EventScript_ApproachFacePlayer
+GoldenrodCity_RadioTower_4F4_EventScript_ApproachWestThree::
+	applymovement 5, GoldenrodCity_RadioTower_4F4_Movement_WestThree
+	applymovement 2, GoldenrodCity_RadioTower_4F4_Movement_WestThree
+	applymovement 7, GoldenrodCity_RadioTower_4F4_Movement_WestThree
+
+GoldenrodCity_RadioTower_4F4_EventScript_ApproachFacePlayer::
+	waitmovementall
+	turnobject 5, DIR_NORTH
+	turnobject 2, DIR_NORTH
+	turnobject 7, DIR_NORTH
+	turnobject OBJ_EVENT_ID_PLAYER, DIR_SOUTH
+	releaseall
+	setvar VAR_LAST_TALKED, LOCALID_RADIO4F_JAMES
+	goto GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesBattle
+
+GoldenrodCity_RadioTower_4F4_EventScript_NeedTwoPokemon::
+	special ShowTrainerCantBattleSpeech
+	waitmessage
+	waitbuttonpress
+	releaseall
+	end
+
+// Emergency/debug interactions still start the same shared double battle.
+GoldenrodRaidoTower4_EventScript_Grunt9::
+	goto_if_set FLAG_PJR_JESSIE_JAMES_3_DEFEATED, GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesAlreadyDefeated
+	goto GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesBattle
+GoldenrodRaidoTower4_EventScript_Grunt28::
+	goto_if_set FLAG_PJR_JESSIE_JAMES_3_DEFEATED, GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesAlreadyDefeated
+	goto GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesBattle
+
+GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesBattle::
+	trainerbattle_double TRAINER_GRUNT_9_HNS, GoldenrodCity_RadioTower_4F4_Text_JessieJamesSeen, GoldenrodCity_RadioTower_4F4_Text_JessieJamesBeaten, GoldenrodCity_RadioTower_4F4_Text_JessieJamesNeedTwo, GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesAfterBattle, localId=LOCALID_RADIO4F_JAMES
+	goto GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesAfterBattle
+
+GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesAfterBattle::
+	lockall
+	setflag FLAG_PJR_JESSIE_JAMES_3_DEFEATED
+	msgbox GoldenrodCity_RadioTower_4F4_Text_JessieJamesAfter, MSGBOX_DEFAULT
+	closemessage
+	// Manual/debug starts skip the intercept route; never send actors through walls.
+	goto_if_ne VAR_TEMP_3, 1, GoldenrodCity_RadioTower_4F4_EventScript_RetreatCleanup
+	getplayerxy VAR_0x8000, VAR_0x8001
+	// First retrace the open aisle to each actor's original column.
+	goto_if_eq VAR_0x8000, 11, GoldenrodCity_RadioTower_4F4_EventScript_RetreatEastThree
+	applymovement 5, GoldenrodCity_RadioTower_4F4_Movement_EastFour
+	applymovement 2, GoldenrodCity_RadioTower_4F4_Movement_EastFour
+	applymovement 7, GoldenrodCity_RadioTower_4F4_Movement_EastFour
+	goto GoldenrodCity_RadioTower_4F4_EventScript_RetreatAfterEast
+GoldenrodCity_RadioTower_4F4_EventScript_RetreatEastThree::
+	applymovement 5, GoldenrodCity_RadioTower_4F4_Movement_EastThree
+	applymovement 2, GoldenrodCity_RadioTower_4F4_Movement_EastThree
+	applymovement 7, GoldenrodCity_RadioTower_4F4_Movement_EastThree
+
+GoldenrodCity_RadioTower_4F4_EventScript_RetreatAfterEast::
+	waitmovementall
+	// Finish off-screen at y=11, rather than colliding with furniture at y=9/12.
+	goto_if_eq VAR_0x8001, 5, GoldenrodCity_RadioTower_4F4_EventScript_RetreatSouthFive
+	goto_if_eq VAR_0x8001, 6, GoldenrodCity_RadioTower_4F4_EventScript_RetreatSouthFour
+	goto GoldenrodCity_RadioTower_4F4_EventScript_RetreatSouthThree
+
+GoldenrodCity_RadioTower_4F4_EventScript_RetreatSouthFive::
+	applymovement 5, GoldenrodCity_RadioTower_4F4_Movement_SouthFive
+	applymovement 2, GoldenrodCity_RadioTower_4F4_Movement_SouthFive
+	applymovement 7, GoldenrodCity_RadioTower_4F4_Movement_SouthFive
+	goto GoldenrodCity_RadioTower_4F4_EventScript_RetreatAfterSouth
+GoldenrodCity_RadioTower_4F4_EventScript_RetreatSouthFour::
+	applymovement 5, GoldenrodCity_RadioTower_4F4_Movement_SouthFour
+	applymovement 2, GoldenrodCity_RadioTower_4F4_Movement_SouthFour
+	applymovement 7, GoldenrodCity_RadioTower_4F4_Movement_SouthFour
+	goto GoldenrodCity_RadioTower_4F4_EventScript_RetreatAfterSouth
+GoldenrodCity_RadioTower_4F4_EventScript_RetreatSouthThree::
+	applymovement 5, GoldenrodCity_RadioTower_4F4_Movement_SouthThree
+	applymovement 2, GoldenrodCity_RadioTower_4F4_Movement_SouthThree
+	applymovement 7, GoldenrodCity_RadioTower_4F4_Movement_SouthThree
+
+GoldenrodCity_RadioTower_4F4_EventScript_RetreatAfterSouth::
+	waitmovementall
+GoldenrodCity_RadioTower_4F4_EventScript_RetreatCleanup::
+	fadescreen FADE_TO_BLACK
+	removeobject 5
+	removeobject 2
+	removeobject 7
+	fadescreen FADE_FROM_BLACK
+	releaseall
+	end
+
+GoldenrodCity_RadioTower_4F4_EventScript_JessieJamesAlreadyDefeated::
+	setvar VAR_TEMP_3, 1
+	end
+
+GoldenrodCity_RadioTower_4F4_Movement_NorthThree:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+GoldenrodCity_RadioTower_4F4_Movement_NorthFour:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+GoldenrodCity_RadioTower_4F4_Movement_NorthFive:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+GoldenrodCity_RadioTower_4F4_Movement_WestThree:
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+GoldenrodCity_RadioTower_4F4_Movement_WestFour:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+GoldenrodCity_RadioTower_4F4_Movement_EastThree:
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	step_end
+
+GoldenrodCity_RadioTower_4F4_Movement_EastFour:
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	step_end
+
+GoldenrodCity_RadioTower_4F4_Movement_SouthThree:
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	step_end
+
+GoldenrodCity_RadioTower_4F4_Movement_SouthFour:
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	step_end
+
+GoldenrodCity_RadioTower_4F4_Movement_SouthFive:
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	step_end
+
+GoldenrodRaidoTower4_EventScript_Proton::
+	trainerbattle_single TRAINER_PROTON_2_HNS, GoldenrodCity_RadioTower_4F4_Text_Proton_Seen, GoldenrodCity_RadioTower_4F4_Text_Proton_Beaten
+	msgbox GoldenrodCity_RadioTower_4F4_Text_Proton_After, MSGBOX_AUTOCLOSE
+	end
+
+
+GoldenrodCity_RadioTower_4F4_EventScript_Fisher::
+	lock
+	faceplayer
+	msgbox GoldenrodCity_RadioTower_4F4_Text_Fisher, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+GoldenrodCity_RadioTower_4F4_EventScript_Scientist::
+	trainerbattle_single TRAINER_RICH_HNS, GoldenrodCity_RadioTower_4F4_Text_ScientistRichSeen, GoldenrodCity_RadioTower_4F4_Text_ScientistRichBeaten
+	msgbox GoldenrodCity_RadioTower_4F4_Text_ScientistRichAfter, MSGBOX_AUTOCLOSE
+	end
+
+
+GoldenrodCity_RadioTower_4F4_EventScript_Mary::
+	lock
+	faceplayer
+	goto_if_eq VAR_GOLDENROD_CITY_STATE, 6, GoldenrodCity_RadioTower_4F4_EventScript_Mary2
+	goto_if_eq VAR_GOLDENROD_CITY_STATE, 7, GoldenrodCity_RadioTower_4F4_EventScript_Mary2
+	goto_if_eq VAR_GOLDENROD_CITY_STATE, 8, GoldenrodCity_RadioTower_4F4_EventScript_Mary2
+	goto_if_eq VAR_GOLDENROD_CITY_STATE, 9, GoldenrodCity_RadioTower_4F4_EventScript_Mary2
+	goto_if_unset FLAG_GOT_MARY_BRIGHT_POWDER, GoldenrodCity_RadioTower_4F4_EventScript_Mary3
+	msgbox GoldenrodCity_RadioTower_4F4_Text_DJMaryAfter, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+GoldenrodCity_RadioTower_4F4_EventScript_Mary2::
+	msgbox GoldenrodCity_RadioTower_4F4_Text_DJMary, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+GoldenrodCity_RadioTower_4F4_EventScript_Mary3::
+	msgbox GoldenrodCity_RadioTower_4F4_Text_DJMaryCleared, MSGBOX_DEFAULT
+	closemessage
+	giveitem ITEM_BRIGHT_POWDER
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull
+	msgbox GoldenrodCity_RadioTower_4F4_Text_DJMaryPinkBow, MSGBOX_DEFAULT
+	closemessage
+	setflag FLAG_GOT_MARY_BRIGHT_POWDER
+	closemessage
+	release
+	end
+
+GoldenrodCity_RadioTower_4F4_EventScript_Meowth::
+	lock
+	faceplayer
+	waitse
+	playmoncry SPECIES_MEOWTH, CRY_MODE_NORMAL
+	msgbox GoldenrodCity_RadioTower_4F4_Text_Meowth, MSGBOX_DEFAULT
+	waitmoncry
+	release
+	end
+
+
+GoldenrodCity_RadioTower_4F4_Text_Proton_Seen:
+	.string "PROTON: Now wait just one second!\p"
+	.string "Aren't you the one who got in our\n"
+	.string "way at SLOWPOKE WELL?\p"
+	.string "I see... You're doing all this\n"
+	.string "because you want to make me angry.\l"
+	.string "Be careful!\p"
+	.string "But since you seem to wish it, I'll\n"
+	.string "show you the full extent of a TEAM\l"
+	.string "ROCKET EXECUTIVE's wrath!$"
+
+GoldenrodCity_RadioTower_4F4_Text_Proton_Beaten:
+	.string "Phew...$"
+
+GoldenrodCity_RadioTower_4F4_Text_Proton_After:
+	.string "PROTON: You may have won this\n"
+	.string "time... But all you did was make\p"
+	.string "TEAM ROCKET's wrath grow.$"
+
+GoldenrodCity_RadioTower_4F4_Text_Fisher:
+	.string "I listened to the radio while I was\n"
+	.string "at the RUINS.\p"
+	.string "I heard a strange broadcast there.$"
+
+GoldenrodCity_RadioTower_4F4_Text_DJMary:
+	.string "MARY: Why? Why do I have to suffer\n"
+	.string "through this?\p"
+	.string "MEOWTH, help me!$"
+
+GoldenrodCity_RadioTower_4F4_Text_DJMaryCleared:
+	.string "MARY: Oh! You're my little savior!\p"
+	.string "Will you take this as my thanks?$"
+
+GoldenrodCity_RadioTower_4F4_Text_DJMaryPinkBow:
+	.string "MARY: It's good for dodging the\n"
+	.string "enemy's attacks.$"
+
+GoldenrodCity_RadioTower_4F4_Text_DJMaryAfter:
+	.string "MARY: Please tune into me on PROF.\n"
+	.string "OAK'S POKéMON TALK show!$"
+
+GoldenrodCity_RadioTower_4F4_Text_Meowth:
+	.string "MEOWTH: Meowth…$"
+
+GoldenrodCity_RadioTower_4F4_Text_GruntM10Seen:
+	.string "You plan to rescue the DIRECTOR?\p"
+	.string "That won't be possible because I'm\n"
+	.string "going to beat you!$"
+
+GoldenrodCity_RadioTower_4F4_Text_GruntM10Beaten:
+	.string "No! Unbelievable!$"
+
+GoldenrodCity_RadioTower_4F4_Text_GruntM10After:
+	.string "I don't believe it! I was beaten!$"
+
+GoldenrodCity_RadioTower_4F4_Text_ExecutiveM2Seen:
+	.string "Stop! I'm known as the TEAM ROCKET\n"
+	.string "fortress!\p"
+	.string "You're not taking another step!$"
+
+GoldenrodCity_RadioTower_4F4_Text_ExecutiveM2Beaten:
+	.string "The fortress came down!$"
+
+GoldenrodCity_RadioTower_4F4_Text_ExecutiveM2After:
+	.string "You've earned my respect, so here's\n"
+	.string "some advice.\p"
+	.string "It's not too late. You can still turn\n"
+	.string "back.$"
+
+GoldenrodCity_RadioTower_4F4_Text_GruntF4Seen:
+	.string "Don't I think POKéMON are cute?\p"
+	.string "I'll think my POKéMON are cute--\p"
+	.string "after they beat yours!$"
+
+GoldenrodCity_RadioTower_4F4_Text_GruntF4Beaten:
+	.string "Oh, no! They're so useless!$"
+
+GoldenrodCity_RadioTower_4F4_Text_GruntF4After:
+	.string "I love my beautiful self!\p"
+	.string "Who cares about POKéMON?$"
+
+GoldenrodCity_RadioTower_4F4_Text_ScientistRichSeen:
+	.string "Most excellent.\p"
+	.string "This RADIO TOWER will fulfill our\n"
+	.string "grand design.$"
+
+GoldenrodCity_RadioTower_4F4_Text_ScientistRichBeaten:
+	.string "Hmmm…\p"
+	.string "All grand plans come with snags.$"
+
+GoldenrodCity_RadioTower_4F4_Text_ScientistRichAfter:
+	.string "Do you honestly believe you can stop\n"
+	.string "TEAM ROCKET?$"
+
+GoldenrodCity_RadioTower_4F4_Text_ProductionSign:
+	.string "4F PRODUCTION$"
+
+GoldenrodCity_RadioTower_4F4_Text_Studio2Sign:
+	.string "4F STUDIO 2$"
+
+GoldenrodCity_RadioTower_4F4_Text_JessieJamesSeen:
+	.string "JESSIE: This tower belongs to\n"
+	.string "TEAM ROCKET!\p"
+	.string "JAMES: And we're guarding it\n"
+	.string "together!$"
+
+GoldenrodCity_RadioTower_4F4_Text_JessieJamesBeaten:
+	.string "JESSIE & JAMES: Not again!$"
+
+GoldenrodCity_RadioTower_4F4_Text_JessieJamesAfter:
+	.string "JESSIE: Keep moving, twerp.\p"
+	.string "JAMES: We'll meet again!$"
+
+GoldenrodCity_RadioTower_4F4_Text_JessieJamesNeedTwo:
+	.string "Bring at least two {PKMN} if you\n"
+	.string "want to face both of us!$"

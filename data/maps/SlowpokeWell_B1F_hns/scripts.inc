@@ -1,0 +1,246 @@
+SlowpokeWell_B1F_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SlowpokeWell_B1F_EventScript_JessieJamesTransition
+	map_script MAP_SCRIPT_ON_LOAD, SlowpokeWell_B1F_EventScript_JessieJamesLoad
+	.byte 0
+
+SlowpokeWell_B1F_EventScript_JessieJamesTransition::
+	setflag FLAG_TEMP_1
+	setvar VAR_TEMP_0, 1
+	goto_if_set FLAG_PJR_JESSIE_JAMES_1_DEFEATED, SlowpokeWell_B1F_EventScript_JessieJamesTransitionDone
+	checktrainerflag TRAINER_GRUNT_21_HNS
+	goto_if_eq TRUE, SlowpokeWell_B1F_EventScript_JessieJamesMarkPreviousWin
+	setvar VAR_TEMP_0, 0
+	end
+SlowpokeWell_B1F_EventScript_JessieJamesMarkPreviousWin::
+	setflag FLAG_PJR_JESSIE_JAMES_1_DEFEATED
+SlowpokeWell_B1F_EventScript_JessieJamesTransitionDone::
+	end
+
+SlowpokeWell_B1F_EventScript_JessieJamesLoad::
+	setflag FLAG_TEMP_1
+	call_if_set FLAG_PJR_JESSIE_JAMES_1_DEFEATED, SlowpokeWell_B1F_EventScript_LegacyRocketRescue
+	end
+
+SlowpokeWell_B1F_EventScript_LegacyRocketRescue::
+	goto_if_set FLAG_HIDE_SLOWPOKE_WELL_KURT, SlowpokeWell_B1F_EventScript_LegacyRocketRescueDone
+	goto_if_unset FLAG_HIDE_AZALEA_TOWN_ROCKETS, SlowpokeWell_B1F_EventScript_LegacyRocketRescueDone
+	clearflag FLAG_HIDE_AZALEA_TOWN_ROCKETS
+	cleartrainerflag TRAINER_ETO_HNS
+	cleartrainerflag TRAINER_PROTON_1_HNS
+	addobject 12
+	addobject 13
+SlowpokeWell_B1F_EventScript_LegacyRocketRescueDone::
+	return
+
+SlowpokeWell_B1F_EventScript_Item_Super_Potion_1::
+	finditem ITEM_SUPER_POTION
+	end
+
+SlowpokeWell_B1F_EventScript_Item_Super_Potion_2::
+	finditem ITEM_SUPER_POTION
+	end
+
+SlowpokeWell_B1F_EventScript_Item_Great_Ball::
+	finditem ITEM_GREAT_BALL
+	end
+
+SlowpokeWell_B1F_EventScript_Item_Full_Heal::
+	finditem ITEM_FULL_HEAL
+	end
+
+SlowpokeWell_B1F_EventScript_Kurt::
+	lock
+	msgbox SlowpokeWell_B1F_Text_KurtIntro, MSGBOX_DEFAULT
+	closemessage
+	end
+
+// PRL-style native trainer: either Jessie or James starts the shared duo.
+SlowpokeWell_B1F_EventScript_JessieJamesInteract::
+	trainerbattle_double TRAINER_GRUNT_21_HNS, SlowpokeWell_B1F_Text_JessieJamesSeen, SlowpokeWell_B1F_Text_JessieJamesBeaten, SlowpokeWell_B1F_Text_JessieJamesNeedTwo, SlowpokeWell_B1F_EventScript_JessieJamesAfterBattle, localId=10
+	end
+
+SlowpokeWell_B1F_EventScript_JessieJamesJessie::
+	trainerbattle_double TRAINER_GRUNT_21_HNS, SlowpokeWell_B1F_Text_JessieJamesSeen, SlowpokeWell_B1F_Text_JessieJamesBeaten, SlowpokeWell_B1F_Text_JessieJamesNeedTwo, SlowpokeWell_B1F_EventScript_JessieJamesAfterBattle, localId=11
+	end
+
+SlowpokeWell_B1F_EventScript_JessieJamesAfterBattle::
+	lockall
+	setflag FLAG_PJR_JESSIE_JAMES_1_DEFEATED
+	msgbox SlowpokeWell_B1F_Text_JessieJamesAfter, MSGBOX_DEFAULT
+	closemessage
+	removeobject 10
+	removeobject 11
+	removeobject 28
+	releaseall
+	end
+
+SlowpokeWell_B1F_EventScript_Eto::
+	trainerbattle_single TRAINER_ETO_HNS, SlowpokeWell_B1F_Text_GruntM2Seen, SlowpokeWell_B1F_Text_GruntM2Beaten
+	msgbox SlowpokeWell_B1F_Text_GruntM2After, MSGBOX_AUTOCLOSE
+	end
+
+SlowpokeWell_B1F_EventScript_Proton::
+	lock
+	faceplayer
+	msgbox SlowpokeWell_B1F_Text_ProtonSeen, MSGBOX_DEFAULT
+	closemessage
+	trainerbattle_no_intro TRAINER_PROTON_1_HNS, SlowpokeWell_B1F_Text_ProtonBeaten
+	msgbox SlowpokeWell_B1F_Text_ProtonAfter, MSGBOX_AUTOCLOSE
+	closemessage
+	fadescreen FADE_TO_BLACK
+	setflag FLAG_HIDE_AZALEA_TOWN_ROCKETS
+	clearflag FLAG_HIDE_KURT_1
+	addobject LOCALID_WELL_KURT
+	removeobject 11
+	removeobject 12
+	removeobject 13
+	delay 120
+	fadescreen FADE_FROM_BLACK
+	special DrawWholeMapView
+	turnobject OBJ_EVENT_ID_PLAYER, DIR_SOUTH
+	applymovement LOCALID_WELL_KURT, SlowpokeWell_B1F_Movement_Kurt
+	waitmovement 0
+	msgbox SlowpokeWell_B1F_Text_KurtAfter, MSGBOX_DEFAULT
+	closemessage
+	fadescreen FADE_TO_BLACK
+	setflag FLAG_HIDE_SLOWPOKE_WELL_KURT
+	setflag FLAG_HIDE_KURT_1
+	goto_if_ge VAR_AZALEA_TOWN_STATE, 3, SlowpokeWell_B1F_EventScript_ProtonKeepLaterProgress
+	clearflag FLAG_HIDE_KURT_2
+	clearflag FLAG_HIDE_AZALEA_TOWN_SLOWPOKE
+	setvar VAR_AZALEA_TOWN_STATE, 3
+SlowpokeWell_B1F_EventScript_ProtonKeepLaterProgress::
+	warp MAP_AZALEA_TOWN_KURTS_HOUSE_HNS, 15, 4
+	waitstate
+	end
+
+SlowpokeWell_B1F_Movement_JessieJamesRunIn:
+	walk_faster_down
+	step_end
+
+SlowpokeWell_B1F_Movement_Kurt:
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+SlowpokeWell_B1F_Text_KurtIntro:
+	.string "KURT: Hey there, {PLAYER}!\p"
+	.string "The guard up top took off when\n"
+	.string "I shouted at him.\p"
+	.string "But then I took a tumble down\n"
+	.string "the WELL.\p"
+	.string "I slammed down hard on my back,\n"
+	.string "so I can't move.\p"
+	.string "Rats! If I were fit, my POKéMON\n"
+	.string "would've punished them…\p"
+	.string "Ah, it can't be helped.\p"
+	.string "{PLAYER}, show them how gutsy\n"
+	.string "you are in my place!$"
+
+SlowpokeWell_B1F_Text_KurtAfter:
+	.string "KURT: Way to go, {PLAYER}!\p"
+	.string "TEAM ROCKET has taken off.\p"
+	.string "My back's better too.\n"
+	.string "Let's get out of here.$"
+
+SlowpokeWell_B1F_Text_GruntM29Seen:
+	.string "Darn! I was standing guard up\n"
+	.string "top when some old coot yelled\l"
+	.string "at me.\p"
+	.string "He startled me so much that\n"
+	.string "I fell down here.\p"
+	.string "I think I'll vent my anger by\n"
+	.string "taking it out on you!$"
+
+SlowpokeWell_B1F_Text_GruntM29Beaten:
+	.string "Arrgh! This is NOT my day!$"
+
+SlowpokeWell_B1F_Text_GruntM29After:
+	.string "Sure, we've been hacking the\n"
+	.string "tails off SLOWPOKE and selling\l"
+	.string "them.\p"
+	.string "Everything we do is for profit.\p"
+	.string "That's right! We're TEAM ROCKET,\n"
+	.string "and we'll do anything for money!$"
+
+SlowpokeWell_B1F_Text_ProtonSeen:
+	.string "What do you want?\p"
+	.string "If you interrupt our work,\n"
+	.string "don't expect any mercy!$"
+
+SlowpokeWell_B1F_Text_ProtonBeaten:
+	.string "You did OK today,\n"
+	.string "but wait till next time!$"
+
+SlowpokeWell_B1F_Text_ProtonAfter:
+	.string "Yeah, TEAM ROCKET was broken up\n"
+	.string "three years ago.\p"
+	.string "The boss went into hiding.\p"
+	.string "But we continued our activities\n"
+	.string "underground!\p"
+	.string "A small obstacle like you won't be\n"
+	.string "much of a problem for our mission.\p"
+	.string "I advise you to be very afraid of\n"
+	.string "what is to come!$"
+
+SlowpokeWell_B1F_Text_GruntM2Seen:
+	.string "Hyuck-hyuck-hyuck!\n"
+	.string "Quit taking SLOWPOKETAILS?\p"
+	.string "You're nuts!\n"
+	.string "If we obeyed you, TEAM ROCKET's\l"
+	.string "rep would be ruined!$"
+
+SlowpokeWell_B1F_Text_GruntM2Beaten:
+	.string "Hyuck…\n"
+	.string "Too strong…$"
+
+SlowpokeWell_B1F_Text_GruntM2After:
+	.string "We need the money,\n"
+	.string "but selling SLOWPOKETAILS?\p"
+	.string "It's tough being a ROCKET GRUNT!$"
+
+SlowpokeWell_B1F_Text_GruntF1Seen:
+	.string "Stop taking TAILS?\p"
+	.string "Yeah, just try to defeat all\n"
+	.string "of us!$"
+
+SlowpokeWell_B1F_Text_GruntF1Beaten:
+	.string "You rotten brat!$"
+
+SlowpokeWell_B1F_Text_GruntF1After:
+	.string "SLOWPOKETAILS grow back fast!\p"
+	.string "What's wrong with selling them?$"
+
+SlowpokeWell_B1F_Text_SlowpokeWithMail:
+	.string "A SLOWPOKE with its TAIL cut off…\p"
+	.string "Huh? It has MAIL.\n"
+	.string "Read it?$"
+
+SlowpokeWell_B1F_Text_SlowpokeMail:
+	.string "{PLAYER} read the MAIL.\p"
+	.string "Be good and look after the\n"
+	.string "house with Grandpa and SLOWPOKE.\p"
+	.string "Love, Dad$"
+
+SlowpokeWell_B1F_Text_TaillessSlowpoke:
+	.string "A SLOWPOKE with its TAIL cut off…$"
+
+SlowpokeWell_B1F_Text_JessieJamesSeen:
+	.string "JESSIE: Hold it, twerp!\p"
+	.string "JAMES: We're handling this one\n"
+	.string "together!$"
+
+SlowpokeWell_B1F_Text_JessieJamesBeaten:
+	.string "JESSIE & JAMES: Not again!$"
+
+SlowpokeWell_B1F_Text_JessieJamesAfter:
+	.string "JAMES: We'll be back.\p"
+	.string "JESSIE: Count on it!$"
+
+SlowpokeWell_B1F_Text_JessieJamesNeedTwo:
+	.string "Bring at least two {PKMN} if you\n"
+	.string "want to face both of us!$"

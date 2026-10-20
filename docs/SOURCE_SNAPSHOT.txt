@@ -1,0 +1,6 @@
+Source: jamesthoward2112-tech/Pokemon-Johto-Relics
+Source branch: pru/bell-tower-final-rocket-lv58-20261020
+Source commit: 6f26a381a13821fd63688cd53dd59de682148bab
+Imported to: jamesthoward2112-tech/Pokemon-Relics-Ultimate
+Import type: full source snapshot, excluding Git history, old workflows, raw ROMs/saves, and project README
+Status: source-only — not yet compiled or gameplay-verified in new repository
