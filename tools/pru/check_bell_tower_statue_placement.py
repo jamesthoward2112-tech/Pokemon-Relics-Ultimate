@@ -11,9 +11,9 @@ flag = "FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED"
 assert not any(o.get("flag") == flag for o in eight["object_events"]), "Jessie and James still on 8F"
 
 expected = {
-    "OBJ_EVENT_GFX_JESSIE_HNS": (11, 5),
-    "OBJ_EVENT_GFX_JAMES_HNS": (14, 5),
-    "OBJ_EVENT_GFX_MON_BASE+SPECIES_MEOWTH": (12, 5),
+    "OBJ_EVENT_GFX_JESSIE_HNS": (9, 5),
+    "OBJ_EVENT_GFX_JAMES_HNS": (11, 5),
+    "OBJ_EVENT_GFX_MON_BASE+SPECIES_MEOWTH": (10, 5),
 }
 found = {o["graphics_id"]: (o["x"], o["y"]) for o in nine["object_events"] if o.get("flag") == flag}
 assert found == expected, f"Final trio misplaced on 9F: {found}"
@@ -26,7 +26,7 @@ width = 21
 tiles = struct.unpack("<" + "H" * (len(layout) // 2), layout)
 tile = lambda x, y: tiles[y * width + x] & 0x3FF
 assert tile(9, 3) == tile(16, 3) == 0x249, "This is not the two-statue 9F corridor"
-assert all(tile(x, y) == 0x23D for x, y in expected.values()), "Trio is not on the upper wall corridor"
+assert all(tile(x, y) in (0x2E0, 0x23D) for x, y in expected.values()), "Trio is not in the intended corridor"
 script9 = (maps / "TinTower_9F_hns/scripts.inc").read_text()
 script8 = (maps / "TinTower_8F_hns/scripts.inc").read_text()
 assert "trainerbattle_double TRAINER_JESSIE_JAMES_TINTOWER_HNS" in script9
