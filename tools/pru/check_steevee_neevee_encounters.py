@@ -64,7 +64,7 @@ assert "return B_TRANSITION_EEVEE_TWINS;" in battle
 assert "Task_PRL_EeveeTwins" in transition
 for ext in ("4bpp", "bin", "gbapal"):
     assert f'graphics/battle_transitions/prl/eevee_twins.{ext}' in transition
-assert "tools/pru/install_prl_duo_assets.py" in read(".github/workflows/pru-valkiri-final-build.yml")
+assert "tools/pru/install_prl_duo_assets.py" in read(".github/workflows/pru-clean-build.yml")
 assert team_levels(party,"TRAINER_ANN_AND_ANNE_HNS")==[30,30]  # original donor data retained
 
 # Dragon's Den adds a fifth visit with its own trainer flag (679), rather than
