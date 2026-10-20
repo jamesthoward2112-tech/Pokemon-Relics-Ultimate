@@ -1,0 +1,62 @@
+name: Import canonical PRU source
+
+# Runs once after this workflow is introduced. The same workflow is
+# manually rerunnable. New source is copied from the reviewed, existing
+# public PRU branch; unreviewed Library material is NOT uploaded here.
+on:
+  push:
+    paths:
+      - .github/workflows/import-pru-source.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pru-source-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+      - name: Import reviewed PRU source snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE_BRANCH='pru/bell-tower-final-rocket-lv58-20261020'
+          SOURCE_REPO='https://github.com/jamesthoward2112-tech/Pokemon-Johto-Relics.git'
+          git clone --depth 1 --single-branch --branch "$SOURCE_BRANCH" "$SOURCE_REPO" "$RUNNER_TEMP/legacy-pru-source"
+          ORIGIN_SHA="$(git -C "$RUNNER_TEMP/legacy-pru-source" rev-parse HEAD)"
+          echo "Importing source $SOURCE_BRANCH @ $ORIGIN_SHA"
+          rsync -a "$RUNNER_TEMP/legacy-pru-source/" ./ \
+            --exclude='/.git/***' \
+            --exclude='/.github/***' \
+            --exclude='/README.md' \
+            --exclude='*.gba' \
+            --exclude='*.sav' \
+            --exclude='*.sgm' \
+            --exclude='*.zip' \
+            --exclude='*.7z'
+          cat > docs/SOURCE_SNAPSHOT.txt <<EOF
+          Source: jamesthoward2112-tech/Pokemon-Johto-Relics
+          Source branch: $SOURCE_BRANCH
+          Source commit: $ORIGIN_SHA
+          Imported to: jamesthoward2112-tech/Pokemon-Relics-Ultimate
+          Import type: full source snapshot, excluding Git history, old workflows, raw ROMs/saves, and project README
+          Status: source-only — not yet compiled or gameplay-verified in new repository
+          EOF
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'No source changes to import'
+            exit 0
+          fi
+          git commit -m 'Bootstrap PRU source from legacy Johto Relics branch'
+          git push origin HEAD:main
