@@ -96,6 +96,7 @@ jobs:
           python3 tools/pru/check_valkiri_sound.py
           python3 tools/pru/check_skarmet_tourmaline.py
           python3 tools/pru/check_steevee_neevee_encounters.py
+          python3 tools/pru/check_bell_tower_statue_placement.py
       - name: Restore pinned PJR multiboot binary build inputs
         shell: bash
         run: |
