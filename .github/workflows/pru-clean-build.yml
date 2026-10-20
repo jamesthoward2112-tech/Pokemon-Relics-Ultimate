@@ -1,0 +1,60 @@
+name: PRU canonical clean build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pru-canonical-build-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-rom:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Confirm original approved transition assets are committed
+        shell: bash
+        run: |
+          set -euo pipefail
+          missing=0
+          for name in jessie_james eevee_twins; do
+            for ext in png bin pal; do
+              file="graphics/battle_transitions/prl/${name}.${ext}"
+              if [[ ! -f "$file" ]]; then
+                echo "::error file=$file::Approved original trainer transition asset missing (see issue #1)"
+                missing=1
+              fi
+            done
+          done
+          if [[ "$missing" != 0 ]]; then
+            echo 'See GitHub issue #1 and docs/LIBRARY_MIGRATION.md. Never substitute placeholder art.'
+            exit 1
+          fi
+      - name: Install GBA toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
+      - name: Compile canonical PRU
+        run: make -j2 hns
+      - name: Verify direct ROM
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t roms < <(find . -maxdepth 1 -type f -name '*.gba' | sort)
+          test "${#roms[@]}" -eq 1
+          test "$(stat -c%s "${roms[0]}")" -eq 33554432
+          sha256sum "${roms[0]}" | tee pru-rom.sha256
+      - name: Upload test build artifact (not a release)
+        uses: actions/upload-artifact@v4
+        with:
+          name: PRU-CANONICAL-UNTESTED
+          path: |
+            ./*.gba
+            pru-rom.sha256
+          if-no-files-found: error
