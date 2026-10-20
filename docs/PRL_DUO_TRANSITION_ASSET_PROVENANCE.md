@@ -19,8 +19,8 @@ The original ZIP, GIF/MP4 storyboard approvals, and `PRL_Battle_Transitions_Inte
 
 Both imported atlases are `128×256` indexed 16-colour GBA source PNGs (512 8×8 tiles). The accompanying binary `.bin` map is 2,048 bytes (32×32 16-bit entries), with **palette bank 15 embedded in all entries**. The colours of the PNG indexed palettes were compared against the JASC `.pal` source values and match exactly.
 
-The migrated PRU transition implementation incorrectly loaded palette bank 13. In the *PRL duo transition initializer only*, that bank has been corrected to **15** in `src/battle_transition.c` (preserving native PatternWeave timing and other transitions).
+**Important distinction: these extracted PNG/bin/pal files are historical original *source* art, not the already-working PJR production graphics.** The successful PJR workflow runs `python3 tools/pru/install_prl_duo_assets.py`, which recreates the compiled `.4bpp`, `.gbapal` and `.bin` payloads from the already-tracked pinned `assets/prl_duo_20261011.json`. That *production* pack uses BG palette **bank 13**, and includes the previously approved lossless Jessie & James white/transparency-index remapping. Consequently the `src/battle_transition.c` production code retains **bank 13**. Our initial change to 15 has been reverted. The canonical PRU build now runs the proven PJR production installer and palette regression checker before `make hns`, so the resulting artwork should match PJR exactly; verify visually in mGBA.
 
-**Verification completed:** Original ZIP extraction, PNG dimensions/mode/palette check, matching JASC palettes, BG tilemap bank check and exact SHA-1 Git blob matching.
+**Verification completed:** Original Library ZIP extraction and SHA-1 Git blob matching; original PJR production asset pack and installer verified from the source repository. In-game comparison still pending.
 
 **Still required:** full new-repo `make hns` source compilation, mGBA boot and visual in-game comparison of both intros; verify no art deformation, no incorrect transparency and no regression to other battle transitions. This source import is not itself user gameplay verification.
