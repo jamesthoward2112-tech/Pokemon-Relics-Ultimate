@@ -154,10 +154,18 @@ jobs:
           fi
           kill "$EMU_PID" || true
           echo 'PRU emulator boot smoke check passed'
+      - name: Upload direct GBA test artifact after successful source build
+        uses: actions/upload-artifact@v4
+        with:
+          name: PRU-CANONICAL-SOURCE-VALIDATED
+          path: |
+            pokehns.gba
+            pru-rom.sha256
+          if-no-files-found: error
       - name: Publish confirmed raw GBA to GitHub prerelease
         shell: bash
         env:
-          GH_TOKEN: \${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           test -s pokehns.gba
@@ -178,11 +186,3 @@ jobs:
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
             --jq '.assets[].name' | grep -Fx "$file"
           echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/$file"
-      - name: Upload direct GBA test artifact after successful source build
-        uses: actions/upload-artifact@v4
-        with:
-          name: PRU-CANONICAL-SOURCE-VALIDATED
-          path: |
-            pokehns.gba
-            pru-rom.sha256
-          if-no-files-found: error
