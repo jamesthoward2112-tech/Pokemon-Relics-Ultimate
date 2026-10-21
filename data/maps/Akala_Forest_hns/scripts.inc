@@ -30,10 +30,10 @@ Alola_Akala_BattleRaichu::
 	lock
 	faceplayer
 	setflag FLAG_BATTLED_RAICHU
-	playmoncry SPECIES_RAICHU_ALOLA, 0
+	playmoncry SPECIES_RAICHU, 0
 	msgbox Alola_Akala_BattleRaichu_Text_0, MSGBOX_AUTOCLOSE
 	waitmoncry
-	setwildbattle SPECIES_RAICHU_ALOLA, 60
+	setwildbattle SPECIES_RAICHU, 60
 	dowildbattle
 	specialvar VAR_RESULT, GetBattleOutcome
 	compare VAR_RESULT, B_OUTCOME_CAUGHT
