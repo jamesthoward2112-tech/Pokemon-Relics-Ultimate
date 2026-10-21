@@ -93,6 +93,7 @@ jobs:
           set -euo pipefail
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_pru_444_gameplay.py
+          python3 tools/pru/check_legendary_catching_respawns.py
           python3 tools/pru/check_bld_status_icon.py
           python3 tools/pru/check_valkiri_sound.py
           python3 tools/pru/check_skarmet_tourmaline.py
