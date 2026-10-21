@@ -50,6 +50,14 @@ TinTower_RoofDay_MapScript_HoohStory::
 
 TinTower_RoofDay_MapScript_HoohPostStoryGone::
 	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
+	goto_if_set FLAG_CAUGHT_HO_OH, TinTower_RoofDay_MapScript_HoohCaught
+	@ If normal Ho-Oh was defeated, let it return on the next visit.
+	@ The later Relic Ho-Oh unlock (state 4) remains a separate encounter.
+	clearflag FLAG_HIDE_HO_OH
+	setobjectxyperm LOCALID_HO_OH, 10, 6
+	end
+
+TinTower_RoofDay_MapScript_HoohCaught::
 	setflag FLAG_HIDE_HO_OH
 	end
 
@@ -201,6 +209,7 @@ TinTower_RoofDay_EventScript_TalkToKimono::
 TinTower_RoofDay_EventScript_HoOh::
 	lockall
 	goto_if_eq VAR_COMPLETED_HO_OH, 4, TinTower_RoofDay_EventScript_HoOhPostgame
+	goto_if_eq VAR_COMPLETED_HO_OH, 3, TinTower_RoofDay_EventScript_HoOhRetry
 	waitse
 	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
 	delay 30
@@ -225,6 +234,22 @@ TinTower_RoofDay_EventScript_HoOh::
 	clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_NPCS
 	setvar VAR_ECRUTEAK_CITY_THEATER, 8
 	setvar VAR_COMPLETED_HO_OH, 3
+	releaseall
+	end
+
+@ Simple Lv50 retry after a knockout: never replay the Kimono choreography.
+TinTower_RoofDay_EventScript_HoOhRetry::
+	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
+	waitmoncry
+	playbgm MUS_HG_VS_HO_OH, 0
+	seteventmon SPECIES_HO_OH, 50
+	special BattleSetup_StartLegendaryBattle
+	waitstate
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, TinTower_RoofDay_EventScript_RanFromHoOh
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, TinTower_RoofDay_EventScript_RanFromHoOh
+	call_if_eq VAR_RESULT, B_OUTCOME_WON, TinTower_RoofDay_EventScript_HoohFlewAway
+	call_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, TinTower_RoofDay_EventScript_CaughtHooh
 	releaseall
 	end
 
