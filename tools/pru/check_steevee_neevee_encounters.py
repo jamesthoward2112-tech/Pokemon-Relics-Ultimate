@@ -53,6 +53,7 @@ for area,(alias,coords,levels,original) in slots.items():
         assert event["graphics_id"]=="OBJ_EVENT_GFX_TWIN_HNS",(area,name)
         assert event["flag"]=="0",(area,name)
         assert event["trainer_type"]=="TRAINER_TYPE_NORMAL",(area,name)
+        assert event["trainer_sight_or_berry_tree_id"] == "6", (area,name,"must spot player from 6 tiles")
         assert f"{label}::" in script
         section=script.split(f"{label}::",1)[1].split("\n\tend",1)[0]
         assert f"trainerbattle_double {alias}," in section,(area,name)
@@ -86,6 +87,7 @@ for name, xy in (("Steevee",(7,31)),("Neevee",(7,32))):
     assert (actors[0]["x"],actors[0]["y"]) == xy
     assert actors[0]["graphics_id"] == "OBJ_EVENT_GFX_TWIN_HNS"
     assert actors[0]["trainer_type"] == "TRAINER_TYPE_NORMAL"
+    assert actors[0]["trainer_sight_or_berry_tree_id"] == "6", (name,"Dragons Den sight must be 6 tiles")
     assert f"trainerbattle_double {den_id}," in den_script.split(label+"::",1)[1].split("\n\tend",1)[0]
 assert "DragonsDen_Cavern_EventScript_TwinLea" not in read("data/maps/DragonsDen_Cavern_hns/map.json")
 assert "DragonsDen_Cavern_EventScript_TwinPia" not in read("data/maps/DragonsDen_Cavern_hns/map.json")
