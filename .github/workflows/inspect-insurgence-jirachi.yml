@@ -1,0 +1,38 @@
+name: Inspect Insurgence Jirachi donor images
+on:
+  push:
+    branches: [pru/insurgence-mega-jirachi-art-20261022]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch official Insurgence Jirachi wiki markup
+        run: |
+          python3 - <<'PY'
+          import urllib.request,re,html
+          targets = [
+            "https://wiki.p-insurgence.com/Jirachi_%28Pok%C3%A9mon%29",
+            "https://wiki.p-insurgence.com/index.php?title=Jirachi_(Pok%C3%A9mon)&action=render"
+          ]
+          for u in targets:
+            try:
+              req=urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0 (compatible; PRU-asset-audit/1.0)'})
+              s=urllib.request.urlopen(req,timeout=25).read().decode('utf8','replace')
+              print("Fetched",u,len(s))
+              tags=re.findall(r'<img\\b[^>]*>',s,re.I)
+              for i,t in enumerate(tags):
+                if i>=len(tags)-35 or "385" in t or "Jirachi" in t:
+                  print("IMAGE",i,html.unescape(t[:650]))
+              for marker in ['Mega Jirachi','Mega_Jirachi','id="Sprites"','id="Mega_Jirachi"']:
+                p=s.rfind(marker)
+                print('MARKER',marker,p, s[max(0,p-250):p+1800].replace('\\n',' ')[:2050])
+              break
+            except Exception as e:
+              print("source fetch error",repr(e))
+              continue
+          else:
+            raise SystemExit('Official source unavailable')
+          PY
