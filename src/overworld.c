@@ -970,7 +970,6 @@ static void RestorePruDefeatedLegendariesOnMapEntry(void)
         && PruLegendarySeenButUncaught(SPECIES_CELEBI))
     {
         FlagClear(FLAG_HIDE_CELEBI);
-        FlagClear(FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI);
     }
 
     // These two maps additionally persist a "defeated" flag which their
