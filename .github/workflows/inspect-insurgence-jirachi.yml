@@ -22,10 +22,12 @@ jobs:
         run: python tools/pru/bank_insurgence_mega_jirachi.py
       - name: Inspect exact source palette and rectangle pixels
         run: python tools/pru/analyze_insurgence_jirachi.py
-      - name: Commit four verified original donor PNGs to isolated branch
+      - name: Uniform GBA 64x64 conversion and colour-paired shiny QA
+        run: python tools/pru/install_insurgence_mega_jirachi.py
+      - name: Commit original donor and GBA graphics for visual review
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/insurgence_mega_jirachi/source_*.png assets/insurgence_mega_jirachi/SOURCE.md
-          git commit -m "Bank original Insurgence Mega Jirachi front/back normal/shiny" || exit 0
+          git add assets/insurgence_mega_jirachi graphics/pokemon/jirachi
+          git commit -m "Stage original Insurgence Mega Jirachi 64x64 battle art and palettes" || exit 0
           git push
