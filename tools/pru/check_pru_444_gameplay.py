@@ -21,6 +21,12 @@ allowed = {row["Species_Constant"] for row in rows}
 allowed_names = {row["Name"] for row in rows}
 # Internal source name for Valkiri, and the shared species name for Sevii Noivern.
 allowed_names.update({"Valkyvoir", "Noivern"})
+# Explicit negative fixtures: a full 444 audit must reject notorious regressions.
+# Ursaring is approved, but Ursaluna (including Bloodmoon) is not.
+for forbidden in ("Ursaluna", "Ursalina", "Ursaluna Bloodmoon"):
+    assert forbidden not in allowed_names, f"Forbidden Pokémon entered PRU 444: {forbidden}"
+assert "SPECIES_URSALUNA" not in allowed, "Ursaluna must not enter PRU's 444"
+
 name_aliases = {
     "Mr Mime": "Mr. Mime",
     "Farfetchd": "Farfetch'd",
@@ -103,3 +109,4 @@ print(f"PASS: {trainer_count} HNS trainers / {pokemon_count} legal Pokémon")
 print(f"PASS: {len(wild_maps)} HNS wild maps / {wild_slots} legal wild slots")
 print(f"PASS: {event_scripts} HNS map scripts with no out-of-dex species constants")
 print("PASS: evolution targets remain confined to the approved 444")
+print("PASS: Ursaluna / Ursalina explicitly excluded from approved 444")
