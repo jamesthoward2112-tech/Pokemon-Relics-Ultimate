@@ -75,7 +75,7 @@ Snowswept_Cavern_EventScript_Sneasler::
 	faceplayer
 	playmoncry SPECIES_MYSTYNX, CRY_MODE_ENCOUNTER
 	waitmoncry
-	setwildbossbattle species=SPECIES_SNEASLER, level=80, item=ITEM_RAZOR_CLAW, move1_1=MOVE_DIRE_CLAW, move1_2=MOVE_ROCK_SLIDE, move1_3=MOVE_BRICK_BREAK move1_4=MOVE_LASH_OUT
+	setwildbossbattle species=SPECIES_HERACURION, level=80, item=ITEM_RAZOR_CLAW, move1_1=MOVE_DIRE_CLAW, move1_2=MOVE_ROCK_SLIDE, move1_3=MOVE_BRICK_BREAK move1_4=MOVE_LASH_OUT
 	settotemboost B_POSITION_OPPONENT_LEFT, 1, 0, 2, 0, 0, 0
 	setflag FLAG_NO_WILD_CATCHING
 	setflag FLAG_NO_WILD_RUNNING
@@ -84,7 +84,7 @@ Snowswept_Cavern_EventScript_Sneasler::
     dowildbattle
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, Snowswept_Cavern_EventScript_SneaslerRan
-    bufferspeciesname STR_VAR_1, SPECIES_SNEASLER
+    bufferspeciesname STR_VAR_1, SPECIES_HERACURION
     msgbox SinjohRuins_Lab_Text_DropedItem, MSGBOX_DEFAULT
     giveitem ITEM_TOXIC_PLATE
     addvar VAR_PLATECOUNTER, 1
