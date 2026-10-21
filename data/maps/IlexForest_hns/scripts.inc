@@ -292,13 +292,19 @@ IlexForest_EventScript_SecondCelebi::
 waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, IlexForest_EventScript_SecondCelebiRan
+	@ Knockout only removes the visible NPC for this visit. Only capture
+	@ permanently hides the second, separately unlocked Celebi encounter.
+	call_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, IlexForest_EventScript_SecondCelebiCaught
 	fadescreenswapbuffers FADE_TO_BLACK
 	removeobject LOCALID_ILEX_FOREST_SECOND_CELEBI
-	setflag FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI
 	fadescreenswapbuffers FADE_FROM_BLACK
 	special GivePartyMonNationalRibbon
 	release
 	end
+
+IlexForest_EventScript_SecondCelebiCaught::
+	setflag FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI
+	return
 
 IlexForest_EventScript_SecondCelebiRan::
 	release
