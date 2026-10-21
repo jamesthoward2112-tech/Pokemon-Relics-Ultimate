@@ -51,9 +51,15 @@ for part in ("front","back"):
     normal=orig[part]
     shiny=orig[part+"_shiny"]
     assert normal.size==shiny.size
-    assert list(normal.getchannel("A").getdata())==list(shiny.getchannel("A").getdata()), (
-        f"Normal/shiny silhouettes differ for {part}"
-    )
+    mask_n=[a>127 for a in normal.getchannel("A").getdata()]
+    mask_s=[a>127 for a in shiny.getchannel("A").getdata()]
+    differences=sum(x!=y for x,y in zip(mask_n,mask_s))
+    # The Insurgence wiki sprite exports contain a few shiny alpha holes.
+    # In battle one form cannot acquire/remove physical body pixels, so
+    # use the original NORMAL alpha silhouette consistently for both forms.
+    assert differences < len(mask_n)//10, f"Donor shapes differ excessively: {part} {differences}"
+    print(f"INFO: source shiny alpha differs at {differences} pixels; "
+          "normal silhouette retained for both palettes")
     for n,s in zip(normal.getdata(),shiny.getdata()):
         if n[3] <= 127:
             continue
@@ -81,7 +87,7 @@ while len(palette_normal)<16:
 indices={c:i+1 for i,c in enumerate(colors)}
 
 def convert(part):
-    im=orig[part]
+    im=orig[part.removesuffix("_shiny")]
     mask=im.getchannel("A").point(lambda a: 255 if a>127 else 0)
     bbox=mask.getbbox()
     assert bbox, f"Empty donor {part}"
