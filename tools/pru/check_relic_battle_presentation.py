@@ -14,7 +14,7 @@ match = re.search(
     species, re.DOTALL
 )
 assert match, "Donphalanx species entry missing"
-assert tuple(map(int, match.groups())) == (0, 12), "Donphalanx back art should sit 12 GBA pixels lower"
+assert tuple(map(int, match.groups())) == (0, 16), "Donphalanx back art must retain approved 16-pixel anchor"
 
 assert "#define B_WAIT_TIME_PRU_HAZARD_MESSAGE 120" in constants
 for move, effect in [("MOVE_CEASELESS_EDGE", "EFFECT_CEASELESS_EDGE"),
@@ -31,8 +31,13 @@ assert "bool8 preserveHazardText = toWait == B_WAIT_TIME_PRU_HAZARD_MESSAGE;" in
 assert "(!preserveHazardText && !gSaveBlock3Ptr->challengeSettings.fastBattle)" in commands
 assert "gTestRunnerHeadless ||" in commands
 
+# Lock the specific approved anchors: never import a previous branch's positioning.
+pru = Path("src/data/pokemon/species_info/pru_custom.h").read_text()
+swamplith = re.search(r"\\[SPECIES_SWAMPLITH\\]\\s*=\\s*\\{.*?\\.backPicYOffset\\s*=\\s*(\\d+)", pru, re.DOTALL)
+assert swamplith and int(swamplith.group(1)) == 10, "Swamplith must keep its lowered 10-pixel back-sprite anchor"
+
 # Inventory, not a global re-anchor: transparent margins vary across art donors.
 pru = Path("src/data/pokemon/species_info/pru_custom.h").read_text()
 zeroes = re.findall(r"\[SPECIES_([A-Z0-9_]+)\]\s*=\s*\{(?:(?!\n\},).)*?\.backPicYOffset\s*=\s*0", pru, re.DOTALL)
-print("PASS: Donphalanx back sprite lowered; three hazard moves show 120-frame message")
+print("PASS: Donphalanx 16px and Swamplith 10px approved battle anchors; three hazard moves show 120-frame message")
 print(f"AUDIT: {len(zeroes)} PRU custom species still specify backPicYOffset = 0; inspect art individually: " + ", ".join(zeroes))
