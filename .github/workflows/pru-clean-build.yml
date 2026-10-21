@@ -100,6 +100,7 @@ jobs:
           python3 tools/pru/check_relic_battle_presentation.py
           python3 tools/test_indigo_control_tutors.py
           python3 tools/pru/check_johto_first_clear_ai.py
+          python3 tools/pru/check_kanto_gym_custom_rebalance.py
       - name: Restore pinned PJR multiboot binary build inputs
         shell: bash
         run: |
