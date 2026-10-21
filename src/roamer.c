@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle.h"
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "field_effect.h"
@@ -495,7 +496,54 @@ void UpdateRoamerHPStatus(struct Pokemon *mon)
     ROAMER(gEncounteredRoamerIndex)->statusA = status;
     ROAMER(gEncounteredRoamerIndex)->statusB = status >> 8;
 
+    // PRU: a roaming legendary knocked out in HNS is not lost forever.
+    // Restore HP/status before it moves to another route; an actual capture
+    // remains permanent because the battle handler deactivates that roamer.
+    if (IS_HNS && gBattleOutcome == B_OUTCOME_WON)
+    {
+        ROAMER(gEncounteredRoamerIndex)->hp = GetMonData(mon, MON_DATA_MAX_HP);
+        ROAMER(gEncounteredRoamerIndex)->statusA = 0;
+        ROAMER(gEncounteredRoamerIndex)->statusB = 0;
+    }
+
     RoamerMoveToOtherLocationSet(gEncounteredRoamerIndex);
+}
+
+// Also repair HNS save files where a Kanto roamer was already deactivated
+// by a pre-fix knockout. HP=0 distinguishes knockouts from story cleanup;
+// Pokédex caught data prevents duplicating a legitimately captured Pokémon.
+void RestorePruDefeatedRoamers(void)
+{
+#if IS_HNS
+    u32 i;
+
+    for (i = 0; i < ROAMER_COUNT; i++)
+    {
+        u16 species = ROAMER(i)->species;
+        enum NationalDexOrder dexNum;
+        struct Pokemon mon;
+        const u8 (*locs)[6];
+
+        if (ROAMER(i)->active || ROAMER(i)->hp != 0
+            || ROAMER(i)->locationTableId != ROAMER_LOC_TABLE_KANTO
+            || (species != SPECIES_LATIAS && species != SPECIES_LATIOS))
+            continue;
+        dexNum = SpeciesToNationalPokedexNum(species);
+        if (!GetSetPokedexFlag(dexNum, FLAG_GET_SEEN)
+            || GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT))
+            continue;
+
+        CreateMonWithIVsPersonality(&mon, species, ROAMER(i)->level,
+                                  ROAMER(i)->ivs, ROAMER(i)->personality);
+        ROAMER(i)->hp = GetMonData(&mon, MON_DATA_MAX_HP);
+        ROAMER(i)->statusA = 0;
+        ROAMER(i)->statusB = 0;
+        ROAMER(i)->active = TRUE;
+        locs = GetRoamerLocations(i);
+        sRoamerLocation[i][MAP_GRP] = ROAMER_MAP_GROUP;
+        sRoamerLocation[i][MAP_NUM] = locs[Random() % GetRoamerNumLocationSets(i)][0];
+    }
+#endif
 }
 
 void SetRoamerInactive(u32 roamerIndex)
