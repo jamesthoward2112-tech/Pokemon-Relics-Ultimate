@@ -77,9 +77,9 @@ NewSinjoh_HauntedHouse_EventScript_StartScary::
 NewSinjoh_House3_EventScript_NobleTyphlosion::
 	lock
 	faceplayer
-	playmoncry SPECIES_TYPHLOSION_HISUI, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_TYPHLOSION, CRY_MODE_ENCOUNTER
 	waitmoncry
-	setwildbossbattle species=SPECIES_TYPHLOSION_HISUI, level=80, item=ITEM_SPOOKY_PLATE, move1_1=MOVE_INFERNAL_PARADE, move1_2=MOVE_LAVA_PLUME, move1_3=MOVE_CONFUSE_RAY move1_4=MOVE_SOLAR_BEAM
+	setwildbossbattle species=SPECIES_TYPHLOSION, level=80, item=ITEM_SPOOKY_PLATE, move1_1=MOVE_INFERNAL_PARADE, move1_2=MOVE_LAVA_PLUME, move1_3=MOVE_CONFUSE_RAY move1_4=MOVE_SOLAR_BEAM
 	settotemboost B_POSITION_OPPONENT_LEFT, 0, 2, 0, 1, 2, 0
 	setflag FLAG_NO_WILD_CATCHING
 	setflag FLAG_NO_WILD_RUNNING
@@ -88,7 +88,7 @@ NewSinjoh_House3_EventScript_NobleTyphlosion::
     dowildbattle
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, NewSinjoh_House3_EventScript_NobleTyphlosionRan
-    bufferspeciesname STR_VAR_1, SPECIES_TYPHLOSION_HISUI
+    bufferspeciesname STR_VAR_1, SPECIES_TYPHLOSION
     msgbox SinjohRuins_Lab_Text_DropedItem, MSGBOX_DEFAULT
     giveitem ITEM_SPOOKY_PLATE
     addvar VAR_PLATECOUNTER, 1
