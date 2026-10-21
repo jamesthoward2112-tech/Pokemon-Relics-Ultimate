@@ -33,7 +33,7 @@ assert "gTestRunnerHeadless ||" in commands
 
 # Lock the specific approved anchors: never import a previous branch's positioning.
 pru = Path("src/data/pokemon/species_info/pru_custom.h").read_text()
-swamplith = re.search(r"\\[SPECIES_SWAMPLITH\\]\\s*=\\s*\\{.*?\\.backPicYOffset\\s*=\\s*(\\d+)", pru, re.DOTALL)
+swamplith = re.search(r"\[SPECIES_SWAMPLITH\]\s*=\s*\{.*?\.backPicYOffset\s*=\s*(\d+)", pru, re.DOTALL)
 assert swamplith and int(swamplith.group(1)) == 10, "Swamplith must keep its lowered 10-pixel back-sprite anchor"
 
 # Inventory, not a global re-anchor: transparent margins vary across art donors.
