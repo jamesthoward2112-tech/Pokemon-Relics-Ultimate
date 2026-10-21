@@ -38,10 +38,10 @@ Alola_Poni_BattleExeggutor::
 	lock
 	faceplayer
 	setflag FLAG_BATTLED_EXEGGUTOR
-	playmoncry SPECIES_EXEGGUTOR_ALOLA, 0
+	playmoncry SPECIES_EXEGGUTOR, 0
 	msgbox Alola_Poni_BattleExeggutor_Text_0, MSGBOX_AUTOCLOSE
 	waitmoncry
-	setwildbattle SPECIES_EXEGGUTOR_ALOLA, 60
+	setwildbattle SPECIES_EXEGGUTOR, 60
 	dowildbattle
 	specialvar VAR_RESULT, GetBattleOutcome
 	compare VAR_RESULT, B_OUTCOME_CAUGHT
@@ -95,13 +95,13 @@ Alola_Poni_TotemBattle_Trigger_4:
 	fadescreenswapbuffers FADE_TO_BLACK
 	delay 30
 	clearflag FLAG_HIDE_PONI_TOTEM
-	playmoncry SPECIES_ELECTIVIRE, 0
+	playmoncry SPECIES_NOXICHU, 0
 	addobject Poni_Totem
 	waitmoncry
 	delay 30
 	fadescreenswapbuffers FADE_FROM_BLACK
 	delay 30
-	playmoncry SPECIES_ELECTIVIRE, 0
+	playmoncry SPECIES_NOXICHU, 0
 	applymovement Poni_Totem, Alola_Poni_TotemBattle_Trigger_Movement_0
 	waitmovement 0
 	waitmoncry
@@ -125,10 +125,10 @@ Alola_Poni_TotemBattle_Trigger_10:
 Alola_Poni_TotemBattle::
 	lock
 	faceplayer
-	playmoncry SPECIES_ELECTIVIRE, 0
+	playmoncry SPECIES_NOXICHU, 0
 	msgbox Alola_Poni_TotemBattle_Text_0, MSGBOX_AUTOCLOSE
 	waitmoncry
-	setwildbattle SPECIES_ELECTABUZZ, 60, ITEM_NONE, SPECIES_ELECTIVIRE, 60, ITEM_SHUCA_BERRY
+	setwildbattle SPECIES_ELECTABUZZ, 60, ITEM_NONE, SPECIES_NOXICHU, 60, ITEM_SHUCA_BERRY
 	settotemboost B_POSITION_OPPONENT_RIGHT, 1, 1, 1, 1, 1, 1
 	setflag FLAG_NO_WILD_CATCHING
 	setflag FLAG_NO_WILD_RUNNING
@@ -262,10 +262,10 @@ Alola_Poni_TapuFini_Flyover_2:
 Alola_Poni_BattleVsTapuFini::
 	lock
 	faceplayer
-	playmoncry SPECIES_TAPU_FINI, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_SUICUNE, CRY_MODE_ENCOUNTER
 	msgbox Alola_Poni_BattleVsTapuFini_Text_0
 	waitmoncry
-	seteventmon SPECIES_TAPU_FINI, 60
+	seteventmon SPECIES_SUICUNE, 60
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
