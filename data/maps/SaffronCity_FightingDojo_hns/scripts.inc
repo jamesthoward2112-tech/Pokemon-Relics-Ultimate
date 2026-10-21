@@ -25,20 +25,20 @@ SaffronCity_FightingDojo_EventScript_Lickilicky_EV_HP::
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_LICKILICKY, CRY_MODE_NORMAL
+	playmoncry SPECIES_KHANG, CRY_MODE_NORMAL
 	msgbox SaffronCity_FightingDojo_Text_Lickilicky, MSGBOX_DEFAULT
 	delay 20
 	closemessage
 	goto_if_set FLAG_TEMP_1, SaffronCity_FightingDojo_EventScript_BattleLickilicky_EV_HP
 	delay 30
-	bufferspeciesname STR_VAR_1, SPECIES_LICKILICKY
+	bufferspeciesname STR_VAR_1, SPECIES_KHANG
 	bufferstring STR_VAR_2, SaffronCity_FightingDojo_Text_HP
 	msgbox SaffronCity_FightingDojo_Text_WouldYouLikeToBattle, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, SaffronCity_FightingDojo_EventScript_Refused
 SaffronCity_FightingDojo_EventScript_BattleLickilicky_EV_HP::
 	setflag FLAG_NO_WILD_CATCHING
 	setflag FLAG_NO_SHINY
-	setwildbattle SPECIES_LICKILICKY, 1, ITEM_NONE
+	setwildbattle SPECIES_KHANG, 1, ITEM_NONE
 	dowildbattle
 	clearflag FLAG_NO_WILD_CATCHING
 	clearflag FLAG_NO_SHINY
