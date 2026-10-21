@@ -35,9 +35,11 @@ assert "gTestRunnerHeadless ||" in commands
 pru = Path("src/data/pokemon/species_info/pru_custom.h").read_text()
 swamplith = re.search(r"\[SPECIES_SWAMPLITH\]\s*=\s*\{.*?\.backPicYOffset\s*=\s*(\d+)", pru, re.DOTALL)
 assert swamplith and int(swamplith.group(1)) == 10, "Swamplith must keep its lowered 10-pixel back-sprite anchor"
+sceptitan = re.search(r"\[SPECIES_SCEPTITAN\]\s*=\s*\{.*?\.backPicYOffset\s*=\s*(\d+)", pru, re.DOTALL)
+assert sceptitan and int(sceptitan.group(1)) == 10, "Sceptitan must keep its lowered 10-pixel back-sprite anchor"
 
 # Inventory, not a global re-anchor: transparent margins vary across art donors.
 pru = Path("src/data/pokemon/species_info/pru_custom.h").read_text()
 zeroes = re.findall(r"\[SPECIES_([A-Z0-9_]+)\]\s*=\s*\{(?:(?!\n\},).)*?\.backPicYOffset\s*=\s*0", pru, re.DOTALL)
-print("PASS: Donphalanx 16px and Swamplith 10px approved battle anchors; three hazard moves show 120-frame message")
+print("PASS: Donphalanx 16px, Swamplith 10px and Sceptitan 10px battle anchors; three hazard moves show 120-frame message")
 print(f"AUDIT: {len(zeroes)} PRU custom species still specify backPicYOffset = 0; inspect art individually: " + ", ".join(zeroes))
