@@ -14,6 +14,13 @@ WhirlIslands_LugiaChamber_MapScript_LugiaStory::
 
 WhirlIslands_LugiaChamber_MapScript_LugiaPostStoryGone::
 	setflag FLAG_HIDE_WHIRL_ISLANDS_KIMONO_GIRLS
+	goto_if_set FLAG_CAUGHT_LUGIA, WhirlIslands_LugiaChamber_MapScript_LugiaCaught
+	@ First story battle was lost to knockout: unlock repeat encounter on
+	@ the next area visit, without replaying the Kimono cutscene.
+	setvar VAR_COMPLETED_LUGIA, 4
+	goto WhirlIslands_LugiaChamber_MapScript_LugiaPostStoryEncounter
+
+WhirlIslands_LugiaChamber_MapScript_LugiaCaught::
 	setflag FLAG_HIDE_LUGIA
 	end
 
