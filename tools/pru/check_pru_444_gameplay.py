@@ -31,7 +31,7 @@ name_aliases = {
 form_pattern = re.compile(r"SPECIES_UNOWN_[A-Z_]+|SPECIES_CASTFORM_(NORMAL|SUNNY|RAINY|SNOWY)|SPECIES_DEOXYS_(NORMAL|ATTACK|DEFENSE|SPEED)")
 
 def valid_constant(species):
-    return species in allowed or species == "SPECIES_NONE" or bool(form_pattern.fullmatch(species))
+    return species in allowed or species in {"SPECIES_NONE", "SPECIES_EGG", "SPECIES_WOOPER_PALDEA"} or bool(form_pattern.fullmatch(species))
 
 errors = []
 trainer_count = 0
