@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main]
+    branches: [main, "pru/astrachi-mt-moon-20261022"]
   workflow_dispatch:
 
 permissions:
