@@ -11004,6 +11004,15 @@ static u32 ComputeCaptureOdds(u32 wildMonBattler, u32 playerBattler)
     else
         catchRate = gSpeciesInfo[battleMon->species].catchRate;
 
+    // PRU: Legends/mythicals should still need weakening and status, but the
+    // original catch rate of 3 makes even a sleeping 1-HP encounter tedious.
+    // Clamp the base rate only for HNS legendary and roamer battles. This
+    // preserves the chosen Ball's bonus, HP/status multipliers and all other
+    // game modes, while avoiding any guaranteed catches.
+    if (IS_HNS && (gBattleTypeFlags & (BATTLE_TYPE_LEGENDARY | BATTLE_TYPE_ROAMER))
+        && catchRate < 20)
+        catchRate = 20;
+
     catchRate += ball.flatBonus;
     if (catchRate <= 0)
         catchRate = 1;
