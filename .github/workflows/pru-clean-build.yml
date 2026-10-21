@@ -92,6 +92,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 tools/pru/check_444_species_dex.py
+          python3 tools/pru/check_pru_444_gameplay.py
           python3 tools/pru/check_bld_status_icon.py
           python3 tools/pru/check_valkiri_sound.py
           python3 tools/pru/check_skarmet_tourmaline.py
@@ -192,7 +193,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Direct GBA compiled from canonical main commit $GITHUB_SHA. Corrected Donphalanx and Swamplith battle back-sprite offsets; full source regression and mGBA boot checks required before release. In-game save-state playtesting remains pending." \
+              --notes "Direct GBA compiled from canonical main commit $GITHUB_SHA. Restricted HNS trainer, wild and scripted encounters to the approved 444; corrected Sceptitan, Donphalanx and Swamplith offsets and all Steevee-Neevee sight ranges. Automated source regression and mGBA boot checks required before release. In-game save-state playtesting remains pending." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
