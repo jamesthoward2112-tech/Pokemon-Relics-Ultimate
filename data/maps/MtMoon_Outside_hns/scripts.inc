@@ -172,7 +172,7 @@ MtMoon_Outside_Text_WhiteRockTouchNight:
 	.string "..........................$"
 
 MtMoon_Outside_Text_WhiteRockAstrachi:
-	.string "The stone shines once more!\\p"
+	.string "The stone shines once more!\p"
 	.string "A second wish has awakened!$"
 
 MtMoon_Outside_Text_Astrachi:
