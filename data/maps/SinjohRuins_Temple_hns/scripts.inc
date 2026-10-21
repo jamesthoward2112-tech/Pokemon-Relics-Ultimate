@@ -52,7 +52,7 @@ SinjohRuins_Temple_EventScript_RegielekiScanner::
 	lock
 	goto_if_set FLAG_BROUGHT_REGIELEKI, SinjohRuins_Temple_EventScript_ScannerAlreadyDone
 	msgbox SinjohRuins_Temple_Text_Mon, MSGBOX_AUTOCLOSE
-	checkspecies SPECIES_REGIELEKI
+	checkspecies SPECIES_RAIKOU
 	goto_if_eq VAR_RESULT, FALSE, SinjohRuins_Lab_EventScript_NoOp
 	setflag FLAG_BROUGHT_REGIELEKI
     goto_if_eq VAR_RESULT, TRUE, SinjohRuins_Temple_EventScript_SeenPokemon
@@ -63,7 +63,7 @@ SinjohRuins_Temple_EventScript_RegidragoScanner::
 	lock
 	goto_if_set FLAG_BROUGHT_REGIDRAGO, SinjohRuins_Temple_EventScript_ScannerAlreadyDone
 	msgbox SinjohRuins_Temple_Text_Mon, MSGBOX_AUTOCLOSE
-	checkspecies SPECIES_REGIDRAGO
+	checkspecies SPECIES_RAYQUAZA
 	goto_if_eq VAR_RESULT, FALSE, SinjohRuins_Lab_EventScript_NoOp
 	setflag FLAG_BROUGHT_REGIDRAGO
     goto_if_eq VAR_RESULT, TRUE, SinjohRuins_Temple_EventScript_SeenPokemon
