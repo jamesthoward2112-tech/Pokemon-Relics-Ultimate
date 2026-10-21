@@ -4,9 +4,9 @@ SinjohRuins_RegigigasRoom_hns_MapScripts::
 SinjohRuins_RegigigasRoom_EventScript_Regigigas::
 	lock
 	faceplayer
-	playmoncry SPECIES_REGIGIGAS, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
 	waitmoncry
-	seteventmon SPECIES_REGIGIGAS, 80
+	seteventmon SPECIES_GROUDON, 80
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
