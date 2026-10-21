@@ -482,7 +482,7 @@ NewBarkTown_Lab_EventScript_Elm_Check_Togepi::
 	goto_if_eq VAR_RESULT, TRUE, NewBarkTown_Lab_EventScript_Elm_Togepi_Seen
 	checkspecies SPECIES_TOGETIC
 	goto_if_eq VAR_RESULT, TRUE, NewBarkTown_Lab_EventScript_Elm_Togepi_Seen
-	checkspecies SPECIES_TOGEKISS
+	checkspecies SPECIES_TOGETIC
 	goto_if_eq VAR_RESULT, TRUE, NewBarkTown_Lab_EventScript_Elm_Togepi_Seen
 	return
 
