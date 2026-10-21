@@ -97,43 +97,37 @@ class TestIndigoControlTutors(unittest.TestCase):
             choosebox,
         )
 
-        # These tutors keep normal compatibility, then add logical type-based
-        # fallback only for Relic-series custom species.
+        # Both tutors now cover the approved 444 Pokémon (including the
+        # appended PRU species), but never automatically unlock all moves.
         self.assertIn("if (CanLearnTeachableMove(species, move))", choosebox)
-        self.assertIn(
+        self.assertIn("SpeciesToPokedexNum(species) == 0xFFFF", choosebox)
+        self.assertIn("!IS_HNS", choosebox)
+        self.assertNotIn(
             "if (species < SPECIES_SCARABUB || species > SPECIES_DRAGONITE_RELIC)",
             choosebox,
         )
         self.assertIn("CanSpeciesLearnPjrControlTutorMove(species, gSpecialVar_0x8005)", choosebox)
         self.assertNotIn("if (IsPjrControlTutorMove(gSpecialVar_0x8005))", choosebox)
+        compatibility = choosebox.split("static bool32 CanSpeciesLearnPjrControlTutorMove", 1)[1].split("static u32 CanMonLearnPjrControlMove", 1)[0]
         for move in HAZARD_MOVES + CLEANUP_MOVES:
-            self.assertIn(f"case {move}:", choosebox)
+            self.assertIn(f"case {move}:", compatibility)
 
-        # Most fallback access follows the move's own non-Normal type.
-        self.assertIn("moveType = GetMoveType(move);", choosebox)
-        self.assertIn(
-            "if (moveType != TYPE_NORMAL && IsSpeciesOfType(species, moveType))",
-            choosebox,
-        )
-
-        # The few semantic exceptions remain deliberately narrow.
-        self.assertRegex(
-            choosebox,
-            r"(?s)case MOVE_WILL_O_WISP:.*?TYPE_FIRE.*?TYPE_GHOST",
-        )
-        self.assertRegex(
-            choosebox,
-            r"(?s)case MOVE_WHIRLWIND:\s*return IsSpeciesOfType\(species, TYPE_FLYING\);",
-        )
-        self.assertRegex(
-            choosebox,
-            r"(?s)case MOVE_HEAL_BELL:\s*return IsSpeciesOfType\(species, TYPE_FAIRY\);",
-        )
-        self.assertRegex(
-            choosebox,
-            r"(?s)case MOVE_PSYCHIC_FANGS:\s*case MOVE_RAPID_SPIN:\s*"
-            r"case MOVE_TIDY_UP:\s*case MOVE_COURT_CHANGE:.*?return FALSE;",
-        )
+        # Move rules reflect species type and anatomy, not only the old
+        # custom-ID range. New additions must stay eligible too.
+        for species in ("SPECIES_SCEPTITAN", "SPECIES_DONPHALANX",
+                        "SPECIES_SKULBERUS", "SPECIES_NOXICHU",
+                        "SPECIES_EEVEEON"):
+            self.assertIn(species, compatibility)
+        self.assertIn("case MOVE_CEASELESS_EDGE:", compatibility)
+        self.assertIn("case MOVE_RAPID_SPIN:", compatibility)
+        self.assertIn("case MOVE_TIDY_UP:", compatibility)
+        self.assertIn("case MOVE_PSYCHIC_FANGS:", compatibility)
+        self.assertIn("case MOVE_COURT_CHANGE:", compatibility)
+        self.assertIn("return species == SPECIES_EEVEEON;", compatibility)
+        self.assertIn("moveType = GetMoveType(move);", compatibility)
+        self.assertIn("if (moveType != TYPE_NORMAL && IsSpeciesOfType(species, moveType))", compatibility)
+        self.assertRegex(compatibility, r"(?s)case MOVE_WILL_O_WISP:.*?TYPE_FIRE.*?TYPE_GHOST")
+        self.assertRegex(compatibility, r"(?s)case MOVE_WHIRLWIND:.*?TYPE_FLYING")
 
         # Shuckoloose is Bug/Rock and the Rock control moves are genuinely Rock type.
         pjr_families = PJR_FAMILIES.read_text(encoding="utf-8")
@@ -154,6 +148,15 @@ class TestIndigoControlTutors(unittest.TestCase):
             "gSpecialVar_0x8005)",
             choosebox,
         )
+
+    def test_pru_restores_equipped_berries_as_well_as_other_consumables(self):
+        source = (ROOT / "src" / "battle_util.c").read_text(encoding="utf-8")
+        self.assertIn("void TryRestoreHeldItems(void)", source)
+        self.assertIn("if (!IS_HNS && GetItemPocket(lostItem) == POCKET_BERRIES", source)
+        self.assertIn("(IS_HNS || GetItemPocket(lostItem) != POCKET_BERRIES)", source)
+        self.assertIn("SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &lostItem);", source)
+        cfg = (ROOT / "include" / "config" / "battle.h").read_text(encoding="utf-8")
+        self.assertIn("#define B_RESTORE_HELD_BATTLE_ITEMS GEN_LATEST", cfg)
 
     def test_cleanup_tutor_npc_is_static(self):
         data = json.loads(MAP.read_text(encoding="utf-8"))

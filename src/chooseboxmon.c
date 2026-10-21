@@ -160,29 +160,103 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
 {
     enum Type moveType;
 
-    // Keep all existing canonical / donor compatibility.
+    // Preserve existing TM, egg-move and tutor compatibility first.
     if (CanLearnTeachableMove(species, move))
         return TRUE;
 
-    // Only the Relic-series custom roster gets the fallback below.
-    if (species < SPECIES_SCARABUB || species > SPECIES_DRAGONITE_RELIC)
-        return FALSE;
-    if (!IsPjrControlTutorMove(move))
+    // These two free Indigo Plateau tutors are exclusively a PRU service.
+    // The former SCARABUB..DRAGONITE_RELIC range omitted Gen 1-3 and
+    // PRU's appended species 1624-1642. Check the actual 444-entry Dex
+    // instead of guessing eligibility from a contiguous engine ID range.
+    if (!IS_HNS || species == SPECIES_NONE || species >= NUM_SPECIES
+        || SpeciesToPokedexNum(species) == 0xFFFF
+        || !IsPjrControlTutorMove(move))
         return FALSE;
 
-    // A few status moves have a theme that is clearer than their nominal type.
+    // New options are based on battle role, elemental ability and plausible
+    // anatomy. No universal move unlock; existing donor access still wins.
     switch (move)
     {
+    case MOVE_STEALTH_ROCK:
+    case MOVE_SALT_CURE:
+        return IsSpeciesOfType(species, TYPE_ROCK)
+            || IsSpeciesOfType(species, TYPE_GROUND)
+            || IsSpeciesOfType(species, TYPE_STEEL);
+    case MOVE_SPIKES:
+        return IsSpeciesOfType(species, TYPE_GROUND)
+            || IsSpeciesOfType(species, TYPE_ROCK)
+            || IsSpeciesOfType(species, TYPE_STEEL)
+            || IsSpeciesOfType(species, TYPE_POISON);
+    case MOVE_TOXIC_SPIKES:
+        return IsSpeciesOfType(species, TYPE_POISON)
+            || IsSpeciesOfType(species, TYPE_BUG);
+    case MOVE_STICKY_WEB:
+    case MOVE_INFESTATION:
+        return IsSpeciesOfType(species, TYPE_BUG);
+    case MOVE_STONE_AXE:
+        return IsSpeciesOfType(species, TYPE_ROCK)
+            || IsSpeciesOfType(species, TYPE_GROUND)
+            || IsSpeciesOfType(species, TYPE_STEEL);
+    case MOVE_CEASELESS_EDGE:
+        return IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_STEEL)
+            || species == SPECIES_SCEPTITAN
+            || species == SPECIES_SCEPTILE
+            || species == SPECIES_SCYTHER
+            || species == SPECIES_SCIZOR;
+    case MOVE_LEECH_SEED:
+    case MOVE_AROMATHERAPY:
+        return IsSpeciesOfType(species, TYPE_GRASS)
+            || (move == MOVE_AROMATHERAPY && IsSpeciesOfType(species, TYPE_FAIRY));
+    case MOVE_TOXIC:
+        return IsSpeciesOfType(species, TYPE_POISON)
+            || IsSpeciesOfType(species, TYPE_BUG)
+            || IsSpeciesOfType(species, TYPE_GRASS)
+            || IsSpeciesOfType(species, TYPE_DARK);
     case MOVE_WILL_O_WISP:
         return IsSpeciesOfType(species, TYPE_FIRE)
             || IsSpeciesOfType(species, TYPE_GHOST);
+    case MOVE_THUNDER_WAVE:
+        return IsSpeciesOfType(species, TYPE_ELECTRIC)
+            || IsSpeciesOfType(species, TYPE_PSYCHIC)
+            || IsSpeciesOfType(species, TYPE_STEEL);
+    case MOVE_TAUNT:
+        return IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_GHOST)
+            || IsSpeciesOfType(species, TYPE_FIGHTING);
     case MOVE_ENCORE:
         return IsSpeciesOfType(species, TYPE_FAIRY)
-            || IsSpeciesOfType(species, TYPE_PSYCHIC);
+            || IsSpeciesOfType(species, TYPE_PSYCHIC)
+            || IsSpeciesOfType(species, TYPE_NORMAL);
+    case MOVE_KNOCK_OFF:
+        return IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_FIGHTING)
+            || IsSpeciesOfType(species, TYPE_STEEL);
     case MOVE_ROAR:
-        return IsSpeciesOfType(species, TYPE_DRAGON);
+        return IsSpeciesOfType(species, TYPE_DRAGON)
+            || IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_NORMAL)
+            || IsSpeciesOfType(species, TYPE_ROCK)
+            || IsSpeciesOfType(species, TYPE_GROUND);
     case MOVE_WHIRLWIND:
+    case MOVE_DEFOG:
         return IsSpeciesOfType(species, TYPE_FLYING);
+    case MOVE_DRAGON_TAIL:
+        return IsSpeciesOfType(species, TYPE_DRAGON);
+    case MOVE_RAPID_SPIN:
+        return IsSpeciesOfType(species, TYPE_GROUND)
+            || IsSpeciesOfType(species, TYPE_STEEL)
+            || IsSpeciesOfType(species, TYPE_ROCK)
+            || IsSpeciesOfType(species, TYPE_NORMAL);
+    case MOVE_MORTAL_SPIN:
+        return IsSpeciesOfType(species, TYPE_POISON)
+            || IsSpeciesOfType(species, TYPE_BUG);
+    case MOVE_TIDY_UP:
+        return IsSpeciesOfType(species, TYPE_NORMAL)
+            || IsSpeciesOfType(species, TYPE_FAIRY);
+    case MOVE_COURT_CHANGE:
+        // Court Change remains specialised: no mass distribution.
+        return species == SPECIES_EEVEEON;
     case MOVE_HAZE:
         return IsSpeciesOfType(species, TYPE_ICE)
             || IsSpeciesOfType(species, TYPE_WATER)
@@ -191,30 +265,59 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
     case MOVE_CLEAR_SMOG:
         return IsSpeciesOfType(species, TYPE_POISON)
             || IsSpeciesOfType(species, TYPE_FIRE);
+    case MOVE_BRICK_BREAK:
+        return IsSpeciesOfType(species, TYPE_FIGHTING)
+            || IsSpeciesOfType(species, TYPE_GROUND)
+            || IsSpeciesOfType(species, TYPE_STEEL);
+    case MOVE_PSYCHIC_FANGS:
+        // Sharp teeth/tusks only; Psychic typing alone implies no fangs.
+        return species == SPECIES_SKULBERUS
+            || species == SPECIES_DONPHALANX
+            || species == SPECIES_NOXICHU
+            || species == SPECIES_MIGHTYENA
+            || species == SPECIES_HOUNDOOM
+            || species == SPECIES_GYARADOS;
     case MOVE_ICE_SPINNER:
-    case MOVE_ICY_WIND:
+    case MOVE_CHILLING_WATER:
         return IsSpeciesOfType(species, TYPE_ICE)
             || IsSpeciesOfType(species, TYPE_WATER);
     case MOVE_HEAL_BELL:
-        return IsSpeciesOfType(species, TYPE_FAIRY);
-    case MOVE_CHILLING_WATER:
-        return IsSpeciesOfType(species, TYPE_WATER)
-            || IsSpeciesOfType(species, TYPE_ICE);
-    case MOVE_PSYCHIC_FANGS:
-    case MOVE_RAPID_SPIN:
-    case MOVE_TIDY_UP:
-    case MOVE_COURT_CHANGE:
-        // Shape / anatomy / signature-style moves need explicit donor
-        // compatibility rather than a broad type rule.
-        return FALSE;
+        return IsSpeciesOfType(species, TYPE_FAIRY)
+            || IsSpeciesOfType(species, TYPE_PSYCHIC)
+            || IsSpeciesOfType(species, TYPE_NORMAL);
+    case MOVE_U_TURN:
+        return IsSpeciesOfType(species, TYPE_BUG)
+            || IsSpeciesOfType(species, TYPE_FLYING)
+            || IsSpeciesOfType(species, TYPE_DARK);
+    case MOVE_VOLT_SWITCH:
+    case MOVE_NUZZLE:
+        return IsSpeciesOfType(species, TYPE_ELECTRIC);
+    case MOVE_FLIP_TURN:
+        return IsSpeciesOfType(species, TYPE_WATER);
+    case MOVE_PARTING_SHOT:
+        return IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_GHOST)
+            || IsSpeciesOfType(species, TYPE_PSYCHIC);
+    case MOVE_SNARL:
+        return IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_NORMAL)
+            || IsSpeciesOfType(species, TYPE_GHOST);
+    case MOVE_ICY_WIND:
+        return IsSpeciesOfType(species, TYPE_ICE)
+            || IsSpeciesOfType(species, TYPE_WATER)
+            || IsSpeciesOfType(species, TYPE_FLYING);
+    case MOVE_BREAKING_SWIPE:
+        return IsSpeciesOfType(species, TYPE_DRAGON)
+            || IsSpeciesOfType(species, TYPE_STEEL)
+            || IsSpeciesOfType(species, TYPE_DARK);
+    case MOVE_ACID_SPRAY:
+        return IsSpeciesOfType(species, TYPE_POISON);
     default:
         break;
     }
 
-    // For the remaining tutor moves, a Relic custom may learn the move when
-    // its own typing matches the move's type. This gives, for example,
-    // Shuckoloose Rock hazards, Toxeon Poison utility, and Feralodon Water /
-    // Dragon control without making unrelated species universally eligible.
+    // Safeguard for a future Control Tutor addition: the move still needs
+    // a non-Normal type match, never blanket eligibility.
     moveType = GetMoveType(move);
     if (moveType != TYPE_NORMAL && IsSpeciesOfType(species, moveType))
         return TRUE;
