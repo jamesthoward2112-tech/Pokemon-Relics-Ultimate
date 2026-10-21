@@ -482,6 +482,10 @@
 #define FLAG_ROCKETHIDEOUT_SWITCH                   0x1DF
 #define FLAG_ROUTE25_GOT_NUGGET                     0x1E0
 #define FLAG_SUMMONED_MTMOON_JIRACHI                0x1E1
+// New, unused save bits: separate Astrachi encounter from Jirachi and its shared Dex index.
+#define FLAG_HIDE_MTMOON_ASTRACHI                    0x4E0
+#define FLAG_SUMMONED_MTMOON_ASTRACHI                0x4E1
+#define FLAG_CAUGHT_MTMOON_ASTRACHI                  0x4E2
 #define FLAG_COMPLETED_AERODACTYL_PUZZLE            0x1E2
 #define FLAG_COMPLETED_HOOH_PUZZLE                  0x1E3
 #define FLAG_COMPLETED_KABUTO_PUZZLE                0x1E4
