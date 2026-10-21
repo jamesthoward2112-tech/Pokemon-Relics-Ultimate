@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ensure Johto's first League clear is actually tactically challenging.
 
-Deliberately protect existing species, levels, trainer artwork, team order,
+Deliberately protect the approved 444-legal species, levels, trainer artwork, team order,
 and all rematch/post-Kanto tiers. We only alter first-clear AI/moves/items.
 """
 import re
@@ -12,11 +12,11 @@ text = path.read_text(encoding="utf-8")
 expected = {
   "TRAINER_WILL_1_HNS": [
     {
-      "species": "Alakazam Relic",
+      "species": "Valkyvoir",
       "level": 56
     },
     {
-      "species": "Slowking Relic",
+      "species": "Slowking",
       "level": 56
     },
     {
@@ -34,7 +34,7 @@ expected = {
   ],
   "TRAINER_KOGA_1_HNS": [
     {
-      "species": "Beedrill Relic",
+      "species": "Pinsirex",
       "level": 58
     },
     {
@@ -50,13 +50,13 @@ expected = {
       "level": 59
     },
     {
-      "species": "Crobat Relic",
+      "species": "Ghoulbat",
       "level": 60
     }
   ],
   "TRAINER_BRUNO_1_HNS": [
     {
-      "species": "Hitmonchan Relic",
+      "species": "Medicham",
       "level": 59
     },
     {
@@ -64,7 +64,7 @@ expected = {
       "level": 59
     },
     {
-      "species": "Hitmonlee Relic",
+      "species": "Hitmonlee",
       "level": 60
     },
     {
@@ -72,7 +72,7 @@ expected = {
       "level": 60
     },
     {
-      "species": "Machamp Relic",
+      "species": "Machamp",
       "level": 61
     }
   ],
@@ -94,13 +94,13 @@ expected = {
       "level": 61
     },
     {
-      "species": "Houndoom Relic",
+      "species": "Skulberus",
       "level": 62
     }
   ],
   "TRAINER_LANCE_1_HNS": [
     {
-      "species": "Gyarados Relic",
+      "species": "Feralodon",
       "level": 62
     },
     {
@@ -120,7 +120,7 @@ expected = {
       "level": 64
     },
     {
-      "species": "Dragonite Relic",
+      "species": "Drakeon",
       "level": 65
     }
   ]
@@ -157,4 +157,4 @@ assert "- Mach Punch" in block("TRAINER_BRUNO_1_HNS")
 assert "- Destiny Bond" in block("TRAINER_KAREN_1_HNS")
 assert "- Dragon Dance" in block("TRAINER_LANCE_1_HNS")
 assert "- Stealth Rock" in block("TRAINER_LANCE_1_HNS")
-print("PASS: Johto first-clear E4 and Lance retain all species/levels with smart AI, distinct sets, items and EVs")
+print("PASS: Johto E4 and Lance retain 444-legal species/levels, smart AI, distinct sets, items and EVs")
