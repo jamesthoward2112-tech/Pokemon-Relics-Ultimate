@@ -74,7 +74,7 @@ SinjohRuins_ArceusRoom_TriggerScene::
 	applymovement2 LOCALID_SINJOHRUINS_ARCEUSROOM_ARCEUS, SinjohRuins_ArceusRoom_Movement_ArceusWalkDown
 	playfanfare MUS_AWAKEN_LEGEND
 	fadescreen FADE_FROM_WHITE
-    playmoncry SPECIES_ARCEUS, 0
+    playmoncry SPECIES_ALPHORACLE, 0
 	delay 20
 	waitmovement LOCALID_SINJOHRUINS_ARCEUSROOM_ARCEUS
 	setvar VAR_0x8004, 0  @ vertical pan
@@ -92,9 +92,9 @@ SinjohRuins_ArceusRoom_TriggerScene::
 	setweather WEATHER_NONE
 	doweather
 	applymovement2 LOCALID_SINJOHRUINS_ARCEUSROOM_ARCEUS, SinjohRuins_ArceusRoom_Movement_ArceusLooksAround
-	playmoncry SPECIES_ARCEUS, 0
+	playmoncry SPECIES_ALPHORACLE, 0
 	waitmovement 0
-	playmoncry SPECIES_ARCEUS, 0
+	playmoncry SPECIES_ALPHORACLE, 0
 	waitmoncry
 	fadedefaultbgm
 	setobjectxyperm LOCALID_SINJOHRUINS_ARCEUSROOM_ARCEUS, 18, 18
@@ -272,7 +272,7 @@ SinjohRuins_ArceusRoom_EventScript_Arceus::
 	lock
 	faceplayer
 	goto_if_ge VAR_SINJOH_STORYLINE, 12, SinjohRuins_ArceusRoom_EventScript_ArceusPhase2
-	playmoncry SPECIES_ARCEUS, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ALPHORACLE, CRY_MODE_ENCOUNTER
 	msgbox SinjohRuins_ArceusRoom_Text_CryArceus, MSGBOX_AUTOCLOSE
 	delay 40
 	waitmoncry
@@ -280,7 +280,7 @@ SinjohRuins_ArceusRoom_EventScript_Arceus::
 	setflag FLAG_NO_WILD_RUNNING
 	setflag FLAG_SMART_WILD_AI
 	setflag FLAG_NO_SHINY
-	setwildbossbattle species=SPECIES_ARCEUS_STEEL, level=100, item=ITEM_IRON_PLATE, move1_1=MOVE_JUDGMENT, move1_2=MOVE_HYDRO_PUMP, move1_3=MOVE_RECOVER move1_4=MOVE_DAZZLING_GLEAM
+	setwildbossbattle species=SPECIES_ALPHORACLE, level=100, item=ITEM_IRON_PLATE, move1_1=MOVE_JUDGMENT, move1_2=MOVE_HYDRO_PUMP, move1_3=MOVE_RECOVER move1_4=MOVE_DAZZLING_GLEAM
 	settotemboost B_POSITION_OPPONENT_LEFT, 2, 2, 0, 2, 2, 2
 	special BattleSetup_StartLegendaryBattle
 	playbgm MUS_HG_VS_ARCEUS, 0
@@ -293,11 +293,11 @@ SinjohRuins_ArceusRoom_EventScript_Arceus::
 	clearflag FLAG_SMART_WILD_AI
 	clearflag FLAG_NO_SHINY
 SinjohRuins_ArceusRoom_EventScript_ArceusPhase2::
-	playmoncry SPECIES_ARCEUS, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ALPHORACLE, CRY_MODE_ENCOUNTER
 	msgbox SinjohRuins_ArceusRoom_Text_CryArceus2, MSGBOX_AUTOCLOSE
 	delay 40
 	waitmoncry
-	setwildbossbattle species=SPECIES_ARCEUS, level=80, item=ITEM_NONE, move1_1=MOVE_EXTREME_SPEED, move1_2=MOVE_EARTH_POWER, move1_3=MOVE_RECOVER move1_4=MOVE_HYPER_BEAM
+	setwildbossbattle species=SPECIES_ALPHORACLE, level=80, item=ITEM_NONE, move1_1=MOVE_EXTREME_SPEED, move1_2=MOVE_EARTH_POWER, move1_3=MOVE_RECOVER move1_4=MOVE_HYPER_BEAM
 	@settotemboost B_POSITION_OPPONENT_LEFT, 1, 0, 2, 0, 0, 0
 	special BattleSetup_StartLegendaryBattle
 	playbgm MUS_HG_VS_ARCEUS, 0
