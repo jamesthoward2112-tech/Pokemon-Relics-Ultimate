@@ -6174,3 +6174,8 @@ void GivePartyMonNationalRibbon(void)
             TryPutSpotTheCutiesOnAir(mon, MON_DATA_NATIONAL_RIBBON);
     }
 }
+// Mt. Moon's second wish is catch-gated, including players on older saves.
+void PruIsJirachiCaught(void)
+{
+    gSpecialVar_Result = GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT);
+}
