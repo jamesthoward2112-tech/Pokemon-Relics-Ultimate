@@ -953,6 +953,9 @@ static void RestorePruDefeatedLegendariesOnMapEntry(void)
     if (!IS_HNS)
         return;
 
+    // Restore legacy Kanto roamers defeated on older PRU saves as well.
+    RestorePruDefeatedRoamers();
+
     for (i = 0; i < ARRAY_COUNT(sLegendaryHideFlags); i++)
     {
         if (PruLegendarySeenButUncaught(sLegendaryHideFlags[i].species))
