@@ -49,10 +49,12 @@ TinTower_9F_EventScript_JessieJamesBattle::
 	setflag FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED
 	msgbox TinTower_9F_Text_JessieJamesFinalAfter, MSGBOX_DEFAULT
 	closemessage
-	@ All three leave together, east along the statue wall then south
-	@ down the right-hand corridor. Finish on distinct tiles.
+	@ Stagger the trio: James leads, Meowth follows, then Jessie.
+	@ All three walk right, then turn south along the right-hand passage.
 	applymovement 5, TinTower_9F_Movement_JamesExit
+	delay 32
 	applymovement 6, TinTower_9F_Movement_MeowthExit
+	delay 32
 	applymovement 4, TinTower_9F_Movement_JessieExit
 	waitmovement 0
 	removeobject 4
@@ -83,12 +85,13 @@ TinTower_9F_Text_JessieJamesNeedTwo:
 	.string "JAMES: This is a double battle!\n"
 	.string "Bring at least two POK?MON.$"
 
-@ Start: Jessie (11,4), Meowth (12,4), James (13,4).
-@ All walk to the east first, then turn down the unobstructed right edge.
-@ If NPC spawn positions change, update this choreography too.
+@ Start: Jessie (11,3), Meowth (12,3), James (13,3).
+@ The statue at x16,y3 blocks going straight east; turn south at x15.
+@ Their routes are staggered so they do not run into one another.
 TinTower_9F_Movement_JamesExit:
 	walk_right
 	walk_right
+	walk_down
 	walk_right
 	walk_down
 	walk_down
@@ -108,6 +111,7 @@ TinTower_9F_Movement_MeowthExit:
 	walk_down
 	walk_down
 	walk_down
+	walk_down
 	step_end
 
 TinTower_9F_Movement_JessieExit:
@@ -115,7 +119,7 @@ TinTower_9F_Movement_JessieExit:
 	walk_right
 	walk_right
 	walk_right
-	walk_right
+	walk_down
 	walk_down
 	walk_down
 	walk_down
