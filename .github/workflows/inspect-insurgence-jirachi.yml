@@ -1,40 +1,29 @@
-name: Inspect Insurgence Jirachi donor images
+name: Bank Insurgence Mega Jirachi original sprite artwork
 on:
   push:
     branches: [pru/insurgence-mega-jirachi-art-20261022]
+    paths:
+      - .github/workflows/inspect-insurgence-jirachi.yml
+      - tools/pru/bank_insurgence_mega_jirachi.py
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
-  inspect:
+  bank:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch official Insurgence Jirachi wiki markup
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Pillow image validation
+        run: python -m pip install pillow
+      - name: Fetch four original Insurgence Mega Jirachi sprite files
+        run: python tools/pru/bank_insurgence_mega_jirachi.py
+      - name: Commit four verified original donor PNGs to isolated branch
         run: |
-          python3 - <<'PY'
-          import urllib.request,re,html
-          targets = [
-            "https://wiki.p-insurgence.com/Jirachi_%28Pok%C3%A9mon%29",
-            "https://wiki.p-insurgence.com/index.php?title=Jirachi_(Pok%C3%A9mon)&action=render"
-          ]
-          for u in targets:
-            try:
-              req=urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0 (compatible; PRU-asset-audit/1.0)'})
-              s=urllib.request.urlopen(req,timeout=25).read().decode('utf8','replace')
-              print("Fetched",u,len(s))
-              tags=re.findall(r'<img\b[^>]*>',s,re.I)
-              for i,t in enumerate(tags):
-                if i>=len(tags)-35 or "385" in t or "Jirachi" in t:
-                  print("IMAGE",i,html.unescape(t[:650]))
-              for marker in ['Mega Jirachi','Mega_Jirachi','id="Sprites"','id="Mega_Jirachi"']:
-                p=s.rfind(marker)
-                print('MARKER',marker,p, s[max(0,p-250):p+2000].replace('\\n',' ')[:2250])
-              sprite_section=s[s.rfind('id="Sprites"'):]
-              print("SPRITE_SECTION",sprite_section[:10000].replace("\\n"," "))
-              break
-            except Exception as e:
-              print("source fetch error",repr(e))
-              continue
-          else:
-            raise SystemExit('Official source unavailable')
-          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/insurgence_mega_jirachi/source_*.png assets/insurgence_mega_jirachi/SOURCE.md
+          git commit -m "Bank original Insurgence Mega Jirachi front/back normal/shiny" || exit 0
+          git push
