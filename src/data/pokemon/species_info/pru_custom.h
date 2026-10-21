@@ -101,7 +101,7 @@
     .pokemonScale = 256, .pokemonOffset = 0, .trainerScale = 256, .trainerOffset = 0,
     .frontPic = gMonFrontPic_Swamplith, .frontPicSize = MON_COORDS_SIZE(64, 64), .frontPicYOffset = 0,
     .frontAnimFrames = sAnims_SingleFramePlaceHolder, .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
-    .backPic = gMonBackPic_Swamplith, .backPicSize = MON_COORDS_SIZE(64, 64), .backPicYOffset = 6, .backAnimId = BACK_ANIM_NONE,
+    .backPic = gMonBackPic_Swamplith, .backPicSize = MON_COORDS_SIZE(64, 64), .backPicYOffset = 10, .backAnimId = BACK_ANIM_NONE,
     .palette = gMonPalette_Swamplith, .shinyPalette = gMonShinyPalette_Swamplith,
     .iconSprite = gMonIcon_Swamplith, .iconPalIndex = 0,
     .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
