@@ -48,9 +48,16 @@ TinTower_9F_EventScript_JessieJamesBattle::
 	trainerbattle_double TRAINER_JESSIE_JAMES_TINTOWER_HNS, TinTower_9F_Text_JessieJamesFinalSeen, TinTower_9F_Text_JessieJamesFinalBeaten, TinTower_9F_Text_JessieJamesNeedTwo
 	setflag FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED
 	msgbox TinTower_9F_Text_JessieJamesFinalAfter, MSGBOX_DEFAULT
+	closemessage
+	@ All three leave together, east along the statue wall then south
+	@ down the right-hand corridor. Finish on distinct tiles.
+	applymovement 5, TinTower_9F_Movement_JamesExit
+	applymovement 6, TinTower_9F_Movement_MeowthExit
+	applymovement 4, TinTower_9F_Movement_JessieExit
+	waitmovement 0
 	removeobject 4
 	removeobject 5
-	removeobject 6  @ Meowth
+	removeobject 6
 	releaseall
 	end
 
@@ -75,3 +82,43 @@ TinTower_9F_Text_JessieJamesFinalAfter:
 TinTower_9F_Text_JessieJamesNeedTwo:
 	.string "JAMES: This is a double battle!\n"
 	.string "Bring at least two POK?MON.$"
+
+@ Start: Jessie (11,4), Meowth (12,4), James (13,4).
+@ All walk to the east first, then turn down the unobstructed right edge.
+@ If NPC spawn positions change, update this choreography too.
+TinTower_9F_Movement_JamesExit:
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+TinTower_9F_Movement_MeowthExit:
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+TinTower_9F_Movement_JessieExit:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end

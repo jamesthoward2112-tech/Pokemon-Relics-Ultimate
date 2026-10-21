@@ -38,6 +38,15 @@ assert "trainerbattle_double TRAINER_JESSIE_JAMES_TINTOWER_HNS" in script9
 assert "map_script MAP_SCRIPT_ON_FRAME_TABLE, TinTower_9F_OnFrame" in script9
 assert script9.count("removeobject 6") == 2
 assert "setflag FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED" in script9
+# Verify the battle does not immediately erase the trio: all three physically
+# depart to the right and down before removal.
+aftermath = script9.split("TinTower_9F_EventScript_JessieJamesBattle::", 1)[1].split("TinTower_9F_EventScript_NoFinalRocket::", 1)[0]
+assert aftermath.index("msgbox TinTower_9F_Text_JessieJamesFinalAfter") < aftermath.index("applymovement 5, TinTower_9F_Movement_JamesExit")
+assert aftermath.index("applymovement 5, TinTower_9F_Movement_JamesExit") < aftermath.index("waitmovement 0") < aftermath.index("removeobject 4")
+for name in ("JamesExit", "MeowthExit", "JessieExit"):
+    segment = script9.split("TinTower_9F_Movement_" + name + ":", 1)[1].split("step_end", 1)[0]
+    assert "walk_right" in segment and "walk_down" in segment, "Missing east then south exit for " + name
+    assert segment.index("walk_right") < segment.index("walk_down"), "Incorrect exit route for " + name
 assert "removeobject 4" in script9 and "removeobject 5" in script9
 assert "TinTower_9F_EventScript_JessieJamesBattle" in script9
 assert "JessieJamesBattle" not in script8
