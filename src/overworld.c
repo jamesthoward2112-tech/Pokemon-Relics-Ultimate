@@ -964,6 +964,12 @@ static void RestorePruDefeatedLegendariesOnMapEntry(void)
         && PruLegendarySeenButUncaught(SPECIES_JIRACHI))
         FlagClear(FLAG_HIDE_MTMOON_JIRACHI);
 
+    // Suicune's Route 25 story advances to stage 8 after either an
+    // unsuccessful knockout or a capture; only uncaught Suicune returns.
+    if (VarGet(VAR_SUICUNE_ENCOUNTERS) >= 8
+        && PruLegendarySeenButUncaught(SPECIES_SUICUNE))
+        FlagClear(FLAG_HIDE_ROUTE25_SUICUNE);
+
     // The Ilex Forest shrine is story-gated. Never spawn Celebi before it
     // has been summoned, even if the player has seen one elsewhere.
     if (VarGet(VAR_AZALEA_TOWN_STATE) >= 10
