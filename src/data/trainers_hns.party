@@ -724,7 +724,7 @@ Music: Hg Girl 2
 Double Battle: No
 AI: Check Bad Move
 
-Happiny
+Chansey
 Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -741,7 +741,7 @@ Aipom
 Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Munchlax
+Snorlax
 Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -4937,7 +4937,7 @@ Dunsparce
 Level: 37
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Dudunsparce
+Dunsparce
 Level: 43
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -7280,7 +7280,7 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Brave Bird
 - Steel Wing
 
-Honchkrow
+Ghoulbat
 Level: 64
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Mimic
@@ -7382,7 +7382,7 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Gyro Ball
 - Earthquake
 
-Yanmega @ Berry Juice
+Venomoth @ Berry Juice
 Level: 63
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Air Slash
@@ -7516,7 +7516,7 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Milk Drink
 - Zen Headbutt
 
-Lickilicky @ Silk Scarf
+Khang @ Silk Scarf
 Level: 65
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Defense Curl
@@ -7613,7 +7613,7 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Sludge Bomb
 - Psychic
 
-Mismagius
+Gengar
 Level: 63
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Shadow Ball
@@ -7630,7 +7630,7 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Thunderbolt
 - Dream Eater
 
-Dusknoir
+Dusclops
 Level: 65
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Shadow Punch
@@ -7700,7 +7700,7 @@ AI: Basic Trainer
 Mugshot: Light Blue
 Items: Full Restore / Full Restore
 
-Weavile
+Glalie
 Level: 64
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Night Slash
@@ -7724,7 +7724,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Shadow Ball
 - Lovely Kiss
 
-Froslass
+Glalie
 Level: 64
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Shadow Ball
@@ -7732,7 +7732,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Will O Wisp
 - Destiny Bond
 
-Mamoswine @ Soft Sand
+Piloswine @ Soft Sand
 Level: 65
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Strength
@@ -7842,7 +7842,7 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Icy Wind
 - Roost
 
-Mamoswine @ Sitrus Berry
+Piloswine @ Sitrus Berry
 Level: 44
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Take Down
@@ -7936,7 +7936,7 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Iron Defense
 - Rock Slide
 
-Magnezone
+Magneton
 Level: 64
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Gyro Ball
@@ -8030,7 +8030,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Swagger
 - Steel Wing
 
-Magnezone
+Magneton
 Level: 41
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Thunderbolt
@@ -9078,7 +9078,7 @@ AI: Smart Trainer / Prediction
 Mugshot: Pink
 Items: Full Restore / Full Restore
 
-Alakazam Relic @ Focus Sash
+Valkyvoir @ Focus Sash
 Level: 56
 Ability: Magic Guard
 IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -9089,7 +9089,7 @@ Timid Nature
 - Dazzling Gleam
 - Energy Ball
 
-Slowking Relic @ Assault Vest
+Slowking @ Assault Vest
 Level: 56
 Ability: Regenerator
 IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -9143,7 +9143,7 @@ Double Battle: Yes
 AI: Smart Trainer / Prediction
 Mugshot: Pink
 
-Slowking Relic @ Covert Cloak
+Slowking @ Covert Cloak
 Level: 66
 Ability: Regenerator
 IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
@@ -9187,7 +9187,7 @@ Sassy Nature
 - Psychic
 - Helping Hand
 
-Alakazam Relic @ Life Orb
+Valkyvoir @ Life Orb
 Level: 66
 Ability: Magic Guard
 IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -9220,7 +9220,7 @@ AI: Smart Trainer / Prediction
 Mugshot: Orange
 Items: Full Restore / Full Restore
 
-Hitmonchan Relic @ Assault Vest
+Heracurion @ Assault Vest
 Level: 59
 Ability: Iron Fist
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -9242,7 +9242,7 @@ Jolly Nature
 - Rock Slide
 - Earthquake
 
-Hitmonlee Relic @ Focus Sash
+Hitmonlee @ Focus Sash
 Level: 60
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 EVs: 4 HP / 252 Atk / 0 Def / 0 SpA / 0 SpD / 252 Spe
@@ -9263,7 +9263,7 @@ Impish Nature
 - Heavy Slam
 - Body Press
 
-Machamp Relic @ Lum Berry
+Machamp @ Lum Berry
 Level: 61
 Ability: No Guard
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -9328,7 +9328,7 @@ Jolly Nature
 - Rock Slide
 - Protect
 
-Hitmonchan Relic @ Punching Glove
+Heracurion @ Punching Glove
 Level: 67
 Ability: Iron Fist
 IVs: 31 HP / 31 Atk / 31 Def / 0 SpA / 31 SpD / 31 Spe
@@ -9339,7 +9339,7 @@ Adamant Nature
 - Ice Punch
 - Mach Punch
 
-Machamp Relic @ Lum Berry
+Machamp @ Lum Berry
 Level: 68
 Ability: No Guard
 IVs: 31 HP / 31 Atk / 31 Def / 0 SpA / 31 SpD / 0 Spe
@@ -9405,7 +9405,7 @@ Timid Nature
 - Heat Wave
 - Roost
 
-Houndoom Relic @ Shuca Berry
+Skulberus @ Shuca Berry
 Level: 62
 Ability: Flash Fire
 IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -9437,7 +9437,7 @@ Careful Nature
 - Helping Hand
 - Protect
 
-Weavile @ Focus Sash
+Sneasel @ Focus Sash
 Level: 67
 Ability: Pressure
 IVs: 31 HP / 31 Atk / 31 Def / 0 SpA / 31 SpD / 31 Spe
@@ -9481,7 +9481,7 @@ Jolly Nature
 - Psycho Cut
 - Protect
 
-Houndoom Relic @ Shuca Berry
+Skulberus @ Shuca Berry
 Level: 69
 Ability: Flash Fire
 IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -9503,7 +9503,7 @@ AI: Smart Trainer / Prediction
 Mugshot: Purple
 Items: Full Restore / Full Restore
 
-Beedrill Relic @ Focus Sash
+Pinsirex @ Focus Sash
 Level: 58
 Ability: Sniper
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -9547,7 +9547,7 @@ Timid Nature
 - Psychic
 - Sleep Powder
 
-Crobat Relic @ Life Orb
+Ghoulbat @ Life Orb
 Level: 60
 Ability: Infiltrator
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -9579,7 +9579,7 @@ Jolly Nature
 - Crunch
 - Protect
 
-Crobat Relic @ Covert Cloak
+Ghoulbat @ Covert Cloak
 Level: 68
 Ability: Infiltrator
 IVs: 31 HP / 31 Atk / 31 Def / 0 SpA / 31 SpD / 31 Spe
@@ -9623,7 +9623,7 @@ Timid Nature
 - Ice Beam
 - Thunderbolt
 
-Beedrill Relic @ Scope Lens
+Pinsirex @ Scope Lens
 Level: 67
 Ability: Sniper
 IVs: 31 HP / 31 Atk / 31 Def / 0 SpA / 31 SpD / 31 Spe
@@ -9645,7 +9645,7 @@ AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 Mugshot: Blue
 
-Gyarados Relic @ Wacan Berry
+Feralodon @ Wacan Berry
 Level: 62
 Ability: Intimidate
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -9700,7 +9700,7 @@ Jolly Nature
 - Earthquake
 - Taunt
 
-Dragonite Relic @ Weakness Policy
+Drakeon @ Weakness Policy
 Level: 65
 Ability: Multiscale
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -9743,7 +9743,7 @@ Jolly Nature
 - Iron Head
 - Protect
 
-Gyarados Relic @ Wacan Berry
+Feralodon @ Wacan Berry
 Level: 69
 Ability: Intimidate
 IVs: 31 HP / 31 Atk / 31 Def / 0 SpA / 31 SpD / 31 Spe
@@ -9765,7 +9765,7 @@ Adamant Nature
 - Ice Fang
 - Protect
 
-Dragonite Relic @ Weakness Policy
+Drakeon @ Weakness Policy
 Level: 68
 Ability: Multiscale
 IVs: 31 HP / 31 Atk / 31 Def / 0 SpA / 31 SpD / 31 Spe
@@ -10048,7 +10048,7 @@ AI: Basic Trainer
 Mugshot: Dark Red
 Items: Full Restore / Full Restore
 
-Ursaluna Bloodmoon @ Chesto Berry
+Donphalanx @ Chesto Berry
 Level: 64
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Hammer Arm
@@ -10103,7 +10103,7 @@ AI: Basic Trainer
 Mugshot: Dark Red
 Items: Full Restore / Full Restore
 
-Ursaluna Bloodmoon @ Chesto Berry
+Donphalanx @ Chesto Berry
 Level: 68
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Hammer Arm
@@ -10344,7 +10344,7 @@ AI: Basic Trainer
 Mugshot: Dark Red
 Items: Full Restore / Full Restore
 
-Ursaluna Bloodmoon @ Chesto Berry
+Donphalanx @ Chesto Berry
 Level: 64
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Hammer Arm
@@ -10399,7 +10399,7 @@ AI: Basic Trainer
 Mugshot: Dark Red
 Items: Full Restore / Full Restore
 
-Ursaluna Bloodmoon @ Chesto Berry
+Donphalanx @ Chesto Berry
 Level: 68
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Hammer Arm
@@ -10640,7 +10640,7 @@ AI: Basic Trainer
 Mugshot: Dark Red
 Items: Full Restore / Full Restore
 
-Ursaluna Bloodmoon @ Chesto Berry
+Donphalanx @ Chesto Berry
 Level: 64
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Hammer Arm
@@ -10695,7 +10695,7 @@ AI: Basic Trainer
 Mugshot: Dark Red
 Items: Full Restore / Full Restore
 
-Ursaluna Bloodmoon @ Chesto Berry
+Donphalanx @ Chesto Berry
 Level: 68
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Hammer Arm
@@ -10857,7 +10857,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Safeguard
 - Mega Punch
 
-Honchkrow
+Ghoulbat
 Level: 61
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Dark Pulse
@@ -10881,7 +10881,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Screech
 - Slash
 
-Ursaluna
+Donphalanx
 Level: 60
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Headlong Rush
@@ -10981,7 +10981,7 @@ AI: Basic Trainer
 Mugshot: Dark Red
 Items: Full Restore / Full Restore
 
-Porygon Z
+Porygon2
 Level: 39
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Tri Attack
@@ -11067,7 +11067,7 @@ AI: Basic Trainer
 Mugshot: Dark Red
 Items: Full Restore / Full Restore
 
-Porygon Z
+Porygon2
 Level: 39
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Tri Attack
@@ -11118,7 +11118,7 @@ AI: Basic Trainer
 Mugshot: Dark Red
 Items: Full Restore / Full Restore
 
-Porygon Z
+Porygon2
 Level: 39
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Tri Attack
@@ -13307,7 +13307,7 @@ Music: Hg Girl 1
 Double Battle: No
 AI: Check Bad Move
 
-Gallade
+Medicham
 Level: 55
 
 Nidoking
@@ -13400,7 +13400,7 @@ AI: Check Bad Move
 Scizor
 Level: 69
 
-Ambipom
+Khang
 Level: 64
 
 === TRAINER_KYLE_2_HNS ===
@@ -13712,19 +13712,19 @@ Music: Hg Suspicious 2
 Double Battle: No
 AI: Check Bad Move
 
-Magmortar
+Torkaldera
 Level: 62
 
-Electivire
+Noxichu
 Level: 62
 
-Tangrowth
+Tropisaur
 Level: 62
 
-Togekiss
+Valkyvoir
 Level: 62
 
-Roserade
+Vileplume
 Level: 62
 
 === TRAINER_CHARLES_2_HNS ===
@@ -13782,7 +13782,7 @@ Double Battle: No
 AI: Smart Trainer
 Mugshot: Green
 
-Raichu Alola
+Raichu
 Level: 70
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Nasty Plot
@@ -13790,7 +13790,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Psychic
 - Substitute
 
-Exeggutor Alola @ Choice Specs
+Exeggutor @ Choice Specs
 Level: 70
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 EVs: 0 HP / 0 Atk / 0 Def / 252 SpA / 4 SpD / 252 Spe
@@ -13801,7 +13801,7 @@ Modest Nature
 - Giga Drain
 
 
-Ninetales Alola @ Light Clay
+Ninetales @ Light Clay
 Level: 70
 Ability: Snow Warning
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -13812,7 +13812,7 @@ Timid Nature
 - Hail
 - Aurora Veil
 
-Golem Alola @ Choice Band
+Golem @ Choice Band
 Level: 70
 Ability: Magnet Pull
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -13823,7 +13823,7 @@ Adamant Nature
 - Earthquake
 - Volt Switch
 
-Muk Alola @ Assault Vest
+Muk @ Assault Vest
 Level: 70
 Ability: Poison Touch
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -13858,7 +13858,7 @@ AI: Smart Trainer
 Flygon @ Assault Vest
 Level: 70
 
-Typhlosion Hisui @ Focus Sash
+Typhlosion @ Focus Sash
 Level: 70
 
 Arbok
@@ -14325,7 +14325,7 @@ Level: 63
 - Taunt  
 - U-turn  
 
-Tangrowth @ Leftovers  
+Tropisaur @ Leftovers  
 Ability: Leaf Guard  
 Level: 61  
 - Ingrain  
@@ -14457,7 +14457,7 @@ Music: Hg Boy 1
 Double Battle: No
 AI: Check Bad Move
 
-Raticate-Alola  
+Raticate  
 Ability: Hustle  
 Level: 61 
 - Crunch  
@@ -14473,7 +14473,7 @@ Level: 61
 - Swords Dance  
 - Sand Tomb  
 
-Leafeon @ Sitrus Berry  
+Sceptile @ Sitrus Berry  
 Ability: Leaf Guard  
 Level: 63  
 - Leaf Blade  
@@ -14508,7 +14508,7 @@ Level: 63
 - Mach Punch  
 - Dual Chop  
 
-Electivire @ Zoom Lens  
+Noxichu @ Zoom Lens  
 Ability: Motor Drive  
 Level: 60 
 Brave Nature  
@@ -14636,7 +14636,7 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 Mugshot: Green
 
-Leafeon @ Meadow Plate  
+Sceptile @ Meadow Plate  
 Ability: Chlorophyll  
 Level: 70
 EVs: 4 HP / 252 Atk / 252 Def  
@@ -14656,7 +14656,7 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 Mugshot: Light Blue
 
-Glaceon @ Icicle Plate  
+Walrein @ Icicle Plate  
 Ability: Ice Body  
 Level: 70
 EVs: 252 HP / 252 SpA / 4 SpD  
@@ -14677,7 +14677,7 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 Mugshot: Pink
 
-Sylveon @ Pixie Plate  
+Guardeon @ Pixie Plate  
 Ability: Pixilate  
 Level: 70
 Happiness: 254   
@@ -14741,7 +14741,7 @@ Adamant Nature
 - Curse  
 - Rock Slide  
 
-Kleavor @ Scope Lens  
+Pinsirex @ Scope Lens  
 Ability: Sharpness  
 Level: 77  
 EVs: 124 Atk / 132 Def / 252 Spe  
@@ -14802,7 +14802,7 @@ IVs: 0 Atk
 - Whirlpool  
 - Agility  
 
-Exeggutor-Alola @ White Herb  
+Exeggutor @ White Herb  
 Ability: Frisk  
 Level: 70 
 - Light Screen  
@@ -14892,7 +14892,7 @@ Music: Hg Suspicious 1
 Double Battle: No
 AI: Check Bad Move
 
-Dugtrio-Alola @ Focus Sash  
+Dugtrio @ Focus Sash  
 Ability: Sand Force  
 Level: 70  
 EVs: 252 Atk / 252 Spe  
@@ -14932,7 +14932,7 @@ Relaxed Nature
 - Iron Defense  
 - Rock Blast  
 
-Perrserker @ Iron Plate  
+Skarmadon @ Iron Plate  
 Ability: Steely Spirit  
 Level: 70 
 EVs: 248 HP / 252 Atk / 8 SpD  
@@ -14961,7 +14961,7 @@ Hasty Nature
 - Lunge  
 - Psycho Cut  
 
-Gliscor @ Toxic Orb  
+Donphalanx @ Toxic Orb  
 Ability: Poison Heal  
 Level: 70 
 EVs: 124 Atk / 252 Def / 132 SpD  
@@ -15037,7 +15037,7 @@ Level: 69
 - Double Team  
 - Steel Wing  
 
-Honchkrow  
+Ghoulbat  
 Ability: Moxie  
 Level: 69 
 - Acrobatics  
@@ -15099,7 +15099,7 @@ IVs: 0 Atk
 - Bug Buzz  
 - Air Slash  
 
-Yanmega @ Sitrus Berry  
+Venomoth @ Sitrus Berry  
 Ability: Speed Boost  
 Level: 70   
 IVs: 0 Atk  
@@ -15152,7 +15152,7 @@ Level: 70
 - Double-Edge  
 - Play Rough  
 
-Ambipom @ Loaded Dice  
+Khang @ Loaded Dice  
 Ability: Technician  
 Level: 70 
 - Tail Slap  
@@ -15160,7 +15160,7 @@ Level: 70
 - Tail Whip  
 - Aerial Ace  
 
-Ursaluna-Bloodmoon  
+Miltitan  
 Ability: Mind's Eye  
 Level: 69  
 IVs: 0 Atk  
@@ -15177,7 +15177,7 @@ Level: 70
 - Rollout  
 - Iron Head  
 
-Obstagoon  
+Nolax  
 Ability: Reckless  
 Level: 70 
 - Double-Edge  
@@ -15213,7 +15213,7 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Will O Wisp
 - Rock Tomb
 
-Dusknoir  
+Dusclops  
 Ability: Pressure  
 Level: 70 
 - Shadow Punch  
@@ -15221,7 +15221,7 @@ Level: 70
 - Will-O-Wisp  
 - Pain Split  
 
-Typhlosion-Hisui  
+Typhlosion  
 Ability: Blaze  
 Level: 70 
 Quirky Nature  
@@ -15231,7 +15231,7 @@ IVs: 0 Atk
 - Confuse Ray  
 - Calm Mind  
 
-Mismagius  
+Gengar  
 Ability: Levitate  
 Level: 70   
 IVs: 0 Atk  
@@ -15284,7 +15284,7 @@ Level: 70
 - Drain Punch  
 - Stomping Tantrum  
 
-Sirfetch’d @ Leek  
+Heracurion @ Leek  
 Ability: Scrappy  
 Level: 70 
 - Leaf Blade  
@@ -15292,7 +15292,7 @@ Level: 70
 - Quick Attack  
 - Meteor Assault  
 
-Sneasler  
+Heracurion  
 Ability: Poison Touch  
 Level: 70
 - Dire Claw  
@@ -15327,7 +15327,7 @@ Level: 70
 - Steel Wing  
 - Stealth Rock  
 
-Sandslash-Alola  
+Steelix  
 Ability: Snow Cloak  
 Level: 72 
 - Curse  
@@ -15343,7 +15343,7 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Iron Defense
 - Rock Slide
 
-Magnezone  
+Magneton  
 Ability: Analytic  
 Level: 70
 Sassy Nature  
@@ -15353,7 +15353,7 @@ IVs: 0 Atk / 0 Spe
 - Flash Cannon  
 - Magnet Rise  
 
-Perrserker  
+Skarmadon  
 Ability: Steely Spirit  
 Level: 70 
 IVs: 0 Spe  
@@ -15381,7 +15381,7 @@ AI: Smart Trainer / Prediction
 Mugshot: Light Blue
 Items: Full Restore / Full Restore
 
-Weavile  
+Dewgong  
 Ability: Pressure  
 Level: 70 
 - Fake Out  
@@ -15397,7 +15397,7 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Psychic
 - Lovely Kiss
 
-Ninetales-Alola @ Light Clay  
+Walrein @ Light Clay  
 Ability: Snow Warning  
 Level: 70
 IVs: 0 Atk  
@@ -15415,7 +15415,7 @@ IVs: 0 Atk
 - Reflect  
 - Safeguard  
 
-Mamoswine @ Soft Sand  
+Piloswine @ Soft Sand  
 Ability: Oblivious  
 Level: 71
 - Earthquake  
@@ -15423,7 +15423,7 @@ Level: 71
 - Curse  
 - Ice Shard  
 
-Froslass (F)  
+Glalie  
 Ability: Snow Cloak  
 Level: 72
 IVs: 0 Atk  
@@ -15459,7 +15459,7 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Crunch
 - Dragon Dance
 
-Exeggutor-Alola @ Sitrus Berry  
+Exeggutor @ Sitrus Berry  
 Ability: Harvest  
 Level: 70  
 - Wood Hammer  
@@ -15503,7 +15503,7 @@ AI: Smart Trainer / Prediction
 Mugshot: Orange
 Items: Full Restore / Full Restore
 
-Kleavor @ Razor Claw  
+Pinsirex @ Razor Claw  
 Ability: Sharpness  
 Level: 72 
 - Stone Axe  
@@ -15511,7 +15511,7 @@ Level: 72
 - Agility  
 - Swords Dance  
 
-Gliscor @ Toxic Orb  
+Donphalanx @ Toxic Orb  
 Ability: Poison Heal  
 Level: 71 
 - Spikes  
@@ -15544,7 +15544,7 @@ Level: 70
 - Calm Mind  
 - Thunderbolt  
 
-Golem-Alola @ Magnet  
+Golem @ Magnet  
 Ability: Galvanize  
 Level: 72  
 - Stone Edge  
@@ -15660,7 +15660,7 @@ Level: 70
 - Wild Charge  
 - Crunch  
 
-Electivire @ Scope Lens  
+Noxichu @ Scope Lens  
 Ability: Motor Drive  
 Level: 69  
 - Thunder Punch  
@@ -15668,7 +15668,7 @@ Level: 69
 - Cross Chop  
 - Bulk Up  
 
-Raichu-Alola @ Electric Seed  
+Raichu @ Electric Seed  
 Ability: Surge Surfer  
 Level: 71  
 IVs: 0 Atk  
@@ -15688,7 +15688,7 @@ AI: Smart Trainer / Prediction
 Mugshot: Green
 Items: Full Restore / Full Restore
 
-Roserade @ Focus Sash  
+Vileplume @ Focus Sash  
 Ability: Natural Cure  
 Level: 70
 IVs: 0 Atk  
@@ -15697,7 +15697,7 @@ IVs: 0 Atk
 - Toxic  
 - Petal Dance  
 
-Tangrowth @ Leftovers  
+Tropisaur @ Leftovers  
 Ability: Chlorophyll  
 Level: 71 
 IVs: 0 Atk  
@@ -15715,7 +15715,7 @@ IVs: 0 Atk
 - Synthesis  
 - Poison Powder  
 
-Electrode-Hisui @ Miracle Seed  
+Sunflorid @ Miracle Seed  
 Ability: Aftermath  
 Level: 71  
 IVs: 0 Atk  
@@ -15761,7 +15761,7 @@ Level: 70
 - Swallow  
 - Spit Up  
 
-Weezing-Galar @ Fairy Feather  
+Frytning @ Fairy Feather  
 Ability: Levitate  
 Level: 70 
 IVs: 0 Atk  
@@ -15770,7 +15770,7 @@ IVs: 0 Atk
 - Flamethrower  
 - Corrosive Gas  
 
-Muk-Alola @ Leftovers  
+Muk @ Leftovers  
 Ability: Poison Touch  
 Level: 70 
 - Gunk Shot  
@@ -15786,7 +15786,7 @@ Level: 70
 - Brave Bird  
 - Toxic  
 
-Sneasler @ Flying Gem  
+Adnokana @ Flying Gem  
 Ability: Unburden  
 Level: 70 
 - Acrobatics  
@@ -15814,7 +15814,7 @@ AI: Smart Trainer / Prediction
 Mugshot: Pink
 Items: Full Restore / Full Restore
 
-Mr. Mime-Galar @ Eviolite  
+Mystynx @ Eviolite  
 Ability: Vital Spirit  
 Level: 70
 IVs: 0 Atk  
@@ -15823,7 +15823,7 @@ IVs: 0 Atk
 - Psychic  
 - Freeze-Dry  
 
-Slowbro-Galar @ Quick Claw  
+Slowbro @ Quick Claw  
 Ability: Quick Draw  
 Level: 70 
 - Shell Side Arm  
@@ -15840,7 +15840,7 @@ IVs: 0 Atk
 - Psychic Terrain  
 - Power Gem  
 
-Rapidash-Galar  
+Rapidash  
 Ability: Pastel Veil  
 Level: 70 
 - Play Rough  
@@ -15886,7 +15886,7 @@ IVs: 0 Spe
 - Gyro Ball  
 - Iron Defense  
 
-Magmortar @ Magnet  
+Torkaldera @ Magnet  
 Ability: Flame Body  
 Level: 70 
 IVs: 0 Atk  
@@ -15912,7 +15912,7 @@ IVs: 0 Atk
 - Recover  
 - Amnesia  
 
-Arcanine-Hisui @ Rock Incense  
+Arcanine @ Rock Incense  
 Ability: Rock Head  
 Level: 70 
 - Head Smash  
@@ -15940,7 +15940,7 @@ AI: Smart Trainer / Prediction
 Mugshot: Blue
 Items: Full Restore / Full Restore
 
-Rhyperior @ Loaded Dice  
+Rhydon @ Loaded Dice  
 Ability: Solid Rock  
 Level: 70 
 - Rock Blast  
@@ -15964,7 +15964,7 @@ Level: 70
 - Stone Edge  
 - Bulk Up  
 
-Marowak-Alola @ Thick Club  
+Maroghost @ Thick Club  
 Ability: Lightning Rod  
 Level: 71  
 - Shadow Bone  
@@ -16000,7 +16000,7 @@ AI: Smart Trainer / Prediction
 Mugshot: Pink
 Items: Full Restore / Full Restore
 
-Alakazam Relic @ Light Clay
+Valkyvoir @ Light Clay
 Ability: Trace  
 Level: 74 
 IVs: 0 Atk  
@@ -16018,7 +16018,7 @@ IVs: 0 Atk
 - Ice Beam
 - Psychic
 
-Slowking Relic @ Leftovers
+Slowking @ Leftovers
 Ability: Own Tempo  
 Level: 76 
 IVs: 0 Atk  
@@ -16072,7 +16072,7 @@ Level: 74
 - Nasty Plot
 - Thunder Fang
 
-Overqwil @ Black Sludge  
+Kablowfish @ Black Sludge  
 Ability: Poison Point  
 Level: 75
 - Barb Barrage  
@@ -16099,7 +16099,7 @@ IVs: 0 Atk
 - Earth Power  
 - Noble Roar  
 
-Beedrill Relic @ Bright Powder
+Pinsirex @ Bright Powder
 Ability: Shield Dust  
 Level: 77  
 IVs: 0 Atk  
@@ -16108,7 +16108,7 @@ IVs: 0 Atk
 - Swords Dance
 - Toxic
 
-Crobat Relic
+Ghoulbat
 Ability: Inner Focus  
 Level: 79  
 - Acrobatics
@@ -16161,7 +16161,7 @@ Level: 77
 - Cross Chop  
 - Body Slam  
 
-Hitmonlee Relic @ Expert Belt
+Hitmonlee @ Expert Belt
 Ability: Technician  
 Level: 77 
 - Close Combat
@@ -16169,7 +16169,7 @@ Level: 77
 - Stone Edge
 - Reversal
 
-Machamp Relic @ Flame Orb
+Machamp @ Flame Orb
 Ability: Guts  
 Level: 79  
 - Facade
@@ -16197,7 +16197,7 @@ IVs: 0 Atk
 - Shadow Ball  
 - Calm Mind  
 
-Weavile @ Razor Claw  
+Sneasel @ Razor Claw  
 Ability: Pressure  
 Level: 75  
 - Hone Claws  
@@ -16221,7 +16221,7 @@ Level: 77
 - Nasty Plot
 - Roost
 
-Obstagoon @ Flame Orb  
+Skulberus @ Flame Orb  
 Ability: Guts  
 Level: 77 
 - Close Combat  
@@ -16229,7 +16229,7 @@ Level: 77
 - Fling  
 - Cross Chop  
 
-Houndoom Relic @ Charcoal
+Skulberus @ Charcoal
 Ability: Unnerve  
 Level: 79  
 - Fire Blast
@@ -16256,7 +16256,7 @@ Level: 77
 - Crunch
 - Iron Head
 
-Gyarados Relic @ Eject Button
+Feralodon @ Eject Button
 Ability: Intimidate  
 Level: 77 
 - Waterfall
@@ -16289,7 +16289,7 @@ Level: 79
 - Heavy Slam
 - Roost
 
-Dragonite Relic @ Leftovers
+Drakeon @ Leftovers
 Ability: Multiscale  
 Level: 79 
 - Iron Head
@@ -16307,7 +16307,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Pikachu-Starter @ Light Ball  
+Noxichu @ Light Ball  
 Ability: Lightning Rod
 Level: 95
 - Volt Tackle  
@@ -16315,7 +16315,7 @@ Level: 95
 - Iron Tail  
 - Double Team  
 
-Snorlax @ Chesto Berry  
+Nolax @ Chesto Berry  
 Ability: Immunity  
 Level: 85
 - Belly Drum  
@@ -16323,7 +16323,7 @@ Level: 85
 - Rest  
 - Heavy Slam  
 
-Charizard  
+Charaxis  
 Ability: Blaze  
 Level: 87  
 - Fire Blast  
@@ -16331,7 +16331,7 @@ Level: 87
 - Outrage  
 - Steel Wing  
 
-Venusaur @ Blunder Policy  
+Edensaur @ Blunder Policy  
 Ability: Chlorophyll  
 Level: 87  
 Tera Type: Grass  
@@ -16342,7 +16342,7 @@ IVs: 0 Atk
 - Earth Power  
 - Sleep Powder 
 
-Blastoise @ Leftovers  
+Fortotoise @ Leftovers  
 Ability: Torrent  
 Level: 86
 - Hydro Cannon  
@@ -16350,7 +16350,7 @@ Level: 86
 - Ice Beam  
 - Flash Cannon  
 
-Tauros-Paldea-Combat @ Sitrus Berry  
+Khang @ Sitrus Berry  
 Ability: Cud Chew  
 Level: 85  
 Tera Type: Fighting  
@@ -16369,19 +16369,19 @@ Music: Rocket
 Double Battle: Yes
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Asudem Jj
+Adnokana
 Level: 54
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
-Nidogod Jj
+Frytning
 Level: 55
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
-Victreebel Redux Jj
+Victreebel
 Level: 54
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
-Tyranitar Redux Jj
+Tyranitar
 Level: 58
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
@@ -17066,7 +17066,7 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Tailwind
 - Icy Wind
 
-Leafeon @ Sitrus Berry
+Champeon @ Sitrus Berry
 Level: 50
 IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Leaf Blade
@@ -17074,7 +17074,7 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Swords Dance
 - Bite
 
-Glaceon @ Sitrus Berry
+Guardeon @ Sitrus Berry
 Level: 50
 IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Ice Beam
