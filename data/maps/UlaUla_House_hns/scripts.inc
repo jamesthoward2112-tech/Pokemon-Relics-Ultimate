@@ -120,7 +120,7 @@ Alola_Ulaula_House_Noivern::
 Alola_Ulaula_House_Typholosion::
 	lock
 	faceplayer
-	playmoncry SPECIES_TYPHLOSION_HISUI, 0
+	playmoncry SPECIES_TYPHLOSION, 0
 	msgbox Alola_Ulaula_House_Typholosion_Text_0
 	waitmoncry
 	release
