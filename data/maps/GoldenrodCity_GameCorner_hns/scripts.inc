@@ -46,7 +46,7 @@ GoldenrodCity_GameCorner_PrizeRoom_EventScript_Clefairy::
 	end
 
 GoldenrodCity_GameCorner_PrizeRoom_EventScript_Munchlax::
-	setvar VAR_TEMP_1, SPECIES_MUNCHLAX
+	setvar VAR_TEMP_1, SPECIES_SNORLAX
 	setvar VAR_TEMP_2, 2800
 	goto GoldenrodCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeMon
 	end
@@ -75,7 +75,7 @@ GoldenrodCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeMon::
 	case SPECIES_ABRA,     GoldenrodCity_GameCorner_PrizeRoom_EventScript_GiveAbra
 	case SPECIES_CLEFAIRY, GoldenrodCity_GameCorner_PrizeRoom_EventScript_GiveClefairy
 	case SPECIES_DRATINI,  GoldenrodCity_GameCorner_PrizeRoom_EventScript_GiveDratini
-	case SPECIES_MUNCHLAX,  GoldenrodCity_GameCorner_PrizeRoom_EventScript_GiveMunchlax
+	case SPECIES_SNORLAX,  GoldenrodCity_GameCorner_PrizeRoom_EventScript_GiveMunchlax
 	case SPECIES_PORYGON,  GoldenrodCity_GameCorner_PrizeRoom_EventScript_GivePorygon
 	case SPECIES_PINSIR,   GoldenrodCity_GameCorner_PrizeRoom_EventScript_GivePinsir
 	end
