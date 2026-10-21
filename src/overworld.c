@@ -85,6 +85,8 @@
 #include "constants/vars_hns.h"
 #include "nuzlocke.h"
 #include "pokemon_storage_system.h"
+#include "pokemon.h"
+#include "pokedex.h"
 
 STATIC_ASSERT((B_FLAG_FOLLOWERS_DISABLED == 0 || OW_FOLLOWERS_ENABLED), FollowersFlagAssignedWithoutEnablingThem);
 
@@ -910,6 +912,81 @@ bool8 SetDiveWarpDive(u16 x, u16 y)
     return SetDiveWarp(CONNECTION_DIVE, x, y);
 }
 
+// PRU: A defeated (but uncaught) stationary legendary becomes available
+// again on the next map entry. The original HNS scripts set their hide flags
+// after both a knockout and a capture, so Pokédex caught data—not that flag—
+// must decide whether the encounter is permanently complete. No new save
+// flags are required; this also repairs existing saves after a knockout.
+static bool32 PruLegendarySeenButUncaught(u16 species)
+{
+    enum NationalDexOrder dexNum = SpeciesToNationalPokedexNum(species);
+    return GetSetPokedexFlag(dexNum, FLAG_GET_SEEN)
+        && !GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT);
+}
+
+static void RestorePruDefeatedLegendariesOnMapEntry(void)
+{
+    static const struct
+    {
+        u16 species;
+        u16 hideFlag;
+    } sLegendaryHideFlags[] =
+    {
+        { SPECIES_HO_OH,     FLAG_HIDE_HO_OH },
+        { SPECIES_LUGIA,     FLAG_HIDE_LUGIA },
+        { SPECIES_ARTICUNO,  FLAG_HIDE_ARTICUNO },
+        { SPECIES_ZAPDOS,    FLAG_HIDE_ZAPDOS },
+        { SPECIES_MOLTRES,   FLAG_HIDE_MOLTRES },
+        { SPECIES_MEWTWO,    FLAG_HIDE_MEWTWO },
+        { SPECIES_GROUDON,   FLAG_HIDE_GROUDON },
+        { SPECIES_KYOGRE,    FLAG_HIDE_KYOGRE },
+        { SPECIES_RAYQUAZA,  FLAG_HIDE_RAYQUAZA },
+        { SPECIES_LATIAS,    FLAG_HIDE_LATIAS },
+        { SPECIES_LATIOS,    FLAG_HIDE_LATIOS },
+        { SPECIES_REGICE,    FLAG_HIDE_SINJOHRUINS_REGICE },
+        { SPECIES_REGIROCK,  FLAG_HIDE_SINJOHRUINS_REGIROCK },
+        { SPECIES_REGISTEEL, FLAG_HIDE_SINJOHRUINS_REGISTEEL },
+        { SPECIES_MEW,       FLAG_HIDE_MEW },
+    };
+    u32 i;
+
+    if (!IS_HNS)
+        return;
+
+    for (i = 0; i < ARRAY_COUNT(sLegendaryHideFlags); i++)
+    {
+        if (PruLegendarySeenButUncaught(sLegendaryHideFlags[i].species))
+            FlagClear(sLegendaryHideFlags[i].hideFlag);
+    }
+
+    // Mt. Moon's Jirachi may only return after the White Rock summoning.
+    if (FlagGet(FLAG_SUMMONED_MTMOON_JIRACHI)
+        && PruLegendarySeenButUncaught(SPECIES_JIRACHI))
+        FlagClear(FLAG_HIDE_MTMOON_JIRACHI);
+
+    // The Ilex Forest shrine is story-gated. Never spawn Celebi before it
+    // has been summoned, even if the player has seen one elsewhere.
+    if (VarGet(VAR_AZALEA_TOWN_STATE) >= 10
+        && PruLegendarySeenButUncaught(SPECIES_CELEBI))
+    {
+        FlagClear(FLAG_HIDE_CELEBI);
+        FlagClear(FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI);
+    }
+
+    // These two maps additionally persist a "defeated" flag which their
+    // transition scripts check before showing the encounter. Reset only
+    // when re-entering their actual islands, and never after a capture.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_FARAWAY_ISLAND_INTERIOR_HNS)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_FARAWAY_ISLAND_INTERIOR_HNS)
+        && PruLegendarySeenButUncaught(SPECIES_MEW))
+        FlagClear(FLAG_DEFEATED_MEW);
+
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_BIRTH_ISLAND_EXTERIOR_HNS)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_BIRTH_ISLAND_EXTERIOR_HNS)
+        && PruLegendarySeenButUncaught(SPECIES_DEOXYS))
+        FlagClear(FLAG_DEFEATED_DEOXYS);
+}
+
 void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
 {
     SetWarpDestination(mapGroup, mapNum, WARP_ID_NONE, -1, -1);
@@ -938,6 +1015,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     ChooseAmbientCrySpecies();
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
+    RestorePruDefeatedLegendariesOnMapEntry();
     RunOnTransitionMapScript();
     InitMap();
     CopySecondaryTilesetToVramUsingHeap(gMapHeader.mapLayout);
@@ -1008,6 +1086,7 @@ static void LoadMapFromWarp(bool32 a1)
         FlagClear(FLAG_SYS_USE_FLASH);
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
+    RestorePruDefeatedLegendariesOnMapEntry();
     RunOnTransitionMapScript();
     UpdateLocationHistoryForRoamer();
     MoveAllRoamersToOtherLocationSets();
