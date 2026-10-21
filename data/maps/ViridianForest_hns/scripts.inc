@@ -245,9 +245,9 @@ ViridianForest_Movement_Pichu3_GoLeft:
 ViridianForest_EventScript_SpikyEaredPichu::
 	lock
 	faceplayer
-	playmoncry SPECIES_PICHU_SPIKY_EARED, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_PICHU, CRY_MODE_ENCOUNTER
 	waitmoncry
-	setwildbattle SPECIES_PICHU_SPIKY_EARED, 35
+	setwildbattle SPECIES_PICHU, 35
 	dowildbattle
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, ViridianForest_EventScript_SpikyEaredPichuRan
