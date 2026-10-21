@@ -30,6 +30,16 @@ for species, hide_flag in {
 assert "FLAG_GET_SEEN" in overworld and "FLAG_GET_CAUGHT" in overworld
 assert "FLAG_SUMMONED_MTMOON_JIRACHI" in overworld
 assert "FlagClear(FLAG_HIDE_MTMOON_JIRACHI)" in overworld
+assert "VarGet(VAR_SUICUNE_ENCOUNTERS) >= 8" in overworld
+assert "FlagClear(FLAG_HIDE_ROUTE25_SUICUNE)" in overworld
+assert "RestorePruDefeatedRoamers();" in overworld
+roamer = read("src/roamer.c")
+battle_main = read("src/battle_main.c")
+assert "if (IS_HNS && gBattleOutcome == B_OUTCOME_WON)" in roamer
+assert "ROAMER(gEncounteredRoamerIndex)->hp = GetMonData(mon, MON_DATA_MAX_HP)" in roamer
+assert "void RestorePruDefeatedRoamers(void)" in roamer
+assert "ROAMER_LOC_TABLE_KANTO" in roamer and "FLAG_GET_CAUGHT" in roamer
+assert "(!IS_HNS && gBattleOutcome == B_OUTCOME_WON)" in battle_main
 assert "VarGet(VAR_AZALEA_TOWN_STATE) >= 10" in overworld
 assert "FlagClear(FLAG_DEFEATED_MEW)" in overworld
 assert "FlagClear(FLAG_DEFEATED_DEOXYS)" in overworld
@@ -51,4 +61,5 @@ assert "SPECIES_JIRACHI, 50" in read("data/maps/MtMoon_Outside_hns/scripts.inc")
 print("PASS: legends use rate floor 20 only in HNS legendary/roamer encounters")
 print("PASS: 15 static legendary hide flags restore only for seen, uncaught species")
 print("PASS: Jirachi and Celebi story gates; Mew and Deoxys defeat markers reset")
-print("PASS: Lugia, Ho-Oh and second Celebi retries preserve captured/story states")
+print("PASS: Lugia, Ho-Oh, Suicune and second Celebi retries preserve captured/story states")
+print("PASS: Latias/Latios roamers recover on knockout; capture remains permanent")
