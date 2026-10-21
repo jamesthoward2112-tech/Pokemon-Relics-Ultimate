@@ -2193,7 +2193,10 @@ static void Cmd_waitmessage(void)
         else
         {
             u16 toWait = cmd->time;
-            if (gTestRunnerHeadless || !gSaveBlock3Ptr->challengeSettings.fastBattle)
+            // PRU secondary hazard announcements must remain readable even
+            // when ordinary text waits are skipped by the battle-speed option.
+            bool8 preserveHazardText = toWait == B_WAIT_TIME_PRU_HAZARD_MESSAGE;
+            if (gTestRunnerHeadless || (!preserveHazardText && !gSaveBlock3Ptr->challengeSettings.fastBattle))
                 gPauseCounterBattle = toWait;
             if (++gPauseCounterBattle >= toWait)
             {

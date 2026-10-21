@@ -671,6 +671,9 @@ enum BattleEnvironments
     BATTLE_ENVIRONMENT_COUNT,
 };
 
+// PRU: two seconds for secondary hazard-placement text from Ceaseless Edge,
+// Stone Axe and Siege Tusk. Unlike ordinary waits, this is not auto-skipped.
+#define B_WAIT_TIME_PRU_HAZARD_MESSAGE 120
 #define B_WAIT_TIME_LONG        (B_WAIT_TIME_MULTIPLIER * 4)
 #define B_WAIT_TIME_MED         (B_WAIT_TIME_MULTIPLIER * 3)
 #define B_WAIT_TIME_SHORT       (B_WAIT_TIME_MULTIPLIER * 2)

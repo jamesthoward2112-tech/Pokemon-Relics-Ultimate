@@ -631,7 +631,7 @@ PJR_FINAL_SPECIES(SPECIES_SUDOWARDEN, 90, 125, 145, 40, 95, 40, TYPE_ROCK, TYPE_
 PJR_FINAL_SPECIES(SPECIES_DONPHALANX, 110, 140, 135, 60, 85, 60, TYPE_GROUND, TYPE_DARK,
     ABILITY_STAMINA, ABILITY_INTIMIDATE, ABILITY_SAND_RUSH, "Donphalanx", CRY_DONPHAN,
     NATIONAL_DEX_DONPHAN, "War Tusk", BODY_COLOR_GRAY, gMonFrontPic_Donphalanx, gMonBackPic_Donphalanx,
-    gMonPalette_Donphalanx, gMonShinyPalette_Donphalanx, gMonIcon_Donphalanx, 0, sDonphalanxLevelUpLearnset, sDonphanTeachableLearnset, 0, 0),
+    gMonPalette_Donphalanx, gMonShinyPalette_Donphalanx, gMonIcon_Donphalanx, 0, sDonphalanxLevelUpLearnset, sDonphanTeachableLearnset, 0, 12),
 
 PJR_FINAL_SPECIES(SPECIES_FAERANIUM, 100, 85, 115, 105, 120, 65, TYPE_GRASS, TYPE_FAIRY,
     ABILITY_ANCIENT_BLOOM, ABILITY_NONE, ABILITY_NONE, "Faeranium", CRY_MEGANIUM,

@@ -412,14 +412,14 @@ BattleScript_EffectRevivalBlessingSendOut:
 BattleScript_StealthRockActivates::
 	setstealthrock BattleScript_StealthRockActivatesRet
 	printfromtable gDmgHazardsStringIds
-	waitmessage B_WAIT_TIME_LONG
+	waitmessage B_WAIT_TIME_PRU_HAZARD_MESSAGE
 BattleScript_StealthRockActivatesRet:
 	return
 
 BattleScript_SpikesActivates::
 	trysetspikes BattleScript_SpikesActivatesRet
 	printfromtable gDmgHazardsStringIds
-	waitmessage B_WAIT_TIME_LONG
+	waitmessage B_WAIT_TIME_PRU_HAZARD_MESSAGE
 BattleScript_SpikesActivatesRet:
 	return
 
