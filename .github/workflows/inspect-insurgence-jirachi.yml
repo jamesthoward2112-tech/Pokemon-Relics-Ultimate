@@ -5,6 +5,7 @@ on:
     paths:
       - .github/workflows/inspect-insurgence-jirachi.yml
       - tools/pru/bank_insurgence_mega_jirachi.py
+      - tools/pru/install_insurgence_mega_jirachi.py
   workflow_dispatch:
 permissions:
   contents: write
