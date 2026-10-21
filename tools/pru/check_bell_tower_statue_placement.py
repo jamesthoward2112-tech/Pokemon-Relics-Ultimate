@@ -46,7 +46,9 @@ assert "setflag FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED" in script9
 # depart to the right and down before removal.
 aftermath = script9.split("TinTower_9F_EventScript_JessieJamesBattle::", 1)[1].split("TinTower_9F_EventScript_NoFinalRocket::", 1)[0]
 assert aftermath.index("msgbox TinTower_9F_Text_JessieJamesFinalAfter") < aftermath.index("applymovement 5, TinTower_9F_Movement_JamesExit")
-assert aftermath.index("applymovement 5, TinTower_9F_Movement_JamesExit") < aftermath.index("waitmovement 0") < aftermath.index("removeobject 4")
+exit_start = aftermath.index("applymovement 5, TinTower_9F_Movement_JamesExit")
+exit_wait = aftermath.index("waitmovement 0", exit_start)
+assert exit_start < exit_wait < aftermath.index("removeobject 4"), "Objects removed before completed walk-off"
 for name in ("JamesExit", "MeowthExit", "JessieExit"):
     segment = script9.split("TinTower_9F_Movement_" + name + ":", 1)[1].split("step_end", 1)[0]
     assert "walk_right" in segment and "walk_down" in segment, "Missing east then south exit for " + name
