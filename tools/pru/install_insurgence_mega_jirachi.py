@@ -87,7 +87,7 @@ def convert(part):
     assert bbox, f"Empty donor {part}"
     cropped=im.crop(bbox)
     src_w,src_h=cropped.size
-    max_w,max_h=((60,60) if part=="front" else (64,58))
+    max_w,max_h=((60,60) if part.startswith("front") else (64,58))
     # Single aspect-preserving scale for width AND height. No stretching.
     factor=min(max_w/src_w,max_h/src_h,1)
     out_w=max(1,round(src_w*factor))
@@ -97,12 +97,13 @@ def convert(part):
     scaled=cropped.resize((out_w,out_h),Image.Resampling.NEAREST)
     # Both views visually grounded; front larger vertically, back wider.
     x=(64-out_w)//2
-    y=64-out_h-2 if part=="front" else 64-out_h
+    y=64-out_h-2 if part.startswith("front") else 64-out_h
     canvas=Image.new("P",(64,64),0)
     rgbpal=palette_shiny if part.endswith("shiny") else palette_normal
     flatpal=[v for rgb in rgbpal for v in rgb]+[0]*(768-48)
     canvas.putpalette(flatpal)
     data=[0]*4096
+    normal_scaled=(orig[part.removesuffix("_shiny")].crop(bbox).resize((out_w,out_h), Image.Resampling.NEAREST) if part.endswith("_shiny") else None)
     for py in range(out_h):
         for px in range(out_w):
             rgba=scaled.getpixel((px,py))
@@ -112,9 +113,6 @@ def convert(part):
             if part.endswith("shiny"):
                 # Use colour pairing with the normal sprite at the same source
                 # coordinate to preserve indexed shiny palette ordering.
-                normal_scaled=orig[part.removesuffix("_shiny")].crop(bbox).resize(
-                    (out_w,out_h),Image.Resampling.NEAREST
-                )
                 nrgba=normal_scaled.getpixel((px,py))
                 rgb=key(nrgba[:3])
             data[(y+py)*64+(x+px)]=indices[rgb]
