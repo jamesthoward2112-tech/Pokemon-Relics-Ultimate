@@ -32,9 +32,9 @@ Snowswept_Cavern_EventScript_ActivateSneasler::
     
     applymovement2 LOCALID_SNOWSWEPT_CAVERN_SNEASLER, Snowswept_Cavern_Movement_SpawnSneasler1
     delay 10
-    playmoncry SPECIES_WEAVILE, CRY_MODE_NORMAL
+    playmoncry SPECIES_MYSTYNX, CRY_MODE_NORMAL
     waitmoncry
-    playmoncry SPECIES_WEAVILE, CRY_MODE_NORMAL
+    playmoncry SPECIES_MYSTYNX, CRY_MODE_NORMAL
     waitmoncry
     waitmovement 0
 
@@ -73,7 +73,7 @@ Snowswept_Cavern_Movement_SpawnSneasler2:
 Snowswept_Cavern_EventScript_Sneasler::
 	lock
 	faceplayer
-	playmoncry SPECIES_WEAVILE, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_MYSTYNX, CRY_MODE_ENCOUNTER
 	waitmoncry
 	setwildbossbattle species=SPECIES_SNEASLER, level=80, item=ITEM_RAZOR_CLAW, move1_1=MOVE_DIRE_CLAW, move1_2=MOVE_ROCK_SLIDE, move1_3=MOVE_BRICK_BREAK move1_4=MOVE_LASH_OUT
 	settotemboost B_POSITION_OPPONENT_LEFT, 1, 0, 2, 0, 0, 0
