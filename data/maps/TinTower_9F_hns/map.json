@@ -61,9 +61,9 @@
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "TinTower_9F_EventScript_JessieJamesInteract",
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "2",
+      "script": "TinTower_9F_EventScript_JessieJamesTrainer",
       "flag": "FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED"
     },
     {
@@ -74,9 +74,9 @@
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "TinTower_9F_EventScript_JessieJamesInteract",
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "2",
+      "script": "TinTower_9F_EventScript_JessieJamesTrainer",
       "flag": "FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED"
     },
     {
@@ -178,6 +178,60 @@
       "type": "trigger",
       "x": 16,
       "y": 5,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "1",
+      "script": "TinTower_9F_EventScript_JessieJamesTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 4,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "1",
+      "script": "TinTower_9F_EventScript_JessieJamesTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 4,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "1",
+      "script": "TinTower_9F_EventScript_JessieJamesTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 4,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "1",
+      "script": "TinTower_9F_EventScript_JessieJamesTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 13,
+      "y": 4,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "1",
+      "script": "TinTower_9F_EventScript_JessieJamesTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 4,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "1",
+      "script": "TinTower_9F_EventScript_JessieJamesTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 15,
+      "y": 4,
       "elevation": 0,
       "var": "VAR_TEMP_0",
       "var_value": "1",

@@ -17,7 +17,8 @@ expected = {
 }
 found = {o["graphics_id"]: (o["x"], o["y"]) for o in nine["object_events"] if o.get("flag") == flag}
 assert found == expected, f"Final trio misplaced on 9F: {found}"
-assert all(o["script"] == "TinTower_9F_EventScript_JessieJamesInteract" for o in nine["object_events"] if o.get("flag") == flag)
+assert all(o["script"] == "TinTower_9F_EventScript_JessieJamesTrainer" and o["trainer_type"] == "TRAINER_TYPE_NORMAL" and int(o["trainer_sight_or_berry_tree_id"]) >= 2 for o in nine["object_events"] if o.get("graphics_id") in ("OBJ_EVENT_GFX_JESSIE_HNS", "OBJ_EVENT_GFX_JAMES_HNS"))
+assert any(o["script"] == "TinTower_9F_EventScript_JessieJamesInteract" and o["trainer_type"] == "TRAINER_TYPE_NONE" for o in nine["object_events"] if o.get("graphics_id") == "OBJ_EVENT_GFX_MON_BASE+SPECIES_MEOWTH")
 warps = {(w["x"], w["y"]) for w in nine["warp_events"]}
 # Nearest unobstructed floor row against the upper statue wall. Existing warp
 # tiles must stay free, and the trio must form an adjacent, unbroken line.
@@ -35,8 +36,13 @@ assert all(tile(x, y) == 0x324 for x, y in expected.values()), "Trio not on save
 script9 = (maps / "TinTower_9F_hns/scripts.inc").read_text()
 script8 = (maps / "TinTower_8F_hns/scripts.inc").read_text()
 assert "trainerbattle_double TRAINER_JESSIE_JAMES_TINTOWER_HNS" in script9
-assert "map_script MAP_SCRIPT_ON_FRAME_TABLE, TinTower_9F_OnFrame" in script9
-expected_triggers = {(15, 6), (16, 6), (10, 5), (15, 5), (16, 5)}
+assert "MAP_SCRIPT_ON_FRAME_TABLE" not in script9, "Battle must be triggered by trainer sight or corridor, not instantly on floor entry"
+assert "TinTower_9F_EventScript_JessieJamesTrainer::\n\ttrainerbattle_double " in script9
+assert "TinTower_9F_EventScript_JessieJamesNeedTwo, TinTower_9F_EventScript_JessieJamesAfterBattle" not in script9  # typo guard only
+assert "TinTower_9F_Text_JessieJamesNeedTwo, TinTower_9F_EventScript_JessieJamesAfterBattle" in script9
+assert "TinTower_9F_Movement_JessieNoticePlayer:" in script9
+assert "emote_exclamation_mark" in script9
+expected_triggers = {(15, 6), (16, 6), (10, 5), (15, 5), (16, 5)} | {(x, 4) for x in range(10, 16)}
 actual_triggers = {(v["x"],v["y"]) for v in nine["coord_events"] if v["script"]=="TinTower_9F_EventScript_JessieJamesTrigger"}
 assert actual_triggers == expected_triggers, f"Mandatory approach triggers missing: {actual_triggers}"
 assert all(v["var"] == "VAR_TEMP_0" and v["var_value"] == "1" for v in nine["coord_events"]), "Approach must respect one-time story gate"
@@ -44,7 +50,7 @@ assert script9.count("removeobject 6") == 2
 assert "setflag FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED" in script9
 # Verify the battle does not immediately erase the trio: all three physically
 # depart to the right and down before removal.
-aftermath = script9.split("TinTower_9F_EventScript_JessieJamesBattle::", 1)[1].split("TinTower_9F_EventScript_NoFinalRocket::", 1)[0]
+aftermath = script9.split("TinTower_9F_EventScript_JessieJamesAfterBattle::", 1)[1].split("TinTower_9F_EventScript_NoFinalRocket::", 1)[0]
 assert aftermath.index("msgbox TinTower_9F_Text_JessieJamesFinalAfter") < aftermath.index("applymovement 5, TinTower_9F_Movement_JamesExit")
 exit_start = aftermath.index("applymovement 5, TinTower_9F_Movement_JamesExit")
 exit_wait = aftermath.index("waitmovement 0", exit_start)
@@ -57,4 +63,4 @@ assert "removeobject 4" in script9 and "removeobject 5" in script9
 assert "delay 32" in aftermath
 assert "TinTower_9F_EventScript_JessieJamesBattle" in script9
 assert "JessieJamesBattle" not in script8
-print("PASS: Bell Tower 9F trio at save coordinate (12,3), flanked by Jessie and James, forced approach triggers and staggered walk-off scripts")
+print("PASS: Bell Tower 9F exact coordinates; Jessie/James native sight and !, y4 corridor triggers, automatic post-battle walk-off")

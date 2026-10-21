@@ -1,6 +1,5 @@
 TinTower_9F_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, TinTower_9F_OnTransition
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, TinTower_9F_OnFrame
 	.byte 0
 
 @ Existing finale relocated without changing battle or dialogue; 9F upper-right between statues.
@@ -9,11 +8,7 @@ TinTower_9F_OnTransition::
 	call TinTower_OnTransition
 	end
 
-@ One-time mandatory Johto finale on 9F, in the statue gallery.
-@ Keep the existing Ho-Oh roof scripts independent.
-TinTower_9F_OnFrame::
-	map_script_2 VAR_TEMP_0, 1, TinTower_9F_EventScript_JessieJamesBattle
-	.2byte 0
+@ Story flags arm coordinate approach triggers; entering the floor no longer starts the battle automatically.
 
 TinTower_9F_EventScript_SyncFinalRocketState::
 	setvar VAR_TEMP_0, 0
@@ -33,19 +28,31 @@ TinTower_9F_EventScript_JessieJamesTrigger::
 	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, TinTower_9F_EventScript_NoFinalRocket
 	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, TinTower_9F_EventScript_NoFinalRocket
 	goto_if_set FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED, TinTower_9F_EventScript_NoFinalRocket
-	goto TinTower_9F_EventScript_JessieJamesBattle
+	lockall
+	setvar VAR_TEMP_0, 0
+	applymovement 4, TinTower_9F_Movement_JessieNoticePlayer
+	waitmovement 4
+	goto TinTower_9F_EventScript_JessieJamesTrainer
 
 TinTower_9F_EventScript_JessieJamesInteract::
 	goto_if_set FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED, TinTower_9F_EventScript_NoFinalRocket
-	goto TinTower_9F_EventScript_JessieJamesBattle
+	goto TinTower_9F_EventScript_JessieJamesTrainer
 
+@ Compatibility alias for previously referenced mandatory encounter.
 TinTower_9F_EventScript_JessieJamesBattle::
+	goto TinTower_9F_EventScript_JessieJamesTrigger
+
+@ Direct trainerbattle as the first command allows the normal trainer-sight
+@ engine to spot the player, show ! and start the double battle automatically.
+@ The explicit continuation ensures the victory dialogue and walk-off start
+@ immediately without requiring another interaction.
+TinTower_9F_EventScript_JessieJamesTrainer::
+	trainerbattle_double TRAINER_JESSIE_JAMES_TINTOWER_HNS, TinTower_9F_Text_JessieJamesFinalSeen, TinTower_9F_Text_JessieJamesFinalBeaten, TinTower_9F_Text_JessieJamesNeedTwo, TinTower_9F_EventScript_JessieJamesAfterBattle
+	end
+
+TinTower_9F_EventScript_JessieJamesAfterBattle::
 	lockall
 	setvar VAR_TEMP_0, 0
-	applymovement 4, Common_Movement_FacePlayer
-	applymovement 5, Common_Movement_FacePlayer
-	waitmovement 0
-	trainerbattle_double TRAINER_JESSIE_JAMES_TINTOWER_HNS, TinTower_9F_Text_JessieJamesFinalSeen, TinTower_9F_Text_JessieJamesFinalBeaten, TinTower_9F_Text_JessieJamesNeedTwo
 	setflag FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED
 	msgbox TinTower_9F_Text_JessieJamesFinalAfter, MSGBOX_DEFAULT
 	closemessage
@@ -125,4 +132,10 @@ TinTower_9F_Movement_JessieExit:
 	walk_down
 	walk_down
 	walk_down
+	step_end
+
+@ Jessie spots the player in the corridor when a coordinate trigger fires.
+@ Natural trainer sight also shows this alert via the standard engine.
+TinTower_9F_Movement_JessieNoticePlayer:
+	emote_exclamation_mark
 	step_end
