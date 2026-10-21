@@ -176,7 +176,13 @@ jobs:
           set -euo pipefail
           test -s pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
-          tag="pru-bell-tower-$(git rev-parse --short=10 HEAD)"
+          # Older jobs must never publish a ROM after main has advanced.
+          latest_main="$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)"
+          if test "$latest_main" != "$GITHUB_SHA"; then
+            echo "SKIP_STALE_ROM: build $GITHUB_SHA is not current main $latest_main"
+            exit 0
+          fi
+          tag="pru-build-$(git rev-parse --short=10 HEAD)"
           file="Pokemon-Relics-Ultimate-${GITHUB_SHA:0:10}.gba"
           cp pokehns.gba "$RUNNER_TEMP/$file"
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
