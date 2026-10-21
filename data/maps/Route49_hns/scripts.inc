@@ -160,9 +160,9 @@ Route49_EventScript_ActivateOverqwil::
     clearflag FLAG_HIDE_ROUTE49_NOBLE_OVERQWIL
     applymovement2 LOCALID_ROUTE49_NOBLE_OVERQWIL, Route49_Movement_OverqwilEntrance1
     delay 10
-    playmoncry SPECIES_OVERQWIL, CRY_MODE_NORMAL
+    playmoncry SPECIES_KABLOWFISH, CRY_MODE_NORMAL
     waitmoncry
-    playmoncry SPECIES_OVERQWIL, CRY_MODE_NORMAL
+    playmoncry SPECIES_KABLOWFISH, CRY_MODE_NORMAL
     waitmoncry
     waitmovement 0
     applymovement2 LOCALID_ROUTE49_NOBLE_OVERQWIL, Route49_Movement_OverqwilEntrance2
@@ -200,9 +200,9 @@ Route49_Movement_OverqwilEntrance2:
 Route49_EventScript_Overqwil::
 	lock
 	faceplayer
-	playmoncry SPECIES_OVERQWIL, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_KABLOWFISH, CRY_MODE_ENCOUNTER
 	waitmoncry
-	setwildbossbattle species=SPECIES_OVERQWIL, level=80, item=ITEM_BLACK_SLUDGE, move1_1=MOVE_BARB_BARRAGE, move1_2=MOVE_LIQUIDATION, move1_3=MOVE_TOXIC_SPIKES move1_4=MOVE_CURSE
+	setwildbossbattle species=SPECIES_KABLOWFISH, level=80, item=ITEM_BLACK_SLUDGE, move1_1=MOVE_BARB_BARRAGE, move1_2=MOVE_LIQUIDATION, move1_3=MOVE_TOXIC_SPIKES move1_4=MOVE_CURSE
 	settotemboost B_POSITION_OPPONENT_LEFT, 0, 2, 0, 0, 3, 0
 	setflag FLAG_NO_WILD_CATCHING
 	setflag FLAG_NO_WILD_RUNNING
@@ -211,7 +211,7 @@ Route49_EventScript_Overqwil::
     dowildbattle
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, Route49_EventScript_OverqwilRan
-    bufferspeciesname STR_VAR_1, SPECIES_OVERQWIL
+    bufferspeciesname STR_VAR_1, SPECIES_KABLOWFISH
     msgbox SinjohRuins_Lab_Text_DropedItem, MSGBOX_DEFAULT
     giveitem ITEM_DREAD_PLATE
     addvar VAR_PLATECOUNTER, 1
@@ -279,9 +279,9 @@ Route49_EventScript_ActivateWyrdeerLeft::
     clearflag FLAG_HIDE_ROUTE49_NOBLE_WYRDEER
     applymovement2 LOCALID_ROUTE49_NOBLE_WYRDEER, Route49_Movement_WyrdeerEntrance1
     delay 10
-    playmoncry SPECIES_WYRDEER, CRY_MODE_NORMAL
+    playmoncry SPECIES_STANTLER, CRY_MODE_NORMAL
     waitmoncry
-    playmoncry SPECIES_WYRDEER, CRY_MODE_NORMAL
+    playmoncry SPECIES_STANTLER, CRY_MODE_NORMAL
     waitmoncry
     waitmovement 0
     applymovement2 LOCALID_ROUTE49_NOBLE_WYRDEER, Route49_Movement_WyrdeerEntrance2
@@ -320,9 +320,9 @@ Route49_EventScript_ActivateWyrdeerRight::
     clearflag FLAG_HIDE_ROUTE49_NOBLE_WYRDEER
     applymovement2 LOCALID_ROUTE49_NOBLE_WYRDEER, Route49_Movement_WyrdeerEntrance1
     delay 10
-    playmoncry SPECIES_WYRDEER, CRY_MODE_NORMAL
+    playmoncry SPECIES_STANTLER, CRY_MODE_NORMAL
     waitmoncry
-    playmoncry SPECIES_WYRDEER, CRY_MODE_NORMAL
+    playmoncry SPECIES_STANTLER, CRY_MODE_NORMAL
     waitmoncry
     waitmovement 0
     applymovement2 LOCALID_ROUTE49_NOBLE_WYRDEER, Route49_Movement_WyrdeerEntrance2
@@ -362,9 +362,9 @@ Route49_Movement_WyrdeerEntrance2:
 Route49_EventScript_Wyrdeer::
 	lock
 	faceplayer
-	playmoncry SPECIES_WYRDEER, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_STANTLER, CRY_MODE_ENCOUNTER
 	waitmoncry
-	setwildbossbattle species=SPECIES_WYRDEER, level=80, item=ITEM_CLEAR_AMULET, move1_1=MOVE_PSYSHIELD_BASH, move1_2=MOVE_LUNGE, move1_3=MOVE_CALM_MIND move1_4=MOVE_THUNDERBOLT
+	setwildbossbattle species=SPECIES_STANTLER, level=80, item=ITEM_CLEAR_AMULET, move1_1=MOVE_PSYSHIELD_BASH, move1_2=MOVE_LUNGE, move1_3=MOVE_CALM_MIND move1_4=MOVE_THUNDERBOLT
 	settotemboost B_POSITION_OPPONENT_LEFT, 0, 1, 2, 0, 1, 0
 	setflag FLAG_NO_WILD_CATCHING
 	setflag FLAG_NO_WILD_RUNNING
@@ -373,7 +373,7 @@ Route49_EventScript_Wyrdeer::
     dowildbattle
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, Route49_EventScript_WyrdeerRan
-    bufferspeciesname STR_VAR_1, SPECIES_WYRDEER
+    bufferspeciesname STR_VAR_1, SPECIES_STANTLER
     msgbox SinjohRuins_Lab_Text_DropedItem, MSGBOX_DEFAULT
     giveitem ITEM_MIND_PLATE
     addvar VAR_PLATECOUNTER, 1
