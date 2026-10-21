@@ -124,7 +124,7 @@ Alola_Akala_TotemBattle_Trigger_4:
 	goto_if_eq Alola_Akala_TotemBattle_Trigger_14
 	compare VAR_0x8000, TIME_EVENING
 	goto_if_eq Alola_Akala_TotemBattle_Trigger_14
-	playmoncry SPECIES_PROBOPASS, 0
+	playmoncry SPECIES_AGGRON, 0
 	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_SPECIES ( PROBOPASS )
 	clearflag FLAG_AKALA_TOTEM_DAY
 	addobject Akala_Totem
@@ -141,7 +141,7 @@ Alola_Akala_TotemBattle_Trigger_13:
 	goto_if_eq Alola_Akala_TotemBattle_Trigger_20
 	compare VAR_0x8000, TIME_EVENING
 	goto_if_eq Alola_Akala_TotemBattle_Trigger_20
-	playmoncry SPECIES_PROBOPASS, 0
+	playmoncry SPECIES_AGGRON, 0
 	applymovement Akala_Totem, Alola_Akala_TotemBattle_Trigger_Movement_0
 	waitmovement 0
 	waitmoncry
@@ -163,7 +163,7 @@ Alola_Akala_TotemBattle_Trigger_10:
 	goto Alola_Akala_TotemBattle_Trigger_5
 
 Alola_Akala_TotemBattle_Trigger_14:
-	playmoncry SPECIES_MAGMORTAR, 0
+	playmoncry SPECIES_TORKALDERA, 0
 	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_SPECIES ( MAGMORTAR )
 	setflag FLAG_AKALA_TOTEM_DAY
 	addobject Akala_Totem
@@ -171,7 +171,7 @@ Alola_Akala_TotemBattle_Trigger_14:
 	goto Alola_Akala_TotemBattle_Trigger_13
 
 Alola_Akala_TotemBattle_Trigger_20:
-	playmoncry SPECIES_MAGMORTAR, 0
+	playmoncry SPECIES_TORKALDERA, 0
 	applymovement Akala_Totem, Alola_Akala_TotemBattle_Trigger_Movement_0
 	waitmovement 0
 	waitmoncry
@@ -182,10 +182,10 @@ Alola_Akala_TotemBattle::
 	lock
 	faceplayer
 	goto_if_set FLAG_AKALA_TOTEM_DAY, Alola_Akala_TotemBattle_1
-	playmoncry SPECIES_PROBOPASS, 0
+	playmoncry SPECIES_AGGRON, 0
 	msgbox Alola_Akala_TotemBattle_Text_2, MSGBOX_AUTOCLOSE
 	waitmoncry
-	setwildbattle SPECIES_NOSEPASS, 60, ITEM_NONE, SPECIES_PROBOPASS, 60, ITEM_PETAYA_BERRY
+	setwildbattle SPECIES_NOSEPASS, 60, ITEM_NONE, SPECIES_AGGRON, 60, ITEM_PETAYA_BERRY
 	settotemboost B_POSITION_OPPONENT_RIGHT, 1, 1, 1, 1, 1, 1
 	setflag FLAG_NO_WILD_CATCHING
 	setflag FLAG_NO_WILD_RUNNING
@@ -200,10 +200,10 @@ Alola_Akala_TotemBattle::
 	return
 
 Alola_Akala_TotemBattle_1:
-	playmoncry SPECIES_MAGMORTAR, 0
+	playmoncry SPECIES_TORKALDERA, 0
 	msgbox Alola_Akala_TotemBattle_Text_0, MSGBOX_AUTOCLOSE
 	waitmoncry
-	setwildbattle SPECIES_MAGMAR, 60, ITEM_NONE, SPECIES_MAGMORTAR, 60, ITEM_SITRUS_BERRY
+	setwildbattle SPECIES_MAGMAR, 60, ITEM_NONE, SPECIES_TORKALDERA, 60, ITEM_SITRUS_BERRY
 	settotemboost B_POSITION_OPPONENT_RIGHT, 1, 1, 1, 1, 1, 1
 	setflag FLAG_NO_WILD_CATCHING
 	setflag FLAG_NO_WILD_RUNNING
@@ -344,10 +344,10 @@ Alola_Akala_TapuLele_Flyover_2:
 Alola_Akala_BattleVsTapuLele::
 	lock
 	faceplayer
-	playmoncry SPECIES_TAPU_LELE, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_LATIAS, CRY_MODE_ENCOUNTER
 	msgbox Alola_Akala_BattleVsTapuLele_Text_0
 	waitmoncry
-	seteventmon SPECIES_TAPU_LELE, 60
+	seteventmon SPECIES_LATIAS, 60
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
