@@ -4,9 +4,9 @@ SinjohRuins_RegielekiRoom_hns_MapScripts::
 SinjohRuins_RegielekiRoom_EventScript_Regieleki::
 	lock
 	faceplayer
-	playmoncry SPECIES_REGIELEKI, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_RAIKOU, CRY_MODE_ENCOUNTER
 	waitmoncry
-	seteventmon SPECIES_REGIELEKI, 80
+	seteventmon SPECIES_RAIKOU, 80
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
