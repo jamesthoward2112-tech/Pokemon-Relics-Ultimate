@@ -6127,10 +6127,12 @@ static void ReturnFromBattleToOverworld(void)
         ZeroEnemyPartyMons();
 
 #ifndef BUGFIX
-        if ((gBattleOutcome & B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT)
+        if ((!IS_HNS && (gBattleOutcome & B_OUTCOME_WON)) || gBattleOutcome == B_OUTCOME_CAUGHT)
 #else
-        if ((gBattleOutcome == B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT) // Bug: When Roar is used by roamer, gBattleOutcome is B_OUTCOME_PLAYER_TELEPORTED (5).
-#endif                                                                               // & with B_OUTCOME_WON (1) will return TRUE and deactivates the roamer.
+        if ((!IS_HNS && gBattleOutcome == B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT)
+#endif
+            // PRU HNS: a knockout revives the roamer on a new route.
+            // Only a capture retires it permanently.
             SetRoamerInactive(gEncounteredRoamerIndex);
     }
 
