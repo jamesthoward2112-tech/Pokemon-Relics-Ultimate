@@ -10,7 +10,7 @@ permissions:
 
 concurrency:
   group: pru-canonical-build
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build-rom:
@@ -177,7 +177,7 @@ jobs:
           test -s pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           tag="pru-bell-tower-$(git rev-parse --short=10 HEAD)"
-          file="Pokemon-Relics-Ultimate-Bell-Tower-2026-10-20.gba"
+          file="Pokemon-Relics-Ultimate-${GITHUB_SHA:0:10}.gba"
           cp pokehns.gba "$RUNNER_TEMP/$file"
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$tag" "$RUNNER_TEMP/$file" --repo "$GITHUB_REPOSITORY" --clobber
@@ -185,8 +185,8 @@ jobs:
             gh release create "$tag" "$RUNNER_TEMP/$file" \
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
-              --title 'Pokémon Relics Ultimate — Bell Tower Jessie & James test ROM' \
-              --notes 'Direct GBA test release compiled and binary-audited from the canonical PRU main branch with existing PJR and PRL artwork. Bell Tower Jessie & James encounter on 8F, max Lv58. Save-game playtesting not yet completed.' \
+              --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
+              --notes "Direct GBA compiled from canonical main commit $GITHUB_SHA. Corrected Donphalanx and Swamplith battle back-sprite offsets; full source regression and mGBA boot checks required before release. In-game save-state playtesting remains pending." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
