@@ -317,13 +317,13 @@ FuchsiaCity_Gym_EventScript_PRURewardBagFull:
 	return
 
 FuchsiaCity_Gym_Text_PRURewardIntro:
-	.string "Your bonus prize for defeating\\n"
+	.string "Your bonus prize for defeating\n"
 	.string "the GYM LEADER!$"
 
 FuchsiaCity_Gym_Text_PRURewardMoney:
-	.string "You also received 10,000 in\\n"
+	.string "You also received 10,000 in\n"
 	.string "GYM prize money!$"
 
 FuchsiaCity_Gym_Text_PRURewardBagFull:
-	.string "Your BAG is full! Make some room\\n"
+	.string "Your BAG is full! Make some room\n"
 	.string "and come back for your prize.$"
