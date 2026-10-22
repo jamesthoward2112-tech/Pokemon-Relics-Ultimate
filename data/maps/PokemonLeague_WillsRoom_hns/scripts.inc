@@ -158,5 +158,5 @@ PokemonLeague_WillsRoom_Text_PRUHeistBlocked:
 	.string "WILL: TEAM ROCKET's KANTO\n"
 	.string "BADGE HEIST isn't finished!\p"
 	.string "Recover the eight badges and\n"
-	.string "defeat JESSIE and JAMES before\\l"
+	.string "defeat JESSIE and JAMES before\l"
 	.string "challenging us again!$"
