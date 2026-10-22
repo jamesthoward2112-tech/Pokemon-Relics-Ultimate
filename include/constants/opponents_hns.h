@@ -721,7 +721,22 @@
 #define TRAINER_PRU_MAXIE_GROUDON_HNS            681
 // Celadon Gym S&N: unique append-only battle flag so old Jo & Zoe wins do not skip it.
 #define TRAINER_STEEVE_NEEVEE_CELADON_HNS       682
-#define TRAINERS_COUNT_HNS                       683
+// Kanto recurring duos and eight dedicated Badge Heist recovery opponents.
+// Preserve every previous ID (0-682) and all old trainer save bits unchanged.
+#define TRAINER_STEEVE_NEEVEE_SEAFOAM_HNS             683
+#define TRAINER_STEEVE_NEEVEE_KANTO_FINALE_HNS        684
+#define TRAINER_JESSIE_JAMES_POWERPLANT_HNS           685
+#define TRAINER_JESSIE_JAMES_GAMECORNER_HNS           686
+#define TRAINER_JESSIE_JAMES_KANTO_FINALE_HNS         687
+#define TRAINER_PRU_HEIST_BROCK_HNS                   688
+#define TRAINER_PRU_HEIST_MISTY_HNS                   689
+#define TRAINER_PRU_HEIST_SURGE_HNS                   690
+#define TRAINER_PRU_HEIST_ERIKA_HNS                   691
+#define TRAINER_PRU_HEIST_JANINE_HNS                  692
+#define TRAINER_PRU_HEIST_SABRINA_HNS                 693
+#define TRAINER_PRU_HEIST_BLAINE_HNS                  694
+#define TRAINER_PRU_HEIST_GIOVANNI_HNS                695
+#define TRAINERS_COUNT_HNS                       696
 #define MAX_TRAINERS_COUNT_HNS                   864
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_HNS_H
