@@ -180,7 +180,7 @@ ReceptionGate_Text_PRURocketBalloon:
 	.string "The TEAM ROCKET trio escapes\n"
 	.string "toward INDIGO PLATEAU!\p"
 	.string "Recover seven BADGES from\n"
-	.string "KANTO's GYM LEADERS, then\\l"
+	.string "KANTO's GYM LEADERS, then\l"
 	.string "challenge GIOVANNI!$"
 
 
