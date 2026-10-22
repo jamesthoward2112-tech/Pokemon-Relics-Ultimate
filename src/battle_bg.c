@@ -32,6 +32,7 @@
 #include "constants/battle_partner.h"
 #include "rtc.h"
 #include "data/battle_environment.h"
+#include "data/pru_crystal_bg_table.h"
 
 // .rodata
 
@@ -894,9 +895,157 @@ static u32 GetBattleTerrainTimeOfDay(void)
     }
 }
 
+// Keep all Crystal Redux artwork on BG3 only. The original entrance curtains
+// stay intact on BG1/BG2, so no split/overlapping donor backdrop appears in
+// the battle slide; the complete matching tiles/map/palette appear together.
+static const u8 sPruCrystalGrass[] = {0, 1, 3, 9, 22, 23, 24, 28};
+static const u8 sPruCrystalWater[] = {2, 11, 15, 20, 21, 32};
+static const u8 sPruCrystalCave[] = {6, 7, 19, 25, 26, 27, 29, 36};
+static const u8 sPruCrystalRock[] = {7, 16, 25, 26, 29, 31, 35};
+static const u8 sPruCrystalIce[] = {4, 5, 6, 34};
+static const u8 sPruCrystalUrban[] = {8, 10, 12, 13, 14, 17, 18, 30, 35, 37};
+static const u8 sPruCrystalSpecial[] = {16, 27, 33, 36};
+
+static u8 GetPruCrystalBattleBgIndex(u16 environment)
+{
+#if IS_HNS
+    const u8 *choices = sPruCrystalGrass;
+    u32 count = NELEMS(sPruCrystalGrass);
+    u32 mapSeed;
+
+    // Do not affect link battles, battle facilities or forced test environments.
+    if (TestRunner_Battle_GetForcedEnvironment()
+     || (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER)))
+        return 0xFF;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    {
+        // Distinct Gym Leader arenas; rematches and postgame challenges use
+        // the same leader's background, independent of their map location.
+        switch (TRAINER_BATTLE_PARAM.opponentA)
+        {
+        case TRAINER_FALKNER_1_HNS:
+        case TRAINER_FALKNER_2_HNS:
+        case TRAINER_FALKNER_POSTOBC_HNS: return 35;
+        case TRAINER_BUGSY_1_HNS:
+        case TRAINER_BUGSY_2_HNS:
+        case TRAINER_BUGSY_POSTOBC_HNS: return 1;
+        case TRAINER_WHITNEY_1_HNS:
+        case TRAINER_WHITNEY_2_HNS:
+        case TRAINER_WHITNEY_POSTOBC_HNS: return 17;
+        case TRAINER_MORTY_1_HNS:
+        case TRAINER_MORTY_2_HNS:
+        case TRAINER_MORTY_POSTOBC_HNS: return 19;
+        case TRAINER_CHUCK_1_HNS:
+        case TRAINER_CHUCK_2_HNS:
+        case TRAINER_CHUCK_1_2_HNS:
+        case TRAINER_CHUCK_1_3_HNS:
+        case TRAINER_CHUCK_POSTOBC_HNS: return 31;
+        case TRAINER_JASMINE_1_HNS:
+        case TRAINER_JASMINE_2_HNS:
+        case TRAINER_JASMINE_1_2_HNS:
+        case TRAINER_JASMINE_1_3_HNS:
+        case TRAINER_JASMINE_POSTOBC_HNS: return 18;
+        case TRAINER_PRYCE_1_HNS:
+        case TRAINER_PRYCE_2_HNS:
+        case TRAINER_PRYCE_1_2_HNS:
+        case TRAINER_PRYCE_1_3_HNS:
+        case TRAINER_PRYCE_POSTOBC_HNS: return 6;
+        case TRAINER_CLAIR_1_HNS:
+        case TRAINER_CLAIR_2_HNS:
+        case TRAINER_CLAIR_3_HNS:
+        case TRAINER_CLAIR_POSTOBC_HNS: return 36;
+        case TRAINER_BROCK_HNS:
+        case TRAINER_BROCK_POSTOBC_HNS: return 7;
+        case TRAINER_MISTY_HNS:
+        case TRAINER_MISTY_POSTOBC_HNS: return 32;
+        case TRAINER_LTSURGE_HNS:
+        case TRAINER_LTSURGE_POSTOBC_HNS: return 14;
+        case TRAINER_ERIKA_HNS:
+        case TRAINER_ERIKA_POSTOBC_HNS: return 9;
+        case TRAINER_JANINE_HNS:
+        case TRAINER_JANINE_POSTOBC_HNS: return 12;
+        case TRAINER_SABRINA_HNS:
+        case TRAINER_SABRINA_POSTOBC_HNS: return 8;
+        case TRAINER_BLAINE_HNS:
+        case TRAINER_BLAINE_POSTOBC_HNS: return 33;
+        case TRAINER_BLUE_HNS:
+        case TRAINER_BLUE_2_HNS:
+        case TRAINER_BLUE_POSTOBC_HNS: return 10;
+        default: break;
+        }
+    }
+
+    // Wild and regular trainer fights use scenery appropriate to the map.
+    // Stable map-based variety makes all 38 donor environments accessible.
+    switch (environment)
+    {
+    case BATTLE_ENVIRONMENT_WATER:
+    case BATTLE_ENVIRONMENT_POND:
+    case BATTLE_ENVIRONMENT_UNDERWATER:
+    case BATTLE_ENVIRONMENT_CAVE_WATER:
+    case BATTLE_ENVIRONMENT_GRAY_CAVE_WATER:
+        choices = sPruCrystalWater;
+        count = NELEMS(sPruCrystalWater);
+        break;
+    case BATTLE_ENVIRONMENT_CAVE:
+    case BATTLE_ENVIRONMENT_GRAY_CAVE:
+        choices = sPruCrystalCave;
+        count = NELEMS(sPruCrystalCave);
+        break;
+    case BATTLE_ENVIRONMENT_MOUNTAIN:
+    case BATTLE_ENVIRONMENT_SAND:
+        choices = sPruCrystalRock;
+        count = NELEMS(sPruCrystalRock);
+        break;
+    case BATTLE_ENVIRONMENT_ROCK_SNOW:
+    case BATTLE_ENVIRONMENT_MOUNTAIN_SNOW:
+    case BATTLE_ENVIRONMENT_SNOW_CAVE:
+    case BATTLE_ENVIRONMENT_ICE:
+    case BATTLE_ENVIRONMENT_SNOW:
+        choices = sPruCrystalIce;
+        count = NELEMS(sPruCrystalIce);
+        break;
+    case BATTLE_ENVIRONMENT_VOLCANO:
+    case BATTLE_ENVIRONMENT_VOLCANO_CAVE:
+    case BATTLE_ENVIRONMENT_BURIAL_GROUND:
+        choices = sPruCrystalSpecial;
+        count = NELEMS(sPruCrystalSpecial);
+        break;
+    case BATTLE_ENVIRONMENT_BUILDING:
+    case BATTLE_ENVIRONMENT_GYM:
+    case BATTLE_ENVIRONMENT_LEADER:
+    case BATTLE_ENVIRONMENT_BLUE_BUILDING:
+        choices = sPruCrystalUrban;
+        count = NELEMS(sPruCrystalUrban);
+        break;
+    default:
+        break;
+    }
+
+    mapSeed = (u32)gSaveBlock1Ptr->location.mapGroup * 131
+            + (u32)gSaveBlock1Ptr->location.mapNum * 17
+            + environment * 7;
+    return choices[mapSeed % count];
+#else
+    return 0xFF;
+#endif
+}
+
 static void LoadBattleEnvironmentGfx(u16 environment)
 {
     const void *tileset, *tilemap, *palette;
+
+    u8 pruCrystalBg = GetPruCrystalBattleBgIndex(environment);
+    if (pruCrystalBg != 0xFF)
+    {
+        // Transfer one complete image; never mix separate donor entry panels.
+        const struct PruCrystalBattleBg *bg = &sPruCrystalBattleBgs[pruCrystalBg];
+        DecompressDataWithHeaderVram(bg->tiles, (void *)BG_CHAR_ADDR(2));
+        DecompressDataWithHeaderVram(bg->tilemap, (void *)BG_SCREEN_ADDR(26));
+        LoadPalette(bg->palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+        return;
+    }
 
     if (environment >= NELEMS(gBattleEnvironmentInfo))
         environment = BATTLE_ENVIRONMENT_PLAIN;
@@ -1405,13 +1554,31 @@ bool8 LoadChosenBattleElement(u8 caseId)
         LoadPalette(gBattleTextboxPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
         break;
     case 3:
-        DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tileset, (void *)(BG_CHAR_ADDR(2)));
+        {
+            u8 pruBg = GetPruCrystalBattleBgIndex(GetBattleEnvironmentOverride());
+            if (pruBg != 0xFF)
+                DecompressDataWithHeaderVram(sPruCrystalBattleBgs[pruBg].tiles, (void *)BG_CHAR_ADDR(2));
+            else
+                DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tileset, (void *)(BG_CHAR_ADDR(2)));
+        }
         break;
     case 4:
-        DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tilemap, (void *)(BG_SCREEN_ADDR(26)));
+        {
+            u8 pruBg = GetPruCrystalBattleBgIndex(GetBattleEnvironmentOverride());
+            if (pruBg != 0xFF)
+                DecompressDataWithHeaderVram(sPruCrystalBattleBgs[pruBg].tilemap, (void *)BG_SCREEN_ADDR(26));
+            else
+                DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tilemap, (void *)(BG_SCREEN_ADDR(26)));
+        }
         break;
     case 5:
-        LoadPalette(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+        {
+            u8 pruBg = GetPruCrystalBattleBgIndex(GetBattleEnvironmentOverride());
+            if (pruBg != 0xFF)
+                LoadPalette(sPruCrystalBattleBgs[pruBg].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+            else
+                LoadPalette(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+        }
         break;
     case 6:
         LoadBattleMenuWindowGfx();
