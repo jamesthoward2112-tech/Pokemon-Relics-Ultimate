@@ -219,6 +219,25 @@ void CreateShinyScriptedMon(u16 species, u8 level, enum Item item)
     SetNuzlockeChecks();
 }
 
+// Called immediately after setwildbattleshiny on Route 10; this flag
+// is stored inside the Pokémon rather than the savefile encounter flag,
+// so the caught Electrode retains its superboss identity.
+void PruPrepareChargedElectrode(void)
+{
+    bool32 value = TRUE;
+    struct Pokemon *mon = &gEnemyParty[0];
+    if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_ELECTRODE)
+        return;
+
+    SetMonData(mon, MON_DATA_MODERN_FATEFUL_ENCOUNTER, &value);
+    // Competitive challenge, with no Explosion self-KO softlock.
+    SetMonMoveSlot(mon, MOVE_THUNDERBOLT, 0);
+    SetMonMoveSlot(mon, MOVE_VOLT_SWITCH, 1);
+    SetMonMoveSlot(mon, MOVE_THUNDER_WAVE, 2);
+    SetMonMoveSlot(mon, MOVE_ELECTRO_BALL, 3);
+    CalculateMonStats(mon);
+}
+
 void CreateScriptedWildBossMon(u16 species, u8 level, enum Item item, enum Move moves[MAX_MON_MOVES])
 {
     u8 heldItem[2];
