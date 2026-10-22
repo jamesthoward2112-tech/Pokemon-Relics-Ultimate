@@ -82,6 +82,8 @@ jobs:
           PY
       - name: Import pinned PRL-approved existing sprites and palettes
         run: python3 tools/pru/sync_prl_authoritative_sprites.py
+      - name: Install Insurgence Mega Jirachi from pinned 64x64 donor assets
+        run: python3 tools/pru/install_insurgence_mega_jirachi.py
       - name: Restore proven Hoenn Last Wish and Noxichu title boot sequence
         env:
           GH_TOKEN: ${{ github.token }}
@@ -93,6 +95,7 @@ jobs:
           set -euo pipefail
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_pru_444_gameplay.py
+          python3 tools/pru/check_insurgence_mega_jirachi.py
           python3 tools/pru/check_legendary_catching_respawns.py
           python3 tools/pru/check_bld_status_icon.py
           python3 tools/pru/check_valkiri_sound.py
@@ -194,7 +197,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Direct GBA compiled from canonical main commit $GITHUB_SHA. Restricted HNS trainer, wild and scripted encounters to the approved 444; corrected Sceptitan, Donphalanx and Swamplith offsets and all Steevee-Neevee sight ranges. Automated source regression and mGBA boot checks required before release. In-game save-state playtesting remains pending." \
+              --notes "Direct GBA compiled from canonical main commit $GITHUB_SHA. Restricted HNS trainer, wild and scripted encounters to the approved 444; corrected Sceptitan, Donphalanx and Swamplith offsets and all Steevee-Neevee sight ranges; installed the authentic Insurgence Mega Jirachi normal/shiny artwork in the existing Jirachi slot as 64x64 GBA battle sprites without changing species mechanics. Automated source regression and mGBA boot checks required before release. In-game save-state playtesting remains pending." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
