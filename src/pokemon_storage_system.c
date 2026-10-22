@@ -5365,7 +5365,9 @@ static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s
 #endif
     else
     {
-        template.paletteTag = PALTAG_MON_ICON_0 + gSpeciesInfo[species].iconPalIndex;
+        // Use the same palette override as party/summary (Astrachi #10,
+        // Swamplith #8, Skarmet #9), instead of a shared palette here.
+        template.paletteTag = PALTAG_MON_ICON_0 + GetMonIconPaletteIndexFromSpecies(species);
     }
 
     tileNum = TryLoadMonIconTiles(species, personality, isEgg);
