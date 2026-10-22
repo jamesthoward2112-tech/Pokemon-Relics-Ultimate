@@ -36,8 +36,26 @@
   "coord_events": [
     {
       "type": "trigger",
+      "x": 17,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_PRU_CUBONE_STAGE_MAROGHOST",
+      "var_value": "0",
+      "script": "LavenderSpiritTower_5F_EventScript_Maroghost"
+    },
+    {
+      "type": "trigger",
       "x": 18,
       "y": 9,
+      "elevation": 3,
+      "var": "VAR_PRU_CUBONE_STAGE_MAROGHOST",
+      "var_value": "0",
+      "script": "LavenderSpiritTower_5F_EventScript_Maroghost"
+    },
+    {
+      "type": "trigger",
+      "x": 18,
+      "y": 11,
       "elevation": 3,
       "var": "VAR_PRU_CUBONE_STAGE_MAROGHOST",
       "var_value": "0",
