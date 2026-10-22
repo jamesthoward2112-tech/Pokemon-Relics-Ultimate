@@ -1,5 +1,3 @@
-.set LOCALID_PRU_GROUDON, 1
-.set LOCALID_PRU_MAXIE, 2
 
 MtSilver_1F_MoltresRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, MtSilver_1F_MoltresRoom_OnTransition
@@ -33,13 +31,13 @@ MtSilver_1F_MoltresRoom_EventScript_Groudon::
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, MtSilver_1F_MoltresRoom_EventScript_GroudonCaught
-	removeobject LOCALID_PRU_GROUDON
+	removeobject 1
 	release
 	end
 
 MtSilver_1F_MoltresRoom_EventScript_GroudonCaught::
 	setflag FLAG_PRU_GROUDON_CAUGHT
-	removeobject LOCALID_PRU_GROUDON
+	removeobject 1
 	release
 	end
 
