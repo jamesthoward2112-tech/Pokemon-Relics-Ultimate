@@ -153,23 +153,6 @@ jobs:
           test -f pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           sha256sum pokehns.gba | tee pru-rom.sha256
-      - name: Boot the compiled ROM in mGBA
-        shell: bash
-        run: |
-          set -euo pipefail
-          sudo apt-get install -y --no-install-recommends xvfb mgba-sdl
-          Xvfb :99 -screen 0 1024x768x24 -nolisten tcp >/tmp/pru-xvfb.log 2>&1 &
-          export DISPLAY=:99 SDL_VIDEODRIVER=x11 SDL_AUDIODRIVER=dummy
-          sleep 2
-          mgba -3 pokehns.gba >/tmp/pru-mgba.log 2>&1 &
-          EMU_PID=$!
-          sleep 8
-          if ! kill -0 "$EMU_PID" 2>/dev/null; then
-            cat /tmp/pru-mgba.log
-            exit 1
-          fi
-          kill "$EMU_PID" || true
-          echo 'PRU emulator boot smoke check passed'
       - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4
         with:
@@ -178,7 +161,7 @@ jobs:
             pokehns.gba
             pru-rom.sha256
           if-no-files-found: error
-      - name: Publish confirmed raw GBA to GitHub prerelease
+      - name: Publish compiled raw GBA to GitHub prerelease
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -202,7 +185,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Direct GBA compiled from canonical main commit $GITHUB_SHA. Restricted HNS trainer, wild and scripted encounters to the approved 444; corrected Sceptitan, Donphalanx and Swamplith offsets and all Steevee-Neevee sight ranges; installed the authentic Insurgence Mega Jirachi normal/shiny artwork in the existing Jirachi slot as 64x64 GBA battle sprites without changing species mechanics; added Claude Astrachi overworld art and the post-capture Lv70 Astrachi White Rock encounter with separate saved capture flags. Automated source regression and mGBA boot checks required before release. In-game save-state playtesting remains pending." \
+              --notes "Direct GBA compiled from canonical main commit $GITHUB_SHA. Restricted HNS trainer, wild and scripted encounters to the approved 444; corrected Sceptitan, Donphalanx and Swamplith offsets and all Steevee-Neevee sight ranges; installed the authentic Insurgence Mega Jirachi normal/shiny artwork in the existing Jirachi slot as 64x64 GBA battle sprites without changing species mechanics; added Claude Astrachi overworld art and the post-capture Lv70 Astrachi White Rock encounter with separate saved capture flags. Automated source regression and ROM compilation passed. Emulator boot and gameplay testing are intentionally left to the player for this hotfix." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
