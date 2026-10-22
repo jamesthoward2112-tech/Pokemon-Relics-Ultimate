@@ -76,7 +76,8 @@ const u32 gMonFrontPic_Astrachi[] = INCBIN_U32("graphics/pokemon/prl_authoritati
 const u16 gMonPalette_Astrachi[] = INCBIN_U16("graphics/pokemon/prl_authoritative/astrachi/normal.gbapal");
 const u32 gMonBackPic_Astrachi[] = INCBIN_U32("graphics/pokemon/prl_authoritative/astrachi/back.4bpp.smol");
 const u16 gMonShinyPalette_Astrachi[] = INCBIN_U16("graphics/pokemon/prl_authoritative/astrachi/shiny.gbapal");
-const u8 gMonIcon_Astrachi[] = INCBIN_U8("graphics/pokemon/prl_authoritative/astrachi/icon.4bpp");
+// Native 32x64 4bpp two-frame party icon; NOT the PRL unnormalized import.
+const u8 gMonIcon_Astrachi[] = INCBIN_U8("graphics/pokemon/astrachi/icon.4bpp");
 
 const u32 gMonFrontPic_Eeveeon[] = INCBIN_U32("graphics/pokemon/prl_authoritative/eeveeon/front.4bpp.smol");
 const u16 gMonPalette_Eeveeon[] = INCBIN_U16("graphics/pokemon/prl_authoritative/eeveeon/normal.gbapal");
