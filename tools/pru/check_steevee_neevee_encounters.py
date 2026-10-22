@@ -74,7 +74,9 @@ den_map = json.loads(read("data/maps/DragonsDen_Cavern_hns/map.json"))
 den_script = read("data/maps/DragonsDen_Cavern_hns/scripts.inc")
 den_id = "TRAINER_STEEVE_NEEVEE_DRAGONS_DEN_HNS"
 assert f"#define {den_id}     679" in opponents
-assert "#define TRAINERS_COUNT_HNS                       680" in opponents
+assert "#define TRAINER_PRU_ARCHIE_KYOGRE_HNS            680" in opponents
+assert "#define TRAINER_PRU_MAXIE_GROUDON_HNS            681" in opponents
+assert "#define TRAINERS_COUNT_HNS                       682" in opponents
 assert "case TRAINER_STEEVE_NEEVEE_DRAGONS_DEN_HNS:" in battle
 assert team_levels(party, den_id) == [53,51,50,50,52,52]
 den_team = party.split(f"=== {den_id} ===",1)[1]
