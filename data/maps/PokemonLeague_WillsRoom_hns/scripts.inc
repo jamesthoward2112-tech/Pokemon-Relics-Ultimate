@@ -67,6 +67,19 @@ PokemonLeague_WillsRoom_EventScript_Will::
 	end
 
 PokemonLeague_WillsRoom_EventScript_PRUHeistCleared::
+	@ The final Kanto Eevee Twins match at Route 23 is also required.
+	goto_if_unset FLAG_BADGE16_GET, PokemonLeague_WillsRoom_EventScript_PRUAllCleared
+	checktrainerflag TRAINER_STEEVE_NEEVEE_KANTO_FINALE_HNS
+	goto_if TRUE, PokemonLeague_WillsRoom_EventScript_PRUAllCleared
+	msgbox PokemonLeague_WillsRoom_Text_PRUTwinsBlocked, MSGBOX_DEFAULT
+	closemessage
+	fadescreen FADE_TO_BLACK
+	warp MAP_INDIGO_PLATEAU_POKEMON_CENTER_HNS, 32, 5
+	waitstate
+	release
+	end
+
+PokemonLeague_WillsRoom_EventScript_PRUAllCleared::
 	goto_if_ge VAR_LEAGUE_STATE, 2, PokemonLeague_WillsRoom_EventScript_WillDefeated
 	goto_if_set FLAG_IS_CHAMPION, PokemonLeague_WillsRoom_EventScript_WillRematch
 	msgbox PokemonLeague_WillsRoom_Text_Before, MSGBOX_DEFAULT
@@ -160,3 +173,8 @@ PokemonLeague_WillsRoom_Text_PRUHeistBlocked:
 	.string "Recover the eight badges and\n"
 	.string "defeat JESSIE and JAMES before\l"
 	.string "challenging us again!$"
+
+PokemonLeague_WillsRoom_Text_PRUTwinsBlocked:
+	.string "WILL: STEEVEE and NEEVEE\n"
+	.string "are waiting on ROUTE 23!\p"
+	.string "Face them before the LEAGUE.$"
