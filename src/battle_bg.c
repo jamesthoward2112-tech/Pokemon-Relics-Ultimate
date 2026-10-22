@@ -1203,7 +1203,10 @@ static void LoadPruEmeraldBattleForeground(void)
 
     // Original Emerald animated entry tiles (charbase 1) and unmodified
     // entry map (screenblock 28). Neither touches Crystal Redux BG3 (2/26).
-    LoadBattleEnvironmentEntryGfx(environment);
+    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[environment].entry.tileset,
+                                 (void *)BG_CHAR_ADDR(1));
+    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[environment].entry.tilemap,
+                                 (void *)BG_SCREEN_ADDR(28));
     CpuFill32(0, (void *)BG_SCREEN_ADDR(29), BG_SCREEN_SIZE);
 
     // Emerald anim maps address BG palette 4. The static donor scenery owns
