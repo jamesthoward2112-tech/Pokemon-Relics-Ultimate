@@ -48,9 +48,29 @@ assert "GetBoxMonData(GetCurrentBoxmon(), MON_DATA_MODERN_FATEFUL_ENCOUNTER)" in
 assert summary.count("enum Ability ability = GetSummaryMonAbility();") == 2
 # The new encounter knows Kablow; a caught old Electrode gets the move if
 # its fourth slot is still the original Electro Ball.
-assert "SetMonMoveSlot(mon, MOVE_KABLOW, 3);" in util
+assert "SetMonMoveSlot(mon, MOVE_KABOOM, 3);" in util
 assert "GetMonData(mon, MON_DATA_MOVE4) == MOVE_ELECTRO_BALL" in pokemon
-assert "SetMonMoveSlot(mon, MOVE_KABLOW, 3);" in pokemon
+assert "GetMonData(mon, MON_DATA_MOVE4) == MOVE_KABLOW" in pokemon
+assert "SetMonMoveSlot(mon, MOVE_KABOOM, 3);" in pokemon
+# Kaboom is a new signature move, not a rewrite of Kablowfish's Kablow!
+moves = read("include/constants/moves.h")
+infos = read("src/data/moves_info.h")
+resolution = read("src/battle_move_resolution.c")
+switching = read("src/battle_script_commands.c")
+assert moves.index("MOVE_KABLOW,") < moves.index("MOVE_KABOOM,") < moves.index("MOVES_COUNT,")
+assert "[MOVE_KABLOW]" in infos and ".power = 170" in infos.split("[MOVE_KABLOW]", 1)[1].split("},", 1)[0]
+kaboom = infos.split("[MOVE_KABOOM]", 1)[1].split("    [MOVE_", 1)[0]
+for expected in ('.power = 200', '.type = TYPE_ELECTRIC',
+                 '.explosion = TRUE', '.chance = 100',
+                 '.moveEffect = MOVE_EFFECT_PARALYSIS',
+                 'Paralyzes survivors.'):
+    assert expected in kaboom, expected
+assert "gCurrentMove == MOVE_KABOOM" in resolution
+kb = resolution.split("gCurrentMove == MOVE_KABOOM", 1)[1].split("else if", 1)[0]
+assert "HAZARDS_SPIKES" in kb and "HAZARDS_STEALTH_ROCK" in kb
+assert "HAZARDS_TOXIC_SPIKES" not in kb
+assert "GetMonAbility(&GetSideParty(side)[gBattlerPartyIndexes[battler]])" in switching
+
 assert "MOVE_KABLOW" in read("src/data/pokemon/level_up_learnsets/pjr.h")
 for stat, amount in (("HP",100), ("ATK",100), ("DEF",115), ("SPATK",150),
                      ("SPDEF",125), ("SPEED",175)):
