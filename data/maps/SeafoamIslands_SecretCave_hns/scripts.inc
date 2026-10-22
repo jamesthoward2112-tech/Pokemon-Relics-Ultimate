@@ -14,11 +14,11 @@ SeafoamIslands_SecretCave_EventScript_Kyogre::
 	lock
 	faceplayer
 	goto_if_unset FLAG_PRU_ARCHIE_KYOGRE_DEFEATED, SeafoamIslands_SecretCave_EventScript_Archie
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_KYOGRE_PRIMAL, CRY_MODE_ENCOUNTER
 	waitmoncry
-	@ Blue Orb triggers native Primal Reversion and Primordial Sea in battle.
-	@ A captured Kyogre keeps its orb and can revert to Primal again.
-	seteventmon SPECIES_KYOGRE, 75, ITEM_BLUE_ORB
+	@ Start in true Primal form: Primordial Sea is active from turn one.
+	@ The Blue Orb is retained if caught, allowing normal battle reversion.
+	seteventmon SPECIES_KYOGRE_PRIMAL, 75, ITEM_BLUE_ORB
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
