@@ -78,7 +78,7 @@ for flag, address in [
     ("FLAG_PRU_CUBONE_MIMIKYU_CAUGHT", "0x93D"),
     ("FLAG_PRU_CUBONE_MEMORIAL_REWARDED", "0x93E"),
 ]:
-    assert re.search(rf"#define\\s+{flag}\\s+{address}\\b", flags), (flag, address)
+    assert re.search(rf"#define\s+{flag}\s+{address}\b", flags), (flag, address)
 var_defs = READ("include/constants/vars.h")
 for var in ("VAR_PRU_CUBONE_STAGE_MAROGHOST", "VAR_PRU_CUBONE_STAGE_OSTEODIAN"):
     assert var in var_defs
