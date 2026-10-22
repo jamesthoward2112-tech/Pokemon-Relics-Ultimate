@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: pru-canonical-build
+  group: pru-direct-gba-hotfix-20261022
   cancel-in-progress: true
 
 jobs:
