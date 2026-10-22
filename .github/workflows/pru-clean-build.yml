@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main, pru/kanto-duos-heist-emerald-foreground-20261022]
+    branches: [main]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 # Each build is independent: never supersede a queued ROM build.
-# One scoped integration smoke build is enabled on this feature branch; main remains automatic.
+# PR builds are opt-in via workflow_dispatch; main pushes still run automatically.
 concurrency:
   group: pru-clean-build-${{ github.run_id }}
   cancel-in-progress: false
