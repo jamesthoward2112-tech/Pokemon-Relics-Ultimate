@@ -1,6 +1,7 @@
 # Scoped PRU source/ROM validation for the integrated Emerald+J&J+S&N work.
 # Only a change to THIS file invokes a full integration run on this branch.
 # No automatic builds on unrelated development commits.
+# Fresh attempt requested after the prior run stalled during dependency installation.
 name: PRU single integration ROM gate
 
 on:
