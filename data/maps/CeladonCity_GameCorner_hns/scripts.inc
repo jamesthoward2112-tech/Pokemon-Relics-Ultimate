@@ -130,3 +130,42 @@ CeladonGameCorner_Text_Gramps:
 
 CeladonGameCorner_Text_Woman:
 	.string "I can't stop winning!$"
+
+@ Standalone Kanto Rocket doubles. The Machine Part quest is NEVER reset.
+
+CeladonGameCorner_EventScript_PRUJessie::
+	trainerbattle_double TRAINER_JESSIE_JAMES_GAMECORNER_HNS, CeladonGameCorner_Text_PRUIntro, CeladonGameCorner_Text_PRUWin, Route104_Text_GinaNotEnoughMons
+	goto CeladonGameCorner_EventScript_PRUAfterWin
+
+CeladonGameCorner_EventScript_PRUJames::
+	goto CeladonGameCorner_EventScript_PRUJessie
+
+CeladonGameCorner_EventScript_PRUMeowth::
+	msgbox CeladonGameCorner_Text_PRUMeowth, MSGBOX_NPC
+	end
+
+CeladonGameCorner_EventScript_PRUAfterWin::
+	setflag FLAG_PRU_JESSIE_JAMES_GAMECORNER
+	msgbox CeladonGameCorner_Text_PRUEscape, MSGBOX_DEFAULT
+	closemessage
+	removeobject 12
+	removeobject 13
+	removeobject 14
+	end
+
+
+CeladonGameCorner_Text_PRUIntro:
+	.string "JESSIE: Remember TEAM ROCKET's\n"
+	.string "old CELADON hideout?\p"
+	.string "JAMES: This is OUR Game Corner!\p"
+	.string "JESSIE: Prepare for trouble!$
+CeladonGameCorner_Text_PRUWin:
+	.string "JESSIE: What? We lost again!\p"
+	.string "JAMES: Our plan was perfect!$"
+
+CeladonGameCorner_Text_PRUEscape:
+	.string "MEOWTH: We gotta go!\p"
+	.string "TEAM ROCKET retreats for now!$"
+
+CeladonGameCorner_Text_PRUMeowth:
+	.string "MEOWTH: Meowth, that's right!$"
