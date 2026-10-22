@@ -158,7 +158,7 @@ CeladonGameCorner_Text_PRUIntro:
 	.string "JESSIE: Remember TEAM ROCKET's\n"
 	.string "old CELADON hideout?\p"
 	.string "JAMES: This is OUR Game Corner!\p"
-	.string "JESSIE: Prepare for trouble!$
+	.string "JESSIE: Prepare for trouble!$"
 CeladonGameCorner_Text_PRUWin:
 	.string "JESSIE: What? We lost again!\p"
 	.string "JAMES: Our plan was perfect!$"
