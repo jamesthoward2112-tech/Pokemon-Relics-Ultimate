@@ -27,6 +27,24 @@ assert "FLAG_PRU_KANTO_BIRDS_UNLOCKED" in ow
 assert "void EnsurePruKantoBirdRoamers(void);" in hdr
 assert "RestorePruDefeatedRoamers();" in ow
 
+# A failed Poké Ball must not trigger the old flee-on-first-turn AI.
+# Use competitive wild-mon moves instead, preserve Lati roaming behaviour,
+# and reject stray opponent RUN commands as a second line of defence.
+ai = read("src/battle_ai_main.c")
+util = read("src/battle_util.c")
+main = read("src/battle_main.c")
+assert "flags = GetWildAiFlags() & ~AI_FLAG_ROAMING;" in ai
+assert "flags = AI_FLAG_ROAMING;" in ai  # other roamers are unchanged
+assert "gBattleMons[battlerAtk].species == SPECIES_ARTICUNO" in ai
+assert "gBattleMons[battlerAtk].species == SPECIES_ZAPDOS" in ai
+assert "gBattleMons[battlerAtk].species == SPECIES_MOLTRES" in ai
+for n in ("ARTICUNO", "ZAPDOS", "MOLTRES"):
+    assert "gBattleMons[gBattlerAttacker].species == SPECIES_" + n in util
+assert "gBattleOutcome = B_OUTCOME_MON_FLED;" in util  # only for non-bird opponents
+assert "gBattleOutcome == B_OUTCOME_WON" in roam
+assert "RoamerMoveToOtherLocationSet(gEncounteredRoamerIndex);" in roam
+assert "if ((!IS_HNS && gBattleOutcome == B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT)" in main
+
 for name in ("articuno", "zapdos", "moltres"):
     path = ROOT / "graphics/pokemon" / name
     for filename, size in (
@@ -44,4 +62,4 @@ for name in ("articuno", "zapdos", "moltres"):
         lines = (path / f"{kind}.pal").read_text().splitlines()
         assert lines[:3] == ["JASC-PAL", "0100", "16"]
         assert len(lines[3:]) == 16
-print("PASS: Articuno-P, Zapdos-P and Moltres-P native-size indexed graphics, palette, overworld weather and roamer hooks")
+print("PASS: Articuno-P, Zapdos-P and Moltres-P native-size indexed graphics, palette, weather, no-flee battles, and defeat relocation")
