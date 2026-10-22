@@ -1149,6 +1149,16 @@ static u8 GetBattleEnvironmentOverride(void)
     return GetBattleEnvironmentByMapScene(battleScene);
 }
 
+// Used only to disable the panorama-splitting entrance on standard PRU
+// battles. Preserve the original link, facility and partner transitions.
+bool8 IsPruCrystalBattleBgActive(void)
+{
+    if (gBattleTypeFlags & (BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_MULTI))
+        return FALSE;
+
+    return GetPruCrystalBattleBgIndex(GetBattleEnvironmentOverride()) != 0xFF;
+}
+
 void BattleInitBgsAndWindows(void)
 {
     ResetBgsAndClearDma3BusyFlags(0);
@@ -1476,6 +1486,11 @@ void InitLinkBattleVsScreen(u8 taskId)
 
 void DrawBattleEntryBackground(void)
 {
+    // BG3 already contains the full Crystal Redux scene. Never draw the
+    // separate entrance curtain panels above it or scroll the panorama.
+    if (IsPruCrystalBattleBgActive())
+        return;
+
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {
         DecompressDataWithHeaderVram(gBattleVSFrame_Gfx, (void *)(BG_CHAR_ADDR(1)));

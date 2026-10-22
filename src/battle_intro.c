@@ -20,6 +20,7 @@ void BattleIntroSlide3(u8);
 static void BattleIntroSlideLink(u8);
 static void BattleIntroSlidePartner(u8);
 static void BattleIntroNoSlide(u8);
+static void BattleIntroCrystalStatic(u8);
 
 static const u8 sBattleAnimBgCnts[] = {REG_OFFSET_BG0CNT, REG_OFFSET_BG1CNT, REG_OFFSET_BG2CNT, REG_OFFSET_BG3CNT};
 
@@ -105,6 +106,10 @@ void HandleIntroSlide(u8 environment)
     {
         taskId = CreateTask(BattleIntroSlide3, 0);
     }
+    else if (IsPruCrystalBattleBgActive())
+    {
+        taskId = CreateTask(BattleIntroCrystalStatic, 0);
+    }
     else
     {
         if (environment >= NELEMS(gBattleEnvironmentInfo)
@@ -134,6 +139,25 @@ static void BattleIntroSlideEnd(u8 taskId)
     SetGpuReg(REG_OFFSET_BLDY, 0);
     SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
     SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
+}
+
+// Unlike BattleIntroNoSlide this does not grow a window or animate the
+// BG3 scanline offsets. The complete scene is visible before the intro task;
+// grass/platform, trainer and Pokémon sprites still use their own callbacks.
+static void BattleIntroCrystalStatic(u8 taskId)
+{
+    ScanlineEffect_Stop();
+    gBattle_WIN0V = WIN_RANGE(0, DISPLAY_HEIGHT);
+    SetGpuReg(REG_OFFSET_WIN0V, gBattle_WIN0V);
+    gIntroSlideFlags &= ~1;
+
+    // Restore the normal battle-window BG settings without ever displaying
+    // the separate scrolling entry curtains.
+    SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 0);
+    SetBgAttribute(2, BG_ATTR_CHARBASEINDEX, 0);
+    SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
+    SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) | BGCNT_TXT512x256);
+    BattleIntroSlideEnd(taskId);
 }
 
 static void BattleIntroNoSlide(u8 taskId)
