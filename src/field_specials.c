@@ -6175,7 +6175,22 @@ void GivePartyMonNationalRibbon(void)
     }
 }
 // Mt. Moon's second wish is catch-gated, including players on older saves.
-void PruIsJirachiCaught(void)
+// Script 'specialvar' assigns the C function RETURN VALUE to VAR_RESULT.
+// Writing gSpecialVar_Result from a void special does NOT work: scrcmd.c
+// overwrites it with the (undefined) return register after the call.
+u16 PruIsJirachiCaught(void)
 {
-    gSpecialVar_Result = GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT);
+    u8 i;
+
+    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT))
+        return TRUE;
+
+    // Old saves may have a valid caught Jirachi in the player's party even
+    // where the caught-Dex flag was not carried forward during migration.
+    for (i = 0; i < gPlayerPartyCount; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL) == SPECIES_JIRACHI)
+            return TRUE;
+    }
+    return FALSE;
 }

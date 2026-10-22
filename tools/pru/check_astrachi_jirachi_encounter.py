@@ -30,7 +30,15 @@ overworld = read("src/overworld.c")
 assert "FlagGet(FLAG_CAUGHT_MTMOON_ASTRACHI)" in overworld
 assert "FlagGet(FLAG_SUMMONED_MTMOON_ASTRACHI)" in overworld
 special = read("src/field_specials.c")
-assert "PruIsJirachiCaught(void)" in special and "FLAG_GET_CAUGHT" in special.split("PruIsJirachiCaught(void)",1)[1]
+# A 'specialvar' command stores the special's u16 return value. The prior
+# void function assigned VAR_RESULT directly, then scrcmd overwrote it with
+# an undefined return register: user could catch Jirachi yet never get Astrachi.
+assert "u16 PruIsJirachiCaught(void)" in special, "Stone gate must be return-valued for specialvar"
+gate_fn = special.split("u16 PruIsJirachiCaught(void)", 1)[1]
+assert "FLAG_GET_CAUGHT" in gate_fn
+assert "MON_DATA_SPECIES, NULL) == SPECIES_JIRACHI" in gate_fn
+assert "return TRUE;" in gate_fn and "return FALSE;" in gate_fn
+assert "gSpecialVar_Result =" not in gate_fn, "Do not fake a specialvar result via side effect"
 sprite = ROOT / "graphics/pokemon/astrachi/overworld.png"
 assert sprite.is_file() and sprite.stat().st_size > 0
 info = read("src/data/pokemon/species_info/pru_custom.h")
