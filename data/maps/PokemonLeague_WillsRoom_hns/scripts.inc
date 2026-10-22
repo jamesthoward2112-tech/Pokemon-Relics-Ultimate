@@ -54,6 +54,19 @@ EliteFourRoom_CloseDoor::
 PokemonLeague_WillsRoom_EventScript_Will::
 	lock 
 	faceplayer
+	@ The completed Kanto Badge Heist is required for the second League.
+	@ This check does not affect the player's first Johto Elite Four clear.
+	goto_if_unset FLAG_BADGE16_GET, PokemonLeague_WillsRoom_EventScript_PRUHeistCleared
+	goto_if_set FLAG_PRU_HEIST_COMPLETED, PokemonLeague_WillsRoom_EventScript_PRUHeistCleared
+	msgbox PokemonLeague_WillsRoom_Text_PRUHeistBlocked, MSGBOX_DEFAULT
+	closemessage
+	fadescreen FADE_TO_BLACK
+	warp MAP_INDIGO_PLATEAU_POKEMON_CENTER_HNS, 32, 5
+	waitstate
+	release
+	end
+
+PokemonLeague_WillsRoom_EventScript_PRUHeistCleared::
 	goto_if_ge VAR_LEAGUE_STATE, 2, PokemonLeague_WillsRoom_EventScript_WillDefeated
 	goto_if_set FLAG_IS_CHAMPION, PokemonLeague_WillsRoom_EventScript_WillRematch
 	msgbox PokemonLeague_WillsRoom_Text_Before, MSGBOX_DEFAULT
@@ -139,3 +152,11 @@ PokemonLeague_WillsRoom_Text_RematchBefore:
     .string "enhanced strategy and might.\p"
     .string "Let us see if your foresight\n"
     .string "matches mine.$"
+
+
+PokemonLeague_WillsRoom_Text_PRUHeistBlocked:
+	.string "WILL: TEAM ROCKET's KANTO\n"
+	.string "BADGE HEIST isn't finished!\p"
+	.string "Recover the eight badges and\n"
+	.string "defeat JESSIE and JAMES before\\l"
+	.string "challenging us again!$"
