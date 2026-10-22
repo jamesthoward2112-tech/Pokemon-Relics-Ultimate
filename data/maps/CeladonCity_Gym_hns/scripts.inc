@@ -6,6 +6,15 @@ CeladonCity_Gym_EventScript_Erika::
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_CELADON_GYM, CeladonCity_Gym_EventScript_Erika_Defeated
+	@ The twins must be beaten before Erika can be challenged, even if avoided.
+	checktrainerflag TRAINER_JO_AND_ZOE_HNS
+	goto_if TRUE, CeladonCity_Gym_EventScript_ErikaReady
+	msgbox CeladonCity_Gym_Text_SteeveeNeeveeGate, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+CeladonCity_Gym_EventScript_ErikaReady::
 	msgbox CeladonCity_Gym_Text_ErikaBeforeBattle, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_ERIKA_HNS, CeladonCity_Gym_Text_ErikaBeaten
 	message CeladonCity_Gym_Text_PlayerReceivedRainbowBadge
@@ -134,35 +143,48 @@ CeladonCity_Gym_Text_BeautyJuliaAfter:
 	.string "How do I go about becoming\n"
 	.string "ladylike like ERIKA?$"
 
-CeladonCity_Gym_EventScript_Jo::
-	trainerbattle_double TRAINER_JO_AND_ZOE_HNS, CeladonCity_Gym_Text_TwinsJoAndZoe1Seen, CeladonCity_Gym_Text_TwinsJoAndZoe1Beaten, Route104_Text_GinaNotEnoughMons
-	special GetPlayerBigGuyGirlString
-	msgbox CeladonCity_Gym_Text_TwinsJoAndZoe1After, MSGBOX_AUTOCLOSE
+@ Preserve Celadon's stable trainer ID so existing save flags remain compatible.
+@ Steevee and Neevee share this double battle from either overworld NPC.
+CeladonCity_Gym_EventScript_Steevee::
+	trainerbattle_double TRAINER_JO_AND_ZOE_HNS, CeladonCity_Gym_Text_SteeveeSeen, CeladonCity_Gym_Text_SteeveeNeeveeBeaten, Route104_Text_GinaNotEnoughMons
+	msgbox CeladonCity_Gym_Text_SteeveeAfter, MSGBOX_AUTOCLOSE
 	end
 
-CeladonCity_Gym_EventScript_Zoe::
-	trainerbattle_double TRAINER_JO_AND_ZOE_HNS, CeladonCity_Gym_Text_TwinsJoAndZoe2Seen, CeladonCity_Gym_Text_TwinsJoAndZoe2Beaten, Route104_Text_GinaNotEnoughMons
-	msgbox CeladonCity_Gym_Text_TwinsJoAndZoe2After, MSGBOX_AUTOCLOSE
+CeladonCity_Gym_EventScript_Neevee::
+	trainerbattle_double TRAINER_JO_AND_ZOE_HNS, CeladonCity_Gym_Text_NeeveeSeen, CeladonCity_Gym_Text_SteeveeNeeveeBeaten, Route104_Text_GinaNotEnoughMons
+	msgbox CeladonCity_Gym_Text_NeeveeAfter, MSGBOX_AUTOCLOSE
 	end
 
-CeladonCity_Gym_Text_TwinsJoAndZoe1Seen:
-	.string "We'll show you POKéMON moves that\n"
-	.string "ERIKA taught us!$"
+CeladonCity_Gym_Text_SteeveeSeen:
+	.string "STEEVEE: Surprise! It's us!\p"
+	.string "NEEVEE: ERIKA has been teaching\n"
+	.string "us some clever tricks!\p"
+	.string "STEEVEE: Beat us before you\n"
+	.string "challenge her!$"
 
-CeladonCity_Gym_Text_TwinsJoAndZoe1Beaten:
-	.string "Oh… We lost…$"
+CeladonCity_Gym_Text_NeeveeSeen:
+	.string "NEEVEE: Remember us?\p"
+	.string "STEEVEE: Our partners have grown\n"
+	.string "since JOHTO!\p"
+	.string "NEEVEE: Let's battle together!$"
 
-CeladonCity_Gym_Text_TwinsJoAndZoe1After:
-	.string "ERIKA will get you back for us!$"
+CeladonCity_Gym_Text_SteeveeNeeveeBeaten:
+	.string "STEEVEE: You got us again!\p"
+	.string "NEEVEE: ERIKA will be impressed!$"
 
-CeladonCity_Gym_Text_TwinsJoAndZoe2Seen:
-	.string "We're going to protect ERIKA!$"
+CeladonCity_Gym_Text_SteeveeAfter:
+	.string "STEEVEE: We trained with ERIKA\n"
+	.string "to sharpen our teamwork!$"
 
-CeladonCity_Gym_Text_TwinsJoAndZoe2Beaten:
-	.string "We couldn't win…$"
+CeladonCity_Gym_Text_NeeveeAfter:
+	.string "NEEVEE: We'll keep working on\n"
+	.string "our EEVEE evolutions!$"
 
-CeladonCity_Gym_Text_TwinsJoAndZoe2After:
-	.string "ERIKA is much, much stronger!$"
+CeladonCity_Gym_Text_SteeveeNeeveeGate:
+	.string "ERIKA: My visiting friends,\n"
+	.string "STEEVEE and NEEVEE, wish to\l"
+	.string "test my challengers first.\p"
+	.string "Please battle them before me.$"
 
 CeladonCity_Gym_EventScript_GymStatue::
 	lockall
