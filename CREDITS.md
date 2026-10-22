@@ -143,3 +143,5 @@ were extracted from *Pokémon Team Rocket Jessie & James* (FireRed/BPRE), by
 `PRL_Team_Rocket_COMPLETE_Donor_Bank_2026-10-09.zip`. Source sprite bytes
 were retained without alteration. Further individual graphic artist credits
 and redistribution terms remain to be verified.
+
+- **Astrachi overworld (Claude)** — Original nine-frame overworld strip supplied by project owner on 22 October 2026; converted to transparent indexed GBA sprite sheet for the PRU Mt. Moon Square event. Existing battle sprites are unchanged.

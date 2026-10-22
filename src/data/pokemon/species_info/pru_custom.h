@@ -274,6 +274,11 @@
     .iconSprite = gMonIcon_Astrachi, .iconPalIndex = 0,
     .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
     .levelUpLearnset = sAstrachiLevelUpLearnset, .teachableLearnset = sJirachiTeachableLearnset,
+    OVERWORLD(
+        sPicTable_Astrachi, SIZE_32x32, SHADOW_SIZE_M, TRACKS_NONE,
+        sAnimTable_Following,
+        gOverworldPalette_Astrachi, gShinyOverworldPalette_Astrachi
+    )
 },
 [SPECIES_EEVEEON] =
 {

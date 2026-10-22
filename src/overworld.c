@@ -962,6 +962,16 @@ static void RestorePruDefeatedLegendariesOnMapEntry(void)
             FlagClear(sLegendaryHideFlags[i].hideFlag);
     }
 
+    // Astrachi's three saved flags are new. Hide it on older saves until the
+    // stone has explicitly summoned it; after a knockout restore it only on
+    // map re-entry. Astrachi presently shares Jirachi's National Dex number,
+    // so the ordinary Pokédex-based legendary retry check is not sufficient.
+    if (!FlagGet(FLAG_SUMMONED_MTMOON_ASTRACHI)
+        || FlagGet(FLAG_CAUGHT_MTMOON_ASTRACHI))
+        FlagSet(FLAG_HIDE_MTMOON_ASTRACHI);
+    else
+        FlagClear(FLAG_HIDE_MTMOON_ASTRACHI);
+
     // Mt. Moon's Jirachi may only return after the White Rock summoning.
     if (FlagGet(FLAG_SUMMONED_MTMOON_JIRACHI)
         && PruLegendarySeenButUncaught(SPECIES_JIRACHI))
