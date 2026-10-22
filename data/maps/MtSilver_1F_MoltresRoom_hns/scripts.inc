@@ -44,12 +44,12 @@ MtSilver_1F_MoltresRoom_EventScript_GroudonCaught::
 	end
 
 MtSilver_1F_MoltresRoom_Text_MaxieIntro:
-	.string "MAXIE: You trespass on sacred\\n"
+	.string "MAXIE: You trespass on sacred\n"
 	.string "ground! TEAM MAGMA will stop you!$"
 
 MtSilver_1F_MoltresRoom_Text_MaxieDefeated:
 	.string "MAXIE: Impossible...$"
 
 MtSilver_1F_MoltresRoom_Text_MaxieAfter:
-	.string "MAXIE: The molten heart of\\n"
+	.string "MAXIE: The molten heart of\n"
 	.string "GROUDON answers only to strength.$"
