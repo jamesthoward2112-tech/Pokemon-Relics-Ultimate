@@ -18762,6 +18762,7 @@ static const struct LevelUpMove sMimikyuLevelUpLearnset[] = {
     LEVEL_UP_MOVE(41, MOVE_HONE_CLAWS),
     LEVEL_UP_MOVE(46, MOVE_PLAY_ROUGH),
     LEVEL_UP_MOVE(50, MOVE_PAIN_SPLIT),
+    LEVEL_UP_MOVE(60, MOVE_EERIE_FOG),
     LEVEL_UP_END
 };
 #endif //P_FAMILY_MIMIKYU
