@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main]
+    branches: [main, "pru/astrachi-mt-moon-20261022"]
   workflow_dispatch:
 
 permissions:
@@ -96,6 +96,7 @@ jobs:
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_pru_444_gameplay.py
           python3 tools/pru/check_insurgence_mega_jirachi.py
+          python3 tools/pru/check_astrachi_jirachi_encounter.py
           python3 tools/pru/check_legendary_catching_respawns.py
           python3 tools/pru/check_bld_status_icon.py
           python3 tools/pru/check_valkiri_sound.py
