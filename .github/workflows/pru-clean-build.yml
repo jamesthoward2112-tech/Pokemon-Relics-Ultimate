@@ -98,6 +98,7 @@ jobs:
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_pru_444_gameplay.py
           python3 tools/pru/check_insurgence_mega_jirachi.py
+          python3 tools/pru/check_insurgence_space_mew.py
           python3 tools/pru/check_p_bird_sprites.py
           python3 tools/pru/check_astrachi_jirachi_encounter.py
           python3 tools/pru/check_legendary_catching_respawns.py
