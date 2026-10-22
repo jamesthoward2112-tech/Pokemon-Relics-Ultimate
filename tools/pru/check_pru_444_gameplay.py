@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Fail the PRU build if any Johto/Kanto trainer, wild slot or static
-HNS event exposes a species outside the approved 444.
+HNS event exposes a species outside the approved 447 staged roster.
 
-This is deliberately separate from the Pokédex-numbering test: a 444-entry
+This is deliberately separate from the Pokédex-numbering test: a 447-entry
 Pokédex does not prevent Gen 4+ Pokémon appearing in battles or encounters.
 Other game modes are not affected by the HNS checks.
 """
@@ -16,16 +16,16 @@ with (ROOT / "data/pru/PRU_National_Pokedex_2026-10-16.csv").open(
     encoding="utf-8-sig", newline=""
 ) as fh:
     rows = list(csv.DictReader(fh))
-assert len(rows) == 444
+assert len(rows) == 447
 allowed = {row["Species_Constant"] for row in rows}
 allowed_names = {row["Name"] for row in rows}
 # Internal source name for Valkiri, and the shared species name for Sevii Noivern.
 allowed_names.update({"Valkyvoir", "Noivern"})
-# Explicit negative fixtures: a full 444 audit must reject notorious regressions.
+# Explicit negative fixtures: a full 447 audit must reject notorious regressions.
 # Ursaring is approved, but Ursaluna (including Bloodmoon) is not.
 for forbidden in ("Ursaluna", "Ursalina", "Ursaluna Bloodmoon"):
-    assert forbidden not in allowed_names, f"Forbidden Pokémon entered PRU 444: {forbidden}"
-assert "SPECIES_URSALUNA" not in allowed, "Ursaluna must not enter PRU's 444"
+    assert forbidden not in allowed_names, f"Forbidden Pokémon entered PRU staged dex: {forbidden}"
+assert "SPECIES_URSALUNA" not in allowed, "Ursaluna must not enter PRU's staged dex"
 
 name_aliases = {
     "Mr Mime": "Mr. Mime",
@@ -56,20 +56,7 @@ for section in re.split(r"(?=^=== TRAINER_[^\n]+ ===\s*$)", party, flags=re.M):
         species = name.split(" @ ", 1)[0].strip()
         species = re.sub(r" \([FM]\)$", "", species)
         pokemon_count += 1
-        # Explicit trainer-only exception requested for the Seafoam S&N
-        # double battle. These two later-generation Eeveelutions already
-        # exist in the engine but are not members of PRU's 444 Pokédex.
-        # Do not allow them in wild encounters, gifts, evolutions or any
-        # other trainer parties; the 444 dex size stays unchanged.
-        seafoam_eeveelution_exception = (
-            trainer == "TRAINER_STEEVE_NEEVEE_SEAFOAM_HNS"
-            and species in {"Glaceon", "Leafeon"}
-        )
-        if (
-            species not in allowed_names
-            and name_aliases.get(species) not in allowed_names
-            and not seafoam_eeveelution_exception
-        ):
+        if species not in allowed_names and name_aliases.get(species) not in allowed_names:
             errors.append(f"{trainer}: forbidden trainer Pokémon {species}")
 assert trainer_count >= 650 and pokemon_count >= 1800, (
     "Trainer file was unexpectedly truncated or audit skipped trainer data"
@@ -111,7 +98,7 @@ for path in sorted((ROOT / "data/maps").glob("*_hns/scripts.inc")):
 evolution = (ROOT / "src/pokemon.c").read_text(encoding="utf-8")
 assert "IsPruApprovedEvolutionTarget(targetSpecies)" in evolution
 assert "sPruDexSpecies[i] == species" in evolution
-assert "#define PRU_DEX_COUNT 444" in (ROOT / "src/data/pokemon/pru_dex_order.h").read_text()
+assert "#define PRU_DEX_COUNT 447" in (ROOT / "src/data/pokemon/pru_dex_order.h").read_text()
 
 if errors:
     print(f"FAIL: {len(errors)} forbidden PRU species placements:")
@@ -121,5 +108,5 @@ if errors:
 print(f"PASS: {trainer_count} HNS trainers / {pokemon_count} legal Pokémon")
 print(f"PASS: {len(wild_maps)} HNS wild maps / {wild_slots} legal wild slots")
 print(f"PASS: {event_scripts} HNS map scripts with no out-of-dex species constants")
-print("PASS: evolution targets remain confined to the approved 444")
+print("PASS: evolution targets remain confined to the approved 447")
 print("PASS: Ursaluna / Ursalina explicitly excluded from approved 444")
