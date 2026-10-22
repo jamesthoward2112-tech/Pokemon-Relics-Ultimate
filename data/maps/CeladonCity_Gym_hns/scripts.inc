@@ -5,6 +5,8 @@ CeladonCity_Gym_hns_MapScripts::
 CeladonCity_Gym_EventScript_Erika::
 	lock
 	faceplayer
+	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_STARTED, CeladonCity_Gym_EventScript_PRUHeistErika
 	goto_if_set FLAG_DEFEATED_CELADON_GYM, CeladonCity_Gym_EventScript_Erika_Defeated
 	@ The twins must be beaten before Erika can be challenged, even if avoided.
 	checktrainerflag TRAINER_STEEVE_NEEVEE_CELADON_HNS
@@ -237,3 +239,33 @@ CeladonCity_Gym_Text_PRURewardMoney:
 CeladonCity_Gym_Text_PRURewardBagFull:
 	.string "Your BAG is full! Make some room\n"
 	.string "and come back for your prize.$"
+
+@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
+CeladonCity_Gym_EventScript_PRUHeistErika::
+	goto_if_set FLAG_PRU_HEIST_ERIKA, CeladonCity_Gym_EventScript_PRUHeistErikaDone
+	msgbox CeladonCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_ERIKA_HNS, CeladonCity_Gym_Text_PRUHeistWon
+	setflag FLAG_PRU_HEIST_ERIKA
+	msgbox CeladonCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+CeladonCity_Gym_EventScript_PRUHeistErikaDone::
+	msgbox CeladonCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+CeladonCity_Gym_Text_PRUHeistChallenge:
+	.string "ERIKA: TEAM ROCKET took your\n"
+	.string "BADGE CASE? Let's win it back!$"
+
+CeladonCity_Gym_Text_PRUHeistWon:
+	.string "ERIKA: You've earned this\n"
+	.string "BADGE back. Nicely done!$"
+
+CeladonCity_Gym_Text_PRUHeistAlready:
+	.string "ERIKA: One step closer\n"
+	.string "to stopping TEAM ROCKET!$"
+
