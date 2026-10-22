@@ -28,7 +28,7 @@ const u32 gMonFrontPic_Swamplith[] = INCBIN_U32("graphics/pokemon/prl_authoritat
 const u16 gMonPalette_Swamplith[] = INCBIN_U16("graphics/pokemon/prl_authoritative/swamplith/normal.gbapal");
 const u32 gMonBackPic_Swamplith[] = INCBIN_U32("graphics/pokemon/prl_authoritative/swamplith/back.4bpp.smol");
 const u16 gMonShinyPalette_Swamplith[] = INCBIN_U16("graphics/pokemon/prl_authoritative/swamplith/shiny.gbapal");
-const u8 gMonIcon_Swamplith[] = INCBIN_U8("graphics/pokemon/prl_authoritative/swamplith/icon.4bpp");
+const u8 gMonIcon_Swamplith[] = INCBIN_U8("graphics/pokemon/swamplith/icon.4bpp");
 
 const u32 gMonFrontPic_Skulberus[] = INCBIN_U32("graphics/pokemon/prl_authoritative/skulberus/front.4bpp.smol");
 const u16 gMonPalette_Skulberus[] = INCBIN_U16("graphics/pokemon/prl_authoritative/skulberus/normal.gbapal");
