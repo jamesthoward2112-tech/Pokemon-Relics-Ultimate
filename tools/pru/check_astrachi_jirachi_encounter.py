@@ -78,5 +78,37 @@ workflow = read(".github/workflows/pru-clean-build.yml")
 assert "install_insurgence_mega_jirachi.py" in workflow
 assert "check_insurgence_mega_jirachi.py" in workflow
 assert "check_astrachi_jirachi_encounter.py" in workflow
+# Party icon regression (also checked when CI re-imports pinned PRL assets).
+# Party/PC OAM uses two successive 32x32 icon images from a 32x64 sheet.
+icon = ROOT / "graphics/pokemon/astrachi/icon.png"
+with Image.open(icon) as im:
+    im.load()
+    assert im.mode == "P" and im.size == (32, 64), ("invalid two-frame GBA icon", im.mode, im.size)
+    assert im.info.get("transparency") == 0, "index zero must be transparent"
+    assert max(im.getdata()) < 16 and len(set(im.getdata())) <= 16
+    assert len(set(im.getdata())) > 8, "Astrachi icon degraded"
+    a = im.crop((0, 0, 32, 32))
+    b = im.crop((0, 32, 32, 64))
+    a_box = a.point(lambda px: 255 if px else 0).getbbox()
+    b_box = b.point(lambda px: 255 if px else 0).getbbox()
+    assert a_box == (3, 4, 29, 27) and b_box == (3, 5, 29, 28), (a_box, b_box)
+    assert a.tobytes() != b.tobytes(), "two icon frames must subtly animate"
+    assert im.getpixel((0, 0)) == im.getpixel((0, 32)) == 0
+
+icon_header = read("src/data/graphics/pru_pokemon.h")
+assert 'gMonIcon_Astrachi[] = INCBIN_U8("graphics/pokemon/astrachi/icon.4bpp")' in icon_header
+icon_engine = read("src/pokemon_icon.c")
+assert "sPRUAstrachiIconPalette[16]" in icon_engine
+assert "{ sPRUAstrachiIconPalette, POKE_ICON_BASE_PAL_TAG + 10 }" in icon_engine
+assert "if (species == SPECIES_ASTRACHI)\n        return 10;" in icon_engine
+assert "GetPruCustomIconPaletteIndex(species, gSpeciesInfo[species].iconPalIndex)" in icon_engine
+pc = read("src/pokemon_storage_system.c")
+assert "PALTAG_MON_ICON_0 + GetMonIconPaletteIndexFromSpecies(species)" in pc
+party = read("src/party_menu.c")
+assert "CreateMonIconIsEgg(species" in party
+sync = read("tools/pru/sync_prl_authoritative_sprites.py")
+assert '"astrachi",  # Locally corrected 32x64 icon' in sync
+print("PASS: Astrachi exact 32x64 4bpp two-frame compact icon, dedicated palette #10, party/PC asset wiring")
+
 print("PASS: Jirachi caught-only gate, Level 70 Astrachi, independent capture flags and retry")
 print("PASS: Astrachi #443 + Claude overworld and Insurgence Jirachi art guards")
