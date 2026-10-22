@@ -34,6 +34,9 @@
 #include "data/battle_environment.h"
 #include "data/pru_crystal_bg_table.h"
 
+// Emerald battle-entry layer state is reset at every new battle.
+static bool8 sPruEmeraldForegroundActive;
+
 // .rodata
 
 static const struct OamData sVsLetter_V_OamData =
@@ -1151,8 +1154,6 @@ static u8 GetBattleEnvironmentOverride(void)
 
 // Crystal Redux BG3 never moves. Emerald's original environment entry art is
 // an optional foreground on BG1, with its own palette and tile storage.
-static bool8 sPruEmeraldForegroundActive;
-
 bool8 IsPruEmeraldForegroundActive(void)
 {
     return sPruEmeraldForegroundActive;
