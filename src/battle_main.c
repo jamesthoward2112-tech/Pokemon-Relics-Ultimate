@@ -3672,11 +3672,13 @@ static void DoBattleIntro(void)
                 gBattleMons[battler].types[0] = GetSpeciesType(gBattleMons[battler].species, 0);
                 gBattleMons[battler].types[1] = GetSpeciesType(gBattleMons[battler].species, 1);
                 gBattleMons[battler].types[2] = TYPE_MYSTERY;
-                // The party-to-battle conversion already resolved special
-                // per-mon abilities. Do not overwrite Electrode's Levitate.
-                if (gBattleMons[battler].species != SPECIES_ELECTRODE
-                 || gBattleMons[battler].ability != ABILITY_LEVITATE)
-                    gBattleMons[battler].ability = GetAbilityBySpecies(gBattleMons[battler].species, gBattleMons[battler].abilityNum);
+                // Resolve the real party member's ability at battle entry.
+                // A species-only lookup silently replaces the marked shiny
+                // Power Plant Electrode's Levitate with Static/Soundproof.
+                // Apply the same per-mon source as the switch-in path so
+                // Ground-type Siege Tusk cannot bypass Levitate on turn one.
+                enum BattleSide side = GetBattlerSide(battler);
+                gBattleMons[battler].ability = GetMonAbility(&GetSideParty(side)[gBattlerPartyIndexes[battler]]);
                 gBattleStruct->battlerState[battler].hpOnSwitchout = gBattleMons[battler].hp;
                 memset(&gBattleMons[battler].volatiles, 0, sizeof(struct Volatiles));
                 for (i = 0; i < NUM_BATTLE_STATS; i++)
