@@ -3209,6 +3209,21 @@ static enum MoveEndResult MoveEndMoveBlock(void)
                 gSideTimers[side].toxicSpikesAmount++;
             }
         }
+        else if (gCurrentMove == MOVE_KABOOM
+              && IsBattlerTurnDamaged(gBattlerTarget, INCLUDING_SUBSTITUTES)
+              && !gBattleStruct->isSkyBattle)
+        {
+            // Kaboom! independently lays Spikes and Stealth Rock, never Toxic
+            // Spikes. It still succeeds after the explosion faints its user.
+            if (gSideTimers[side].spikesAmount < 3)
+            {
+                if (gSideTimers[side].spikesAmount == 0)
+                    PushHazardTypeToQueue(side, HAZARDS_SPIKES);
+                gSideTimers[side].spikesAmount++;
+            }
+            if (!IsHazardOnSide(side, HAZARDS_STEALTH_ROCK))
+                PushHazardTypeToQueue(side, HAZARDS_STEALTH_ROCK);
+        }
         else if (gSideTimers[side].spikesAmount < 3
               && IsBattlerTurnDamaged(gBattlerTarget, INCLUDING_SUBSTITUTES)
               && IsBattlerAlive(gBattlerAttacker))

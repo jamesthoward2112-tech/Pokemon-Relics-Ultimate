@@ -23221,8 +23221,8 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("KABLOW!"),
         .description = COMPOUND_STRING(
-            "The user detonates violently,\n"
-            "scattering hazardous shrapnel."),
+            "Explodes; leaves Spikes\n"
+            "and Toxic Spikes."),
         .effect = EFFECT_CEASELESS_EDGE,
         .power = 170,
         .type = TYPE_STEEL,
@@ -23234,6 +23234,32 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .explosion = TRUE,
         .parentalBondBanned = TRUE,
         .dampBanned = TRUE,
+        .battleAnimScript = gBattleAnimMove_Explosion,
+    },
+
+    // Unique Electric-type explosion for the Power Plant's shiny Electrode.
+    // Kablowfish retains its original Steel-type Kablow! unchanged.
+    [MOVE_KABOOM] =
+    {
+        .name = COMPOUND_STRING("KABOOM!"),
+        .description = COMPOUND_STRING(
+            "Faints; sets Spikes/rocks.\n"
+            "Paralyzes survivors."),
+        .effect = EFFECT_CEASELESS_EDGE,
+        .power = 200,
+        .type = TYPE_ELECTRIC,
+        .accuracy = 100,
+        .pp = 5,
+        .target = TARGET_FOES_AND_ALLY,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .explosion = TRUE,
+        .parentalBondBanned = TRUE,
+        .dampBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_PARALYSIS,
+            .chance = 100,
+        }),
         .battleAnimScript = gBattleAnimMove_Explosion,
     },
 
