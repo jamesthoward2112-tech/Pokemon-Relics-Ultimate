@@ -1,5 +1,3 @@
-.set LOCALID_PRU_KYOGRE, 1
-.set LOCALID_PRU_ARCHIE, 2
 
 SeafoamIslands_SecretCave_hns_MapScripts::
 	.byte 0
@@ -23,13 +21,13 @@ SeafoamIslands_SecretCave_EventScript_Kyogre::
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, SeafoamIslands_SecretCave_EventScript_KyogreCaught
-	removeobject LOCALID_PRU_KYOGRE
+	removeobject 1
 	release
 	end
 
 SeafoamIslands_SecretCave_EventScript_KyogreCaught::
 	setflag FLAG_PRU_KYOGRE_CAUGHT
-	removeobject LOCALID_PRU_KYOGRE
+	removeobject 1
 	release
 	end
 
