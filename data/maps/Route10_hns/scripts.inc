@@ -62,8 +62,9 @@ Route10_EventScript_PRU_ShinyElectrode::
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, Route10_EventScript_PRU_ElectrodeCaught
-	@ KO, escape, whiteout: remove for this visit only, not permanently.
-	removeobject LOCALID_ROUTE10_PRU_ELECTRODE
+	@ Kaboom! self-KO, any other KO, escape, or whiteout must not
+	@ consume the encounter or hide the sprite. Allow an immediate rematch.
+	@ Only a successful capture sets the permanent disappearance flag.
 	release
 	end
 
