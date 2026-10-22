@@ -182,6 +182,8 @@ CeruleanGym_Text_Note:
 CeruleanCity_Gym_EventScript_Misty::
 	lock
 	faceplayer
+	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_STARTED, CeruleanCity_Gym_EventScript_PRUHeistMisty
 	goto_if_set FLAG_DEFEATED_CERULEAN_GYM, CeruleanCity_Gym_EventScript_Misty_Defeated
 	msgbox CeruleanGym_Text_MistyIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_MISTY_HNS, CeruleanGym_Text_MistyWinLoss
@@ -357,3 +359,33 @@ CeruleanCity_Gym_Text_PRURewardMoney:
 CeruleanCity_Gym_Text_PRURewardBagFull:
 	.string "Your BAG is full! Make some room\n"
 	.string "and come back for your prize.$"
+
+@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
+CeruleanCity_Gym_EventScript_PRUHeistMisty::
+	goto_if_set FLAG_PRU_HEIST_MISTY, CeruleanCity_Gym_EventScript_PRUHeistMistyDone
+	msgbox CeruleanCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_MISTY_HNS, CeruleanCity_Gym_Text_PRUHeistWon
+	setflag FLAG_PRU_HEIST_MISTY
+	msgbox CeruleanCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+CeruleanCity_Gym_EventScript_PRUHeistMistyDone::
+	msgbox CeruleanCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+CeruleanCity_Gym_Text_PRUHeistChallenge:
+	.string "MISTY: TEAM ROCKET took your\n"
+	.string "BADGE CASE? Let's win it back!$"
+
+CeruleanCity_Gym_Text_PRUHeistWon:
+	.string "MISTY: You've earned this\n"
+	.string "BADGE back. Nicely done!$"
+
+CeruleanCity_Gym_Text_PRUHeistAlready:
+	.string "MISTY: One step closer\n"
+	.string "to stopping TEAM ROCKET!$"
+
