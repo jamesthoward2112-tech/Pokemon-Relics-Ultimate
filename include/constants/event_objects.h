@@ -585,7 +585,8 @@
 #define OBJ_EVENT_GFX_ALOLA_OAK_HNS             547
 #define OBJ_EVENT_GFX_JESSIE_HNS                548
 #define OBJ_EVENT_GFX_JAMES_HNS                 549
-#define NUM_OBJ_EVENT_GFX                        550
+#define OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS    550
+#define NUM_OBJ_EVENT_GFX                        551
 
 
 // These are dynamic object gfx ids.
@@ -783,6 +784,7 @@
 #define OBJ_EVENT_PAL_TAG_ALOLA_OAK_HNS           0x119C
 #define OBJ_EVENT_PAL_TAG_JESSIE_HNS              0x119D
 #define OBJ_EVENT_PAL_TAG_JAMES_HNS               0x119E
+#define OBJ_EVENT_PAL_TAG_PRU_MEOWTH_BALLOON_HNS 0x119F
 
 #if OW_FOLLOWERS_POKEBALLS
 // Vanilla
