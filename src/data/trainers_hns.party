@@ -17301,18 +17301,18 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Glaceon @ Never-Melt Ice
 Level: 70
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
-- Surf
-- Aurora Beam
-- Bite
-- Acid Armor
+- Ice Beam
+- Shadow Ball
+- Icy Wind
+- Protect
 
 Leafeon @ Miracle Seed
 Level: 70
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
-- Thunderbolt
-- Double Kick
+- Leaf Blade
+- Bite
+- Swords Dance
 - Quick Attack
-- Thunder Wave
 
 Guardeon @ Metal Coat
 Level: 71
