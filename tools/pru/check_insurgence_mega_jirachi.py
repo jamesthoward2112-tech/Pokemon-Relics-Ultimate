@@ -28,6 +28,11 @@ for name,size in {"anim_front_gba.png":(64,128),"anim_front.png":(64,128),
         assert len(colors)>6, "Blank or severely degraded donor"
 front=Image.open(GFX/"anim_front_gba.png")
 assert list(front.crop((0,0,64,64)).getdata())==list(front.crop((0,64,64,128)).getdata()), "Jirachi's second animation frame is not locked"
+# User gameplay feedback: guard against reintroducing the old global shrink
+# (50x60) which made this exact Insurgence front distorted and jagged.
+assert front.crop((0,0,64,64)).getbbox() == (2,0,60,64), \
+    "Jirachi lost its native 59-column detail-preserving front composition"
+
 for name in ("normal.pal","normal_gba.pal","shiny.pal","shiny_gba.pal"):
     rows=(GFX/name).read_text().splitlines()
     assert rows[:3]==["JASC-PAL","0100","16"], name
