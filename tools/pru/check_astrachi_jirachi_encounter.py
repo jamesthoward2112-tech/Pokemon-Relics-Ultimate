@@ -41,6 +41,34 @@ assert "return TRUE;" in gate_fn and "return FALSE;" in gate_fn
 assert "gSpecialVar_Result =" not in gate_fn, "Do not fake a specialvar result via side effect"
 sprite = ROOT / "graphics/pokemon/astrachi/overworld.png"
 assert sprite.is_file() and sprite.stat().st_size > 0
+# PRU follower animation expects SIX 32x32 frames in this precise order:
+# south idle/step, north idle/step, side idle/step. Claude's untouched
+# 4x4 128x128 contact sheet had fronts/sides/backs interleaved; treating
+# those sixteen cells as runtime frames made the stationary Astrachi rotate.
+from PIL import Image
+original = ROOT / "assets/astrachi/claude_overworld_original_128x128.png"
+with Image.open(original) as src, Image.open(sprite) as packed:
+    assert src.mode == "P" and src.size == (128, 128), "Lost original Claude asset"
+    assert packed.mode == "P" and packed.size == (192, 32), "Astrachi runtime sheet must match 6x32 GBA layout"
+    assert src.info.get("transparency") == packed.info.get("transparency") == 0
+    assert len(set(packed.getdata())) <= 16
+    assert len(set(packed.getdata())) > 2
+    assert packed.getpalette() == src.getpalette(), "Do not change Claude's normal sprite palette"
+    for dest, source_index in enumerate((0, 1, 8, 9, 2, 3)):
+        source_tile = src.crop(((source_index % 4) * 32, (source_index // 4) * 32,
+                                (source_index % 4 + 1) * 32, (source_index // 4 + 1) * 32))
+        runtime_tile = packed.crop((dest * 32, 0, (dest + 1) * 32, 32))
+        assert list(source_tile.getdata()) == list(runtime_tile.getdata()), (
+            f"Astrachi frame {dest} must be correctly facing; do not rotate on idle"
+        )
+anims = read("src/data/object_events/object_event_anims.h")
+assert "[ANIM_STD_GO_SOUTH] = sAnim_GoSouth2F" in anims
+pic_tables = read("src/data/object_events/object_event_pic_tables_followers.h")
+assert "overworld_ascending_frames(gObjectEventPic_Astrachi, 4, 4)" in pic_tables
+assert "overworld_ascending_frames(gObjectEventPic_Jirachi, 4, 4)" in pic_tables
+scene = read("data/maps/MtMoon_Outside_hns/map.json")
+assert scene.count('"movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_DOWN"') >= 2
+
 info = read("src/data/pokemon/species_info/pru_custom.h")
 assert "sPicTable_Astrachi" in info and "gOverworldPalette_Astrachi" in info
 dex = read("data/pru/PRU_National_Pokedex_2026-10-16.csv")
