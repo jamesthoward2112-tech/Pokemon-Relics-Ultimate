@@ -2284,3 +2284,6 @@ const u16 gBattleIcons_Pal2[] = INCBIN_U16("graphics/types/battle_icons2.gbapal"
 
 const u16 gGhostPalette[] = INCBIN_U16("graphics/pokemon/ghost/front.gbapal");
 const u32 gGhostFrontPic[] = INCBIN_U32("graphics/pokemon/ghost/front.4bpp.smol");
+
+// PRU: 38 original GBA-ready Crystal Advance Redux battle environments.
+#include "data/pru_crystal_gfx.h"
