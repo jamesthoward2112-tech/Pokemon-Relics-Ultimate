@@ -685,7 +685,19 @@ void HandleAction_Run(void)
         }
         else
         {
-            if (GetBattlerHoldEffect(gBattlerAttacker) != HOLD_EFFECT_CAN_ALWAYS_RUN
+            // PRU Kanto birds are persistent fights, not flee-on-turn-one
+            // roamers. This also stops any other AI path from escaping even
+            // if it accidentally sends a Run action.
+            if (IS_HNS && (gBattleTypeFlags & BATTLE_TYPE_ROAMER)
+                && (gBattleMons[gBattlerAttacker].species == SPECIES_ARTICUNO
+                    || gBattleMons[gBattlerAttacker].species == SPECIES_ZAPDOS
+                    || gBattleMons[gBattlerAttacker].species == SPECIES_MOLTRES))
+            {
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_ATTACKER_CANT_ESCAPE;
+                gBattlescriptCurrInstr = BattleScript_PrintFailedToRunString;
+                gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
+            }
+            else if (GetBattlerHoldEffect(gBattlerAttacker) != HOLD_EFFECT_CAN_ALWAYS_RUN
              && GetBattlerAbility(gBattlerAttacker) != ABILITY_RUN_AWAY
              && !CanBattlerEscape(gBattlerAttacker))
             {
