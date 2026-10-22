@@ -107,6 +107,7 @@ jobs:
           python3 tools/pru/check_crystal_battle_backgrounds.py
           python3 tools/pru/check_emerald_foregrounds.py
           python3 tools/pru/check_444_species_dex.py
+          python3 tools/pru/check_lavender_cubone_staging.py
           python3 tools/pru/check_pru_444_gameplay.py
           python3 tools/pru/check_20261022_legendary_encounters.py
           python3 tools/pru/check_insurgence_mega_jirachi.py
