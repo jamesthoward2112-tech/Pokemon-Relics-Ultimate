@@ -37,13 +37,13 @@ icon_defs = {
 }
 for slug, symbol in icon_defs.items():
     palette_match = re.search(
-        r"static const u16 " + symbol + r"\\[16\\]\\s*=\\s*\\{([^}]*)\\}",
+        r"static const u16 " + symbol + r"\[16\]\s*=\s*\{([^}]*)\}",
         icons, re.S,
     )
     assert palette_match, (slug, symbol)
     c_rgb = [
         tuple(map(int, xyz))
-        for xyz in re.findall(r"RGB\\((\\d+),\\s*(\\d+),\\s*(\\d+)\\)", palette_match.group(1))
+        for xyz in re.findall(r"RGB\((\d+),\s*(\d+),\s*(\d+)\)", palette_match.group(1))
     ]
     assert len(c_rgb) == 16, (slug, c_rgb)
     with Image.open(ROOT / "graphics/pokemon" / slug / "icon.png") as im:
