@@ -64,7 +64,7 @@ assert "if (IsPruCrystalBattleBgActive())" in main
 assert "ScanlineEffect_Stop();" in main
 assert "gBattle_WIN0V = WIN_RANGE(0, DISPLAY_HEIGHT);" in main
 assert "taskId = CreateTask(BattleIntroCrystalStatic, 0);" in intro
-static_intro = intro.split("static void BattleIntroCrystalStatic(u8 taskId)\\n{", 1)[1].split("static void BattleIntroNoSlide", 1)[0]
+static_intro = intro.split("static void BattleIntroCrystalStatic(u8 taskId)", 1)[1].split("static void BattleIntroNoSlide", 1)[0]
 assert "ScanlineEffect_Stop();" in static_intro
 assert "gIntroSlideFlags &= ~1;" in static_intro
 assert "BattleIntroSlideEnd(taskId);" in static_intro
