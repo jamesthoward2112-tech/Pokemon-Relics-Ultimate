@@ -27,6 +27,44 @@ assert "FLAG_PRU_KANTO_BIRDS_UNLOCKED" in ow
 assert "void EnsurePruKantoBirdRoamers(void);" in hdr
 assert "RestorePruDefeatedRoamers();" in ow
 
+# Party/PC sprite palettes must match the literal 4bpp image colour indices,
+# not the separate battle palette or a manually reordered colour subset.
+icon_defs = {
+    "articuno": "sPRUArticunoPIconPalette",
+    "zapdos": "sPRUZapdosPIconPalette",
+    "moltres": "sPRUMoltresPIconPalette",
+    "swamplith": "sPRUSwamplithIconPalette",
+}
+for slug, symbol in icon_defs.items():
+    palette_match = re.search(
+        r"static const u16 " + symbol + r"\\[16\\]\\s*=\\s*\\{([^}]*)\\}",
+        icons, re.S,
+    )
+    assert palette_match, (slug, symbol)
+    c_rgb = [
+        tuple(map(int, xyz))
+        for xyz in re.findall(r"RGB\\((\\d+),\\s*(\\d+),\\s*(\\d+)\\)", palette_match.group(1))
+    ]
+    assert len(c_rgb) == 16, (slug, c_rgb)
+    with Image.open(ROOT / "graphics/pokemon" / slug / "icon.png") as im:
+        assert im.mode == "P" and im.size == (32, 64), slug
+        assert im.getpalette() is not None, slug
+        png_rgb = [
+            tuple(im.getpalette()[i:i + 3]) for i in range(0, 48, 3)
+        ]
+        expected = [tuple(v // 8 for v in rgb) for rgb in png_rgb]
+        assert c_rgb == expected, (
+            slug, "icon palette does not match indexed sprite", c_rgb, expected
+        )
+
+# Swamplith's old PRL authoritative icon.4bpp uses different colour indices.
+# The palette-matched local 32x64 icon must be compiled and not overwritten
+# on repeat PRL donor synchronisation.
+gfx = read("src/data/graphics/pru_pokemon.h")
+sync = read("tools/pru/sync_prl_authoritative_sprites.py")
+assert 'gMonIcon_Swamplith[] = INCBIN_U8("graphics/pokemon/swamplith/icon.4bpp")' in gfx
+assert '"swamplith", # Green-detail' in sync
+
 # A failed Poké Ball must not trigger the old flee-on-first-turn AI.
 # Use competitive wild-mon moves instead, preserve Lati roaming behaviour,
 # and reject stray opponent RUN commands as a second line of defence.
