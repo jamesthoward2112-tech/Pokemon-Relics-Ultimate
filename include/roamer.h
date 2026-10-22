@@ -4,6 +4,8 @@
 void DeactivateAllRoamers(void);
 void InitRoamer(void);
 void InitKantoRoamers(void);
+void EnsurePruKantoBirdRoamers(void);
+void ApplyPruKantoBirdWeather(void);
 void UpdateLocationHistoryForRoamer(void);
 void RoamerMoveToOtherLocationSet(u32 roamerIndex);
 void RoamerMove(u32 roamerIndex);
