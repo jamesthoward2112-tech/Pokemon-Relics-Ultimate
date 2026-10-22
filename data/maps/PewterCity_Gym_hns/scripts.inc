@@ -11,6 +11,8 @@ PewterCity_Gym_EventScript_Jerry::
 PewterCity_Gym_EventScript_Brock::
 	lock
 	faceplayer
+	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_STARTED, PewterCity_Gym_EventScript_PRUHeistBrock
 	goto_if_set FLAG_DEFEATED_PEWTER_GYM, PewterCity_Gym_EventScript_Brock_Defeated
 	msgbox PewterCity_Gym_Text_Brock_Intro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_BROCK_HNS, PewterCity_Gym_Text_Brock_WinLoss
@@ -219,3 +221,33 @@ PewterCity_Gym_Text_PRURewardMoney:
 PewterCity_Gym_Text_PRURewardBagFull:
 	.string "Your BAG is full! Make some room\n"
 	.string "and come back for your prize.$"
+
+@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
+PewterCity_Gym_EventScript_PRUHeistBrock::
+	goto_if_set FLAG_PRU_HEIST_BROCK, PewterCity_Gym_EventScript_PRUHeistBrockDone
+	msgbox PewterCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_BROCK_HNS, PewterCity_Gym_Text_PRUHeistWon
+	setflag FLAG_PRU_HEIST_BROCK
+	msgbox PewterCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+PewterCity_Gym_EventScript_PRUHeistBrockDone::
+	msgbox PewterCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+PewterCity_Gym_Text_PRUHeistChallenge:
+	.string "BROCK: TEAM ROCKET took your\n"
+	.string "BADGE CASE? Let's win it back!$"
+
+PewterCity_Gym_Text_PRUHeistWon:
+	.string "BROCK: You've earned this\n"
+	.string "BADGE back. Nicely done!$"
+
+PewterCity_Gym_Text_PRUHeistAlready:
+	.string "BROCK: One step closer\n"
+	.string "to stopping TEAM ROCKET!$"
+
