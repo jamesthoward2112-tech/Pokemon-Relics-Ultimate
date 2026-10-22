@@ -57,6 +57,7 @@ Route10_EventScript_PRU_ShinyElectrode::
 	waitmoncry
 	@ This guarantees the same white-and-blue shiny shown on the ledge.
 	setwildbattleshiny SPECIES_ELECTRODE, 80
+	special PruPrepareChargedElectrode
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
