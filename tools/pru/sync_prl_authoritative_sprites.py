@@ -37,6 +37,7 @@ NORMALIZED_EEVEE_ICONS = {
     "champeon", "lepideon", "guardeon", "obsideon", "toxeon",
     "sphynxeon", "omeon", "drakeon", "eeveeon", "nimbeon",
     "astrachi",  # Locally corrected 32x64 icon + dedicated icon palette #10.
+    "swamplith", # Green-detail PRU icon palette #8; PRL 4bpp donor tiles use a mismatched index order.
 }
 NOXICHU_BLOBS = {
     "front.png": "7e866622e368249babadc1382dea74902ddba960",
