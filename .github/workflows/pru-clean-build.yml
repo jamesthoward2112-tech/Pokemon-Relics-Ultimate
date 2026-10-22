@@ -34,6 +34,8 @@ jobs:
           test -s assets/prl_duo_20261011.json
           python3 tools/pru/install_prl_duo_assets.py
           python3 tools/pru/check_prl_duo_palette.py
+      - name: Install original approved Meowth balloon sprite and palette
+        run: python3 tools/pru/install_original_meowth_balloon.py
       - name: Restore original PJR Infinity donor sprites from checked-in pack
         run: |
           set -euo pipefail
