@@ -7,7 +7,7 @@ CeladonCity_Gym_EventScript_Erika::
 	faceplayer
 	goto_if_set FLAG_DEFEATED_CELADON_GYM, CeladonCity_Gym_EventScript_Erika_Defeated
 	@ The twins must be beaten before Erika can be challenged, even if avoided.
-	checktrainerflag TRAINER_JO_AND_ZOE_HNS
+	checktrainerflag TRAINER_STEEVE_NEEVEE_CELADON_HNS
 	goto_if TRUE, CeladonCity_Gym_EventScript_ErikaReady
 	msgbox CeladonCity_Gym_Text_SteeveeNeeveeGate, MSGBOX_DEFAULT
 	closemessage
@@ -143,15 +143,15 @@ CeladonCity_Gym_Text_BeautyJuliaAfter:
 	.string "How do I go about becoming\n"
 	.string "ladylike like ERIKA?$"
 
-@ Preserve Celadon's stable trainer ID so existing save flags remain compatible.
-@ Steevee and Neevee share this double battle from either overworld NPC.
+@ Unique Celadon trainer ID ensures past Jo & Zoe wins do not skip this battle.
+@ Steevee and Neevee share one defeat flag from either overworld NPC.
 CeladonCity_Gym_EventScript_Steevee::
-	trainerbattle_double TRAINER_JO_AND_ZOE_HNS, CeladonCity_Gym_Text_SteeveeSeen, CeladonCity_Gym_Text_SteeveeNeeveeBeaten, Route104_Text_GinaNotEnoughMons
+	trainerbattle_double TRAINER_STEEVE_NEEVEE_CELADON_HNS, CeladonCity_Gym_Text_SteeveeSeen, CeladonCity_Gym_Text_SteeveeNeeveeBeaten, Route104_Text_GinaNotEnoughMons
 	msgbox CeladonCity_Gym_Text_SteeveeAfter, MSGBOX_AUTOCLOSE
 	end
 
 CeladonCity_Gym_EventScript_Neevee::
-	trainerbattle_double TRAINER_JO_AND_ZOE_HNS, CeladonCity_Gym_Text_NeeveeSeen, CeladonCity_Gym_Text_SteeveeNeeveeBeaten, Route104_Text_GinaNotEnoughMons
+	trainerbattle_double TRAINER_STEEVE_NEEVEE_CELADON_HNS, CeladonCity_Gym_Text_NeeveeSeen, CeladonCity_Gym_Text_SteeveeNeeveeBeaten, Route104_Text_GinaNotEnoughMons
 	msgbox CeladonCity_Gym_Text_NeeveeAfter, MSGBOX_AUTOCLOSE
 	end
 
