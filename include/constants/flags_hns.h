@@ -491,6 +491,8 @@
 #define FLAG_PRU_ARTICUNO_ROAMER_INITIALIZED          0x4E4
 #define FLAG_PRU_ZAPDOS_ROAMER_INITIALIZED            0x4E5
 #define FLAG_PRU_MOLTRES_ROAMER_INITIALIZED           0x4E6
+// Special Level 80 shiny Electrode on Route 10: only its capture persists.
+#define FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT         0x4E7
 #define FLAG_COMPLETED_AERODACTYL_PUZZLE            0x1E2
 #define FLAG_COMPLETED_HOOH_PUZZLE                  0x1E3
 #define FLAG_COMPLETED_KABUTO_PUZZLE                0x1E4
