@@ -17097,3 +17097,120 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Bite
 - Toxic
 - Quick Attack
+
+=== TRAINER_PRU_ARCHIE_KYOGRE_HNS ===
+Name: ARCHIE
+Class: Aqua Leader
+Pic: Aqua Leader Archie
+Gender: Male
+Music: Aqua
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Mightyena @ Sitrus Berry
+Level: 73
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Crunch
+- Play Rough
+- Sucker Punch
+- Swagger
+
+Crobat @ Black Sludge
+Level: 74
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brave Bird
+- Poison Fang
+- Roost
+- U-Turn
+
+Tentacruel @ Black Sludge
+Level: 74
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Scald
+- Sludge Bomb
+- Ice Beam
+- Toxic Spikes
+
+Sharpedo @ Mystic Water
+Level: 75
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Liquidation
+- Crunch
+- Ice Fang
+- Protect
+
+Gyarados @ Lum Berry
+Level: 76
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Waterfall
+- Crunch
+- Earthquake
+- Dragon Dance
+
+Swampert @ Leftovers
+Level: 78
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Earthquake
+- Liquidation
+- Ice Punch
+- Stealth Rock
+
+=== TRAINER_PRU_MAXIE_GROUDON_HNS ===
+Name: MAXIE
+Class: Magma Leader
+Pic: Magma Leader Maxie
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Mightyena @ Sitrus Berry
+Level: 73
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Crunch
+- Play Rough
+- Sucker Punch
+- Swagger
+
+Crobat @ Black Sludge
+Level: 74
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brave Bird
+- Poison Fang
+- Roost
+- U-Turn
+
+Torkoal @ Heat Rock
+Ability: Drought
+Level: 74
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Lava Plume
+- Solar Beam
+- Earth Power
+- Stealth Rock
+
+Flygon @ Life Orb
+Level: 75
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Earthquake
+- Dragon Claw
+- Rock Slide
+- Dragon Dance
+
+Houndoom @ Wise Glasses
+Level: 76
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Dark Pulse
+- Flamethrower
+- Nasty Plot
+- Sludge Bomb
+
+Camerupt @ Leftovers
+Level: 78
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Earth Power
+- Fire Blast
+- Ancient Power
+- Yawn
