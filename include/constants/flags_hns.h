@@ -3555,10 +3555,11 @@
 #define FLAG_UNUSED_0x938                                       0
 #define FLAG_UNUSED_0x939                                       0
 #define FLAG_UNUSED_0x93A                                       0
-#define FLAG_UNUSED_0x93B                                       0
-#define FLAG_UNUSED_0x93C                                       0
-#define FLAG_UNUSED_0x93D                                       0
-#define FLAG_UNUSED_0x93E                                       0
+// Reserved save-safe PRU Lavender Cubone memorial stages. Never renumber.
+#define FLAG_PRU_CUBONE_MAROGHOST_RESOLVED                     0x93B
+#define FLAG_PRU_CUBONE_OSTEODIAN_RESOLVED                     0x93C
+#define FLAG_PRU_CUBONE_MIMIKYU_CAUGHT                         0x93D
+#define FLAG_PRU_CUBONE_MEMORIAL_REWARDED                      0x93E
 #define FLAG_UNUSED_0x93F                                       0
 #define FLAG_UNUSED_0x940                                       0
 #define FLAG_UNUSED_0x941                                       0
