@@ -74,31 +74,31 @@ static const u16 sPRUAstrachiIconPalette[16] =
     RGB(6, 7, 7), RGB(5, 6, 13), RGB(4, 5, 8), RGB(3, 4, 6),
 };
 
-// Exact palette-index ordering from the owner-approved TRE Articuno-P icon.
+// Exact 16-entry indexed PNG icon palette for approved TRE Articuno-P.
 static const u16 sPRUArticunoPIconPalette[16] =
 {
-    RGB(0, 0, 0), RGB(8, 8, 8), RGB(15, 19, 9), RGB(12, 12, 11),
-    RGB(19, 25, 9), RGB(31, 31, 31), RGB(18, 30, 9), RGB(29, 14, 19),
-    RGB(30, 28, 5), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)
+    RGB(12, 19, 16), RGB(15, 15, 15), RGB(23, 23, 22), RGB(31, 31, 31),
+    RGB(14, 14, 25), RGB(20, 21, 30), RGB(22, 16, 11), RGB(29, 24, 17),
+    RGB(24, 21, 5), RGB(30, 30, 5), RGB(30, 12, 10), RGB(18, 15, 25),
+    RGB(24, 20, 25), RGB(23, 5, 19), RGB(12, 12, 11), RGB(8, 8, 8)
 };
 
-// Exact palette-index ordering from the owner-approved TRE Zapdos-P icon.
+// Exact 16-entry indexed PNG icon palette for approved TRE Zapdos-P.
 static const u16 sPRUZapdosPIconPalette[16] =
 {
-    RGB(0, 0, 0), RGB(31, 31, 31), RGB(23, 20, 8), RGB(8, 8, 8),
-    RGB(30, 30, 5), RGB(31, 22, 20), RGB(29, 14, 19), RGB(26, 12, 8),
-    RGB(30, 18, 5), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)
+    RGB(12, 19, 16), RGB(16, 16, 14), RGB(23, 23, 23), RGB(31, 31, 31),
+    RGB(23, 20, 8), RGB(30, 30, 5), RGB(26, 12, 8), RGB(30, 18, 5),
+    RGB(17, 15, 31), RGB(12, 9, 25), RGB(29, 14, 19), RGB(31, 22, 20),
+    RGB(20, 24, 31), RGB(13, 21, 19), RGB(12, 12, 11), RGB(8, 8, 8)
 };
 
-// Exact palette-index ordering from the owner-approved TRE Moltres-P icon.
+// Exact 16-entry indexed PNG icon palette for approved TRE Moltres-P.
 static const u16 sPRUMoltresPIconPalette[16] =
 {
-    RGB(0, 0, 0), RGB(8, 8, 8), RGB(29, 14, 19), RGB(18, 30, 9),
-    RGB(19, 25, 9), RGB(12, 12, 11), RGB(15, 19, 9), RGB(31, 31, 31),
-    RGB(30, 30, 21), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)
+    RGB(12, 19, 16), RGB(16, 16, 14), RGB(23, 23, 23), RGB(31, 31, 31),
+    RGB(23, 20, 8), RGB(30, 30, 5), RGB(26, 12, 8), RGB(30, 18, 5),
+    RGB(17, 15, 31), RGB(12, 9, 25), RGB(29, 14, 19), RGB(31, 22, 20),
+    RGB(20, 24, 31), RGB(13, 21, 19), RGB(12, 12, 11), RGB(8, 8, 8)
 };
 
 const struct SpritePalette gMonIconPaletteTable[] =
