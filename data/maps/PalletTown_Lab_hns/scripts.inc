@@ -42,18 +42,18 @@ PalletTown_Lab_EventScript_OakPRUAuroraBagFull:
 	end
 
 PalletTown_Lab_Text_PRUAuroraTicketIntro:
-	.string "OAK: Four KANTO BADGES already!\\p"
-	.string "I've been saving a special ticket\\n"
+	.string "OAK: Four KANTO BADGES already!\p"
+	.string "I've been saving a special ticket\n"
 	.string "for an exceptional trainer.$"
 
 PalletTown_Lab_Text_PRUAuroraTicketOutro:
-	.string "OAK: Take the AURORA TICKET to\\n"
-	.string "OLIVINE PORT and sail to BIRTH ISLAND.\\p"
-	.string "They say a strange visitor fell\\n"
+	.string "OAK: Take the AURORA TICKET to\n"
+	.string "OLIVINE PORT and sail to BIRTH ISLAND.\p"
+	.string "They say a strange visitor fell\n"
 	.string "from the stars there...$"
 
 PalletTown_Lab_Text_PRUAuroraBagFull:
-	.string "OAK: Make room for this ticket\\n"
+	.string "OAK: Make room for this ticket\n"
 	.string "and come back to me.$"
 
 PalletTown_Lab_EventScript_OakGiveNatDex_ForPlaytesters::
