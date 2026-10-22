@@ -51,6 +51,24 @@
       "var": "VAR_PRU_CUBONE_STAGE_OSTEODIAN",
       "var_value": "0",
       "script": "LavenderSpiritTower_6F_EventScript_Osteodian"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 16,
+      "elevation": 3,
+      "var": "VAR_PRU_CUBONE_STAGE_OSTEODIAN",
+      "var_value": "0",
+      "script": "LavenderSpiritTower_6F_EventScript_Osteodian"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 17,
+      "elevation": 3,
+      "var": "VAR_PRU_CUBONE_STAGE_OSTEODIAN",
+      "var_value": "0",
+      "script": "LavenderSpiritTower_6F_EventScript_Osteodian"
     }
   ],
   "bg_events": []
