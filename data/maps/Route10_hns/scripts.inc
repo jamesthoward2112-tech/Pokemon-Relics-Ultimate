@@ -74,8 +74,8 @@ Route10_EventScript_PRU_ElectrodeCaught::
 	end
 
 Route10_Text_PRU_ShinyElectrode:
-	.string "The POWER PLANT is vibrating!\\p"
-	.string "A strange blue ELECTRODE is\\n"
+	.string "The POWER PLANT is vibrating!\p"
+	.string "A strange blue ELECTRODE is\n"
 	.string "overflowing with energy!$"
 
 Route10_Text_HikerJimSeen:
