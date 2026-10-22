@@ -3747,6 +3747,15 @@ static u16 CalculateBoxMonChecksumReencrypt(struct BoxPokemon *boxMon)
     return checksum;
 }
 
+// Special once-per-save Power Plant boss. A fateful shiny Electrode marker
+// travels with the captured Pokémon through party, PC and saving.
+static bool32 IsPruChargedElectrode(struct Pokemon *mon)
+{
+    return GetMonData(mon, MON_DATA_SPECIES) == SPECIES_ELECTRODE
+        && GetMonData(mon, MON_DATA_MODERN_FATEFUL_ENCOUNTER)
+        && GetMonData(mon, MON_DATA_IS_SHINY);
+}
+
 void CalculateMonStats(struct Pokemon *mon)
 {
     s32 oldMaxHP = GetMonData(mon, MON_DATA_MAX_HP);
@@ -3757,6 +3766,18 @@ void CalculateMonStats(struct Pokemon *mon)
     s32 newMaxHP;
 
     u8 nature = GetMonData(mon, MON_DATA_HIDDEN_NATURE);
+
+    // Keep the unique boss stats even after catching or withdrawing from PC.
+    // Other (including random shiny) Electrode are completely unchanged.
+    static const u16 sPruChargedElectrodeBaseStats[NUM_STATS] = {
+        [STAT_HP] = 100,
+        [STAT_ATK] = 100,
+        [STAT_DEF] = 115,
+        [STAT_SPATK] = 150,
+        [STAT_SPDEF] = 125,
+        [STAT_SPEED] = 175,
+    };
+    bool32 isPruChargedElectrode = IsPruChargedElectrode(mon);
 
     if (FlagGet(FLAG_LIMIT_TO_50) == TRUE && level != 50)
         level = 50;
@@ -3785,7 +3806,7 @@ void CalculateMonStats(struct Pokemon *mon)
         if (i == STAT_HP)
             continue;
 
-        u32 baseStat = equalizedBst ? equalizedBst : GetSpeciesBaseStat(species, i);
+        u32 baseStat = equalizedBst ? equalizedBst : (isPruChargedElectrode ? sPruChargedElectrodeBaseStats[i] : GetSpeciesBaseStat(species, i));
         s32 n = (((2 * baseStat + iv[i] + ev[i] / 4) * level) / 100) + 5;
         n = ModifyStatByNature(nature, n, i);
         if (B_FRIENDSHIP_BOOST == TRUE)
@@ -3804,7 +3825,7 @@ void CalculateMonStats(struct Pokemon *mon)
     }
     else
     {
-        s32 n = 2 * (equalizedBst ? equalizedBst : GetSpeciesBaseHP(species)) + iv[STAT_HP];
+        s32 n = 2 * (equalizedBst ? equalizedBst : (isPruChargedElectrode ? sPruChargedElectrodeBaseStats[STAT_HP] : GetSpeciesBaseHP(species))) + iv[STAT_HP];
         newMaxHP = (((n + ev[STAT_HP] / 4) * level) / 100) + level + 10;
     }
 
@@ -5641,6 +5662,9 @@ enum Ability GetAbilityBySpecies(u16 species, u8 abilityNum)
 
 enum Ability GetMonAbility(struct Pokemon *mon)
 {
+    if (IsPruChargedElectrode(mon))
+        return ABILITY_LEVITATE;
+
     u16 species = GetMonData(mon, MON_DATA_SPECIES);
     u8 abilityNum = GetMonData(mon, MON_DATA_ABILITY_NUM);
     return GetAbilityBySpecies(species, abilityNum);

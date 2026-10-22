@@ -716,7 +716,10 @@
 // Dragon's Den: new save-stable fifth Steevee & Neevee encounter.
 #define TRAINER_STEEVE_NEEVEE_DRAGONS_DEN_HNS     679
 
-#define TRAINERS_COUNT_HNS                       680
+// PRU's postgame Team Aqua and Team Magma cavern guardians.
+#define TRAINER_PRU_ARCHIE_KYOGRE_HNS            680
+#define TRAINER_PRU_MAXIE_GROUDON_HNS            681
+#define TRAINERS_COUNT_HNS                       682
 #define MAX_TRAINERS_COUNT_HNS                   864
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_HNS_H

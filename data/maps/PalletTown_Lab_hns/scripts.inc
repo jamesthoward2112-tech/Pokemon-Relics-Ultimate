@@ -5,6 +5,8 @@ PalletTown_Lab_EventScript_Oak::
 	lock
 	faceplayer
 	call_if_unset FLAG_SYS_NATIONAL_DEX, PalletTown_Lab_EventScript_OakGiveNatDex_ForPlaytesters
+	goto_if_unset FLAG_PRU_OAK_AURORA_TICKET_RECEIVED, PalletTown_Lab_EventScript_OakPRUAuroraCheck
+PalletTown_Lab_EventScript_OakNormalDialogue:
 	goto_if_eq VAR_PALLETTOWN_LABSTATE, 1, PalletTown_Lab_EventScript_OakBadgeCheck
 	goto_if_eq VAR_PALLETTOWN_LABSTATE, 2, PalletTown_Lab_EventScript_OakDex
 	msgbox PalletTown_Lab_Text_OakWelcomeKanto, MSGBOX_DEFAULT
@@ -16,6 +18,43 @@ PalletTown_Lab_EventScript_Oak::
 	closemessage
 	release
 	end
+
+// Deoxys' Aurora Ticket is now an obtainable post-League Kanto milestone.
+// Preserve Oak's normal badge/Indigo Plateau story on every other visit.
+PalletTown_Lab_EventScript_OakPRUAuroraCheck:
+	goto_if_ge VAR_NUM_BADGES, 12, PalletTown_Lab_EventScript_OakPRUAuroraGift
+	goto PalletTown_Lab_EventScript_OakNormalDialogue
+
+PalletTown_Lab_EventScript_OakPRUAuroraGift:
+	msgbox PalletTown_Lab_Text_PRUAuroraTicketIntro, MSGBOX_DEFAULT
+	giveitem ITEM_AURORA_TICKET
+	goto_if_eq VAR_RESULT, FALSE, PalletTown_Lab_EventScript_OakPRUAuroraBagFull
+	setflag FLAG_PRU_OAK_AURORA_TICKET_RECEIVED
+	msgbox PalletTown_Lab_Text_PRUAuroraTicketOutro, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+PalletTown_Lab_EventScript_OakPRUAuroraBagFull:
+	msgbox PalletTown_Lab_Text_PRUAuroraBagFull, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+PalletTown_Lab_Text_PRUAuroraTicketIntro:
+	.string "OAK: Four KANTO BADGES already!\p"
+	.string "I've been saving a special ticket\n"
+	.string "for an exceptional trainer.$"
+
+PalletTown_Lab_Text_PRUAuroraTicketOutro:
+	.string "OAK: Take the AURORA TICKET to\n"
+	.string "OLIVINE PORT and sail to BIRTH ISLAND.\p"
+	.string "They say a strange visitor fell\n"
+	.string "from the stars there...$"
+
+PalletTown_Lab_Text_PRUAuroraBagFull:
+	.string "OAK: Make room for this ticket\n"
+	.string "and come back to me.$"
 
 PalletTown_Lab_EventScript_OakGiveNatDex_ForPlaytesters::
 	setflag FLAG_SYS_NATIONAL_DEX

@@ -15,7 +15,7 @@
   "connections": 0,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_MON_BASE+SPECIES_GROUDON",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(KYOGRE_PRIMAL)",
       "x": 16,
       "y": 11,
       "elevation": 0,
@@ -24,9 +24,23 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SeafoamIslands_SecretCave_EventScript_Groudon",
-      "flag": "FLAG_HIDE_GROUDON",
-      "localid": "LOCALID_SEAFOAMGROUDON"
+      "script": "SeafoamIslands_SecretCave_EventScript_Kyogre",
+      "flag": "FLAG_PRU_KYOGRE_CAUGHT",
+      "localid": "LOCALID_PRU_KYOGRE"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ARCHIE",
+      "x": 16,
+      "y": 14,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "SeafoamIslands_SecretCave_EventScript_Archie",
+      "flag": "FLAG_PRU_ARCHIE_KYOGRE_DEFEATED",
+      "local_id": "LOCALID_PRU_ARCHIE"
     }
   ],
   "warp_events": [
