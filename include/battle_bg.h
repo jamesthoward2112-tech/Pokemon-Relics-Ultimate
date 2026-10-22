@@ -21,6 +21,8 @@ void LoadBattleTextboxAndBackground(void);
 void InitLinkBattleVsScreen(u8 taskId);
 void DrawBattleEntryBackground(void);
 bool8 IsPruCrystalBattleBgActive(void);
+bool8 IsPruEmeraldForegroundActive(void);
+void EndPruEmeraldBattleForeground(void);
 bool8 LoadChosenBattleElement(u8 caseId);
 void DrawTerrainTypeBattleBackground(void);
 
