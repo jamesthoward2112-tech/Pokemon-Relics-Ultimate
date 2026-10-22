@@ -33,6 +33,8 @@ SaffronCity_Gym_EventScript_Jared::
 SaffronCity_Gym_EventScript_Sabrina::
 	lock
 	faceplayer
+	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_STARTED, SaffronCity_Gym_EventScript_PRUHeistSabrina
 	goto_if_set FLAG_DEFEATED_SAFFRON_GYM, SaffronCity_Gym_EventScript_Sabrina_Defeated
 	msgbox SaffronCity_Gym_Text_SabrinaIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_SABRINA_HNS, SaffronCity_Gym_Text_SabrinaWinLoss
@@ -230,3 +232,33 @@ SaffronCity_Gym_Text_PRURewardMoney:
 SaffronCity_Gym_Text_PRURewardBagFull:
 	.string "Your BAG is full! Make some room\n"
 	.string "and come back for your prize.$"
+
+@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
+SaffronCity_Gym_EventScript_PRUHeistSabrina::
+	goto_if_set FLAG_PRU_HEIST_SABRINA, SaffronCity_Gym_EventScript_PRUHeistSabrinaDone
+	msgbox SaffronCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_SABRINA_HNS, SaffronCity_Gym_Text_PRUHeistWon
+	setflag FLAG_PRU_HEIST_SABRINA
+	msgbox SaffronCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SaffronCity_Gym_EventScript_PRUHeistSabrinaDone::
+	msgbox SaffronCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SaffronCity_Gym_Text_PRUHeistChallenge:
+	.string "SABRINA: TEAM ROCKET took your\n"
+	.string "BADGE CASE? Let's win it back!$"
+
+SaffronCity_Gym_Text_PRUHeistWon:
+	.string "SABRINA: You've earned this\n"
+	.string "BADGE back. Nicely done!$"
+
+SaffronCity_Gym_Text_PRUHeistAlready:
+	.string "SABRINA: One step closer\n"
+	.string "to stopping TEAM ROCKET!$"
+
