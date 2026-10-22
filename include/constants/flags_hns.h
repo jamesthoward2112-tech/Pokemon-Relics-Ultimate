@@ -497,6 +497,7 @@
 #define FLAG_PRU_MAXIE_GROUDON_DEFEATED              0x4E9
 #define FLAG_PRU_KYOGRE_CAUGHT                      0x4EA
 #define FLAG_PRU_GROUDON_CAUGHT                     0x4EB
+#define FLAG_PRU_OAK_AURORA_TICKET_RECEIVED          0x4EC
 #define FLAG_COMPLETED_AERODACTYL_PUZZLE            0x1E2
 #define FLAG_COMPLETED_HOOH_PUZZLE                  0x1E3
 #define FLAG_COMPLETED_KABUTO_PUZZLE                0x1E4
