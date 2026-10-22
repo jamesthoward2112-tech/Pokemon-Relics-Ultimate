@@ -49,29 +49,33 @@ Route10_EventScript_PPSign::
 	msgbox Route10_Text_PowerPlant, MSGBOX_SIGN
 	end
 
-Route10_EventScript_Zapdos::
+Route10_EventScript_PRU_ShinyElectrode::
 	lock
 	faceplayer
-	playmoncry SPECIES_ZAPDOS, CRY_MODE_ENCOUNTER
-	msgbox SeafoamIslands_B1F_Text_ArticunoBattle
-	delay 40
+	msgbox Route10_Text_PRU_ShinyElectrode, MSGBOX_DEFAULT
+	playmoncry SPECIES_ELECTRODE, CRY_MODE_ENCOUNTER
 	waitmoncry
-	seteventmon SPECIES_ZAPDOS, 50
+	@ This guarantees the same white-and-blue shiny shown on the ledge.
+	setwildbattleshiny SPECIES_ELECTRODE, 80
 	special BattleSetup_StartLegendaryBattle
-waitstate
+	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
-	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, Route10_EventScript_ZapdosRan
-	fadescreenswapbuffers FADE_TO_BLACK
-	removeobject LOCALID_ROUTE10_ZAPDOS
-	setflag FLAG_HIDE_ZAPDOS
-	fadescreenswapbuffers FADE_FROM_BLACK
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, Route10_EventScript_PRU_ElectrodeCaught
+	@ KO, escape, whiteout: remove for this visit only, not permanently.
+	removeobject LOCALID_ROUTE10_PRU_ELECTRODE
 	release
 	end
 
-Route10_EventScript_ZapdosRan::
+Route10_EventScript_PRU_ElectrodeCaught::
+	setflag FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT
+	removeobject LOCALID_ROUTE10_PRU_ELECTRODE
 	release
 	end
 
+Route10_Text_PRU_ShinyElectrode:
+	.string "The POWER PLANT is vibrating!\\p"
+	.string "A strange blue ELECTRODE is\\n"
+	.string "overflowing with energy!$"
 
 Route10_Text_HikerJimSeen:
 	.string "Hahahah!$"
