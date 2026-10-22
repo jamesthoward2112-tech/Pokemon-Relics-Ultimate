@@ -516,6 +516,7 @@
 #define FLAG_PRU_HIDE_ROCKET_HEIST_GATE                0x4FA
 #define FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO              0x4FB
 #define FLAG_PRU_HIDE_HEIST_GIOVANNI                   0x4FC
+#define FLAG_PRU_HIDE_MEOWTH_BALLOON                   0x4FD
 #define FLAG_COMPLETED_AERODACTYL_PUZZLE            0x1E2
 #define FLAG_COMPLETED_HOOH_PUZZLE                  0x1E3
 #define FLAG_COMPLETED_KABUTO_PUZZLE                0x1E4
