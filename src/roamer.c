@@ -601,6 +601,14 @@ void UpdateRoamerHPStatus(struct Pokemon *mon)
     }
 
     RoamerMoveToOtherLocationSet(gEncounteredRoamerIndex);
+#if IS_HNS
+    // The defeated/fled bird no longer controls the weather here.
+    if (IsPruKantoBirdSpecies(ROAMER(gEncounteredRoamerIndex)->species))
+    {
+        SetSavedWeatherFromCurrMapHeader();
+        ApplyPruKantoBirdWeather();
+    }
+#endif
 }
 
 // Also repair HNS save files where a Kanto roamer was already deactivated
@@ -643,7 +651,19 @@ void RestorePruDefeatedRoamers(void)
 
 void SetRoamerInactive(u32 roamerIndex)
 {
+#if IS_HNS
+    bool8 wasLocalBird = ROAMER(roamerIndex)->active
+        && IsPruKantoBirdSpecies(ROAMER(roamerIndex)->species)
+        && IsRoamerAt(roamerIndex, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
+#endif
     ROAMER(roamerIndex)->active = FALSE;
+#if IS_HNS
+    if (wasLocalBird)
+    {
+        SetSavedWeatherFromCurrMapHeader();
+        ApplyPruKantoBirdWeather();
+    }
+#endif
 }
 
 void GetRoamerLocation(u32 roamerIndex, u8 *mapGroup, u8 *mapNum)
