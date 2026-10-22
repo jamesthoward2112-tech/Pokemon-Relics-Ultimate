@@ -33,7 +33,16 @@ pokemon = read("src/pokemon.c")
 util = read("src/script_pokemon_util.c")
 assert "setwildbattleshiny SPECIES_ELECTRODE, 80" in electrode
 assert "special PruPrepareChargedElectrode" in electrode
-assert "setflag FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT" in electrode
+# The Power Plant Electrode stays visible after Kaboom! self-KO, any other
+# knockout, fleeing or whiteout. Capture is the *only* permanent removal.
+encounter, caught_block = electrode.split("Route10_EventScript_PRU_ElectrodeCaught::", 1)
+encounter = encounter.split("Route10_EventScript_PRU_ShinyElectrode::", 1)[1]
+caught_block = caught_block.split("Route10_Text_PRU_ShinyElectrode:", 1)[0]
+assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, Route10_EventScript_PRU_ElectrodeCaught" in encounter
+assert "removeobject LOCALID_ROUTE10_PRU_ELECTRODE" not in encounter
+assert "setflag FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT" not in encounter
+assert "setflag FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT" in caught_block
+assert "removeobject LOCALID_ROUTE10_PRU_ELECTRODE" in caught_block
 assert any(o.get("graphics_id") == "OBJ_EVENT_GFX_SPECIES_SHINY(ELECTRODE)"
            and o.get("flag") == "FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT"
            for o in route["object_events"])
@@ -42,7 +51,12 @@ assert "return ABILITY_LEVITATE;" in pokemon and "IsPruChargedElectrode" in poke
 # Ability must survive initial battle setup and display in party/PC summaries.
 assert "dst->ability = GetMonAbility(src);" in pokemon
 battle_main = read("src/battle_main.c")
-assert "gBattleMons[battler].ability != ABILITY_LEVITATE" in battle_main
+# Initial battle and switch-in must use the actual Pokémon's ability,
+# never the species default (Static/Soundproof for Electrode).
+intro = battle_main.split("case BATTLE_INTRO_STATE_DRAW_SPRITES:", 1)[1].split("case BATTLE_INTRO_STATE_", 1)[0]
+ability_source = "gBattleMons[battler].ability = GetMonAbility(&GetSideParty(side)[gBattlerPartyIndexes[battler]]);"
+assert ability_source in intro
+assert "GetAbilityBySpecies(gBattleMons[battler].species" not in intro
 summary = read("src/pokemon_summary_screen.c")
 assert "GetBoxMonData(GetCurrentBoxmon(), MON_DATA_MODERN_FATEFUL_ENCOUNTER)" in summary
 assert summary.count("enum Ability ability = GetSummaryMonAbility();") == 2
@@ -70,6 +84,11 @@ kb = resolution.split("gCurrentMove == MOVE_KABOOM", 1)[1].split("else if", 1)[0
 assert "HAZARDS_SPIKES" in kb and "HAZARDS_STEALTH_ROCK" in kb
 assert "HAZARDS_TOXIC_SPIKES" not in kb
 assert "GetMonAbility(&GetSideParty(side)[gBattlerPartyIndexes[battler]])" in switching
+# Siege Tusk itself is a standard Ground damaging move without ability bypass.
+siege = infos.split("[MOVE_SIEGE_TUSK]", 1)[1].split("    [MOVE_", 1)[0]
+assert ".type = TYPE_GROUND" in siege
+assert "ignoresTargetAbility = TRUE" not in siege
+assert "ABILITY_LEVITATE" in read("src/battle_util.c")
 
 assert "MOVE_KABLOW" in read("src/data/pokemon/level_up_learnsets/pjr.h")
 for stat, amount in (("HP",100), ("ATK",100), ("DEF",115), ("SPATK",150),
