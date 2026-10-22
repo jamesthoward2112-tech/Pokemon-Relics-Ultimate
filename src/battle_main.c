@@ -635,6 +635,20 @@ static void CB2_InitBattleInternal(void)
     if (TestRunner_Battle_GetForcedEnvironment())
         gBattleEnvironment = TestRunner_Battle_GetForcedEnvironment() - 1;
 
+    if (IsPruCrystalBattleBgActive())
+    {
+        // The standard intro uses HBlank DMA to give the top and bottom
+        // halves of BG3 opposite horizontal offsets. That tears a complete
+        // Crystal Redux background into strips; show the already loaded
+        // scene in one piece instead. Trainer/platform sprite animations
+        // run independently and are left untouched.
+        ScanlineEffect_Stop();
+        gBattle_WIN0V = WIN_RANGE(0, DISPLAY_HEIGHT);
+        SetGpuReg(REG_OFFSET_WIN0V, gBattle_WIN0V);
+        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR);
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+    }
+
     InitBattleBgsVideo();
     LoadBattleTextboxAndBackground();
     ResetSpriteData();
