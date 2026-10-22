@@ -7012,21 +7012,79 @@ Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_JO_AND_ZOE_HNS ===
-Name: JO&ZOE
+Name: STEEVEE
 Class: Twins Hns
 Pic: Twins Hns
 Gender: Male
 Music: Hg Girl 2
 Double Battle: Yes
-AI: Check Bad Move
+AI: Smart Trainer / Prediction
+Items: Full Restore
 
-Victreebel
-Level: 58
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Flareon @ Charcoal
+Level: 63
+Ability: Flash Fire
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 4 HP / 252 Atk / 0 Def / 0 SpA / 0 SpD / 252 Spe
+Adamant Nature
+- Flare Blitz
+- Quick Attack
+- Will-O-Wisp
+- Protect
 
-Vileplume
-Level: 58
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Toxeon @ Black Sludge
+Level: 63
+Ability: Poison Touch
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 4 HP / 252 Atk / 0 Def / 0 SpA / 0 SpD / 252 Spe
+Jolly Nature
+- Poison Jab
+- Bite
+- Toxic
+- Protect
+
+Lepideon @ Focus Sash
+Level: 64
+Ability: Tinted Lens
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 4 HP / 0 Atk / 0 Def / 252 SpA / 0 SpD / 252 Spe
+Timid Nature
+- Bug Buzz
+- Giga Drain
+- Quiver Dance
+- Protect
+
+Nimbeon @ Sitrus Berry
+Level: 64
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 0 Atk / 0 Def / 4 SpA / 252 SpD / 0 Spe
+Calm Nature
+- Air Slash
+- Roost
+- Tailwind
+- Icy Wind
+
+Espeon @ Light Clay
+Level: 65
+Ability: Synchronize
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 4 HP / 0 Atk / 0 Def / 252 SpA / 0 SpD / 252 Spe
+Timid Nature
+- Psychic
+- Reflect
+- Helping Hand
+- Morning Sun
+
+Eeveeon @ Leftovers
+Level: 66
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 4 Atk / 0 Def / 0 SpA / 252 SpD / 0 Spe
+Careful Nature
+- Eevoboost
+- Hyper Voice
+- Double-Edge
+- Baton Pass
+
 
 === TRAINER_MEG_AND_PEG_HNS ===
 Name: MEG&PEG
