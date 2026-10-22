@@ -24,11 +24,11 @@ MtSilver_1F_MoltresRoom_EventScript_Groudon::
 	lock
 	faceplayer
 	goto_if_unset FLAG_PRU_MAXIE_GROUDON_DEFEATED, MtSilver_1F_MoltresRoom_EventScript_Maxie
-	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_GROUDON_PRIMAL, CRY_MODE_ENCOUNTER
 	waitmoncry
-	@ Red Orb triggers native Primal Reversion and Desolate Land in battle.
-	@ Captured Groudon retains the orb.
-	seteventmon SPECIES_GROUDON, 75, ITEM_RED_ORB
+	@ Start in true Primal form: Desolate Land is active from turn one.
+	@ The Red Orb is retained if caught, allowing normal battle reversion.
+	seteventmon SPECIES_GROUDON_PRIMAL, 75, ITEM_RED_ORB
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
