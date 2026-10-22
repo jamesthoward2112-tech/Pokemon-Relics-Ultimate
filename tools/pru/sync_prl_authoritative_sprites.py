@@ -36,6 +36,7 @@ PRU_VISUAL_OVERRIDES = {"feralodon", "donphalanx", "skarmet"}
 NORMALIZED_EEVEE_ICONS = {
     "champeon", "lepideon", "guardeon", "obsideon", "toxeon",
     "sphynxeon", "omeon", "drakeon", "eeveeon", "nimbeon",
+    "astrachi",  # Locally corrected 32x64 icon + dedicated icon palette #10.
 }
 NOXICHU_BLOBS = {
     "front.png": "7e866622e368249babadc1382dea74902ddba960",
