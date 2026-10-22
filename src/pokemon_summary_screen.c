@@ -3833,9 +3833,23 @@ static void WrapPruAbilitySummaryText(const u8 *source)
     sPruAbilitySummaryText[out] = EOS;
 }
 
+// Summary screen normally asks the species rather than this individual mon.
+// The special shiny Power Plant Electrode has Levitate, including after capture
+// and when viewed directly in the PC.
+static enum Ability GetSummaryMonAbility(void)
+{
+    struct PokeSummary *sum = &sMonSummaryScreen->summary;
+    if (sum->species == SPECIES_ELECTRODE
+        && sum->isShiny
+        && GetBoxMonData(GetCurrentBoxmon(), MON_DATA_MODERN_FATEFUL_ENCOUNTER))
+        return ABILITY_LEVITATE;
+
+    return GetAbilityBySpecies(sum->species, sum->abilityNum);
+}
+
 static void PrintMonAbilityName(void)
 {
-    enum Ability ability = GetAbilityBySpecies(sMonSummaryScreen->summary.species, sMonSummaryScreen->summary.abilityNum);
+    enum Ability ability = GetSummaryMonAbility();
     u8 windowId = AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_ABILITY);
 
     if (IS_HNS)
@@ -3846,7 +3860,7 @@ static void PrintMonAbilityName(void)
 
 static void PrintMonAbilityDescription(void)
 {
-    enum Ability ability = GetAbilityBySpecies(sMonSummaryScreen->summary.species, sMonSummaryScreen->summary.abilityNum);
+    enum Ability ability = GetSummaryMonAbility();
     u8 windowId = AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_ABILITY);
 
     if (IS_HNS)

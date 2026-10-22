@@ -3779,6 +3779,15 @@ void CalculateMonStats(struct Pokemon *mon)
     };
     bool32 isPruChargedElectrode = IsPruChargedElectrode(mon);
 
+    // Save compatibility: previously caught Power Plant Electrode keep their
+    // original first three moves but receive Kablow in the old Electro Ball slot.
+    // Do not overwrite a player-customised fourth move.
+    if (isPruChargedElectrode
+        && GetMonData(mon, MON_DATA_MOVE1) == MOVE_THUNDERBOLT
+        && GetMonData(mon, MON_DATA_MOVE2) == MOVE_VOLT_SWITCH
+        && GetMonData(mon, MON_DATA_MOVE4) == MOVE_ELECTRO_BALL)
+        SetMonMoveSlot(mon, MOVE_KABLOW, 3);
+
     if (FlagGet(FLAG_LIMIT_TO_50) == TRUE && level != 50)
         level = 50;
 
@@ -6054,7 +6063,8 @@ void PokemonToBattleMon(struct Pokemon *src, struct BattlePokemon *dst)
     dst->types[1] = GetSpeciesType(dst->species, 1);
     dst->types[2] = TYPE_MYSTERY;
     dst->isShiny = IsMonShiny(src);
-    dst->ability = GetAbilityBySpecies(dst->species, dst->abilityNum);
+    // Preserve individual event ability overrides (e.g. shiny boss Electrode).
+    dst->ability = GetMonAbility(src);
     GetMonData(src, MON_DATA_NICKNAME, nickname);
     StringCopy_Nickname(dst->nickname, nickname);
     GetMonData(src, MON_DATA_OT_NAME, dst->otName);

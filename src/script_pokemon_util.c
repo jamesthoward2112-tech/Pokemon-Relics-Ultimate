@@ -234,7 +234,8 @@ void PruPrepareChargedElectrode(void)
     SetMonMoveSlot(mon, MOVE_THUNDERBOLT, 0);
     SetMonMoveSlot(mon, MOVE_VOLT_SWITCH, 1);
     SetMonMoveSlot(mon, MOVE_THUNDER_WAVE, 2);
-    SetMonMoveSlot(mon, MOVE_ELECTRO_BALL, 3);
+    // Kablowfish's signature move: powerful Steel explosion + hazard shards.
+    SetMonMoveSlot(mon, MOVE_KABLOW, 3);
     CalculateMonStats(mon);
 }
 
