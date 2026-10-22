@@ -7,19 +7,15 @@ on:
       - 'docs/**'
       - '**/*.md'
       - '.github/PULL_REQUEST_TEMPLATE.md'
-  pull_request:
-    branches: [main]
-    paths-ignore:
-      - 'docs/**'
-      - '**/*.md'
-      - '.github/PULL_REQUEST_TEMPLATE.md'
   workflow_dispatch:
 
 permissions:
   contents: write
 
+# Each build is independent: never supersede a queued ROM build.
+# PR builds are opt-in via workflow_dispatch; main pushes still run automatically.
 concurrency:
-  group: pru-clean-build-${{ github.ref }}
+  group: pru-clean-build-${{ github.run_id }}
   cancel-in-progress: false
 
 jobs:
