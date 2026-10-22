@@ -78,7 +78,7 @@ assert "#define TRAINER_PRU_ARCHIE_KYOGRE_HNS            680" in opponents
 assert "#define TRAINER_PRU_MAXIE_GROUDON_HNS            681" in opponents
 # The original 682 ceiling is an old hardcoded fixture. PRU appends save-safe
 # Kanto duo battles without moving any existing trainer IDs.
-count = re.search(r"#define TRAINERS_COUNT_HNS\\s+(\\d+)", opponents)
+count = re.search(r"#define TRAINERS_COUNT_HNS\s+(\d+)", opponents)
 assert count and int(count.group(1)) >= 683
 assert "#define TRAINER_STEEVE_NEEVEE_CELADON_HNS       682" in opponents
 assert team_levels(party, "TRAINER_STEEVE_NEEVEE_CELADON_HNS") == [63,63,64,64,65,66]
