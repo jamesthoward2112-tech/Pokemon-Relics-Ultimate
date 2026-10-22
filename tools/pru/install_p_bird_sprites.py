@@ -354,6 +354,39 @@ def save_jasc(colors, destination):
                            "".join(f"{r} {g} {b}\n" for r, g, b in pal))
 
 
+
+def sync_runtime_icon_palette(slug, colors):
+    """Keep ROM sprite palettes in the exact PNG 4bpp colour-index order.
+
+    The TRE donor is installed afresh by every clean build. A manually typed
+    palette does not necessarily match its 32x64 indexed PNG and makes the
+    party and PC sprites garbled even when the art looks fine on disk.
+    """
+    import re
+    symbol = {
+        "articuno": "sPRUArticunoPIconPalette",
+        "zapdos": "sPRUZapdosPIconPalette",
+        "moltres": "sPRUMoltresPIconPalette",
+    }[slug]
+    palette = rgb_palette(colors)
+    lines = [
+        "    " + ", ".join(
+            f"RGB({red // 8}, {green // 8}, {blue // 8})"
+            for red, green, blue in palette[start:start + 4]
+        ) + ("," if start != 12 else "")
+        for start in range(0, 16, 4)
+    ]
+    file = ROOT / "src/pokemon_icon.c"
+    source = file.read_text()
+    regex = (
+        r"(static const u16 " + symbol
+        + r"\[16\]\s*=\s*\{)[^}]*(\};)"
+    )
+    replacement = r"\g<1>\n" + "\n".join(lines) + "\n" + r"\g<2>"
+    source, changed = re.subn(regex, replacement, source, count=1)
+    assert changed == 1, (slug, symbol)
+    file.write_text(source)
+
 def install(slug, donor):
     assert donor["front"].size == donor["back"].size == (64, 64)
     assert donor["icon"].size == (32, 32)
@@ -404,6 +437,7 @@ def install(slug, donor):
         save_jasc(normal_colors, output / name)
     for name in ("shiny.pal", "shiny_gba.pal"):
         save_jasc(shiny_colors, output / name)
+    sync_runtime_icon_palette(slug, icon_colors)
     print(f"PASS {slug}-P: 64x128 two-frame front, 64x64 back, "
           f"32x64 party icon, {len(normal_colors)} palette entries; shiny mapped")
 
