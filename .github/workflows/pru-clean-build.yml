@@ -99,6 +99,7 @@ jobs:
           set -euo pipefail
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_pru_444_gameplay.py
+          python3 tools/pru/check_20261022_legendary_encounters.py
           python3 tools/pru/check_insurgence_mega_jirachi.py
           python3 tools/pru/check_insurgence_space_mew.py
           python3 tools/pru/check_p_bird_sprites.py
