@@ -14,7 +14,7 @@ SeafoamIslands_SecretCave_EventScript_Kyogre::
 	lock
 	faceplayer
 	goto_if_unset FLAG_PRU_ARCHIE_KYOGRE_DEFEATED, SeafoamIslands_SecretCave_EventScript_Archie
-	playmoncry SPECIES_KYOGRE_PRIMAL, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 	waitmoncry
 	@ Kyogre holds the Blue Orb and automatically becomes Primal on entry.
 	@ Capture keeps base Kyogre plus the Orb for future Primal Reversion.
