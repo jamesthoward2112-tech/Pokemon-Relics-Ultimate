@@ -465,8 +465,10 @@ void BattleSetup_StartRoamerBattle(void)
         song = MUS_HG_VS_ENTEI;
     else if (species == SPECIES_RAIKOU)
         song = MUS_HG_VS_RAIKOU;
-    else
-        song = MUS_HG_VS_SUICUNE; 
+    else if (species == SPECIES_SUICUNE)
+        song = MUS_HG_VS_SUICUNE;
+    // Use the normal legendary theme for Kanto birds and the Lati duo,
+    // rather than the Johto Suicune-specific music.
 #endif
     CreateBattleStartTask(GetWildBattleTransition(), song);
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);

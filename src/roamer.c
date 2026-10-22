@@ -5,6 +5,9 @@
 #include "field_effect.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
+#include "field_weather.h"
+#include "constants/weather.h"
+#include "constants/flags.h"
 #include "ow_synchronize.h"
 #include "pokemon.h"
 #include "random.h"
@@ -336,18 +339,99 @@ void InitRoamer(void)
     DeactivateRoamersByLocationTable(ROAMER_LOC_TABLE_JOHTO);
 }
 
+static bool8 IsPruKantoBirdSpecies(u16 species)
+{
+    return species == SPECIES_ARTICUNO || species == SPECIES_ZAPDOS || species == SPECIES_MOLTRES;
+}
+
+// Retain the original Latias/Latios quest without wiping the three new roamers.
 void InitKantoRoamers(void)
 {
-    DeactivateRoamersByLocationTable(ROAMER_LOC_TABLE_KANTO);
-    if (gSpecialVar_0x8004 == 0)
+    u16 species = gSpecialVar_0x8004 == 0 ? SPECIES_LATIAS : SPECIES_LATIOS;
+    u32 i;
+
+    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT))
+        return;
+
+    for (i = 0; i < ROAMER_COUNT; i++)
+        if (ROAMER(i)->active && ROAMER(i)->species == species)
+            return;
+
+    GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_SET_SEEN);
+    TryAddRoamer(species, 60, ROAMER_LOC_TABLE_KANTO);
+}
+
+// An existing save with Kanto access automatically unlocks these three
+// independent Level 70 roamers on its next outdoor Kanto route visit.
+void EnsurePruKantoBirdRoamers(void)
+{
+    static const struct
     {
-        GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_LATIAS), FLAG_SET_SEEN);
-        TryAddRoamer(SPECIES_LATIAS, 60, ROAMER_LOC_TABLE_KANTO);
+        u16 species;
+        u16 initFlag;
+    } sBirds[] = {
+        {SPECIES_ARTICUNO, FLAG_PRU_ARTICUNO_ROAMER_INITIALIZED},
+        {SPECIES_ZAPDOS, FLAG_PRU_ZAPDOS_ROAMER_INITIALIZED},
+        {SPECIES_MOLTRES, FLAG_PRU_MOLTRES_ROAMER_INITIALIZED},
+    };
+    u8 mapNum = gSaveBlock1Ptr->location.mapNum;
+    u32 i, j;
+    bool8 kantoRoute = FALSE;
+
+    if (gSaveBlock1Ptr->location.mapGroup != ROAMER_MAP_GROUP)
+        return;
+    for (i = 0; i < ARRAY_COUNT(sRoamerLocationsKanto) - 1; i++)
+        if (sRoamerLocationsKanto[i][0] == mapNum)
+            kantoRoute = TRUE;
+    if (!kantoRoute)
+        return;
+
+    FlagSet(FLAG_PRU_KANTO_BIRDS_UNLOCKED);
+    for (i = 0; i < ARRAY_COUNT(sBirds); i++)
+    {
+        u16 species = sBirds[i].species;
+        if (FlagGet(sBirds[i].initFlag))
+            continue;
+        if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT))
+        {
+            FlagSet(sBirds[i].initFlag);
+            continue;
+        }
+        // Compatible with a previously initialized/save-carried bird.
+        for (j = 0; j < ROAMER_COUNT; j++)
+            if (ROAMER(j)->species == species && ROAMER(j)->active)
+                break;
+        if (j < ROAMER_COUNT || TryAddRoamer(species, 70, ROAMER_LOC_TABLE_KANTO))
+            FlagSet(sBirds[i].initFlag);
     }
-    else
+}
+
+// The temporary weather belongs only to a Kanto route occupied by an active
+// bird. When several arrive on the same route, the fixed order avoids flicker.
+void ApplyPruKantoBirdWeather(void)
+{
+    u32 i;
+    u16 species = SPECIES_NONE;
+
+    for (i = 0; i < ROAMER_COUNT; i++)
     {
-        GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_LATIOS), FLAG_SET_SEEN);
-        TryAddRoamer(SPECIES_LATIOS, 60, ROAMER_LOC_TABLE_KANTO);
+        if (!ROAMER(i)->active || !IsPruKantoBirdSpecies(ROAMER(i)->species))
+            continue;
+        if (!IsRoamerAt(i, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum))
+            continue;
+        if (species == SPECIES_NONE || ROAMER(i)->species < species)
+            species = ROAMER(i)->species;
+    }
+
+    switch (species)
+    {
+    case SPECIES_ARTICUNO: SetSavedWeather(WEATHER_SNOW); break;
+    case SPECIES_ZAPDOS: SetSavedWeather(WEATHER_RAIN_THUNDERSTORM); break;
+    case SPECIES_MOLTRES: SetSavedWeather(WEATHER_DROUGHT); break;
+    default:
+        // The caller has reset map-header weather on entry; leave scripted
+        // weather intact if no legendary occupies this route.
+        break;
     }
 }
 #else
@@ -361,6 +445,12 @@ void InitRoamer(void)
 }
 
 void InitKantoRoamers(void)
+{
+}
+void EnsurePruKantoBirdRoamers(void)
+{
+}
+void ApplyPruKantoBirdWeather(void)
 {
 }
 #endif
@@ -475,15 +565,19 @@ void CreateRoamerMonInstance(u32 roamerIndex)
 bool8 TryStartRoamerEncounter(void)
 {
     u32 i;
+    u8 eligible[ROAMER_COUNT];
+    u8 count = 0;
 
+    // Pick among co-located roamers fairly, with one 25% roll overall.
     for (i = 0; i < ROAMER_COUNT; i++)
+        if (IsRoamerAt(i, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum))
+            eligible[count++] = i;
+    if (count && (Random() % 4) == 0)
     {
-        if (IsRoamerAt(i, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum) == TRUE && (Random() % 4) == 0)
-        {
-            CreateRoamerMonInstance(i);
-            gEncounteredRoamerIndex = i;
-            return TRUE;
-        }
+        i = eligible[Random() % count];
+        CreateRoamerMonInstance(i);
+        gEncounteredRoamerIndex = i;
+        return TRUE;
     }
     return FALSE;
 }
@@ -507,6 +601,14 @@ void UpdateRoamerHPStatus(struct Pokemon *mon)
     }
 
     RoamerMoveToOtherLocationSet(gEncounteredRoamerIndex);
+#if IS_HNS
+    // The defeated/fled bird no longer controls the weather here.
+    if (IsPruKantoBirdSpecies(ROAMER(gEncounteredRoamerIndex)->species))
+    {
+        SetSavedWeatherFromCurrMapHeader();
+        ApplyPruKantoBirdWeather();
+    }
+#endif
 }
 
 // Also repair HNS save files where a Kanto roamer was already deactivated
@@ -526,7 +628,8 @@ void RestorePruDefeatedRoamers(void)
 
         if (ROAMER(i)->active || ROAMER(i)->hp != 0
             || ROAMER(i)->locationTableId != ROAMER_LOC_TABLE_KANTO
-            || (species != SPECIES_LATIAS && species != SPECIES_LATIOS))
+            || (species != SPECIES_LATIAS && species != SPECIES_LATIOS
+                && !IsPruKantoBirdSpecies(species)))
             continue;
         dexNum = SpeciesToNationalPokedexNum(species);
         if (!GetSetPokedexFlag(dexNum, FLAG_GET_SEEN)
@@ -548,7 +651,19 @@ void RestorePruDefeatedRoamers(void)
 
 void SetRoamerInactive(u32 roamerIndex)
 {
+#if IS_HNS
+    bool8 wasLocalBird = ROAMER(roamerIndex)->active
+        && IsPruKantoBirdSpecies(ROAMER(roamerIndex)->species)
+        && IsRoamerAt(roamerIndex, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
+#endif
     ROAMER(roamerIndex)->active = FALSE;
+#if IS_HNS
+    if (wasLocalBird)
+    {
+        SetSavedWeatherFromCurrMapHeader();
+        ApplyPruKantoBirdWeather();
+    }
+#endif
 }
 
 void GetRoamerLocation(u32 roamerIndex, u8 *mapGroup, u8 *mapNum)

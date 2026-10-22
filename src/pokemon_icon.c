@@ -74,6 +74,33 @@ static const u16 sPRUAstrachiIconPalette[16] =
     RGB(6, 7, 7), RGB(5, 6, 13), RGB(4, 5, 8), RGB(3, 4, 6),
 };
 
+// Exact palette-index ordering from the owner-approved TRE Articuno-P icon.
+static const u16 sPRUArticunoPIconPalette[16] =
+{
+    RGB(0, 0, 0), RGB(8, 8, 8), RGB(15, 19, 9), RGB(12, 12, 11),
+    RGB(19, 25, 9), RGB(31, 31, 31), RGB(18, 30, 9), RGB(29, 14, 19),
+    RGB(30, 28, 5), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)
+};
+
+// Exact palette-index ordering from the owner-approved TRE Zapdos-P icon.
+static const u16 sPRUZapdosPIconPalette[16] =
+{
+    RGB(0, 0, 0), RGB(31, 31, 31), RGB(23, 20, 8), RGB(8, 8, 8),
+    RGB(30, 30, 5), RGB(31, 22, 20), RGB(29, 14, 19), RGB(26, 12, 8),
+    RGB(30, 18, 5), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)
+};
+
+// Exact palette-index ordering from the owner-approved TRE Moltres-P icon.
+static const u16 sPRUMoltresPIconPalette[16] =
+{
+    RGB(0, 0, 0), RGB(8, 8, 8), RGB(29, 14, 19), RGB(18, 30, 9),
+    RGB(19, 25, 9), RGB(12, 12, 11), RGB(15, 19, 9), RGB(31, 31, 31),
+    RGB(30, 30, 21), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)
+};
+
 const struct SpritePalette gMonIconPaletteTable[] =
 {
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
@@ -87,6 +114,9 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUSwamplithIconPalette, POKE_ICON_BASE_PAL_TAG + 8 },
     { sPRUSkarmetIconPalette, POKE_ICON_BASE_PAL_TAG + 9 },
     { sPRUAstrachiIconPalette, POKE_ICON_BASE_PAL_TAG + 10 },
+    { sPRUArticunoPIconPalette, POKE_ICON_BASE_PAL_TAG + 11 },
+    { sPRUZapdosPIconPalette, POKE_ICON_BASE_PAL_TAG + 12 },
+    { sPRUMoltresPIconPalette, POKE_ICON_BASE_PAL_TAG + 13 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -202,6 +232,12 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 9;
     if (species == SPECIES_ASTRACHI)
         return 10;
+    if (species == SPECIES_ARTICUNO)
+        return 11;
+    if (species == SPECIES_ZAPDOS)
+        return 12;
+    if (species == SPECIES_MOLTRES)
+        return 13;
     return original;
 }
 

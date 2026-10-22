@@ -486,6 +486,11 @@
 #define FLAG_HIDE_MTMOON_ASTRACHI                    0x4E0
 #define FLAG_SUMMONED_MTMOON_ASTRACHI                0x4E1
 #define FLAG_CAUGHT_MTMOON_ASTRACHI                  0x4E2
+// PRU: persistent Kanto roaming legendary-bird unlock and individual initializations.
+#define FLAG_PRU_KANTO_BIRDS_UNLOCKED                 0x4E3
+#define FLAG_PRU_ARTICUNO_ROAMER_INITIALIZED          0x4E4
+#define FLAG_PRU_ZAPDOS_ROAMER_INITIALIZED            0x4E5
+#define FLAG_PRU_MOLTRES_ROAMER_INITIALIZED           0x4E6
 #define FLAG_COMPLETED_AERODACTYL_PUZZLE            0x1E2
 #define FLAG_COMPLETED_HOOH_PUZZLE                  0x1E3
 #define FLAG_COMPLETED_KABUTO_PUZZLE                0x1E4
