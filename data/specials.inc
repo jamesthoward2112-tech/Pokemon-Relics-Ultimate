@@ -712,3 +712,4 @@ gSpecials::
 	def_special IsPjrTinTowerEntranceStatue
 
 	def_special PruIsJirachiCaught
+	def_special PruPrepareChargedElectrode
