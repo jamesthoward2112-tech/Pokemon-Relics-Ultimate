@@ -1,10 +1,11 @@
 // PRU source of truth: /Pokémon Relics Ultimate/Canonical Data/PRU_National_Pokedex_2026-10-16.csv
-// No entries added or removed. Indexed 1..444; battle-only Mega forms not separate entries.
+// Preserve original 1..444. Append only the three approved species 445..447;
+// 448..450 are RESERVED for later stories. Battle forms do not add entries.
 // This mapping is used for HNS Pokémon summary numbers only, not the engine's vanilla National Dex flags.
 #ifndef GUARD_PRU_DEX_ORDER_H
 #define GUARD_PRU_DEX_ORDER_H
 
-#define PRU_DEX_COUNT 444
+#define PRU_DEX_COUNT 447
 
 static const u16 sPruDexSpecies[PRU_DEX_COUNT] =
 {
@@ -452,6 +453,9 @@ static const u16 sPruDexSpecies[PRU_DEX_COUNT] =
     SPECIES_JIRACHI, // 442 Jirachi
     SPECIES_ASTRACHI, // 443 Astrachi
     SPECIES_DEOXYS, // 444 Deoxys
+    SPECIES_GLACEON, // 445 Glaceon
+    SPECIES_LEAFEON, // 446 Leafeon
+    SPECIES_MIMIKYU_DISGUISED, // 447 Mimikyu
 };
 
 #endif // GUARD_PRU_DEX_ORDER_H
