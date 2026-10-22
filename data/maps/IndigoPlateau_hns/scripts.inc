@@ -16,6 +16,7 @@ IndigoPlateau_Text_Sign:
 @ Johto League challenge. The Badge Heist is a physical story case only.
 IndigoPlateau_EventScript_PRUSyncRocket::
 	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
+	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUSyncDone
 	goto_if_set FLAG_PRU_HEIST_COMPLETED, IndigoPlateau_EventScript_PRUSyncDone
 	clearflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
@@ -45,11 +46,19 @@ IndigoPlateau_EventScript_PRUEscape::
 	setflag FLAG_PRU_HEIST_COMPLETED
 	msgbox IndigoPlateau_Text_PRUBalloonDeparture, MSGBOX_DEFAULT
 	closemessage
-	fadescreenswapbuffers FADE_TO_WHITE
+	@ Display authentic MrNightology 64x64 Meowth balloon and animate
+	@ its ascent without redrawing or replacing any existing sprites.
+	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	addobject 4
 	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
 	removeobject 1
 	removeobject 2
 	removeobject 3
+	applymovement 4, IndigoPlateau_Movement_PRUBalloonRise
+	waitmovement 4
+	fadescreenswapbuffers FADE_TO_WHITE
+	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	removeobject 4
 	playse SE_M_TELEPORT
 	fadescreenswapbuffers FADE_FROM_WHITE
 	releaseall
@@ -82,3 +91,11 @@ IndigoPlateau_Text_PRUMeowth:
 IndigoPlateau_Text_PRUWaiting:
 	.string "TEAM ROCKET's final challenge\n"
 	.string "awaits the eight BADGES!$"
+
+
+IndigoPlateau_Movement_PRUBalloonRise:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end
