@@ -53,6 +53,7 @@
 #include "constants/trainers.h"
 #include "constants/opponents_hns.h"
 #include "constants/weather.h"
+#include "constants/maps.h"
 #include "randomizer.h"
 #include "constants/pokemon.h"
 
@@ -3004,6 +3005,25 @@ bool32 TryFieldEffects(enum FieldEffectCases caseId)
         }
         break;
     case FIELD_EFFECT_OVERWORLD_WEATHER:
+        // The three scripted Lavender memorial encounters take place inside
+        // the isolated, seven-floor spirit tower. They use the exact native
+        // eight-turn PRL Eerie Fog battle setting, never generic fog terrain.
+        // Scope by HNS map to avoid changing normal Kanto weather or trainers.
+        if (IS_HNS
+         && !(gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED))
+         && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_LAVENDER_SPIRIT_TOWER_5F_HNS)
+         && (gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_5F_HNS)
+          || gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_6F_HNS)
+          || gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_7F_HNS))
+         && TryChangeBattleWeather(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT),
+                                   BATTLE_WEATHER_FOG, ABILITY_NONE))
+        {
+            gBattleCommunication[MULTISTRING_CHOOSER] = WEATHER_FOG_DIAGONAL;
+            gBattleScripting.animArg1 = B_ANIM_FOG_CONTINUES;
+            BattleScriptPushCursorAndCallback(BattleScript_OverworldWeatherStarts);
+            effect = TRUE;
+            break;
+        }
         // The five pre-League Kimono Girls' Ghost battles are an Eerie Fog
         // ritual. Previously all five simply knew the move, so the AI could
         // choose not to use it at all. Start native PRL Eerie Fog before the
