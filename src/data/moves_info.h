@@ -23221,8 +23221,8 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("KABLOW!"),
         .description = COMPOUND_STRING(
-            "The user detonates violently,\n"
-            "scattering hazardous shrapnel."),
+            "Explodes; leaves Spikes\n"
+            "and Toxic Spikes."),
         .effect = EFFECT_CEASELESS_EDGE,
         .power = 170,
         .type = TYPE_STEEL,
