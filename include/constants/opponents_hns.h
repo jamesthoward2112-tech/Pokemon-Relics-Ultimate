@@ -719,7 +719,9 @@
 // PRU's postgame Team Aqua and Team Magma cavern guardians.
 #define TRAINER_PRU_ARCHIE_KYOGRE_HNS            680
 #define TRAINER_PRU_MAXIE_GROUDON_HNS            681
-#define TRAINERS_COUNT_HNS                       682
+// Celadon Gym S&N: unique append-only battle flag so old Jo & Zoe wins do not skip it.
+#define TRAINER_STEEVE_NEEVEE_CELADON_HNS       682
+#define TRAINERS_COUNT_HNS                       683
 #define MAX_TRAINERS_COUNT_HNS                   864
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_HNS_H
