@@ -3,13 +3,15 @@ name: PRU canonical clean build
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: pru-direct-gba-hotfix-20261022
+  group: pru-clean-build-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
