@@ -953,12 +953,21 @@ static void RestorePruDefeatedLegendariesOnMapEntry(void)
     if (!IS_HNS)
         return;
 
-    // Restore legacy Kanto roamers defeated on older PRU saves as well.
+    // Initialize old/new saves when the player first enters a Kanto route.
+    // Keep the three stationary duplicates hidden after roaming unlock.
+    EnsurePruKantoBirdRoamers();
     RestorePruDefeatedRoamers();
 
     for (i = 0; i < ARRAY_COUNT(sLegendaryHideFlags); i++)
     {
-        if (PruLegendarySeenButUncaught(sLegendaryHideFlags[i].species))
+        u16 species = sLegendaryHideFlags[i].species;
+        if (FlagGet(FLAG_PRU_KANTO_BIRDS_UNLOCKED)
+            && (species == SPECIES_ARTICUNO || species == SPECIES_ZAPDOS || species == SPECIES_MOLTRES))
+        {
+            FlagSet(sLegendaryHideFlags[i].hideFlag);
+            continue;
+        }
+        if (PruLegendarySeenButUncaught(species))
             FlagClear(sLegendaryHideFlags[i].hideFlag);
     }
 
@@ -1044,6 +1053,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     InitSecondaryTilesetAnimation();
     UpdateLocationHistoryForRoamer();
     MoveAllRoamers();
+    ApplyPruKantoBirdWeather();
     TryShowRoamerFlash();
     DoCurrentWeather();
     ResetFieldTasksArgs();
@@ -1108,6 +1118,7 @@ static void LoadMapFromWarp(bool32 a1)
     RunOnTransitionMapScript();
     UpdateLocationHistoryForRoamer();
     MoveAllRoamersToOtherLocationSets();
+    ApplyPruKantoBirdWeather();
     gChainFishingDexNavStreak = 0;
     if ((gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR_HNS))
         InitBattlePyramidMap(FALSE);
