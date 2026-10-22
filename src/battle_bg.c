@@ -1149,6 +1149,101 @@ static u8 GetBattleEnvironmentOverride(void)
     return GetBattleEnvironmentByMapScene(battleScene);
 }
 
+// Crystal Redux BG3 never moves. Emerald's original environment entry art is
+// an optional foreground on BG1, with its own palette and tile storage.
+static bool8 sPruEmeraldForegroundActive;
+
+bool8 IsPruEmeraldForegroundActive(void)
+{
+    return sPruEmeraldForegroundActive;
+}
+
+static bool8 IsPruEmeraldEnvironment(u8 environment)
+{
+    switch (environment)
+    {
+    case BATTLE_ENVIRONMENT_GRASS:
+    case BATTLE_ENVIRONMENT_LONG_GRASS:
+    case BATTLE_ENVIRONMENT_POND:
+    case BATTLE_ENVIRONMENT_WATER:
+    case BATTLE_ENVIRONMENT_SAND:
+    case BATTLE_ENVIRONMENT_MOUNTAIN:
+    case BATTLE_ENVIRONMENT_CAVE:
+    case BATTLE_ENVIRONMENT_GRAY_CAVE:
+    case BATTLE_ENVIRONMENT_CAVE_WATER:
+    case BATTLE_ENVIRONMENT_GRAY_CAVE_WATER:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
+static void LoadPruEmeraldBattleForeground(void)
+{
+    u8 environment;
+    u16 i;
+    volatile u16 *tilemap;
+
+    sPruEmeraldForegroundActive = FALSE;
+    if (!IsPruCrystalBattleBgActive()
+     || gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK
+                          | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_EREADER_TRAINER
+                          | BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_MULTI
+                          | BATTLE_TYPE_LEGENDARY))
+        return;
+
+    environment = GetBattleEnvironmentOverride();
+    if (!IsPruEmeraldEnvironment(environment)
+     || environment >= NELEMS(gBattleEnvironmentInfo)
+     || !gBattleEnvironmentInfo[environment].entry.tileset
+     || !gBattleEnvironmentInfo[environment].entry.tilemap
+     || !gBattleEnvironmentInfo[environment].palette)
+        return;
+
+    // Original Emerald animated entry tiles (charbase 1) and unmodified
+    // entry map (screenblock 28). Neither touches Crystal Redux BG3 (2/26).
+    LoadBattleEnvironmentEntryGfx(environment);
+    CpuFill32(0, (void *)BG_SCREEN_ADDR(29), BG_SCREEN_SIZE);
+
+    // Emerald anim maps address BG palette 4. The static donor scenery owns
+    // palettes 2-4, so give the foreground its own copy in palette 8.
+    LoadPalette((const u16 *)gBattleEnvironmentInfo[environment].palette + 32,
+                BG_PLTT_ID(8), PLTT_SIZE_4BPP);
+    tilemap = (volatile u16 *)BG_SCREEN_ADDR(28);
+    for (i = 0; i < BG_SCREEN_SIZE / sizeof(u16); i++)
+    {
+        u16 entry = tilemap[i];
+        if ((entry & 0xF000) == 0x4000)
+            tilemap[i] = (entry & 0x0FFF) | 0x8000;
+    }
+
+    // 256x512 prevents the entrance art from wrapping onscreen while below
+    // the viewport. Sprites/windows continue independently on OBJ/BG0/BG2.
+    SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 1);
+    SetGpuReg(REG_OFFSET_BG1CNT,
+              BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR
+              | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
+    gBattle_BG1_X = 0;
+    gBattle_BG1_Y = (u16)-160;
+    sPruEmeraldForegroundActive = TRUE;
+}
+
+void EndPruEmeraldBattleForeground(void)
+{
+    if (!sPruEmeraldForegroundActive)
+        return;
+
+    // Normal battle and battle animations require BG1 again after the entry.
+    CpuFill32(0, (void *)BG_SCREEN_ADDR(28), BG_SCREEN_SIZE * 2);
+    SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 0);
+    SetGpuReg(REG_OFFSET_BG1CNT,
+              BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR
+              | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
+    gBattle_BG1_X = 0;
+    gBattle_BG1_Y = 0;
+    sPruEmeraldForegroundActive = FALSE;
+}
+
 // Used only to disable the panorama-splitting entrance on standard PRU
 // battles. Preserve the original link, facility and partner transitions.
 bool8 IsPruCrystalBattleBgActive(void)
@@ -1218,6 +1313,7 @@ void DrawMainBattleBackground(void)
 
 void LoadBattleTextboxAndBackground(void)
 {
+    sPruEmeraldForegroundActive = FALSE;
     DecompressDataWithHeaderVram(gBattleTextboxTiles, (void *)(BG_CHAR_ADDR(0)));
     CopyToBgTilemapBuffer(0, gBattleTextboxTilemap, 0, 0);
     CopyBgTilemapBufferToVram(0);
@@ -1489,7 +1585,10 @@ void DrawBattleEntryBackground(void)
     // BG3 already contains the full Crystal Redux scene. Never draw the
     // separate entrance curtain panels above it or scroll the panorama.
     if (IsPruCrystalBattleBgActive())
+    {
+        LoadPruEmeraldBattleForeground();
         return;
+    }
 
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {
