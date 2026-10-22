@@ -251,6 +251,8 @@ VermilionCity_Gym_EventScript_Horton::
 VermilionCity_Gym_EventScript_Surge::
 	lock
 	faceplayer
+	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_STARTED, VermilionCity_Gym_EventScript_PRUHeistSurge
 	goto_if_set FLAG_DEFEATED_VERMILION_GYM, VermilionCity_Gym_EventScript_Surge_Defeated
 	msgbox VermilionGym_Text_LtSurgeIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_LTSURGE_HNS, VermilionGym_Text_LtSurgeWinLoss
@@ -463,3 +465,33 @@ VermilionCity_Gym_Text_PRURewardMoney:
 VermilionCity_Gym_Text_PRURewardBagFull:
 	.string "Your BAG is full! Make some room\n"
 	.string "and come back for your prize.$"
+
+@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
+VermilionCity_Gym_EventScript_PRUHeistSurge::
+	goto_if_set FLAG_PRU_HEIST_SURGE, VermilionCity_Gym_EventScript_PRUHeistSurgeDone
+	msgbox VermilionCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_SURGE_HNS, VermilionCity_Gym_Text_PRUHeistWon
+	setflag FLAG_PRU_HEIST_SURGE
+	msgbox VermilionCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+VermilionCity_Gym_EventScript_PRUHeistSurgeDone::
+	msgbox VermilionCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+VermilionCity_Gym_Text_PRUHeistChallenge:
+	.string "SURGE: TEAM ROCKET took your\n"
+	.string "BADGE CASE? Let's win it back!$"
+
+VermilionCity_Gym_Text_PRUHeistWon:
+	.string "SURGE: You've earned this\n"
+	.string "BADGE back. Nicely done!$"
+
+VermilionCity_Gym_Text_PRUHeistAlready:
+	.string "SURGE: One step closer\n"
+	.string "to stopping TEAM ROCKET!$"
+
