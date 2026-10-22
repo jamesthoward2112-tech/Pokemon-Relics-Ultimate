@@ -1,0 +1,20 @@
+# Scoped PRU source/ROM validation for the integrated Emerald+J&J+S&N work.
+# Only a change to THIS file invokes a full integration run on this branch.
+# No automatic builds on unrelated development commits.
+name: PRU single integration ROM gate
+
+on:
+  push:
+    branches:
+      - pru/kanto-duos-heist-emerald-foreground-20261022
+    paths:
+      - '.github/workflows/pru-one-shot-integration.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  full-source-and-rom:
+    uses: ./.github/workflows/pru-clean-build.yml
+    permissions:
+      contents: write
