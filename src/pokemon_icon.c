@@ -61,6 +61,19 @@ static const u16 sPRUSkarmetIconPalette[16] =
     RGB(29, 27, 31), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
 };
 
+// Astrachi party icon uses 16 indexed colours (index zero transparent).
+// This palette is derived from the approved PRL icon, not a shared Jirachi
+// palette: using iconPalIndex=0 previously caused the neon/garbled display.
+// Palette #10 is mapped via GetPruCustomIconPaletteIndex without changing
+// the 3-bit iconPalIndex field in SpeciesInfo or any saved game.
+static const u16 sPRUAstrachiIconPalette[16] =
+{
+    RGB(0, 0, 0), RGB(13, 11, 6), RGB(31, 30, 27), RGB(29, 27, 22),
+    RGB(29, 25, 16), RGB(26, 25, 23), RGB(25, 22, 16), RGB(19, 17, 14),
+    RGB(16, 13, 10), RGB(14, 11, 7), RGB(10, 10, 14), RGB(8, 8, 11),
+    RGB(6, 7, 7), RGB(5, 6, 13), RGB(4, 5, 8), RGB(3, 4, 6),
+};
+
 const struct SpritePalette gMonIconPaletteTable[] =
 {
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
@@ -73,6 +86,7 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRLEeveeonIconPalette, POKE_ICON_BASE_PAL_TAG + 7 },
     { sPRUSwamplithIconPalette, POKE_ICON_BASE_PAL_TAG + 8 },
     { sPRUSkarmetIconPalette, POKE_ICON_BASE_PAL_TAG + 9 },
+    { sPRUAstrachiIconPalette, POKE_ICON_BASE_PAL_TAG + 10 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -186,6 +200,8 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 8;
     if (species == SPECIES_SKARMET)
         return 9;
+    if (species == SPECIES_ASTRACHI)
+        return 10;
     return original;
 }
 
