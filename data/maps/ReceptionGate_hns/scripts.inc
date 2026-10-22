@@ -122,6 +122,7 @@ VictoryRoadGate_Text_RightBlackBelt:
 ReceptionGate_EventScript_PRUSyncRocket::
 	setvar VAR_TEMP_0, 0
 	setflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
+	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	goto_if_unset FLAG_BADGE16_GET, ReceptionGate_EventScript_PRUSyncDone
 	goto_if_set FLAG_PRU_HEIST_STARTED, ReceptionGate_EventScript_PRUSyncDone
 	clearflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
@@ -145,11 +146,19 @@ ReceptionGate_EventScript_PRUHeistTrigger::
 	setflag FLAG_PRU_HEIST_STARTED
 	msgbox ReceptionGate_Text_PRURocketBalloon, MSGBOX_DEFAULT
 	closemessage
-	fadescreenswapbuffers FADE_TO_WHITE
+	@ Display authentic MrNightology 64x64 Meowth balloon and animate
+	@ its ascent without redrawing or replacing any existing sprites.
+	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	addobject 8
 	setflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
 	removeobject 5
 	removeobject 6
 	removeobject 7
+	applymovement 8, ReceptionGate_Movement_PRUBalloonRise
+	waitmovement 8
+	fadescreenswapbuffers FADE_TO_WHITE
+	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	removeobject 8
 	playse SE_M_TELEPORT
 	fadescreenswapbuffers FADE_FROM_WHITE
 	releaseall
@@ -173,3 +182,11 @@ ReceptionGate_Text_PRURocketBalloon:
 	.string "Recover seven BADGES from\n"
 	.string "KANTO's GYM LEADERS, then\\l"
 	.string "challenge GIOVANNI!$"
+
+
+ReceptionGate_Movement_PRUBalloonRise:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end
