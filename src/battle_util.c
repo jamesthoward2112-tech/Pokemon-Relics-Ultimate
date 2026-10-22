@@ -2995,6 +2995,12 @@ bool32 TryFieldEffects(enum FieldEffectCases caseId)
         }
         else if (B_OVERWORLD_FOG >= GEN_8
               && (GetCurrentWeather() == WEATHER_FOG_HORIZONTAL || GetCurrentWeather() == WEATHER_FOG_DIAGONAL)
+              // The spectral tower summons Eerie Fog, not default Misty Terrain.
+              && !(IS_HNS
+                   && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_LAVENDER_SPIRIT_TOWER_5F_HNS)
+                   && (gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_5F_HNS)
+                    || gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_6F_HNS)
+                    || gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_7F_HNS)))
               && !(gFieldStatuses & STATUS_FIELD_MISTY_TERRAIN))
         {
             gFieldStatuses = STATUS_FIELD_MISTY_TERRAIN;
