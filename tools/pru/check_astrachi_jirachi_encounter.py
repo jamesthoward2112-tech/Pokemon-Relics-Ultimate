@@ -43,8 +43,9 @@ sprite = ROOT / "graphics/pokemon/astrachi/overworld.png"
 assert sprite.is_file() and sprite.stat().st_size > 0
 # PRU follower animation expects SIX 32x32 frames in this precise order:
 # south idle/step, north idle/step, side idle/step. Claude's untouched
-# 4x4 128x128 contact sheet had fronts/sides/backs interleaved; treating
-# those sixteen cells as runtime frames made the stationary Astrachi rotate.
+# 4x4 128x128 contact sheet uses COLUMNS for facing and ROWS for motion;
+# rows [0,1] are the two bounce poses of each direction. Never pair the
+# front and back from the same row or the stationary Astrachi will rotate.
 from PIL import Image
 original = ROOT / "assets/astrachi/claude_overworld_original_128x128.png"
 with Image.open(original) as src, Image.open(sprite) as packed:
@@ -54,7 +55,7 @@ with Image.open(original) as src, Image.open(sprite) as packed:
     assert len(set(packed.getdata())) <= 16
     assert len(set(packed.getdata())) > 2
     assert packed.getpalette() == src.getpalette(), "Do not change Claude's normal sprite palette"
-    for dest, source_index in enumerate((0, 1, 8, 9, 2, 3)):
+    for dest, source_index in enumerate((0, 4, 1, 5, 2, 6)):
         source_tile = src.crop(((source_index % 4) * 32, (source_index // 4) * 32,
                                 (source_index % 4 + 1) * 32, (source_index // 4 + 1) * 32))
         runtime_tile = packed.crop((dest * 32, 0, (dest + 1) * 32, 32))
