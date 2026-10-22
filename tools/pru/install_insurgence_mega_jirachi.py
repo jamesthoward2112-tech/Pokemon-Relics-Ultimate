@@ -3,8 +3,10 @@
 
 Pixel-art safe: use the ORIGINAL PNG alpha mask to remove all transparent RGB
 (rectangles in the image preview are actually transparent), trim true-alpha
-padding, resize with a SINGLE uniform factor by nearest-neighbor, centre
-horizontally, and place the visible bottom near the bottom of the GBA frame.
+padding, restore its native 2x pixel grid before fitting the 64x64 GBA frame:
+front preserves all 59 columns and the face, compacting only the top/lower
+tip rows; back retains its full original streamer silhouette via proportional
+reduction (native back is 100px wide).
 Preserves exact normal/shiny relationship; does not introduce a new species.
 """
 from __future__ import annotations
@@ -86,49 +88,71 @@ while len(palette_normal)<16:
     palette_shiny.append((0,0,0))
 indices={c:i+1 for i,c in enumerate(colors)}
 
+def fit_original_sprite(cropped, base):
+    """Fit the *true* pixel-art grid, not the wiki's 2x enlargement.
+
+    The original front is exactly 59x71 logical pixels, NOT 118x142 unique
+    pixels. Previous scaling to 50x60 sampled across original pixel columns
+    and mangled the face, contours and streamers. Preserve all 59 columns,
+    every row of the central 51px and shorten only seven tip/streamer rows.
+    The source back is 100x66 logical pixels: it cannot fit 64px wide
+    without proportional reduction, so retain its complete silhouette.
+    """
+    if base == "front":
+        assert cropped.size == (118, 142), cropped.size
+        native = cropped.resize((59, 71), Image.Resampling.NEAREST)
+        rows = ([round(i * 7 / 4) for i in range(5)]
+                + list(range(8, 59))
+                + [59 + round(i * 11 / 7) for i in range(8)])
+        assert len(rows) == 64 and len(set(rows)) == 64
+        sprite = Image.new("RGBA", (59, 64), (0, 0, 0, 0))
+        for dest, source_row in enumerate(rows):
+            sprite.paste(native.crop((0, source_row, 59, source_row + 1)),
+                         (0, dest))
+        return sprite
+
+    assert base == "back" and cropped.size == (200, 132), cropped.size
+    native = cropped.resize((100, 66), Image.Resampling.NEAREST)
+    # The 100px-wide back simply cannot fit its complete wing/streamer
+    # silhouette into 64px without proportional scaling.
+    return native.resize((64, 42), Image.Resampling.NEAREST)
+
+
 def convert(part):
-    im=orig[part.removesuffix("_shiny")]
-    mask=im.getchannel("A").point(lambda a: 255 if a>127 else 0)
-    bbox=mask.getbbox()
+    base = part.removesuffix("_shiny")
+    normal = orig[base]
+    bbox = normal.getchannel("A").point(lambda a: 255 if a > 127 else 0).getbbox()
     assert bbox, f"Empty donor {part}"
-    cropped=im.crop(bbox)
-    src_w,src_h=cropped.size
-    max_w,max_h=((60,60) if part.startswith("front") else (64,58))
-    # Single aspect-preserving scale for width AND height. No stretching.
-    factor=min(max_w/src_w,max_h/src_h,1)
-    out_w=max(1,round(src_w*factor))
-    out_h=max(1,round(src_h*factor))
-    assert 0<out_w<=64 and 0<out_h<=64
-    assert abs((out_w/out_h)/(src_w/src_h)-1)<0.025
-    scaled=cropped.resize((out_w,out_h),Image.Resampling.NEAREST)
-    # Both views visually grounded; front larger vertically, back wider.
-    x=(64-out_w)//2
-    y=64-out_h-2 if part.startswith("front") else 64-out_h
-    canvas=Image.new("P",(64,64),0)
-    rgbpal=palette_shiny if part.endswith("shiny") else palette_normal
-    flatpal=[v for rgb in rgbpal for v in rgb]+[0]*(768-48)
+    scaled = fit_original_sprite(orig[part].crop(bbox), base)
+    normal_scaled = (fit_original_sprite(normal.crop(bbox), base)
+                     if part.endswith("_shiny") else scaled)
+    out_w, out_h = scaled.size
+    assert out_w <= 64 and out_h <= 64
+    x = (64 - out_w) // 2
+    y = 64 - out_h if base == "front" else 64 - out_h
+    canvas = Image.new("P", (64, 64), 0)
+    rgbpal = palette_shiny if part.endswith("shiny") else palette_normal
+    flatpal = [v for rgb in rgbpal for v in rgb] + [0] * (768 - 48)
     canvas.putpalette(flatpal)
-    data=[0]*4096
-    normal_scaled=(orig[part.removesuffix("_shiny")].crop(bbox).resize((out_w,out_h), Image.Resampling.NEAREST) if part.endswith("_shiny") else None)
+    data = [0] * 4096
     for py in range(out_h):
         for px in range(out_w):
-            rgba=scaled.getpixel((px,py))
-            if rgba[3]<=127:
+            rgba = scaled.getpixel((px, py))
+            nrgba = normal_scaled.getpixel((px, py))
+            if nrgba[3] <= 127:
                 continue
-            rgb=key(rgba[:3]) if not part.endswith("shiny") else rgba[:3]
-            if part.endswith("shiny"):
-                # Use colour pairing with the normal sprite at the same source
-                # coordinate to preserve indexed shiny palette ordering.
-                nrgba=normal_scaled.getpixel((px,py))
-                rgb=key(nrgba[:3])
-            data[(y+py)*64+(x+px)]=indices[rgb]
+            # Shared colour indices: true shiny appearance is controlled by
+            # matching the shiny palette to the exact normal sprite pixels.
+            rgb = key(nrgba[:3])
+            data[(y + py) * 64 + (x + px)] = indices[rgb]
     canvas.putdata(data)
-    canvas.info["transparency"]=0
-    assert max(data)<16 and len(set(data))<=16
-    print(f"{part}: original visible bbox={bbox} {src_w}x{src_h}; "
-          f"frame visible={out_w}x{out_h} x={x} y={y}; "
-          f"aspect error={abs(out_w/out_h/(src_w/src_h)-1):.3f}; indexed max={max(data)}")
+    canvas.info["transparency"] = 0
+    assert max(data) < 16 and len(set(data)) <= 16
+    print(f"{part}: original 2x bbox={bbox}; "
+          f"native-fit={out_w}x{out_h} x={x} y={y}; "
+          f"indexed max={max(data)}")
     return canvas
+
 
 normal_front=convert("front")
 normal_back=convert("back")
@@ -180,4 +204,4 @@ for i,(name,im) in enumerate([
     preview.paste(large,(i*256,30))
     d.text((i*256+6,9),name,fill=(255,255,255))
 preview.save(SOURCES/"preview_4x.png")
-print("PASS: native 64x64 indexed Mega Jirachi from exact Insurgence sources; 2-frame front; 4 shared normal/shiny matching palettes; NO aspect distortion")
+print("PASS: native 64x64 indexed Mega Jirachi from exact Insurgence sources; 2-frame front; 4 shared normal/shiny matching palettes; front face preserved without horizontal scaling")
