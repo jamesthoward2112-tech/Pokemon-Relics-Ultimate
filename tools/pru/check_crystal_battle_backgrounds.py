@@ -54,7 +54,26 @@ assert len(set(leaders.values())) == 16
 for leader, idx in leaders.items():
     assert re.search(r"case TRAINER_" + leader + r"(?:_\w+)?_HNS: return " + str(idx) + r";", code), leader
 
+# The backdrop must already be fully visible, not split by the original
+# top/bottom HBlank BG3 scrolling or revealed through expanding window strips.
+main = Path("src/battle_main.c").read_text()
+intro = Path("src/battle_intro.c").read_text()
+header = Path("include/battle_bg.h").read_text()
+assert "bool8 IsPruCrystalBattleBgActive(void);" in header
+assert "if (IsPruCrystalBattleBgActive())" in main
+assert "ScanlineEffect_Stop();" in main
+assert "gBattle_WIN0V = WIN_RANGE(0, DISPLAY_HEIGHT);" in main
+assert "taskId = CreateTask(BattleIntroCrystalStatic, 0);" in intro
+static_intro = intro.split("static void BattleIntroCrystalStatic(u8 taskId)\\n{", 1)[1].split("static void BattleIntroNoSlide", 1)[0]
+assert "ScanlineEffect_Stop();" in static_intro
+assert "gIntroSlideFlags &= ~1;" in static_intro
+assert "BattleIntroSlideEnd(taskId);" in static_intro
+assert "gScanlineEffectRegBuffers" not in static_intro
+assert "gBattle_BG3_X" not in static_intro
+assert "gBattle_BG1_X +=" not in static_intro
+
 # Prevent regression to PRL's double-entry panorama/seam.
 entry = code.split("void DrawBattleEntryBackground(void)", 1)[1].split("bool8 LoadChosenBattleElement", 1)[0]
 assert "gPruCrystal" not in entry, "donor entry panels must not be displayed"
+assert "if (IsPruCrystalBattleBgActive())" in entry
 print("PASS: all 38 Crystal Redux GBA backgrounds, distinct Gym Leaders, safe intro loading")
