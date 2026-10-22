@@ -24,7 +24,7 @@ MtSilver_1F_MoltresRoom_EventScript_Groudon::
 	lock
 	faceplayer
 	goto_if_unset FLAG_PRU_MAXIE_GROUDON_DEFEATED, MtSilver_1F_MoltresRoom_EventScript_Maxie
-	playmoncry SPECIES_GROUDON_PRIMAL, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
 	waitmoncry
 	@ Groudon holds the Red Orb and automatically becomes Primal on entry.
 	@ Capture keeps base Groudon plus the Orb for future Primal Reversion.
