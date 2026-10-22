@@ -350,8 +350,8 @@ def save_sheet(img, destination, frames=1):
 def save_jasc(colors, destination):
     pal = rgb_palette(colors)
     assert len(pal) == 16
-    destination.write_text("JASC-PAL\\n0100\\n16\\n" +
-                           "".join(f"{r} {g} {b}\\n" for r, g, b in pal))
+    destination.write_text("JASC-PAL\n0100\n16\n" +
+                           "".join(f"{r} {g} {b}\n" for r, g, b in pal))
 
 
 def install(slug, donor):
