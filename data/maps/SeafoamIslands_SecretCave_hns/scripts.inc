@@ -34,13 +34,13 @@ SeafoamIslands_SecretCave_EventScript_KyogreCaught::
 	end
 
 SeafoamIslands_SecretCave_Text_ArchieIntro:
-	.string "ARCHIE: Hold it! This sea beast\\n"
-	.string "is under TEAM AQUA's protection!\\p"
+	.string "ARCHIE: Hold it! This sea beast\n"
+	.string "is under TEAM AQUA's protection!\p"
 	.string "Defeat me if you want to pass!$"
 
 SeafoamIslands_SecretCave_Text_ArchieDefeated:
 	.string "ARCHIE: So much for our plan!$"
 
 SeafoamIslands_SecretCave_Text_ArchieAfter:
-	.string "ARCHIE: You have earned a shot\\n"
+	.string "ARCHIE: You have earned a shot\n"
 	.string "at KYOGRE. Its power is immense.$"
