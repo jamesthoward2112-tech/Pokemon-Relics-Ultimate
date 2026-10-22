@@ -39,6 +39,19 @@ assert any(o.get("graphics_id") == "OBJ_EVENT_GFX_SPECIES_SHINY(ELECTRODE)"
            for o in route["object_events"])
 assert "MON_DATA_MODERN_FATEFUL_ENCOUNTER" in util
 assert "return ABILITY_LEVITATE;" in pokemon and "IsPruChargedElectrode" in pokemon
+# Ability must survive initial battle setup and display in party/PC summaries.
+assert "dst->ability = GetMonAbility(src);" in pokemon
+battle_main = read("src/battle_main.c")
+assert "gBattleMons[battler].ability != ABILITY_LEVITATE" in battle_main
+summary = read("src/pokemon_summary_screen.c")
+assert "GetBoxMonData(GetCurrentBoxmon(), MON_DATA_MODERN_FATEFUL_ENCOUNTER)" in summary
+assert summary.count("enum Ability ability = GetSummaryMonAbility();") == 2
+# The new encounter knows Kablow; a caught old Electrode gets the move if
+# its fourth slot is still the original Electro Ball.
+assert "SetMonMoveSlot(mon, MOVE_KABLOW, 3);" in util
+assert "GetMonData(mon, MON_DATA_MOVE4) == MOVE_ELECTRO_BALL" in pokemon
+assert "SetMonMoveSlot(mon, MOVE_KABLOW, 3);" in pokemon
+assert "MOVE_KABLOW" in read("src/data/pokemon/level_up_learnsets/pjr.h")
 for stat, amount in (("HP",100), ("ATK",100), ("DEF",115), ("SPATK",150),
                      ("SPDEF",125), ("SPEED",175)):
     assert f"[STAT_{stat}] = {amount}" in pokemon
