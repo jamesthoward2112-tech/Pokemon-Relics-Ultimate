@@ -65,20 +65,19 @@ sync = read("tools/pru/sync_prl_authoritative_sprites.py")
 assert 'gMonIcon_Swamplith[] = INCBIN_U8("graphics/pokemon/swamplith/icon.4bpp")' in gfx
 assert '"swamplith", # Green-detail' in sync
 
-# A failed Poké Ball must not trigger the old flee-on-first-turn AI.
-# Use competitive wild-mon moves instead, preserve Lati roaming behaviour,
-# and reject stray opponent RUN commands as a second line of defence.
+# Every PRU roamer (including Latias/Latios and the birds) now uses
+# competitive wild AI, never the stock flee-on-turn-one roaming script.
+# The shared legendary opponent guard blocks stray Run, ability and item
+# escape paths while leaving the player's Run and other game variants alone.
 ai = read("src/battle_ai_main.c")
 util = read("src/battle_util.c")
 main = read("src/battle_main.c")
 assert "flags = GetWildAiFlags() & ~AI_FLAG_ROAMING;" in ai
-assert "flags = AI_FLAG_ROAMING;" in ai  # other roamers are unchanged
-assert "gBattleMons[battlerAtk].species == SPECIES_ARTICUNO" in ai
-assert "gBattleMons[battlerAtk].species == SPECIES_ZAPDOS" in ai
-assert "gBattleMons[battlerAtk].species == SPECIES_MOLTRES" in ai
-for n in ("ARTICUNO", "ZAPDOS", "MOLTRES"):
-    assert "gBattleMons[gBattlerAttacker].species == SPECIES_" + n in util
-assert "gBattleOutcome = B_OUTCOME_MON_FLED;" in util  # only for non-bird opponents
+assert "flags = AI_FLAG_ROAMING;" in ai  # non-HNS game variants only
+assert "if (IsPruLegendaryWildBattler(battlerAtk))" in ai
+assert "if (IsPruLegendaryWildBattler(gBattlerAttacker))" in util
+assert "bool32 IsPruLegendaryWildBattler(enum BattlerId battler)" in util
+assert "gBattleOutcome = B_OUTCOME_MON_FLED;" in util  # ordinary nonlegendary fleeing
 assert "gBattleOutcome == B_OUTCOME_WON" in roam
 assert "RoamerMoveToOtherLocationSet(gEncounteredRoamerIndex);" in roam
 assert "if ((!IS_HNS && gBattleOutcome == B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT)" in main
