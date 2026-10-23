@@ -7,6 +7,8 @@ on:
       - 'docs/**'
       - '**/*.md'
       - '.github/PULL_REQUEST_TEMPLATE.md'
+  pull_request:
+    branches: [main]
   workflow_call:
   workflow_dispatch:
 
@@ -14,7 +16,7 @@ permissions:
   contents: write
 
 # Each build is independent: never supersede a queued ROM build.
-# PR builds are opt-in via workflow_dispatch; main pushes still run automatically.
+# Pull requests compile for review but only main publishes a direct ROM release.
 concurrency:
   group: pru-clean-build-${{ github.run_id }}
   cancel-in-progress: false
@@ -113,6 +115,7 @@ jobs:
           python3 tools/pru/check_static_battle_backgrounds.py
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_lavender_cubone_staging.py
+          python3 tools/pru/check_lavender_tower_restoration.py
           python3 tools/pru/check_pru_444_gameplay.py
           python3 tools/pru/check_20261022_legendary_encounters.py
           python3 tools/pru/check_insurgence_mega_jirachi.py
@@ -180,6 +183,7 @@ jobs:
             pru-rom.sha256
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}

@@ -29,6 +29,8 @@ LavenderTownSoulHouse_EventScript_MrFujiPeace::
 LavenderTownSoulHouse_EventScript_AskSpiritTower::
 	msgbox LavenderTownSoulHouse_Text_EnterTower, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, LavenderTownSoulHouse_EventScript_EndQuestTalk
+	msgbox LavenderTownSoulHouse_Text_CloseEyes
+	setescapewarp MAP_LAVENDER_TOWN_SOUL_HOUSE_HNS, 11, 12
 	closemessage
 	warp MAP_LAVENDER_SPIRIT_TOWER_1F_HNS, 11, 15
 	waitstate
@@ -51,14 +53,21 @@ LavenderTownSoulHouse_EventScript_CuboneHappy::
 LavenderTownSoulHouse_Text_CuboneQuest:
 	.string "Have you heard that CUBONE cry?\p"
 	.string "Its mother died protecting it.\p"
-	.string "Yet a shadow in a PIKACHU\n"
-	.string "costume watches over it.\p"
-	.string "I fear the old tower's ghosts\n"
-	.string "have not found peace.$"
+	.string "A strange PIKACHU is rumoured\n"
+	.string "to be in the old tower.\p"
+	.string "Nobody knows why it is there.$"
 
 LavenderTownSoulHouse_Text_EnterTower:
-	.string "Visit the old spirit tower\n"
-	.string "through this memorial?$"
+	.string "The old tower is gone, but\n"
+	.string "its memories remain.\p"
+	.string "I can take you there in spirit.\n"
+	.string "Will you come with me?$"
+
+LavenderTownSoulHouse_Text_CloseEyes:
+	.string "An ESCAPE ROPE will bring you\n"
+	.string "safely back to me.\p"
+	.string "Close your eyes...\p"
+	.string "Let the memories return.$"
 
 LavenderTownSoulHouse_Text_ThankYou:
 	.string "You gave CUBONE a new friend.\n"
