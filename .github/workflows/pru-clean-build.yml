@@ -29,10 +29,11 @@ jobs:
         timeout-minutes: 20
         run: |
           set -euo pipefail
-          # Bound network stalls; an unresponsive Ubuntu mirror previously
-          # trapped the whole ROM build before it reached source validation.
-          sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update
-          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil
+          # The hosted runner's Azure mirror repeatedly drops large ARM toolchain archives.
+          # Use Ubuntu's standard archive directly so apt can complete before the step timeout.
+          printf '%s\n' 'http://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt
+          sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil
       - name: Install original working PJR Jessie James and Steevee Neevee production transition art
         run: |
           set -euo pipefail
