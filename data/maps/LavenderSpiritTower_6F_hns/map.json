@@ -1,0 +1,75 @@
+{
+  "id": "MAP_LAVENDER_SPIRIT_TOWER_6F_HNS",
+  "name": "LavenderSpiritTower_6F_hns",
+  "game_version": "hns",
+  "layout": "LAYOUT_POKEMON_TOWER_6F",
+  "music": "MUS_RG_POKE_TOWER",
+  "region": "REGION_KANTO",
+  "region_map_section": "MAPSEC_POKEMON_TOWER",
+  "requires_flash": false,
+  "weather": "WEATHER_FOG_HORIZONTAL",
+  "map_type": "MAP_TYPE_INDOOR",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "floor_number": 0,
+  "battle_scene": "MAP_BATTLE_SCENE_INDOOR_1",
+  "connections": null,
+  "object_events": [],
+  "warp_events": [
+    {
+      "x": 11,
+      "y": 16,
+      "elevation": 3,
+      "dest_map": "MAP_LAVENDER_SPIRIT_TOWER_7F_HNS",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 18,
+      "y": 10,
+      "elevation": 3,
+      "dest_map": "MAP_LAVENDER_SPIRIT_TOWER_5F_HNS",
+      "dest_warp_id": "1"
+    }
+  ],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 15,
+      "elevation": 3,
+      "var": "VAR_PRU_CUBONE_STAGE_OSTEODIAN",
+      "var_value": "0",
+      "script": "LavenderSpiritTower_6F_EventScript_Osteodian"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 16,
+      "elevation": 3,
+      "var": "VAR_PRU_CUBONE_STAGE_OSTEODIAN",
+      "var_value": "0",
+      "script": "LavenderSpiritTower_6F_EventScript_Osteodian"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 16,
+      "elevation": 3,
+      "var": "VAR_PRU_CUBONE_STAGE_OSTEODIAN",
+      "var_value": "0",
+      "script": "LavenderSpiritTower_6F_EventScript_Osteodian"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 17,
+      "elevation": 3,
+      "var": "VAR_PRU_CUBONE_STAGE_OSTEODIAN",
+      "var_value": "0",
+      "script": "LavenderSpiritTower_6F_EventScript_Osteodian"
+    }
+  ],
+  "bg_events": []
+}

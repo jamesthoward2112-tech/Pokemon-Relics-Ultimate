@@ -8129,7 +8129,9 @@ u8 GetLevelUpMovesBySpecies(u16 species, u16 *moves)
 
 u16 SpeciesToPokedexNum(u16 species)
 {
-    // PRU has 444 approved, individually numbered Pokémon. The inherited Johto
+    // PRU's 444 original entries remain unchanged; approved additions 445-447
+    // are appended, while 448-450 are held for later side quests.
+    // The inherited Johto
     // regional Dex returns 0 for many Hoenn species; the inherited National Dex
     // reuses the base number for genuine Relic evolutions. Neither is the PRU Dex.
     if (IS_HNS)
@@ -8148,7 +8150,7 @@ u16 SpeciesToPokedexNum(u16 species)
         }
 
         // Non-canonical battle-only forms retain their base Pokémon's number;
-        // they must NOT create a new entry among the 444 approved species.
+        // they must NOT create an extra numbered PRU entry.
         baseSpecies = NationalPokedexNumToSpecies(gSpeciesInfo[originalSpecies].natDexNum);
         if (baseSpecies != SPECIES_NONE)
         {
