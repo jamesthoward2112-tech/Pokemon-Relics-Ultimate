@@ -358,6 +358,16 @@ void LoadMonIconPalettes(void)
         LoadSpritePalette(&gMonIconPaletteTable[i]);
 }
 
+// Storage PC has additional sprite palettes (cursor, portrait, items, etc.).
+// Reserve the six ubiquitous icon palettes, then load bespoke ones only when
+// the relevant species is actually on screen.
+void LoadMonIconBasePalettes(void)
+{
+    u8 i;
+    for (i = 0; i < 6; i++)
+        LoadSpritePalette(&gMonIconPaletteTable[i]);
+}
+
 // unused
 void SafeLoadMonIconPalette(u16 species)
 {
