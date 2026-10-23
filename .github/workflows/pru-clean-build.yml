@@ -214,6 +214,7 @@ jobs:
       contents: read
     steps:
       - name: Remove obsolete failed/cancelled attempts, preserve successful builds
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
