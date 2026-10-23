@@ -32,9 +32,17 @@ for i in range(38):
         if expected_uncompressed is not None:
             assert expanded == expected_uncompressed, (n, name, expanded)
     assert len((base / n / "palette_48colors.gbapal").read_bytes()) == 96
-    for field in ("gPruCrystalTiles_", "gPruCrystalMap_", "gPruCrystalPal_"):
+    for field in (
+        "gPruCrystalTiles_", "gPruCrystalMap_", "gPruCrystalPal_",
+        "gPruCrystalEntryTiles_", "gPruCrystalEntryMap_",
+    ):
         assert (field + n) in gfx, (field, n)
         assert (field + n) in table, (field, n)
+    assert re.search(
+        r"\{gPruCrystalTiles_" + n + r", gPruCrystalMap_" + n
+        + r", gPruCrystalPal_" + n + r", gPruCrystalEntryTiles_" + n
+        + r", gPruCrystalEntryMap_" + n + r"\}", table
+    ), (n, "mismatched entry/background pair")
 
 # Every indexed environment must have an ordinary encounter mapping or leader.
 n_by_env = set()
@@ -72,8 +80,9 @@ assert "gScanlineEffectRegBuffers" not in static_intro
 assert "gBattle_BG3_X" not in static_intro
 assert "gBattle_BG1_X +=" not in static_intro
 
-# Prevent regression to PRL's double-entry panorama/seam.
+# Prevent regression to PRL's double-entry panorama/seam. The entry loader
+# uses its own BG1 map and never decomposes an entry panel on BG3.
 entry = code.split("void DrawBattleEntryBackground(void)", 1)[1].split("bool8 LoadChosenBattleElement", 1)[0]
-assert "gPruCrystal" not in entry, "donor entry panels must not be displayed"
 assert "if (IsPruCrystalBattleBgActive())" in entry
+assert "LoadPruCrystalBattleEntry();" in entry
 print("PASS: all 38 Crystal Redux GBA backgrounds, distinct Gym Leaders, safe intro loading")

@@ -141,9 +141,9 @@ static void BattleIntroSlideEnd(u8 taskId)
     SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
 }
 
-// Unlike BattleIntroNoSlide, the complete Crystal Redux backdrop remains
-// visible and stationary. The authentic Emerald entry art on BG1 rises only
-// into the lower edge of the scene, settles, then fades away softly.
+// The complete Crystal Redux backdrop remains visible and stationary on BG3.
+// If the matching donor scene has real entry art, its BG1 tiles slide down
+// into the bottom of the frame and fade out before BG1 is cleared.
 static void BattleIntroCrystalStatic(u8 taskId)
 {
     // PR #22: never scroll BG3, split HBlank strips or expand the curtain.
@@ -156,7 +156,7 @@ static void BattleIntroCrystalStatic(u8 taskId)
         SetGpuReg(REG_OFFSET_BG2CNT,
                   BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR
                   | BGCNT_SCREENBASE(30) | BGCNT_TXT512x256);
-        if (!IsPruEmeraldForegroundActive())
+        if (!IsPruCrystalBattleEntryActive())
         {
             gIntroSlideFlags &= ~1;
             SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 0);
@@ -174,15 +174,15 @@ static void BattleIntroCrystalStatic(u8 taskId)
     }
     else if (gTasks[taskId].tState == 1)
     {
-        // Emerald's entry tiles occupy approximately rows 4-14. A long
-        // positive-Y sweep dragged grass through the *centre* and off the top.
-        // Instead bring it up from below and stop at the bottom of the scene.
-        // BG1 vertical scroll -48 positions short grass around screen Y=112-160.
-        if ((s16)gBattle_BG1_Y < -48)
+        // These original donor maps are 14 tile rows high. Negative BG1 scroll
+        // moves the foreground DOWN the display, as in the Gen 3 intro.
+        // Unlike the retired Emerald overlay, never sweep upwards or over BG3.
+        s16 stopY = gTasks[taskId].tEnvironment == BATTLE_ENVIRONMENT_LONG_GRASS ? -80 : -56;
+        if ((s16)gBattle_BG1_Y > stopY)
         {
-            gBattle_BG1_Y += 8;
-            if ((s16)gBattle_BG1_Y > -48)
-                gBattle_BG1_Y = (u16)-48;
+            gBattle_BG1_Y -= 2;
+            if ((s16)gBattle_BG1_Y < stopY)
+                gBattle_BG1_Y = (u16)stopY;
         }
         else
         {
@@ -192,8 +192,7 @@ static void BattleIntroCrystalStatic(u8 taskId)
     }
     else if (gTasks[taskId].tState == 2)
     {
-        // A brief settled foreground reads as grass/waves/sand entering,
-        // rather than a wipe that travels across and obscures the Pokemon.
+        // Let the real Crystal Redux foreground briefly settle in position.
         if (gTasks[taskId].data[2]-- <= 0)
         {
             gTasks[taskId].data[2] = 16;
@@ -210,7 +209,7 @@ static void BattleIntroCrystalStatic(u8 taskId)
     }
     else
     {
-        EndPruEmeraldBattleForeground();
+        EndPruCrystalBattleEntry();
         gIntroSlideFlags &= ~1;
         BattleIntroSlideEnd(taskId);
     }
