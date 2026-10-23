@@ -141,13 +141,12 @@ static void BattleIntroSlideEnd(u8 taskId)
     SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
 }
 
-// Unlike BattleIntroNoSlide this does not grow a window or animate the
-// BG3 scanline offsets. The complete scene is visible before the intro task;
-// grass/platform, trainer and Pokémon sprites still use their own callbacks.
+// Unlike BattleIntroNoSlide, the complete Crystal Redux backdrop remains
+// visible and stationary. The authentic Emerald entry art on BG1 rises only
+// into the lower edge of the scene, settles, then fades away softly.
 static void BattleIntroCrystalStatic(u8 taskId)
 {
-    // PR #22: never scroll BG3, split HBlank strips or expand the curtain
-    // window. Only the original Emerald foreground is allowed to move.
+    // PR #22: never scroll BG3, split HBlank strips or expand the curtain.
     if (gTasks[taskId].tState == 0)
     {
         ScanlineEffect_Stop();
@@ -167,30 +166,50 @@ static void BattleIntroCrystalStatic(u8 taskId)
             BattleIntroSlideEnd(taskId);
             return;
         }
+        // The fade affects BG1 only; BG3 always shows the full static scene.
+        SetGpuReg(REG_OFFSET_BLDCNT,
+                  BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0));
         gTasks[taskId].tState = 1;
     }
     else if (gTasks[taskId].tState == 1)
     {
-        // The authentic Emerald art is drawn in rows 4-14 of BG1's first
-        // screenblock. Begin below the viewport, then let the entire art
-        // sweep upwards and *off* the screen before clearing the tilemap.
-        // Clearing at Y=0 made the grass flash and disappear mid-animation.
-        // Crystal Redux scenery on BG3 remains completely stationary.
-        if ((s16)gBattle_BG1_Y < 160)
+        // Emerald's entry tiles occupy approximately rows 4-14. A long
+        // positive-Y sweep dragged grass through the *centre* and off the top.
+        // Instead bring it up from below and stop at the bottom of the scene.
+        // BG1 vertical scroll -48 positions short grass around screen Y=112-160.
+        if ((s16)gBattle_BG1_Y < -48)
         {
-            gBattle_BG1_Y += 6;
-            if ((s16)gBattle_BG1_Y > 160)
-                gBattle_BG1_Y = 160;
+            gBattle_BG1_Y += 8;
+            if ((s16)gBattle_BG1_Y > -48)
+                gBattle_BG1_Y = (u16)-48;
         }
         else
         {
+            gTasks[taskId].data[2] = 8;
             gTasks[taskId].tState = 2;
         }
     }
+    else if (gTasks[taskId].tState == 2)
+    {
+        // A brief settled foreground reads as grass/waves/sand entering,
+        // rather than a wipe that travels across and obscures the Pokemon.
+        if (gTasks[taskId].data[2]-- <= 0)
+        {
+            gTasks[taskId].data[2] = 16;
+            gTasks[taskId].tState = 3;
+        }
+    }
+    else if (gTasks[taskId].data[2] > 0)
+    {
+        // Fade the foreground against the real battle scenery, not to black.
+        // Never clear its tiles while opaque: that caused the original flash.
+        gTasks[taskId].data[2]--;
+        SetGpuReg(REG_OFFSET_BLDALPHA,
+                  BLDALPHA_BLEND(gTasks[taskId].data[2], 16 - gTasks[taskId].data[2]));
+    }
     else
     {
-        // BG1 artwork has exited the top of the 160px viewport naturally;
-        // restore the standard battle layer only after it is fully invisible.
         EndPruEmeraldBattleForeground();
         gIntroSlideFlags &= ~1;
         BattleIntroSlideEnd(taskId);

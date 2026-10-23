@@ -685,13 +685,10 @@ void HandleAction_Run(void)
         }
         else
         {
-            // PRU Kanto birds are persistent fights, not flee-on-turn-one
-            // roamers. This also stops any other AI path from escaping even
-            // if it accidentally sends a Run action.
-            if (IS_HNS && (gBattleTypeFlags & BATTLE_TYPE_ROAMER)
-                && (gBattleMons[gBattlerAttacker].species == SPECIES_ARTICUNO
-                    || gBattleMons[gBattlerAttacker].species == SPECIES_ZAPDOS
-                    || gBattleMons[gBattlerAttacker].species == SPECIES_MOLTRES))
+            // PRU: ALL wild legendaries/mythicals, including Latias/Latios
+            // and the Kanto birds, must battle rather than select Run.
+            // Safeguard still applies if any alternate AI path sends Run.
+            if (IsPruLegendaryWildBattler(gBattlerAttacker))
             {
                 gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_ATTACKER_CANT_ESCAPE;
                 gBattlescriptCurrInstr = BattleScript_PrintFailedToRunString;
@@ -5251,8 +5248,33 @@ u32 IsAbilityPreventingEscape(enum BattlerId battler)
     return 0;
 }
 
+// All PRU wild legendary/mythical encounters are fought, never lost to
+// Roaming AI, Run Away, Smoke Ball or Teleport. The player may still run;
+// normal trainer, link and Safari battle behaviour must be unaffected.
+bool32 IsPruLegendaryWildBattler(enum BattlerId battler)
+{
+    u16 species;
+
+    if (!IS_HNS || IsOnPlayerSide(battler)
+     || (gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_LINK
+                          | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_RECORDED
+                          | BATTLE_TYPE_SAFARI)))
+        return FALSE;
+
+    species = gBattleMons[battler].species;
+    if (species == SPECIES_NONE)
+        return FALSE;
+
+    return (gBattleTypeFlags & (BATTLE_TYPE_ROAMER | BATTLE_TYPE_LEGENDARY))
+        || gSpeciesInfo[species].isSubLegendary
+        || gSpeciesInfo[species].isRestrictedLegendary
+        || gSpeciesInfo[species].isMythical;
+}
+
 bool32 CanBattlerEscape(enum BattlerId battler) // no ability check
 {
+    if (IsPruLegendaryWildBattler(battler))
+        return FALSE;
     if (gBattleStruct->battlerState[battler].commanderSpecies != SPECIES_NONE)
         return FALSE;
     else if (GetConfig(B_GHOSTS_ESCAPE) >= GEN_6 && IS_BATTLER_OF_TYPE(battler, TYPE_GHOST))
