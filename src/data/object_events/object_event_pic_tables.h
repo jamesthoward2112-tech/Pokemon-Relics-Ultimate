@@ -4240,6 +4240,10 @@ static const struct SpriteFrameImage sPicTable_James_hns[] = {
     overworld_frame(gObjectEventPic_James_hns, 2, 4, 8),
 };
 
+static const struct SpriteFrameImage sPicTable_PruMeowthBalloon_hns[] = {
+    obj_frame_tiles(gObjectEventPic_PruMeowthBalloon_hns),
+};
+
 static const struct SpriteFrameImage sPicTable_Bill_hns[] = {
     overworld_frame(gObjectEventPic_Bill_hns, 2, 4, 0),
     overworld_frame(gObjectEventPic_Bill_hns, 2, 4, 1),

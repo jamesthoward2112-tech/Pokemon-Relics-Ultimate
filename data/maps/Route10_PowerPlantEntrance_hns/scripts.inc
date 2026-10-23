@@ -216,3 +216,52 @@ Route10_PowerPlantEntrance_Text_TradeCompleted:
 Route10_PowerPlantEntrance_Text_Engineer4WeCanGetMagnetTrainRunning:
 	.string "All right! We can finally get the\n"
 	.string "MAGNET TRAIN running again.$"
+
+@ Standalone Kanto Rocket doubles. The Machine Part quest is NEVER reset.
+
+Route10_PowerPlantEntrance_EventScript_PRUJessie::
+	goto_if_set FLAG_RETURNED_MACHINE_PART, Route10_PowerPlantEntrance_EventScript_PRUPostRepair
+	trainerbattle_double TRAINER_JESSIE_JAMES_POWERPLANT_HNS, Route10_PowerPlantEntrance_Text_PRUBeforeRepair, Route10_PowerPlantEntrance_Text_PRUWin, Route104_Text_GinaNotEnoughMons
+	goto Route10_PowerPlantEntrance_EventScript_PRUAfterWin
+
+Route10_PowerPlantEntrance_EventScript_PRUPostRepair::
+	trainerbattle_double TRAINER_JESSIE_JAMES_POWERPLANT_HNS, Route10_PowerPlantEntrance_Text_PRUAfterRepair, Route10_PowerPlantEntrance_Text_PRUWin, Route104_Text_GinaNotEnoughMons
+	goto Route10_PowerPlantEntrance_EventScript_PRUAfterWin
+
+Route10_PowerPlantEntrance_EventScript_PRUJames::
+	goto Route10_PowerPlantEntrance_EventScript_PRUJessie
+
+Route10_PowerPlantEntrance_EventScript_PRUMeowth::
+	msgbox Route10_PowerPlantEntrance_Text_PRUMeowth, MSGBOX_NPC
+	end
+
+Route10_PowerPlantEntrance_EventScript_PRUAfterWin::
+	setflag FLAG_PRU_JESSIE_JAMES_POWERPLANT
+	msgbox Route10_PowerPlantEntrance_Text_PRUEscape, MSGBOX_DEFAULT
+	closemessage
+	removeobject 7
+	removeobject 8
+	removeobject 9
+	end
+
+
+Route10_PowerPlantEntrance_Text_PRUBeforeRepair:
+	.string "JESSIE: That missing MACHINE\n"
+	.string "PART? We're after it too!\p"
+	.string "JAMES: Prepare for trouble!$"
+
+Route10_PowerPlantEntrance_Text_PRUAfterRepair:
+	.string "JESSIE: You fixed the generator?\p"
+	.string "JAMES: Even after we came back\n"
+	.string "for that precious MACHINE PART!\p"
+	.string "JESSIE: Prepare for trouble!$"
+Route10_PowerPlantEntrance_Text_PRUWin:
+	.string "JESSIE: What? We lost again!\p"
+	.string "JAMES: Our plan was perfect!$"
+
+Route10_PowerPlantEntrance_Text_PRUEscape:
+	.string "MEOWTH: We gotta go!\p"
+	.string "TEAM ROCKET retreats for now!$"
+
+Route10_PowerPlantEntrance_Text_PRUMeowth:
+	.string "MEOWTH: Meowth, that's right!$"

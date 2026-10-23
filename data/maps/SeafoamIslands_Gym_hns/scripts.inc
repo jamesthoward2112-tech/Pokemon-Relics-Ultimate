@@ -16,7 +16,17 @@ SeafoamIslands_Gym_OnTransition_Defeated:
 SeafoamIslands_Gym_EventScript_Blaine::
 	lock
 	faceplayer
+	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_STARTED, SeafoamIslands_Gym_EventScript_PRUHeistBlaine
 	goto_if_set FLAG_DEFEATED_CINNABAR_ISLAND_GYM, SeafoamIslands_Gym_EventScript_Blaine_Defeated
+	checktrainerflag TRAINER_STEEVE_NEEVEE_SEAFOAM_HNS
+	goto_if TRUE, SeafoamIslands_Gym_EventScript_BlaineTwinReady
+	msgbox SeafoamIslands_Gym_Text_PRUTwinsGate, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SeafoamIslands_Gym_EventScript_BlaineTwinReady::
 	msgbox SeafoamIslands_Gym_Text_BlaineIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_BLAINE_HNS, SeafoamIslands_Gym_Text_BlaineWinLoss
 	message SeafoamIslands_Gym_Text_ReceivedVolcanoBadge
@@ -201,3 +211,63 @@ SeafoamIslands_Gym_Text_PRURewardMoney:
 SeafoamIslands_Gym_Text_PRURewardBagFull:
 	.string "Your BAG is full! Make some room\n"
 	.string "and come back for your prize.$"
+
+@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
+SeafoamIslands_Gym_EventScript_PRUHeistBlaine::
+	goto_if_set FLAG_PRU_HEIST_BLAINE, SeafoamIslands_Gym_EventScript_PRUHeistBlaineDone
+	msgbox SeafoamIslands_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_BLAINE_HNS, SeafoamIslands_Gym_Text_PRUHeistWon
+	setflag FLAG_PRU_HEIST_BLAINE
+	msgbox SeafoamIslands_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SeafoamIslands_Gym_EventScript_PRUHeistBlaineDone::
+	msgbox SeafoamIslands_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SeafoamIslands_Gym_Text_PRUHeistChallenge:
+	.string "BLAINE: TEAM ROCKET took your\n"
+	.string "BADGE CASE? Let's win it back!$"
+
+SeafoamIslands_Gym_Text_PRUHeistWon:
+	.string "BLAINE: You've earned this\n"
+	.string "BADGE back. Nicely done!$"
+
+SeafoamIslands_Gym_Text_PRUHeistAlready:
+	.string "BLAINE: One step closer\n"
+	.string "to stopping TEAM ROCKET!$"
+
+
+SeafoamIslands_Gym_EventScript_PRUSteevee::
+	trainerbattle_double TRAINER_STEEVE_NEEVEE_SEAFOAM_HNS, SeafoamIslands_Gym_Text_PRUSteeveeIntro, SeafoamIslands_Gym_Text_PRULoss, Route104_Text_GinaNotEnoughMons
+	msgbox SeafoamIslands_Gym_Text_PRUAfter, MSGBOX_AUTOCLOSE
+	end
+
+SeafoamIslands_Gym_EventScript_PRUNeevee::
+	trainerbattle_double TRAINER_STEEVE_NEEVEE_SEAFOAM_HNS, SeafoamIslands_Gym_Text_PRUNeeveeIntro, SeafoamIslands_Gym_Text_PRULoss, Route104_Text_GinaNotEnoughMons
+	msgbox SeafoamIslands_Gym_Text_PRUAfter, MSGBOX_AUTOCLOSE
+	end
+
+SeafoamIslands_Gym_Text_PRUSteeveeIntro:
+	.string "STEEVEE: We trained in the\n"
+	.string "cold SEAFOAM CAVES!\p"
+	.string "NEEVEE: Ready for a double? $"
+
+SeafoamIslands_Gym_Text_PRUNeeveeIntro:
+	.string "NEEVEE: Our new partners are\n"
+	.string "cooler than the SEAFOAM ICE!$"
+
+SeafoamIslands_Gym_Text_PRULoss:
+	.string "STEEVEE: Even ICE couldn't\n"
+	.string "slow you down!$"
+
+SeafoamIslands_Gym_Text_PRUAfter:
+	.string "NEEVEE: Good luck with BLAINE!$"
+
+SeafoamIslands_Gym_Text_PRUTwinsGate:
+	.string "BLAINE: Defeat my visitors,\n"
+	.string "STEEVEE and NEEVEE, first!$"

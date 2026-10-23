@@ -56,7 +56,20 @@ for section in re.split(r"(?=^=== TRAINER_[^\n]+ ===\s*$)", party, flags=re.M):
         species = name.split(" @ ", 1)[0].strip()
         species = re.sub(r" \([FM]\)$", "", species)
         pokemon_count += 1
-        if species not in allowed_names and name_aliases.get(species) not in allowed_names:
+        # Explicit trainer-only exception requested for the Seafoam S&N
+        # double battle. These two later-generation Eeveelutions already
+        # exist in the engine but are not members of PRU's 444 Pokédex.
+        # Do not allow them in wild encounters, gifts, evolutions or any
+        # other trainer parties; the 444 dex size stays unchanged.
+        seafoam_eeveelution_exception = (
+            trainer == "TRAINER_STEEVE_NEEVEE_SEAFOAM_HNS"
+            and species in {"Glaceon", "Leafeon"}
+        )
+        if (
+            species not in allowed_names
+            and name_aliases.get(species) not in allowed_names
+            and not seafoam_eeveelution_exception
+        ):
             errors.append(f"{trainer}: forbidden trainer Pokémon {species}")
 assert trainer_count >= 650 and pokemon_count >= 1800, (
     "Trainer file was unexpectedly truncated or audit skipped trainer data"

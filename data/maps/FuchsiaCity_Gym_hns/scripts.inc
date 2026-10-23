@@ -44,6 +44,8 @@ FuchsiaCity_Gym_DefeatedBarry::
 FuchsiaCity_Gym_EventScript_Janine::
 	lock
 	faceplayer
+	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_STARTED, FuchsiaCity_Gym_EventScript_PRUHeistJanine
 	goto_if_set FLAG_DEFEATED_FUCHSIA_GYM, FuchsiaCity_Gym_EventScript_Janine_Defeated
 	msgbox FuchsiaCity_Gym_Text_Janine_DisappointYou, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_JANINE_HNS, FuchsiaCity_Gym_Text_Janine_ToughOne
@@ -327,3 +329,33 @@ FuchsiaCity_Gym_Text_PRURewardMoney:
 FuchsiaCity_Gym_Text_PRURewardBagFull:
 	.string "Your BAG is full! Make some room\n"
 	.string "and come back for your prize.$"
+
+@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
+FuchsiaCity_Gym_EventScript_PRUHeistJanine::
+	goto_if_set FLAG_PRU_HEIST_JANINE, FuchsiaCity_Gym_EventScript_PRUHeistJanineDone
+	msgbox FuchsiaCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_JANINE_HNS, FuchsiaCity_Gym_Text_PRUHeistWon
+	setflag FLAG_PRU_HEIST_JANINE
+	msgbox FuchsiaCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+FuchsiaCity_Gym_EventScript_PRUHeistJanineDone::
+	msgbox FuchsiaCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+FuchsiaCity_Gym_Text_PRUHeistChallenge:
+	.string "JANINE: TEAM ROCKET took your\n"
+	.string "BADGE CASE? Let's win it back!$"
+
+FuchsiaCity_Gym_Text_PRUHeistWon:
+	.string "JANINE: You've earned this\n"
+	.string "BADGE back. Nicely done!$"
+
+FuchsiaCity_Gym_Text_PRUHeistAlready:
+	.string "JANINE: One step closer\n"
+	.string "to stopping TEAM ROCKET!$"
+

@@ -7,6 +7,7 @@ on:
       - 'docs/**'
       - '**/*.md'
       - '.github/PULL_REQUEST_TEMPLATE.md'
+  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -34,6 +35,8 @@ jobs:
           test -s assets/prl_duo_20261011.json
           python3 tools/pru/install_prl_duo_assets.py
           python3 tools/pru/check_prl_duo_palette.py
+      - name: Install original approved Meowth balloon sprite and palette
+        run: python3 tools/pru/install_original_meowth_balloon.py
       - name: Restore original PJR Infinity donor sprites from checked-in pack
         run: |
           set -euo pipefail
@@ -102,6 +105,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 tools/pru/check_crystal_battle_backgrounds.py
+          python3 tools/pru/check_emerald_foregrounds.py
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_pru_444_gameplay.py
           python3 tools/pru/check_20261022_legendary_encounters.py

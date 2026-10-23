@@ -1,4 +1,5 @@
 IndigoPlateau_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, IndigoPlateau_EventScript_PRUSyncRocket
 	.byte 0
 
 IndigoPlateau_Sign::
@@ -9,3 +10,92 @@ IndigoPlateau_Text_Sign:
 	.string "INDIGO PLATEAU\p"
 	.string "The Ultimate Goal for Trainers!\p"
 	.string "POKéMON LEAGUE HQ$"
+
+
+@ This second Indigo battle follows eight recovery rematches, not the first
+@ Johto League challenge. The Badge Heist is a physical story case only.
+IndigoPlateau_EventScript_PRUSyncRocket::
+	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
+	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUSyncDone
+	goto_if_set FLAG_PRU_HEIST_COMPLETED, IndigoPlateau_EventScript_PRUSyncDone
+	clearflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
+IndigoPlateau_EventScript_PRUSyncDone::
+	end
+
+IndigoPlateau_EventScript_PRUJessie::
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUWaiting
+	trainerbattle_double TRAINER_JESSIE_JAMES_KANTO_FINALE_HNS, IndigoPlateau_Text_PRURocketIntro, IndigoPlateau_Text_PRURocketWin, Route104_Text_GinaNotEnoughMons
+	goto IndigoPlateau_EventScript_PRUEscape
+
+IndigoPlateau_EventScript_PRUJames::
+	goto IndigoPlateau_EventScript_PRUJessie
+
+IndigoPlateau_EventScript_PRUMeowth::
+	msgbox IndigoPlateau_Text_PRUMeowth, MSGBOX_NPC
+	end
+
+IndigoPlateau_EventScript_PRUWaiting::
+	msgbox IndigoPlateau_Text_PRUWaiting, MSGBOX_NPC
+	end
+
+IndigoPlateau_EventScript_PRUEscape::
+	lockall
+	msgbox IndigoPlateau_Text_PRUBadgeCaseReturn, MSGBOX_DEFAULT
+	setflag FLAG_PRU_JESSIE_JAMES_INDIGO
+	setflag FLAG_PRU_HEIST_COMPLETED
+	msgbox IndigoPlateau_Text_PRUBalloonDeparture, MSGBOX_DEFAULT
+	closemessage
+	@ Display authentic MrNightology 64x64 Meowth balloon and animate
+	@ its ascent without redrawing or replacing any existing sprites.
+	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	addobject 4
+	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
+	removeobject 1
+	removeobject 2
+	removeobject 3
+	applymovement 4, IndigoPlateau_Movement_PRUBalloonRise
+	waitmovement 4
+	fadescreenswapbuffers FADE_TO_WHITE
+	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	removeobject 4
+	playse SE_M_TELEPORT
+	fadescreenswapbuffers FADE_FROM_WHITE
+	releaseall
+	end
+
+IndigoPlateau_Text_PRURocketIntro:
+	.string "JESSIE: All your BADGES are\n"
+	.string "back? Not so fast!\p"
+	.string "JAMES: Our final KANTO battle!\p"
+	.string "MEOWTH: Let's get 'em!$"
+
+IndigoPlateau_Text_PRURocketWin:
+	.string "JESSIE: How can this be?\p"
+	.string "JAMES: Our best team lost!$"
+
+IndigoPlateau_Text_PRUBadgeCaseReturn:
+	.string "TEAM ROCKET drops your\n"
+	.string "original KANTO BADGE CASE!\p"
+	.string "All sixteen BADGES are safe.\n"
+	.string "The LEAGUE awaits!$"
+
+IndigoPlateau_Text_PRUBalloonDeparture:
+	.string "MEOWTH: Prepare to blast off!\p"
+	.string "The MEOWTH BALLOON rises and\n"
+	.string "TEAM ROCKET flies away!$"
+
+IndigoPlateau_Text_PRUMeowth:
+	.string "MEOWTH: That's right!$"
+
+IndigoPlateau_Text_PRUWaiting:
+	.string "TEAM ROCKET's final challenge\n"
+	.string "awaits the eight BADGES!$"
+
+
+IndigoPlateau_Movement_PRUBalloonRise:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end

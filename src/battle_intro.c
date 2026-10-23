@@ -146,18 +146,53 @@ static void BattleIntroSlideEnd(u8 taskId)
 // grass/platform, trainer and Pokémon sprites still use their own callbacks.
 static void BattleIntroCrystalStatic(u8 taskId)
 {
-    ScanlineEffect_Stop();
-    gBattle_WIN0V = WIN_RANGE(0, DISPLAY_HEIGHT);
-    SetGpuReg(REG_OFFSET_WIN0V, gBattle_WIN0V);
-    gIntroSlideFlags &= ~1;
-
-    // Restore the normal battle-window BG settings without ever displaying
-    // the separate scrolling entry curtains.
-    SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 0);
-    SetBgAttribute(2, BG_ATTR_CHARBASEINDEX, 0);
-    SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
-    SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) | BGCNT_TXT512x256);
-    BattleIntroSlideEnd(taskId);
+    // PR #22: never scroll BG3, split HBlank strips or expand the curtain
+    // window. Only the original Emerald foreground is allowed to move.
+    if (gTasks[taskId].tState == 0)
+    {
+        ScanlineEffect_Stop();
+        gBattle_WIN0V = WIN_RANGE(0, DISPLAY_HEIGHT);
+        SetGpuReg(REG_OFFSET_WIN0V, gBattle_WIN0V);
+        SetBgAttribute(2, BG_ATTR_CHARBASEINDEX, 0);
+        SetGpuReg(REG_OFFSET_BG2CNT,
+                  BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR
+                  | BGCNT_SCREENBASE(30) | BGCNT_TXT512x256);
+        if (!IsPruEmeraldForegroundActive())
+        {
+            gIntroSlideFlags &= ~1;
+            SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 0);
+            SetGpuReg(REG_OFFSET_BG1CNT,
+                      BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR
+                      | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
+            BattleIntroSlideEnd(taskId);
+            return;
+        }
+        gTasks[taskId].tState = 1;
+    }
+    else if (gTasks[taskId].tState == 1)
+    {
+        // BG1 starts 160 px below its final position; scroll it upward over
+        // twenty frames. The complete Crystal background on BG3 stays at X/Y=0.
+        if ((s16)gBattle_BG1_Y < 0)
+        {
+            gBattle_BG1_Y += 8;
+            if ((s16)gBattle_BG1_Y > 0)
+                gBattle_BG1_Y = 0;
+        }
+        if ((s16)gBattle_BG1_Y >= 0)
+        {
+            gTasks[taskId].data[2] = 6;
+            gTasks[taskId].tState = 2;
+        }
+    }
+    else if (gTasks[taskId].data[2]-- <= 0)
+    {
+        // Leave no foreground tiles or palettes covering sprites, menus or
+        // later battle animations after the short Emerald entrance finishes.
+        EndPruEmeraldBattleForeground();
+        gIntroSlideFlags &= ~1;
+        BattleIntroSlideEnd(taskId);
+    }
 }
 
 static void BattleIntroNoSlide(u8 taskId)

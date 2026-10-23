@@ -17214,3 +17214,845 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Fire Blast
 - Ancient Power
 - Yawn
+
+=== TRAINER_STEEVE_NEEVEE_CELADON_HNS ===
+Name: STEEVEE
+Class: Twins Hns
+Pic: Twins Hns
+Gender: Male
+Music: Hg Girl 2
+Double Battle: Yes
+AI: Smart Trainer / Prediction
+Items: Full Restore
+
+Flareon @ Charcoal
+Level: 63
+Ability: Flash Fire
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 4 HP / 252 Atk / 0 Def / 0 SpA / 0 SpD / 252 Spe
+Adamant Nature
+- Flare Blitz
+- Quick Attack
+- Will-O-Wisp
+- Protect
+
+Toxeon @ Black Sludge
+Level: 63
+Ability: Poison Touch
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 4 HP / 252 Atk / 0 Def / 0 SpA / 0 SpD / 252 Spe
+Jolly Nature
+- Poison Jab
+- Bite
+- Toxic
+- Protect
+
+Lepideon @ Focus Sash
+Level: 64
+Ability: Tinted Lens
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 4 HP / 0 Atk / 0 Def / 252 SpA / 0 SpD / 252 Spe
+Timid Nature
+- Bug Buzz
+- Giga Drain
+- Quiver Dance
+- Protect
+
+Nimbeon @ Sitrus Berry
+Level: 64
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 0 Atk / 0 Def / 4 SpA / 252 SpD / 0 Spe
+Calm Nature
+- Air Slash
+- Roost
+- Tailwind
+- Icy Wind
+
+Espeon @ Light Clay
+Level: 65
+Ability: Synchronize
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 4 HP / 0 Atk / 0 Def / 252 SpA / 0 SpD / 252 Spe
+Timid Nature
+- Psychic
+- Reflect
+- Helping Hand
+- Morning Sun
+
+Eeveeon @ Leftovers
+Level: 66
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 4 Atk / 0 Def / 0 SpA / 252 SpD / 0 Spe
+Careful Nature
+- Eevoboost
+- Hyper Voice
+- Double-Edge
+- Baton Pass
+
+=== TRAINER_STEEVE_NEEVEE_SEAFOAM_HNS ===
+Name: STEEVEE
+Class: Twins Hns
+Pic: Twins Hns
+Gender: Male
+Music: Hg Girl 2
+Double Battle: Yes
+AI: Check Bad Move / Try To Faint / Check Viability
+
+Glaceon @ Never-Melt Ice
+Level: 70
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Ice Beam
+- Shadow Ball
+- Icy Wind
+- Protect
+
+Leafeon @ Miracle Seed
+Level: 70
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Leaf Blade
+- Bite
+- Swords Dance
+- Quick Attack
+
+Guardeon @ Metal Coat
+Level: 71
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Flamethrower
+- Fire Spin
+- Bite
+- Quick Attack
+
+Sphynxeon @ Soft Sand
+Level: 72
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Poison Jab
+- Bite
+- Toxic
+- Quick Attack
+
+Nimbeon @ Sitrus Berry
+Level: 73
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Air Slash
+- Roost
+- Tailwind
+- Icy Wind
+
+Drakeon @ Dragon Fang
+Level: 74
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Eevoboost
+- Hyper Voice
+- Double-Edge
+- Baton Pass
+
+=== TRAINER_STEEVE_NEEVEE_KANTO_FINALE_HNS ===
+Name: STEEVEE
+Class: Twins Hns
+Pic: Twins Hns
+Gender: Male
+Music: Hg Girl 2
+Double Battle: Yes
+AI: Check Bad Move / Try To Faint / Check Viability
+
+Vaporeon @ Sitrus Berry
+Level: 78
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Surf
+- Aurora Beam
+- Bite
+- Acid Armor
+
+Jolteon @ Sitrus Berry
+Level: 78
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Thunderbolt
+- Double Kick
+- Quick Attack
+- Thunder Wave
+
+Flareon @ Sitrus Berry
+Level: 79
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Flamethrower
+- Fire Spin
+- Bite
+- Quick Attack
+
+Toxeon @ Sitrus Berry
+Level: 79
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Poison Jab
+- Bite
+- Toxic
+- Quick Attack
+
+Nimbeon @ Sitrus Berry
+Level: 80
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Air Slash
+- Roost
+- Tailwind
+- Icy Wind
+
+Eeveeon @ Leftovers
+Level: 81
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Eevoboost
+- Hyper Voice
+- Double-Edge
+- Baton Pass
+
+=== TRAINER_JESSIE_JAMES_POWERPLANT_HNS ===
+Name: JAMES
+Class: Jessie James Hns
+Pic: James Hns
+Gender: Male
+Music: Rocket
+Double Battle: Yes
+AI: Smart Trainer / Prediction
+Items: Full Restore
+
+Adnokana @ Black Sludge
+Level: 65
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Poison Jab
+- Crunch
+- Coil
+- Protect
+
+Frytning @ Sitrus Berry
+Level: 66
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Sludge Bomb
+- Flamethrower
+- Will-O-Wisp
+- Protect
+
+Pikachu @ Light Ball
+Level: 67
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Thunderbolt
+- Thunder Wave
+- Quick Attack
+- Protect
+
+Meowth @ Focus Sash
+Level: 67
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fake Out
+- Bite
+- Taunt
+- Feint
+
+=== TRAINER_JESSIE_JAMES_GAMECORNER_HNS ===
+Name: JAMES
+Class: Jessie James Hns
+Pic: James Hns
+Gender: Male
+Music: Rocket
+Double Battle: Yes
+AI: Smart Trainer / Prediction
+Items: Full Restore
+
+Adnokana @ Black Sludge
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Poison Jab
+- Crunch
+- Coil
+- Protect
+
+Frytning @ Sitrus Berry
+Level: 71
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Sludge Bomb
+- Flamethrower
+- Will-O-Wisp
+- Protect
+
+Victreebel @ Focus Sash
+Level: 71
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Leaf Blade
+- Sludge Bomb
+- Sleep Powder
+- Protect
+
+Houndoom @ Life Orb
+Level: 72
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Dark Pulse
+- Flamethrower
+- Snarl
+- Protect
+
+Pikachu @ Light Ball
+Level: 72
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Thunderbolt
+- Nuzzle
+- Quick Attack
+- Protect
+
+Meowth @ Focus Sash
+Level: 73
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fake Out
+- Bite
+- Taunt
+- Feint
+
+=== TRAINER_JESSIE_JAMES_KANTO_FINALE_HNS ===
+Name: JAMES
+Class: Jessie James Hns
+Pic: James Hns
+Gender: Male
+Music: Rocket
+Double Battle: Yes
+AI: Smart Trainer / Prediction
+Items: Full Restore
+
+Adnokana @ Black Sludge
+Level: 80
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Poison Jab
+- Crunch
+- Coil
+- Protect
+
+Frytning @ Sitrus Berry
+Level: 80
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Sludge Bomb
+- Flamethrower
+- Will-O-Wisp
+- Protect
+
+Victreebel @ Focus Sash
+Level: 81
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Leaf Blade
+- Sludge Bomb
+- Sleep Powder
+- Protect
+
+Gyarados @ Life Orb
+Level: 81
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Waterfall
+- Crunch
+- Dragon Dance
+- Protect
+
+Pikachu @ Light Ball
+Level: 82
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Thunderbolt
+- Nuzzle
+- Quick Attack
+- Protect
+
+Meowth @ Focus Sash
+Level: 83
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fake Out
+- Bite
+- Taunt
+- Feint
+
+=== TRAINER_PRU_HEIST_BROCK_HNS ===
+Name: BROCK
+Class: Leader Kanto Hns
+Pic: Leader Brock Hns
+Gender: Male
+Music: Hg Boy 1
+Double Battle: No
+AI: Smart Trainer / Prediction
+Mugshot: Orange
+Items: Full Restore / Full Restore
+
+Pinsirex @ Razor Claw  
+Ability: Sharpness  
+Level: 76 
+- Stone Axe  
+- X-Scissor  
+- Agility  
+- Swords Dance  
+
+Donphalanx @ Toxic Orb  
+Ability: Poison Heal  
+Level: 75 
+- Spikes  
+- Protect  
+- Crabhammer  
+- Earthquake  
+
+Aerodactyl  
+Ability: Unnerve  
+Level: 76
+- Fire Fang  
+- Sky Attack  
+- Earthquake  
+- Dragon Dance  
+
+Omastar  
+Ability: Swift Swim  
+Level: 74
+IVs: 0 Atk  
+- Ancient Power  
+- Surf  
+- Ice Beam  
+- Toxic  
+
+Relicanth @ Hard Stone  
+Ability: Rock Head  
+Level: 74 
+- Wave Crash  
+- Head Smash  
+- Calm Mind  
+- Thunderbolt  
+
+Golem @ Magnet  
+Ability: Galvanize  
+Level: 76  
+- Stone Edge  
+- Body Slam  
+- Autotomize  
+- Charge
+
+=== TRAINER_PRU_HEIST_MISTY_HNS ===
+Name: MISTY
+Class: Leader Kanto Hns
+Pic: Leader Misty Hns
+Gender: Male
+Music: Hg Boy 1
+Double Battle: No
+AI: Smart Trainer / Prediction
+Mugshot: Light Blue
+Items: Full Restore / Full Restore
+
+Politoed @ Damp Rock  
+Ability: Drizzle  
+Level: 76 
+- Weather Ball  
+- Seismic Toss  
+- Metronome  
+- Hypnosis  
+
+Swampert @ Quick Claw  
+Ability: Torrent  
+Level: 76 
+- Rain Dance  
+- Barrier  
+- Earthquake  
+- Liquidation  
+
+Vaporeon @ Leftovers  
+Ability: Water Absorb  
+Level: 76  
+EVs: 32 HP / 40 Def / 12 SpD  
+IVs: 0 Atk  
+- Aqua Ring  
+- Hydro Pump  
+- Ice Beam  
+- Acid Armor  
+
+Milotic @ Shell Bell  
+Ability: Marvel Scale  
+Level: 75   
+IVs: 0 Atk  
+- Scald  
+- Ice Beam  
+- Rest  
+- Sleep Talk  
+
+Lapras  
+Ability: Shell Armor  
+Level: 75 
+IVs: 0 Atk  
+- Freeze-Dry  
+- Hydro Pump  
+- Rain Dance  
+- Reflect  
+
+Starmie @ Mystic Water  
+Ability: Natural Cure  
+Level: 75
+IVs: 0 Atk  
+- Psyshock  
+- Surf  
+- Thunderbolt  
+- Recover
+
+=== TRAINER_PRU_HEIST_SURGE_HNS ===
+Name: LTSURGE
+Class: Leader Kanto Hns
+Pic: Leader Surge Hns
+Gender: Male
+Music: Hg Boy 1
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+Mugshot: Yellow
+
+Electrode @ Normal Gem  
+Ability: Soundproof  
+Level: 76  
+- Electro Ball  
+- Rain Dance  
+- Explosion  
+
+Jolteon  
+Ability: Volt Absorb  
+Level: 75   
+IVs: 0 Atk  
+- Electric Terrain  
+- Thunder  
+- Rain Dance  
+- Reflect  
+
+Lanturn @ Leftovers  
+Ability: Volt Absorb  
+Level: 76   
+IVs: 0 Atk  
+- Rain Dance  
+- Thunder  
+- Ion Deluge  
+- Hydro Pump  
+
+Manectric @ Terrain Extender  
+Ability: Lightning Rod  
+Level: 76  
+- Electric Terrain  
+- Charge  
+- Wild Charge  
+- Crunch  
+
+Noxichu @ Scope Lens  
+Ability: Motor Drive  
+Level: 75  
+- Thunder Punch  
+- Ice Punch  
+- Cross Chop  
+- Bulk Up  
+
+Raichu @ Electric Seed  
+Ability: Surge Surfer  
+Level: 77  
+IVs: 0 Atk  
+- Rising Voltage  
+- Electric Terrain  
+- Psyshock  
+- Calm Mind
+
+=== TRAINER_PRU_HEIST_ERIKA_HNS ===
+Name: ERIKA
+Class: Leader Kanto Hns
+Pic: Leader Erika Hns
+Gender: Male
+Music: Hg Boy 1
+Double Battle: No
+AI: Smart Trainer / Prediction
+Mugshot: Green
+Items: Full Restore / Full Restore
+
+Vileplume @ Focus Sash  
+Ability: Natural Cure  
+Level: 76
+IVs: 0 Atk  
+- Toxic Spikes  
+- Venoshock  
+- Toxic  
+- Petal Dance  
+
+Tropisaur @ Leftovers  
+Ability: Chlorophyll  
+Level: 77 
+IVs: 0 Atk  
+- Ingrain  
+- Giga Drain  
+- Grassy Terrain  
+- Protect  
+
+Venusaur  
+Ability: Overgrow  
+Level: 76
+IVs: 0 Atk  
+- Sludge Bomb  
+- Energy Ball  
+- Synthesis  
+- Poison Powder  
+
+Sunflorid @ Miracle Seed  
+Ability: Aftermath  
+Level: 77  
+IVs: 0 Atk  
+- Chloroblast  
+- Electro Ball  
+- Foul Play  
+
+Bellossom @ Lum Berry  
+Ability: Chlorophyll  
+Level: 78
+IVs: 0 Atk  
+- Grassy Terrain  
+- Quiver Dance  
+- Petal Dance  
+- Attract  
+
+Ludicolo  
+Ability: Swift Swim  
+Level: 76
+IVs: 0 Atk  
+- Rain Dance  
+- Hydro Pump  
+- Energy Ball  
+- Double Team
+
+=== TRAINER_PRU_HEIST_JANINE_HNS ===
+Name: JANINE
+Class: Leader Kanto Hns
+Pic: Leader Janine Hns
+Gender: Male
+Music: Hg Boy 1
+Double Battle: No
+AI: Smart Trainer / Prediction
+Mugshot: Purple
+Items: Full Restore / Full Restore
+
+Swalot  
+Ability: Liquid Ooze  
+IVs: 0 Atk  
+Level: 76
+- Toxic Spikes  
+- Stockpile  
+- Swallow  
+- Spit Up  
+
+Frytning @ Fairy Feather  
+Ability: Levitate  
+Level: 76 
+IVs: 0 Atk  
+- Strange Steam  
+- Sludge Bomb  
+- Flamethrower  
+- Corrosive Gas  
+
+Muk @ Leftovers  
+Ability: Poison Touch  
+Level: 76 
+- Gunk Shot  
+- Acid Armor  
+- Power-Up Punch  
+- Disable  
+
+Crobat  
+Ability: Infiltrator  
+Level: 76  
+- Leech Life  
+- Confuse Ray  
+- Brave Bird  
+- Toxic  
+
+Adnokana @ Flying Gem  
+Ability: Unburden  
+Level: 76 
+- Acrobatics  
+- Dire Claw  
+- Close Combat  
+- Fake Out  
+
+Toxeon @ Bright Powder  
+Ability: Shield Dust  
+Level: 79 
+IVs: 0 Atk  
+- Venoshock  
+- Signal Beam  
+- Double Team  
+- Toxic
+
+=== TRAINER_PRU_HEIST_SABRINA_HNS ===
+Name: SABRINA
+Class: Leader Kanto Hns
+Pic: Leader Sabrina Hns
+Gender: Male
+Music: Hg Boy 1
+Double Battle: No
+AI: Smart Trainer / Prediction
+Mugshot: Pink
+Items: Full Restore / Full Restore
+
+Mystynx @ Eviolite  
+Ability: Vital Spirit  
+Level: 77
+IVs: 0 Atk  
+- Light Screen  
+- Reflect  
+- Psychic  
+- Freeze-Dry  
+
+Slowbro @ Quick Claw  
+Ability: Quick Draw  
+Level: 77 
+- Shell Side Arm  
+- Calm Mind  
+- Psyshock  
+- Slack Off  
+
+Espeon  
+Ability: Magic Bounce  
+Level: 77
+IVs: 0 Atk  
+- Psychic  
+- Morning Sun  
+- Psychic Terrain  
+- Power Gem  
+
+Rapidash  
+Ability: Pastel Veil  
+Level: 77 
+- Play Rough  
+- Psycho Cut  
+- Wild Charge  
+- Swords Dance  
+
+Wobbuffet @ Leftovers  
+Ability: Shadow Tag  
+Level: 77  
+IVs: 0 Atk  
+- Counter  
+- Mirror Coat  
+- Encore  
+- Destiny Bond  
+
+Alakazam  
+Ability: Magic Guard  
+Level: 77 
+IVs: 0 Atk  
+- Psyshock  
+- Shadow Ball  
+- Calm Mind  
+- Tri Attack
+
+=== TRAINER_PRU_HEIST_BLAINE_HNS ===
+Name: BLAINE
+Class: Leader Kanto Hns
+Pic: Leader Blaine Hns
+Gender: Male
+Music: Hg Boy 1
+Double Battle: No
+AI: Smart Trainer / Prediction
+Mugshot: Dark Red
+Items: Full Restore / Full Restore
+
+Torkoal @ Heat Rock  
+Ability: Drought  
+Level: 78 
+IVs: 0 Spe  
+- Solar Beam  
+- Heat Wave  
+- Gyro Ball  
+- Iron Defense  
+
+Torkaldera @ Magnet  
+Ability: Flame Body  
+Level: 77 
+IVs: 0 Atk  
+- Fire Blast  
+- Thunderbolt  
+- Confuse Ray  
+- Clear Smog  
+
+Blaziken @ Scope Lens  
+Ability: Speed Boost  
+Level: 77 
+- Blaze Kick  
+- Power-Up Punch  
+- Thunder Punch  
+- Protect  
+
+Magcargo @ Absorb Bulb  
+Ability: Flame Body  
+Level: 77 
+IVs: 0 Atk  
+- Sunny Day  
+- Flamethrower  
+- Recover  
+- Amnesia  
+
+Arcanine @ Rock Incense  
+Ability: Rock Head  
+Level: 77 
+- Head Smash  
+- Raging Fury  
+- Wild Charge  
+- Extreme Speed  
+
+Camerupt @ Leftovers  
+Ability: Solid Rock  
+Level: 77 
+IVs: 0 Atk  
+- Eruption  
+- Protect  
+- Amnesia  
+- Earth Power
+
+=== TRAINER_PRU_HEIST_GIOVANNI_HNS ===
+Name: GIOVANNI
+Class: Rocket Admin Hns
+Pic: Giovanni Hns
+Gender: Male
+Music: Hg Boy 1
+Double Battle: No
+AI: Smart Trainer / Prediction
+Mugshot: Dark Red
+Items: Full Restore / Full Restore
+
+Kangaskhan
+Level: 77
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Dizzy Punch
+- Fire Punch
+- Safeguard
+- Mega Punch
+
+Ghoulbat
+Level: 78
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Dark Pulse
+- Air Slash
+- Thief
+- Double Team
+
+Nidoqueen
+Level: 78
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Ice Punch
+- Cross Poison
+- Bulldoze
+- Body Slam
+
+Persian
+Level: 78
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Faint Attack
+- Swagger
+- Screech
+- Slash
+
+Donphalanx
+Level: 77
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Headlong Rush
+- Sandstorm
+- Play Rough
+- Double Edge
+
+Nidoking
+Level: 79
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Thunder Punch
+- Earthquake
+- Rock Slide
+- Thrash

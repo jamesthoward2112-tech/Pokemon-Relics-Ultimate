@@ -498,6 +498,25 @@
 #define FLAG_PRU_KYOGRE_CAUGHT                      0x4EA
 #define FLAG_PRU_GROUDON_CAUGHT                     0x4EB
 #define FLAG_PRU_OAK_AURORA_TICKET_RECEIVED          0x4EC
+// Append-only Kanto Great Badge Heist flags. These never alter real badge
+// flags or the existing Machine Part / Rocket storyline on older saves.
+#define FLAG_PRU_HEIST_STARTED                         0x4ED
+#define FLAG_PRU_HEIST_COMPLETED                       0x4EE
+#define FLAG_PRU_HEIST_BROCK                           0x4EF
+#define FLAG_PRU_HEIST_MISTY                           0x4F0
+#define FLAG_PRU_HEIST_SURGE                           0x4F1
+#define FLAG_PRU_HEIST_ERIKA                           0x4F2
+#define FLAG_PRU_HEIST_JANINE                          0x4F3
+#define FLAG_PRU_HEIST_SABRINA                         0x4F4
+#define FLAG_PRU_HEIST_BLAINE                          0x4F5
+#define FLAG_PRU_HEIST_GIOVANNI                        0x4F6
+#define FLAG_PRU_JESSIE_JAMES_POWERPLANT               0x4F7
+#define FLAG_PRU_JESSIE_JAMES_GAMECORNER               0x4F8
+#define FLAG_PRU_JESSIE_JAMES_INDIGO                   0x4F9
+#define FLAG_PRU_HIDE_ROCKET_HEIST_GATE                0x4FA
+#define FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO              0x4FB
+#define FLAG_PRU_HIDE_HEIST_GIOVANNI                   0x4FC
+#define FLAG_PRU_HIDE_MEOWTH_BALLOON                   0x4FD
 #define FLAG_COMPLETED_AERODACTYL_PUZZLE            0x1E2
 #define FLAG_COMPLETED_HOOH_PUZZLE                  0x1E3
 #define FLAG_COMPLETED_KABUTO_PUZZLE                0x1E4
