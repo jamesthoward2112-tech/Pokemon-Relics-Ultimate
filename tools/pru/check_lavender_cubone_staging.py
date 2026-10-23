@@ -51,7 +51,9 @@ for n in range(1, 8):
     assert m["id"] == f"MAP_LAVENDER_SPIRIT_TOWER_{n}F_HNS"
     assert m["layout"] == f"LAYOUT_PRU_LAVENDER_SPIRIT_TOWER_{n}F"
     layout = layouts[m["layout"]]
-    assert layout["game_version"] == "hns" and layout["layout_version"] == "hns"
+    # Keep HNS map identity/save IDs while decoding original FRLG 32-bit
+    # tile attributes (not HNS/Emerald 16-bit attributes).
+    assert layout["game_version"] == "hns" and layout["layout_version"] == "frlg"
     assert layout["blockdata_filepath"] == f"data/layouts/PokemonTower_{n}F_Frlg/map.bin"
     assert layout["primary_tileset"] == "gTileset_PruSpiritTowerPrimary"
     assert layout["secondary_tileset"] == "gTileset_PruSpiritTowerSecondary"
@@ -128,4 +130,4 @@ assert "The spectral tower summons Eerie Fog" in native
 
 print("PASS (source only): Lavender quest maps and warps, three approved dex additions,")
 print("  ordered catch/KO stage flags, Mimikyu replay, native Eerie Fog, save-safe IDs.")
-print("OPEN: no ROM built; compile/link, emulator, save migration and map collision testing pending.")
+print("OPEN: on-device staircase traversal, encounter pacing and save migration require playtesting.")

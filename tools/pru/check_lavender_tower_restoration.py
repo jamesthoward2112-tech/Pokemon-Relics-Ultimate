@@ -3,6 +3,7 @@
 
 import csv
 import json
+import struct
 from pathlib import Path
 
 
@@ -30,7 +31,14 @@ def main():
         assert (layout["width"], layout["height"]) == (donor_layout["width"], donor_layout["height"])
         assert layout["blockdata_filepath"] == donor_layout["blockdata_filepath"]
         assert layout["border_filepath"] == donor_layout["border_filepath"]
+        # The copied FRLG tilesets have 32-bit metatile attributes.  An HNS
+        # layoutVersion makes fieldmap.c read them as 16-bit Emerald attrs,
+        # silently disabling directional staircase warp behaviours.
+        assert layout["game_version"] == "hns"
+        assert layout["layout_version"] == donor_layout["layout_version"] == "frlg", floor
         assert (ROOT / layout["blockdata_filepath"]).stat().st_size == 24 * 20 * 2
+        map_bytes = (ROOT / layout["blockdata_filepath"]).read_bytes()
+        tower_attrs = (ROOT / "data/tilesets/secondary/pokemon_tower_frlg/metatile_attributes.bin").read_bytes()
         assert len(current["warp_events"]) == len(donor["warp_events"])
 
         for portal, old in zip(current["warp_events"], donor["warp_events"]):
@@ -48,7 +56,23 @@ def main():
                 destination = load_json(f"data/maps/LavenderSpiritTower_{target_floor}F_hns/map.json")
                 matching = destination["warp_events"][int(portal["dest_warp_id"])]
                 assert matching["dest_map"] == current["id"], (floor, portal, matching)
+                metatile = struct.unpack_from("<H", map_bytes, 2 * (portal["y"] * 24 + portal["x"]))[0] & 0x3FF
+                assert metatile >= 0x280, (floor, metatile)
+                behavior = struct.unpack_from("<I", tower_attrs, (metatile - 0x280) * 4)[0] & 0x1FF
+                assert behavior in (0xEB, 0xEC, 0xED, 0xEE), (floor, portal, behavior)
             assert portal["dest_map"] == target
+
+        if floor == 1:
+            # Walkable floor 1 stair: FRLG tile 0x2A8 holds 0xEB
+            # (MB_UP_RIGHT_STAIR_WARP).  Misreading its 32-bit attribute as
+            # 16-bit produces 0x08 (MB_CAVE) and blocks the player.
+            staircase = current["warp_events"][-1]
+            assert (staircase["x"], staircase["y"]) == (18, 9)
+            tile = struct.unpack_from("<H", map_bytes, 2 * (staircase["y"] * 24 + staircase["x"]))[0] & 0x3FF
+            assert tile == 0x2A8
+            attribute_offset = (tile - 0x280) * 4
+            assert (struct.unpack_from("<I", tower_attrs, attribute_offset)[0] & 0x1FF) == 0xEB
+            assert (struct.unpack_from("<H", tower_attrs, attribute_offset // 2)[0] & 0xFF) == 0x08
 
         assert current["allow_escaping"] is True, f"Escape Rope unavailable on floor {floor}"
         expected_weather = "WEATHER_NONE" if floor == 1 else "WEATHER_FOG_HORIZONTAL"
@@ -93,7 +117,7 @@ def main():
             assert slot["species"] not in ("SPECIES_GASTLY", "SPECIES_SHUPPET", "SPECIES_DUSKULL")
     assert not any(e["map"] == "MAP_LAVENDER_SPIRIT_TOWER_1F_HNS" for e in encounters)
 
-    print("PASS: full seven-floor FRLG donor, reciprocal warps, fog, Rope return and approved ghost tables")
+    print("PASS: seven-floor FRLG donor, 32-bit stair behaviours, reciprocal warps, fog, Rope return and ghost tables")
 
 
 if __name__ == "__main__":
