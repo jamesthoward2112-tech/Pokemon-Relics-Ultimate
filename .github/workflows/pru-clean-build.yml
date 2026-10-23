@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install proven PJR GBA build dependencies
-        timeout-minutes: 8
+        timeout-minutes: 20
         run: |
           set -euo pipefail
           # Bound network stalls; an unresponsive Ubuntu mirror previously
