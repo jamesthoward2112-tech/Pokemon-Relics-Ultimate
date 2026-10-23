@@ -26,9 +26,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install proven PJR GBA build dependencies
+        timeout-minutes: 8
         run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil
+          set -euo pipefail
+          # Bound network stalls; an unresponsive Ubuntu mirror previously
+          # trapped the whole ROM build before it reached source validation.
+          sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil
       - name: Install original working PJR Jessie James and Steevee Neevee production transition art
         run: |
           set -euo pipefail
@@ -105,7 +109,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 tools/pru/check_crystal_battle_backgrounds.py
-          python3 tools/pru/check_emerald_foregrounds.py
+          python3 tools/pru/check_crystal_entry_transitions.py
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_pru_444_gameplay.py
           python3 tools/pru/check_20261022_legendary_encounters.py
