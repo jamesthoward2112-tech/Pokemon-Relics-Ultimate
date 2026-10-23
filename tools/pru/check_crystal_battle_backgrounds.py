@@ -32,9 +32,17 @@ for i in range(38):
         if expected_uncompressed is not None:
             assert expanded == expected_uncompressed, (n, name, expanded)
     assert len((base / n / "palette_48colors.gbapal").read_bytes()) == 96
-    for field in ("gPruCrystalTiles_", "gPruCrystalMap_", "gPruCrystalPal_"):
+    for field in (
+        "gPruCrystalTiles_", "gPruCrystalMap_", "gPruCrystalPal_",
+        "gPruCrystalEntryTiles_", "gPruCrystalEntryMap_",
+    ):
         assert (field + n) in gfx, (field, n)
         assert (field + n) in table, (field, n)
+    assert re.search(
+        r"\{gPruCrystalTiles_" + n + r", gPruCrystalMap_" + n
+        + r", gPruCrystalPal_" + n + r", gPruCrystalEntryTiles_" + n
+        + r", gPruCrystalEntryMap_" + n + r"\}", table
+    ), (n, "mismatched entry/background pair")
 
 # Every indexed environment must have an ordinary encounter mapping or leader.
 n_by_env = set()
