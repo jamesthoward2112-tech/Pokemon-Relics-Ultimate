@@ -40,6 +40,27 @@ assert "ROAMER(gEncounteredRoamerIndex)->hp = GetMonData(mon, MON_DATA_MAX_HP)" 
 assert "void RestorePruDefeatedRoamers(void)" in roamer
 assert "ROAMER_LOC_TABLE_KANTO" in roamer and "FLAG_GET_CAUGHT" in roamer
 assert "(!IS_HNS && gBattleOutcome == B_OUTCOME_WON)" in battle_main
+assert "gBattleOutcome == B_OUTCOME_CAUGHT" in battle_main
+# Never reintroduce the pre-existing Lati flee-on-turn-one regression.
+ai = read("src/battle_ai_main.c")
+util = read("src/battle_util.c")
+util_h = read("include/battle_util.h")
+scripts = read("src/battle_script_commands.c")
+intro = read("src/battle_intro.c")
+assert re.search(r"else if \(gBattleTypeFlags & BATTLE_TYPE_ROAMER\)[\s\S]*?if \(IS_HNS\)\s*flags = GetWildAiFlags\(\) & ~AI_FLAG_ROAMING", ai)
+assert "Preserve normal Lati roamer behaviour" not in ai
+assert "if (IsPruLegendaryWildBattler(battlerAtk))" in ai
+assert "bool32 IsPruLegendaryWildBattler(enum BattlerId battler)" in util
+assert "bool32 IsPruLegendaryWildBattler(enum BattlerId battler);" in util_h
+for tag in ("isSubLegendary", "isRestrictedLegendary", "isMythical",
+            "BATTLE_TYPE_ROAMER | BATTLE_TYPE_LEGENDARY"):
+    assert tag in util, tag
+assert "if (IsPruLegendaryWildBattler(gBattlerAttacker))" in util
+assert re.search(r"bool32 CanBattlerEscape\(enum BattlerId battler\)[\s\S]*?if \(IsPruLegendaryWildBattler\(battler\)\)\s*return FALSE;", util)
+assert "if (IsPruLegendaryWildBattler(battler))" in battle_main
+assert "if (IsPruLegendaryWildBattler(gBattlerAttacker)" in scripts
+assert "|| IsPruLegendaryWildBattler(gBattlerTarget))" in scripts
+assert "B_OUTCOME_CAUGHT" in battle_main and "SetRoamerInactive(gEncounteredRoamerIndex);" in battle_main
 assert "VarGet(VAR_AZALEA_TOWN_STATE) >= 10" in overworld
 assert "FlagClear(FLAG_DEFEATED_MEW)" in overworld
 assert "FlagClear(FLAG_DEFEATED_DEOXYS)" in overworld
@@ -62,4 +83,5 @@ print("PASS: legends use rate floor 20 only in HNS legendary/roamer encounters")
 print("PASS: 15 static legendary hide flags restore only for seen, uncaught species")
 print("PASS: Jirachi and Celebi story gates; Mew and Deoxys defeat markers reset")
 print("PASS: Lugia, Ho-Oh, Suicune and second Celebi retries preserve captured/story states")
-print("PASS: Latias/Latios roamers recover on knockout; capture remains permanent")
+print("PASS: all PRU wild legendaries fight (including Latias/Latios), cannot flee/Teleport/Roar")
+print("PASS: Latias/Latios and Kanto bird roamers recover after KO, retire after capture")
