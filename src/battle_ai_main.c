@@ -229,13 +229,10 @@ static u64 GetAiFlags(u16 trainerId, enum BattlerId battler)
             flags = AI_FLAG_SAFARI;
         else if (gBattleTypeFlags & BATTLE_TYPE_ROAMER)
         {
-            // PRU: Kanto legendary birds must fight instead of using the
-            // stock roaming AI, which flees on turn one (including immediately
-            // after a failed Ball). Preserve normal Lati roamer behaviour.
-            u16 species = GetMonData(&gEnemyParty[0], MON_DATA_SPECIES);
-            if (IS_HNS && (species == SPECIES_ARTICUNO
-                        || species == SPECIES_ZAPDOS
-                        || species == SPECIES_MOLTRES))
+            // PRU roamers (Latias, Latios and all three Kanto birds) always
+            // fight. Stock AI_FLAG_ROAMING makes Lati twins flee immediately.
+            // Keep original roaming behaviour in the other game variants.
+            if (IS_HNS)
                 flags = GetWildAiFlags() & ~AI_FLAG_ROAMING;
             else
                 flags = AI_FLAG_ROAMING;
@@ -7065,12 +7062,9 @@ static void AI_Watch(void)
 // Roaming pokemon logic
 static s32 AI_Roaming(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move, s32 score)
 {
-    // Defensive safeguard if any alternate AI flags inject roaming AI.
-    // Articuno, Zapdos and Moltres never choose to run from battle in PRU.
-    if (IS_HNS && (gBattleTypeFlags & BATTLE_TYPE_ROAMER)
-        && (gBattleMons[battlerAtk].species == SPECIES_ARTICUNO
-            || gBattleMons[battlerAtk].species == SPECIES_ZAPDOS
-            || gBattleMons[battlerAtk].species == SPECIES_MOLTRES))
+    // Defensive safeguard if an alternate AI configuration enables roaming:
+    // no PRU legendary wild battler may flee, including Latias and Latios.
+    if (IsPruLegendaryWildBattler(battlerAtk))
         return score;
 
     bool32 roamerCanFlee = FALSE;
