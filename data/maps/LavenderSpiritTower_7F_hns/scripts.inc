@@ -22,6 +22,7 @@ LavenderSpiritTower_7F_EventScript_Mimikyu::
 	goto LavenderSpiritTower_7F_EventScript_Done
 
 LavenderSpiritTower_7F_EventScript_Caught::
+	setflag FLAG_PRU_CUBONE_MIMIKYU_RESOLVED
 	setflag FLAG_PRU_CUBONE_MIMIKYU_CAUGHT
 	removeobject LOCALID_LAVENDER_SPIRIT_MIMIKYU
 	msgbox LavenderSpiritTower_7F_Text_Caught
@@ -29,6 +30,8 @@ LavenderSpiritTower_7F_EventScript_Caught::
 	end
 
 LavenderSpiritTower_7F_EventScript_Fainted::
+	// KO completes the memorial; Mimikyu can still respawn for a later capture.
+	setflag FLAG_PRU_CUBONE_MIMIKYU_RESOLVED
 	removeobject LOCALID_LAVENDER_SPIRIT_MIMIKYU
 	msgbox LavenderSpiritTower_7F_Text_Fainted
 	release
@@ -42,6 +45,7 @@ LavenderSpiritTower_7F_EventScript_Done::
 
 LavenderSpiritTower_7F_EventScript_Cubone::
 	goto_if_set FLAG_PRU_CUBONE_MIMIKYU_CAUGHT, LavenderSpiritTower_7F_EventScript_CuboneHappy
+	goto_if_set FLAG_PRU_CUBONE_MIMIKYU_RESOLVED, LavenderSpiritTower_7F_EventScript_CuboneHappy
 	msgbox LavenderSpiritTower_7F_Text_Cubone, MSGBOX_NPC
 	end
 
