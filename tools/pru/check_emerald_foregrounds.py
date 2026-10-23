@@ -36,15 +36,21 @@ for required in (
 assert "bool8 IsPruEmeraldForegroundActive(void);" in header
 assert "EndPruEmeraldBattleForeground();" in intro
 static = intro.split("static void BattleIntroCrystalStatic(u8 taskId)\n{", 1)[1].split("\nstatic void BattleIntroNoSlide", 1)[0]
-assert "gBattle_BG1_Y += 6;" in static
-assert "gBattle_BG1_Y < 160" in static
-assert "gBattle_BG1_Y = 160;" in static
-assert "gTasks[taskId].data[2] = 6;" not in static
-assert static.index("gBattle_BG1_Y = 160;") < static.index("EndPruEmeraldBattleForeground();")
+# The foreground stops at the bottom of the screen (never sweeps up
+# through the scenery), remains briefly visible, then blends back to BG3.
+assert "gBattle_BG1_Y += 8;" in static
+assert "gBattle_BG1_Y < -48" in static
+assert "gBattle_BG1_Y = (u16)-48;" in static
+assert "gBattle_BG1_Y = 160;" not in static
+assert "gTasks[taskId].data[2] = 8;" in static
+assert "BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3" in static
+assert "BLDALPHA_BLEND(16, 0)" in static
+assert "16 - gTasks[taskId].data[2]" in static
+assert static.index("BLDALPHA_BLEND(16, 0)") < static.index("gBattle_BG1_Y += 8;") < static.index("EndPruEmeraldBattleForeground();")
 assert "gBattle_BG3_X" not in static and "gBattle_BG3_Y" not in static
 assert "gScanlineEffectRegBuffers" not in static
 assert "gIntroSlideFlags &= ~1;" in static
 assert "BattleIntroSlideEnd(taskId);" in static
 assert "python3 tools/pru/check_crystal_battle_backgrounds.py" in workflow
 assert "python3 tools/pru/check_emerald_foregrounds.py" in workflow
-print("PRU_EMERALD_FOREGROUNDS_PASS: authentic Emerald entry maps, continuous BG1 sweep beyond viewport, Crystal BG3 static")
+print("PRU_EMERALD_FOREGROUNDS_PASS: authentic Emerald art rises to lower screen and crossfades, Crystal BG3 static")
