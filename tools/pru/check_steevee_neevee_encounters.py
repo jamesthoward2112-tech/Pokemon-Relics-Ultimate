@@ -25,6 +25,13 @@ party = read("src/data/trainers_hns.party")
 opponents = read("include/constants/opponents_hns.h")
 battle = read("src/battle_setup.c")
 transition = read("src/battle_transition.c")
+# Keep the full pair name visible for every Steevee/Neevee encounter.
+assert len(trainerIds := re.findall(r"^=== (TRAINER_STEEVE_NEEVEE_[A-Z0-9_]+) ===$", party, re.M)) == 8
+for trainer_id in trainerIds:
+    assert f"=== {trainer_id} ===\nName: STEEVEE & NEEVEE\n" in party, trainer_id
+assert re.search(r"^#define TRAINER_NAME_LENGTH 16$", read("include/constants/global.h"), re.M)
+assert re.search(r"^\s*\[TRANSITION_TYPE_NORMAL\]\s*=\s*\{B_TRANSITION_WHITE_BARS_FADE,\s*B_TRANSITION_WHITE_BARS_FADE\}", battle, re.M)
+
 for area,(alias,coords,levels,original) in slots.items():
     entry = json.loads(read(f"data/maps/{area}_hns/map.json"))
     script = read(f"data/maps/{area}_hns/scripts.inc")
@@ -86,7 +93,7 @@ assert "case TRAINER_STEEVE_NEEVEE_DRAGONS_DEN_HNS:" in battle
 assert team_levels(party, den_id) == [53,51,50,50,52,52]
 den_team = party.split(f"=== {den_id} ===",1)[1]
 assert "Drakeon @ Sitrus Berry" in den_team
-assert "Name: STEEVEE" in den_team
+assert "Name: STEEVEE & NEEVEE" in den_team
 for name, xy in (("Steevee",(7,31)),("Neevee",(7,32))):
     label = f"DragonsDen_Cavern_EventScript_{name}"
     actors = [o for o in den_map["object_events"] if o["script"] == label]

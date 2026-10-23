@@ -16846,7 +16846,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Memento
 
 === TRAINER_STEEVE_NEEVEE_ROUTE3_HNS ===
-Name: STEEVEE
+Name: STEEVEE & NEEVEE
 Class: Twins Hns
 Pic: Twins Hns
 Gender: Male
@@ -16887,7 +16887,7 @@ IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 - Moonlight
 
 === TRAINER_STEEVE_NEEVEE_SS_ANNE_HNS ===
-Name: STEEVEE
+Name: STEEVEE & NEEVEE
 Class: Twins Hns
 Pic: Twins Hns
 Gender: Male
@@ -16928,7 +16928,7 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 - Quick Attack
 
 === TRAINER_STEEVE_NEEVEE_TOWER_HNS ===
-Name: STEEVEE
+Name: STEEVEE & NEEVEE
 Class: Twins Hns
 Pic: Twins Hns
 Gender: Male
@@ -16985,7 +16985,7 @@ IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 - Icy Wind
 
 === TRAINER_STEEVE_NEEVEE_ROUTE23_HNS ===
-Name: STEEVEE
+Name: STEEVEE & NEEVEE
 Class: Twins Hns
 Pic: Twins Hns
 Gender: Male
@@ -17042,7 +17042,7 @@ IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 - Baton Pass
 
 === TRAINER_STEEVE_NEEVEE_DRAGONS_DEN_HNS ===
-Name: STEEVEE
+Name: STEEVEE & NEEVEE
 Class: Twins Hns
 Pic: Twins Hns
 Gender: Male
@@ -17216,7 +17216,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Yawn
 
 === TRAINER_STEEVE_NEEVEE_CELADON_HNS ===
-Name: STEEVEE
+Name: STEEVEE & NEEVEE
 Class: Twins Hns
 Pic: Twins Hns
 Gender: Male
@@ -17290,7 +17290,7 @@ Careful Nature
 - Baton Pass
 
 === TRAINER_STEEVE_NEEVEE_SEAFOAM_HNS ===
-Name: STEEVEE
+Name: STEEVEE & NEEVEE
 Class: Twins Hns
 Pic: Twins Hns
 Gender: Male
@@ -17347,7 +17347,7 @@ IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 - Baton Pass
 
 === TRAINER_STEEVE_NEEVEE_KANTO_FINALE_HNS ===
-Name: STEEVEE
+Name: STEEVEE & NEEVEE
 Class: Twins Hns
 Pic: Twins Hns
 Gender: Male
