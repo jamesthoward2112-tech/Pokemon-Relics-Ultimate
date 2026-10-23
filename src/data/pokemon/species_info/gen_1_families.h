@@ -18870,6 +18870,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
                                 {EVO_ITEM, ITEM_MOON_STONE, SPECIES_UMBREON},
                                 {EVO_ITEM, ITEM_ANCIENT_STONE, SPECIES_EEVEEON},
                                 {EVO_ITEM, ITEM_SHINY_STONE, SPECIES_NIMBEON},
+                                {EVO_ITEM, ITEM_LEAF_STONE, SPECIES_LEAFEON},
+                                {EVO_ITEM, ITEM_ICE_STONE, SPECIES_GLACEON},
                                 {EVO_ITEM, ITEM_DUSK_STONE, SPECIES_OMEON},
                                 {EVO_ITEM, ITEM_EXPERT_BELT, SPECIES_CHAMPEON},
                                 {EVO_ITEM, ITEM_SILVER_POWDER, SPECIES_LEPIDEON},

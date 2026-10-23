@@ -109,8 +109,9 @@ jobs:
         run: |
           set -euo pipefail
           python3 tools/pru/check_crystal_battle_backgrounds.py
-          python3 tools/pru/check_crystal_entry_transitions.py
+          python3 tools/pru/check_static_battle_backgrounds.py
           python3 tools/pru/check_444_species_dex.py
+          python3 tools/pru/check_lavender_cubone_staging.py
           python3 tools/pru/check_pru_444_gameplay.py
           python3 tools/pru/check_20261022_legendary_encounters.py
           python3 tools/pru/check_insurgence_mega_jirachi.py

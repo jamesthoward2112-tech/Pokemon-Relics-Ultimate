@@ -34,19 +34,6 @@
 #include "data/battle_environment.h"
 #include "data/pru_crystal_bg_table.h"
 
-// An original donor entry occupies the existing BG1 intro layer only.
-static bool8 sPruCrystalEntryActive;
-
-// The remaining donor maps are blank or single repeated tiles. Showing
-// those as an opaque curtain would hide the already complete BG3 backdrop.
-static const bool8 sPruCrystalEntryHasArt[38] =
-{
-    [0] = TRUE, [1] = TRUE, [3] = TRUE, [4] = TRUE,
-    [5] = TRUE, [7] = TRUE, [14] = TRUE, [15] = TRUE,
-    [19] = TRUE, [22] = TRUE, [23] = TRUE, [24] = TRUE,
-    [25] = TRUE, [36] = TRUE,
-};
-
 // .rodata
 
 static const struct OamData sVsLetter_V_OamData =
@@ -1162,64 +1149,6 @@ static u8 GetBattleEnvironmentOverride(void)
     return GetBattleEnvironmentByMapScene(battleScene);
 }
 
-// The settled Crystal Redux background always lives on BG3. Donor entry
-// artwork uses only the existing BG1 intro layer and its same 2-4 palettes.
-bool8 IsPruCrystalBattleEntryActive(void)
-{
-    return sPruCrystalEntryActive;
-}
-
-static void LoadPruCrystalBattleEntry(void)
-{
-    u8 entryIndex;
-
-    sPruCrystalEntryActive = FALSE;
-    if (!IsPruCrystalBattleBgActive()
-     || gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK
-                          | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_EREADER_TRAINER
-                          | BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_MULTI
-                          | BATTLE_TYPE_LEGENDARY))
-        return;
-
-    entryIndex = GetPruCrystalBattleBgIndex(GetBattleEnvironmentOverride());
-    if (entryIndex >= NELEMS(sPruCrystalBattleBgs)
-     || !sPruCrystalEntryHasArt[entryIndex])
-        return;
-
-    // The matching donor art and its map have the same exact scene index as
-    // BG3. Never load unrelated Emerald art or modify BG3's tilemap.
-    DecompressDataWithHeaderVram(sPruCrystalBattleBgs[entryIndex].entryTiles,
-                                 (void *)BG_CHAR_ADDR(1));
-    CpuFill32(0, (void *)BG_SCREEN_ADDR(28), BG_SCREEN_SIZE * 2);
-    DecompressDataWithHeaderVram(sPruCrystalBattleBgs[entryIndex].entryTilemap,
-                                 (void *)BG_SCREEN_ADDR(28));
-    // Donor maps use the already loaded BG palettes 2-4; do not replace
-    // their colours or allocate extra palettes as the Emerald overlay did.
-    SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 1);
-    SetGpuReg(REG_OFFSET_BG1CNT,
-              BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR
-              | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
-    gBattle_BG1_X = 0;
-    gBattle_BG1_Y = 0;
-    sPruCrystalEntryActive = TRUE;
-}
-
-void EndPruCrystalBattleEntry(void)
-{
-    if (!sPruCrystalEntryActive)
-        return;
-
-    // Normal battle and battle animations require BG1 again after the entry.
-    CpuFill32(0, (void *)BG_SCREEN_ADDR(28), BG_SCREEN_SIZE * 2);
-    SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 0);
-    SetGpuReg(REG_OFFSET_BG1CNT,
-              BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR
-              | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
-    gBattle_BG1_X = 0;
-    gBattle_BG1_Y = 0;
-    sPruCrystalEntryActive = FALSE;
-}
-
 // Used only to disable the panorama-splitting entrance on standard PRU
 // battles. Preserve the original link, facility and partner transitions.
 bool8 IsPruCrystalBattleBgActive(void)
@@ -1289,7 +1218,6 @@ void DrawMainBattleBackground(void)
 
 void LoadBattleTextboxAndBackground(void)
 {
-    sPruCrystalEntryActive = FALSE;
     DecompressDataWithHeaderVram(gBattleTextboxTiles, (void *)(BG_CHAR_ADDR(0)));
     CopyToBgTilemapBuffer(0, gBattleTextboxTilemap, 0, 0);
     CopyBgTilemapBufferToVram(0);
@@ -1558,13 +1486,10 @@ void InitLinkBattleVsScreen(u8 taskId)
 
 void DrawBattleEntryBackground(void)
 {
-    // BG3 already contains the full Crystal Redux scene. A matching donor
-    // entry can move on BG1, but BG3 must never split or slide.
+    // The complete Crystal Redux BG3 scene is already visible. Do not load
+    // any extra entry tiles, grass, water, rocks or other foreground overlay.
     if (IsPruCrystalBattleBgActive())
-    {
-        LoadPruCrystalBattleEntry();
         return;
-    }
 
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {

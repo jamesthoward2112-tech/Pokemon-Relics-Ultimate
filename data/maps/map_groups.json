@@ -337,7 +337,14 @@
     "LavenderTown_House2_hns",
     "LavenderTown_House3_hns",
     "LavenderTown_RadioStation_hns",
-    "LavenderTown_SoulHouse_hns"
+    "LavenderTown_SoulHouse_hns",
+    "LavenderSpiritTower_1F_hns",
+    "LavenderSpiritTower_2F_hns",
+    "LavenderSpiritTower_3F_hns",
+    "LavenderSpiritTower_4F_hns",
+    "LavenderSpiritTower_5F_hns",
+    "LavenderSpiritTower_6F_hns",
+    "LavenderSpiritTower_7F_hns"
   ],
   "gMapGroup_IndoorCeladon_Hns": [
     "CeladonCity_PokemonCenter_hns",

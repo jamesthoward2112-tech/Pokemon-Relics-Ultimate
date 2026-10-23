@@ -80,9 +80,9 @@ assert "gScanlineEffectRegBuffers" not in static_intro
 assert "gBattle_BG3_X" not in static_intro
 assert "gBattle_BG1_X +=" not in static_intro
 
-# Prevent regression to PRL's double-entry panorama/seam. The entry loader
-# uses its own BG1 map and never decomposes an entry panel on BG3.
+# Prevent regression to the unwanted BG1 foreground/entry overlay entirely.
 entry = code.split("void DrawBattleEntryBackground(void)", 1)[1].split("bool8 LoadChosenBattleElement", 1)[0]
 assert "if (IsPruCrystalBattleBgActive())" in entry
-assert "LoadPruCrystalBattleEntry();" in entry
+assert "LoadPruCrystalBattleEntry" not in entry
+assert "LoadPruCrystalBattleEntry" not in code
 print("PASS: all 38 Crystal Redux GBA backgrounds, distinct Gym Leaders, safe intro loading")
