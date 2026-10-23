@@ -918,6 +918,21 @@ static u8 GetPruCrystalBattleBgIndex(u16 environment)
      || (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER)))
         return 0xFF;
 
+    // One haunting backdrop throughout Lavender Spirit Tower. Without a
+    // map-specific override the generic building/terrain map seed chooses a
+    // different (sometimes sunny) Crystal Redux scene on each floor.
+    switch ((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
+    {
+    case MAP_LAVENDER_SPIRIT_TOWER_1F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_2F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_3F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_4F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_5F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_6F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_7F_HNS:
+        return 19; // Original Crystal Redux tombstone/graveyard scene.
+    }
+
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
     {
         // Distinct Gym Leader arenas; rematches and postgame challenges use

@@ -641,7 +641,7 @@ PJR_FINAL_SPECIES(SPECIES_FAERANIUM, 100, 85, 115, 105, 120, 65, TYPE_GRASS, TYP
 PJR_FINAL_SPECIES(SPECIES_PYROCLAST, 85, 95, 85, 130, 90, 105, TYPE_FIRE, TYPE_GHOST,
     ABILITY_CINDER_VEIL, ABILITY_NONE, ABILITY_NONE, "Pyroclast", CRY_TYPHLOSION,
     NATIONAL_DEX_TYPHLOSION, "Cinder Relic", BODY_COLOR_RED, gMonFrontPic_Pyroclast, gMonBackPic_Pyroclast,
-    gMonPalette_Pyroclast, gMonShinyPalette_Pyroclast, gMonIcon_Pyroclast, P_GBA_STYLE_SPECIES_ICONS ? 1 : 3, sPyroclastLevelUpLearnset, sTyphlosionTeachableLearnset, 0, 0),
+    gMonPalette_Pyroclast, gMonShinyPalette_Pyroclast, gMonIcon_Pyroclast, P_GBA_STYLE_SPECIES_ICONS ? 1 : 3, sPyroclastLevelUpLearnset, sTyphlosionTeachableLearnset, 0, 8),
 
 PJR_FINAL_SPECIES(SPECIES_FERALODON, 105, 135, 105, 70, 85, 80, TYPE_WATER, TYPE_DRAGON,
     ABILITY_TIDAL_ROAR, ABILITY_NONE, ABILITY_NONE, "Feralodon", CRY_FERALIGATR,

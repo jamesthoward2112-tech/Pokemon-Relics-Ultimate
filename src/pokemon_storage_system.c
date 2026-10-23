@@ -247,6 +247,12 @@ enum {
     PALTAG_MON_ICON_5, // Used implicitly in CreateMonIconSprite
     PALTAG_MON_ICON_6, // PRL Noxichu: unique icon palette must not overlap display-mon tag
     PALTAG_MON_ICON_7, // PRL Eeveeon: unique cream/brown palette
+    PALTAG_MON_ICON_8, // Swamplith: the display-mon palette used to alias this tag
+    PALTAG_MON_ICON_9, // Skarmet
+    PALTAG_MON_ICON_10, // Astrachi
+    PALTAG_MON_ICON_11, // Articuno-P
+    PALTAG_MON_ICON_12, // Zapdos-P
+    PALTAG_MON_ICON_13, // Moltres-P
     PALTAG_DISPLAY_MON,
     PALTAG_MISC_1,
     PALTAG_MARKING_COMBO,
@@ -4523,7 +4529,11 @@ static void InitMonIconFields(void)
 {
     u16 i;
 
-    LoadMonIconPalettes();
+    // The PC needs OBJ palettes for its cursor, large portrait, waveform and
+    // item icons as well as Pokémon. Preloading all 14 icon palettes exhausts
+    // the GBA's 16 slots and causes custom icons to borrow changing colours.
+    LoadMonIconBasePalettes();
+    LoadMonIconPalette(SPECIES_SWAMPLITH);
     for (i = 0; i < MAX_MON_ICONS; i++)
         sStorage->numIconsPerSpecies[i] = 0;
     for (i = 0; i < MAX_MON_ICONS; i++)
@@ -5369,6 +5379,10 @@ static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s
         // Swamplith #8, Skarmet #9), instead of a shared palette here.
         template.paletteTag = PALTAG_MON_ICON_0 + GetMonIconPaletteIndexFromSpecies(species);
     }
+
+    // PC custom palettes are loaded as sprites appear, not en masse at init.
+    // This also keeps the real Swamplith palette pinned when scrolling boxes.
+    LoadMonIconPalette(species);
 
     tileNum = TryLoadMonIconTiles(species, personality, isEgg);
     if (tileNum == 0xFFFF)
