@@ -13665,7 +13665,12 @@ void BS_JumpIfRoarFails(void)
 {
     NATIVE_ARGS(const u8 *jumpInstr);
 
-    if (WILD_DOUBLE_BATTLE
+    // No forced Roar/Whirlwind battle termination for wild legendaries.
+    // Neither side can phase out the encounter: catch, faint or player Run.
+    if (IsPruLegendaryWildBattler(gBattlerAttacker)
+     || IsPruLegendaryWildBattler(gBattlerTarget))
+        gBattlescriptCurrInstr = cmd->jumpInstr;
+    else if (WILD_DOUBLE_BATTLE
         && IsOnPlayerSide(gBattlerAttacker)
         && !IsOnPlayerSide(gBattlerTarget)
         && IS_WHOLE_SIDE_ALIVE(gBattlerTarget))
