@@ -11540,7 +11540,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "hns",
-      "layout_version": "hns"
+      "layout_version": "frlg"
     },
     {
       "id": "LAYOUT_PRU_LAVENDER_SPIRIT_TOWER_2F",
@@ -11554,7 +11554,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "hns",
-      "layout_version": "hns"
+      "layout_version": "frlg"
     },
     {
       "id": "LAYOUT_PRU_LAVENDER_SPIRIT_TOWER_3F",
@@ -11568,7 +11568,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "hns",
-      "layout_version": "hns"
+      "layout_version": "frlg"
     },
     {
       "id": "LAYOUT_PRU_LAVENDER_SPIRIT_TOWER_4F",
@@ -11582,7 +11582,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "hns",
-      "layout_version": "hns"
+      "layout_version": "frlg"
     },
     {
       "id": "LAYOUT_PRU_LAVENDER_SPIRIT_TOWER_5F",
@@ -11596,7 +11596,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "hns",
-      "layout_version": "hns"
+      "layout_version": "frlg"
     },
     {
       "id": "LAYOUT_PRU_LAVENDER_SPIRIT_TOWER_6F",
@@ -11610,7 +11610,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "hns",
-      "layout_version": "hns"
+      "layout_version": "frlg"
     },
     {
       "id": "LAYOUT_PRU_LAVENDER_SPIRIT_TOWER_7F",
@@ -11624,7 +11624,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "hns",
-      "layout_version": "hns"
+      "layout_version": "frlg"
     },
     {
       "id": "LAYOUT_MAHOGANYTOWN_HNS",
