@@ -87,6 +87,7 @@ for flag, address in [
     ("FLAG_PRU_CUBONE_OSTEODIAN_RESOLVED", "0x93C"),
     ("FLAG_PRU_CUBONE_MIMIKYU_CAUGHT", "0x93D"),
     ("FLAG_PRU_CUBONE_MEMORIAL_REWARDED", "0x93E"),
+    ("FLAG_PRU_CUBONE_MIMIKYU_RESOLVED", "0x93F"),
 ]:
     assert re.search(rf"#define\s+{flag}\s+{address}\b", flags), (flag, address)
 var_defs = READ("include/constants/vars.h")
@@ -117,6 +118,20 @@ assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT" in final
 assert "setflag FLAG_PRU_CUBONE_MIMIKYU_CAUGHT" in final
 assert "goto_if_eq VAR_RESULT, B_OUTCOME_WON" in final
 assert "removeobject LOCALID_LAVENDER_SPIRIT_MIMIKYU" in final
+assert final.count("setflag FLAG_PRU_CUBONE_MIMIKYU_RESOLVED") == 2
+assert "goto_if_set FLAG_PRU_CUBONE_MIMIKYU_RESOLVED, LavenderSpiritTower_7F_EventScript_CuboneHappy" in final
+assert "goto_if_set FLAG_PRU_CUBONE_MIMIKYU_CAUGHT, LavenderSpiritTower_7F_EventScript_Done" in final
+assert "goto_if_set FLAG_PRU_CUBONE_MIMIKYU_RESOLVED, LavenderTownSoulHouse_EventScript_MrFujiResolved" in soul_script
+assert "checkitem ITEM_POKE_FLUTE, 1" in soul_script
+assert "giveitem_msg LavenderTownSoulHouse_Text_ReceivedPokeFlute, ITEM_POKE_FLUTE, 1" in soul_script
+assert soul_script.index("giveitem_msg LavenderTownSoulHouse_Text_ReceivedPokeFlute") < soul_script.index("giveitem ITEM_THICK_CLUB")
+assert "goto_if_set FLAG_PRU_CUBONE_MEMORIAL_REWARDED" in soul_script
+assert "LavenderTownSoulHouse_EventScript_AskSpiritTower::" in soul_script
+verm = READ("data/maps/VermilionCity_hns/scripts.inc")
+assert "checkitem ITEM_POKE_FLUTE, 1" in verm
+assert "VermilionCity_EventScript_SnorlaxWakeUpFlute::" in verm
+assert "VermilionCity_EventScript_SnorlaxBattle::" in verm
+assert "special CheckRadioStation" in verm
 native = READ("src/battle_util.c")
 tileset_src = READ("src/data/tilesets/pru_spirit_tower.h")
 assert '#include "data/tilesets/pru_spirit_tower.h"' in READ("src/tilesets.c")

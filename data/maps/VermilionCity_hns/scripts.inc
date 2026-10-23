@@ -178,6 +178,8 @@ VermilionCity_EventScript_Nerd::
 
 VermilionCity_EventScript_Snorlax::
 	lock
+	checkitem ITEM_POKE_FLUTE, 1
+	goto_if_eq VAR_RESULT, TRUE, VermilionCity_EventScript_SnorlaxWakeUpFlute
 	special CheckRadioStation
 	goto_if_eq VAR_RESULT, TRUE, VermilionCity_EventScript_SnorlaxWakeUp
 	@goto_if_set FLAG_KANTO_RADIO_GOT, VermilionCity_EventScript_SnorlaxWakeUp
@@ -186,9 +188,16 @@ VermilionCity_EventScript_Snorlax::
 	release
 	end
 
+VermilionCity_EventScript_SnorlaxWakeUpFlute::
+    playbgm MUS_HG_RADIO_POKE_FLUTE, FALSE
+    msgbox VermilionCity_Text_FluteNearSnorlax, MSGBOX_DEFAULT
+    goto VermilionCity_EventScript_SnorlaxBattle
+
 VermilionCity_EventScript_SnorlaxWakeUp::
     playbgm MUS_HG_RADIO_POKE_FLUTE, FALSE
     msgbox VermilionCity_Text_RadioNearSnorlax, MSGBOX_DEFAULT
+
+VermilionCity_EventScript_SnorlaxBattle::
     playmoncry SPECIES_SNORLAX, CRY_MODE_ENCOUNTER
     delay 40
     waitmoncry
@@ -348,6 +357,11 @@ VermilionCity_Text_SuperNerd:
 
 VermilionCity_Text_SnorlaxSleeping:
 	.string "SNORLAX is snoring peacefully…$"
+
+VermilionCity_Text_FluteNearSnorlax:
+	.string "The POKé FLUTE sounded beside\n"
+	.string "the sleeping SNORLAX…\p"
+	.string "SNORLAX woke up!$"
 
 VermilionCity_Text_RadioNearSnorlax:
 	.string "The POKéGEAR was placed near \n"

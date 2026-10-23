@@ -7,11 +7,23 @@ LavenderTownSoulHouse_EventScript_MrFuji::
 	lock
 	faceplayer
 	goto_if_set FLAG_PRU_CUBONE_MIMIKYU_CAUGHT, LavenderTownSoulHouse_EventScript_MrFujiResolved
+	goto_if_set FLAG_PRU_CUBONE_MIMIKYU_RESOLVED, LavenderTownSoulHouse_EventScript_MrFujiResolved
 	msgbox MrFuji_Text_Main
 	msgbox LavenderTownSoulHouse_Text_CuboneQuest
 	goto LavenderTownSoulHouse_EventScript_AskSpiritTower
 
 LavenderTownSoulHouse_EventScript_MrFujiResolved::
+	// Use the Key Item itself: FLAG_GOT_POKE_FLUTE is zero in the HNS flag set.
+	// Old saves with Mimikyu already caught get the missing flute on revisit.
+	checkitem ITEM_POKE_FLUTE, 1
+	goto_if_eq VAR_RESULT, TRUE, LavenderTownSoulHouse_EventScript_MemorialGift
+	msgbox LavenderTownSoulHouse_Text_PokeFluteReward
+	checkitemspace ITEM_POKE_FLUTE
+	goto_if_eq VAR_RESULT, FALSE, LavenderTownSoulHouse_EventScript_FullBag
+	giveitem_msg LavenderTownSoulHouse_Text_ReceivedPokeFlute, ITEM_POKE_FLUTE, 1, MUS_RG_OBTAIN_KEY_ITEM
+	msgbox LavenderTownSoulHouse_Text_ExplainPokeFlute
+
+LavenderTownSoulHouse_EventScript_MemorialGift::
 	goto_if_set FLAG_PRU_CUBONE_MEMORIAL_REWARDED, LavenderTownSoulHouse_EventScript_MrFujiPeace
 	msgbox LavenderTownSoulHouse_Text_ThankYou
 	giveitem ITEM_THICK_CLUB, 1
@@ -43,6 +55,7 @@ LavenderTownSoulHouse_EventScript_EndQuestTalk::
 
 LavenderTownSoulHouse_EventScript_Cubone::
 	goto_if_set FLAG_PRU_CUBONE_MIMIKYU_CAUGHT, LavenderTownSoulHouse_EventScript_CuboneHappy
+	goto_if_set FLAG_PRU_CUBONE_MIMIKYU_RESOLVED, LavenderTownSoulHouse_EventScript_CuboneHappy
 	msgbox LavenderTownSoulHouse_Text_CuboneCrying, MSGBOX_NPC
 	end
 
@@ -68,6 +81,20 @@ LavenderTownSoulHouse_Text_CloseEyes:
 	.string "safely back to me.\p"
 	.string "Close your eyes...\p"
 	.string "Let the memories return.$"
+
+LavenderTownSoulHouse_Text_PokeFluteReward:
+	.string "MR. FUJI: You brought peace to\n"
+	.string "the tower, and joy to CUBONE.\p"
+	.string "Please accept this POKé FLUTE.$"
+
+LavenderTownSoulHouse_Text_ReceivedPokeFlute:
+	.string "{PLAYER} received the POKé FLUTE\n"
+	.string "from MR. FUJI.$"
+
+LavenderTownSoulHouse_Text_ExplainPokeFlute:
+	.string "The POKé FLUTE can wake up\n"
+	.string "sleeping POKéMON.\p"
+	.string "Try it beside a SNORLAX.$"
 
 LavenderTownSoulHouse_Text_ThankYou:
 	.string "You gave CUBONE a new friend.\n"
