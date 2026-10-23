@@ -36,6 +36,8 @@ assert "LEVEL_UP_MOVE(65, MOVE_SHADOW_CLAW)" in mimi_moves
 
 groups = json.loads(READ("data/maps/map_groups.json"))
 lavender_group = groups["gMapGroup_IndoorLavender_Hns"]
+layouts = {layout["id"]: layout for layout in json.loads(READ("data/layouts/layouts.json"))["layouts"]}
+event_asm = READ("data/event_scripts.s")
 assert lavender_group[:7] == [
     "LavenderTown_PokemonCenter_hns", "LavenderTown_Mart_hns",
     "LavenderTown_House1_hns", "LavenderTown_House2_hns",
@@ -47,7 +49,13 @@ for n in range(1, 8):
     assert key in lavender_group
     m = json.loads(READ(f"data/maps/{key}/map.json"))
     assert m["id"] == f"MAP_LAVENDER_SPIRIT_TOWER_{n}F_HNS"
-    assert m["layout"] == f"LAYOUT_POKEMON_TOWER_{n}F"
+    assert m["layout"] == f"LAYOUT_PRU_LAVENDER_SPIRIT_TOWER_{n}F"
+    layout = layouts[m["layout"]]
+    assert layout["game_version"] == "hns" and layout["layout_version"] == "hns"
+    assert layout["blockdata_filepath"] == f"data/layouts/PokemonTower_{n}F_Frlg/map.bin"
+    assert layout["primary_tileset"] == "gTileset_PruSpiritTowerPrimary"
+    assert layout["secondary_tileset"] == "gTileset_PruSpiritTowerSecondary"
+    assert f'.include "data/maps/{key}/scripts.inc"' in event_asm
     assert m["game_version"] == "hns"
     scripts = READ(f"data/maps/{key}/scripts.inc")
     assert f"{key}_MapScripts::" in scripts
@@ -108,6 +116,10 @@ assert "setflag FLAG_PRU_CUBONE_MIMIKYU_CAUGHT" in final
 assert "goto_if_eq VAR_RESULT, B_OUTCOME_WON" in final
 assert "removeobject LOCALID_LAVENDER_SPIRIT_MIMIKYU" in final
 native = READ("src/battle_util.c")
+tileset_src = READ("src/data/tilesets/pru_spirit_tower.h")
+assert '#include "data/tilesets/pru_spirit_tower.h"' in READ("src/tilesets.c")
+for symbol in ("gTileset_PruSpiritTowerPrimary", "gTileset_PruSpiritTowerSecondary"):
+    assert symbol in tileset_src
 for i in (5, 6, 7):
     assert f"MAP_LAVENDER_SPIRIT_TOWER_{i}F_HNS" in native
 assert "BATTLE_WEATHER_FOG, ABILITY_NONE" in native
