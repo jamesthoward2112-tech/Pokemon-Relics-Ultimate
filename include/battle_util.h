@@ -240,6 +240,7 @@ u32 IsAbilityOnFieldExcept(enum BattlerId battler, enum Ability ability);
 u32 IsAbilityPreventingEscape(enum BattlerId battler);
 bool32 IsBattlerProtected(struct BattleContext *ctx);
 enum ProtectType GetProtectType(enum ProtectMethod method);
+bool32 IsPruLegendaryWildBattler(enum BattlerId battler);
 bool32 CanBattlerEscape(enum BattlerId battler); // no ability check
 void BattleScriptExecute(const u8 *BS_ptr);
 void BattleScriptPushCursorAndCallback(const u8 *BS_ptr);
