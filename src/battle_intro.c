@@ -171,24 +171,26 @@ static void BattleIntroCrystalStatic(u8 taskId)
     }
     else if (gTasks[taskId].tState == 1)
     {
-        // BG1 starts 160 px below its final position; scroll it upward over
-        // twenty frames. The complete Crystal background on BG3 stays at X/Y=0.
-        if ((s16)gBattle_BG1_Y < 0)
+        // The authentic Emerald art is drawn in rows 4-14 of BG1's first
+        // screenblock. Begin below the viewport, then let the entire art
+        // sweep upwards and *off* the screen before clearing the tilemap.
+        // Clearing at Y=0 made the grass flash and disappear mid-animation.
+        // Crystal Redux scenery on BG3 remains completely stationary.
+        if ((s16)gBattle_BG1_Y < 160)
         {
-            gBattle_BG1_Y += 8;
-            if ((s16)gBattle_BG1_Y > 0)
-                gBattle_BG1_Y = 0;
+            gBattle_BG1_Y += 6;
+            if ((s16)gBattle_BG1_Y > 160)
+                gBattle_BG1_Y = 160;
         }
-        if ((s16)gBattle_BG1_Y >= 0)
+        else
         {
-            gTasks[taskId].data[2] = 6;
             gTasks[taskId].tState = 2;
         }
     }
-    else if (gTasks[taskId].data[2]-- <= 0)
+    else
     {
-        // Leave no foreground tiles or palettes covering sprites, menus or
-        // later battle animations after the short Emerald entrance finishes.
+        // BG1 artwork has exited the top of the 160px viewport naturally;
+        // restore the standard battle layer only after it is fully invisible.
         EndPruEmeraldBattleForeground();
         gIntroSlideFlags &= ~1;
         BattleIntroSlideEnd(taskId);
