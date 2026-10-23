@@ -3560,7 +3560,7 @@
 #define FLAG_PRU_CUBONE_OSTEODIAN_RESOLVED                     0x93C
 #define FLAG_PRU_CUBONE_MIMIKYU_CAUGHT                         0x93D
 #define FLAG_PRU_CUBONE_MEMORIAL_REWARDED                      0x93E
-#define FLAG_UNUSED_0x93F                                       0
+#define FLAG_PRU_CUBONE_MIMIKYU_RESOLVED                       0x93F // KO or catch; saved permanently
 #define FLAG_UNUSED_0x940                                       0
 #define FLAG_UNUSED_0x941                                       0
 #define FLAG_UNUSED_0x942                                       0
