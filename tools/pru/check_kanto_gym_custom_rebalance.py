@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the first Kanto Gym battles: eight 444-legal, six-Pokemon, smart Relic teams.
+"""Guard the first Kanto Gym battles: eight dex-legal, six-Pokemon, smart Relic teams.
 
 Never use this test to rewrite or touch Kanto Gym leader sprites, story/event
 flags, rematches, Johto Elite Four, or save-game structure.
@@ -12,7 +12,7 @@ root = Path(__file__).resolve().parents[2]
 party = (root / "src/data/trainers_hns.party").read_text(encoding="utf-8")
 with (root / "data/pru/PRU_National_Pokedex_2026-10-16.csv").open(encoding="utf-8", newline="") as f:
     canonical = {row["Name"] for row in csv.DictReader(f)}
-assert len(canonical) == 444
+assert len(canonical) == 447  # Original 444 plus Glaceon, Leafeon and Mimikyu.
 
 teams = {
     "BROCK": [("Golem", 64), ("Kabutops", 64), ("Relicanth", 65),
