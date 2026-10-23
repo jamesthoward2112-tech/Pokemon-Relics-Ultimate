@@ -15,6 +15,9 @@ for name in assets:
     assert all((t >> 12) in (0, 4) for t in tiles), name
     # Emerald anim foregrounds use palette 4; the Crystal background uses BG2-4.
     assert 4 in {t >> 12 for t in tiles}, name
+    # At BG1 scroll Y=160 every nontransparent tile is off the top edge.
+    occupied_rows = [idx // 32 for idx, tile in enumerate(tiles) if tile & 0x3FF]
+    assert occupied_rows and max(occupied_rows) < 20, name
 
 bg = Path("src/battle_bg.c").read_text()
 intro = Path("src/battle_intro.c").read_text()
@@ -33,11 +36,15 @@ for required in (
 assert "bool8 IsPruEmeraldForegroundActive(void);" in header
 assert "EndPruEmeraldBattleForeground();" in intro
 static = intro.split("static void BattleIntroCrystalStatic(u8 taskId)\n{", 1)[1].split("\nstatic void BattleIntroNoSlide", 1)[0]
-assert "gBattle_BG1_Y += 8;" in static
+assert "gBattle_BG1_Y += 6;" in static
+assert "gBattle_BG1_Y < 160" in static
+assert "gBattle_BG1_Y = 160;" in static
+assert "gTasks[taskId].data[2] = 6;" not in static
+assert static.index("gBattle_BG1_Y = 160;") < static.index("EndPruEmeraldBattleForeground();")
 assert "gBattle_BG3_X" not in static and "gBattle_BG3_Y" not in static
 assert "gScanlineEffectRegBuffers" not in static
 assert "gIntroSlideFlags &= ~1;" in static
 assert "BattleIntroSlideEnd(taskId);" in static
 assert "python3 tools/pru/check_crystal_battle_backgrounds.py" in workflow
 assert "python3 tools/pru/check_emerald_foregrounds.py" in workflow
-print("PRU_EMERALD_FOREGROUNDS_PASS: authentic Emerald entry tilemaps, BG1 isolation, Crystal BG3 static")
+print("PRU_EMERALD_FOREGROUNDS_PASS: authentic Emerald entry maps, continuous BG1 sweep beyond viewport, Crystal BG3 static")

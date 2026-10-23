@@ -203,3 +203,41 @@ jobs:
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
             --jq '.assets[].name' | grep -Fx "$file"
           echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/$file"
+
+  prune-stale-attempts:
+    name: Prune failed and cancelled historical PRU runs
+    needs: build-rom
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Remove obsolete failed/cancelled attempts, preserve successful builds
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Retain every successful run and all release evidence. Only prune
+          # failed/cancelled PRU canonical runs older than two hours.
+          cutoff="$(date -u -d '2 hours ago' '+%Y-%m-%dT%H:%M:%SZ')"
+          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs?per_page=100" \
+            --jq ".workflow_runs[] | select(.name == \"PRU canonical clean build\" and .status == \"completed\" and (.conclusion == \"failure\" or .conclusion == \"cancelled\") and .created_at < \"$cutoff\") | .id" \
+            > "$RUNNER_TEMP/pru-stale-runs.txt"
+          cleaned=0
+          failed=0
+          while IFS= read -r run_id; do
+            test -n "$run_id" || continue
+            test "$run_id" != "$GITHUB_RUN_ID" || continue
+            if gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/runs/$run_id" >/dev/null 2>&1; then
+              cleaned=$((cleaned + 1))
+            else
+              failed=$((failed + 1))
+              echo "Could not delete obsolete run $run_id"
+            fi
+            # Avoid bursting the GitHub Actions write API.
+            sleep 0.4
+          done < "$RUNNER_TEMP/pru-stale-runs.txt"
+          echo "PRU_RUNS_CLEANED=$cleaned failures=$failed"
