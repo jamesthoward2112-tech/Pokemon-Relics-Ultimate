@@ -2713,3 +2713,17 @@ const struct Tileset gTileset_MtEmber_Hns =
     .callback = InitTilesetAnim_MtEmber_Hns,
 };
 #endif // IS_FRLG || IS_HNS
+
+#if IS_HNS
+// Exact Emerald cave tileset for the relocated Kyogre chamber; no remapping.
+const struct Tileset gTileset_Cave =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Cave,
+    .palettes = gTilesetPalettes_Cave,
+    .metatiles = gMetatiles_Cave,
+    .metatileAttributes = gMetatileAttributes_Cave,
+    .callback = InitTilesetAnim_Cave,
+};
+#endif // IS_HNS

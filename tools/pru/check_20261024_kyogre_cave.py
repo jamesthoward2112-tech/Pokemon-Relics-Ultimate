@@ -67,4 +67,14 @@ assert "AI: Smart Trainer / Prediction" in boss
 assert "Kyogre @ Blue Orb" in boss
 assert boss.index("Swamplith @") < boss.index("Kyogre @ Blue Orb")
 assert "Level: 75" in boss
+
+# The Emerald Cave tileset is normally excluded by HNS preprocessor guards.
+# Its exact donor pixels/collision metadata must therefore be explicitly linked.
+metatiles_source = read("src/data/tilesets/metatiles.h")
+headers_source = read("src/data/tilesets/headers.h")
+assert '#if IS_HNS\n// Exact Emerald Cave metatiles' in metatiles_source
+assert 'const u16 gMetatiles_Cave[] = INCBIN_U16("data/tilesets/secondary/cave/metatiles.bin");' in metatiles_source
+assert '#if IS_HNS\n// Exact Emerald cave tileset' in headers_source
+assert 'const struct Tileset gTileset_Cave =' in headers_source
+
 print("PRU_KYOGRE_CAVE_PASS: native overworld, field rain, locked post-battle, preserved respawn, rain-themed custom team")
