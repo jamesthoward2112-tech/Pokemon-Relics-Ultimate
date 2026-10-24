@@ -17135,17 +17135,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Psychic Fangs
 - Protect
 
-Gyarados @ Lum Berry
-Level: 77
-Ability: Intimidate
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Waterfall
-- Crunch
-- Ice Fang
-- Dragon Dance
-
 Feralodon @ Wacan Berry
-Level: 78
+Level: 77
 Ability: Tidal Roar
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Liquidation
@@ -17154,13 +17145,21 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Superpower
 
 Swamplith @ Leftovers
-Level: 80
+Level: 78
 Ability: Tidal Bastion
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Liquidation
 - Earthquake
 - Ice Punch
 - Rock Slide
+
+Kyogre @ Blue Orb
+Level: 75
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Origin Pulse
+- Thunder
+- Ice Beam
+- Calm Mind
 
 === TRAINER_PRU_MAXIE_GROUDON_HNS ===
 Name: MAXIE
