@@ -17108,53 +17108,58 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Mightyena @ Sitrus Berry
-Level: 73
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Crunch
-- Play Rough
-- Sucker Punch
-- Swagger
-
-Crobat @ Black Sludge
+Pelipper @ Damp Rock
 Level: 74
+Ability: Drizzle
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Brave Bird
-- Poison Fang
+- Hurricane
+- Scald
 - Roost
 - U-Turn
 
-Tentacruel @ Black Sludge
-Level: 74
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Scald
-- Sludge Bomb
-- Ice Beam
-- Toxic Spikes
-
-Sharpedo @ Mystic Water
+Skulberus @ Black Glasses
 Level: 75
+Ability: Moxie
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Crunch
+- Close Combat
+- Sucker Punch
+- Poison Fang
+
+Sharpedo @ Life Orb
+Level: 76
+Ability: Speed Boost
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Liquidation
 - Crunch
-- Ice Fang
+- Psychic Fangs
 - Protect
 
-Gyarados @ Lum Berry
-Level: 76
+Feralodon @ Wacan Berry
+Level: 77
+Ability: Tidal Roar
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Waterfall
-- Crunch
-- Earthquake
-- Dragon Dance
-
-Swampert @ Leftovers
-Level: 78
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Earthquake
 - Liquidation
+- Dragon Dance
+- Crunch
+- Superpower
+
+Swamplith @ Leftovers
+Level: 78
+Ability: Tidal Bastion
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Liquidation
+- Earthquake
 - Ice Punch
-- Stealth Rock
+- Rock Slide
+
+Kyogre @ Blue Orb
+Level: 75
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Origin Pulse
+- Thunder
+- Ice Beam
+- Calm Mind
 
 === TRAINER_PRU_MAXIE_GROUDON_HNS ===
 Name: MAXIE

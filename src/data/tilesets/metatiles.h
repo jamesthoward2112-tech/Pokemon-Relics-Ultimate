@@ -730,3 +730,9 @@ const u16 gMetatiles_MtEmber_Hns[] = INCBIN_U16("data/tilesets/secondary/mt_embe
 const u16 gMetatileAttributes_MtEmber_Hns[] = INCBIN_U16("data/tilesets/secondary/mt_ember_hns/metatile_attributes.bin");
 
 #endif // IS_FRLG || IS_HNS
+
+#if IS_HNS
+// Exact Emerald Cave metatiles, compiled only for the PRU Kyogre pool donor.
+const u16 gMetatiles_Cave[] = INCBIN_U16("data/tilesets/secondary/cave/metatiles.bin");
+const u16 gMetatileAttributes_Cave[] = INCBIN_U16("data/tilesets/secondary/cave/metatile_attributes.bin");
+#endif // IS_HNS

@@ -16313,6 +16313,18 @@
       "blockdata_filepath": "data/layouts/NewSinjoh_KimonoHideout_hns/map.bin",
       "game_version": "hns",
       "layout_version": "hns"
+    },
+    {
+      "id": "LAYOUT_PRU_KYOGRE_CHAMBER_HNS",
+      "name": "SeafoamIslands_KyogreChamber_hns_Layout",
+      "width": 27,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/MarineCave_End/border.bin",
+      "blockdata_filepath": "data/layouts/MarineCave_End/map.bin",
+      "layout_version": "hns",
+      "game_version": "hns"
     }
   ]
 }
