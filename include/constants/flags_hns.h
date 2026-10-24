@@ -517,6 +517,7 @@
 #define FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO              0x4FB
 #define FLAG_PRU_HIDE_HEIST_GIOVANNI                   0x4FC
 #define FLAG_PRU_HIDE_MEOWTH_BALLOON                   0x4FD
+#define FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE             0x4FE // Hidden until Archie loses; re-entry checks catch flag.
 #define FLAG_COMPLETED_AERODACTYL_PUZZLE            0x1E2
 #define FLAG_COMPLETED_HOOH_PUZZLE                  0x1E3
 #define FLAG_COMPLETED_KABUTO_PUZZLE                0x1E4

@@ -1,12 +1,32 @@
 
 SeafoamIslands_SecretCave_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SeafoamIslands_SecretCave_OnTransition
 	.byte 0
+
+SeafoamIslands_SecretCave_OnTransition:
+	goto_if_set FLAG_PRU_KYOGRE_CAUGHT, SeafoamIslands_SecretCave_OnTransition_HideKyogre
+	goto_if_set FLAG_PRU_ARCHIE_KYOGRE_DEFEATED, SeafoamIslands_SecretCave_OnTransition_ShowKyogre
+	goto SeafoamIslands_SecretCave_OnTransition_HideKyogre
+
+SeafoamIslands_SecretCave_OnTransition_HideKyogre:
+	setflag FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE
+	end
+
+SeafoamIslands_SecretCave_OnTransition_ShowKyogre:
+	clearflag FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE
+	end
 
 SeafoamIslands_SecretCave_EventScript_Archie::
 	trainerbattle_single TRAINER_PRU_ARCHIE_KYOGRE_HNS, SeafoamIslands_SecretCave_Text_ArchieIntro, SeafoamIslands_SecretCave_Text_ArchieDefeated
 	setflag FLAG_PRU_ARCHIE_KYOGRE_DEFEATED
 	lockall
 	msgbox SeafoamIslands_SecretCave_Text_ArchieAfter, MSGBOX_DEFAULT
+	closemessage
+	clearflag FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE
+	addobject LOCALID_PRU_KYOGRE
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	waitmoncry
+	msgbox SeafoamIslands_SecretCave_Text_ArchieReveal, MSGBOX_DEFAULT
 	closemessage
 	fadescreenswapbuffers FADE_TO_BLACK
 	removeobject LOCALID_PRU_ARCHIE
@@ -21,14 +41,14 @@ SeafoamIslands_SecretCave_EventScript_Kyogre::
 	goto_if_unset FLAG_PRU_ARCHIE_KYOGRE_DEFEATED, SeafoamIslands_SecretCave_EventScript_Archie
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 	waitmoncry
-	@ Kyogre holds the Blue Orb and automatically becomes Primal on entry.
-	@ Capture keeps base Kyogre plus the Orb for future Primal Reversion.
-	seteventmon SPECIES_KYOGRE, 75, ITEM_BLUE_ORB
+	@ Shiny base Kyogre holds the Blue Orb, reverting to shiny Primal form.
+	@ Only capture persists; knockout or whiteout allows the wild encounter again.
+	setwildbattleshiny SPECIES_KYOGRE, 75, ITEM_BLUE_ORB
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, SeafoamIslands_SecretCave_EventScript_KyogreCaught
-	removeobject 1
+	removeobject LOCALID_PRU_KYOGRE
 	release
 	end
 
@@ -38,21 +58,26 @@ SeafoamIslands_SecretCave_EventScript_KyogreUnavailable::
 
 SeafoamIslands_SecretCave_EventScript_KyogreCaught::
 	setflag FLAG_PRU_KYOGRE_CAUGHT
-	removeobject 1
+	setflag FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE
+	removeobject LOCALID_PRU_KYOGRE
 	release
 	end
 
 SeafoamIslands_SecretCave_Text_ArchieIntro:
-	.string "ARCHIE: You made it this far?\p"
-	.string "KYOGRE answered TEAM AQUA's call!\p"
-	.string "You may beat the rest of my team,\p"
-	.string "but can you survive KYOGRE?$"
+	.string "ARCHIE: TEAM AQUA found an\p"
+	.string "ancient RELIC beneath KANTO.\p"
+	.string "It awakened a power beyond\n"
+	.string "even our darkest dreams.\p"
+	.string "Beat me to learn its secret!$"
 
 SeafoamIslands_SecretCave_Text_ArchieDefeated:
-	.string "ARCHIE: KYOGRE... no!$"
+	.string "ARCHIE: No! My final ace...$"
 
 SeafoamIslands_SecretCave_Text_ArchieAfter:
-	.string "ARCHIE: Even KYOGRE has fallen...\p"
-	.string "It is free of my command now.\p"
-	.string "It waits ahead in this cave.\p"
-	.string "Challenge it yourself, if you dare!$"
+	.string "ARCHIE: Even my ace has fallen...\p"
+	.string "That RELIC was never mine\p"
+	.string "to command. What have I done?$"
+
+SeafoamIslands_SecretCave_Text_ArchieReveal:
+	.string "ARCHIE: It's here... behind me!?\p"
+	.string "No! I'm leaving! You face it!$"

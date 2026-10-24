@@ -17105,7 +17105,7 @@ Pic: Aqua Leader Archie
 Gender: Male
 Music: Aqua
 Double Battle: No
-AI: Smart Trainer / Prediction
+AI: Smart Trainer / Prediction / Ace Pokemon
 Items: Full Restore / Full Restore
 
 Pelipper @ Damp Rock
@@ -17156,6 +17156,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Kyogre @ Blue Orb
 Level: 75
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Shiny: Yes
 - Origin Pulse
 - Thunder
 - Ice Beam

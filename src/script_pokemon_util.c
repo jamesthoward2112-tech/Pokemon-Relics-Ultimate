@@ -216,6 +216,14 @@ void CreateShinyScriptedMon(u16 species, u8 level, enum Item item)
         heldItem[1] = item >> 8;
         SetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM, heldItem);
     }
+    // Orb legends retain the unique fateful-encounter identity of seteventmon
+    // while using the game's proper shiny-Pokémon creation path.
+    if ((species == SPECIES_KYOGRE && item == ITEM_BLUE_ORB)
+     || (species == SPECIES_GROUDON && item == ITEM_RED_ORB))
+    {
+        bool32 fateful = TRUE;
+        SetMonData(&gEnemyParty[0], MON_DATA_MODERN_FATEFUL_ENCOUNTER, &fateful);
+    }
     SetNuzlockeChecks();
 }
 

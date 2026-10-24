@@ -121,6 +121,7 @@ jobs:
           python3 tools/pru/check_pru_444_gameplay.py
           python3 tools/pru/check_20261022_legendary_encounters.py
           python3 tools/pru/check_20261024_kyogre_cave.py
+          python3 tools/pru/check_20261024_primal_ace.py
           python3 tools/pru/check_insurgence_mega_jirachi.py
           python3 tools/pru/check_insurgence_space_mew.py
           python3 tools/pru/check_p_bird_sprites.py
