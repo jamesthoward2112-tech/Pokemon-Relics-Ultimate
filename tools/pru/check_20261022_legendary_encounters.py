@@ -15,7 +15,7 @@ for map_name, mon, orb, boss, caught, defeated in (
 ):
     script = read(f"data/maps/{map_name}/scripts.inc")
     data = json.loads(read(f"data/maps/{map_name}/map.json"))
-    assert f"seteventmon SPECIES_{mon}, 75, ITEM_{orb}_ORB" in script, mon
+    assert f"setwildbattleshiny SPECIES_{mon}, 75, ITEM_{orb}_ORB" in script, mon
     assert f"seteventmon SPECIES_{mon}_PRIMAL" not in script, mon
     assert f"playmoncry SPECIES_{mon}, CRY_MODE_ENCOUNTER" in script, mon
     assert f"goto_if_unset {defeated}" in script, mon
@@ -23,7 +23,7 @@ for map_name, mon, orb, boss, caught, defeated in (
     assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT" in script, mon
     expected_sprite = "OBJ_EVENT_GFX_KYOGRE_FRONT" if mon == "KYOGRE" else f"OBJ_EVENT_GFX_SPECIES({mon}_PRIMAL)"
     assert any(o.get("graphics_id") == expected_sprite
-               and o.get("flag") == caught for o in data["object_events"]), mon
+               and o.get("flag") == ("FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE" if mon == "KYOGRE" else caught) for o in data["object_events"]), mon
     assert any(o.get("graphics_id") == f"OBJ_EVENT_GFX_{boss}"
                and o.get("trainer_sight_or_berry_tree_id") == "4"
                and o.get("flag") == defeated for o in data["object_events"]), boss

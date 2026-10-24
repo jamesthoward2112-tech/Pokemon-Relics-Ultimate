@@ -16,13 +16,13 @@ archie = next(obj for obj in events if obj["script"] == "SeafoamIslands_SecretCa
 assert map_data["weather"] == "WEATHER_RAIN", "rain must be visible on the cave map"
 assert map_data["layout"] == "LAYOUT_SEAFOAM_ISLANDS_SECRET_CAVE_HNS", "restore the previously working Seafoam cave artwork"
 assert (kyogre["x"], kyogre["y"], kyogre["elevation"]) == (16, 11, 0)
-assert (archie["x"], archie["y"], archie["elevation"]) == (16, 14, 0)
+assert (archie["x"], archie["y"], archie["elevation"]) == (16, 12, 0)
 assert map_data["warp_events"][0]["dest_map"] == "MAP_SEAFOAM_ISLANDS_GYM_HNS"
 assert (map_data["warp_events"][0]["x"], map_data["warp_events"][0]["y"]) == (16, 17)
 assert map_data["coord_events"] == [], "the original compact room uses Kyogre's visible NPC event, not a distant pool trigger"
 
 assert kyogre["graphics_id"] == "OBJ_EVENT_GFX_KYOGRE_FRONT", "use the tested native Kyogre overworld asset"
-assert kyogre["flag"] == "FLAG_PRU_KYOGRE_CAUGHT"
+assert kyogre["flag"] == "FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE"
 assert archie["flag"] == "FLAG_PRU_ARCHIE_KYOGRE_DEFEATED"
 assert archie["trainer_sight_or_berry_tree_id"] == "4"
 
@@ -35,7 +35,7 @@ assert "removeobject LOCALID_PRU_ARCHIE" in post
 assert "setflag FLAG_PRU_ARCHIE_KYOGRE_DEFEATED" in post
 
 encounter = script.split("SeafoamIslands_SecretCave_EventScript_Kyogre::", 1)[1].split("SeafoamIslands_SecretCave_Text_ArchieIntro:", 1)[0]
-assert "seteventmon SPECIES_KYOGRE, 75, ITEM_BLUE_ORB" in encounter
+assert "setwildbattleshiny SPECIES_KYOGRE, 75, ITEM_BLUE_ORB" in encounter
 assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT" in encounter
 assert "goto_if_set FLAG_PRU_KYOGRE_CAUGHT, SeafoamIslands_SecretCave_EventScript_KyogreUnavailable" in encounter, "capture must keep Kyogre permanently unavailable"
 before_capture, after_capture = encounter.split("SeafoamIslands_SecretCave_EventScript_KyogreCaught::", 1)
