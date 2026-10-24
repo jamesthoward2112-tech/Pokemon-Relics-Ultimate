@@ -43,7 +43,7 @@ assert "RANDOMIZER_AVAILABLE" in chunk
 
 safari_maps = [e for group in encounters["wild_encounter_groups"]
                for e in group.get("encounters", [])
-               if e["map"] == brush["id"]]
+               if e.get("map") == brush["id"]]
 assert safari_maps and any(e.get("land_mons", {}).get("encounter_rate", 0) > 0
                            and len(e["land_mons"]["mons"]) > 0 for e in safari_maps)
 assert any(c.get("map") == brush["id"] for c in beach.get("connections", []))
