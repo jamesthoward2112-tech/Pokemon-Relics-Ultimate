@@ -1681,3 +1681,98 @@ static const u16 sAlphoracleInfinityTeachableLearnset[] =
     MOVE_RAIN_DANCE,
     MOVE_UNAVAILABLE,
 };
+
+ 
+// Lavender Spirit Tower guardians deliberately have different roles and move pools.
+// Osteodian: defensive Ground-type bone guardian, with Defense-based offence.
+static const struct LevelUpMove sOsteodianLevelUpLearnset[] =
+{
+    LEVEL_UP_MOVE(1, MOVE_BONE_CLUB),
+    LEVEL_UP_MOVE(1, MOVE_HARDEN),
+    LEVEL_UP_MOVE(1, MOVE_PROTECT),
+    LEVEL_UP_MOVE(10, MOVE_BONE_RUSH),
+    LEVEL_UP_MOVE(18, MOVE_BULLDOZE),
+    LEVEL_UP_MOVE(26, MOVE_ROCK_TOMB),
+    LEVEL_UP_MOVE(34, MOVE_BONEMERANG),
+    LEVEL_UP_MOVE(42, MOVE_PROTECT),
+    LEVEL_UP_MOVE(50, MOVE_HEAVY_SLAM),
+    LEVEL_UP_MOVE(56, MOVE_STONE_EDGE),
+    LEVEL_UP_MOVE(60, MOVE_BODY_PRESS),
+    LEVEL_UP_MOVE(64, MOVE_IRON_DEFENSE),
+    LEVEL_UP_MOVE(68, MOVE_EARTHQUAKE),
+    LEVEL_UP_MOVE(74, MOVE_STEALTH_ROCK),
+    LEVEL_UP_END
+};
+
+// Maroghost: offensive Ground/Ghost wraith, not a second regular Marowak.
+static const struct LevelUpMove sMaroghostLevelUpLearnset[] =
+{
+    LEVEL_UP_MOVE(1, MOVE_BONE_CLUB),
+    LEVEL_UP_MOVE(1, MOVE_ASTONISH),
+    LEVEL_UP_MOVE(1, MOVE_CURSE),
+    LEVEL_UP_MOVE(10, MOVE_SHADOW_SNEAK),
+    LEVEL_UP_MOVE(18, MOVE_HEX),
+    LEVEL_UP_MOVE(26, MOVE_BONEMERANG),
+    LEVEL_UP_MOVE(34, MOVE_SHADOW_CLAW),
+    LEVEL_UP_MOVE(42, MOVE_SWORDS_DANCE),
+    LEVEL_UP_MOVE(48, MOVE_PHANTOM_FORCE),
+    LEVEL_UP_MOVE(54, MOVE_WILL_O_WISP),
+    LEVEL_UP_MOVE(60, MOVE_SHADOW_BONE),
+    LEVEL_UP_MOVE(64, MOVE_EARTHQUAKE),
+    LEVEL_UP_MOVE(70, MOVE_POLTERGEIST),
+    LEVEL_UP_END
+};
+
+// Dedicated TM/tutor compatibility: the two guardians no longer inherit
+// Marowak's identical generic teachable pool.
+static const u16 sOsteodianTeachableLearnset[] =
+{
+    MOVE_PROTECT,
+    MOVE_IRON_DEFENSE,
+    MOVE_BODY_PRESS,
+    MOVE_HEAVY_SLAM,
+    MOVE_EARTHQUAKE,
+    MOVE_BULLDOZE,
+    MOVE_DIG,
+    MOVE_ROCK_SLIDE,
+    MOVE_STONE_EDGE,
+    MOVE_STEALTH_ROCK,
+    MOVE_ROCK_TOMB,
+    MOVE_SANDSTORM,
+    MOVE_BRICK_BREAK,
+    MOVE_BONE_RUSH,
+    MOVE_BONEMERANG,
+    MOVE_ENDURE,
+    MOVE_REST,
+    MOVE_SLEEP_TALK,
+    MOVE_SUBSTITUTE,
+    MOVE_ROAR,
+    MOVE_UNAVAILABLE,
+};
+
+static const u16 sMaroghostTeachableLearnset[] =
+{
+    MOVE_SHADOW_CLAW,
+    MOVE_SHADOW_BALL,
+    MOVE_SHADOW_SNEAK,
+    MOVE_SHADOW_BONE,
+    MOVE_WILL_O_WISP,
+    MOVE_HEX,
+    MOVE_PHANTOM_FORCE,
+    MOVE_POLTERGEIST,
+    MOVE_EARTHQUAKE,
+    MOVE_BULLDOZE,
+    MOVE_DIG,
+    MOVE_BONEMERANG,
+    MOVE_SWORDS_DANCE,
+    MOVE_KNOCK_OFF,
+    MOVE_TAUNT,
+    MOVE_CURSE,
+    MOVE_DRAIN_PUNCH,
+    MOVE_BRICK_BREAK,
+    MOVE_PROTECT,
+    MOVE_SUBSTITUTE,
+    MOVE_REST,
+    MOVE_SLEEP_TALK,
+    MOVE_UNAVAILABLE,
+};

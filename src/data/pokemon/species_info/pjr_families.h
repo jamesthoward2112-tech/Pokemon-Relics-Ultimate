@@ -500,7 +500,7 @@
     .eggCycles = 20, .friendship = STANDARD_FRIENDSHIP,
     .growthRate = GROWTH_MEDIUM_FAST,
     .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER),
-    .abilities = { ABILITY_ROCK_HEAD, ABILITY_SCRAPPY, ABILITY_BATTLE_ARMOR },
+    .abilities = { ABILITY_BATTLE_ARMOR, ABILITY_STURDY, ABILITY_SOLID_ROCK },
     .bodyColor = BODY_COLOR_BROWN,
     .speciesName = _("Osteodian"), .cryId = CRY_MAROWAK, .natDexNum = NATIONAL_DEX_MAROWAK,
     .categoryName = _("Guardian"), .height = 20, .weight = 860,
@@ -514,7 +514,7 @@
     .backPic = gMonBackPic_Osteodian, .backPicSize = MON_COORDS_SIZE(64, 64), .backPicYOffset = 0, .backAnimId = BACK_ANIM_NONE,
     .palette = gMonPalette_Osteodian, .shinyPalette = gMonShinyPalette_Osteodian,
     .iconSprite = gMonIcon_Osteodian, .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 1 : 2, .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-    .levelUpLearnset = sMarowakLevelUpLearnset, .teachableLearnset = sMarowakTeachableLearnset,
+    .levelUpLearnset = sOsteodianLevelUpLearnset, .teachableLearnset = sOsteodianTeachableLearnset,
 },
 
 [SPECIES_MAROGHOST] =
@@ -527,7 +527,7 @@
     .eggCycles = 20, .friendship = STANDARD_FRIENDSHIP,
     .growthRate = GROWTH_MEDIUM_FAST,
     .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER),
-    .abilities = { ABILITY_ROCK_HEAD, ABILITY_CURSED_BODY, ABILITY_BATTLE_ARMOR },
+    .abilities = { ABILITY_CURSED_BODY, ABILITY_INFILTRATOR, ABILITY_LEVITATE },
     .bodyColor = BODY_COLOR_PURPLE,
     .speciesName = _("Maroghost"), .cryId = CRY_MAROWAK, .natDexNum = NATIONAL_DEX_MAROWAK,
     .categoryName = _("Bone Wraith"), .height = 16, .weight = 600,
@@ -541,7 +541,7 @@
     .backPic = gMonBackPic_Maroghost, .backPicSize = MON_COORDS_SIZE(64, 64), .backPicYOffset = 0, .backAnimId = BACK_ANIM_NONE,
     .palette = gMonPalette_Maroghost, .shinyPalette = gMonShinyPalette_Maroghost,
     .iconSprite = gMonIcon_Maroghost, .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 1 : 2, .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-    .levelUpLearnset = sMarowakLevelUpLearnset, .teachableLearnset = sMarowakTeachableLearnset,
+    .levelUpLearnset = sMaroghostLevelUpLearnset, .teachableLearnset = sMaroghostTeachableLearnset,
 },
 
 [SPECIES_ALPHORACLE] =
