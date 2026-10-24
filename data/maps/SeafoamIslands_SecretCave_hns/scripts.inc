@@ -5,7 +5,13 @@ SeafoamIslands_SecretCave_hns_MapScripts::
 SeafoamIslands_SecretCave_EventScript_Archie::
 	trainerbattle_single TRAINER_PRU_ARCHIE_KYOGRE_HNS, SeafoamIslands_SecretCave_Text_ArchieIntro, SeafoamIslands_SecretCave_Text_ArchieDefeated
 	setflag FLAG_PRU_ARCHIE_KYOGRE_DEFEATED
+	lockall
 	msgbox SeafoamIslands_SecretCave_Text_ArchieAfter, MSGBOX_DEFAULT
+	closemessage
+	fadescreenswapbuffers FADE_TO_BLACK
+	removeobject LOCALID_PRU_ARCHIE
+	fadescreenswapbuffers FADE_FROM_BLACK
+	releaseall
 	end
 
 SeafoamIslands_SecretCave_EventScript_Kyogre::
@@ -32,13 +38,17 @@ SeafoamIslands_SecretCave_EventScript_KyogreCaught::
 	end
 
 SeafoamIslands_SecretCave_Text_ArchieIntro:
-	.string "ARCHIE: Hold it! This sea beast\n"
-	.string "is under TEAM AQUA's protection!\p"
-	.string "Defeat me if you want to pass!$"
+	.string "ARCHIE: Stop right there!\\p"
+	.string "KYOGRE's power belongs to the sea,\\n"
+	.string "not to the likes of you!\\p"
+	.string "If you want to reach it,\\n"
+	.string "you'll have to defeat me!$"
 
 SeafoamIslands_SecretCave_Text_ArchieDefeated:
-	.string "ARCHIE: So much for our plan!$"
+	.string "ARCHIE: My perfect plan...$"
 
 SeafoamIslands_SecretCave_Text_ArchieAfter:
-	.string "ARCHIE: You have earned a shot\n"
-	.string "at KYOGRE. Its power is immense.$"
+	.string "ARCHIE: Hah... You're strong.\\p"
+	.string "Even I cannot command this storm.\\p"
+	.string "Go on. KYOGRE is waiting.\\p"
+	.string "Let the sea judge your strength!$"
