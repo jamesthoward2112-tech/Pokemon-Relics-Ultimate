@@ -661,6 +661,17 @@ static bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum 
 
     {
         u16 species = wildMonInfo->wildPokemon[wildMonIndex].species;
+#if IS_HNS
+        // Fuchsia Safari Level 2+ Brush habitat: rare, catchable Kangaskhan.
+        // Override one in ten ordinary land encounters without replacing
+        // or reweighting the other twelve encounter-table slots.
+        if (area == WILD_AREA_LAND
+         && GetSafariZoneFlag()
+         && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_FUCHSIA_CITY_SAFARI_ZONE_BRUSH_HNS)
+         && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_FUCHSIA_CITY_SAFARI_ZONE_BRUSH_HNS)
+         && (Random() % 100) < 10)
+            species = SPECIES_KANGASKHAN;
+#endif
         #if RANDOMIZER_AVAILABLE == TRUE
         species = RandomizeWildEncounter(species, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, area, wildMonIndex);
         #endif
