@@ -1,11 +1,6 @@
 
 SeafoamIslands_SecretCave_hns_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, SeafoamIslands_SecretCave_OnTransition
 	.byte 0
-
-SeafoamIslands_SecretCave_OnTransition:
-	setvar VAR_TEMP_1, 1
-	end
 
 SeafoamIslands_SecretCave_EventScript_Archie::
 	trainerbattle_single TRAINER_PRU_ARCHIE_KYOGRE_HNS, SeafoamIslands_SecretCave_Text_ArchieIntro, SeafoamIslands_SecretCave_Text_ArchieDefeated
@@ -24,7 +19,6 @@ SeafoamIslands_SecretCave_EventScript_Kyogre::
 	faceplayer
 	goto_if_set FLAG_PRU_KYOGRE_CAUGHT, SeafoamIslands_SecretCave_EventScript_KyogreUnavailable
 	goto_if_unset FLAG_PRU_ARCHIE_KYOGRE_DEFEATED, SeafoamIslands_SecretCave_EventScript_Archie
-	setvar VAR_TEMP_1, 0
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 	waitmoncry
 	@ Kyogre holds the Blue Orb and automatically becomes Primal on entry.
@@ -39,7 +33,6 @@ SeafoamIslands_SecretCave_EventScript_Kyogre::
 	end
 
 SeafoamIslands_SecretCave_EventScript_KyogreUnavailable::
-	setvar VAR_TEMP_1, 0
 	release
 	end
 
@@ -61,5 +54,5 @@ SeafoamIslands_SecretCave_Text_ArchieDefeated:
 SeafoamIslands_SecretCave_Text_ArchieAfter:
 	.string "ARCHIE: Even KYOGRE has fallen...\p"
 	.string "It is free of my command now.\p"
-	.string "It has retreated to the pool.\p"
+	.string "It waits ahead in this cave.\p"
 	.string "Challenge it yourself, if you dare!$"
