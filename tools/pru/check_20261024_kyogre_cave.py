@@ -14,7 +14,13 @@ kyogre = next(obj for obj in events if obj["script"] == "SeafoamIslands_SecretCa
 archie = next(obj for obj in events if obj["script"] == "SeafoamIslands_SecretCave_EventScript_Archie")
 
 assert map_data["weather"] == "WEATHER_RAIN", "rain must be visible on the cave map"
-assert map_data["layout"] == "LAYOUT_MARINE_CAVE_END", "reuse the official Kyogre pool chamber"
+layout_data = json.loads(read("data/layouts/layouts.json"))
+chamber = next(x for x in layout_data["layouts"] if x["id"] == "LAYOUT_PRU_KYOGRE_CHAMBER_HNS")
+assert chamber["game_version"] == "hns" and chamber["layout_version"] == "hns", "pool layout must link into the HNS ROM"
+assert chamber["blockdata_filepath"] == "data/layouts/MarineCave_End/map.bin", "pool must reuse original collision and tiles"
+assert chamber["border_filepath"] == "data/layouts/MarineCave_End/border.bin"
+assert chamber["secondary_tileset"] == "gTileset_Cave"
+assert map_data["layout"] == "LAYOUT_PRU_KYOGRE_CHAMBER_HNS", "reuse the original Kyogre pool as a compiled HNS layout"
 assert (kyogre["x"], kyogre["y"], kyogre["elevation"]) == (9, 22, 1)
 assert (archie["x"], archie["y"]) == (9, 27)
 assert map_data["warp_events"][0]["dest_map"] == "MAP_SEAFOAM_ISLANDS_GYM_HNS"
