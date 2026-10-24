@@ -22,6 +22,7 @@ SeafoamIslands_SecretCave_EventScript_Archie::
 SeafoamIslands_SecretCave_EventScript_Kyogre::
 	lock
 	faceplayer
+	goto_if_set FLAG_PRU_KYOGRE_CAUGHT, SeafoamIslands_SecretCave_EventScript_KyogreUnavailable
 	goto_if_unset FLAG_PRU_ARCHIE_KYOGRE_DEFEATED, SeafoamIslands_SecretCave_EventScript_Archie
 	setvar VAR_TEMP_1, 0
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
@@ -34,6 +35,11 @@ SeafoamIslands_SecretCave_EventScript_Kyogre::
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, SeafoamIslands_SecretCave_EventScript_KyogreCaught
 	removeobject 1
+	release
+	end
+
+SeafoamIslands_SecretCave_EventScript_KyogreUnavailable::
+	setvar VAR_TEMP_1, 0
 	release
 	end
 
