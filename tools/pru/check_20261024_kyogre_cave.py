@@ -37,12 +37,14 @@ assert "setflag FLAG_PRU_KYOGRE_CAUGHT" in after_capture
 party_file = read("src/data/trainers_hns.party")
 boss = party_file.split("=== TRAINER_PRU_ARCHIE_KYOGRE_HNS ===", 1)[1].split("=== TRAINER_PRU_MAXIE_GROUDON_HNS ===", 1)[0]
 actual_species = re.findall(r"^([A-Za-z]+) @ ", boss, flags=re.MULTILINE)
-assert actual_species == ["Pelipper", "Skulberus", "Sharpedo", "Gyarados", "Feralodon", "Swamplith"], actual_species
+assert actual_species == ["Pelipper", "Skulberus", "Sharpedo", "Feralodon", "Swamplith", "Kyogre"], actual_species
 assert len(re.findall(r"^Level: ", boss, flags=re.MULTILINE)) == 6
 assert "Ability: Drizzle" in boss
 assert "Ability: Moxie" in boss
 assert "Ability: Tidal Roar" in boss
 assert "Ability: Tidal Bastion" in boss
 assert "AI: Smart Trainer / Prediction" in boss
-assert "Level: 80" in boss
+assert "Kyogre @ Blue Orb" in boss
+assert boss.index("Swamplith @") < boss.index("Kyogre @ Blue Orb")
+assert "Level: 75" in boss
 print("PRU_KYOGRE_CAVE_PASS: native overworld, field rain, locked post-battle, preserved respawn, rain-themed custom team")
