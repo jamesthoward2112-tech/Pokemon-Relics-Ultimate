@@ -15,7 +15,7 @@ species = (ROOT / "include/constants/species.h").read_text()
 
 for current_level, cost in ((1, 20000), (2, 30000), (3, 40000)):
     section = script.split(f"FuchsiaCity_SafariZoneEntrance_UpgradeGuy{current_level}::", 1)[1]
-    section = section.split("FuchsiaCity_SafariZoneEntrance_UpgradeGuy", 1)[0]
+    section = section.split("\nFuchsiaCity_SafariZoneEntrance_UpgradeGuy", 1)[0]
     assert f"checkmoney {cost}" in section, (current_level, "balance check")
     assert f"removemoney {cost}" in section, (current_level, "payment")
     assert f"setvar VAR_KANTO_SAFARI_ZONE_PROGRESS, {current_level + 1}" in section
