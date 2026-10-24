@@ -1,6 +1,11 @@
 
 SeafoamIslands_SecretCave_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SeafoamIslands_SecretCave_OnTransition
 	.byte 0
+
+SeafoamIslands_SecretCave_OnTransition:
+	setvar VAR_TEMP_1, 1
+	end
 
 SeafoamIslands_SecretCave_EventScript_Archie::
 	trainerbattle_single TRAINER_PRU_ARCHIE_KYOGRE_HNS, SeafoamIslands_SecretCave_Text_ArchieIntro, SeafoamIslands_SecretCave_Text_ArchieDefeated
@@ -18,6 +23,7 @@ SeafoamIslands_SecretCave_EventScript_Kyogre::
 	lock
 	faceplayer
 	goto_if_unset FLAG_PRU_ARCHIE_KYOGRE_DEFEATED, SeafoamIslands_SecretCave_EventScript_Archie
+	setvar VAR_TEMP_1, 0
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 	waitmoncry
 	@ Kyogre holds the Blue Orb and automatically becomes Primal on entry.

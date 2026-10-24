@@ -14,6 +14,16 @@ kyogre = next(obj for obj in events if obj["script"] == "SeafoamIslands_SecretCa
 archie = next(obj for obj in events if obj["script"] == "SeafoamIslands_SecretCave_EventScript_Archie")
 
 assert map_data["weather"] == "WEATHER_RAIN", "rain must be visible on the cave map"
+assert map_data["layout"] == "LAYOUT_MARINE_CAVE_END", "reuse the official Kyogre pool chamber"
+assert (kyogre["x"], kyogre["y"], kyogre["elevation"]) == (9, 22, 1)
+assert (archie["x"], archie["y"]) == (9, 27)
+assert map_data["warp_events"][0]["dest_map"] == "MAP_SEAFOAM_ISLANDS_GYM_HNS"
+assert (map_data["warp_events"][0]["x"], map_data["warp_events"][0]["y"]) == (20, 4)
+assert any(event["x"] == 9 and event["y"] == 26
+           and event["script"] == "SeafoamIslands_SecretCave_EventScript_Kyogre"
+           and event["var"] == "VAR_TEMP_1" and event["var_value"] == "1"
+           for event in map_data["coord_events"]), "pool-side approach must trigger Kyogre"
+
 assert kyogre["graphics_id"] == "OBJ_EVENT_GFX_KYOGRE_FRONT", "use the tested native Kyogre overworld asset"
 assert kyogre["flag"] == "FLAG_PRU_KYOGRE_CAUGHT"
 assert archie["flag"] == "FLAG_PRU_ARCHIE_KYOGRE_DEFEATED"
@@ -22,6 +32,9 @@ assert archie["trainer_sight_or_berry_tree_id"] == "4"
 script = read("data/maps/SeafoamIslands_SecretCave_hns/scripts.inc")
 post = script.split("SeafoamIslands_SecretCave_EventScript_Archie::", 1)[1].split("SeafoamIslands_SecretCave_EventScript_Kyogre::", 1)[0]
 assert "trainerbattle_single TRAINER_PRU_ARCHIE_KYOGRE_HNS" in post
+assert "map_script MAP_SCRIPT_ON_TRANSITION, SeafoamIslands_SecretCave_OnTransition" in script
+assert "setvar VAR_TEMP_1, 1" in script
+assert "setvar VAR_TEMP_1, 0" in script
 assert post.index("lockall") < post.index("msgbox SeafoamIslands_SecretCave_Text_ArchieAfter")
 assert post.index("closemessage") < post.index("releaseall")
 assert "removeobject LOCALID_PRU_ARCHIE" in post
