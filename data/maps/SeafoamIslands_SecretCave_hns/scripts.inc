@@ -38,17 +38,17 @@ SeafoamIslands_SecretCave_EventScript_KyogreCaught::
 	end
 
 SeafoamIslands_SecretCave_Text_ArchieIntro:
-	.string "ARCHIE: Stop right there!\\p"
-	.string "KYOGRE's power belongs to the sea,\\n"
-	.string "not to the likes of you!\\p"
-	.string "If you want to reach it,\\n"
+	.string "ARCHIE: Stop right there!\p"
+	.string "KYOGRE's power belongs to the sea,\n"
+	.string "not to the likes of you!\p"
+	.string "If you want to reach it,\n"
 	.string "you'll have to defeat me!$"
 
 SeafoamIslands_SecretCave_Text_ArchieDefeated:
 	.string "ARCHIE: My perfect plan...$"
 
 SeafoamIslands_SecretCave_Text_ArchieAfter:
-	.string "ARCHIE: Hah... You're strong.\\p"
-	.string "Even I cannot command this storm.\\p"
-	.string "Go on. KYOGRE is waiting.\\p"
+	.string "ARCHIE: Hah... You're strong.\p"
+	.string "Even I cannot command this storm.\p"
+	.string "Go on. KYOGRE is waiting.\p"
 	.string "Let the sea judge your strength!$"
