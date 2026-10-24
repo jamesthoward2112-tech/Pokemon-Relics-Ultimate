@@ -117,6 +117,7 @@ jobs:
           python3 tools/pru/check_lavender_cubone_staging.py
           python3 tools/pru/check_lavender_tower_restoration.py
           python3 tools/pru/check_lavender_graphics_polish.py
+          python3 tools/pru/check_custom_back_sprite_offsets.py
           python3 tools/pru/check_pru_444_gameplay.py
           python3 tools/pru/check_20261022_legendary_encounters.py
           python3 tools/pru/check_insurgence_mega_jirachi.py
