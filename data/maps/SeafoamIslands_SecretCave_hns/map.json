@@ -1,7 +1,7 @@
 {
   "id": "MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS",
   "name": "SeafoamIslands_SecretCave_hns",
-  "layout": "LAYOUT_PRU_KYOGRE_CHAMBER_HNS",
+  "layout": "LAYOUT_SEAFOAM_ISLANDS_SECRET_CAVE_HNS",
   "music": "MUS_ABNORMAL_WEATHER",
   "region_map_section": "MAPSEC_SEAFOAM_ISLANDS",
   "requires_flash": false,
@@ -16,9 +16,9 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_KYOGRE_FRONT",
-      "x": 9,
-      "y": 22,
-      "elevation": 1,
+      "x": 16,
+      "y": 11,
+      "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
@@ -30,10 +30,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ARCHIE",
-      "x": 9,
-      "y": 27,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "x": 16,
+      "y": 14,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
@@ -45,24 +45,14 @@
   ],
   "warp_events": [
     {
-      "x": 20,
-      "y": 4,
+      "x": 16,
+      "y": 17,
       "elevation": 0,
       "dest_map": "MAP_SEAFOAM_ISLANDS_GYM_HNS",
       "dest_warp_id": "1"
     }
   ],
-  "coord_events": [
-    {
-      "type": "trigger",
-      "x": 9,
-      "y": 26,
-      "elevation": 3,
-      "var": "VAR_TEMP_1",
-      "var_value": "1",
-      "script": "SeafoamIslands_SecretCave_EventScript_Kyogre"
-    }
-  ],
+  "coord_events": [],
   "bg_events": [],
   "game_version": "hns",
   "region": "REGION_KANTO"
