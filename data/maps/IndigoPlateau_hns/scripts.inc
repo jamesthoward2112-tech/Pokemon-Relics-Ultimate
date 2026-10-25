@@ -76,7 +76,7 @@ IndigoPlateau_EventScript_PRUEscape::
 	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
 	delay 18
 	playse SE_M_FLY
-	applymovement 4, IndigoPlateau_Movement_PRUBalloonRise
+	applymovement 4, IndigoPlateau_Movement_PRUBalloonDepart
 	waitmovement 4
 	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	removeobject 4
@@ -125,12 +125,14 @@ IndigoPlateau_Movement_PRUMeowthReady:
 	step_end
 
 IndigoPlateau_Movement_PRUBalloonArrive:
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
 	step_end
 
 IndigoPlateau_Movement_PRUJessieBoard:
@@ -145,13 +147,15 @@ IndigoPlateau_Movement_PRUMeowthBoard:
 	walk_fast_down
 	step_end
 
-IndigoPlateau_Movement_PRUBalloonRise:
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
+IndigoPlateau_Movement_PRUBalloonDepart:
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
 	step_end
 
 IndigoPlateau_EventScript_PRUGuard::
