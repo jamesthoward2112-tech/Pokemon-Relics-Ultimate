@@ -53,12 +53,13 @@ IndigoPlateau_EventScript_PRUEscape::
 	closemessage
 	@ Display authentic MrNightology 64x64 Meowth balloon and animate
 	@ its ascent without redrawing or replacing any existing sprites.
-	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
-	addobject 4
 	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
 	removeobject 1
 	removeobject 2
 	removeobject 3
+	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	addobject 4
+	delay 50
 	applymovement 4, IndigoPlateau_Movement_PRUBalloonRise
 	waitmovement 4
 	fadescreenswapbuffers FADE_TO_WHITE
@@ -99,10 +100,8 @@ IndigoPlateau_Text_PRUWaiting:
 
 
 IndigoPlateau_Movement_PRUBalloonRise:
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
+	walk_slow_up
+	walk_slow_up
 	step_end
 
 IndigoPlateau_EventScript_PRUGuard::
@@ -110,6 +109,21 @@ IndigoPlateau_EventScript_PRUGuard::
 	faceplayer
 	msgbox IndigoPlateau_Text_PRUGuard, MSGBOX_DEFAULT
 	release
+	end
+
+@ The NPC alone cannot stop a tile-warp; this coord event runs before
+@ warp handling and denies entry regardless of sprite collision state.
+IndigoPlateau_EventScript_PRUDoorGate::
+	goto_if_unset FLAG_PRU_HEIST_STARTED, IndigoPlateau_EventScript_PRUDoorUnlocked
+	goto_if_set FLAG_PRU_HEIST_COMPLETED, IndigoPlateau_EventScript_PRUDoorUnlocked
+	lockall
+	msgbox IndigoPlateau_Text_PRUGuard, MSGBOX_DEFAULT
+	releaseall
+	end
+
+IndigoPlateau_EventScript_PRUDoorUnlocked::
+	warp MAP_INDIGO_PLATEAU_POKEMON_CENTER_HNS, 19, 15
+	waitstate
 	end
 
 IndigoPlateau_Text_PRUGuard:
