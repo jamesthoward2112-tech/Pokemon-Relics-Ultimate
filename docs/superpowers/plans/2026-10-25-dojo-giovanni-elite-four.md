@@ -21,6 +21,7 @@
 - Ship an uncompressed `.gba`, preserving source history and passing build + emulator checks.
 
 ## Review Focus
+6. The three BP exchange clerks must remain fully functional, and the rightmost Chansey trainer must support repeatable Lv100 doubles without unintended BP costs or rewards.
 1. A prior save in which Blue has already been beaten and the theft has started must still see exactly one correct leader and one correct Giovanni.
 2. Saving/reloading after any leader, or losing the seventh or Giovanni fight, must never skip stages or softlock Indigo.
 3. Attempting to enter Indigo from alternate warps while theft is active must still be blocked; the guard must give accurate Dojo directions.
@@ -118,7 +119,24 @@
 - [ ] **Step 4: Update guards/gates and perform full Dojo→Giovanni→League progression tests with old/new saves.**
 - [ ] **Step 5: Commit Elite Four + gate changes.**
 
-### Task 6: Clean GBA build and release handoff
+### Task 6: BP Exchange counter's repeatable level-100 Chansey doubles
+
+**Files:**
+- Locate and modify: the exact existing BP exchange counter map JSON and script containing three equally spaced female BP clerks, as pictured in the user screenshot `Screenshot_20261025_175857_Pizza Boy A Pro.jpg`.
+- Modify: `src/data/trainers_hns.party` with a dedicated trainer entry.
+- Test: `tools/pru_tests/test_2026_heist_content.py` (can split into `test_2026_chansey_xp.py`).
+
+**Interfaces:**
+- Consumes the current battle/receptionist NPC interface and Chansey trainer sprite conventions.
+- Produces a separate Chansey overworld NPC behind the right end of the BP counter and a repeatable Yes/No Level-100 double battle.
+
+- [ ] **Step 1: Resolve the exact map** by locating the BP exchange room with three NPC clerks spaced equally behind a long horizontal counter; read their map coordinates, graphics and script IDs. Screenshot requires a fourth NPC Chansey station to their right at the same tile interval, without shifting existing receptionists.
+- [ ] **Step 2: Add a failing static test** checking four evenly spaced desk NPC stations with the Chansey rightmost, the exact repeatable two-Pokémon trainer entry, each Chansey level 100 with only Memento/Heal Pulse, `Double Battle: Yes`, and a cancellable Yes/No interaction.
+- [ ] **Step 3: Run test** and confirm missing Chansey NPC/trainer failure.
+- [ ] **Step 4: Add Chansey overworld object** to the actual counter map, add dialogue and reusable `trainerbattle` dispatch without an irreversible beaten flag; use the existing approved Chansey asset.
+- [ ] **Step 5: Retest** all three BP clerk functions, Chansey battle repeated after victory, No/B decline, counter collision and normal EXP gain in emulator. Commit.
+
+### Task 7: Clean GBA build and release handoff
 
 **Files:**
 - Verify: the existing PRU GitHub Actions build workflow, build logs, output `.gba` and hash manifest
@@ -138,3 +156,4 @@
 - Current `POSTOBC` E4 trainers run 74–79 and thus explicitly fail the new level requirement.
 - Rhyperior-P/& and Armoured Mewtwo artwork remain asset-validation dependencies; implementation cannot claim sprites are integrated until the actual front/back/icon sheets are found and verified.
 - Red/Blue Mt Silver paired superboss is intentionally a separate feature after this shipping ROM.
+- BP exchange screenshot shows three equally spaced clerks; the fourth rightmost Chansey station must be measured using actual map tiles, keeping those clerks unchanged.
