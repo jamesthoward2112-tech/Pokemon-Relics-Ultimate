@@ -22,6 +22,7 @@ scripts22 = read("data/maps/Route22_hns/scripts.inc")
 scripts_indigo = read("data/maps/IndigoPlateau_hns/scripts.inc")
 scripts_reception = read("data/maps/ReceptionGate_hns/scripts.inc")
 flags = read("include/constants/flags_hns.h")
+field_engine = read("src/field_control_avatar.c")
 
 # The Kanto Route 22 reception entrance is the heist location, not Route 26.
 assert route22["region"] == "REGION_KANTO"
@@ -65,6 +66,9 @@ assert any(e["x"] == door["x"] and e["y"] == door["y"]
            for e in indigo["coord_events"]), "missing scripted League entrance guard"
 gate = scripts_indigo.split("IndigoPlateau_EventScript_PRUDoorGate::", 1)[1].split(
     "IndigoPlateau_Text_PRUGuard:", 1)[0]
+assert "ShouldBlockIndigoPlateauRocketDoor" in field_engine, "field engine must intercept auto door warps"
+door_func = field_engine.split("static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, enum Direction direction)\\n{", 1)[1].split("static s8 GetWarpEventAtPosition", 1)[0]
+assert door_func.index("ShouldBlockIndigoPlateauRocketDoor(position)") < door_func.index("DoDoorWarp()"), "must check lock before door auto-warp"
 assert "goto_if_unset FLAG_PRU_HEIST_STARTED" in gate
 assert "goto_if_set FLAG_PRU_HEIST_COMPLETED" in gate
 assert "msgbox IndigoPlateau_Text_PRUGuard" in gate
