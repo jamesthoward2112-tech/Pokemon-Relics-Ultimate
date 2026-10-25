@@ -102,7 +102,7 @@ def main():
         entry["Species_Constant"]
         for entry in csv.DictReader((ROOT / "data/pru/PRU_National_Pokedex_2026-10-16.csv").open(encoding="utf-8-sig"))
     }
-    assert len(approved) == 447
+    assert len(approved) == 450
     assert "SPECIES_DUSKNOIR" not in approved
     for floor in range(2, 8):
         map_id = f"MAP_LAVENDER_SPIRIT_TOWER_{floor}F_HNS"
