@@ -69,7 +69,7 @@ assert "addobject 14" not in heist and "removeobject 15" in heist
 assert heist.index("applymovement 15") < heist.index("removeobject 15")
 # Model tile movement from actual source commands to catch missing or reversed approach/flight.
 def movement_delta(scripts, label):
-    script = scripts.split(f"{label}:\\n", 1)[1].split("\\tstep_end", 1)[0]
+    script = scripts.split(f"{label}:\n", 1)[1].split("\tstep_end", 1)[0]
     steps = [line.strip() for line in script.splitlines()]
     assert steps, f"{label}: no movement commands"
     dx = steps.count("walk_fast_right") - steps.count("walk_fast_left")
