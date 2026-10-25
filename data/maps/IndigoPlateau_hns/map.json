@@ -61,8 +61,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS",
-      "x": 11,
-      "y": 4,
+      "x": 19,
+      "y": 10,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
