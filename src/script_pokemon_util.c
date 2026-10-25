@@ -247,6 +247,35 @@ void PruPrepareChargedElectrode(void)
     CalculateMonStats(mon);
 }
 
+// The catchable Seafoam and Mt. Silver legendaries must have the same
+// signature moves as their Team Aqua/Magma boss counterparts.  Called
+// after setwildbattleshiny, preserving the generated shiny PID and Orb.
+void PruPreparePrimalLegendMoves(void)
+{
+    struct Pokemon *mon = &gEnemyParty[0];
+    u16 species = GetMonData(mon, MON_DATA_SPECIES);
+
+    if (species == SPECIES_KYOGRE)
+    {
+        SetMonMoveSlot(mon, MOVE_WATER_SPOUT, 0);
+        SetMonMoveSlot(mon, MOVE_ORIGIN_PULSE, 1);
+        SetMonMoveSlot(mon, MOVE_THUNDER, 2);
+        SetMonMoveSlot(mon, MOVE_ICE_BEAM, 3);
+    }
+    else if (species == SPECIES_GROUDON)
+    {
+        SetMonMoveSlot(mon, MOVE_HONE_CLAWS, 0);
+        SetMonMoveSlot(mon, MOVE_PRECIPICE_BLADES, 1);
+        SetMonMoveSlot(mon, MOVE_FIRE_PUNCH, 2);
+        SetMonMoveSlot(mon, MOVE_DRAGON_CLAW, 3);
+    }
+    else
+    {
+        return;
+    }
+    CalculateMonStats(mon);
+}
+
 void CreateScriptedWildBossMon(u16 species, u8 level, enum Item item, enum Move moves[MAX_MON_MOVES])
 {
     u8 heldItem[2];
