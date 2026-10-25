@@ -375,12 +375,14 @@ Route22_EventScript_PRUHeistTrigger::
 	closemessage
 	@ Display authentic MrNightology 64x64 Meowth balloon and animate
 	@ its ascent without redrawing or replacing any existing sprites.
-	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
-	addobject 14
 	setflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
 	removeobject 11
 	removeobject 12
 	removeobject 13
+	@ Spawn below the gate canopy after clearing Meowth; leave time to see it.
+	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	addobject 14
+	delay 50
 	applymovement 14, Route22_Movement_PRUBalloonRise
 	waitmovement 14
 	fadescreenswapbuffers FADE_TO_WHITE
@@ -412,8 +414,6 @@ Route22_Text_PRURocketBalloon:
 
 
 Route22_Movement_PRUBalloonRise:
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
+	walk_slow_up
+	walk_slow_up
 	step_end
