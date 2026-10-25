@@ -38,7 +38,20 @@ rocket_npcs = [o for o in route22["object_events"] if o["graphics_id"] in (
     "OBJ_EVENT_GFX_JESSIE_HNS", "OBJ_EVENT_GFX_JAMES_HNS", "OBJ_EVENT_GFX_MON_BASE+SPECIES_MEOWTH")]
 assert len(rocket_npcs) == 3
 assert all(o["script"] == "Route22_EventScript_PRUHeistTrigger" for o in rocket_npcs)
-assert [(o["x"], o["y"]) for o in rocket_npcs] == [(11, 11), (13, 11), (12, 11)]
+# Jessie, James and Meowth must form a physical choke immediately in front of
+# the only Route 22 League gate door. A player must face one and press A.
+assert [(o["x"], o["y"]) for o in rocket_npcs] == [(11, 10), (13, 10), (12, 10)]
+center = next(o for o in rocket_npcs if o["graphics_id"] == "OBJ_EVENT_GFX_MON_BASE+SPECIES_MEOWTH")
+assert (center["x"], center["y"]) == (12, 10), "Meowth must occupy the sole tile facing the League door"
+# Neighboring north tiles are non-walkable building blocks, so skirting
+# Jessie or James cannot reach the x12,y9 door without passing Meowth.
+from struct import unpack_from
+route22_blockdata = (ROOT / "data/layouts/Route22_hns/map.bin").read_bytes()
+assert len(route22_blockdata) == 52 * 28 * 2
+def blocks_player(x, y):
+    tile = unpack_from("<H", route22_blockdata, 2 * (52 * y + x))[0]
+    return bool((tile >> 10) & 0x3)
+assert blocks_player(11, 9) and blocks_player(13, 9), "gate flanks must remain impassable"
 assert "call Route22_EventScript_PRUSyncRocket" in scripts22
 assert "goto_if_unset FLAG_BADGE16_GET, Route22_EventScript_PRUHeistNoop" in scripts22
 assert "goto_if_set FLAG_PRU_HEIST_STARTED, Route22_EventScript_PRUHeistNoop" in scripts22
@@ -55,7 +68,7 @@ assert route22_ids["OBJ_EVENT_GFX_MON_BASE+SPECIES_MEOWTH"] == 14
 assert route22_ids["OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS"] == 15
 assert route22["object_events"][10]["graphics_id"] == "OBJ_EVENT_GFX_SMALL_LIGHT_HNS"
 balloon22 = next(o for o in route22["object_events"] if o["graphics_id"] == "OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS")
-assert (balloon22["x"], balloon22["y"]) == (20, 12), "balloon must enter beside the courtyard, not over the gate roof"
+assert (balloon22["x"], balloon22["y"]) == (20, 11), "balloon must enter the paved courtyard one tile in front of the Rockets"
 assert balloon22["flag"] == "FLAG_PRU_HIDE_MEOWTH_BALLOON"
 heist = scripts22.split("Route22_EventScript_PRUHeistTrigger::", 1)[1].split("Route22_EventScript_PRUHeistNoop::", 1)[0]
 assert heist.index("applymovement 12, Route22_Movement_PRUJessieGather") < heist.index("addobject 15")
