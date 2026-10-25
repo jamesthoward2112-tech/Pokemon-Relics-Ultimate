@@ -50,15 +50,39 @@ assert route22_ids["OBJ_EVENT_GFX_MON_BASE+SPECIES_MEOWTH"] == 14
 assert route22_ids["OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS"] == 15
 assert route22["object_events"][10]["graphics_id"] == "OBJ_EVENT_GFX_SMALL_LIGHT_HNS"
 balloon22 = next(o for o in route22["object_events"] if o["graphics_id"] == "OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS")
-assert (balloon22["x"], balloon22["y"]) == (12, 12), "balloon launches in visible courtyard, not under entrance"
+assert (balloon22["x"], balloon22["y"]) == (12, 6), "arrival begins above visible courtyard"
 assert balloon22["flag"] == "FLAG_PRU_HIDE_MEOWTH_BALLOON"
 heist = scripts22.split("Route22_EventScript_PRUHeistTrigger::", 1)[1].split("Route22_EventScript_PRUHeistNoop::", 1)[0]
-assert heist.index("removeobject 14") < heist.index("addobject 15"), "remove Meowth before spawning the balloon"
+assert heist.index("applymovement 12, Route22_Movement_PRUJessieGather") < heist.index("addobject 15")
+assert heist.index("applymovement 13, Route22_Movement_PRUJamesGather") < heist.index("addobject 15")
+assert heist.index("applymovement 14, Route22_Movement_PRUMeowthReady") < heist.index("addobject 15")
+assert heist.index("addobject 15") < heist.index("applymovement 15, Route22_Movement_PRUBalloonArrive")
+assert heist.index("waitmovement 15") < heist.index("applymovement 12, Route22_Movement_PRUJessieBoard")
+assert heist.index("applymovement 12, Route22_Movement_PRUJessieBoard") < heist.index("waitmovement 12") < heist.index("removeobject 12")
+assert heist.index("removeobject 12") < heist.index("applymovement 13, Route22_Movement_PRUJamesBoard")
+assert heist.index("applymovement 13, Route22_Movement_PRUJamesBoard") < heist.index("removeobject 13")
+assert heist.index("removeobject 13") < heist.index("applymovement 14, Route22_Movement_PRUMeowthBoard")
+assert heist.index("applymovement 14, Route22_Movement_PRUMeowthBoard") < heist.index("removeobject 14")
 assert "removeobject 11" not in heist, "do not delete the unrelated Route 22 light"
-assert heist.index("addobject 15") < heist.index("delay 50") < heist.index("applymovement 15")
+assert heist.index("removeobject 14") < heist.index("applymovement 15, Route22_Movement_PRUBalloonRise")
 assert "addobject 14" not in heist and "removeobject 15" in heist
 assert heist.index("applymovement 15") < heist.index("removeobject 15")
-assert "walk_slow_up" in scripts22.split("Route22_Movement_PRUBalloonRise:", 1)[1]
+# Model tile movement from actual source commands to catch missing or reversed approach/flight.
+def movement_delta(scripts, label):
+    script = scripts.split(f"{label}:\\n", 1)[1].split("\\tstep_end", 1)[0]
+    steps = [line.strip() for line in script.splitlines()]
+    assert steps, f"{label}: no movement commands"
+    dx = steps.count("walk_fast_right") - steps.count("walk_fast_left")
+    dy = steps.count("walk_fast_down") - steps.count("walk_fast_up")
+    return dx, dy
+
+assert movement_delta(scripts22, "Route22_Movement_PRUJessieGather") == (1, 0)
+assert movement_delta(scripts22, "Route22_Movement_PRUJamesGather") == (-1, 0)
+assert movement_delta(scripts22, "Route22_Movement_PRUBalloonArrive") == (0, 6)
+assert movement_delta(scripts22, "Route22_Movement_PRUBalloonRise") == (0, -6)
+for name in ("JessieBoard", "JamesBoard", "MeowthBoard"):
+    assert movement_delta(scripts22, f"Route22_Movement_PRU{name}") == (0, 1)
+assert "playse SE_M_FLY" in heist
 assert "Route22_EventScript_Scene::" in scripts22, "existing Giovanni/Silver scene changed"
 assert "ReceptionGate_EventScript_PRUHeistTrigger" not in scripts_reception
 assert not re.search(r"\b(?:setflag|clearflag)\s+FLAG_BADGE\d+_GET", 
@@ -89,7 +113,7 @@ assert "msgbox IndigoPlateau_Text_PRUGuard" in gate
 assert "warp MAP_INDIGO_PLATEAU_POKEMON_CENTER_HNS, 19, 15" in gate
 assert gate.index("msgbox IndigoPlateau_Text_PRUGuard") < gate.index("warp MAP_INDIGO_PLATEAU_POKEMON_CENTER_HNS")
 balloon_indigo = next(o for o in indigo["object_events"] if o["graphics_id"] == "OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS")
-assert (balloon_indigo["x"], balloon_indigo["y"]) == (11, 10)
+assert (balloon_indigo["x"], balloon_indigo["y"]) == (11, 4)
 assert balloon_indigo["flag"] == "FLAG_PRU_HIDE_MEOWTH_BALLOON"
 assert "clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON" in scripts_indigo
 assert "addobject 4" in scripts_indigo
@@ -102,10 +126,20 @@ assert sync.index("clearflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD") < sync.index(
     "goto_if_unset FLAG_PRU_HEIST_GIOVANNI")
 finale = scripts_indigo.split("IndigoPlateau_EventScript_PRUEscape::", 1)[1].split(
     "IndigoPlateau_Text_PRURocketIntro:", 1)[0]
-assert finale.index("removeobject 3") < finale.index("addobject 4")
-assert finale.index("addobject 4") < finale.index("delay 50") < finale.index("applymovement 4")
+assert finale.index("addobject 4") < finale.index("applymovement 4, IndigoPlateau_Movement_PRUBalloonArrive")
+assert finale.index("applymovement 4, IndigoPlateau_Movement_PRUBalloonArrive") < finale.index("applymovement 1, IndigoPlateau_Movement_PRUJessieBoard")
+assert finale.index("applymovement 1, IndigoPlateau_Movement_PRUJessieBoard") < finale.index("removeobject 1")
+assert finale.index("removeobject 1") < finale.index("applymovement 2, IndigoPlateau_Movement_PRUJamesBoard")
+assert finale.index("applymovement 2, IndigoPlateau_Movement_PRUJamesBoard") < finale.index("removeobject 2")
+assert finale.index("removeobject 2") < finale.index("applymovement 3, IndigoPlateau_Movement_PRUMeowthBoard")
+assert finale.index("applymovement 3, IndigoPlateau_Movement_PRUMeowthBoard") < finale.index("removeobject 3")
+assert finale.index("removeobject 3") < finale.index("applymovement 4, IndigoPlateau_Movement_PRUBalloonRise")
 assert "removeobject 4" in finale
-assert finale.index("applymovement 4") < finale.index("removeobject 4")
+assert finale.index("applymovement 4, IndigoPlateau_Movement_PRUBalloonRise") < finale.index("removeobject 4")
+assert movement_delta(scripts_indigo, "IndigoPlateau_Movement_PRUBalloonArrive") == (0, 6)
+assert movement_delta(scripts_indigo, "IndigoPlateau_Movement_PRUBalloonRise") == (0, -6)
+for name in ("JessieBoard", "JamesBoard", "MeowthBoard"):
+    assert movement_delta(scripts_indigo, f"IndigoPlateau_Movement_PRU{name}") == (0, 1)
 assert finale.index("setflag FLAG_PRU_HEIST_COMPLETED") < finale.index(
     "setflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD") < finale.index("removeobject 5")
 assert "#define FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD              0x4FF" in flags
