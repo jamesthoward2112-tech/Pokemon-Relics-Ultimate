@@ -23,7 +23,7 @@ for map_name, mon, orb, boss, caught, defeated in (
     assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT" in script, mon
     expected_sprite = f"OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_{mon}_HNS"
     assert any(o.get("graphics_id") == expected_sprite
-               and o.get("flag") == ("FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE" if mon == "KYOGRE" else caught) for o in data["object_events"]), mon
+               and o.get("flag") == ("FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE" if mon == "KYOGRE" else "FLAG_PRU_HIDE_GROUDON_BEFORE_MAXIE") for o in data["object_events"]), mon
     assert any(o.get("graphics_id") == f"OBJ_EVENT_GFX_{boss}"
                and o.get("trainer_sight_or_berry_tree_id") == "4"
                and o.get("flag") == defeated for o in data["object_events"]), boss

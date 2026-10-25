@@ -49,6 +49,7 @@ SeafoamIslands_SecretCave_EventScript_Kyogre::
 	@ Shiny base Kyogre holds the Blue Orb, reverting to shiny Primal form.
 	@ Only capture persists; knockout or whiteout allows the wild encounter again.
 	setwildbattleshiny SPECIES_KYOGRE, 75, ITEM_BLUE_ORB
+	special PruPreparePrimalLegendMoves
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
