@@ -34,6 +34,11 @@ Each uses Kanto Pokémon or evolutions thereof and 1–2 established custom/spec
 2. Individual gyms for the seven rematches: consistent geography, but sacrifices the requested progression and healing flow.
 3. New bespoke arena/map: greater presentation freedom, but additional map, collision, warp and save-state risk for no player benefit.
 
+## Bonus: BP Exchange Counter Level-100 XP Station
+A separate, optional training service in the **BP exchange counter room shown in James's 2026-10-25 Pizza Boy A Pro screenshot**, not in the Dojo VIP arena. Preserve all three BP exchange ladies. Add exactly one Chansey overworld NPC **behind the same desk to their right**, at an equal gap to the gap between the three existing ladies (the screenshot shows a fourth evenly spaced station just before the counter's right end). The NPC must face the customer and be interactable from in front of the counter without warping, clipping or moving clerks.
+
+On talking to Chansey: explanatory XP-training dialogue, `Yes/No` prompt (B cancels); accept triggers a **repeatable double battle against exactly two level-100 Chansey**, both using only **Memento and Heal Pulse** (the user's approved gentle Chansey-training move pattern). No level scaling, no badges/BP are consumed or awarded, and no one-time completion flag. Trainer battle can be repeated immediately after win/loss; battle grants ordinary experience. Reuse established PRU Chansey training sprite/trainer-battle mechanics where compatible. The BP exchange staff and functions must be unaffected.
+
 ## Out of Scope
 - Rhythm battle-background redesign (Rhythm 56 is the fixed baseline).
 - Reworking Rocket balloon animation already approved.
