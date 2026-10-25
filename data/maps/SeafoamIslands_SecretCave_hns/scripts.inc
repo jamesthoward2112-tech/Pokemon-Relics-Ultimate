@@ -17,7 +17,12 @@ SeafoamIslands_SecretCave_OnTransition_ShowKyogre:
 	end
 
 SeafoamIslands_SecretCave_EventScript_Archie::
-	trainerbattle_single TRAINER_PRU_ARCHIE_KYOGRE_HNS, SeafoamIslands_SecretCave_Text_ArchieIntro, SeafoamIslands_SecretCave_Text_ArchieDefeated
+	@ Continue automatically after victory; the normal trainer battle would
+	@ stop here and force the player to press A on Archie once more.
+	trainerbattle_single TRAINER_PRU_ARCHIE_KYOGRE_HNS, SeafoamIslands_SecretCave_Text_ArchieIntro, SeafoamIslands_SecretCave_Text_ArchieDefeated, SeafoamIslands_SecretCave_EventScript_ArchieAfterBattle
+	end
+
+SeafoamIslands_SecretCave_EventScript_ArchieAfterBattle:
 	setflag FLAG_PRU_ARCHIE_KYOGRE_DEFEATED
 	lockall
 	msgbox SeafoamIslands_SecretCave_Text_ArchieAfter, MSGBOX_DEFAULT
