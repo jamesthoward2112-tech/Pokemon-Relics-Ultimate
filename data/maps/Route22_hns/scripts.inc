@@ -365,22 +365,22 @@ Route22_EventScript_PRUHeistTrigger::
 	lockall
 	setvar VAR_TEMP_1, 1
 	playse SE_PIN
-	applymovement 12, Common_Movement_ExclamationMark
-	waitmovement 12
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement VAR_LAST_TALKED
 	msgbox Route22_Text_PRURocketStolen, MSGBOX_DEFAULT
 	@ The physical display case is stolen; the original badge bits remain
 	@ intact so HM use, 16-badge count and old save progression never regress.
 	setflag FLAG_PRU_HEIST_STARTED
 	msgbox Route22_Text_PRURocketBalloon, MSGBOX_DEFAULT
 	closemessage
-	@ Jessie, James and Meowth gather instead of standing still.
+	@ Jessie, James and Meowth already stand together; now they react.
 	applymovement 12, Route22_Movement_PRUJessieGather
 	applymovement 13, Route22_Movement_PRUJamesGather
 	applymovement 14, Route22_Movement_PRUMeowthReady
 	waitmovement 12
 	waitmovement 13
 	waitmovement 14
-	@ The original Meowth balloon flies down from ABOVE the gate.
+	@ Balloon flies in across OPEN COURTYARD from the right, clear of the roof.
 	playse SE_M_FLY
 	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	addobject 15
@@ -400,7 +400,7 @@ Route22_EventScript_PRUHeistTrigger::
 	setflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
 	delay 18
 	playse SE_M_FLY
-	applymovement 15, Route22_Movement_PRUBalloonRise
+	applymovement 15, Route22_Movement_PRUBalloonDepart
 	waitmovement 15
 	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	removeobject 15
@@ -428,13 +428,11 @@ Route22_Text_PRURocketBalloon:
 
 
 Route22_Movement_PRUJessieGather:
-	walk_fast_right
-	face_down
+	walk_in_place_down
 	step_end
 
 Route22_Movement_PRUJamesGather:
-	walk_fast_left
-	face_down
+	walk_in_place_down
 	step_end
 
 Route22_Movement_PRUMeowthReady:
@@ -442,12 +440,14 @@ Route22_Movement_PRUMeowthReady:
 	step_end
 
 Route22_Movement_PRUBalloonArrive:
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
 	step_end
 
 Route22_Movement_PRUJessieBoard:
@@ -462,11 +462,13 @@ Route22_Movement_PRUMeowthBoard:
 	walk_fast_down
 	step_end
 
-Route22_Movement_PRUBalloonRise:
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
+Route22_Movement_PRUBalloonDepart:
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
 	step_end
