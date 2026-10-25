@@ -16,7 +16,7 @@ assert ace.count("Shiny: Yes") == 1, "trainer Kyogre should be actually shiny"
 assert ace.index("Shiny: Yes") > ace.index("Level: ")
 assert "Kyogre @ Blue Orb" in archie
 assert "Level: 80" in ace.split("===", 1)[0], "Kyogre must be stronger than his Lv78 teammate"
-assert all(f"- {move}" in ace for move in ("Origin Pulse", "Thunder", "Ice Beam", "Calm Mind"))
+assert all(f"- {move}" in ace for move in ("Water Spout", "Origin Pulse", "Thunder", "Ice Beam"))
 
 # Native AI code, not just party ordering, must honour the ace and avoid
 # choosing it when other usable party members remain.

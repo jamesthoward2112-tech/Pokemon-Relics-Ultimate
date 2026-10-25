@@ -122,6 +122,7 @@ jobs:
           python3 tools/pru/check_20261022_legendary_encounters.py
           python3 tools/pru/check_20261024_kyogre_cave.py
           python3 tools/pru/check_20261024_primal_ace.py
+          python3 tools/pru/check_20261025_archie_finale.py
           python3 tools/pru/check_insurgence_mega_jirachi.py
           python3 tools/pru/check_insurgence_space_mew.py
           python3 tools/pru/check_p_bird_sprites.py

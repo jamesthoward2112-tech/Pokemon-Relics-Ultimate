@@ -923,6 +923,8 @@ static u8 GetPruCrystalBattleBgIndex(u16 environment)
     // different (sometimes sunny) Crystal Redux scene on each floor.
     switch ((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
     {
+    case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS:
+        return 32; // Crystal Redux's rocky ocean and breaking waves, for Archie and Kyogre.
     case MAP_LAVENDER_SPIRIT_TOWER_1F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_2F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_3F_HNS:
