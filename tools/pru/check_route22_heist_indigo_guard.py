@@ -141,6 +141,23 @@ assert balloon_indigo["flag"] == "FLAG_PRU_HIDE_MEOWTH_BALLOON"
 assert "clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON" in scripts_indigo
 assert "addobject 4" in scripts_indigo
 
+# The 64x64 flying balloon must render above BG scenery (roof/trees) for
+# every subsprite, both when added mid-cutscene and when field sprites reload.
+renderer = read("src/event_object_movement.c")
+priority_fn = "static void SetPRUMeowthBalloonFlightPriority(struct ObjectEvent *objectEvent, struct Sprite *sprite)"
+assert priority_fn in renderer, "balloon needs sprite-specific foreground priority"
+flight_priority = renderer.split(priority_fn + "\n{", 1)[1].split("\n}", 1)[0]
+assert "OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS" in flight_priority
+assert "objectEvent->fixedPriority = TRUE" in flight_priority
+assert "sprite->oam.priority = 0" in flight_priority
+assert "sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY" in flight_priority
+assert "sprite->subpriority = 0" in flight_priority
+spawn = renderer.split("u8 TrySpawnObjectEventTemplate(", 1)[1].split("u8 SpawnSpecialObjectEvent(", 1)[0]
+reload = renderer.split("static void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)\n{", 1)[1].split("\n}\n", 1)[0]
+assert "SetPRUMeowthBalloonFlightPriority(" in spawn
+assert "SetPRUMeowthBalloonFlightPriority(" in reload
+
+
 sync = scripts_indigo.split("IndigoPlateau_EventScript_PRUSyncRocket::", 1)[1].split(
     "IndigoPlateau_EventScript_PRUSyncDone::", 1)[0]
 assert "goto_if_unset FLAG_PRU_HEIST_STARTED" in sync
