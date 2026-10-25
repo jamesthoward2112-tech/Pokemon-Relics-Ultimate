@@ -1,6 +1,15 @@
 IndigoPlateau_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, IndigoPlateau_EventScript_PRUSyncRocket
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, IndigoPlateau_OnWarp
 	.byte 0
+
+IndigoPlateau_OnWarp:
+	map_script_2 VAR_TEMP_2, VAR_TEMP_2, IndigoPlateau_EventScript_PRUHideBalloonOnWarp
+	.2byte 0
+
+IndigoPlateau_EventScript_PRUHideBalloonOnWarp::
+	hideobjectat 4, MAP_INDIGO_PLATEAU_HNS
+	end
 
 IndigoPlateau_Sign::
 	msgbox IndigoPlateau_Text_Sign, MSGBOX_SIGN
@@ -57,14 +66,12 @@ IndigoPlateau_EventScript_PRUEscape::
 	removeobject 1
 	removeobject 2
 	removeobject 3
-	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
-	addobject 4
+	showobjectat 4, MAP_INDIGO_PLATEAU_HNS
 	delay 50
 	applymovement 4, IndigoPlateau_Movement_PRUBalloonRise
 	waitmovement 4
 	fadescreenswapbuffers FADE_TO_WHITE
-	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
-	removeobject 4
+	hideobjectat 4, MAP_INDIGO_PLATEAU_HNS
 	playse SE_M_TELEPORT
 	fadescreenswapbuffers FADE_FROM_WHITE
 	releaseall
