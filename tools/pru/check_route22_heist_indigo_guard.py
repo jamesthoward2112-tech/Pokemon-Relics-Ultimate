@@ -63,7 +63,7 @@ assert heist.index("applymovement 13, Route22_Movement_PRUJamesGather") < heist.
 assert heist.index("applymovement 14, Route22_Movement_PRUMeowthReady") < heist.index("addobject 15")
 assert heist.index("addobject 15") < heist.index("applymovement 15, Route22_Movement_PRUBalloonArrive")
 assert heist.index("waitmovement 15") < heist.index("applymovement 12, Route22_Movement_PRUJessieBoard")
-assert "applymovement 12, Common_Movement_ExclamationMark" in heist
+assert "applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark" in heist
 assert "applymovement 11, Common_Movement_ExclamationMark" not in heist
 assert heist.index("applymovement 12, Route22_Movement_PRUJessieBoard") < heist.index("waitmovement 12", heist.index("applymovement 12, Route22_Movement_PRUJessieBoard")) < heist.index("removeobject 12")
 assert heist.index("removeobject 12") < heist.index("applymovement 13, Route22_Movement_PRUJamesBoard")
