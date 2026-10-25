@@ -21,7 +21,7 @@ assert map_data["warp_events"][0]["dest_map"] == "MAP_SEAFOAM_ISLANDS_GYM_HNS"
 assert (map_data["warp_events"][0]["x"], map_data["warp_events"][0]["y"]) == (16, 17)
 assert map_data["coord_events"] == [], "the original compact room uses Kyogre's visible NPC event, not a distant pool trigger"
 
-assert kyogre["graphics_id"] == "OBJ_EVENT_GFX_KYOGRE_FRONT", "use the tested native Kyogre overworld asset"
+assert kyogre["graphics_id"] == "OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_KYOGRE_HNS", "use the approved shiny Primal overworld asset"
 assert kyogre["flag"] == "FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE"
 assert archie["flag"] == "FLAG_PRU_ARCHIE_KYOGRE_DEFEATED"
 assert archie["trainer_sight_or_berry_tree_id"] == "4"
@@ -54,6 +54,6 @@ assert "Ability: Tidal Bastion" in boss
 assert "AI: Smart Trainer / Prediction" in boss
 assert "Kyogre @ Blue Orb" in boss
 assert boss.index("Swamplith @") < boss.index("Kyogre @ Blue Orb")
-assert "Level: 75" in boss
+assert "Level: 80" in boss
 
 print("PRU_KYOGRE_CAVE_PASS: original Seafoam room, native Kyogre, rain, dialogue lock, capture-only removal, custom rain team")

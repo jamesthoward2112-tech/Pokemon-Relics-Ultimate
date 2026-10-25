@@ -497,6 +497,8 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RocketM_hns
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Jessie_hns;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_James_hns;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruMeowthBalloon_hns;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruShinyPrimalKyogre_hns;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruShinyPrimalGroudon_hns;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Sabrina_hns;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SageElder_hns;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Sage_hns;
@@ -1044,6 +1046,8 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_JESSIE_HNS] = &gObjectEventGraphicsInfo_Jessie_hns,
     [OBJ_EVENT_GFX_JAMES_HNS] = &gObjectEventGraphicsInfo_James_hns,
     [OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS] = &gObjectEventGraphicsInfo_PruMeowthBalloon_hns,
+    [OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_KYOGRE_HNS] = &gObjectEventGraphicsInfo_PruShinyPrimalKyogre_hns,
+    [OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_GROUDON_HNS] = &gObjectEventGraphicsInfo_PruShinyPrimalGroudon_hns,
     [OBJ_EVENT_GFX_ANABEL_HNS] = &gObjectEventGraphicsInfo_Anabel_hns,
     [OBJ_EVENT_GFX_BRANDON_HNS] = &gObjectEventGraphicsInfo_Brandon_hns,
     [OBJ_EVENT_GFX_GRETA_HNS] = &gObjectEventGraphicsInfo_Greta_hns,

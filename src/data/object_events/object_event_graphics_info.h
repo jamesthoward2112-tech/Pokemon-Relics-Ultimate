@@ -7431,6 +7431,9 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_James_hns = {TAG_N
 
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruMeowthBalloon_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_PRU_MEOWTH_BALLOON_HNS, OBJ_EVENT_PAL_TAG_NONE, 2048, 64, 64, 5, SHADOW_SIZE_NONE, TRUE, FALSE, TRACKS_NONE, &gObjectEventBaseOam_64x64, sOamTables_64x64, sAnimTable_Inanimate, sPicTable_PruMeowthBalloon_hns, gDummySpriteAffineAnimTable};
 
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruShinyPrimalKyogre_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_PRU_SHINY_PRIMAL_KYOGRE_HNS, OBJ_EVENT_PAL_TAG_NONE, 2048, 64, 64, 5, SHADOW_SIZE_NONE, TRUE, FALSE, TRACKS_NONE, &gObjectEventBaseOam_64x64, sOamTables_64x64, sAnimTable_Inanimate, sPicTable_PruShinyPrimalKyogre_hns, gDummySpriteAffineAnimTable};
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruShinyPrimalGroudon_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_PRU_SHINY_PRIMAL_GROUDON_HNS, OBJ_EVENT_PAL_TAG_NONE, 2048, 64, 64, 5, SHADOW_SIZE_NONE, TRUE, FALSE, TRACKS_NONE, &gObjectEventBaseOam_64x64, sOamTables_64x64, sAnimTable_Inanimate, sPicTable_PruShinyPrimalGroudon_hns, gDummySpriteAffineAnimTable};
+
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Bill_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_NPC_3_HNS, OBJ_EVENT_PAL_TAG_NONE, 256, 16, 32, 3, SHADOW_SIZE_M, FALSE, FALSE, TRACKS_FOOT, &gObjectEventBaseOam_16x32, sOamTables_16x32, sAnimTable_Standard, sPicTable_Bill_hns, gDummySpriteAffineAnimTable};
 
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Elm_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_ELM_HNS, OBJ_EVENT_PAL_TAG_NONE, 256, 16, 32, 4, SHADOW_SIZE_M, FALSE, FALSE, TRACKS_FOOT, &gObjectEventBaseOam_16x32, sOamTables_16x32, sAnimTable_Standard, sPicTable_Elm_hns, gDummySpriteAffineAnimTable};
