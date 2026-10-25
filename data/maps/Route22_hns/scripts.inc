@@ -1,17 +1,7 @@
 Route22_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route22_OnTransition
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, Route22_OnWarp
 	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
-
-@ Warp-in scripts run after object spawn, but before the map is displayed.
-Route22_OnWarp:
-	map_script_2 VAR_TEMP_2, VAR_TEMP_2, Route22_EventScript_PRUHideBalloonOnWarp
-	.2byte 0
-
-Route22_EventScript_PRUHideBalloonOnWarp::
-	hideobjectat 15, MAP_ROUTE22_HNS
-	end
 
 Route22_OnTransition: 
 	callnative SetTimeBasedEncounters
@@ -389,13 +379,15 @@ Route22_EventScript_PRUHeistTrigger::
 	removeobject 12
 	removeobject 13
 	removeobject 14
-	@ The balloon is already loaded as object 15; reveal it in the courtyard.
-	showobjectat 15, MAP_ROUTE22_HNS
+	@ Spawn the 64x64 balloon using its actual map object ID (15).
+	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	addobject 15
 	delay 50
 	applymovement 15, Route22_Movement_PRUBalloonRise
 	waitmovement 15
 	fadescreenswapbuffers FADE_TO_WHITE
-	hideobjectat 15, MAP_ROUTE22_HNS
+	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	removeobject 15
 	playse SE_M_TELEPORT
 	fadescreenswapbuffers FADE_FROM_WHITE
 	releaseall
