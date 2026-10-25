@@ -365,31 +365,45 @@ Route22_EventScript_PRUHeistTrigger::
 	lockall
 	setvar VAR_TEMP_1, 1
 	playse SE_PIN
-	applymovement 11, Common_Movement_ExclamationMark
-	waitmovement 11
+	applymovement 12, Common_Movement_ExclamationMark
+	waitmovement 12
 	msgbox Route22_Text_PRURocketStolen, MSGBOX_DEFAULT
 	@ The physical display case is stolen; the original badge bits remain
 	@ intact so HM use, 16-badge count and old save progression never regress.
 	setflag FLAG_PRU_HEIST_STARTED
 	msgbox Route22_Text_PRURocketBalloon, MSGBOX_DEFAULT
 	closemessage
-	@ Display authentic MrNightology 64x64 Meowth balloon and animate
-	@ its ascent without redrawing or replacing any existing sprites.
-	setflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
-	removeobject 12
-	removeobject 13
-	removeobject 14
-	@ Spawn the 64x64 balloon using its actual map object ID (15).
+	@ Jessie, James and Meowth gather instead of standing still.
+	applymovement 12, Route22_Movement_PRUJessieGather
+	applymovement 13, Route22_Movement_PRUJamesGather
+	applymovement 14, Route22_Movement_PRUMeowthReady
+	waitmovement 12
+	waitmovement 13
+	waitmovement 14
+	@ The original Meowth balloon flies down from ABOVE the gate.
+	playse SE_M_FLY
 	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	addobject 15
-	delay 50
+	applymovement 15, Route22_Movement_PRUBalloonArrive
+	waitmovement 15
+	delay 12
+	@ Each Rocket steps into the basket before leaving the scene.
+	applymovement 12, Route22_Movement_PRUJessieBoard
+	waitmovement 12
+	removeobject 12
+	applymovement 13, Route22_Movement_PRUJamesBoard
+	waitmovement 13
+	removeobject 13
+	applymovement 14, Route22_Movement_PRUMeowthBoard
+	waitmovement 14
+	removeobject 14
+	setflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
+	delay 18
+	playse SE_M_FLY
 	applymovement 15, Route22_Movement_PRUBalloonRise
 	waitmovement 15
-	fadescreenswapbuffers FADE_TO_WHITE
 	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	removeobject 15
-	playse SE_M_TELEPORT
-	fadescreenswapbuffers FADE_FROM_WHITE
 	releaseall
 	end
 
@@ -413,7 +427,46 @@ Route22_Text_PRURocketBalloon:
 	.string "challenge GIOVANNI!$"
 
 
+Route22_Movement_PRUJessieGather:
+	walk_fast_right
+	face_down
+	step_end
+
+Route22_Movement_PRUJamesGather:
+	walk_fast_left
+	face_down
+	step_end
+
+Route22_Movement_PRUMeowthReady:
+	jump_in_place_down
+	step_end
+
+Route22_Movement_PRUBalloonArrive:
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	step_end
+
+Route22_Movement_PRUJessieBoard:
+	walk_fast_down
+	step_end
+
+Route22_Movement_PRUJamesBoard:
+	walk_fast_down
+	step_end
+
+Route22_Movement_PRUMeowthBoard:
+	walk_fast_down
+	step_end
+
 Route22_Movement_PRUBalloonRise:
-	walk_slow_up
-	walk_slow_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
 	step_end
