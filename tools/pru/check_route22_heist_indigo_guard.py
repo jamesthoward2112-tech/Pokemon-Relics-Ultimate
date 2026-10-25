@@ -23,6 +23,10 @@ scripts_indigo = read("data/maps/IndigoPlateau_hns/scripts.inc")
 scripts_reception = read("data/maps/ReceptionGate_hns/scripts.inc")
 flags = read("include/constants/flags_hns.h")
 field_engine = read("src/field_control_avatar.c")
+movement_engine = read("src/event_object_movement.c")
+# A preloaded but hidden balloon must not block the Route 22 doorway.
+collision_check = movement_engine.split("u32 GetObjectObjectCollidesWith(", 1)[1].split("static bool8 DoesObjectCollideWithObjectAt(", 1)[0]
+assert "curObject->graphicsId == OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS && curObject->invisible" in collision_check
 
 # The Kanto Route 22 reception entrance is the heist location, not Route 26.
 assert route22["region"] == "REGION_KANTO"
