@@ -226,8 +226,6 @@ PewterCity_Gym_Text_PRURewardBagFull:
 PewterCity_Gym_EventScript_PRUHeistBrock::
 	goto_if_set FLAG_PRU_HEIST_BROCK, PewterCity_Gym_EventScript_PRUHeistBrockDone
 	msgbox PewterCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_BROCK_HNS, PewterCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_BROCK
 	msgbox PewterCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
 	closemessage
 	release

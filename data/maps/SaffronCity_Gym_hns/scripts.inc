@@ -237,8 +237,6 @@ SaffronCity_Gym_Text_PRURewardBagFull:
 SaffronCity_Gym_EventScript_PRUHeistSabrina::
 	goto_if_set FLAG_PRU_HEIST_SABRINA, SaffronCity_Gym_EventScript_PRUHeistSabrinaDone
 	msgbox SaffronCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_SABRINA_HNS, SaffronCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_SABRINA
 	msgbox SaffronCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
 	closemessage
 	release

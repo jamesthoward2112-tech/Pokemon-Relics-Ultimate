@@ -1,6 +1,13 @@
 CeruleanCity_Gym_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, CeruleanCity_Gym_EventScript_PRUHideMistyAfterBlue
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, CeruleanCity_Gym_OnFrame
 	.byte 0
+
+CeruleanCity_Gym_EventScript_PRUHideMistyAfterBlue::
+	goto_if_unset FLAG_DEFEATED_VIRIDIAN_GYM, CeruleanCity_Gym_EventScript_PRUHideMistyDone
+	setflag FLAG_HIDE_CERULEAN_GYM_TRAINERS
+CeruleanCity_Gym_EventScript_PRUHideMistyDone::
+	end
 
 CeruleanCity_Gym_OnFrame::
 	map_script_2 VAR_KANTO_ROCKET_STORY_STATE, 2,  CeruleanCity_Gym_EventScript_RocketGrunt
@@ -364,8 +371,6 @@ CeruleanCity_Gym_Text_PRURewardBagFull:
 CeruleanCity_Gym_EventScript_PRUHeistMisty::
 	goto_if_set FLAG_PRU_HEIST_MISTY, CeruleanCity_Gym_EventScript_PRUHeistMistyDone
 	msgbox CeruleanCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_MISTY_HNS, CeruleanCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_MISTY
 	msgbox CeruleanCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
 	closemessage
 	release

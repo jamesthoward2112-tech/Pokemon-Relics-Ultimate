@@ -1,5 +1,206 @@
 SaffronCity_FightingDojoVIP_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SaffronCity_FightingDojoVIP_OnTransition
 	.byte 0
+
+SaffronCity_FightingDojoVIP_OnTransition::
+	call SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync
+	end
+
+SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync::
+	@ In an active heist, show only the next leader. Normal VIP rematches are intact.
+	goto_if_unset FLAG_PRU_HEIST_STARTED, SaffronCity_FightingDojoVIP_EventScript_PRUHeistSyncDone
+	goto_if_set FLAG_PRU_HEIST_GIOVANNI, SaffronCity_FightingDojoVIP_EventScript_PRUHeistSyncFinished
+	setflag FLAG_HIDE_DOJO_BLUE
+	setflag FLAG_HIDE_DOJO_BROCK
+	setflag FLAG_HIDE_DOJO_MISTY
+	setflag FLAG_HIDE_DOJO_SURGE
+	setflag FLAG_HIDE_DOJO_ERIKA
+	setflag FLAG_HIDE_DOJO_JANINE
+	setflag FLAG_HIDE_DOJO_SABRINA
+	setflag FLAG_HIDE_DOJO_BLAINE
+	goto_if_unset FLAG_PRU_HEIST_BROCK, SaffronCity_FightingDojoVIP_EventScript_PRUShowBrock
+	goto_if_unset FLAG_PRU_HEIST_MISTY, SaffronCity_FightingDojoVIP_EventScript_PRUShowMisty
+	goto_if_unset FLAG_PRU_HEIST_SURGE, SaffronCity_FightingDojoVIP_EventScript_PRUShowSurge
+	goto_if_unset FLAG_PRU_HEIST_ERIKA, SaffronCity_FightingDojoVIP_EventScript_PRUShowErika
+	goto_if_unset FLAG_PRU_HEIST_JANINE, SaffronCity_FightingDojoVIP_EventScript_PRUShowJanine
+	goto_if_unset FLAG_PRU_HEIST_SABRINA, SaffronCity_FightingDojoVIP_EventScript_PRUShowSabrina
+	goto_if_unset FLAG_PRU_HEIST_BLAINE, SaffronCity_FightingDojoVIP_EventScript_PRUShowBlaine
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowBrock::
+	clearflag FLAG_HIDE_DOJO_BROCK
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowMisty::
+	clearflag FLAG_HIDE_DOJO_MISTY
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowSurge::
+	clearflag FLAG_HIDE_DOJO_SURGE
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowErika::
+	clearflag FLAG_HIDE_DOJO_ERIKA
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowJanine::
+	clearflag FLAG_HIDE_DOJO_JANINE
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowSabrina::
+	clearflag FLAG_HIDE_DOJO_SABRINA
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowBlaine::
+	clearflag FLAG_HIDE_DOJO_BLAINE
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUHeistSyncFinished::
+	clearflag FLAG_HIDE_DOJO_BROCK
+	clearflag FLAG_HIDE_DOJO_MISTY
+	clearflag FLAG_HIDE_DOJO_SURGE
+	clearflag FLAG_HIDE_DOJO_ERIKA
+	clearflag FLAG_HIDE_DOJO_JANINE
+	clearflag FLAG_HIDE_DOJO_SABRINA
+	clearflag FLAG_HIDE_DOJO_BLAINE
+	clearflag FLAG_HIDE_DOJO_BLUE
+SaffronCity_FightingDojoVIP_EventScript_PRUHeistSyncDone::
+	return
+
+@ The seven leader battles happen here during the Badge Heist, once each.
+@ The existing Dojo nurse remains available after each battle.
+
+SaffronCity_FightingDojoVIP_EventScript_PRUHeistBrock::
+	goto_if_set FLAG_PRU_HEIST_BROCK, SaffronCity_FightingDojoVIP_EventScript_PRUAlreadyBeaten
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_BROCK_HNS, SaffronCity_FightingDojoVIP_Text_PRUHeistDefeat
+	setflag FLAG_PRU_HEIST_BROCK
+	setflag FLAG_HIDE_DOJO_BROCK
+	removeobject 2
+	clearflag FLAG_HIDE_DOJO_MISTY
+	addobject 1
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SaffronCity_FightingDojoVIP_EventScript_PRUHeistMisty::
+	goto_if_unset FLAG_PRU_HEIST_BROCK, SaffronCity_FightingDojoVIP_EventScript_PRUNotReady
+	goto_if_set FLAG_PRU_HEIST_MISTY, SaffronCity_FightingDojoVIP_EventScript_PRUAlreadyBeaten
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_MISTY_HNS, SaffronCity_FightingDojoVIP_Text_PRUHeistDefeat
+	setflag FLAG_PRU_HEIST_MISTY
+	setflag FLAG_HIDE_DOJO_MISTY
+	removeobject 1
+	clearflag FLAG_HIDE_DOJO_SURGE
+	addobject 3
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SaffronCity_FightingDojoVIP_EventScript_PRUHeistSurge::
+	goto_if_unset FLAG_PRU_HEIST_MISTY, SaffronCity_FightingDojoVIP_EventScript_PRUNotReady
+	goto_if_set FLAG_PRU_HEIST_SURGE, SaffronCity_FightingDojoVIP_EventScript_PRUAlreadyBeaten
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_SURGE_HNS, SaffronCity_FightingDojoVIP_Text_PRUHeistDefeat
+	setflag FLAG_PRU_HEIST_SURGE
+	setflag FLAG_HIDE_DOJO_SURGE
+	removeobject 3
+	clearflag FLAG_HIDE_DOJO_ERIKA
+	addobject 4
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SaffronCity_FightingDojoVIP_EventScript_PRUHeistErika::
+	goto_if_unset FLAG_PRU_HEIST_SURGE, SaffronCity_FightingDojoVIP_EventScript_PRUNotReady
+	goto_if_set FLAG_PRU_HEIST_ERIKA, SaffronCity_FightingDojoVIP_EventScript_PRUAlreadyBeaten
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_ERIKA_HNS, SaffronCity_FightingDojoVIP_Text_PRUHeistDefeat
+	setflag FLAG_PRU_HEIST_ERIKA
+	setflag FLAG_HIDE_DOJO_ERIKA
+	removeobject 4
+	clearflag FLAG_HIDE_DOJO_JANINE
+	addobject 5
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SaffronCity_FightingDojoVIP_EventScript_PRUHeistJanine::
+	goto_if_unset FLAG_PRU_HEIST_ERIKA, SaffronCity_FightingDojoVIP_EventScript_PRUNotReady
+	goto_if_set FLAG_PRU_HEIST_JANINE, SaffronCity_FightingDojoVIP_EventScript_PRUAlreadyBeaten
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_JANINE_HNS, SaffronCity_FightingDojoVIP_Text_PRUHeistDefeat
+	setflag FLAG_PRU_HEIST_JANINE
+	setflag FLAG_HIDE_DOJO_JANINE
+	removeobject 5
+	clearflag FLAG_HIDE_DOJO_SABRINA
+	addobject 6
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SaffronCity_FightingDojoVIP_EventScript_PRUHeistSabrina::
+	goto_if_unset FLAG_PRU_HEIST_JANINE, SaffronCity_FightingDojoVIP_EventScript_PRUNotReady
+	goto_if_set FLAG_PRU_HEIST_SABRINA, SaffronCity_FightingDojoVIP_EventScript_PRUAlreadyBeaten
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_SABRINA_HNS, SaffronCity_FightingDojoVIP_Text_PRUHeistDefeat
+	setflag FLAG_PRU_HEIST_SABRINA
+	setflag FLAG_HIDE_DOJO_SABRINA
+	removeobject 6
+	clearflag FLAG_HIDE_DOJO_BLAINE
+	addobject 7
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SaffronCity_FightingDojoVIP_EventScript_PRUHeistBlaine::
+	goto_if_unset FLAG_PRU_HEIST_SABRINA, SaffronCity_FightingDojoVIP_EventScript_PRUNotReady
+	goto_if_set FLAG_PRU_HEIST_BLAINE, SaffronCity_FightingDojoVIP_EventScript_PRUAlreadyBeaten
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_HEIST_BLAINE_HNS, SaffronCity_FightingDojoVIP_Text_PRUHeistDefeat
+	setflag FLAG_PRU_HEIST_BLAINE
+	setflag FLAG_HIDE_DOJO_BLAINE
+	removeobject 7
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistGiovanni, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SaffronCity_FightingDojoVIP_EventScript_PRUNotReady::
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNotReady, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SaffronCity_FightingDojoVIP_EventScript_PRUAlreadyBeaten::
+	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistAlready, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge:
+	.string "ROCKET stole your KANTO BADGES!\p"
+	.string "Win our full-strength rematches\l"
+	.string "to take them back! Ready?$"
+
+SaffronCity_FightingDojoVIP_Text_PRUHeistDefeat:
+	.string "An excellent battle!$"
+
+SaffronCity_FightingDojoVIP_Text_PRUHeistNext:
+	.string "Your next KANTO LEADER awaits\l"
+	.string "here in the DOJO. Heal up!$"
+
+SaffronCity_FightingDojoVIP_Text_PRUHeistGiovanni:
+	.string "BLAINE: That's seven! But\n"
+	.string "BLUE has disappeared...\p"
+	.string "Who's KANTO's eighth LEADER?\l"
+	.string "Try VIRIDIAN GYM!$"
+
+SaffronCity_FightingDojoVIP_Text_PRUHeistNotReady:
+	.string "Face the other KANTO LEADERS\l"
+	.string "first, in the proper order.$"
+
+SaffronCity_FightingDojoVIP_Text_PRUHeistAlready:
+	.string "Our BADGE rematch is over.\l"
+	.string "Find the next leader!$"
 
 SaffronCity_FightingDojoVIP_EventScript_Nurse::
 	lock
@@ -268,6 +469,9 @@ SaffronCity_FightingDojoVIP_EventScript_Clair_PostOBC::
 SaffronCity_FightingDojoVIP_EventScript_Brock::
 	lock
 	faceplayer
+	goto_if_unset FLAG_PRU_HEIST_STARTED, SaffronCity_FightingDojoVIP_EventScript_Brock_Normal
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, SaffronCity_FightingDojoVIP_EventScript_PRUHeistBrock
+SaffronCity_FightingDojoVIP_EventScript_Brock_Normal::
 	msgbox SaffronCity_FightingDojoVIP_Text_Brock_Rematch, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, SaffronCity_FightingDojoVIP_EventScript_Declined
 	closemessage
@@ -297,6 +501,9 @@ SaffronCity_FightingDojoVIP_EventScript_Brock_PostOBC::
 SaffronCity_FightingDojoVIP_EventScript_Misty::
 	lock
 	faceplayer
+	goto_if_unset FLAG_PRU_HEIST_STARTED, SaffronCity_FightingDojoVIP_EventScript_Misty_Normal
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, SaffronCity_FightingDojoVIP_EventScript_PRUHeistMisty
+SaffronCity_FightingDojoVIP_EventScript_Misty_Normal::
 	msgbox SaffronCity_FightingDojoVIP_Text_Misty_Rematch, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, SaffronCity_FightingDojoVIP_EventScript_Declined
 	closemessage
@@ -326,6 +533,9 @@ SaffronCity_FightingDojoVIP_EventScript_Misty_PostOBC::
 SaffronCity_FightingDojoVIP_EventScript_Surge::
 	lock
 	faceplayer
+	goto_if_unset FLAG_PRU_HEIST_STARTED, SaffronCity_FightingDojoVIP_EventScript_Surge_Normal
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, SaffronCity_FightingDojoVIP_EventScript_PRUHeistSurge
+SaffronCity_FightingDojoVIP_EventScript_Surge_Normal::
 	msgbox SaffronCity_FightingDojoVIP_Text_Surge_Rematch, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, SaffronCity_FightingDojoVIP_EventScript_Declined
 	closemessage
@@ -355,6 +565,9 @@ SaffronCity_FightingDojoVIP_EventScript_Surge_PostOBC::
 SaffronCity_FightingDojoVIP_EventScript_Erika::
 	lock
 	faceplayer
+	goto_if_unset FLAG_PRU_HEIST_STARTED, SaffronCity_FightingDojoVIP_EventScript_Erika_Normal
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, SaffronCity_FightingDojoVIP_EventScript_PRUHeistErika
+SaffronCity_FightingDojoVIP_EventScript_Erika_Normal::
 	msgbox SaffronCity_FightingDojoVIP_Text_Erika_Rematch, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, SaffronCity_FightingDojoVIP_EventScript_Declined
 	closemessage
@@ -384,6 +597,9 @@ SaffronCity_FightingDojoVIP_EventScript_Erika_PostOBC::
 SaffronCity_FightingDojoVIP_EventScript_Janine::
 	lock
 	faceplayer
+	goto_if_unset FLAG_PRU_HEIST_STARTED, SaffronCity_FightingDojoVIP_EventScript_Janine_Normal
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, SaffronCity_FightingDojoVIP_EventScript_PRUHeistJanine
+SaffronCity_FightingDojoVIP_EventScript_Janine_Normal::
 	msgbox SaffronCity_FightingDojoVIP_Text_Janine_Rematch, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, SaffronCity_FightingDojoVIP_EventScript_Declined
 	closemessage
@@ -413,6 +629,9 @@ SaffronCity_FightingDojoVIP_EventScript_Janine_PostOBC::
 SaffronCity_FightingDojoVIP_EventScript_Sabrina::
 	lock
 	faceplayer
+	goto_if_unset FLAG_PRU_HEIST_STARTED, SaffronCity_FightingDojoVIP_EventScript_Sabrina_Normal
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, SaffronCity_FightingDojoVIP_EventScript_PRUHeistSabrina
+SaffronCity_FightingDojoVIP_EventScript_Sabrina_Normal::
 	msgbox SaffronCity_FightingDojoVIP_Text_Sabrina_Rematch, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, SaffronCity_FightingDojoVIP_EventScript_Declined
 	closemessage
@@ -442,6 +661,9 @@ SaffronCity_FightingDojoVIP_EventScript_Sabrina_PostOBC::
 SaffronCity_FightingDojoVIP_EventScript_Blaine::
 	lock
 	faceplayer
+	goto_if_unset FLAG_PRU_HEIST_STARTED, SaffronCity_FightingDojoVIP_EventScript_Blaine_Normal
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, SaffronCity_FightingDojoVIP_EventScript_PRUHeistBlaine
+SaffronCity_FightingDojoVIP_EventScript_Blaine_Normal::
 	msgbox SaffronCity_FightingDojoVIP_Text_Blaine_Rematch, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, SaffronCity_FightingDojoVIP_EventScript_Declined
 	closemessage

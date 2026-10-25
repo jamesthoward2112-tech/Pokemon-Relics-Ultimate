@@ -244,8 +244,6 @@ CeladonCity_Gym_Text_PRURewardBagFull:
 CeladonCity_Gym_EventScript_PRUHeistErika::
 	goto_if_set FLAG_PRU_HEIST_ERIKA, CeladonCity_Gym_EventScript_PRUHeistErikaDone
 	msgbox CeladonCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_ERIKA_HNS, CeladonCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_ERIKA
 	msgbox CeladonCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
 	closemessage
 	release

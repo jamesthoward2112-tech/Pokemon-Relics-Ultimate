@@ -11,6 +11,9 @@ SeafoamIslands_Gym_OnTransition:
 
 SeafoamIslands_Gym_OnTransition_Defeated:
 	clearflag FLAG_HIDE_SEAFOAM_BLAINE
+	goto_if_unset FLAG_DEFEATED_VIRIDIAN_GYM, SeafoamIslands_Gym_OnTransition_LeaveBlaine
+	setflag FLAG_HIDE_SEAFOAM_BLAINE
+SeafoamIslands_Gym_OnTransition_LeaveBlaine:
 	end
 
 SeafoamIslands_Gym_EventScript_Blaine::
@@ -216,8 +219,6 @@ SeafoamIslands_Gym_Text_PRURewardBagFull:
 SeafoamIslands_Gym_EventScript_PRUHeistBlaine::
 	goto_if_set FLAG_PRU_HEIST_BLAINE, SeafoamIslands_Gym_EventScript_PRUHeistBlaineDone
 	msgbox SeafoamIslands_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_BLAINE_HNS, SeafoamIslands_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_BLAINE
 	msgbox SeafoamIslands_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
 	closemessage
 	release

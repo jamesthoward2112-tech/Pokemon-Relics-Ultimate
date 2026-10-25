@@ -470,8 +470,6 @@ VermilionCity_Gym_Text_PRURewardBagFull:
 VermilionCity_Gym_EventScript_PRUHeistSurge::
 	goto_if_set FLAG_PRU_HEIST_SURGE, VermilionCity_Gym_EventScript_PRUHeistSurgeDone
 	msgbox VermilionCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_SURGE_HNS, VermilionCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_SURGE
 	msgbox VermilionCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
 	closemessage
 	release

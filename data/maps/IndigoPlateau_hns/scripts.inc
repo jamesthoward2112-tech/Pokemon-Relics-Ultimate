@@ -22,6 +22,7 @@ IndigoPlateau_EventScript_PRUSyncRocket::
 	goto_if_set FLAG_PRU_HEIST_COMPLETED, IndigoPlateau_EventScript_PRUSyncDone
 	clearflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD
 	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUSyncDone
+	setflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD
 	clearflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
 IndigoPlateau_EventScript_PRUSyncDone::
 	end
@@ -169,6 +170,7 @@ IndigoPlateau_EventScript_PRUGuard::
 @ warp handling and denies entry regardless of sprite collision state.
 IndigoPlateau_EventScript_PRUDoorGate::
 	goto_if_unset FLAG_PRU_HEIST_STARTED, IndigoPlateau_EventScript_PRUDoorUnlocked
+	goto_if_set FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUDoorUnlocked
 	goto_if_set FLAG_PRU_HEIST_COMPLETED, IndigoPlateau_EventScript_PRUDoorUnlocked
 	lockall
 	msgbox IndigoPlateau_Text_PRUGuard, MSGBOX_DEFAULT
@@ -182,7 +184,9 @@ IndigoPlateau_EventScript_PRUDoorUnlocked::
 
 IndigoPlateau_Text_PRUGuard:
 	.string "ROCKET GRUNT: INDIGO PLATEAU\l"
-	.string "is closed by TEAM ROCKET!\p"
-	.string "Recover your stolen BADGE CASE\l"
-	.string "and beat our bosses before\l"
-	.string "we let you enter!$"
+	.string "is closed until you reclaim\l"
+	.string "all EIGHT KANTO BADGES!\p"
+	.string "Battle the GYM LEADERS at\l"
+	.string "SAFFRON's FIGHTING DOJO.\p"
+	.string "Then track down their missing\l"
+	.string "eighth LEADER!$"

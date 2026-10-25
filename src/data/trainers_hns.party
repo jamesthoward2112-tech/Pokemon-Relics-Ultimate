@@ -16002,7 +16002,7 @@ Items: Full Restore / Full Restore
 
 Valkyvoir @ Light Clay
 Ability: Trace  
-Level: 74 
+Level: 82
 IVs: 0 Atk  
 - Psychic
 - Shadow Ball
@@ -16011,7 +16011,7 @@ IVs: 0 Atk
 
 Mystynx @ Never-Melt Ice
 Ability: Dry Skin  
-Level: 75 
+Level: 83
 IVs: 0 Atk  
 - Lovely Kiss
 - Moonblast
@@ -16020,7 +16020,7 @@ IVs: 0 Atk
 
 Slowking @ Leftovers
 Ability: Own Tempo  
-Level: 76 
+Level: 83
 IVs: 0 Atk  
 - Surf
 - Psychic
@@ -16029,7 +16029,7 @@ IVs: 0 Atk
 
 Grumpig @ Leftovers  
 Ability: Thick Fat  
-Level: 77  
+Level: 84
 IVs: 0 Atk  
 - Teeter Dance  
 - Power Gem  
@@ -16038,7 +16038,7 @@ IVs: 0 Atk
 
 Slowbro  
 Ability: Oblivious  
-Level: 77  
+Level: 84
 - Fire Punch  
 - Curse  
 - Earthquake  
@@ -16046,12 +16046,12 @@ Level: 77
 
 Xatu  
 Ability: Magic Bounce  
-Level: 79 
+Level: 85
 IVs: 0 Atk  
 - Future Sight  
 - Air Slash  
 - Confuse Ray  
-- Protect  
+- Protect
 
 === TRAINER_KOGA_POSTOBC_HNS ===
 Name: KOGA
@@ -16066,7 +16066,7 @@ Items: Full Restore / Full Restore
 
 Toxeon @ Black Sludge
 Ability: Water Absorb  
-Level: 74 
+Level: 83
 - Toxic Spikes
 - Sludge Wave
 - Nasty Plot
@@ -16074,7 +16074,7 @@ Level: 74
 
 Kablowfish @ Black Sludge  
 Ability: Poison Point  
-Level: 75
+Level: 84
 - Barb Barrage  
 - Lash Out  
 - Swords Dance  
@@ -16082,7 +16082,7 @@ Level: 75
 
 Ariados @ Blunder Policy  
 Ability: Sniper  
-Level: 76
+Level: 84
 EVs: 252 Spe  
 Jolly Nature  
 - Sticky Web  
@@ -16092,7 +16092,7 @@ Jolly Nature
 
 Nidoking @ Life Orb  
 Ability: Sheer Force  
-Level: 77   
+Level: 85
 IVs: 0 Atk  
 - Fire Blast  
 - Ice Beam  
@@ -16101,7 +16101,7 @@ IVs: 0 Atk
 
 Pinsirex @ Bright Powder
 Ability: Shield Dust  
-Level: 77  
+Level: 85
 IVs: 0 Atk  
 - Megahorn
 - Poison Jab
@@ -16110,7 +16110,7 @@ IVs: 0 Atk
 
 Ghoulbat
 Ability: Inner Focus  
-Level: 79  
+Level: 86
 - Acrobatics
 - Cross Poison
 - Toxic
@@ -16129,7 +16129,7 @@ Items: Full Restore / Full Restore
 
 Steelix @ Assault Vest  
 Ability: Rock Head  
-Level: 74 
+Level: 84
 EVs: 252 SpD  
 Sassy Nature  
 - Heavy Slam  
@@ -16139,7 +16139,7 @@ Sassy Nature
 
 Champeon
 Ability: Intimidate  
-Level: 75 
+Level: 85
 - Superpower
 - Extreme Speed
 - Swords Dance
@@ -16147,7 +16147,7 @@ Level: 75
 
 Heracurion @ Life Orb
 Ability: Moxie  
-Level: 76 
+Level: 85
 - Close Combat
 - Megahorn
 - Earthquake
@@ -16155,7 +16155,7 @@ Level: 76
 
 Hariyama @ Sitrus Berry  
 Ability: Thick Fat  
-Level: 77  
+Level: 86
 - Fake Out  
 - Belly Drum  
 - Cross Chop  
@@ -16163,7 +16163,7 @@ Level: 77
 
 Hitmonlee @ Expert Belt
 Ability: Technician  
-Level: 77 
+Level: 86
 - Close Combat
 - Blaze Kick
 - Stone Edge
@@ -16171,7 +16171,7 @@ Level: 77
 
 Machamp @ Flame Orb
 Ability: Guts  
-Level: 79  
+Level: 87
 - Facade
 - Cross Chop
 - Earthquake
@@ -16190,7 +16190,7 @@ Items: Full Restore / Full Restore
 
 Umbreon @ Black Glasses  
 Ability: Synchronize  
-Level: 74  
+Level: 85
 IVs: 0 Atk  
 - Lunar Blessing  
 - Foul Play  
@@ -16199,7 +16199,7 @@ IVs: 0 Atk
 
 Sneasel @ Razor Claw  
 Ability: Pressure  
-Level: 75  
+Level: 86
 - Hone Claws  
 - Night Slash  
 - Icicle Crash  
@@ -16207,7 +16207,7 @@ Level: 75
 
 Donphalanx @ Leftovers
 Ability: Fur Coat  
-Level: 76 
+Level: 86
 - Earthquake
 - Head Smash
 - Body Press
@@ -16215,7 +16215,7 @@ Level: 76
 
 Grimfowl @ Black Glasses
 Ability: Moxie  
-Level: 77 
+Level: 87
 - Night Daze
 - Hurricane
 - Nasty Plot
@@ -16223,7 +16223,7 @@ Level: 77
 
 Skulberus @ Flame Orb  
 Ability: Guts  
-Level: 77 
+Level: 87
 - Close Combat  
 - Double-Edge  
 - Fling  
@@ -16231,7 +16231,7 @@ Level: 77
 
 Skulberus @ Charcoal
 Ability: Unnerve  
-Level: 79  
+Level: 88
 - Fire Blast
 - Crunch
 - Iron Tail
@@ -16250,7 +16250,7 @@ Mugshot: Blue
 
 Drakeon @ Life Orb
 Ability: Intimidate  
-Level: 77 
+Level: 86
 - Dragon Rush
 - Dragon Dance
 - Crunch
@@ -16258,7 +16258,7 @@ Level: 77
 
 Feralodon @ Eject Button
 Ability: Intimidate  
-Level: 77 
+Level: 87
 - Waterfall
 - Hyper Beam
 - Crunch
@@ -16266,7 +16266,7 @@ Level: 77
 
 Charaxis @ Charcoal
 Ability: Blaze  
-Level: 78 
+Level: 87
 - Fire Blast
 - Earthquake
 - Acrobatics
@@ -16274,7 +16274,7 @@ Level: 78
 
 Feralodon @ Mystic Water
 Ability: Infiltrator  
-Level: 78 
+Level: 88
 IVs: 0 Atk  
 - Dragon Dance
 - Liquidation
@@ -16283,7 +16283,7 @@ IVs: 0 Atk
 
 Skarmadon @ Sharp Beak
 Ability: Rock Head  
-Level: 79
+Level: 88
 - Brave Bird
 - Iron Head
 - Heavy Slam
@@ -16291,7 +16291,7 @@ Level: 79
 
 Drakeon @ Leftovers
 Ability: Multiscale  
-Level: 79 
+Level: 89
 - Iron Head
 - Fire Punch
 - Dragon Rush
@@ -17578,118 +17578,111 @@ AI: Smart Trainer / Prediction
 Mugshot: Orange
 Items: Full Restore / Full Restore
 
-Pinsirex @ Razor Claw  
-Ability: Sharpness  
-Level: 76 
-- Stone Axe  
-- X-Scissor  
-- Agility  
-- Swords Dance  
-
-Donphalanx @ Toxic Orb  
-Ability: Poison Heal  
-Level: 75 
-- Spikes  
-- Protect  
-- Crabhammer  
-- Earthquake  
-
-Aerodactyl  
-Ability: Unnerve  
+Golem @ Leftovers
+Ability: Sturdy
 Level: 76
-- Fire Fang  
-- Sky Attack  
-- Earthquake  
-- Dragon Dance  
+- Stone Edge
+- Earthquake
+- Stealth Rock
+- Explosion
 
-Omastar  
-Ability: Swift Swim  
-Level: 74
-IVs: 0 Atk  
-- Ancient Power  
-- Surf  
-- Ice Beam  
-- Toxic  
+Omastar @ Mystic Water
+Ability: Swift Swim
+Level: 77
+- Surf
+- Ice Beam
+- Ancient Power
+- Toxic
 
-Relicanth @ Hard Stone  
-Ability: Rock Head  
-Level: 74 
-- Wave Crash  
-- Head Smash  
-- Calm Mind  
-- Thunderbolt  
+Kabutops @ Scope Lens
+Ability: Battle Armor
+Level: 77
+- Stone Edge
+- Liquidation
+- X-Scissor
+- Swords Dance
 
-Golem @ Magnet  
-Ability: Galvanize  
-Level: 76  
-- Stone Edge  
-- Body Slam  
-- Autotomize  
-- Charge
+Aerodactyl @ Focus Sash
+Ability: Unnerve
+Level: 78
+- Rock Slide
+- Earthquake
+- Fire Fang
+- Dragon Dance
+
+Obsideon @ Rocky Helmet
+Level: 79
+- Stone Axe
+- Earthquake
+- Crunch
+- Iron Defense
+
+Pinsirex @ Razor Claw
+Ability: Sharpness
+Level: 80
+- Stone Axe
+- X-Scissor
+- Agility
+- Swords Dance
 
 === TRAINER_PRU_HEIST_MISTY_HNS ===
 Name: MISTY
 Class: Leader Kanto Hns
 Pic: Leader Misty Hns
-Gender: Male
+Gender: Female
 Music: Hg Boy 1
 Double Battle: No
 AI: Smart Trainer / Prediction
 Mugshot: Light Blue
 Items: Full Restore / Full Restore
 
-Politoed @ Damp Rock  
-Ability: Drizzle  
-Level: 76 
-- Weather Ball  
-- Seismic Toss  
-- Metronome  
-- Hypnosis  
+Politoed @ Damp Rock
+Ability: Drizzle
+Level: 76
+- Weather Ball
+- Surf
+- Ice Beam
+- Hypnosis
 
-Swampert @ Quick Claw  
-Ability: Torrent  
-Level: 76 
-- Rain Dance  
-- Barrier  
-- Earthquake  
-- Liquidation  
+Cloyster @ Focus Sash
+Ability: Skill Link
+Level: 77
+- Icicle Spear
+- Rock Blast
+- Shell Smash
+- Liquidation
 
-Vaporeon @ Leftovers  
-Ability: Water Absorb  
-Level: 76  
-EVs: 32 HP / 40 Def / 12 SpD  
-IVs: 0 Atk  
-- Aqua Ring  
-- Hydro Pump  
-- Ice Beam  
-- Acid Armor  
+Vaporeon @ Leftovers
+Ability: Water Absorb
+Level: 78
+- Hydro Pump
+- Ice Beam
+- Acid Armor
+- Wish
 
-Milotic @ Shell Bell  
-Ability: Marvel Scale  
-Level: 75   
-IVs: 0 Atk  
-- Scald  
-- Ice Beam  
-- Rest  
-- Sleep Talk  
+Kingdra @ Scope Lens
+Ability: Sniper
+Level: 78
+- Dragon Pulse
+- Surf
+- Ice Beam
+- Agility
 
-Lapras  
-Ability: Shell Armor  
-Level: 75 
-IVs: 0 Atk  
-- Freeze-Dry  
-- Hydro Pump  
-- Rain Dance  
-- Reflect  
-
-Starmie @ Mystic Water  
-Ability: Natural Cure  
-Level: 75
-IVs: 0 Atk  
-- Psyshock  
-- Surf  
-- Thunderbolt  
+Starmie @ Life Orb
+Ability: Natural Cure
+Level: 79
+- Psychic
+- Surf
+- Thunderbolt
 - Recover
+
+Blastoise @ Assault Vest
+Ability: Torrent
+Level: 80
+- Hydro Pump
+- Ice Beam
+- Dark Pulse
+- Flash Cannon
 
 === TRAINER_PRU_HEIST_SURGE_HNS ===
 Name: LTSURGE
@@ -17699,247 +17692,233 @@ Gender: Male
 Music: Hg Boy 1
 Double Battle: No
 AI: Smart Trainer / Prediction
-Items: Full Restore / Full Restore
 Mugshot: Yellow
+Items: Full Restore / Full Restore
 
-Electrode @ Normal Gem  
-Ability: Soundproof  
-Level: 76  
-- Electro Ball  
-- Rain Dance  
-- Explosion  
+Electrode @ Focus Sash
+Ability: Levitate
+Level: 76
+- Kaboom!
+- Thunderbolt
+- Electro Ball
+- Reflect
 
-Jolteon  
-Ability: Volt Absorb  
-Level: 75   
-IVs: 0 Atk  
-- Electric Terrain  
-- Thunder  
-- Rain Dance  
-- Reflect  
+Magneton @ Eviolite
+Ability: Sturdy
+Level: 77
+- Thunderbolt
+- Flash Cannon
+- Thunder Wave
+- Volt Switch
 
-Lanturn @ Leftovers  
-Ability: Volt Absorb  
-Level: 76   
-IVs: 0 Atk  
-- Rain Dance  
-- Thunder  
-- Ion Deluge  
-- Hydro Pump  
+Electivire @ Expert Belt
+Ability: Motor Drive
+Level: 78
+- Thunder Punch
+- Ice Punch
+- Cross Chop
+- Bulk Up
 
-Manectric @ Terrain Extender  
-Ability: Lightning Rod  
-Level: 76  
-- Electric Terrain  
-- Charge  
-- Wild Charge  
-- Crunch  
+Jolteon @ Magnet
+Ability: Volt Absorb
+Level: 78
+- Thunderbolt
+- Shadow Ball
+- Light Screen
+- Agility
 
-Electivire @ Scope Lens  
-Ability: Motor Drive  
-Level: 78  
-- Thunder Punch  
-- Ice Punch  
-- Cross Chop  
-- Bulk Up  
+Porygon2 @ Eviolite
+Ability: Download
+Level: 79
+- Tri Attack
+- Thunderbolt
+- Ice Beam
+- Recover
 
-Raichu @ Electric Seed  
-Ability: Surge Surfer  
-Level: 77  
-IVs: 0 Atk  
-- Rising Voltage  
-- Electric Terrain  
-- Psyshock  
-- Calm Mind
+Raichu @ Life Orb
+Ability: Lightning Rod
+Level: 80
+- Thunderbolt
+- Focus Blast
+- Nasty Plot
+- Volt Switch
 
 === TRAINER_PRU_HEIST_ERIKA_HNS ===
 Name: ERIKA
 Class: Leader Kanto Hns
 Pic: Leader Erika Hns
-Gender: Male
+Gender: Female
 Music: Hg Boy 1
 Double Battle: No
 AI: Smart Trainer / Prediction
 Mugshot: Green
 Items: Full Restore / Full Restore
 
-Vileplume @ Focus Sash  
-Ability: Natural Cure  
+Vileplume @ Black Sludge
+Ability: Chlorophyll
 Level: 76
-IVs: 0 Atk  
-- Toxic Spikes  
-- Venoshock  
-- Toxic  
-- Petal Dance  
+- Giga Drain
+- Sludge Bomb
+- Moonblast
+- Sleep Powder
 
-Tropisaur @ Leftovers  
-Ability: Chlorophyll  
-Level: 77 
-IVs: 0 Atk  
-- Ingrain  
-- Giga Drain  
-- Grassy Terrain  
-- Protect  
+Bellossom @ Leftovers
+Ability: Chlorophyll
+Level: 77
+- Petal Dance
+- Quiver Dance
+- Moonblast
+- Synthesis
 
-Venusaur  
-Ability: Overgrow  
-Level: 76
-IVs: 0 Atk  
-- Sludge Bomb  
-- Energy Ball  
-- Synthesis  
-- Poison Powder  
-
-Sunflorid @ Miracle Seed  
-Ability: Aftermath  
-Level: 77  
-IVs: 0 Atk  
-- Chloroblast  
-- Electro Ball  
-- Foul Play  
-
-Bellossom @ Lum Berry  
-Ability: Chlorophyll  
+Exeggutor @ Sitrus Berry
+Ability: Chlorophyll
 Level: 78
-IVs: 0 Atk  
-- Grassy Terrain  
-- Quiver Dance  
-- Petal Dance  
-- Attract  
+- Psychic
+- Energy Ball
+- Sleep Powder
+- Leech Seed
 
-Ludicolo  
-Ability: Swift Swim  
-Level: 76
-IVs: 0 Atk  
-- Rain Dance  
-- Hydro Pump  
-- Energy Ball  
-- Double Team
+Leafeon @ Scope Lens
+Ability: Leaf Guard
+Level: 78
+- Leaf Blade
+- X-Scissor
+- Swords Dance
+- Synthesis
+
+Victreebel @ Focus Sash
+Ability: Chlorophyll
+Level: 79
+- Power Whip
+- Sludge Bomb
+- Knock Off
+- Sleep Powder
+
+Venusaur @ Black Sludge
+Ability: Overgrow
+Level: 80
+- Sludge Bomb
+- Energy Ball
+- Synthesis
+- Earth Power
 
 === TRAINER_PRU_HEIST_JANINE_HNS ===
 Name: JANINE
 Class: Leader Kanto Hns
 Pic: Leader Janine Hns
-Gender: Male
+Gender: Female
 Music: Hg Boy 1
 Double Battle: No
 AI: Smart Trainer / Prediction
 Mugshot: Purple
 Items: Full Restore / Full Restore
 
-Swalot  
-Ability: Liquid Ooze  
-IVs: 0 Atk  
+Muk @ Black Sludge
+Ability: Poison Touch
 Level: 76
-- Toxic Spikes  
-- Stockpile  
-- Swallow  
-- Spit Up  
+- Gunk Shot
+- Acid Armor
+- Shadow Sneak
+- Disable
 
-Frytning @ Fairy Feather  
-Ability: Levitate  
-Level: 76 
-IVs: 0 Atk  
-- Strange Steam  
-- Sludge Bomb  
-- Flamethrower  
-- Corrosive Gas  
+Venomoth @ Focus Sash
+Ability: Tinted Lens
+Level: 77
+- Bug Buzz
+- Sludge Bomb
+- Quiver Dance
+- Sleep Powder
 
-Muk @ Leftovers  
-Ability: Poison Touch  
-Level: 76 
-- Gunk Shot  
-- Acid Armor  
-- Power-Up Punch  
-- Disable  
+Crobat @ Sharp Beak
+Ability: Infiltrator
+Level: 78
+- Brave Bird
+- Cross Poison
+- Roost
+- Confuse Ray
 
-Crobat  
-Ability: Infiltrator  
-Level: 76  
-- Leech Life  
-- Confuse Ray  
-- Brave Bird  
-- Toxic  
+Tentacruel @ Black Sludge
+Ability: Liquid Ooze
+Level: 78
+- Scald
+- Sludge Bomb
+- Ice Beam
+- Toxic Spikes
 
-Adnokana @ Flying Gem  
-Ability: Unburden  
-Level: 76 
-- Acrobatics  
-- Dire Claw  
-- Close Combat  
-- Fake Out  
+Adnokana @ Flying Gem
+Ability: Unburden
+Level: 79
+- Acrobatics
+- Dire Claw
+- Close Combat
+- Fake Out
 
-Toxeon @ Bright Powder  
-Ability: Shield Dust  
-Level: 79 
-IVs: 0 Atk  
-- Venoshock  
-- Signal Beam  
-- Double Team  
-- Toxic
+Frytning @ Fairy Feather
+Ability: Levitate
+Level: 80
+- Strange Steam
+- Sludge Bomb
+- Flamethrower
+- Corrosive Gas
 
 === TRAINER_PRU_HEIST_SABRINA_HNS ===
 Name: SABRINA
 Class: Leader Kanto Hns
 Pic: Leader Sabrina Hns
-Gender: Male
+Gender: Female
 Music: Hg Boy 1
 Double Battle: No
 AI: Smart Trainer / Prediction
 Mugshot: Pink
 Items: Full Restore / Full Restore
 
-Mystynx @ Eviolite  
-Ability: Vital Spirit  
+Mr. Mime @ Light Clay
+Ability: Filter
+Level: 76
+- Psychic
+- Dazzling Gleam
+- Reflect
+- Light Screen
+
+Hypno @ Leftovers
+Ability: Insomnia
 Level: 77
-IVs: 0 Atk  
-- Light Screen  
-- Reflect  
-- Psychic  
-- Freeze-Dry  
+- Psychic
+- Shadow Ball
+- Hypnosis
+- Dream Eater
 
-Slowbro @ Quick Claw  
-Ability: Quick Draw  
-Level: 77 
-- Shell Side Arm  
-- Calm Mind  
-- Psyshock  
-- Slack Off  
+Slowbro @ Rocky Helmet
+Ability: Regenerator
+Level: 78
+- Surf
+- Psychic
+- Calm Mind
+- Slack Off
 
-Espeon  
-Ability: Magic Bounce  
-Level: 77
-IVs: 0 Atk  
-- Psychic  
-- Morning Sun  
-- Psychic Terrain  
-- Power Gem  
+Espeon @ Twisted Spoon
+Ability: Magic Bounce
+Level: 78
+- Psychic
+- Shadow Ball
+- Power Gem
+- Morning Sun
 
-Rapidash  
-Ability: Pastel Veil  
-Level: 77 
-- Play Rough  
-- Psycho Cut  
-- Wild Charge  
-- Swords Dance  
+Mystynx @ Never-Melt Ice
+Ability: Dry Skin
+Level: 79
+- Freeze-Dry
+- Psychic
+- Moonblast
+- Lovely Kiss
 
-Wobbuffet @ Leftovers  
-Ability: Shadow Tag  
-Level: 77  
-IVs: 0 Atk  
-- Counter  
-- Mirror Coat  
-- Encore  
-- Destiny Bond  
-
-Alakazam  
-Ability: Magic Guard  
-Level: 77 
-IVs: 0 Atk  
-- Psyshock  
-- Shadow Ball  
-- Calm Mind  
-- Tri Attack
+Alakazam @ Focus Sash
+Ability: Magic Guard
+Level: 80
+- Psychic
+- Focus Blast
+- Shadow Ball
+- Calm Mind
 
 === TRAINER_PRU_HEIST_BLAINE_HNS ===
 Name: BLAINE
@@ -17952,57 +17931,53 @@ AI: Smart Trainer / Prediction
 Mugshot: Dark Red
 Items: Full Restore / Full Restore
 
-Torkoal @ Heat Rock  
-Ability: Drought  
-Level: 78 
-IVs: 0 Spe  
-- Solar Beam  
-- Heat Wave  
-- Gyro Ball  
-- Iron Defense  
+Ninetales @ Heat Rock
+Ability: Drought
+Level: 76
+- Fire Blast
+- Solar Beam
+- Will-O-Wisp
+- Nasty Plot
 
-Torkaldera @ Magnet  
-Ability: Flame Body  
-Level: 77 
-IVs: 0 Atk  
-- Fire Blast  
-- Thunderbolt  
-- Confuse Ray  
-- Clear Smog  
+Rapidash @ Wide Lens
+Ability: Flash Fire
+Level: 77
+- Flare Blitz
+- Wild Charge
+- Megahorn
+- Morning Sun
 
-Blaziken @ Scope Lens  
-Ability: Speed Boost  
-Level: 77 
-- Blaze Kick  
-- Power-Up Punch  
-- Thunder Punch  
-- Protect  
-
-Magmortar @ Expert Belt  
-Ability: Flame Body  
+Magmortar @ Expert Belt
+Ability: Flame Body
 Level: 78
-IVs: 0 Atk  
-- Fire Blast  
-- Thunderbolt  
-- Focus Blast  
-- Psychic  
+- Fire Blast
+- Thunderbolt
+- Focus Blast
+- Psychic
 
-Arcanine @ Rock Incense  
-Ability: Rock Head  
-Level: 77 
-- Head Smash  
-- Raging Fury  
-- Wild Charge  
-- Extreme Speed  
+Flareon @ Toxic Orb
+Ability: Guts
+Level: 78
+- Flare Blitz
+- Facade
+- Quick Attack
+- Superpower
 
-Camerupt @ Leftovers  
-Ability: Solid Rock  
-Level: 77 
-IVs: 0 Atk  
-- Eruption  
-- Protect  
-- Amnesia  
-- Earth Power
+Arcanine @ Life Orb
+Ability: Intimidate
+Level: 79
+- Flare Blitz
+- Wild Charge
+- Extreme Speed
+- Close Combat
+
+Charizard @ Charizardite X
+Ability: Blaze
+Level: 80
+- Flare Blitz
+- Dragon Claw
+- Earthquake
+- Dragon Dance
 
 === TRAINER_PRU_HEIST_GIOVANNI_HNS ===
 Name: GIOVANNI
@@ -18015,50 +17990,49 @@ AI: Smart Trainer / Prediction
 Mugshot: Dark Red
 Items: Full Restore / Full Restore
 
-Kangaskhan
-Level: 77
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Dizzy Punch
-- Fire Punch
-- Safeguard
-- Mega Punch
+Omastar @ Focus Sash
+Ability: Swift Swim
+Level: 81
+- Ancient Power
+- Surf
+- Ice Beam
+- Stealth Rock
 
-Ghoulbat
-Level: 78
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Dark Pulse
-- Air Slash
-- Thief
-- Double Team
+Kabutops @ Scope Lens
+Ability: Battle Armor
+Level: 82
+- Stone Edge
+- Liquidation
+- X-Scissor
+- Swords Dance
 
-Nidoqueen
-Level: 78
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Ice Punch
-- Cross Poison
-- Bulldoze
-- Body Slam
-
-Persian
-Level: 78
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Faint Attack
-- Swagger
-- Screech
-- Slash
-
-Donphalanx
-Level: 77
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Headlong Rush
-- Sandstorm
-- Play Rough
-- Double Edge
-
-Nidoking
-Level: 79
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Thunder Punch
-- Earthquake
+Aerodactyl @ Life Orb
+Ability: Unnerve
+Level: 83
 - Rock Slide
-- Thrash
+- Earthquake
+- Fire Fang
+- Dragon Dance
+
+Coelossus @ Leftovers
+Level: 83
+- Earthquake
+- Stone Edge
+- Crunch
+- Curse
+
+Rhyperior @ Assault Vest
+Ability: Solid Rock
+Level: 84
+- Stone Edge
+- Earthquake
+- Megahorn
+- Fire Punch
+
+Mewtwo @ Leftovers
+Ability: Pressure
+Level: 85
+- Psychic
+- Aura Sphere
+- Calm Mind
+- Recover
