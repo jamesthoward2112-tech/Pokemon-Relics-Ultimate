@@ -41,17 +41,25 @@ assert "setflag FLAG_PRU_HEIST_STARTED" in scripts22
 # Balloon must exist from map spawn: dynamic addobject was invisible in live gameplay.
 assert "MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, Route22_OnWarp" in scripts22
 assert "map_script_2 VAR_TEMP_2, VAR_TEMP_2, Route22_EventScript_PRUHideBalloonOnWarp" in scripts22
-assert "hideobjectat 14, MAP_ROUTE22_HNS" in scripts22
-assert "showobjectat 14, MAP_ROUTE22_HNS" in scripts22
-assert "applymovement 14, Route22_Movement_PRUBalloonRise" in scripts22
+assert "hideobjectat 15, MAP_ROUTE22_HNS" in scripts22
+assert "showobjectat 15, MAP_ROUTE22_HNS" in scripts22
+assert "applymovement 15, Route22_Movement_PRUBalloonRise" in scripts22
+# In mapjson, LOCALIDs are one-based positions in object_events, NOT names or guesses.
+route22_ids = {o["graphics_id"]: index + 1 for index, o in enumerate(route22["object_events"])}
+assert route22_ids["OBJ_EVENT_GFX_JESSIE_HNS"] == 12
+assert route22_ids["OBJ_EVENT_GFX_JAMES_HNS"] == 13
+assert route22_ids["OBJ_EVENT_GFX_MON_BASE+SPECIES_MEOWTH"] == 14
+assert route22_ids["OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS"] == 15
+assert route22["object_events"][10]["graphics_id"] == "OBJ_EVENT_GFX_SMALL_LIGHT_HNS"
 balloon22 = next(o for o in route22["object_events"] if o["graphics_id"] == "OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS")
 assert (balloon22["x"], balloon22["y"]) == (12, 12), "balloon launches in visible courtyard, not under entrance"
 assert balloon22["flag"] == "0", "balloon must spawn with map then be hidden by warp script"
 heist = scripts22.split("Route22_EventScript_PRUHeistTrigger::", 1)[1].split("Route22_EventScript_PRUHeistNoop::", 1)[0]
-assert heist.index("removeobject 13") < heist.index("showobjectat 14"), "clear Meowth before balloon reveal"
-assert heist.index("showobjectat 14") < heist.index("delay 50") < heist.index("applymovement 14")
-assert "addobject 14" not in heist and "removeobject 14" not in heist
-assert heist.index("applymovement 14") < heist.index("hideobjectat 14")
+assert heist.index("removeobject 14") < heist.index("showobjectat 15"), "clear Meowth before balloon reveal"
+assert "removeobject 11" not in heist, "do not delete the unrelated Route 22 light"
+assert heist.index("showobjectat 15") < heist.index("delay 50") < heist.index("applymovement 15")
+assert "addobject 15" not in heist and "removeobject 15" not in heist
+assert heist.index("applymovement 15") < heist.index("hideobjectat 15")
 assert "walk_slow_up" in scripts22.split("Route22_Movement_PRUBalloonRise:", 1)[1]
 assert "Route22_EventScript_Scene::" in scripts22, "existing Giovanni/Silver scene changed"
 assert "ReceptionGate_EventScript_PRUHeistTrigger" not in scripts_reception
