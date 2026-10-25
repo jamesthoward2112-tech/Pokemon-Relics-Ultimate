@@ -172,7 +172,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_JESSIE_HNS",
-      "x": 10,
+      "x": 11,
       "y": 11,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -185,7 +185,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_JAMES_HNS",
-      "x": 14,
+      "x": 13,
       "y": 11,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -211,8 +211,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS",
-      "x": 12,
-      "y": 6,
+      "x": 20,
+      "y": 12,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -268,60 +268,6 @@
       "var": "VAR_TEMP_0",
       "var_value": "1",
       "script": "Route22_EventScript_ResetActivation"
-    },
-    {
-      "type": "trigger",
-      "x": 10,
-      "y": 13,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route22_EventScript_PRUHeistTrigger"
-    },
-    {
-      "type": "trigger",
-      "x": 11,
-      "y": 13,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route22_EventScript_PRUHeistTrigger"
-    },
-    {
-      "type": "trigger",
-      "x": 12,
-      "y": 13,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route22_EventScript_PRUHeistTrigger"
-    },
-    {
-      "type": "trigger",
-      "x": 13,
-      "y": 13,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route22_EventScript_PRUHeistTrigger"
-    },
-    {
-      "type": "trigger",
-      "x": 14,
-      "y": 13,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route22_EventScript_PRUHeistTrigger"
-    },
-    {
-      "type": "trigger",
-      "x": 12,
-      "y": 10,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route22_EventScript_PRUHeistTrigger"
     }
   ],
   "bg_events": [
