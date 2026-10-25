@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Ship a raw PRU .gba with the approved sequential seven-leader Dojo challenge, Giovanni's Armoured Mewtwo finale, and Elite Four rematches balanced to levels 82–89.
+**Goal:** Ship a raw PRU .gba with the seven-leader Dojo challenge, Armoured Mewtwo Giovanni finale, Elite Four rematches at levels 82–89, and a repeatable Level-100 double-Chansey XP counter.
 
 **Architecture:** Continue from `pru/combined-rhythm-rocket-balloon-20261025` on an isolated feature branch. Reuse the existing `SaffronCity_FightingDojoVIP_hns` map, trainer definitions, persistent heist flags, Viridian Gym boss event, and cave encounter. Add only the battle-only assets/form logic needed to represent Armoured Mewtwo, and lock progression with declarative save flags. Avoid altering the main Dojo EV-training room or the Rhythm 56 background integration.
 
@@ -17,16 +17,17 @@
 - Armoured Mewtwo battle-only: Def 120, SpD 120; ordinary Mewtwo stats elsewhere.
 - Existing Kanto first-clear badge mechanics, EV Dojo, Johto VIP events, cave catch, Mewsion requirements and save flags remain intact.
 - E4 rematch singles: Will 82–85; Koga 83–86; Bruno 84–87; Karen 85–88; Lance 86–89. Six valid Pokémon per trainer; fair AI and items.
+- The BP exchange's three clerks remain intact; add one evenly spaced Chansey on the right, offering repeatable two-Chansey Lv100 double battles using only Memento and Heal Pulse.
 - No unapproved filler sprites. The exact TRE Rhyperior-P/& and Armoured Mewtwo complete asset sets must be verified before artwork integration.
 - Ship an uncompressed `.gba`, preserving source history and passing build + emulator checks.
 
 ## Review Focus
-6. The three BP exchange clerks must remain fully functional, and the rightmost Chansey trainer must support repeatable Lv100 doubles without unintended BP costs or rewards.
 1. A prior save in which Blue has already been beaten and the theft has started must still see exactly one correct leader and one correct Giovanni.
 2. Saving/reloading after any leader, or losing the seventh or Giovanni fight, must never skip stages or softlock Indigo.
 3. Attempting to enter Indigo from alternate warps while theft is active must still be blocked; the guard must give accurate Dojo directions.
 4. Players with Mewtwo already caught must not duplicate a wild Mewtwo; players without one must retain their legitimate cave encounter.
 5. None of the gauntlet NPC flags should accidentally erase Johto VIP rematches or the main Dojo EV trainers.
+6. The BP exchange's three clerks remain fully functional, and the rightmost Chansey trainer supports repeatable Lv100 doubles without unintended BP costs or rewards.
 
 ---
 
