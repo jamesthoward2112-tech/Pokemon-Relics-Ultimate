@@ -2,6 +2,12 @@
 #include "graphics.h"
 
 #if IS_HNS
+// TRE 2026 slot 0922; Giovanni-only trainer artwork, not a global Mewtwo form.
+const u32 gPruArmouredMewtwoFrontGfx[] = INCBIN_U32("graphics/pokemon/mewtwo/armoured/front.4bpp.smol");
+const u16 gPruArmouredMewtwoPalette[] = INCBIN_U16("graphics/pokemon/mewtwo/armoured/normal.gbapal");
+#endif
+
+#if IS_HNS
 const u32 gBattleTextboxTiles[] = INCBIN_U32("graphics/battle_interface/hns/textbox.4bpp.smol");
 const u16 gBattleTextboxPalette[] = INCBIN_U16("graphics/battle_interface/hns/textbox.gbapal");
 const u32 gBattleTextboxTilemap[] = INCBIN_U32("graphics/battle_interface/hns/textbox_map.bin.smolTM");

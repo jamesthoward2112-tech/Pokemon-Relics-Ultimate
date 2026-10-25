@@ -34,6 +34,22 @@
 #include "constants/event_objects.h" // only for SHADOW_SIZE constants
 #include "constants/opponents_hns.h"
 
+#if IS_HNS
+extern const u32 gPruArmouredMewtwoFrontGfx[];
+extern const u16 gPruArmouredMewtwoPalette[];
+
+static bool8 IsPruGiovanniArmouredMewtwo(enum BattlerId battler, u32 species)
+{
+    // Never replace ordinary Mewtwo, including the Cerulean Cave encounter,
+    // party sprites, other trainers, or a transformed battle participant.
+    return (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+        && !IsOnPlayerSide(battler)
+        && TRAINER_BATTLE_PARAM.opponentA == TRAINER_PRU_HEIST_GIOVANNI_HNS
+        && species == SPECIES_MEWTWO
+        && gBattleSpritesDataPtr->battlerData[battler].transformSpecies == SPECIES_NONE;
+}
+#endif
+
 // PRU battle-only Kimono art uses existing Mega sprite *pictures* without
 // enabling Mega Evolution or changing the underlying species/444 Pokédex.
 extern const u32 gMonFrontPic_GengarMega[];
@@ -741,6 +757,20 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
                              gMonSpritesGfxPtr->spritesGfx[position],
                              species, personalityValue);
 
+#if IS_HNS
+    bool8 useGiovanniArmour = IsPruGiovanniArmouredMewtwo(battler, species);
+    if (useGiovanniArmour)
+    {
+        DecompressDataWithHeaderWram(gPruArmouredMewtwoFrontGfx, gMonSpritesGfxPtr->spritesGfx[position]);
+        // Mewtwo's animation normally loads four standard sprite frames.
+        // Copy the authentic armour art to all four to avoid a vanilla flash.
+        for (u32 frame = 1; frame < 4; frame++)
+            Dma3CopyLarge32_(gMonSpritesGfxPtr->spritesGfx[position],
+                             &gMonSpritesGfxPtr->spritesGfx[position][MON_PIC_SIZE * frame],
+                             MON_PIC_SIZE);
+    }
+#endif
+
     // Art-only costumes for the five Lv48 Ecruteak Kimono Ghost battles.
     // Mega Evolution is disabled; these are NOT Mega-form species or boosts.
     // Draw the corresponding donor Mega front silhouette directly, while
@@ -804,6 +834,11 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
     default:
         break;
     }
+
+#if IS_HNS
+    if (useGiovanniArmour)
+        paletteData = gPruArmouredMewtwoPalette;
+#endif
 
     LoadPalette(paletteData, paletteOffset, PLTT_SIZE_4BPP);
     LoadPalette(paletteData, BG_PLTT_ID(8) + BG_PLTT_ID(battler), PLTT_SIZE_4BPP);

@@ -128,6 +128,7 @@ jobs:
           python3 tools/pru/check_route22_heist_indigo_guard.py
           python3 tools/pru/check_frontier_chansey_xp.py
           python3 tools/pru/check_450_electivire_magmortar.py
+          python3 tools/pru/check_giovanni_armoured_mewtwo_sprite.py
           python3 tools/pru/check_insurgence_mega_jirachi.py
           python3 tools/pru/check_insurgence_space_mew.py
           python3 tools/pru/check_p_bird_sprites.py
