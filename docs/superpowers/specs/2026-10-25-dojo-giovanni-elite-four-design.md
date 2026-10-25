@@ -24,9 +24,9 @@ Make the stolen-badge recovery a coherent postgame quest, culminating in Giovann
 Each uses Kanto Pokémon or evolutions thereof and 1–2 established custom/special sprites; six Pokémon, suitable held items and smart-but-fair AI. Audit legality of custom forms in the current 450-entry roster before defining teams.
 
 ## Expanded 450-entry Pokédex
-- #448 Rhyperior (Giovanni's approved custom TRE sprite remains to be verified).
-- #449 Electivire: use an Electirizer on Electabuzz.
-- #450 Magmortar: use a Magmarizer on Magmar.
+- #448 Rhyperior (Protector sold at Goldenrod 2F; Giovanni's approved custom TRE sprite remains to be verified).
+- #449 Electivire: use an Electirizer on Electabuzz (sold at Goldenrod 2F).
+- #450 Magmortar: use a Magmarizer on Magmar (sold at Goldenrod 2F).
 - Existing front/back, party and overworld artwork is reused; preserve #001–#447 unchanged.
 
 ## Battle-Only Form and Sprite Rules

@@ -36,6 +36,10 @@ def check() -> None:
         for asset in ("anim_front.png", "back.png", "icon.png", "normal.pal"):
             assert (art / asset).is_file(), f"Missing {species} asset {asset}"
 
+    shop = (ROOT / "data/maps/GoldenrodCity_DepartmentStore_2F_hns/scripts.inc").read_text(encoding="utf-8")
+    for item in ("PROTECTOR", "ELECTIRIZER", "MAGMARIZER"):
+        assert f".2byte ITEM_{item}" in shop, f"{item} must be obtainable in Goldenrod"
+
     surge, blaine = heist_party("SURGE"), heist_party("BLAINE")
     assert "Electivire" in surge and "Noxichu" not in surge
     assert "Magmortar" in blaine
