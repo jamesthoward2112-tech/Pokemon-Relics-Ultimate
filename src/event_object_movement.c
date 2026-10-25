@@ -6957,6 +6957,10 @@ u32 GetObjectObjectCollidesWith(struct ObjectEvent *objectEvent, s16 x, s16 y, b
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
     {
         curObject = &gObjectEvents[i];
+        // The staged balloon remains loaded but hidden outside cutscenes;
+        // do not let its invisible object block the Route 22 or League door.
+        if (curObject->graphicsId == OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS && curObject->invisible)
+            continue;
         if (curObject->active && (curObject->movementType != MOVEMENT_TYPE_FOLLOW_PLAYER || objectEvent != &gObjectEvents[gPlayerAvatar.objectEventId]) && curObject != objectEvent
          && !FollowerNPC_IsCollisionExempt(curObject, objectEvent)
          )
