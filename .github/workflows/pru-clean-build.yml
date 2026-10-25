@@ -112,6 +112,8 @@ jobs:
         run: |
           set -euo pipefail
           python3 tools/pru/check_crystal_battle_backgrounds.py
+          python3 tools/pru/check_rhythm_battle_background_assets.py
+          python3 tools/pru/check_rhythm_battle_backgrounds.py
           python3 tools/pru/check_static_battle_backgrounds.py
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_lavender_cubone_staging.py
@@ -123,6 +125,7 @@ jobs:
           python3 tools/pru/check_20261024_kyogre_cave.py
           python3 tools/pru/check_20261024_primal_ace.py
           python3 tools/pru/check_20261025_archie_finale.py
+          python3 tools/pru/check_route22_heist_indigo_guard.py
           python3 tools/pru/check_insurgence_mega_jirachi.py
           python3 tools/pru/check_insurgence_space_mew.py
           python3 tools/pru/check_p_bird_sprites.py
