@@ -446,3 +446,6 @@ PRU_No,Name,Species_Key,Species_Constant,Category,Type_Source,Source_Tier,Notes
 445,Glaceon,glaceon,SPECIES_GLACEON,Approved 450 expansion,MON_TYPES(TYPE_ICE),Gen4 cross-evolution,Append-only Eevee evolution; Ice Stone or approved cold route; future entries 448-450 reserved.
 446,Leafeon,leafeon,SPECIES_LEAFEON,Approved 450 expansion,MON_TYPES(TYPE_GRASS),Gen4 cross-evolution,Append-only Eevee evolution; Leaf Stone or approved forest route; future entries 448-450 reserved.
 447,Mimikyu,mimikyu,SPECIES_MIMIKYU_DISGUISED,Approved 450 expansion,"MON_TYPES(TYPE_GHOST, TYPE_FAIRY)",Lavender Soul House ghost quest,Single species with Disguised and Busted battle forms; Eerie Fog move; encounter after Maroghost and Osteodian.
+448,Rhyperior,rhyperior,SPECIES_RHYPERIOR,Approved 450 expansion,"MON_TYPES(TYPE_GROUND, TYPE_ROCK)",Gen4 cross-evolution,Rhydon evolves with Protector; Giovanni TRE sprite pending
+449,Electivire,electivire,SPECIES_ELECTIVIRE,Approved 450 expansion,MON_TYPES(TYPE_ELECTRIC),Gen4 cross-evolution,Electabuzz evolves with Electirizer; Surge rematch
+450,Magmortar,magmortar,SPECIES_MAGMORTAR,Approved 450 expansion,MON_TYPES(TYPE_FIRE),Gen4 cross-evolution,Magmar evolves with Magmarizer; Blaine rematch

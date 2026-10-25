@@ -16,12 +16,18 @@ Make the stolen-badge recovery a coherent postgame quest, culminating in Giovann
 ## Kanto Rematch Team Locks
 - Brock: Golem, Omastar, Kabutops, Aerodactyl, Obsideon, Pinsirex.
 - Misty: Politoed, Cloyster, Vaporeon, Kingdra, custom-sprite Starmie, **Blastoise** (not Fortotoise).
-- Surge: Electrode (Levitate/Kaboom!), Magneton, **Electabuzz**, Jolteon, Porygon2, Raichu with approved special sprite (not Noxichu).
+- Surge: Electrode (Levitate/Kaboom!), Magneton, **Electivire**, Jolteon, Porygon2, Raichu with approved special sprite (not Noxichu).
 - Erika: Vileplume, Bellossom, Exeggutor, Leafeon, special-sprite Victreebel, **Venusaur** (not Edensaur).
 - Janine: Muk, Venomoth, Crobat, Tentacruel, Adnokana, Frytning.
 - Sabrina: Mr. Mime, Hypno, Slowbro, Espeon, Mystynx, Alakazam.
-- Blaine: Ninetales, Rapidash, Magmar, Flareon, Arcanine, **Charizard using Mega Charizard X sprite**.
+- Blaine: Ninetales, Rapidash, **Magmortar**, Flareon, Arcanine, **Charizard using Mega Charizard X sprite**.
 Each uses Kanto Pokémon or evolutions thereof and 1–2 established custom/special sprites; six Pokémon, suitable held items and smart-but-fair AI. Audit legality of custom forms in the current 450-entry roster before defining teams.
+
+## Expanded 450-entry Pokédex
+- #448 Rhyperior (Giovanni's approved custom TRE sprite remains to be verified).
+- #449 Electivire: use an Electirizer on Electabuzz.
+- #450 Magmortar: use a Magmarizer on Magmar.
+- Existing front/back, party and overworld artwork is reused; preserve #001–#447 unchanged.
 
 ## Battle-Only Form and Sprite Rules
 - Armoured Mewtwo: 90→120 Defence and 90→120 Special Defence, otherwise normal Mewtwo's offensive stats, move capability and speed. A separate trainer-only form or battle-only battle data, **not** global Mewtwo base-stat changes, should implement this. The catchable cave Mewtwo remains the ordinary species.

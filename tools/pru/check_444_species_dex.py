@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit the PRU 447-entry staged canonical species order against the active engine tree.
+"""Audit the PRU 450-entry staged canonical species order against the active engine tree.
 
 Run: python3 tools/pru/check_444_species_dex.py
 No network access or third-party packages required; suitable for GitHub Actions.
@@ -19,12 +19,12 @@ ENABLED = ROOT / "include/config/species_enabled.h"
 
 with CANON.open(encoding="utf-8-sig", newline="") as handle:
     canonical = list(csv.DictReader(handle))
-assert len(canonical) == 447, f"canonical count: {len(canonical)}"
-assert [int(r["PRU_No"]) for r in canonical] == list(range(1, 448)), "canonical numbers are not 1..447"
+assert len(canonical) == 450, f"canonical count: {len(canonical)}"
+assert [int(r["PRU_No"]) for r in canonical] == list(range(1, 451)), "canonical numbers are not 1..450"
 names = [r["Name"] for r in canonical]
 ids = [r["Species_Constant"] for r in canonical]
-assert len(set(ids)) == 447, "duplicate source species constants"
-assert len(set(names)) == 447, "duplicate species names"
+assert len(set(ids)) == 450, "duplicate source species constants"
+assert len(set(names)) == 450, "duplicate species names"
 
 definitions = HEADER.read_text(encoding="utf-8")
 missing_constants = [c for c in ids if not re.search(r"^#define\s+" + re.escape(c) + r"\s+", definitions, re.M)]
@@ -68,10 +68,10 @@ for gen in (1, 2, 3, 4, 6):
     assert re.search(rf"^#define P_GEN_{gen}_POKEMON\s+TRUE\b", enabled, re.M), f"Gen {gen} is disabled"
 
 header = ORDER.read_text(encoding="utf-8")
-assert "#define PRU_DEX_COUNT 447" in header
+assert "#define PRU_DEX_COUNT 450" in header
 listed = [(m.group(1), int(m.group(2))) for m in
           re.finditer(r"^\s*(SPECIES_[A-Z0-9_]+),\s*//\s*(\d{3})\b", header, re.M)]
-assert listed == list(zip(ids, range(1, 448))), "Engine HNS summary numbering differs from the canonical list"
+assert listed == list(zip(ids, range(1, 451))), "Engine HNS summary numbering differs from the canonical list"
 
 engine = ENGINE.read_text(encoding="utf-8")
 assert '#include "data/pokemon/pru_dex_order.h"' in engine
@@ -84,12 +84,13 @@ assert "sPruDexSpecies[i] == baseSpecies" in summary
 for name, expected in [("Charaxis", 8), ("Grovyle", 285),
                        ("Mightyena", 297), ("Gardevoir", 318),
                        ("Mewsion", 425), ("Deoxys", 444),
-                       ("Glaceon", 445), ("Leafeon", 446), ("Mimikyu", 447)]:
+                       ("Glaceon", 445), ("Leafeon", 446), ("Mimikyu", 447),
+                       ("Rhyperior", 448), ("Electivire", 449), ("Magmortar", 450)]:
     assert canonical[expected - 1]["Name"] == name, name
 
-print(f"PASS: {len(canonical)}/447 canonical species constants exist and have exactly one SpeciesInfo record")
+print(f"PASS: {len(canonical)}/450 canonical species constants exist and have exactly one SpeciesInfo record")
 print("PASS: active engine includes all nine generation family files and PJR/PRU extensions")
-print("PASS: canonical PRU #001-#447 maps to the HNS summary number lookup without duplicates")
+print("PASS: canonical PRU #001-#450 maps to the HNS summary number lookup without duplicates")
 print("PASS: #008 Charaxis, #285 Grovyle, #297 Mightyena, #318 Gardevoir")
 print("NOTE: these checks validate source registry/summary numbering, NOT gameplay or graphics.")
 print("OPEN: HGSS in-game Pokédex list and save seen/caught flags still use old National/Johto mapping.")

@@ -18,6 +18,7 @@
 - Existing Kanto first-clear badge mechanics, EV Dojo, Johto VIP events, cave catch, Mewsion requirements and save flags remain intact.
 - E4 rematch singles: Will 82–85; Koga 83–86; Bruno 84–87; Karen 85–88; Lance 86–89. Six valid Pokémon per trainer; fair AI and items.
 - The BP exchange's three clerks remain intact; add one evenly spaced Chansey on the right, offering repeatable two-Chansey Lv100 double battles using only Memento and Heal Pulse.
+- Active Pokédex additions #448 Rhyperior, #449 Electivire and #450 Magmortar; both new evolutions use their existing evolution items.
 - No unapproved filler sprites. The exact TRE Rhyperior-P/& and Armoured Mewtwo complete asset sets must be verified before artwork integration.
 - Ship an uncompressed `.gba`, preserving source history and passing build + emulator checks.
 
@@ -45,7 +46,7 @@
 - [ ] **Step 1: Write a static validation test** asserting seven named heist trainers, `SPECIES_RHYPERIOR == 464`, a distinct Armoured Mewtwo battle-only visual/stat route, and existing cave Mewtwo script references. It should initially fail on the currently missing boss form and gauntlet.
 - [ ] **Step 2: Run** `python3 -m unittest tools.pru_tests.test_2026_heist_content -v`; record expected missing-asset/gauntlet failures.
 - [ ] **Step 3: Search and visually audit TRE Rhyperior-P/& and Armoured Mewtwo complete sprites; document exact source library file, donor slot and all palettes in the asset audit.** If a full set is unavailable, pause that art-specific change and seek user direction; never silently substitute stock art.
-- [ ] **Step 4: Verify Pokédex slot #448 and reserved species ranges before enabling Rhyperior, without renumbering existing custom IDs.**
+- [ ] **Step 4: Append Rhyperior #448, Electivire #449 and Magmortar #450 in canonical and HNS summary data, without renumbering existing IDs.**
 - [ ] **Step 5: Commit only verified asset inventory and test scaffolding.**
 
 ### Task 2: Dojo VIP ordered heist events
@@ -77,7 +78,7 @@
 - Uses leader flags from Task 2 and exact six-Pokémon team species order in the spec.
 - Preserves first-clear rewards and existing original badge flags.
 
-- [ ] **Step 1: Add static trainer-table tests** for seven named six-Pokémon singles, levels 76–80, Misty Blastoise, Erika Venusaur, Blaine Charizard with Mega Charizard X art, Surge Electabuzz not Noxichu, unique valid held items/abilities, and no invalid species names.
+- [ ] **Step 1: Add static trainer-table tests** for seven named six-Pokémon singles, levels 76–80, Misty Blastoise, Erika Venusaur, Blaine Charizard with Mega Charizard X art, Surge Electivire not Noxichu, unique valid held items/abilities, and no invalid species names.
 - [ ] **Step 2: Run failing test.**
 - [ ] **Step 3: Implement team edits**, ensuring custom skins are graphics overrides (not accidentally unwanted global species replacements).
 - [ ] **Step 4: Update gym world event visibility** so original first-visit fights remain valid, but leaders are absent during theft; audit Blue's absence in Viridian/Dojo during this story.
