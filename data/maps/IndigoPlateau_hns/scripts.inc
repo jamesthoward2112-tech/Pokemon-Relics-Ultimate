@@ -51,22 +51,35 @@ IndigoPlateau_EventScript_PRUEscape::
 	removeobject 5
 	msgbox IndigoPlateau_Text_PRUBalloonDeparture, MSGBOX_DEFAULT
 	closemessage
-	@ Display authentic MrNightology 64x64 Meowth balloon and animate
-	@ its ascent without redrawing or replacing any existing sprites.
-	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
-	removeobject 1
-	removeobject 2
-	removeobject 3
+	@ Last Rocket rendezvous: respond, then board one at a time.
+	applymovement 1, IndigoPlateau_Movement_PRUJessieReady
+	applymovement 2, IndigoPlateau_Movement_PRUJamesReady
+	applymovement 3, IndigoPlateau_Movement_PRUMeowthReady
+	waitmovement 1
+	waitmovement 2
+	waitmovement 3
+	playse SE_M_FLY
 	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	addobject 4
-	delay 50
+	applymovement 4, IndigoPlateau_Movement_PRUBalloonArrive
+	waitmovement 4
+	delay 12
+	applymovement 1, IndigoPlateau_Movement_PRUJessieBoard
+	waitmovement 1
+	removeobject 1
+	applymovement 2, IndigoPlateau_Movement_PRUJamesBoard
+	waitmovement 2
+	removeobject 2
+	applymovement 3, IndigoPlateau_Movement_PRUMeowthBoard
+	waitmovement 3
+	removeobject 3
+	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
+	delay 18
+	playse SE_M_FLY
 	applymovement 4, IndigoPlateau_Movement_PRUBalloonRise
 	waitmovement 4
-	fadescreenswapbuffers FADE_TO_WHITE
 	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	removeobject 4
-	playse SE_M_TELEPORT
-	fadescreenswapbuffers FADE_FROM_WHITE
 	releaseall
 	end
 
@@ -99,9 +112,46 @@ IndigoPlateau_Text_PRUWaiting:
 	.string "awaits the eight BADGES!$"
 
 
+IndigoPlateau_Movement_PRUJessieReady:
+	walk_in_place_down
+	step_end
+
+IndigoPlateau_Movement_PRUJamesReady:
+	walk_in_place_down
+	step_end
+
+IndigoPlateau_Movement_PRUMeowthReady:
+	jump_in_place_down
+	step_end
+
+IndigoPlateau_Movement_PRUBalloonArrive:
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	step_end
+
+IndigoPlateau_Movement_PRUJessieBoard:
+	walk_fast_down
+	step_end
+
+IndigoPlateau_Movement_PRUJamesBoard:
+	walk_fast_down
+	step_end
+
+IndigoPlateau_Movement_PRUMeowthBoard:
+	walk_fast_down
+	step_end
+
 IndigoPlateau_Movement_PRUBalloonRise:
-	walk_slow_up
-	walk_slow_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
 	step_end
 
 IndigoPlateau_EventScript_PRUGuard::
