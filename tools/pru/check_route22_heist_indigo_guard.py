@@ -38,6 +38,12 @@ assert "goto_if_unset FLAG_BADGE16_GET, Route22_EventScript_PRUHeistNoop" in scr
 assert "goto_if_set FLAG_PRU_HEIST_STARTED, Route22_EventScript_PRUHeistNoop" in scripts22
 assert "setflag FLAG_PRU_HEIST_STARTED" in scripts22
 assert "addobject 14" in scripts22 and "applymovement 14, Route22_Movement_PRUBalloonRise" in scripts22
+balloon22 = next(o for o in route22["object_events"] if o["graphics_id"] == "OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS")
+assert (balloon22["x"], balloon22["y"]) == (12, 12), "balloon launches in visible courtyard, not under entrance"
+heist = scripts22.split("Route22_EventScript_PRUHeistTrigger::", 1)[1].split("Route22_EventScript_PRUHeistNoop::", 1)[0]
+assert heist.index("removeobject 13") < heist.index("addobject 14"), "clear Meowth before balloon spawn"
+assert heist.index("addobject 14") < heist.index("delay 50") < heist.index("applymovement 14")
+assert "walk_slow_up" in scripts22.split("Route22_Movement_PRUBalloonRise:", 1)[1]
 assert "Route22_EventScript_Scene::" in scripts22, "existing Giovanni/Silver scene changed"
 assert "ReceptionGate_EventScript_PRUHeistTrigger" not in scripts_reception
 assert not re.search(r"\b(?:setflag|clearflag)\s+FLAG_BADGE\d+_GET", 
@@ -52,6 +58,21 @@ guard = next(o for o in indigo["object_events"]
              if o["graphics_id"] == "OBJ_EVENT_GFX_ROCKET_M_HNS")
 assert (guard["x"], guard["y"]) == (11, 6), "Rocket guard must occupy the actual door"
 assert guard["flag"] == "FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD"
+# Walking onto the League warp must run a blocking script BEFORE warp handling.
+# NPC collision alone is not sufficient, as shown by gameplay video.
+assert any(e["x"] == door["x"] and e["y"] == door["y"]
+           and e["script"] == "IndigoPlateau_EventScript_PRUDoorGate" 
+           for e in indigo["coord_events"]), "missing scripted League entrance guard"
+gate = scripts_indigo.split("IndigoPlateau_EventScript_PRUDoorGate::", 1)[1].split(
+    "IndigoPlateau_Text_PRUGuard:", 1)[0]
+assert "goto_if_unset FLAG_PRU_HEIST_STARTED" in gate
+assert "goto_if_set FLAG_PRU_HEIST_COMPLETED" in gate
+assert "msgbox IndigoPlateau_Text_PRUGuard" in gate
+assert "warp MAP_INDIGO_PLATEAU_POKEMON_CENTER_HNS, 19, 15" in gate
+assert gate.index("msgbox IndigoPlateau_Text_PRUGuard") < gate.index("warp MAP_INDIGO_PLATEAU_POKEMON_CENTER_HNS")
+balloon_indigo = next(o for o in indigo["object_events"] if o["graphics_id"] == "OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS")
+assert (balloon_indigo["x"], balloon_indigo["y"]) == (11, 10)
+
 sync = scripts_indigo.split("IndigoPlateau_EventScript_PRUSyncRocket::", 1)[1].split(
     "IndigoPlateau_EventScript_PRUSyncDone::", 1)[0]
 assert "goto_if_unset FLAG_PRU_HEIST_STARTED" in sync
@@ -60,6 +81,8 @@ assert sync.index("clearflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD") < sync.index(
     "goto_if_unset FLAG_PRU_HEIST_GIOVANNI")
 finale = scripts_indigo.split("IndigoPlateau_EventScript_PRUEscape::", 1)[1].split(
     "IndigoPlateau_Text_PRURocketIntro:", 1)[0]
+assert finale.index("removeobject 3") < finale.index("addobject 4")
+assert finale.index("addobject 4") < finale.index("delay 50") < finale.index("applymovement 4")
 assert finale.index("setflag FLAG_PRU_HEIST_COMPLETED") < finale.index(
     "setflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD") < finale.index("removeobject 5")
 assert "#define FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD              0x4FF" in flags
