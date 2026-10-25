@@ -15,6 +15,8 @@ ace = archie.split("Kyogre @ Blue Orb", 1)[1]
 assert ace.count("Shiny: Yes") == 1, "trainer Kyogre should be actually shiny"
 assert ace.index("Shiny: Yes") > ace.index("Level: ")
 assert "Kyogre @ Blue Orb" in archie
+assert "Level: 80" in ace.split("===", 1)[0], "Kyogre must be stronger than his Lv78 teammate"
+assert all(f"- {move}" in ace for move in ("Origin Pulse", "Thunder", "Ice Beam", "Calm Mind"))
 
 # Native AI code, not just party ordering, must honour the ace and avoid
 # choosing it when other usable party members remain.
@@ -26,9 +28,19 @@ assert "CountUsablePartyMons(battler) <= aceMonCount" in ai
 map_data = json.loads(read("data/maps/SeafoamIslands_SecretCave_hns/map.json"))
 assert map_data["layout"] == "LAYOUT_SEAFOAM_ISLANDS_SECRET_CAVE_HNS"
 assert map_data["weather"] == "WEATHER_RAIN"
+layouts = json.loads(read("data/layouts/layouts.json"))["layouts"]
+seafoam = next(l for l in layouts if l["id"] == "LAYOUT_SEAFOAM_ISLANDS_SECRET_CAVE_HNS")
+blackthorn = next(l for l in layouts if l["id"] == "LAYOUT_BLACKTHORN_CITY_GYM_HNS")
+assert seafoam["secondary_tileset"] == "gTileset_PruSeafoamBlue_Hns", "Seafoam water must use its own blue palette"
+assert blackthorn["secondary_tileset"] == "gTileset_BlackthornGym_Hns", "Blackthorn Gym must not be recoloured"
+tilesets = read("src/data/tilesets/graphics.h")
+assert 'INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/pru_seafoam_blue_12.gbapal")' in tilesets
+water_palette = read("data/tilesets/secondary/blackthorn_gym_hns/palettes/pru_seafoam_blue_12.pal").splitlines()[3:]
+assert len(water_palette) == 16
+assert all(int(rgb.split()[2]) > int(rgb.split()[0]) for rgb in water_palette[5:]), "Water must be blue, not lava-red"
 kyogre = next(o for o in map_data["object_events"] if o["script"] == "SeafoamIslands_SecretCave_EventScript_Kyogre")
 archie_obj = next(o for o in map_data["object_events"] if o["script"] == "SeafoamIslands_SecretCave_EventScript_Archie")
-assert kyogre["graphics_id"] == "OBJ_EVENT_GFX_KYOGRE_FRONT"
+assert kyogre["graphics_id"] == "OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_KYOGRE_HNS"
 assert kyogre["local_id"] == "LOCALID_PRU_KYOGRE"
 assert kyogre["flag"] == "FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE"
 assert archie_obj["y"] == 12, "Archie should stand closer to the hidden legend"
@@ -52,6 +64,9 @@ assert "setflag FLAG_PRU_KYOGRE_CAUGHT" in caught
 assert "setflag FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE" in caught
 
 groudon = read("data/maps/MtSilver_1F_MoltresRoom_hns/scripts.inc")
+groudon_map = json.loads(read("data/maps/MtSilver_1F_MoltresRoom_hns/map.json"))
+groudon_obj = next(o for o in groudon_map["object_events"] if o["script"] == "MtSilver_1F_MoltresRoom_EventScript_Groudon")
+assert groudon_obj["graphics_id"] == "OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_GROUDON_HNS"
 assert "setwildbattleshiny SPECIES_GROUDON, 75, ITEM_RED_ORB" in groudon
 assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT" in groudon
 util = read("src/script_pokemon_util.c")
@@ -65,4 +80,12 @@ for name in ("kyogre", "groudon"):
     assert (art / "front.png").is_file() and (art / "back.png").is_file()
     assert (art / "shiny.pal").is_file()
     assert (art / "shiny.pal").read_bytes() != (art / "normal.pal").read_bytes()
+    assert (art / "overworld.png").is_file() and (art / "overworld_shiny.pal").is_file()
+    token = f"PruShinyPrimal{name.title()}_hns"
+    graphics = read("src/data/object_events/object_event_graphics.h")
+    assert f"graphics/pokemon/{name}/primal/overworld.4bpp" in graphics
+    assert f"graphics/pokemon/{name}/primal/overworld_shiny.gbapal" in graphics
+    assert token in read("src/data/object_events/object_event_graphics_info.h")
+    assert token in read("src/data/object_events/object_event_graphics_info_pointers.h")
+    assert token in read("src/event_object_movement.c")
 print("PRU_PRIMAL_ACE_PASS: true shiny Primals, native ace AI, hidden Kyogre reveal, original cave, capture-only respawns")

@@ -1709,6 +1709,19 @@ const struct Tileset gTileset_BlackthornGym_Hns =
     .callback = InitTilesetAnim_BlackthornGym,
 };
 
+// Preserve the Seafoam cave's original blocks and animation, but keep its
+// blue pool palette separate from the red magma in Blackthorn Gym.
+const struct Tileset gTileset_PruSeafoamBlue_Hns =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_BlackthornGym_Hns,
+    .palettes = gTilesetPalettes_PruSeafoamBlue_Hns,
+    .metatiles = gMetatiles_BlackthornGym_Hns,
+    .metatileAttributes = gMetatileAttributes_BlackthornGym_Hns,
+    .callback = InitTilesetAnim_BlackthornGym,
+};
+
 const struct Tileset gTileset_BurnedTower_Hns =
 {
     .isCompressed = TRUE,

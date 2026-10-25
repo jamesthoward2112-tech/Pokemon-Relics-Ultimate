@@ -3362,6 +3362,25 @@ const u16 gTilesetPalettes_BlackthornGym_Hns[][16] =
     INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/12.gbapal"),
 };
 
+// Only the Seafoam Kyogre chamber uses this palette substitution. Index 12
+// holds Blackthorn's red magma; the cave instead renders it as blue water.
+const u16 gTilesetPalettes_PruSeafoamBlue_Hns[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/pru_seafoam_blue_12.gbapal"),
+};
+
 const u32 gTilesetTiles_BurnedTower_Hns[] = INCBIN_U32("data/tilesets/secondary/burned_tower_hns/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_BurnedTower_Hns[][16] =

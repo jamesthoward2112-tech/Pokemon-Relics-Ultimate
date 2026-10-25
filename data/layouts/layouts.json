@@ -13300,7 +13300,7 @@
       "width": 35,
       "height": 28,
       "primary_tileset": "gTileset_Johto_Building_Hns",
-      "secondary_tileset": "gTileset_BlackthornGym_Hns",
+      "secondary_tileset": "gTileset_PruSeafoamBlue_Hns",
       "border_filepath": "data/layouts/SeafoamIslands_SecretCave_hns/border.bin",
       "blockdata_filepath": "data/layouts/SeafoamIslands_SecretCave_hns/map.bin",
       "game_version": "hns",
