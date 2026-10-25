@@ -44,6 +44,22 @@
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
 
+// The League door can auto-warp before tile scripts run. Check the
+// Rocket badge-case quest at the field-engine boundary as well.
+#if IS_HNS
+extern const u8 IndigoPlateau_EventScript_PRUDoorGate[];
+
+static bool8 ShouldBlockIndigoPlateauRocketDoor(const struct MapPosition *position)
+{
+    return gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_INDIGO_PLATEAU_HNS)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_INDIGO_PLATEAU_HNS)
+        && position->x == 11 + MAP_OFFSET
+        && position->y == 6 + MAP_OFFSET
+        && FlagGet(FLAG_PRU_HEIST_STARTED)
+        && !FlagGet(FLAG_PRU_HEIST_COMPLETED);
+}
+#endif
+
 static EWRAM_DATA u8 sWildEncounterImmunitySteps = 0;
 static EWRAM_DATA u16 sPrevMetatileBehavior = 0;
 static EWRAM_DATA u8 sPlayerSelectHoldFrames = 0;
@@ -1005,6 +1021,13 @@ static bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileB
 
     if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
     {
+#if IS_HNS
+        if (ShouldBlockIndigoPlateauRocketDoor(position))
+        {
+            ScriptContext_SetupScript(IndigoPlateau_EventScript_PRUDoorGate);
+            return TRUE;
+        }
+#endif
         StoreInitialPlayerAvatarState();
         SetupWarp(&gMapHeader, warpEventId, position);
         if (MetatileBehavior_IsEscalator(metatileBehavior) == TRUE)
@@ -1148,6 +1171,13 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, enu
             warpEventId = GetWarpEventAtMapPosition(&gMapHeader, position);
             if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
             {
+#if IS_HNS
+                if (ShouldBlockIndigoPlateauRocketDoor(position))
+                {
+                    ScriptContext_SetupScript(IndigoPlateau_EventScript_PRUDoorGate);
+                    return TRUE;
+                }
+#endif
                 StoreInitialPlayerAvatarState();
                 SetupWarp(&gMapHeader, warpEventId, position);
                 DoDoorWarp();

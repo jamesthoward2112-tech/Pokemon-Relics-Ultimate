@@ -17,8 +17,11 @@ IndigoPlateau_Text_Sign:
 IndigoPlateau_EventScript_PRUSyncRocket::
 	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
 	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
-	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUSyncDone
+	setflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD
+	goto_if_unset FLAG_PRU_HEIST_STARTED, IndigoPlateau_EventScript_PRUSyncDone
 	goto_if_set FLAG_PRU_HEIST_COMPLETED, IndigoPlateau_EventScript_PRUSyncDone
+	clearflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUSyncDone
 	clearflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
 IndigoPlateau_EventScript_PRUSyncDone::
 	end
@@ -44,23 +47,39 @@ IndigoPlateau_EventScript_PRUEscape::
 	msgbox IndigoPlateau_Text_PRUBadgeCaseReturn, MSGBOX_DEFAULT
 	setflag FLAG_PRU_JESSIE_JAMES_INDIGO
 	setflag FLAG_PRU_HEIST_COMPLETED
+	setflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD
+	removeobject 5
 	msgbox IndigoPlateau_Text_PRUBalloonDeparture, MSGBOX_DEFAULT
 	closemessage
-	@ Display authentic MrNightology 64x64 Meowth balloon and animate
-	@ its ascent without redrawing or replacing any existing sprites.
+	@ Last Rocket rendezvous: respond, then board one at a time.
+	applymovement 1, IndigoPlateau_Movement_PRUJessieReady
+	applymovement 2, IndigoPlateau_Movement_PRUJamesReady
+	applymovement 3, IndigoPlateau_Movement_PRUMeowthReady
+	waitmovement 1
+	waitmovement 2
+	waitmovement 3
+	playse SE_M_FLY
 	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	addobject 4
-	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
-	removeobject 1
-	removeobject 2
-	removeobject 3
-	applymovement 4, IndigoPlateau_Movement_PRUBalloonRise
+	applymovement 4, IndigoPlateau_Movement_PRUBalloonArrive
 	waitmovement 4
-	fadescreenswapbuffers FADE_TO_WHITE
+	delay 12
+	applymovement 1, IndigoPlateau_Movement_PRUJessieBoard
+	waitmovement 1
+	removeobject 1
+	applymovement 2, IndigoPlateau_Movement_PRUJamesBoard
+	waitmovement 2
+	removeobject 2
+	applymovement 3, IndigoPlateau_Movement_PRUMeowthBoard
+	waitmovement 3
+	removeobject 3
+	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
+	delay 18
+	playse SE_M_FLY
+	applymovement 4, IndigoPlateau_Movement_PRUBalloonDepart
+	waitmovement 4
 	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	removeobject 4
-	playse SE_M_TELEPORT
-	fadescreenswapbuffers FADE_FROM_WHITE
 	releaseall
 	end
 
@@ -93,9 +112,77 @@ IndigoPlateau_Text_PRUWaiting:
 	.string "awaits the eight BADGES!$"
 
 
-IndigoPlateau_Movement_PRUBalloonRise:
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
+IndigoPlateau_Movement_PRUJessieReady:
+	walk_in_place_down
 	step_end
+
+IndigoPlateau_Movement_PRUJamesReady:
+	walk_in_place_down
+	step_end
+
+IndigoPlateau_Movement_PRUMeowthReady:
+	jump_in_place_down
+	step_end
+
+IndigoPlateau_Movement_PRUBalloonArrive:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	step_end
+
+IndigoPlateau_Movement_PRUJessieBoard:
+	walk_fast_down
+	step_end
+
+IndigoPlateau_Movement_PRUJamesBoard:
+	walk_fast_down
+	step_end
+
+IndigoPlateau_Movement_PRUMeowthBoard:
+	walk_fast_down
+	step_end
+
+IndigoPlateau_Movement_PRUBalloonDepart:
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	step_end
+
+IndigoPlateau_EventScript_PRUGuard::
+	lock
+	faceplayer
+	msgbox IndigoPlateau_Text_PRUGuard, MSGBOX_DEFAULT
+	release
+	end
+
+@ The NPC alone cannot stop a tile-warp; this coord event runs before
+@ warp handling and denies entry regardless of sprite collision state.
+IndigoPlateau_EventScript_PRUDoorGate::
+	goto_if_unset FLAG_PRU_HEIST_STARTED, IndigoPlateau_EventScript_PRUDoorUnlocked
+	goto_if_set FLAG_PRU_HEIST_COMPLETED, IndigoPlateau_EventScript_PRUDoorUnlocked
+	lockall
+	msgbox IndigoPlateau_Text_PRUGuard, MSGBOX_DEFAULT
+	releaseall
+	end
+
+IndigoPlateau_EventScript_PRUDoorUnlocked::
+	warp MAP_INDIGO_PLATEAU_POKEMON_CENTER_HNS, 19, 15
+	waitstate
+	end
+
+IndigoPlateau_Text_PRUGuard:
+	.string "ROCKET GRUNT: INDIGO PLATEAU\l"
+	.string "is closed by TEAM ROCKET!\p"
+	.string "Recover your stolen BADGE CASE\l"
+	.string "and beat our bosses before\l"
+	.string "we let you enter!$"
