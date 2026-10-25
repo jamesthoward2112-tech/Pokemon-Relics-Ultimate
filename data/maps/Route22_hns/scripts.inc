@@ -5,6 +5,7 @@ Route22_hns_MapScripts::
 
 Route22_OnTransition: 
 	callnative SetTimeBasedEncounters
+	call Route22_EventScript_PRUSyncRocket
 	end
 
 Route22_EventScript_Sign::
@@ -342,3 +343,77 @@ Route22_Text_Silver5:
 Route22_Text_Silver6:
 	.string "{RIVAL}: ... What are you staring at?$"
 
+@ The heist now occurs outdoors at the Kanto Route 22 Reception Gate.
+@ Keep the separate Silver/Giovanni story and Johto gate progression untouched.
+@ The theft unlocks only after Blue's Earth Badge; no real badge is removed.
+Route22_EventScript_PRUSyncRocket::
+	setvar VAR_TEMP_1, 0
+	setflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
+	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	goto_if_unset FLAG_BADGE16_GET, Route22_EventScript_PRUSyncDone
+	goto_if_set FLAG_PRU_HEIST_STARTED, Route22_EventScript_PRUSyncDone
+	clearflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
+Route22_EventScript_PRUSyncDone::
+	return
+
+Route22_EventScript_PRURocket::
+	goto Route22_EventScript_PRUHeistTrigger
+
+Route22_EventScript_PRUHeistTrigger::
+	goto_if_unset FLAG_BADGE16_GET, Route22_EventScript_PRUHeistNoop
+	goto_if_set FLAG_PRU_HEIST_STARTED, Route22_EventScript_PRUHeistNoop
+	lockall
+	setvar VAR_TEMP_1, 1
+	playse SE_PIN
+	applymovement 11, Common_Movement_ExclamationMark
+	waitmovement 11
+	msgbox Route22_Text_PRURocketStolen, MSGBOX_DEFAULT
+	@ The physical display case is stolen; the original badge bits remain
+	@ intact so HM use, 16-badge count and old save progression never regress.
+	setflag FLAG_PRU_HEIST_STARTED
+	msgbox Route22_Text_PRURocketBalloon, MSGBOX_DEFAULT
+	closemessage
+	@ Display authentic MrNightology 64x64 Meowth balloon and animate
+	@ its ascent without redrawing or replacing any existing sprites.
+	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	addobject 14
+	setflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
+	removeobject 11
+	removeobject 12
+	removeobject 13
+	applymovement 14, Route22_Movement_PRUBalloonRise
+	waitmovement 14
+	fadescreenswapbuffers FADE_TO_WHITE
+	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	removeobject 14
+	playse SE_M_TELEPORT
+	fadescreenswapbuffers FADE_FROM_WHITE
+	releaseall
+	end
+
+Route22_EventScript_PRUHeistNoop::
+	end
+
+Route22_Text_PRURocketStolen:
+	.string "JESSIE: All sixteen BADGES?\p"
+	.string "JAMES: We'll be taking the\n"
+	.string "KANTO BADGE CASE!\p"
+	.string "MEOWTH: The LEAGUE can wait!\p"
+	.string "TEAM ROCKET snatches your\n"
+	.string "BADGE CASE!$"
+
+Route22_Text_PRURocketBalloon:
+	.string "MEOWTH: To the balloon!\p"
+	.string "The TEAM ROCKET trio escapes\n"
+	.string "toward INDIGO PLATEAU!\p"
+	.string "Recover seven BADGES from\n"
+	.string "KANTO's GYM LEADERS, then\l"
+	.string "challenge GIOVANNI!$"
+
+
+Route22_Movement_PRUBalloonRise:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end

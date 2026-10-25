@@ -17,8 +17,11 @@ IndigoPlateau_Text_Sign:
 IndigoPlateau_EventScript_PRUSyncRocket::
 	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
 	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
-	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUSyncDone
+	setflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD
+	goto_if_unset FLAG_PRU_HEIST_STARTED, IndigoPlateau_EventScript_PRUSyncDone
 	goto_if_set FLAG_PRU_HEIST_COMPLETED, IndigoPlateau_EventScript_PRUSyncDone
+	clearflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUSyncDone
 	clearflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
 IndigoPlateau_EventScript_PRUSyncDone::
 	end
@@ -44,6 +47,8 @@ IndigoPlateau_EventScript_PRUEscape::
 	msgbox IndigoPlateau_Text_PRUBadgeCaseReturn, MSGBOX_DEFAULT
 	setflag FLAG_PRU_JESSIE_JAMES_INDIGO
 	setflag FLAG_PRU_HEIST_COMPLETED
+	setflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD
+	removeobject 5
 	msgbox IndigoPlateau_Text_PRUBalloonDeparture, MSGBOX_DEFAULT
 	closemessage
 	@ Display authentic MrNightology 64x64 Meowth balloon and animate
@@ -99,3 +104,17 @@ IndigoPlateau_Movement_PRUBalloonRise:
 	walk_fast_up
 	walk_fast_up
 	step_end
+
+IndigoPlateau_EventScript_PRUGuard::
+	lock
+	faceplayer
+	msgbox IndigoPlateau_Text_PRUGuard, MSGBOX_DEFAULT
+	release
+	end
+
+IndigoPlateau_Text_PRUGuard:
+	.string "ROCKET GRUNT: INDIGO PLATEAU\l"
+	.string "is closed by TEAM ROCKET!\p"
+	.string "Recover your stolen BADGE CASE\l"
+	.string "and beat our bosses before\l"
+	.string "we let you enter!$"
