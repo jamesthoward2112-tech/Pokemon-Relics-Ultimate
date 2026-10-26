@@ -18,5 +18,6 @@ ow = Image.open(root / "graphics/object_events/pics/misc/pru_byoxys_hns.png")
 assert ow.size == (64, 32), "Overworld must contain two 32x32 frames"
 assert Image.open(root / "graphics/pokemon/deoxys/byoxys_anim_front_gba.png").size == (64, 128)
 assert Image.open(root / "graphics/pokemon/deoxys/byoxys_back_gba.png").size == (64, 128)
-assert "deoxys/byoxys_anim_front_gba.4bpp.smol" in read("src/data/graphics/pokemon.h")
+assert "deoxys/byoxys_anim_front_gba.4bpp.smol" in read("src/data/graphics/pru_pokemon.h")
+assert ".frontPic = gMonFrontPic_PruByoxys" in read("src/data/pokemon/species_info/gen_3_families.h")
 print("PASS: Birth Island BYOXYS overworld and battle graphics")
