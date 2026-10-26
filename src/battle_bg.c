@@ -938,8 +938,27 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
 
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
     {
-        // Distinct Gym Leader arenas; rematches and postgame challenges use
-        // the same leader's background, independent of their map location.
+        // Rocket badge-heist story battles use two intentionally different
+        // static, already approved Rhythm arenas. Chuck's martial-arts hall
+        // suits the seven Dojo challengers; Blue's final-challenge hall gives
+        // Giovanni and his concealed Armoured Mewtwo a dramatic arena.
+        // Trainer-specific cases prevent changing regular Gym rematches.
+        switch (TRAINER_BATTLE_PARAM.opponentA)
+        {
+        case TRAINER_PRU_HEIST_BROCK_HNS:
+        case TRAINER_PRU_HEIST_MISTY_HNS:
+        case TRAINER_PRU_HEIST_SURGE_HNS:
+        case TRAINER_PRU_HEIST_ERIKA_HNS:
+        case TRAINER_PRU_HEIST_JANINE_HNS:
+        case TRAINER_PRU_HEIST_SABRINA_HNS:
+        case TRAINER_PRU_HEIST_BLAINE_HNS:
+            return 45; // Rhythm: Chuck's martial-arts hall; shared Dojo backdrop.
+        case TRAINER_PRU_HEIST_GIOVANNI_HNS:
+            return 51; // Rhythm: Blue's final challenge hall; Giovanni finale.
+        }
+
+        // Distinct Gym Leader arenas; ordinary and postgame rematches keep
+        // their existing 16 separate scenes, wherever they are battled.
         switch (TRAINER_BATTLE_PARAM.opponentA)
         {
         case TRAINER_FALKNER_1_HNS:

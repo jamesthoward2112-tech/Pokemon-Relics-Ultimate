@@ -114,6 +114,7 @@ jobs:
           python3 tools/pru/check_crystal_battle_backgrounds.py
           python3 tools/pru/check_rhythm_battle_background_assets.py
           python3 tools/pru/check_rhythm_battle_backgrounds.py
+          python3 tools/pru/check_dojo_giovanni_battle_backgrounds.py
           python3 tools/pru/check_static_battle_backgrounds.py
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_lavender_cubone_staging.py
