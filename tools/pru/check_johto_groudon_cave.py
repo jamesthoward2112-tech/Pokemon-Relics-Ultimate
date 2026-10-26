@@ -21,6 +21,7 @@ assert any(o["script"] == "Route45_GroudonCave_EventScript_Groudon" for o in cav
 assert not any(o["script"].endswith(("EventScript_Maxie", "EventScript_Groudon"))
                for o in json.loads(read("data/maps/MtSilver_1F_MoltresRoom_hns/map.json"))["object_events"])
 scene = read("data/maps/Route45_GroudonCave_hns/scripts.inc")
+assert '.include "data/maps/Route45_GroudonCave_hns/scripts.inc"' in read("data/event_scripts.s")
 maxie_party = read("src/data/trainers_hns.party").split("=== TRAINER_PRU_MAXIE_GROUDON_HNS ===", 1)[1].split("=== TRAINER_", 1)[0]
 assert "AI: Smart Trainer / Prediction / Ace Pokemon" in maxie_party
 assert maxie_party.rfind("Groudon @ Red Orb") > maxie_party.rfind("Houndoom @ Wise Glasses")
