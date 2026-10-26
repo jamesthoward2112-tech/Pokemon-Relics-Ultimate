@@ -41,6 +41,7 @@ static u32 IsMatchingSpecies(struct BoxPokemon *boxmon);
 static u32 CanMonDeleteMove(struct BoxPokemon *boxmon);
 static u32 CanMonLearnMove(struct BoxPokemon *boxmon);
 static u32 CanMonLearnPjrControlMove(struct BoxPokemon *boxmon);
+static u32 CanMonLearnPruDoubleMove(struct BoxPokemon *boxmon);
 static u32 CanMonLearnPLAMove(struct BoxPokemon *boxmon);
 static u32 CanRelearnMoves(struct BoxPokemon *boxmon);
 
@@ -54,6 +55,7 @@ static const struct PcMonSelection sPcMonSelectionTypes[] =
     [SELECT_PC_MON_MOVE_RELEARNER] = {ChooseMonForMoveRelearner, CanRelearnMoves, NULL, FALSE},
     [SELECT_PC_MON_PLA_TUTOR] = {ChooseMonForMoveTutor, CanMonLearnPLAMove, MoveTutor_AfterChooseBoxMon, FALSE},
     [SELECT_PC_MON_PJR_CONTROL_TUTOR] = {ChooseMonForMoveTutor, CanMonLearnPjrControlMove, MoveTutor_AfterChooseBoxMon, FALSE},
+    [SELECT_PC_MON_PRU_DOUBLE_TUTOR] = {ChooseMonForMoveTutor, CanMonLearnPruDoubleMove, MoveTutor_AfterChooseBoxMon, FALSE},
 };
 
 static u32 NoFilter(struct BoxPokemon *boxmon)
@@ -192,7 +194,10 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
             || IsSpeciesOfType(species, TYPE_BUG);
     case MOVE_STICKY_WEB:
     case MOVE_INFESTATION:
-        return IsSpeciesOfType(species, TYPE_BUG);
+        // Shuckle and its Relic evolution must never be excluded by older
+        // compatibility tables, regardless of their inherited learnsets.
+        return species == SPECIES_SHUCKLE || species == SPECIES_SHUCKOLOSSE
+            || IsSpeciesOfType(species, TYPE_BUG);
     case MOVE_STONE_AXE:
         return IsSpeciesOfType(species, TYPE_ROCK)
             || IsSpeciesOfType(species, TYPE_GROUND)
@@ -339,6 +344,43 @@ static u32 CanMonLearnPjrControlMove(struct BoxPokemon *boxmon)
         return VALID_MON;
 
     return CANNOT_LEARN_MOVE;
+}
+
+bool32 CanSpeciesLearnPjrControlTutorMoveForRelearner(u16 species, u16 move)
+{
+    return CanSpeciesLearnPjrControlTutorMove(species, move);
+}
+
+// An intentionally narrow tutor. For the active PRU Dex, primary OR
+// secondary typing makes a species eligible for its corresponding spread
+// move. All five share this check; no move can be accidentally taught to
+// every species by a broad numeric ID-range fallback.
+static u32 CanMonLearnPruDoubleMove(struct BoxPokemon *boxmon)
+{
+    u16 species;
+    u16 move = gSpecialVar_0x8005;
+    enum Type type;
+
+    if (GetBoxMonData(boxmon, MON_DATA_IS_EGG))
+        return CANNOT_LEARN_MOVE_IS_EGG;
+    if (BoxMonKnowsMove(boxmon, move))
+        return ALREADY_KNOWS_MOVE;
+
+    species = GetBoxMonData(boxmon, MON_DATA_SPECIES);
+    if (!IS_HNS || species == SPECIES_NONE || species >= NUM_SPECIES
+        || SpeciesToPokedexNum(species) == 0xFFFF)
+        return CANNOT_LEARN_MOVE;
+
+    switch (move)
+    {
+    case MOVE_SHOCKWAVE_FIST: type = TYPE_FIGHTING; break;
+    case MOVE_FAULTLINE: type = TYPE_GROUND; break;
+    case MOVE_WRAITH_CRY: type = TYPE_GHOST; break;
+    case MOVE_METAL_BARRAGE: type = TYPE_STEEL; break;
+    case MOVE_MINDWAVE: type = TYPE_PSYCHIC; break;
+    default: return CANNOT_LEARN_MOVE;
+    }
+    return IsSpeciesOfType(species, type) ? VALID_MON : CANNOT_LEARN_MOVE;
 }
 
 static const u16 sPLATutorLearnsets[][2] =

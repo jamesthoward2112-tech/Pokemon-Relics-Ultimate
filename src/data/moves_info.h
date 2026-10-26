@@ -24215,4 +24215,75 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_ShadowBall,
     },
 
+    // PRU free doubles tutor moves. Every move damages BOTH opposing slots.
+    [MOVE_SHOCKWAVE_FIST] =
+    {
+        .name = COMPOUND_STRING("SHOCKWAVE FIST"),
+        .description = COMPOUND_STRING("Strikes both foes. Has a\n10% flinch chance."),
+        .effect = EFFECT_HIT,
+        .power = 60,
+        .type = TYPE_FIGHTING,
+        .accuracy = 100,
+        .pp = 15,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({ .moveEffect = MOVE_EFFECT_FLINCH, .chance = 10, }),
+        .battleAnimScript = gBattleAnimMove_MachPunch,
+    },
+    [MOVE_FAULTLINE] =
+    {
+        .name = COMPOUND_STRING("FAULTLINE"),
+        .description = COMPOUND_STRING("Hits both foes and sets\nStealth Rock."),
+        .effect = EFFECT_STONE_AXE,
+        .power = 70,
+        .type = TYPE_GROUND,
+        .accuracy = 95,
+        .pp = 10,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .battleAnimScript = gBattleAnimMove_Earthquake,
+    },
+    [MOVE_WRAITH_CRY] =
+    {
+        .name = COMPOUND_STRING("WRAITH CRY"),
+        .description = COMPOUND_STRING("A ghostly cry hits both.\nMay inflict FEAR."),
+        .effect = EFFECT_HIT,
+        .power = 60,
+        .type = TYPE_GHOST,
+        .accuracy = 100,
+        .pp = 15,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({ .moveEffect = MOVE_EFFECT_FEAR, .chance = 10, }),
+        .battleAnimScript = gBattleAnimMove_Snarl,
+    },
+    [MOVE_METAL_BARRAGE] =
+    {
+        .name = COMPOUND_STRING("METAL BARRAGE"),
+        .description = COMPOUND_STRING("Hits both foes and scatters\nSpikes on their side."),
+        .effect = EFFECT_CEASELESS_EDGE,
+        .power = 60,
+        .type = TYPE_STEEL,
+        .accuracy = 100,
+        .pp = 15,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .battleAnimScript = gBattleAnimMove_MetalClaw,
+    },
+    [MOVE_MINDWAVE] =
+    {
+        .name = COMPOUND_STRING("MINDWAVE"),
+        .description = COMPOUND_STRING("Hits both foes. May lower\nSp. Def by one stage."),
+        .effect = EFFECT_HIT,
+        .power = 60,
+        .type = TYPE_PSYCHIC,
+        .accuracy = 100,
+        .pp = 15,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({ .moveEffect = MOVE_EFFECT_SP_DEF_MINUS_1, .chance = 10, }),
+        .battleAnimScript = gBattleAnimMove_Psychic,
+    },
+
 };
