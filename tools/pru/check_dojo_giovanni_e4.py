@@ -133,6 +133,21 @@ def check_dojo_layout():
         assert f"setflag FLAG_HIDE_DOJO_{leader}" in sync
         assert f"clearflag FLAG_HIDE_DOJO_{leader}" in sync
     assert "setflag FLAG_HIDE_DOJO_BLUE" in sync
+    # Blaine's real post-battle farewell, shown before the white flash, must
+    # reveal the final badge objective without naming the eighth Gym's city.
+    blaine_farewell = VIP.split("SaffronCity_FightingDojoVIP_Text_PRUHeistNextBlaine:", 1)[1].split(
+        "SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge:", 1
+    )[0]
+    assert "One final BADGE remains" in blaine_farewell
+    assert "north of PALLET TOWN" in blaine_farewell
+    assert "Its GYM holds your answer" in blaine_farewell
+    assert "VIRIDIAN" not in blaine_farewell
+    blaine_battle = VIP.split("SaffronCity_FightingDojoVIP_EventScript_PRUHeistBlaine::", 1)[1].split(
+        "SaffronCity_FightingDojoVIP_EventScript_PRUNotReady::", 1
+    )[0]
+    assert "msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNextBlaine" in blaine_battle
+    assert blaine_battle.index("Text_PRUHeistNextBlaine") < blaine_battle.index("fadescreenswapbuffers FADE_TO_WHITE")
+
     for name in LEADERS:
         leader = next(e for e in events if e["graphics_id"] == f"OBJ_EVENT_GFX_{name}_HNS")
         assert leader["movement_type"] == "MOVEMENT_TYPE_FACE_DOWN", f"{name}: must be static"

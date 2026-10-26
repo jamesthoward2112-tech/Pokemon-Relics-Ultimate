@@ -236,8 +236,11 @@ SaffronCity_FightingDojoVIP_Text_PRUHeistNextSabrina:
 	.string "Your next opponent is BLAINE!$"
 
 SaffronCity_FightingDojoVIP_Text_PRUHeistNextBlaine:
-	.string "BLAINE: Good battle!\p"
-	.string "All seven rematches are done!$"
+	.string "BLAINE: Seven wins! Bravo!\p"
+	.string "One final BADGE remains.\p"
+	.string "Think of the first city\n"
+	.string "north of PALLET TOWN...\p"
+	.string "Its GYM holds your answer!$"
 
 SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge:
 	.string "ROCKET stole your KANTO BADGES!\p"
@@ -252,10 +255,10 @@ SaffronCity_FightingDojoVIP_Text_PRUHeistNext:
 	.string "here in the DOJO. Heal up!$"
 
 SaffronCity_FightingDojoVIP_Text_PRUHeistGiovanni:
-	.string "BLAINE: That's seven! But\n"
-	.string "BLUE has disappeared...\p"
-	.string "Who's KANTO's eighth LEADER?\l"
-	.string "Try VIRIDIAN GYM!$"
+	.string "BLAINE: Seven victories!\p"
+	.string "An EIGHTH BADGE remains...\p"
+	.string "Remember the first city\n"
+	.string "north of PALLET TOWN?$"
 
 SaffronCity_FightingDojoVIP_Text_PRUHeistNotReady:
 	.string "Face the other KANTO LEADERS\l"
