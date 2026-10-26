@@ -16605,7 +16605,7 @@ const struct ItemInfo gItemsInfo[] =
 
     [ITEM_RELIC_CANDY] =
     {
-        .name = ITEM_NAME("RELIC CANDY"),
+        .name = ITEM_NAME("ANCIENT CANDY"),
         .price = 0,
         .description = COMPOUND_STRING(
             "Elm's special candy.\n"

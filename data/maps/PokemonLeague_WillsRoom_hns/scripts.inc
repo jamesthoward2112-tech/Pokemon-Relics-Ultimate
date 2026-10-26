@@ -2,25 +2,37 @@ PokemonLeague_WillsRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, EliteFourRoom_OnFrame
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_WillsRoom_OnResume
 	map_script MAP_SCRIPT_ON_LOAD, EliteFourRoom_OnLoad
-	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_SelectSprites
+	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_WillAppearance
 	.byte 0
 
-@ Johto League remains the original challenge. The post-Giovanni rooms
-@ replace its trainers with the Kanto Elite Four and Red.
-PRU_KantoE4_SelectSprites::
-	goto_if_unset FLAG_IS_CHAMPION, PRU_KantoE4_ShowJohto
-	goto_if_unset FLAG_BADGE16_GET, PRU_KantoE4_ShowJohto
-	goto_if_unset FLAG_PRU_HEIST_COMPLETED, PRU_KantoE4_ShowJohto
-	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, PRU_KantoE4_ShowJohto
-	goto_if_set FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_KantoE4_ShowJohto
-	setflag FLAG_PRU_HIDE_JOHTO_E4
-	clearflag FLAG_PRU_HIDE_KANTO_E4
+@ A single visible actor per room avoids two co-located hidden events
+@ fighting over save flags at map entry. Both its sprite and battle use
+@ this same predicate; preserve the historical hide-flag IDs for saves.
+PRU_KantoE4_CheckActive::
+	setvar VAR_RESULT, FALSE
+	goto_if_unset FLAG_IS_CHAMPION, PRU_KantoE4_CheckDone
+	goto_if_unset FLAG_BADGE16_GET, PRU_KantoE4_CheckDone
+	goto_if_unset FLAG_PRU_HEIST_COMPLETED, PRU_KantoE4_CheckDone
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, PRU_KantoE4_CheckDone
+	goto_if_set FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_KantoE4_CheckDone
+	setvar VAR_RESULT, TRUE
+PRU_KantoE4_CheckDone::
+	return
+
+PRU_KantoE4_WillAppearance::
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_WILL_HNS
+	call PRU_KantoE4_CheckActive
+	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_WillShowLorelei
 	end
 
-PRU_KantoE4_ShowJohto::
-	clearflag FLAG_PRU_HIDE_JOHTO_E4
-	setflag FLAG_PRU_HIDE_KANTO_E4
+PRU_KantoE4_WillShowLorelei::
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_LORELEI
 	end
+
+PRU_KantoE4_WillOrLorelei::
+	call PRU_KantoE4_CheckActive
+	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_Lorelei
+	goto PokemonLeague_WillsRoom_EventScript_Will
 
 EliteFourRoom_OnLoad::
 	call_if_eq VAR_TEMP_0, 1, EliteFourRoom_CreateDoor

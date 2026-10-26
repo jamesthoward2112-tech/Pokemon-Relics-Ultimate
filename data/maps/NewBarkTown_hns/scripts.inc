@@ -10,7 +10,7 @@ NewBarkTown_OnFrame::
 	.2byte 0
 
 @ After the second League credits, Elm personally gives the reusable
-@ Relic Candy key item. It is never dispensed by an NPC beforehand.
+@ Ancient Candy key item (legacy save ID). No other NPC dispenses it.
 NewBarkTown_EventScript_RelicCandyElm::
 	lockall
 	clearflag FLAG_PRU_HIDE_ELM_RELIC_CANDY
@@ -47,13 +47,15 @@ NewBarkTown_Text_ElmRelicCandy:
 	.string "LEAGUE as well! Incredible!\p"
 	.string "For your RELICS journey,\n"
 	.string "I made you something special.\p"
-	.string "Take this RELIC CANDY.\n"
+	.string "Take this ANCIENT CANDY.\n"
 	.string "It can provide RARE CANDIES\l"
 	.string "whenever you need them!$"
 
 NewBarkTown_Text_ElmRelicFarewell:
-	.string "ELM: The ELITE 18 is now your\n"
-	.string "ultimate challenge. Good luck!$"
+	.string "ELM: OAK told you about the\n"
+	.string "ELITE 18 in SAFFRON, right?\p"
+	.string "That's the ultimate challenge.\n"
+	.string "Good luck!$"
 
 NewBarkTown_EventScript_ElmCallAfterLeague::
 	lock

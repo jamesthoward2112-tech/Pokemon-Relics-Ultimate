@@ -2,8 +2,23 @@ PokemonLeague_KogasRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, EliteFourRoom_OnFrame
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_KogasRoom_OnResume
 	map_script MAP_SCRIPT_ON_LOAD, EliteFourRoom_OnLoad
-	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_SelectSprites
+	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_KogaAppearance
 	.byte 0
+
+PRU_KantoE4_KogaAppearance::
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_KOGA_HNS
+	call PRU_KantoE4_CheckActive
+	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_KogaShowBruno
+	end
+
+PRU_KantoE4_KogaShowBruno::
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_BRUNO_HNS
+	end
+
+PRU_KantoE4_KogaOrBruno::
+	call PRU_KantoE4_CheckActive
+	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_Bruno
+	goto PokemonLeague_KogasRoom_EventScript_Koga
 
 PRU_KantoE4_Bruno::
 	lock

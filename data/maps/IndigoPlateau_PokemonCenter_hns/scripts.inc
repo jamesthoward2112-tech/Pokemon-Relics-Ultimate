@@ -47,8 +47,8 @@ PRU_LeagueEntrance_Unsealed::
 PRU_LeagueEntrance_Text_Closed::
 	.string "The KANTO LEAGUE is over.\n"
 	.string "These doors are now sealed!\p"
-	.string "The ELITE 18 awaits you in\n"
-	.string "the POKéMON CENTER.$"
+	.string "The ELITE 18 awaits you at\n"
+	.string "SAFFRON'S FIGHTING DOJO.$"
 
 
 IndigoPlateau_EventScript_Cooltrainer::

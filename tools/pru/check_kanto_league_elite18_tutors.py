@@ -22,6 +22,7 @@ ids = read("include/constants/opponents_hns.h")
 flags = read("include/constants/flags_hns.h")
 center = read("data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc")
 objects = read("data/maps/IndigoPlateau_PokemonCenter_hns/map.json")
+dojo_objects = read("data/maps/SaffronCity_FightingDojoVIP_hns/map.json")
 will = read("data/maps/PokemonLeague_WillsRoom_hns/scripts.inc")
 koga = read("data/maps/PokemonLeague_KogasRoom_hns/scripts.inc")
 bruno = read("data/maps/PokemonLeague_BrunosRoom_hns/scripts.inc")
@@ -58,7 +59,9 @@ for flag in ("FLAG_PRU_KANTO_LEAGUE_CLEARED", "FLAG_PRU_ELITE18_CLEARED"):
 assert "FLAG_PRU_HEIST_COMPLETED" in center and "FLAG_PRU_HEIST_GIOVANNI" in center
 assert "special HealPlayerParty" in center
 assert "PRU_Elite18_ChoosePair" in center and "PRU_Elite18_Gauntlet" in center
-assert '"script": "PRU_Elite18_Steward"' in objects
+assert '"script": "PRU_Elite18_Steward"' not in objects
+assert '"script": "PRU_Elite18_Steward"' in dojo_objects
+assert '"script": "PRU_ChanseyTrainer_Lv100"' in dojo_objects
 assert '"script": "PRU_KantoLeague_Steward"' not in objects
 assert '"script": "PRU_Candy_Steward"' not in objects
 assert "PRU_Candy_Steward::" not in center

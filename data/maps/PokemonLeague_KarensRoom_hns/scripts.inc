@@ -2,8 +2,23 @@ PokemonLeague_KarensRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, EliteFourRoom_OnFrame
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_KarensRoom_OnResume
 	map_script MAP_SCRIPT_ON_LOAD, EliteFourRoom_OnLoad
-	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_SelectSprites
+	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_KarenAppearance
 	.byte 0
+
+PRU_KantoE4_KarenAppearance::
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_KAREN_HNS
+	call PRU_KantoE4_CheckActive
+	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_KarenShowLance
+	end
+
+PRU_KantoE4_KarenShowLance::
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_LANCE_HNS
+	end
+
+PRU_KantoE4_KarenOrLance::
+	call PRU_KantoE4_CheckActive
+	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_Lance
+	goto PokemonLeague_KarensRoom_EventScript_Karen
 
 PRU_KantoE4_Lance::
 	lock
