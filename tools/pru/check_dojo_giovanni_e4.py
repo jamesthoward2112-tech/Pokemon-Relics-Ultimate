@@ -1,12 +1,15 @@
 """Static regression checks for the Rocket badge-heist finale."""
 
 from pathlib import Path
+import json
 import re
 
 ROOT = Path(__file__).resolve().parents[2]
 VIP = (ROOT / "data/maps/SaffronCity_FightingDojoVIP_hns/scripts.inc").read_text()
+VIP_MAP = json.loads((ROOT / "data/maps/SaffronCity_FightingDojoVIP_hns/map.json").read_text())
 TEAMS = (ROOT / "src/data/trainers_hns.party").read_text()
 GIOVANNI = (ROOT / "data/maps/ViridianCity_Gym_hns/scripts.inc").read_text()
+GIOVANNI_MAP = json.loads((ROOT / "data/maps/ViridianCity_Gym_hns/map.json").read_text())
 INDIGO = (ROOT / "data/maps/IndigoPlateau_hns/scripts.inc").read_text()
 ROCKET = (ROOT / "data/maps/Route22_hns/scripts.inc").read_text()
 STAT_CODE = (ROOT / "src/battle_main.c").read_text()
@@ -21,6 +24,32 @@ LEADERS = {
     "BLAINE": ["Ninetales", "Rapidash", "Magmortar", "Flareon", "Arcanine", "Charizard"],
 }
 FLAGS = list(LEADERS)
+STAGE_POSITIONS = {
+    "BROCK": (20, 21),
+    "MISTY": (26, 24),
+    "SURGE": (18, 18),
+    "ERIKA": (27, 23),
+    "JANINE": (18, 25),
+    "SABRINA": (24, 27),
+    "BLAINE": (27, 15),
+}
+COMPANION_POSITIONS = {
+    "ONIX": (22, 21),
+    "STARMIE": (27, 24),
+    "VICTREEBEL": (28, 23),
+    "MUK": (19, 25),
+    "KADABRA": (25, 27),
+    "MAGMAR": (28, 15),
+}
+HEIST_PARTNER_IDS = {
+    "BROCK": 28,      # Onix
+    "MISTY": 23,      # Starmie
+    "SURGE": 19,      # Raichu
+    "ERIKA": 24,      # Victreebel
+    "JANINE": 30,     # Muk
+    "SABRINA": 27,    # Kadabra
+    "BLAINE": 34,     # Magmar
+}
 
 
 def trainer(name):
@@ -36,7 +65,86 @@ def members(name):
     return [(species.strip(), int(level)) for species, level in pairs]
 
 
+def check_heist_abilities_legal():
+    # Every explicitly requested trainer ability must appear in that
+    # species' three allowed ability slots. Violations crash battle_main.c.
+    allowed = {}
+    for path in (ROOT / "src/data/pokemon/species_info").glob("*.h"):
+        content = path.read_text()
+        records = list(re.finditer(r"\[SPECIES_([A-Z0-9_]+)\]\s*=\s*\{", content))
+        for i, record in enumerate(records):
+            block = content[record.end():records[i + 1].start() if i + 1 < len(records) else len(content)]
+            abilities = re.search(r"\.abilities\s*=\s*\{([^}]+)\}", block)
+            if abilities:
+                allowed[record.group(1)] = {
+                    value.strip().removeprefix("ABILITY_")
+                    for value in abilities.group(1).split(",")
+                }
+    for leader in [*LEADERS, "GIOVANNI"]:
+        for species, ability in re.findall(
+            r"^(.+?)\s+@[^\n]+\nAbility:\s+([^\n]+)\nLevel:",
+            trainer(f"PRU_HEIST_{leader}"), re.M,
+        ):
+            key = re.sub(r"[^A-Z0-9]+", "_", species.upper()).strip("_")
+            requested = re.sub(r"[^A-Z0-9]+", "_", ability.upper()).strip("_")
+            assert key in allowed, f"{leader}: no species ability data for {species}"
+            assert requested in allowed[key], (
+                f"{leader}: illegal ability {ability} for {species}; legal: {sorted(allowed[key])}"
+            )
+
+
+def check_dojo_layout():
+    events = VIP_MAP["object_events"]
+    for leader, xy in STAGE_POSITIONS.items():
+        matches = [e for e in events if e["graphics_id"] == f"OBJ_EVENT_GFX_{leader}_HNS"]
+        assert len(matches) == 1, f"{leader}: expected one stage leader"
+        assert (matches[0]["x"], matches[0]["y"]) == xy, f"{leader}: not on the large Dojo stage"
+
+    for species, xy in COMPANION_POSITIONS.items():
+        matches = [e for e in events if e["graphics_id"] == f"OBJ_EVENT_GFX_MON_BASE+SPECIES_{species}"]
+        assert len(matches) == 1, f"{species}: expected one stage partner"
+        assert (matches[0]["x"], matches[0]["y"]) == xy, f"{species}: partner misplaced"
+        assert "WALK_SEQUENCE" not in matches[0]["movement_type"], (
+            f"{species}: partner must stay beside their leader during the heist"
+        )
+
+    desk_mons = [
+        e for e in events if e["graphics_id"].startswith("OBJ_EVENT_GFX_MON_BASE+")
+        and e["y"] == 5 and e["x"] >= 36
+    ]
+    assert [e["graphics_id"] for e in desk_mons] == [
+        "OBJ_EVENT_GFX_MON_BASE+SPECIES_CHANSEY"
+    ], "the BP counter must not contain roaming Kanto/Johto leader Pokémon"
+
+    desk = [e for e in events if e["script"] == "PRU_ChanseyTrainer_Lv100"]
+    assert len(desk) == 1, "right-hand desk needs the repeatable double Lv100 Chansey trainer"
+    assert (desk[0]["x"], desk[0]["y"]) == (39, 5)
+    assert desk[0]["graphics_id"] == "OBJ_EVENT_GFX_MON_BASE+SPECIES_CHANSEY"
+    assert desk[0]["flag"] == "0"
+
+    sync = VIP.split("SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync::", 1)[1].split(
+        "SaffronCity_FightingDojoVIP_EventScript_PRUHeistSyncFinished::", 1
+    )[0]
+    for leader in LEADERS:
+        assert f"goto_if_set FLAG_PRU_HEIST_{leader}" in sync, (
+            f"{leader}: the Dojo must show every undefeated leader at once"
+        )
+        assert f"clearflag FLAG_HIDE_DOJO_{leader}" in sync
+    assert "SaffronCity_FightingDojoVIP_EventScript_PRUShow" not in sync, (
+        "the old one-at-a-time spawn chain still hides waiting leaders"
+    )
+    for leader, object_id in HEIST_PARTNER_IDS.items():
+        block = VIP.split(f"SaffronCity_FightingDojoVIP_EventScript_PRUHeist{leader.title()}::", 1)[1].split(
+            "SaffronCity_FightingDojoVIP_EventScript_PRUHeist", 1
+        )[0]
+        assert f"removeobject {object_id} " in block, (
+            f"{leader}: Pokémon companion remains after its trainer leaves the stage"
+        )
+
+
 def check():
+    check_heist_abilities_legal()
+    check_dojo_layout()
     assert "all EIGHT KANTO" in ROCKET, "Rocket must demand all 8 leaders"
     assert "FIGHTING DOJO" in ROCKET, "Rocket must point to Saffron Dojo"
     assert "GIOVANNI!" not in ROCKET.split("Route22_Text_PRURocketBalloon:", 1)[1].split("Route22_Movement_", 1)[0], "Rocket must preserve the 8th-leader twist"
@@ -59,6 +167,13 @@ def check():
         ("Omastar", 81), ("Kabutops", 82), ("Aerodactyl", 83),
         ("Coelossus", 83), ("Rhyperior", 84), ("Mewtwo", 85),
     ], g
+    assert "AI: Smart Trainer / Prediction / Ace Pokemon" in trainer("PRU_HEIST_GIOVANNI"), (
+        "Giovanni's last-slot Mewtwo must be reserved until every other party member falls"
+    )
+    assert not any(
+        "MEWTWO" in event["graphics_id"]
+        for event in GIOVANNI_MAP["object_events"]
+    ), "Armoured Mewtwo must not appear in the gym before Giovanni's surprise send-out"
     assert "Armour" in GIOVANNI and "Cerulean" in GIOVANNI
     assert "PruIsMewtwoCaught" in GIOVANNI and "clearflag FLAG_HIDE_MEWTWO" in GIOVANNI
     assert "TRAINER_PRU_HEIST_GIOVANNI_HNS" in STAT_CODE
