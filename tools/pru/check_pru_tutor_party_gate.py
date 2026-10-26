@@ -6,7 +6,7 @@ import re
 ROOT = Path(__file__).resolve().parents[2]
 party = (ROOT / "src/party_menu.c").read_text(encoding="utf-8")
 choosebox = (ROOT / "src/chooseboxmon.c").read_text(encoding="utf-8")
-header = (ROOT / "include/chooseboxmon.h").read_text(encoding="utf-8")
+party_header = (ROOT / "include/party_menu.h").read_text(encoding="utf-8")
 
 match = re.search(
     r"static enum CanMoveBeLearned CanTeachMove\(struct Pokemon \*mon, enum Move move\)\n\{(.*?)\n\}",
@@ -26,5 +26,5 @@ assert "gPartyMenu.action != PARTY_ACTION_MOVE_TUTOR" in gate, (
 )
 assert "sSelectionType != SELECT_PC_MON_PJR_CONTROL_TUTOR" in choosebox
 assert "sSelectionType != SELECT_PC_MON_PRU_DOUBLE_TUTOR" in choosebox
-assert "CanSpeciesLearnSelectedPruTutorMove" in header
+assert "CanSpeciesLearnSelectedPruTutorMove" in party_header
 print("PASS: party tutor eligibility matches its PC selector; TM compatibility stays standard")

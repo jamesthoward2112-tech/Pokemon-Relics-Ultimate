@@ -19,7 +19,5 @@ s32 GetLearnMoveResumeAfterSummaryScreenState(void);
 bool32 CanSpeciesLearnPjrControlTutorMoveForRelearner(u16 species, u16 move);
 // Shared compatibility gate for the free PRU Control and doubles tutors.
 bool32 CanSpeciesLearnPruTutorMove(u16 species, u16 move);
-// Use PRU-only eligibility in the party menu only during the matching tutor.
-bool32 CanSpeciesLearnSelectedPruTutorMove(u16 species, u16 move);
 
 #endif // GUARD_CHOOSEBOXMON_H
