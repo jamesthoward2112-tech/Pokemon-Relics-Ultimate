@@ -135,7 +135,7 @@ def check_dojo_layout():
     assert "setflag FLAG_HIDE_DOJO_BLUE" in sync
     for i, (leader, companion) in enumerate(HEIST_PARTNER_IDS.items()):
         block = VIP.split(f"SaffronCity_FightingDojoVIP_EventScript_PRUHeist{leader.title()}::", 1)[1].split(
-            "SaffronCity_FightingDojoVIP_EventScript_PRUHeist", 1
+            "\nSaffronCity_FightingDojoVIP_EventScript_PRUHeist", 1
         )[0]
         assert f"removeobject {companion} " in block, f"{leader}: companion not removed"
         assert "call SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync" in block
