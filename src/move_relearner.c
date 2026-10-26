@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 12762)
-Total output lines: 1476
-
 #include "global.h"
 #include "main.h"
 #include "battle.h"
@@ -702,7 +699,86 @@ static void DoMoveRelearnerMain(void)
         if (!MoveRelearnerRunTextPrinters())
         {
             MoveRelearnerCreateYesNoMenu();
-            sMoveRelearn…762 tokens truncated…E, gPlayerParty, sMoveRelearnerStruct->partyMon, gPlayerPartyCount - 1, gInitialSummaryScreenCallback);
+            sMoveRelearnerStruct->state++;
+        }
+        break;
+    case MENU_STATE_CONFIRM_STOP_TEACHING:
+        {
+            s8 selection = Menu_ProcessInputNoWrapClearOnChoose();
+
+            if (selection == 0)
+            {
+                sMoveRelearnerStruct->state = MENU_STATE_CHOOSE_SETUP_STATE;
+            }
+            else if (selection == MENU_B_PRESSED || selection == 1)
+            {
+                // What's the point? It gets set to MENU_STATE_PRINT_TRYING_TO_LEARN_PROMPT, anyway.
+                if (sMoveRelearnerMenuState.showContestInfo == FALSE)
+                {
+                    sMoveRelearnerStruct->state = MENU_STATE_SETUP_BATTLE_MODE;
+                }
+                else if (sMoveRelearnerMenuState.showContestInfo == TRUE)
+                {
+                    sMoveRelearnerStruct->state = MENU_STATE_SETUP_CONTEST_MODE;
+                }
+                sMoveRelearnerStruct->state = MENU_STATE_PRINT_TRYING_TO_LEARN_PROMPT;
+            }
+        }
+        break;
+    case MENU_STATE_CHOOSE_SETUP_STATE:
+        if (!MoveRelearnerRunTextPrinters())
+        {
+            FillWindowPixelBuffer(RELEARNERWIN_MSG, 0x11);
+            if (sMoveRelearnerMenuState.showContestInfo == FALSE)
+            {
+                sMoveRelearnerStruct->state = MENU_STATE_SETUP_BATTLE_MODE;
+            }
+            else if (sMoveRelearnerMenuState.showContestInfo == TRUE)
+            {
+                sMoveRelearnerStruct->state = MENU_STATE_SETUP_CONTEST_MODE;
+            }
+        }
+        break;
+    case MENU_STATE_PRINT_WHICH_MOVE_PROMPT:
+        if (!MoveRelearnerRunTextPrinters())
+        {
+            sMoveRelearnerStruct->state = MENU_STATE_SHOW_MOVE_SUMMARY_SCREEN;
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        }
+        break;
+    case MENU_STATE_SHOW_MOVE_SUMMARY_SCREEN:
+        if (!gPaletteFade.active)
+        {
+            ShowSelectMovePokemonSummaryScreen(gPlayerParty, gSpecialVar_0x8004, CB2_InitLearnMoveReturnFromSelectMove, GetCurrentSelectedMove());
+            FreeMoveRelearnerResources();
+        }
+        break;
+    case MENU_STATE_RETURN_TO_PARTY_MENU:
+        if (!gPaletteFade.active)
+        {
+            FreeMoveRelearnerResources();
+            SetMainCallback2(CB2_ReturnToPartyMenuFromSummaryScreen);
+        }
+        break;
+    case 22:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        break;
+    case MENU_STATE_FADE_AND_RETURN:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        if (gRelearnMode == RELEARN_MODE_PARTY_MENU)
+            sMoveRelearnerStruct->state = MENU_STATE_RETURN_TO_PARTY_MENU;
+        else
+            sMoveRelearnerStruct->state++;
+        break;
+    case MENU_STATE_RETURN_TO_FIELD:
+        if (!gPaletteFade.active)
+        {
+            if (gInitialSummaryScreenCallback != NULL)
+            {
+                switch (gRelearnMode)
+                {
+                case RELEARN_MODE_PSS_PAGE_BATTLE_MOVES:
+                    ShowPokemonSummaryScreen(SUMMARY_MODE_RELEARNER_BATTLE, gPlayerParty, sMoveRelearnerStruct->partyMon, gPlayerPartyCount - 1, gInitialSummaryScreenCallback);
                     break;
                 case RELEARN_MODE_PSS_PAGE_CONTEST_MOVES:
                     ShowPokemonSummaryScreen(SUMMARY_MODE_RELEARNER_CONTEST, gPlayerParty, sMoveRelearnerStruct->partyMon, gPlayerPartyCount - 1, gInitialSummaryScreenCallback);
