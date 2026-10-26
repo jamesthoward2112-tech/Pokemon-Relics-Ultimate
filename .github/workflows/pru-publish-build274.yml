@@ -1,4 +1,4 @@
-name: PRU Blaine Hint — direct GBA release
+name: PRU Giovanni TRE — direct GBA release
 
 on:
   push:
@@ -12,39 +12,35 @@ permissions:
   contents: write
 
 jobs:
-  publish-blaine-hint:
+  publish-giovanni:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 15
     steps:
-      - name: Publish tested Blaine Eighth Badge hint GBA
+      - name: Publish checksum-verified Build 279 directly
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          # The published file must be exactly the compiled source at
-          # c3b8722be5, not an earlier ROM or this publishing-only commit.
-          gh run watch 40286112681 --repo "$GITHUB_REPOSITORY" --exit-status
           cd "$RUNNER_TEMP"
-          mkdir -p pru-blaine
-          gh run download 40286112681 --repo "$GITHUB_REPOSITORY" \
-            --name PRU-CANONICAL-SOURCE-VALIDATED --dir pru-blaine
-          cd pru-blaine
+          mkdir -p verified-pru
+          gh run download 40288390022 --repo "$GITHUB_REPOSITORY" --name PRU-CANONICAL-SOURCE-VALIDATED --dir verified-pru
+          cd verified-pru
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           sha256sum --check pru-rom.sha256
-          tag="pru-build-c3b8722be5"
-          file="Pokemon-Relics-Ultimate-c3b8722be5.gba"
+
+          tag="pru-build-681881c398"
+          file="Pokemon-Relics-Ultimate-681881c398.gba"
           cp pokehns.gba "$file"
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$tag" "$file" --repo "$GITHUB_REPOSITORY" --clobber
           else
             gh release create "$tag" "$file" \
               --repo "$GITHUB_REPOSITORY" \
-              --target c3b8722be5d4cb7ddd375ecd1284733b96d198a0 \
-              --title "Pokémon Relics Ultimate — Blaine's Final Badge Hint" \
-              --notes "PRU clean build at c3b8722be5: Blaine now hints at the first city north of Pallet Town and the final eighth Kanto badge without naming Viridian. The ROM retains Dojo and Giovanni battle arenas. Source tests and a full ROM build passed. Live gameplay is not yet verified." \
+              --target 681881c39832b67c736d7b14d233e4eeac810135 \
+              --title "Pokémon Relics Ultimate — Giovanni TRE Fossils and Escape" \
+              --notes "Exact 32 MiB ROM from successful PRU clean build #279, source commit 681881c398. Includes exact TRE Skeleton Aerodactyl, Skeleton Kabutops, Rhyper& trainer-only battle sprites, preserved Armoured Mewtwo ace, Giovanni white-flash exit and Blaine's eighth-badge hint. Automated regressions and ROM verification passed; live emulator QA remains." \
               --prerelease
           fi
-          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
-            --jq '.assets[].name' | grep -Fx "$file"
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fx "$file"
           echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/$file"
