@@ -956,6 +956,7 @@ static void RestorePruDefeatedLegendariesOnMapEntry(void)
     // Initialize old/new saves when the player first enters a Kanto route.
     // Keep the three stationary duplicates hidden after roaming unlock.
     EnsurePruKantoBirdRoamers();
+    EnsurePruJohtoLatiRoamers();
     RestorePruDefeatedRoamers();
 
     for (i = 0; i < ARRAY_COUNT(sLegendaryHideFlags); i++)

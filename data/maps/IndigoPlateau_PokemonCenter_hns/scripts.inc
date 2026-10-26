@@ -19,7 +19,36 @@ IndigoPlateau_PokemonCenter_Enter::
 
 IndigoPlateau_Pokecenter_OnTransition::
 	setrespawn HEAL_LOCATION_INDIGO_PLATEAU_HNS
+	goto_if_set FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_LeagueEntrance_ShowGuard
+	goto_if_unset FLAG_PRU_HEIST_COMPLETED, PRU_LeagueEntrance_KeepOldGuard
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, PRU_LeagueEntrance_KeepOldGuard
+	setflag FLAG_HIDE_LEAGUE_BLACKBELT
 	end
+
+PRU_LeagueEntrance_ShowGuard::
+	clearflag FLAG_HIDE_LEAGUE_BLACKBELT
+	end
+
+PRU_LeagueEntrance_KeepOldGuard::
+	end
+
+PRU_LeagueEntrance_Seal::
+	goto_if_unset FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_LeagueEntrance_Unsealed
+	lock
+	msgbox PRU_LeagueEntrance_Text_Closed, MSGBOX_DEFAULT
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkDown1
+	waitmovement 0
+	release
+	end
+
+PRU_LeagueEntrance_Unsealed::
+	end
+
+PRU_LeagueEntrance_Text_Closed::
+	.string "The KANTO LEAGUE is over.\n"
+	.string "These doors are now sealed!\p"
+	.string "The ELITE 18 awaits you at\n"
+	.string "SAFFRON'S FIGHTING DOJO.$"
 
 
 IndigoPlateau_EventScript_Cooltrainer::
@@ -27,7 +56,12 @@ IndigoPlateau_EventScript_Cooltrainer::
 	end
 
 IndigoPlateau_EventScript_BlackBelt::
+	goto_if_set FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_LeagueEntrance_GuardClosed
 	msgbox IndigoPlateau_Text_Blackbelt, MSGBOX_NPC
+	end
+
+PRU_LeagueEntrance_GuardClosed::
+	msgbox PRU_LeagueEntrance_Text_Closed, MSGBOX_NPC
 	end
 
 IndigoPlateau_EventScript_ShigyNinja::
@@ -516,3 +550,540 @@ IndigoPlateau_Text_TutorMove_Nuzzle:
 	.string "NUZZLE$"
 IndigoPlateau_Text_TutorMove_Cancel:
 	.string "CANCEL$"
+
+PRU_Elite18_Steward::
+	lock
+	faceplayer
+	goto_if_unset FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_Elite18_Locked
+	msgbox PRU_Elite18_Text_FullRun, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, PRU_Elite18_ChoosePair
+	goto PRU_Elite18_Gauntlet
+
+PRU_Elite18_Locked::
+	msgbox PRU_Elite18_Text_Locked, MSGBOX_DEFAULT
+	release
+	end
+
+PRU_Elite18_RequireTwo::
+	special HasEnoughMonsForDoubleBattle
+	goto_if_ne VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS, PRU_Elite18_NeedTwo
+	return
+
+PRU_Elite18_NeedTwo::
+	msgbox PRU_Elite18_Text_NeedTwo, MSGBOX_DEFAULT
+	release
+	end
+
+PRU_Elite18_Gauntlet::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_01
+	call PRU_Elite18_Round_02
+	call PRU_Elite18_Round_03
+	call PRU_Elite18_Round_04
+	call PRU_Elite18_Round_05
+	call PRU_Elite18_Round_06
+	call PRU_Elite18_Round_07
+	call PRU_Elite18_Round_08
+	call PRU_Elite18_Round_09
+	call PRU_Elite18_Round_10
+	call PRU_Elite18_Round_11
+	call PRU_Elite18_Round_12
+	call PRU_Elite18_Round_13
+	call PRU_Elite18_Round_14
+	call PRU_Elite18_Round_15
+	call PRU_Elite18_Round_16
+	call PRU_Elite18_Round_17
+	call PRU_Elite18_Round_18
+	setflag FLAG_PRU_ELITE18_CLEARED
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Cleared, MSGBOX_DEFAULT
+	release
+	end
+
+PRU_Elite18_ChoosePair::
+	message PRU_Elite18_Text_Choose
+	waitmessage
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, PRU_Elite18_Text_Option_01, PRU_Elite18_Text_Option_02, PRU_Elite18_Text_Option_03, PRU_Elite18_Text_Option_04, PRU_Elite18_Text_Option_05, PRU_Elite18_Text_Option_06, PRU_Elite18_Text_Option_07, PRU_Elite18_Text_Option_08, PRU_Elite18_Text_Option_09, PRU_Elite18_Text_Option_10, PRU_Elite18_Text_Option_11, PRU_Elite18_Text_Option_12, PRU_Elite18_Text_Option_13, PRU_Elite18_Text_Option_14, PRU_Elite18_Text_Option_15, PRU_Elite18_Text_Option_16, PRU_Elite18_Text_Option_17, PRU_Elite18_Text_Option_18, PRU_Elite18_Text_Option_Cancel
+	switch VAR_RESULT
+	case 0, PRU_Elite18_One_01
+	case 1, PRU_Elite18_One_02
+	case 2, PRU_Elite18_One_03
+	case 3, PRU_Elite18_One_04
+	case 4, PRU_Elite18_One_05
+	case 5, PRU_Elite18_One_06
+	case 6, PRU_Elite18_One_07
+	case 7, PRU_Elite18_One_08
+	case 8, PRU_Elite18_One_09
+	case 9, PRU_Elite18_One_10
+	case 10, PRU_Elite18_One_11
+	case 11, PRU_Elite18_One_12
+	case 12, PRU_Elite18_One_13
+	case 13, PRU_Elite18_One_14
+	case 14, PRU_Elite18_One_15
+	case 15, PRU_Elite18_One_16
+	case 16, PRU_Elite18_One_17
+	case 17, PRU_Elite18_One_18
+	case 18, PRU_Elite18_Exit
+	case MULTI_B_PRESSED, PRU_Elite18_Exit
+	end
+
+PRU_Elite18_One_01::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_01
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_02::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_02
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_03::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_03
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_04::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_04
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_05::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_05
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_06::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_06
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_07::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_07
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_08::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_08
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_09::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_09
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_10::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_10
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_11::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_11
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_12::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_12
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_13::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_13
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_14::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_14
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_15::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_15
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_16::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_16
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_17::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_17
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_One_18::
+	call PRU_Elite18_RequireTwo
+	call PRU_Elite18_Round_18
+	special HealPlayerParty
+	goto PRU_Elite18_Exit
+
+PRU_Elite18_Exit::
+	closemessage
+	release
+	end
+
+PRU_Elite18_Round_01::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_01, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_01_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_01_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_01_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_01_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_01_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_01_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_02::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_02, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_02_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_02_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_02_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_02_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_02_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_02_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_03::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_03, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_03_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_03_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_03_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_03_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_03_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_03_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_04::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_04, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_04_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_04_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_04_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_04_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_04_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_04_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_05::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_05, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_05_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_05_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_05_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_05_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_05_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_05_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_06::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_06, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_06_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_06_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_06_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_06_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_06_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_06_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_07::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_07, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_07_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_07_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_07_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_07_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_07_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_07_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_08::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_08, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_08_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_08_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_08_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_08_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_08_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_08_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_09::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_09, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_09_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_09_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_09_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_09_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_09_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_09_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_10::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_10, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_10_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_10_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_10_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_10_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_10_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_10_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_11::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_11, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_11_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_11_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_11_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_11_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_11_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_11_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_12::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_12, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_12_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_12_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_12_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_12_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_12_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_12_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_13::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_13, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_13_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_13_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_13_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_13_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_13_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_13_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_14::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_14, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_14_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_14_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_14_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_14_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_14_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_14_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_15::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_15, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_15_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_15_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_15_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_15_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_15_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_15_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_16::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_16, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_16_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_16_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_16_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_16_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_16_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_16_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_17::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_17, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_17_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_17_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_17_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_17_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_17_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_17_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_Elite18_Round_18::
+	special HealPlayerParty
+	msgbox PRU_Elite18_Text_Round_18, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite18_Round_18_Master
+	trainerbattle_two_trainers TRAINER_PRU_E18_18_A_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_18_B_HNS, PRU_Elite18_Text_Victory
+	return
+PRU_Elite18_Round_18_Master::
+	trainerbattle_two_trainers TRAINER_PRU_E18_18_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_18_B_MASTER_HNS, PRU_Elite18_Text_Victory
+	return
+
+PRU_KantoLeague_Text_Locked:
+	.string "Finish all eight KANTO BADGES,\nTEAM ROCKET and GIOVANNI first!$"
+PRU_KantoLeague_Text_Confirm:
+	.string "KANTO LEAGUE: five single battles.\nHealing between each. Ready?$"
+PRU_KantoLeague_Text_Lost:
+	.string "The League demands your best.$"
+PRU_KantoLeague_Text_Cleared:
+	.string "RED: You earned this title.\p"
+	.string "The ELITE 18 awaits!$"
+PRU_KantoLeague_Text_LORELEI:
+	.string "LORELEI: Time for your KANTO\nLEAGUE challenge!$"
+PRU_KantoLeague_Text_BRUNO:
+	.string "BRUNO: Time for your KANTO\nLEAGUE challenge!$"
+PRU_KantoLeague_Text_AGATHA:
+	.string "AGATHA: Time for your KANTO\nLEAGUE challenge!$"
+PRU_KantoLeague_Text_LANCE:
+	.string "LANCE: Time for your KANTO\nLEAGUE challenge!$"
+PRU_KantoLeague_Text_RED:
+	.string "RED: Time for your KANTO\nLEAGUE challenge!$"
+PRU_Elite18_Text_Locked:
+	.string "Defeat RED in the new KANTO\nLEAGUE first!$"
+PRU_Elite18_Text_FullRun:
+	.string "ELITE 18: eighteen paired\ndouble battles, healing each round.\p"
+	.string "Take the full challenge?\nNO: choose an individual pair.$"
+PRU_Elite18_Text_Choose:
+	.string "Choose your ELITE 18 pair:$"
+PRU_Elite18_Text_Victory:
+	.string "An impressive victory!$"
+PRU_Elite18_Text_NeedTwo:
+	.string "Bring at least two healthy\nPOKEMON for DOUBLE BATTLES!$"
+PRU_Elite18_Text_Cleared:
+	.string "OAK: Extraordinary work!\p"
+	.string "Every pair is now Lv100\nwhen you return.$"
+PRU_Elite18_Text_Round_01:
+	.string "ROUND 01: BROCK and ROXANNE!$"
+PRU_Elite18_Text_Option_01:
+	.string "01 BROCK/ROXANNE$"
+PRU_Elite18_Text_Round_02:
+	.string "ROUND 02: MISTY and WALLACE!$"
+PRU_Elite18_Text_Option_02:
+	.string "02 MISTY/WALLACE$"
+PRU_Elite18_Text_Round_03:
+	.string "ROUND 03: SURGE and WATTSON!$"
+PRU_Elite18_Text_Option_03:
+	.string "03 SURGE/WATTSON$"
+PRU_Elite18_Text_Round_04:
+	.string "ROUND 04: ERIKA and BUGSY!$"
+PRU_Elite18_Text_Option_04:
+	.string "04 ERIKA/BUGSY$"
+PRU_Elite18_Text_Round_05:
+	.string "ROUND 05: JANINE and KOGA!$"
+PRU_Elite18_Text_Option_05:
+	.string "05 JANINE/KOGA$"
+PRU_Elite18_Text_Round_06:
+	.string "ROUND 06: SABRINA and WILL!$"
+PRU_Elite18_Text_Option_06:
+	.string "06 SABRINA/WILL$"
+PRU_Elite18_Text_Round_07:
+	.string "ROUND 07: BLAINE and FLANNERY!$"
+PRU_Elite18_Text_Option_07:
+	.string "07 BLAINE/FLANNERY$"
+PRU_Elite18_Text_Round_08:
+	.string "ROUND 08: MAXIE and ARCHIE!$"
+PRU_Elite18_Text_Option_08:
+	.string "08 MAXIE/ARCHIE$"
+PRU_Elite18_Text_Round_09:
+	.string "ROUND 09: LORELEI and GLACIA!$"
+PRU_Elite18_Text_Option_09:
+	.string "09 LORELEI/GLACIA$"
+PRU_Elite18_Text_Round_10:
+	.string "ROUND 10: BRUNO and CHUCK!$"
+PRU_Elite18_Text_Option_10:
+	.string "10 BRUNO/CHUCK$"
+PRU_Elite18_Text_Round_11:
+	.string "ROUND 11: AGATHA and PHOEBE!$"
+PRU_Elite18_Text_Option_11:
+	.string "11 AGATHA/PHOEBE$"
+PRU_Elite18_Text_Round_12:
+	.string "ROUND 12: KAREN and SIDNEY!$"
+PRU_Elite18_Text_Option_12:
+	.string "12 KAREN/SIDNEY$"
+PRU_Elite18_Text_Round_13:
+	.string "ROUND 13: LANCE and DRAKE!$"
+PRU_Elite18_Text_Option_13:
+	.string "13 LANCE/DRAKE$"
+PRU_Elite18_Text_Round_14:
+	.string "ROUND 14: STEEVEE and NEEVEE!$"
+PRU_Elite18_Text_Option_14:
+	.string "14 STEEVEE/NEEVEE$"
+PRU_Elite18_Text_Round_15:
+	.string "ROUND 15: JESSIE and JAMES!$"
+PRU_Elite18_Text_Option_15:
+	.string "15 JESSIE/JAMES$"
+PRU_Elite18_Text_Round_16:
+	.string "ROUND 16: SILVER and MAY!$"
+PRU_Elite18_Text_Option_16:
+	.string "16 SILVER/MAY$"
+PRU_Elite18_Text_Round_17:
+	.string "ROUND 17: RED and BLUE!$"
+PRU_Elite18_Text_Option_17:
+	.string "17 RED/BLUE$"
+PRU_Elite18_Text_Round_18:
+	.string "ROUND 18: OAK and ELM!$"
+PRU_Elite18_Text_Option_18:
+	.string "18 OAK/ELM$"
+PRU_Elite18_Text_Option_Cancel:
+	.string "CANCEL$"
+@ PRU spread-move tutor: its eligibility filter checks either species type
+@ for every member of the active Dex, including the Relic evolutions.
+PRU_DoublesTutor::
+	lock
+	faceplayer
+	message PRU_DoublesTutor_Text_Intro
+	waitmessage
+	dynmultichoice 0, 0, FALSE, 5, 0, DYN_MULTICHOICE_CB_NONE, PRU_DoublesTutor_Text_ShockwaveFist, PRU_DoublesTutor_Text_Faultline, PRU_DoublesTutor_Text_WraithCry, PRU_DoublesTutor_Text_MetalBarrage, PRU_DoublesTutor_Text_Mindwave, IndigoPlateau_Text_TutorMove_Cancel
+	switch VAR_RESULT
+	case 0, PRU_DoublesTutor_ShockwaveFist
+	case 1, PRU_DoublesTutor_Faultline
+	case 2, PRU_DoublesTutor_WraithCry
+	case 3, PRU_DoublesTutor_MetalBarrage
+	case 4, PRU_DoublesTutor_Mindwave
+	case 5, PRU_Elite18_Exit
+	case MULTI_B_PRESSED, PRU_Elite18_Exit
+	end
+
+PRU_DoublesTutor_ShockwaveFist::
+	setvar VAR_0x8005, MOVE_SHOCKWAVE_FIST
+	goto PRU_DoublesTutor_Teach
+PRU_DoublesTutor_Faultline::
+	setvar VAR_0x8005, MOVE_FAULTLINE
+	goto PRU_DoublesTutor_Teach
+PRU_DoublesTutor_WraithCry::
+	setvar VAR_0x8005, MOVE_WRAITH_CRY
+	goto PRU_DoublesTutor_Teach
+PRU_DoublesTutor_MetalBarrage::
+	setvar VAR_0x8005, MOVE_METAL_BARRAGE
+	goto PRU_DoublesTutor_Teach
+PRU_DoublesTutor_Mindwave::
+	setvar VAR_0x8005, MOVE_MINDWAVE
+	goto PRU_DoublesTutor_Teach
+
+PRU_DoublesTutor_Teach::
+	buffermovename STR_VAR_1, VAR_0x8005
+	msgbox IndigoPlateau_Text_TutorConfirm, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, PRU_Elite18_Exit
+	msgbox IndigoPlateau_Text_TutorWhichMon, MSGBOX_DEFAULT
+	fadescreen FADE_TO_BLACK
+	chooseboxmon SELECT_PC_MON_PRU_DOUBLE_TUTOR
+	waitstate
+	goto_if_eq VAR_RESULT, FALSE, PRU_Elite18_Exit
+	msgbox IndigoPlateau_Text_TutorDone, MSGBOX_DEFAULT
+	release
+	end
+
+PRU_DoublesTutor_Text_Intro:
+	.string "Five moves strike BOTH foes!\p"
+	.string "Type-matched and completely free.\nWhich one will you learn?$"
+PRU_DoublesTutor_Text_ShockwaveFist:
+	.string "SHOCKWAVE FIST$"
+PRU_DoublesTutor_Text_Faultline:
+	.string "FAULTLINE$"
+PRU_DoublesTutor_Text_WraithCry:
+	.string "WRAITH CRY$"
+PRU_DoublesTutor_Text_MetalBarrage:
+	.string "METAL BARRAGE$"
+PRU_DoublesTutor_Text_Mindwave:
+	.string "MINDWAVE$"

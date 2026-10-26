@@ -2,7 +2,45 @@ PokemonLeague_KogasRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, EliteFourRoom_OnFrame
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_KogasRoom_OnResume
 	map_script MAP_SCRIPT_ON_LOAD, EliteFourRoom_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_KogaAppearance
 	.byte 0
+
+PRU_KantoE4_KogaAppearance::
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_KOGA_HNS
+	call PRU_KantoE4_CheckActive
+	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_KogaShowBruno
+	end
+
+PRU_KantoE4_KogaShowBruno::
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_BRUNO_HNS
+	end
+
+PRU_KantoE4_KogaOrBruno::
+	call PRU_KantoE4_CheckActive
+	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_Bruno
+	goto PokemonLeague_KogasRoom_EventScript_Koga
+
+PRU_KantoE4_Bruno::
+	lock
+	faceplayer
+	goto_if_ge VAR_LEAGUE_STATE, 3, PRU_KantoE4_BrunoAlreadyWon
+	msgbox PRU_KantoLeague_Text_BRUNO, MSGBOX_DEFAULT
+	setflag FLAG_TEMP_3
+	setflag FLAG_TEMP_5
+	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_BRUNO_HNS, PRU_KantoLeague_Text_Lost
+	clearflag FLAG_TEMP_5
+	msgbox PRU_KantoE4_BrunoAfter, MSGBOX_DEFAULT
+	closemessage
+	goto PRU_KantoE4_BrunoOpenExit
+
+PRU_KantoE4_BrunoAlreadyWon::
+	msgbox PRU_KantoE4_BrunoAfter, MSGBOX_DEFAULT
+	release
+	end
+
+PRU_KantoE4_BrunoAfter:
+	.string "BRUNO: Such strength!\n"
+	.string "AGATHA is waiting ahead!$"
 
 PokemonLeague_KogasRoom_OnResume::
 	setvar VAR_0x8004, 1
@@ -42,6 +80,8 @@ PokemonLeague_KogasRoom_EventScript_KogaOnDefeat::
 	clearflag FLAG_TEMP_5
 	msgbox PokemonLeague_KogasRoom_Text_Defeat, MSGBOX_DEFAULT
 	closemessage
+
+PRU_KantoE4_BrunoOpenExit::
 	setmetatile 6, 1, 0x28E, FALSE
 	setmetatile 6, 2, 0x296, FALSE	
 	playse SE_BANG

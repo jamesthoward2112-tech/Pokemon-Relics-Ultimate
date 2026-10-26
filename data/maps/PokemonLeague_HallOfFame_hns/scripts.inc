@@ -84,6 +84,13 @@ PokemonLeague_HallOfFame_EventScript_SetFirstGameClearFlags::
 @ Kanto badges grants Kanto postgame unlocks.
 PokemonLeague_HallOfFame_EventScript_SetGameClearFlags::
 	setvar VAR_LEAGUE_STATE, 1
+	@ A second Kanto League championship follows the normal credits but
+	@ starts Elm's one-time gift scene upon respawning in New Bark Town.
+	goto_if_unset FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_HallOfFame_Continue
+	goto_if_set FLAG_PRU_ELM_RELIC_CANDY_GIVEN, PRU_HallOfFame_Continue
+	setvar VAR_NEWBARK_TOWN_STATE, 8
+
+PRU_HallOfFame_Continue::
 	goto_if_set FLAG_IS_KANTO_CHAMPION, PokemonLeague_HallOfFame_EventScript_KantoAlreadyAwarded
 	goto_if_unset FLAG_BADGE09_GET, PokemonLeague_HallOfFame_EventScript_KantoAlreadyAwarded
 	goto_if_unset FLAG_BADGE10_GET, PokemonLeague_HallOfFame_EventScript_KantoAlreadyAwarded
