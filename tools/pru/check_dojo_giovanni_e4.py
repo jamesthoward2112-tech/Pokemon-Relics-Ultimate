@@ -211,7 +211,9 @@ def check():
     assert "TRAINER_PRU_HEIST_GIOVANNI_HNS" in STAT_CODE
     assert "2 * 120" in STAT_CODE, "Trainer-only 120 base Def and SpDef missing"
     assert "FLAG_PRU_HEIST_GIOVANNI" in INDIGO
-    assert "goto_if_set FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUDoorUnlocked" in INDIGO
+    assert "goto_if_set FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUMeowthAlert" in INDIGO, (
+        "Giovanni's defeat must unlock the final Rocket showdown, not bypass Jessie and James"
+    )
 
     for location, label in [
         ("PewterCity_Gym_hns", "Brock"),

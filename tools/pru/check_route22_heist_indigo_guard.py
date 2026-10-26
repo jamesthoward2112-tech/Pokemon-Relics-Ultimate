@@ -146,6 +146,40 @@ for leader in ("OBJ_EVENT_GFX_JESSIE_HNS", "OBJ_EVENT_GFX_JAMES_HNS"):
     rocket = next(o for o in indigo["object_events"] if o["graphics_id"] == leader)
     assert rocket["movement_type"] == "MOVEMENT_TYPE_FACE_UP", f"{leader} does not face the Fly spot"
 
+# Meowth is aligned with the Fly arrival (11, 7), two tiles north of him.
+# Ordinary trainer sight works on the next step; a map arrival script must
+# also display Meowth's [!] and launch Jessie/James before the first step.
+meowth_indigo = next(o for o in indigo["object_events"]
+                     if o["graphics_id"] == "OBJ_EVENT_GFX_MON_BASE+SPECIES_MEOWTH")
+assert (meowth_indigo["x"], meowth_indigo["y"]) == (11, 9)
+assert meowth_indigo["movement_type"] == "MOVEMENT_TYPE_FACE_UP"
+assert meowth_indigo["trainer_type"] == "TRAINER_TYPE_NORMAL"
+assert int(meowth_indigo["trainer_sight_or_berry_tree_id"]) >= 2
+assert any(loc["map"] == "MAP_INDIGO_PLATEAU_HNS" and (loc["x"], loc["y"]) == (11, 7)
+           for loc in json.loads(read("src/data/heal_locations.json"))["heal_locations"])
+meowth_event = scripts_indigo.split("IndigoPlateau_EventScript_PRUMeowth::", 1)[1].split(
+    "IndigoPlateau_EventScript_PRUWaiting::", 1)[0]
+assert "goto IndigoPlateau_EventScript_PRUJessie" in meowth_event
+assert "MAP_SCRIPT_ON_FRAME_TABLE, IndigoPlateau_EventScript_PRUOnFrame" in scripts_indigo
+arrival = scripts_indigo.split("IndigoPlateau_EventScript_PRUSyncRocket::", 1)[1].split(
+    "IndigoPlateau_EventScript_PRUSyncDone::", 1)[0]
+assert "getplayerxy VAR_TEMP_0, VAR_TEMP_1" in arrival
+assert "goto_if_unset FLAG_PRU_HEIST_GIOVANNI" in arrival
+assert "goto_if_set FLAG_PRU_HEIST_COMPLETED" in arrival
+assert "goto_if_eq VAR_TEMP_0, 11" in arrival
+assert "goto_if_eq VAR_TEMP_1, 7" in arrival
+on_frame = scripts_indigo.split("IndigoPlateau_EventScript_PRUOnFrame::", 1)[1].split(
+    "IndigoPlateau_EventScript_PRUJessie::", 1)[0]
+assert "setvar VAR_TEMP_3, 0" in on_frame, "disarm one-time Fly trigger"
+assert "IndigoPlateau_EventScript_PRUMeowthAlert" in on_frame
+alert = scripts_indigo.split("IndigoPlateau_EventScript_PRUMeowthAlert::", 1)[1].split(
+    "IndigoPlateau_EventScript_PRUJessie::", 1)[0]
+assert "applymovement 3, Common_Movement_ExclamationMark" in alert
+assert "waitmovement 3" in alert
+assert "goto IndigoPlateau_EventScript_PRUJessie" in alert
+assert "goto_if_set FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUMeowthAlert" in gate, (
+    "Victory Road arrivals could still bypass Meowth before entering the League")
+
 # The 64x64 flying balloon must render above BG scenery (roof/trees) for
 # every subsprite, both when added mid-cutscene and when field sprites reload.
 renderer = read("src/event_object_movement.c")

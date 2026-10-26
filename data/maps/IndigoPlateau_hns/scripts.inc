@@ -1,5 +1,6 @@
 IndigoPlateau_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, IndigoPlateau_EventScript_PRUSyncRocket
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, IndigoPlateau_EventScript_PRUOnFrame
 	.byte 0
 
 IndigoPlateau_Sign::
@@ -15,6 +16,7 @@ IndigoPlateau_Text_Sign:
 @ This second Indigo battle follows eight recovery rematches, not the first
 @ Johto League challenge. The Badge Heist is a physical story case only.
 IndigoPlateau_EventScript_PRUSyncRocket::
+	setvar VAR_TEMP_3, 0
 	setflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
 	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
 	setflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD
@@ -24,8 +26,34 @@ IndigoPlateau_EventScript_PRUSyncRocket::
 	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUSyncDone
 	setflag FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD
 	clearflag FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO
+	@ The Fly landing is (11, 7), directly north of Meowth (11, 9).
+	@ Trainer sight checks walking steps, so initiate a one-time arrival
+	@ alert here instead of waiting for the player to leave the Fly tile.
+	getplayerxy VAR_TEMP_0, VAR_TEMP_1
+	goto_if_eq VAR_TEMP_0, 11, IndigoPlateau_EventScript_PRUCheckFlyLanding
+	goto IndigoPlateau_EventScript_PRUSyncDone
+IndigoPlateau_EventScript_PRUCheckFlyLanding::
+	goto_if_eq VAR_TEMP_1, 7, IndigoPlateau_EventScript_PRUArmFlyAmbush
+	goto IndigoPlateau_EventScript_PRUSyncDone
+IndigoPlateau_EventScript_PRUArmFlyAmbush::
+	setvar VAR_TEMP_3, 1
 IndigoPlateau_EventScript_PRUSyncDone::
 	end
+
+IndigoPlateau_EventScript_PRUOnFrame::
+	map_script_2 VAR_TEMP_3, 1, IndigoPlateau_EventScript_PRUFlyAmbush
+	.2byte 0
+
+IndigoPlateau_EventScript_PRUFlyAmbush::
+	setvar VAR_TEMP_3, 0
+	goto IndigoPlateau_EventScript_PRUMeowthAlert
+
+IndigoPlateau_EventScript_PRUMeowthAlert::
+	lockall
+	applymovement 3, Common_Movement_ExclamationMark
+	waitmovement 3
+	releaseall
+	goto IndigoPlateau_EventScript_PRUJessie
 
 IndigoPlateau_EventScript_PRUJessie::
 	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUWaiting
@@ -36,8 +64,8 @@ IndigoPlateau_EventScript_PRUJames::
 	goto IndigoPlateau_EventScript_PRUJessie
 
 IndigoPlateau_EventScript_PRUMeowth::
-	msgbox IndigoPlateau_Text_PRUMeowth, MSGBOX_NPC
-	end
+	@ Meowth is the central lookout: sight (or talking) starts the duo fight.
+	goto IndigoPlateau_EventScript_PRUJessie
 
 IndigoPlateau_EventScript_PRUWaiting::
 	msgbox IndigoPlateau_Text_PRUWaiting, MSGBOX_NPC
@@ -170,8 +198,10 @@ IndigoPlateau_EventScript_PRUGuard::
 @ warp handling and denies entry regardless of sprite collision state.
 IndigoPlateau_EventScript_PRUDoorGate::
 	goto_if_unset FLAG_PRU_HEIST_STARTED, IndigoPlateau_EventScript_PRUDoorUnlocked
-	goto_if_set FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUDoorUnlocked
 	goto_if_set FLAG_PRU_HEIST_COMPLETED, IndigoPlateau_EventScript_PRUDoorUnlocked
+	@ Even if the player skirts the lookout coming from Victory Road, the
+	@ League door forces the final Jessie/James showdown before entry.
+	goto_if_set FLAG_PRU_HEIST_GIOVANNI, IndigoPlateau_EventScript_PRUMeowthAlert
 	lockall
 	msgbox IndigoPlateau_Text_PRUGuard, MSGBOX_DEFAULT
 	releaseall
