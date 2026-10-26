@@ -236,11 +236,12 @@ SaffronCity_FightingDojoVIP_Text_PRUHeistNextSabrina:
 	.string "Your next opponent is BLAINE!$"
 
 SaffronCity_FightingDojoVIP_Text_PRUHeistNextBlaine:
-	.string "BLAINE: Seven wins! Bravo!\p"
-	.string "One final BADGE remains.\p"
-	.string "Think of the first city\n"
-	.string "north of PALLET TOWN...\p"
-	.string "Its GYM holds your answer!$"
+	.string "BLAINE: Seven rematches won!\p"
+	.string "But an EIGHTH BADGE remains.\p"
+	.string "Remember the first city\n"
+	.string "north of PALLET TOWN?\p"
+	.string "Find its GYM to face your\n"
+	.string "final opponent!$"
 
 SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge:
 	.string "ROCKET stole your KANTO BADGES!\p"

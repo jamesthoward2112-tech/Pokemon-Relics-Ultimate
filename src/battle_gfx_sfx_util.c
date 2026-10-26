@@ -37,6 +37,41 @@
 #if IS_HNS
 extern const u32 gPruArmouredMewtwoFrontGfx[];
 extern const u16 gPruArmouredMewtwoPalette[];
+extern const u32 gPruGiovanniAerodactylFrontGfx[];
+extern const u16 gPruGiovanniAerodactylPalette[];
+extern const u32 gPruGiovanniKabutopsFrontGfx[];
+extern const u16 gPruGiovanniKabutopsPalette[];
+extern const u32 gPruGiovanniRhyperiorFrontGfx[];
+extern const u16 gPruGiovanniRhyperiorPalette[];
+
+enum PruGiovanniRelicSprite
+{
+    PRU_GIOVANNI_RELIC_NONE,
+    PRU_GIOVANNI_RELIC_AERODACTYL,
+    PRU_GIOVANNI_RELIC_KABUTOPS,
+    PRU_GIOVANNI_RELIC_RHYPERIOR,
+};
+
+static enum PruGiovanniRelicSprite GetPruGiovanniRelicSprite(enum BattlerId battler, u32 species)
+{
+    if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     || IsOnPlayerSide(battler)
+     || TRAINER_BATTLE_PARAM.opponentA != TRAINER_PRU_HEIST_GIOVANNI_HNS
+     || gBattleSpritesDataPtr->battlerData[battler].transformSpecies != SPECIES_NONE)
+        return PRU_GIOVANNI_RELIC_NONE;
+
+    switch (species)
+    {
+    case SPECIES_AERODACTYL:
+        return PRU_GIOVANNI_RELIC_AERODACTYL;
+    case SPECIES_KABUTOPS:
+        return PRU_GIOVANNI_RELIC_KABUTOPS;
+    case SPECIES_RHYPERIOR:
+        return PRU_GIOVANNI_RELIC_RHYPERIOR;
+    default:
+        return PRU_GIOVANNI_RELIC_NONE;
+    }
+}
 
 static bool8 IsPruGiovanniArmouredMewtwo(enum BattlerId battler, u32 species)
 {
@@ -759,6 +794,31 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
 
 #if IS_HNS
     bool8 useGiovanniArmour = IsPruGiovanniArmouredMewtwo(battler, species);
+    enum PruGiovanniRelicSprite giovanniRelic = GetPruGiovanniRelicSprite(battler, species);
+    const u32 *relicGfx = NULL;
+    switch (giovanniRelic)
+    {
+    case PRU_GIOVANNI_RELIC_AERODACTYL:
+        relicGfx = gPruGiovanniAerodactylFrontGfx;
+        break;
+    case PRU_GIOVANNI_RELIC_KABUTOPS:
+        relicGfx = gPruGiovanniKabutopsFrontGfx;
+        break;
+    case PRU_GIOVANNI_RELIC_RHYPERIOR:
+        relicGfx = gPruGiovanniRhyperiorFrontGfx;
+        break;
+    default:
+        break;
+    }
+    if (relicGfx != NULL)
+    {
+        DecompressDataWithHeaderWram(relicGfx, gMonSpritesGfxPtr->spritesGfx[position]);
+        // Normal frames would otherwise briefly flash over the relic art.
+        for (u32 frame = 1; frame < 4; frame++)
+            Dma3CopyLarge32_(gMonSpritesGfxPtr->spritesGfx[position],
+                             &gMonSpritesGfxPtr->spritesGfx[position][MON_PIC_SIZE * frame],
+                             MON_PIC_SIZE);
+    }
     if (useGiovanniArmour)
     {
         DecompressDataWithHeaderWram(gPruArmouredMewtwoFrontGfx, gMonSpritesGfxPtr->spritesGfx[position]);
@@ -838,6 +898,20 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
 #if IS_HNS
     if (useGiovanniArmour)
         paletteData = gPruArmouredMewtwoPalette;
+    switch (giovanniRelic)
+    {
+    case PRU_GIOVANNI_RELIC_AERODACTYL:
+        paletteData = gPruGiovanniAerodactylPalette;
+        break;
+    case PRU_GIOVANNI_RELIC_KABUTOPS:
+        paletteData = gPruGiovanniKabutopsPalette;
+        break;
+    case PRU_GIOVANNI_RELIC_RHYPERIOR:
+        paletteData = gPruGiovanniRhyperiorPalette;
+        break;
+    default:
+        break;
+    }
 #endif
 
     LoadPalette(paletteData, paletteOffset, PLTT_SIZE_4BPP);

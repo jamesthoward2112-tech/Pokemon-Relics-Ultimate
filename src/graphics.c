@@ -5,6 +5,14 @@
 // TRE 2026 slot 0922; Giovanni-only trainer artwork, not a global Mewtwo form.
 const u32 gPruArmouredMewtwoFrontGfx[] = INCBIN_U32("graphics/pokemon/mewtwo/armoured/front.4bpp.smol");
 const u16 gPruArmouredMewtwoPalette[] = INCBIN_U16("graphics/pokemon/mewtwo/armoured/normal.gbapal");
+// Authentic TRE 2026 visuals for Giovanni's three fossil/relic team members.
+// Keep the regular species graphics untouched elsewhere in the game.
+const u32 gPruGiovanniAerodactylFrontGfx[] = INCBIN_U32("graphics/pokemon/giovanni_relic/aerodactyl_front.4bpp.smol");
+const u16 gPruGiovanniAerodactylPalette[] = INCBIN_U16("graphics/pokemon/giovanni_relic/aerodactyl_normal.gbapal");
+const u32 gPruGiovanniKabutopsFrontGfx[] = INCBIN_U32("graphics/pokemon/giovanni_relic/kabutops_front.4bpp.smol");
+const u16 gPruGiovanniKabutopsPalette[] = INCBIN_U16("graphics/pokemon/giovanni_relic/kabutops_normal.gbapal");
+const u32 gPruGiovanniRhyperiorFrontGfx[] = INCBIN_U32("graphics/pokemon/giovanni_relic/rhyperior_front.4bpp.smol");
+const u16 gPruGiovanniRhyperiorPalette[] = INCBIN_U16("graphics/pokemon/giovanni_relic/rhyperior_normal.gbapal");
 #endif
 
 #if IS_HNS

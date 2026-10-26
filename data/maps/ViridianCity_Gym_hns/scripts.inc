@@ -256,8 +256,11 @@ ViridianCity_Gym_EventScript_PRUHeistGiovanni::
 	clearflag FLAG_HIDE_MEWTWO
 ViridianCity_Gym_EventScript_PRUMewtwoAlreadyCaught::
 	msgbox ViridianCity_Gym_Text_PRUHeistGiovanniAfter, MSGBOX_DEFAULT
+	@ Giovanni vanishes in a burst of white light after his final speech.
 	closemessage
+	fadescreenswapbuffers FADE_TO_WHITE
 	removeobject 3
+	fadescreenswapbuffers FADE_FROM_WHITE
 	release
 	end
 
