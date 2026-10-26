@@ -1,7 +1,25 @@
 PokemonLeague_ChampionsRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, ChampionRoom_OnFrame
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_ChampionsRoom_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_SelectSprites
 	.byte 0
+
+PRU_KantoE4_Red::
+	lockall
+	faceplayer
+	msgbox PRU_KantoLeague_Text_RED, MSGBOX_DEFAULT
+	setflag FLAG_TEMP_3
+	setflag FLAG_TEMP_5
+	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_RED_HNS, PRU_KantoLeague_Text_Lost
+	clearflag FLAG_TEMP_5
+	msgbox PRU_KantoLeague_Text_Cleared, MSGBOX_DEFAULT
+	closemessage
+	setflag FLAG_PRU_KANTO_LEAGUE_CLEARED
+	setvar VAR_LEAGUE_STATE, 6
+	warpsilent MAP_POKEMON_LEAGUE_HALL_OF_FAME_HNS, 0
+	waitstate
+	releaseall
+	end
 
 PokemonLeague_ChampionsRoom_OnResume::
 	setvar VAR_0x8004, 4

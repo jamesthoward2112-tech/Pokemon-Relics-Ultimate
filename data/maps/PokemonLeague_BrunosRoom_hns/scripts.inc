@@ -2,7 +2,30 @@ PokemonLeague_BrunosRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, EliteFourRoom_OnFrame
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_BrunosRoom_OnResume
 	map_script MAP_SCRIPT_ON_LOAD, EliteFourRoom_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_SelectSprites
 	.byte 0
+
+PRU_KantoE4_Agatha::
+	lock
+	faceplayer
+	goto_if_ge VAR_LEAGUE_STATE, 4, PRU_KantoE4_AgathaAlreadyWon
+	msgbox PRU_KantoLeague_Text_AGATHA, MSGBOX_DEFAULT
+	setflag FLAG_TEMP_3
+	setflag FLAG_TEMP_5
+	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_AGATHA_HNS, PRU_KantoLeague_Text_Lost
+	clearflag FLAG_TEMP_5
+	msgbox PRU_KantoE4_AgathaAfter, MSGBOX_DEFAULT
+	closemessage
+	goto PRU_KantoE4_AgathaOpenExit
+
+PRU_KantoE4_AgathaAlreadyWon::
+	msgbox PRU_KantoE4_AgathaAfter, MSGBOX_DEFAULT
+	release
+	end
+
+PRU_KantoE4_AgathaAfter:
+	.string "AGATHA: Hah! You've earned\n"
+	.string "a meeting with LANCE.$"
 
 PokemonLeague_BrunosRoom_OnResume::
 	setvar VAR_0x8004, 2
@@ -42,6 +65,8 @@ PokemonLeague_BrunosRoom_EventScript_BrunoOnDefeat::
 	clearflag FLAG_TEMP_5	
 	msgbox PokemonLeague_BrunosRoom_Text_Defeat, MSGBOX_DEFAULT
 	closemessage
+
+PRU_KantoE4_AgathaOpenExit::
 	setmetatile 6, 1, 0x28E, FALSE
 	setmetatile 6, 2, 0x296, FALSE	
 	playse SE_BANG

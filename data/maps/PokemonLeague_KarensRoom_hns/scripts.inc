@@ -2,7 +2,30 @@ PokemonLeague_KarensRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, EliteFourRoom_OnFrame
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_KarensRoom_OnResume
 	map_script MAP_SCRIPT_ON_LOAD, EliteFourRoom_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_SelectSprites
 	.byte 0
+
+PRU_KantoE4_Lance::
+	lock
+	faceplayer
+	goto_if_ge VAR_LEAGUE_STATE, 5, PRU_KantoE4_LanceAlreadyWon
+	msgbox PRU_KantoLeague_Text_LANCE, MSGBOX_DEFAULT
+	setflag FLAG_TEMP_3
+	setflag FLAG_TEMP_5
+	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_LANCE_HNS, PRU_KantoLeague_Text_Lost
+	clearflag FLAG_TEMP_5
+	msgbox PRU_KantoE4_LanceAfter, MSGBOX_DEFAULT
+	closemessage
+	goto PRU_KantoE4_LanceOpenExit
+
+PRU_KantoE4_LanceAlreadyWon::
+	msgbox PRU_KantoE4_LanceAfter, MSGBOX_DEFAULT
+	release
+	end
+
+PRU_KantoE4_LanceAfter:
+	.string "LANCE: You're worthy.\n"
+	.string "RED is the last obstacle.$"
 
 PokemonLeague_KarensRoom_OnResume::
 	setvar VAR_0x8004, 3
@@ -42,6 +65,8 @@ PokemonLeague_KarensRoom_EventScript_KarenOnDefeat::
     clearflag FLAG_TEMP_5
 	msgbox PokemonLeague_KarensRoom_Text_Defeat, MSGBOX_DEFAULT
 	closemessage
+
+PRU_KantoE4_LanceOpenExit::
 	setmetatile 6, 1, 0x28E, FALSE
 	setmetatile 6, 2, 0x296, FALSE	
 	playse SE_BANG

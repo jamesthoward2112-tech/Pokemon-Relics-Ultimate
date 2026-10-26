@@ -19,7 +19,36 @@ IndigoPlateau_PokemonCenter_Enter::
 
 IndigoPlateau_Pokecenter_OnTransition::
 	setrespawn HEAL_LOCATION_INDIGO_PLATEAU_HNS
+	goto_if_set FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_LeagueEntrance_ShowGuard
+	goto_if_unset FLAG_PRU_HEIST_COMPLETED, PRU_LeagueEntrance_KeepOldGuard
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, PRU_LeagueEntrance_KeepOldGuard
+	setflag FLAG_HIDE_LEAGUE_BLACKBELT
 	end
+
+PRU_LeagueEntrance_ShowGuard::
+	clearflag FLAG_HIDE_LEAGUE_BLACKBELT
+	end
+
+PRU_LeagueEntrance_KeepOldGuard::
+	end
+
+PRU_LeagueEntrance_Seal::
+	goto_if_unset FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_LeagueEntrance_Unsealed
+	lock
+	msgbox PRU_LeagueEntrance_Text_Closed, MSGBOX_DEFAULT
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkDown1
+	waitmovement 0
+	release
+	end
+
+PRU_LeagueEntrance_Unsealed::
+	end
+
+PRU_LeagueEntrance_Text_Closed::
+	.string "The KANTO LEAGUE is over.\n"
+	.string "These doors are now sealed!\p"
+	.string "The ELITE 18 awaits you in\n"
+	.string "the POKéMON CENTER.$"
 
 
 IndigoPlateau_EventScript_Cooltrainer::
@@ -27,7 +56,12 @@ IndigoPlateau_EventScript_Cooltrainer::
 	end
 
 IndigoPlateau_EventScript_BlackBelt::
+	goto_if_set FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_LeagueEntrance_GuardClosed
 	msgbox IndigoPlateau_Text_Blackbelt, MSGBOX_NPC
+	end
+
+PRU_LeagueEntrance_GuardClosed::
+	msgbox PRU_LeagueEntrance_Text_Closed, MSGBOX_NPC
 	end
 
 IndigoPlateau_EventScript_ShigyNinja::
@@ -517,43 +551,6 @@ IndigoPlateau_Text_TutorMove_Nuzzle:
 IndigoPlateau_Text_TutorMove_Cancel:
 	.string "CANCEL$"
 
-@ PRU post-heist Kanto League. Independent of the first Johto League.
-PRU_KantoLeague_Steward::
-	lock
-	faceplayer
-	goto_if_unset FLAG_BADGE16_GET, PRU_KantoLeague_Locked
-	goto_if_unset FLAG_PRU_HEIST_COMPLETED, PRU_KantoLeague_Locked
-	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, PRU_KantoLeague_Locked
-	msgbox PRU_KantoLeague_Text_Confirm, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, PRU_Elite18_Exit
-	closemessage
-	special HealPlayerParty
-	msgbox PRU_KantoLeague_Text_LORELEI, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_LORELEI_HNS, PRU_KantoLeague_Text_Lost
-	special HealPlayerParty
-	msgbox PRU_KantoLeague_Text_BRUNO, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_BRUNO_HNS, PRU_KantoLeague_Text_Lost
-	special HealPlayerParty
-	msgbox PRU_KantoLeague_Text_AGATHA, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_AGATHA_HNS, PRU_KantoLeague_Text_Lost
-	special HealPlayerParty
-	msgbox PRU_KantoLeague_Text_LANCE, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_LANCE_HNS, PRU_KantoLeague_Text_Lost
-	special HealPlayerParty
-	msgbox PRU_KantoLeague_Text_RED, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_RED_HNS, PRU_KantoLeague_Text_Lost
-	setflag FLAG_PRU_KANTO_LEAGUE_CLEARED
-	special HealPlayerParty
-	msgbox PRU_KantoLeague_Text_Cleared, MSGBOX_DEFAULT
-	giveitem ITEM_RARE_CANDY, 99
-	release
-	end
-
-PRU_KantoLeague_Locked::
-	msgbox PRU_KantoLeague_Text_Locked, MSGBOX_DEFAULT
-	release
-	end
-
 PRU_Elite18_Steward::
 	lock
 	faceplayer
@@ -923,18 +920,6 @@ PRU_Elite18_Round_18_Master::
 	trainerbattle_two_trainers TRAINER_PRU_E18_18_A_MASTER_HNS, PRU_Elite18_Text_Victory, TRAINER_PRU_E18_18_B_MASTER_HNS, PRU_Elite18_Text_Victory
 	return
 
-PRU_Candy_Steward::
-	lock
-	faceplayer
-	goto_if_unset FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_Candy_Locked
-	msgbox PRU_Candy_Text_Gift, MSGBOX_DEFAULT
-	giveitem ITEM_RARE_CANDY, 99
-	release
-	end
-PRU_Candy_Locked::
-	msgbox PRU_Candy_Text_Locked, MSGBOX_DEFAULT
-	release
-	end
 PRU_KantoLeague_Text_Locked:
 	.string "Finish all eight KANTO BADGES,\nTEAM ROCKET and GIOVANNI first!$"
 PRU_KantoLeague_Text_Confirm:
@@ -943,7 +928,7 @@ PRU_KantoLeague_Text_Lost:
 	.string "The League demands your best.$"
 PRU_KantoLeague_Text_Cleared:
 	.string "RED: You earned this title.\p"
-	.string "The ELITE 18 awaits!\nRare Candies are now available.$"
+	.string "The ELITE 18 awaits!$"
 PRU_KantoLeague_Text_LORELEI:
 	.string "LORELEI: Time for your KANTO\nLEAGUE challenge!$"
 PRU_KantoLeague_Text_BRUNO:
@@ -1042,11 +1027,6 @@ PRU_Elite18_Text_Option_18:
 	.string "18 OAK/ELM$"
 PRU_Elite18_Text_Option_Cancel:
 	.string "CANCEL$"
-PRU_Candy_Text_Gift:
-	.string "Champion! Take 99 Rare Candies.\nCome back whenever you need more.$"
-PRU_Candy_Text_Locked:
-	.string "Defeat RED in the KANTO LEAGUE\nto unlock infinite Rare Candies.$"
-
 @ PRU spread-move tutor: its eligibility filter checks either species type
 @ for every member of the active Dex, including the Relic evolutions.
 PRU_DoublesTutor::

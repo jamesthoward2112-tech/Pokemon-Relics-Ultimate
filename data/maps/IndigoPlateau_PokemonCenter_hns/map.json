@@ -134,22 +134,9 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_M_HNS",
-      "x": 24,
-      "y": 13,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "PRU_KantoLeague_Steward",
-      "flag": "0"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT_HNS",
-      "x": 26,
-      "y": 13,
+      "x": 27,
+      "y": 9,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -157,19 +144,6 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "PRU_Elite18_Steward",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN_HNS",
-      "x": 28,
-      "y": 13,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "PRU_Candy_Steward",
       "flag": "0"
     },
     {
@@ -202,7 +176,17 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 3,
+      "elevation": 0,
+      "var": "VAR_LEAGUE_STATE",
+      "var_value": "1",
+      "script": "PRU_LeagueEntrance_Seal"
+    }
+  ],
   "bg_events": [
     {
       "type": "sign",

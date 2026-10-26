@@ -16603,6 +16603,22 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_RareCandy,
     },
 
+    [ITEM_RELIC_CANDY] =
+    {
+        .name = ITEM_NAME("RELIC CANDY"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "Elm's special candy.\n"
+            "Use it to obtain\n"
+            "unlimited Rare Candy."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_InfiniteRareCandies,
+        .iconPic = gItemIcon_RareCandy,
+        .iconPalette = gItemIconPalette_RareCandy,
+    },
+
     [ITEM_CLEAR_BELL] =
     {
         .name = ITEM_NAME("CLEAR BELL"),

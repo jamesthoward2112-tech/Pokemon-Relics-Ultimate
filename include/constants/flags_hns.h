@@ -3564,10 +3564,10 @@
 #define FLAG_PRU_CUBONE_MIMIKYU_RESOLVED                       0x93F // KO or catch; saved permanently
 #define FLAG_PRU_KANTO_LEAGUE_CLEARED                          0x940
 #define FLAG_PRU_ELITE18_CLEARED                               0x941
-#define FLAG_UNUSED_0x942                                       0
-#define FLAG_UNUSED_0x943                                       0
-#define FLAG_UNUSED_0x944                                       0
-#define FLAG_UNUSED_0x945                                       0
+#define FLAG_PRU_HIDE_JOHTO_E4                                 0x942
+#define FLAG_PRU_HIDE_KANTO_E4                                 0x943
+#define FLAG_PRU_ELM_RELIC_CANDY_GIVEN                          0x944
+#define FLAG_PRU_HIDE_ELM_RELIC_CANDY                           0x945
 #define FLAG_UNUSED_0x946                                       0
 #define FLAG_UNUSED_0x947                                       0
 #define FLAG_UNUSED_0x948                                       0
