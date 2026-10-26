@@ -18063,7 +18063,6 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
 - Thrash
 
-// PRU Kanto League and Elite 18: appended trainer parties, save-safe IDs.
 === TRAINER_PRU_KANTO_E4_LORELEI_HNS ===
 Name: LORELEI
 Class: Elite Four Hns

@@ -17,6 +17,7 @@ def block(text, label):
 
 
 party = read("src/data/trainers_hns.party")
+assert "// PRU Kanto League" not in party, "Trainer party parser does not accept free-form comments"
 ids = read("include/constants/opponents_hns.h")
 flags = read("include/constants/flags_hns.h")
 center = read("data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc")

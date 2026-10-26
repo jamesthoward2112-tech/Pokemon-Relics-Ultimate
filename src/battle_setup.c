@@ -1151,6 +1151,12 @@ enum BattleTransition GetTrainerBattleTransition(void)
         u32 secondTrainerId = SanitizeTrainerId(TRAINER_BATTLE_PARAM.opponentB);
         // The two-trainer mode presents both opponents; these event-specific
         // transitions must not affect their normal solo encounters.
+        if ((trainerId == TRAINER_PRU_E18_14_A_HNS && secondTrainerId == TRAINER_PRU_E18_14_B_HNS)
+         || (trainerId == TRAINER_PRU_E18_14_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_14_B_MASTER_HNS))
+            return B_TRANSITION_EEVEE_TWINS;
+        if ((trainerId == TRAINER_PRU_E18_15_A_HNS && secondTrainerId == TRAINER_PRU_E18_15_B_HNS)
+         || (trainerId == TRAINER_PRU_E18_15_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_15_B_MASTER_HNS))
+            return B_TRANSITION_JESSIE_JAMES;
         if ((trainerId == TRAINER_PRU_E18_17_A_HNS && secondTrainerId == TRAINER_PRU_E18_17_B_HNS)
          || (trainerId == TRAINER_PRU_E18_17_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_17_B_MASTER_HNS))
             return B_TRANSITION_RED_BLUE;
