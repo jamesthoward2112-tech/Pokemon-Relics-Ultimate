@@ -1,0 +1,49 @@
+name: PRU Build 274 — direct GBA release
+
+on:
+  push:
+    branches:
+      - pru/dojo-giovanni-e4-plan-20261025
+    paths:
+      - .github/workflows/pru-publish-build274.yml
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish-validated-gba:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Download validated Build 274 GBA and publish direct file
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          mkdir -p pru-274
+          gh run download 40283796393 --repo "$GITHUB_REPOSITORY" --name PRU-CANONICAL-SOURCE-VALIDATED --dir pru-274
+          cd pru-274
+          test "$(stat -c%s pokehns.gba)" -eq 33554432
+          sha256sum --check pru-rom.sha256
+
+          # Publish exactly the successful canonical Build #274 ROM, not the
+          # small publishing-only workflow commit's source tree.
+          tag="pru-build-500ea53731"
+          file="Pokemon-Relics-Ultimate-500ea53731.gba"
+          cp pokehns.gba "$file"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "$file" --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$tag" "$file" \
+              --repo "$GITHUB_REPOSITORY" \
+              --target 500ea53731ed39e23773bcd9e09db51e7335d66c \
+              --title "Pokémon Relics Ultimate — Dojo/Giovanni Arenas (Build 274)" \
+              --notes "Exact 32 MiB GBA from passing canonical Build #274 (commit 500ea53731): Rhythm dojo arena for all seven Rocket badge-heist rematches, separate Giovanni finale arena, ordinary Gym backgrounds preserved. Verified against CI checksum. Save and live gameplay testing still recommended." \
+              --prerelease
+          fi
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+            --jq '.assets[].name' | grep -Fx "$file"
+          echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/$file"
