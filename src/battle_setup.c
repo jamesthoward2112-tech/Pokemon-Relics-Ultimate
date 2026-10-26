@@ -1144,6 +1144,34 @@ enum BattleTransition GetTrainerBattleTransition(void)
     enum TrainerClassID trainerClass = GetTrainerClassFromId(TRAINER_BATTLE_PARAM.opponentA);
 
 #if IS_HNS
+    // The Oak/Elm transition is registered for the forthcoming professor
+    // duo encounter; its trainer IDs do not yet exist in this branch.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+    {
+        u32 secondTrainerId = SanitizeTrainerId(TRAINER_BATTLE_PARAM.opponentB);
+        // The two-trainer mode presents both opponents; these event-specific
+        // transitions must not affect their normal solo encounters.
+        if ((trainerId == TRAINER_PRU_E18_14_A_HNS && secondTrainerId == TRAINER_PRU_E18_14_B_HNS)
+         || (trainerId == TRAINER_PRU_E18_14_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_14_B_MASTER_HNS))
+            return B_TRANSITION_EEVEE_TWINS;
+        if ((trainerId == TRAINER_PRU_E18_15_A_HNS && secondTrainerId == TRAINER_PRU_E18_15_B_HNS)
+         || (trainerId == TRAINER_PRU_E18_15_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_15_B_MASTER_HNS))
+            return B_TRANSITION_JESSIE_JAMES;
+        if ((trainerId == TRAINER_PRU_E18_17_A_HNS && secondTrainerId == TRAINER_PRU_E18_17_B_HNS)
+         || (trainerId == TRAINER_PRU_E18_17_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_17_B_MASTER_HNS))
+            return B_TRANSITION_RED_BLUE;
+        if ((trainerId == TRAINER_PRU_E18_18_A_HNS && secondTrainerId == TRAINER_PRU_E18_18_B_HNS)
+         || (trainerId == TRAINER_PRU_E18_18_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_18_B_MASTER_HNS))
+            return B_TRANSITION_OAK_ELM;
+        bool8 redFirst = (trainerId == TRAINER_RED_HNS || trainerId == TRAINER_RED_POSTOBC_HNS);
+        bool8 blueFirst = (trainerId == TRAINER_BLUE_HNS || trainerId == TRAINER_BLUE_2_HNS
+                           || trainerId == TRAINER_BLUE_POSTOBC_HNS);
+        bool8 redSecond = (secondTrainerId == TRAINER_RED_HNS || secondTrainerId == TRAINER_RED_POSTOBC_HNS);
+        bool8 blueSecond = (secondTrainerId == TRAINER_BLUE_HNS || secondTrainerId == TRAINER_BLUE_2_HNS
+                            || secondTrainerId == TRAINER_BLUE_POSTOBC_HNS);
+        if ((redFirst && blueSecond) || (blueFirst && redSecond))
+            return B_TRANSITION_RED_BLUE;
+    }
     switch (trainerId)
     {
     case TRAINER_GRUNT_21_HNS:

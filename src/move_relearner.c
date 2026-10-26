@@ -32,6 +32,7 @@
 #include "constants/songs.h"
 #include "data/pokemon/egg_moves.h"
 #include "data/tutor_moves.h"
+#include "chooseboxmon.h"
 
 /*
  * Move relearner state machine
@@ -1303,7 +1304,7 @@ static u32 GetRelearnerTMMoves(struct BoxPokemon *mon, u16 *moves)
         if (!CanLearnTeachableMove(species, move))
             continue;
 
-        if (!BoxMonKnowsMove(mon, move))
+        if (!BoxMonKnowsMove(mon, move) && numMoves < MAX_RELEARNER_MOVES)
             moves[numMoves++] = move;
     }
 
@@ -1328,10 +1329,11 @@ static u32 GetRelearnerTutorMoves(struct BoxPokemon *mon, u16 *moves)
     {
         enum Move move = gTutorMoves[i];
 
-        if (!CanLearnTeachableMove(species, move))
+        if (!CanLearnTeachableMove(species, move)
+            && !CanSpeciesLearnPjrControlTutorMoveForRelearner(species, move))
             continue;
 
-        if (!BoxMonKnowsMove(mon, move))
+        if (!BoxMonKnowsMove(mon, move) && numMoves < MAX_RELEARNER_MOVES)
             moves[numMoves++] = move;
     }
 
@@ -1464,7 +1466,8 @@ static bool32 HasRelearnerTutorMoves(struct BoxPokemon *boxMon)
     {
         enum Move move = gTutorMoves[i];
 
-        if (!CanLearnTeachableMove(species, move))
+        if (!CanLearnTeachableMove(species, move)
+            && !CanSpeciesLearnPjrControlTutorMoveForRelearner(species, move))
             continue;
 
         if (!BoxMonKnowsMove(boxMon, move))
