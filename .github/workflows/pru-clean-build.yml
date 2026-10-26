@@ -136,6 +136,9 @@ jobs:
           python3 tools/pru/check_relic_battle_presentation.py
           python3 tools/test_indigo_control_tutors.py
           python3 tools/pru/check_kanto_league_elite18_tutors.py
+          python3 tools/pru/check_johto_lati_weather.py
+          python3 tools/pru/check_johto_groudon_cave.py
+          python3 tools/pru/check_birth_island_byoxys.py
           python3 tools/pru/check_johto_first_clear_ai.py
           python3 tools/pru/check_kanto_gym_custom_rebalance.py
           python3 tools/pru/check_kanto_gym_rewards.py

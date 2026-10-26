@@ -3568,7 +3568,7 @@
 #define FLAG_PRU_HIDE_KANTO_E4                                 0x943
 #define FLAG_PRU_ELM_RELIC_CANDY_GIVEN                          0x944
 #define FLAG_PRU_HIDE_ELM_RELIC_CANDY                           0x945
-#define FLAG_UNUSED_0x946                                       0
+#define FLAG_PRU_HIDE_GROUDON_BEFORE_MAXIE                      0x946
 #define FLAG_UNUSED_0x947                                       0
 #define FLAG_UNUSED_0x948                                       0
 #define FLAG_UNUSED_0x949                                       0
