@@ -126,6 +126,7 @@ jobs:
           python3 tools/pru/check_20261024_primal_ace.py
           python3 tools/pru/check_20261025_archie_finale.py
           python3 tools/pru/check_route22_heist_indigo_guard.py
+          python3 tools/pru/check_dojo_giovanni_e4.py
           python3 tools/pru/check_frontier_chansey_xp.py
           python3 tools/pru/check_450_electivire_magmortar.py
           python3 tools/pru/check_giovanni_armoured_mewtwo_sprite.py

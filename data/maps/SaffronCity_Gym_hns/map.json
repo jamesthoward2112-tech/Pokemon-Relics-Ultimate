@@ -77,7 +77,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SaffronCity_Gym_EventScript_Sabrina",
-      "flag": "FLAG_DEFEATED_VIRIDIAN_GYM"
+      "flag": "FLAG_PRU_HIDE_GYM_SABRINA"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_GYM_GUY_HNS",

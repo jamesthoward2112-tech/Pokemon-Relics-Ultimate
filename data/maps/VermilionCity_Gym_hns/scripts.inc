@@ -44,6 +44,7 @@ VermilionCity_Gym_EventScript_SetBeamsOff::
 	return
 
 VermilionCity_Gym_OnTransition::
+	call VermilionCity_Gym_EventScript_PRUReturnSurge
 	call VermilionCity_Gym_EventScript_InitTrashCans
 	end
 
@@ -252,6 +253,7 @@ VermilionCity_Gym_EventScript_Surge::
 	lock
 	faceplayer
 	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_SURGE, VermilionCity_Gym_EventScript_Surge_Defeated
 	goto_if_set FLAG_PRU_HEIST_STARTED, VermilionCity_Gym_EventScript_PRUHeistSurge
 	goto_if_set FLAG_DEFEATED_VERMILION_GYM, VermilionCity_Gym_EventScript_Surge_Defeated
 	msgbox VermilionGym_Text_LtSurgeIntro, MSGBOX_DEFAULT
@@ -493,3 +495,11 @@ VermilionCity_Gym_Text_PRUHeistAlready:
 	.string "SURGE: One step closer\n"
 	.string "to stopping TEAM ROCKET!$"
 
+
+VermilionCity_Gym_EventScript_PRUReturnSurge::
+	clearflag FLAG_PRU_HIDE_GYM_SURGE
+	goto_if_unset FLAG_DEFEATED_VIRIDIAN_GYM, VermilionCity_Gym_EventScript_PRUReturnSurgeDone
+	goto_if_set FLAG_PRU_HEIST_SURGE, VermilionCity_Gym_EventScript_PRUReturnSurgeDone
+	setflag FLAG_PRU_HIDE_GYM_SURGE
+VermilionCity_Gym_EventScript_PRUReturnSurgeDone::
+	return

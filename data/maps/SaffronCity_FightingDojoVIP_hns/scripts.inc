@@ -7,11 +7,9 @@ SaffronCity_FightingDojoVIP_OnTransition::
 	end
 
 SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync::
-	@ During the heist all undefeated Kanto leaders stand on the main stage.
-	@ The original VIP rematches are still available outside this storyline.
+	@ One active leader and companion pair at a time.
 	goto_if_unset FLAG_PRU_HEIST_STARTED, SaffronCity_FightingDojoVIP_EventScript_PRUHeistSyncDone
 	goto_if_set FLAG_PRU_HEIST_GIOVANNI, SaffronCity_FightingDojoVIP_EventScript_PRUHeistSyncFinished
-	setflag FLAG_HIDE_DOJO_BLUE
 	setflag FLAG_HIDE_DOJO_BROCK
 	setflag FLAG_HIDE_DOJO_MISTY
 	setflag FLAG_HIDE_DOJO_SURGE
@@ -19,37 +17,45 @@ SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync::
 	setflag FLAG_HIDE_DOJO_JANINE
 	setflag FLAG_HIDE_DOJO_SABRINA
 	setflag FLAG_HIDE_DOJO_BLAINE
-	goto_if_set FLAG_PRU_HEIST_BROCK, SaffronCity_FightingDojoVIP_EventScript_PRUAfterBrock
+	setflag FLAG_HIDE_DOJO_BLUE
+	goto_if_unset FLAG_PRU_HEIST_BROCK, SaffronCity_FightingDojoVIP_EventScript_PRUShowBrock
+	goto_if_unset FLAG_PRU_HEIST_MISTY, SaffronCity_FightingDojoVIP_EventScript_PRUShowMisty
+	goto_if_unset FLAG_PRU_HEIST_SURGE, SaffronCity_FightingDojoVIP_EventScript_PRUShowSurge
+	goto_if_unset FLAG_PRU_HEIST_ERIKA, SaffronCity_FightingDojoVIP_EventScript_PRUShowErika
+	goto_if_unset FLAG_PRU_HEIST_JANINE, SaffronCity_FightingDojoVIP_EventScript_PRUShowJanine
+	goto_if_unset FLAG_PRU_HEIST_SABRINA, SaffronCity_FightingDojoVIP_EventScript_PRUShowSabrina
+	goto_if_unset FLAG_PRU_HEIST_BLAINE, SaffronCity_FightingDojoVIP_EventScript_PRUShowBlaine
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowBrock::
 	clearflag FLAG_HIDE_DOJO_BROCK
-SaffronCity_FightingDojoVIP_EventScript_PRUAfterBrock::
-	goto_if_set FLAG_PRU_HEIST_MISTY, SaffronCity_FightingDojoVIP_EventScript_PRUAfterMisty
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowMisty::
 	clearflag FLAG_HIDE_DOJO_MISTY
-SaffronCity_FightingDojoVIP_EventScript_PRUAfterMisty::
-	goto_if_set FLAG_PRU_HEIST_SURGE, SaffronCity_FightingDojoVIP_EventScript_PRUAfterSurge
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowSurge::
 	clearflag FLAG_HIDE_DOJO_SURGE
-SaffronCity_FightingDojoVIP_EventScript_PRUAfterSurge::
-	goto_if_set FLAG_PRU_HEIST_ERIKA, SaffronCity_FightingDojoVIP_EventScript_PRUAfterErika
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowErika::
 	clearflag FLAG_HIDE_DOJO_ERIKA
-SaffronCity_FightingDojoVIP_EventScript_PRUAfterErika::
-	goto_if_set FLAG_PRU_HEIST_JANINE, SaffronCity_FightingDojoVIP_EventScript_PRUAfterJanine
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowJanine::
 	clearflag FLAG_HIDE_DOJO_JANINE
-SaffronCity_FightingDojoVIP_EventScript_PRUAfterJanine::
-	goto_if_set FLAG_PRU_HEIST_SABRINA, SaffronCity_FightingDojoVIP_EventScript_PRUAfterSabrina
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowSabrina::
 	clearflag FLAG_HIDE_DOJO_SABRINA
-SaffronCity_FightingDojoVIP_EventScript_PRUAfterSabrina::
-	goto_if_set FLAG_PRU_HEIST_BLAINE, SaffronCity_FightingDojoVIP_EventScript_PRUAfterBlaine
+	return
+SaffronCity_FightingDojoVIP_EventScript_PRUShowBlaine::
 	clearflag FLAG_HIDE_DOJO_BLAINE
-SaffronCity_FightingDojoVIP_EventScript_PRUAfterBlaine::
 	return
 SaffronCity_FightingDojoVIP_EventScript_PRUHeistSyncFinished::
-	clearflag FLAG_HIDE_DOJO_BROCK
-	clearflag FLAG_HIDE_DOJO_MISTY
-	clearflag FLAG_HIDE_DOJO_SURGE
-	clearflag FLAG_HIDE_DOJO_ERIKA
-	clearflag FLAG_HIDE_DOJO_JANINE
-	clearflag FLAG_HIDE_DOJO_SABRINA
-	clearflag FLAG_HIDE_DOJO_BLAINE
-	clearflag FLAG_HIDE_DOJO_BLUE
+	setflag FLAG_HIDE_DOJO_BROCK
+	setflag FLAG_HIDE_DOJO_MISTY
+	setflag FLAG_HIDE_DOJO_SURGE
+	setflag FLAG_HIDE_DOJO_ERIKA
+	setflag FLAG_HIDE_DOJO_JANINE
+	setflag FLAG_HIDE_DOJO_SABRINA
+	setflag FLAG_HIDE_DOJO_BLAINE
+	setflag FLAG_HIDE_DOJO_BLUE
 SaffronCity_FightingDojoVIP_EventScript_PRUHeistSyncDone::
 	return
 
@@ -64,6 +70,9 @@ SaffronCity_FightingDojoVIP_EventScript_PRUHeistBrock::
 	setflag FLAG_HIDE_DOJO_BROCK
 	removeobject 2
 	removeobject 28 @ Onix leaves the battle stage with Brock.
+	call SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync
+	addobject 1
+	addobject 23
 	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -78,6 +87,9 @@ SaffronCity_FightingDojoVIP_EventScript_PRUHeistMisty::
 	setflag FLAG_HIDE_DOJO_MISTY
 	removeobject 1
 	removeobject 23 @ Starmie leaves with Misty.
+	call SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync
+	addobject 3
+	addobject 19
 	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -92,6 +104,9 @@ SaffronCity_FightingDojoVIP_EventScript_PRUHeistSurge::
 	setflag FLAG_HIDE_DOJO_SURGE
 	removeobject 3
 	removeobject 19 @ Raichu leaves with Surge.
+	call SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync
+	addobject 4
+	addobject 24
 	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -106,6 +121,9 @@ SaffronCity_FightingDojoVIP_EventScript_PRUHeistErika::
 	setflag FLAG_HIDE_DOJO_ERIKA
 	removeobject 4
 	removeobject 24 @ Victreebel leaves with Erika.
+	call SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync
+	addobject 5
+	addobject 30
 	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -120,6 +138,9 @@ SaffronCity_FightingDojoVIP_EventScript_PRUHeistJanine::
 	setflag FLAG_HIDE_DOJO_JANINE
 	removeobject 5
 	removeobject 30 @ Muk leaves with Janine.
+	call SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync
+	addobject 6
+	addobject 27
 	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -134,6 +155,9 @@ SaffronCity_FightingDojoVIP_EventScript_PRUHeistSabrina::
 	setflag FLAG_HIDE_DOJO_SABRINA
 	removeobject 6
 	removeobject 27 @ Kadabra leaves with Sabrina.
+	call SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync
+	addobject 7
+	addobject 34
 	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -148,6 +172,7 @@ SaffronCity_FightingDojoVIP_EventScript_PRUHeistBlaine::
 	setflag FLAG_HIDE_DOJO_BLAINE
 	removeobject 7
 	removeobject 34 @ Magmar leaves with Blaine.
+	call SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync
 	msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistGiovanni, MSGBOX_DEFAULT
 	closemessage
 	release

@@ -12,6 +12,7 @@ SeafoamIslands_Gym_OnTransition:
 SeafoamIslands_Gym_OnTransition_Defeated:
 	clearflag FLAG_HIDE_SEAFOAM_BLAINE
 	goto_if_unset FLAG_DEFEATED_VIRIDIAN_GYM, SeafoamIslands_Gym_OnTransition_LeaveBlaine
+	goto_if_set FLAG_PRU_HEIST_BLAINE, SeafoamIslands_Gym_OnTransition_LeaveBlaine
 	setflag FLAG_HIDE_SEAFOAM_BLAINE
 SeafoamIslands_Gym_OnTransition_LeaveBlaine:
 	end
@@ -20,6 +21,7 @@ SeafoamIslands_Gym_EventScript_Blaine::
 	lock
 	faceplayer
 	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_BLAINE, SeafoamIslands_Gym_EventScript_Blaine_Defeated
 	goto_if_set FLAG_PRU_HEIST_STARTED, SeafoamIslands_Gym_EventScript_PRUHeistBlaine
 	goto_if_set FLAG_DEFEATED_CINNABAR_ISLAND_GYM, SeafoamIslands_Gym_EventScript_Blaine_Defeated
 	checktrainerflag TRAINER_STEEVE_NEEVEE_SEAFOAM_HNS

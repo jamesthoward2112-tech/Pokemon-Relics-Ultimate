@@ -519,6 +519,15 @@
 #define FLAG_PRU_HIDE_MEOWTH_BALLOON                   0x4FD
 #define FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE             0x4FE // Hidden until Archie loses; re-entry checks catch flag.
 #define FLAG_PRU_HIDE_INDIGO_ROCKET_GUARD              0x4FF // Visible after Route 22 heist until final Rocket defeat.
+// Spare persistent HnS bits 0x91B-0x921 keep Gym returns independent of Dojo flags.
+#define FLAG_PRU_HIDE_GYM_BROCK 0x91B
+#define FLAG_PRU_HIDE_GYM_MISTY 0x91C
+#define FLAG_PRU_HIDE_GYM_SURGE 0x91D
+#define FLAG_PRU_HIDE_GYM_ERIKA 0x91E
+#define FLAG_PRU_HIDE_GYM_JANINE 0x91F
+#define FLAG_PRU_HIDE_GYM_SABRINA 0x920
+#define FLAG_PRU_HIDE_GYM_BLAINE 0x921
+
 #define FLAG_COMPLETED_AERODACTYL_PUZZLE            0x1E2
 #define FLAG_COMPLETED_HOOH_PUZZLE                  0x1E3
 #define FLAG_COMPLETED_KABUTO_PUZZLE                0x1E4

@@ -183,10 +183,8 @@ IndigoPlateau_EventScript_PRUDoorUnlocked::
 	end
 
 IndigoPlateau_Text_PRUGuard:
-	.string "ROCKET GRUNT: INDIGO PLATEAU\l"
-	.string "is closed until you reclaim\l"
-	.string "all EIGHT KANTO BADGES!\p"
-	.string "Battle the GYM LEADERS at\l"
-	.string "SAFFRON's FIGHTING DOJO.\p"
-	.string "Then track down their missing\l"
-	.string "eighth LEADER!$"
+	.string "ROCKET: LEAGUE is closed!\p"
+	.string "Reclaim your KANTO BADGES\n"
+	.string "in SAFFRON's DOJO.\p"
+	.string "Then find the final LEADER\n"
+	.string "to reach the LEAGUE!$"

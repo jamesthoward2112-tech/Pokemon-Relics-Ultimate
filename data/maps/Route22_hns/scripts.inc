@@ -419,13 +419,12 @@ Route22_Text_PRURocketStolen:
 	.string "BADGE CASE!$"
 
 Route22_Text_PRURocketBalloon:
-	.string "JESSIE: You want your KANTO\n"
-	.string "BADGE CASE back?\p"
-	.string "JAMES: Beat all EIGHT KANTO\n"
-	.string "GYM LEADERS again!\p"
-	.string "MEOWTH: Start at SAFFRON's\n"
-	.string "FIGHTING DOJO! Off we go!$"
-
+	.string "JESSIE: Want your KANTO\n"
+	.string "BADGES back?\p"
+	.string "JAMES: Earn them ALL at\n"
+	.string "SAFFRON's FIGHTING DOJO!\p"
+	.string "MEOWTH: Every rematch!\n"
+	.string "No shortcuts!$"
 
 Route22_Movement_PRUJessieGather:
 	walk_in_place_down

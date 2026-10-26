@@ -25,21 +25,22 @@ LEADERS = {
 }
 FLAGS = list(LEADERS)
 STAGE_POSITIONS = {
-    "BROCK": (20, 21),
-    "MISTY": (26, 24),
-    "SURGE": (18, 18),
-    "ERIKA": (27, 23),
-    "JANINE": (18, 25),
-    "SABRINA": (24, 27),
-    "BLAINE": (27, 15),
+    "BROCK": (21, 20),
+    "MISTY": (21, 20),
+    "SURGE": (21, 20),
+    "ERIKA": (21, 20),
+    "JANINE": (21, 20),
+    "SABRINA": (21, 20),
+    "BLAINE": (21, 20),
 }
 COMPANION_POSITIONS = {
-    "ONIX": (22, 21),
-    "STARMIE": (27, 24),
-    "VICTREEBEL": (28, 23),
-    "MUK": (19, 25),
-    "KADABRA": (25, 27),
-    "MAGMAR": (28, 15),
+    "ONIX": (23, 20),
+    "STARMIE": (23, 20),
+    "RAICHU": (23, 20),
+    "VICTREEBEL": (23, 20),
+    "MUK": (23, 20),
+    "KADABRA": (23, 20),
+    "MAGMAR": (23, 20),
 }
 HEIST_PARTNER_IDS = {
     "BROCK": 28,      # Onix
@@ -123,29 +124,29 @@ def check_dojo_layout():
     assert desk[0]["flag"] == "0"
 
     sync = VIP.split("SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync::", 1)[1].split(
-        "SaffronCity_FightingDojoVIP_EventScript_PRUHeistSyncFinished::", 1
+        "@ The seven leader battles", 1
     )[0]
     for leader in LEADERS:
-        assert f"goto_if_set FLAG_PRU_HEIST_{leader}" in sync, (
-            f"{leader}: the Dojo must show every undefeated leader at once"
+        assert f"goto_if_unset FLAG_PRU_HEIST_{leader}, SaffronCity_FightingDojoVIP_EventScript_PRUShow{leader.title()}" in sync, (
+            f"{leader} must wait its turn"
         )
+        assert f"setflag FLAG_HIDE_DOJO_{leader}" in sync
         assert f"clearflag FLAG_HIDE_DOJO_{leader}" in sync
-    assert "SaffronCity_FightingDojoVIP_EventScript_PRUShow" not in sync, (
-        "the old one-at-a-time spawn chain still hides waiting leaders"
-    )
-    for leader, object_id in HEIST_PARTNER_IDS.items():
+    assert "setflag FLAG_HIDE_DOJO_BLUE" in sync
+    for i, (leader, companion) in enumerate(HEIST_PARTNER_IDS.items()):
         block = VIP.split(f"SaffronCity_FightingDojoVIP_EventScript_PRUHeist{leader.title()}::", 1)[1].split(
             "SaffronCity_FightingDojoVIP_EventScript_PRUHeist", 1
         )[0]
-        assert f"removeobject {object_id} " in block, (
-            f"{leader}: Pokémon companion remains after its trainer leaves the stage"
-        )
+        assert f"removeobject {companion} " in block, f"{leader}: companion not removed"
+        assert "call SaffronCity_FightingDojoVIP_EventScript_PRUHeistSync" in block
+        if i < len(HEIST_PARTNER_IDS) - 1:
+            assert f"addobject {[1,3,4,5,6,7][i]}" in block, f"{leader}: next leader not spawned"
 
 
 def check():
     check_heist_abilities_legal()
     check_dojo_layout()
-    assert "all EIGHT KANTO" in ROCKET, "Rocket must demand all 8 leaders"
+    assert "Earn them ALL at" in ROCKET, "Rocket must demand every badge be earned at the Dojo"
     assert "FIGHTING DOJO" in ROCKET, "Rocket must point to Saffron Dojo"
     assert "GIOVANNI!" not in ROCKET.split("Route22_Text_PRURocketBalloon:", 1)[1].split("Route22_Movement_", 1)[0], "Rocket must preserve the 8th-leader twist"
     assert "MAP_SCRIPT_ON_TRANSITION" in VIP, "Dojo lacks map-entry sync"
@@ -190,9 +191,9 @@ def check():
     ]:
         src = (ROOT / f"data/maps/{location}/map.json").read_text()
         script = f"{location.removesuffix('_hns')}_EventScript_{label}"
-        assert f'"script": "{script}",\n      "flag": "FLAG_DEFEATED_VIRIDIAN_GYM"' in src
-    assert "FLAG_DEFEATED_VIRIDIAN_GYM" in (ROOT / "data/maps/CeruleanCity_Gym_hns/scripts.inc").read_text()
-    assert "FLAG_DEFEATED_VIRIDIAN_GYM" in (ROOT / "data/maps/SeafoamIslands_Gym_hns/scripts.inc").read_text()
+        assert f'"script": "{script}",\n      "flag": "FLAG_PRU_HIDE_GYM_{label.upper()}"' in src
+    assert "FLAG_PRU_HEIST_MISTY" in (ROOT / "data/maps/CeruleanCity_Gym_hns/scripts.inc").read_text()
+    assert "FLAG_PRU_HEIST_BLAINE" in (ROOT / "data/maps/SeafoamIslands_Gym_hns/scripts.inc").read_text()
 
     for name, low, high in [
         ("WILL_POSTOBC", 82, 85), ("KOGA_POSTOBC", 83, 86),
@@ -202,6 +203,17 @@ def check():
         party = members(name)
         assert all(low <= lvl <= high for _, lvl in party), (name, party)
         assert max(level for _, level in party) == high, (name, party)
+    assert "LEVEL_UP_MOVE(80, MOVE_WATER_SPOUT)" in (ROOT / "src/data/pokemon/level_up_learnsets/pru.h").read_text()
+    assert "sPRUKyogreLevelUpLearnset" in (ROOT / "src/pokemon.c").read_text()
+    assert "sPRUKyogreGen3LevelUpLearnset" in (ROOT / "src/data/pokemon/level_up_learnsets_gen3.c").read_text()
+    for leader, city in [
+        ("BROCK", "PewterCity"), ("SURGE", "VermilionCity"), ("ERIKA", "CeladonCity"),
+        ("JANINE", "FuchsiaCity"), ("SABRINA", "SaffronCity"),
+    ]:
+        gym_script = (ROOT / f"data/maps/{city}_Gym_hns/scripts.inc").read_text()
+        assert f"FLAG_PRU_HIDE_GYM_{leader}" in gym_script
+        assert f"goto_if_set FLAG_PRU_HEIST_{leader}" in gym_script
+    assert r'\p' in INDIGO.split("IndigoPlateau_Text_PRUGuard:", 1)[1]
     print("PASS: seven Dojo leaders, Giovanni roster and E4 rematch progression")
 
 

@@ -4,7 +4,9 @@ CeruleanCity_Gym_hns_MapScripts::
 	.byte 0
 
 CeruleanCity_Gym_EventScript_PRUHideMistyAfterBlue::
+	clearflag FLAG_HIDE_CERULEAN_GYM_TRAINERS
 	goto_if_unset FLAG_DEFEATED_VIRIDIAN_GYM, CeruleanCity_Gym_EventScript_PRUHideMistyDone
+	goto_if_set FLAG_PRU_HEIST_MISTY, CeruleanCity_Gym_EventScript_PRUHideMistyDone
 	setflag FLAG_HIDE_CERULEAN_GYM_TRAINERS
 CeruleanCity_Gym_EventScript_PRUHideMistyDone::
 	end
@@ -190,6 +192,7 @@ CeruleanCity_Gym_EventScript_Misty::
 	lock
 	faceplayer
 	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_MISTY, CeruleanCity_Gym_EventScript_Misty_Defeated
 	goto_if_set FLAG_PRU_HEIST_STARTED, CeruleanCity_Gym_EventScript_PRUHeistMisty
 	goto_if_set FLAG_DEFEATED_CERULEAN_GYM, CeruleanCity_Gym_EventScript_Misty_Defeated
 	msgbox CeruleanGym_Text_MistyIntro, MSGBOX_DEFAULT
