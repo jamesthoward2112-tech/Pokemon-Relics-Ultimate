@@ -165,7 +165,7 @@ jobs:
             echo "Restored pinned PJR build input: data/$file"
           done
       - name: Run targeted GBA-emulator tutor and E4 actor regression tests
-        run: make check BUILD=hns TESTS=test/pru/tutor_and_league.c
+        run: make -j2 check BUILD=hns TESTS=test/pru/tutor_and_league.c
       - name: Build the original PJR-derived PRU source
         run: |
           set -euo pipefail
