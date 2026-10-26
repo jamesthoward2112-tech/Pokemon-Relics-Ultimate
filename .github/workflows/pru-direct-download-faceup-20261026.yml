@@ -1,0 +1,55 @@
+name: Publish Jessie James north-facing direct GBA
+
+on:
+  push:
+    branches:
+      - fix/pru-blaine-giovanni-art-exit-20261026
+    paths:
+      - .github/workflows/pru-direct-download-faceup-20261026.yml
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Wait for validated north-facing PRU build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh run watch 40295930301 --repo "$GITHUB_REPOSITORY" --exit-status
+      - name: Download verified source-built raw GBA
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p rom
+          gh run download 40295930301 --repo "$GITHUB_REPOSITORY" --name PRU-CANONICAL-SOURCE-VALIDATED --dir rom
+          test -s rom/pokehns.gba
+          test "$(stat -c%s rom/pokehns.gba)" -eq 33554432
+          cd rom
+          sha256sum --check pru-rom.sha256
+          mv pokehns.gba Pokemon-Relics-Ultimate-Jessie-James-FaceUp.gba
+      - name: Publish direct unzipped GBA release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag=pru-jessie-james-face-up-20261026
+          file=rom/Pokemon-Relics-Ultimate-Jessie-James-FaceUp.gba
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "$file" --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$tag" "$file" \
+              --repo "$GITHUB_REPOSITORY" \
+              --target 6b82b83135ca670c25484e78954fa56fed1c845d \
+              --title "Pokémon Relics Ultimate — Jessie & James Face North" \
+              --notes "Indigo Plateau Jessie and James now face north. Existing heist, Janine dialogue, Meowth NPC and Rocket finale are otherwise unchanged. Compiled from source commit 6b82b831 by passing GitHub Actions run 40295930301; GBA size and checksum verified. Note: north-facing sight does not cover the center Fly tile because both trainers stand in adjacent columns." \
+              --prerelease
+          fi
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fx "Pokemon-Relics-Ultimate-Jessie-James-FaceUp.gba"
+          echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/Pokemon-Relics-Ultimate-Jessie-James-FaceUp.gba"
