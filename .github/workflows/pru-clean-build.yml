@@ -128,6 +128,7 @@ jobs:
           python3 tools/pru/check_20261025_archie_finale.py
           python3 tools/pru/check_route22_heist_indigo_guard.py
           python3 tools/pru/check_dojo_giovanni_e4.py
+          python3 tools/pru/check_final_badge_fossils.py
           python3 tools/pru/check_kanto_gym_doors_cerulean_pool.py
           python3 tools/pru/check_frontier_chansey_xp.py
           python3 tools/pru/check_450_electivire_magmortar.py

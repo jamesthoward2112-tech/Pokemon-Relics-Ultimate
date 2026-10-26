@@ -138,9 +138,9 @@ def check_dojo_layout():
     blaine_farewell = VIP.split("SaffronCity_FightingDojoVIP_Text_PRUHeistNextBlaine:", 1)[1].split(
         "SaffronCity_FightingDojoVIP_Text_PRUHeistChallenge:", 1
     )[0]
-    assert "One final BADGE remains" in blaine_farewell
+    assert "EIGHTH BADGE remains" in blaine_farewell
     assert "north of PALLET TOWN" in blaine_farewell
-    assert "Its GYM holds your answer" in blaine_farewell
+    assert "Find its GYM" in blaine_farewell
     assert "VIRIDIAN" not in blaine_farewell
     blaine_battle = VIP.split("SaffronCity_FightingDojoVIP_EventScript_PRUHeistBlaine::", 1)[1].split(
         "SaffronCity_FightingDojoVIP_EventScript_PRUNotReady::", 1
