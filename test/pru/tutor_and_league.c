@@ -104,7 +104,7 @@ static u8 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive)
     }
 
     if (objectEventId != OBJECT_EVENTS_COUNT)
-        DestroySprite(&gSprites[gObjectEvents[objectEventId].spriteId]);
+        RemoveObjectEvent(&gObjectEvents[objectEventId]);
     memcpy(gObjectEvents, savedObjectEvents, sizeof(savedObjectEvents));
     memcpy(gSaveBlock1Ptr->objectEventTemplates, savedTemplates, sizeof(savedTemplates));
     gMapHeader = savedHeader;
