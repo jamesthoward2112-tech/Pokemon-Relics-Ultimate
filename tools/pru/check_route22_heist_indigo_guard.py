@@ -141,6 +141,11 @@ assert balloon_indigo["flag"] == "FLAG_PRU_HIDE_MEOWTH_BALLOON"
 assert "clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON" in scripts_indigo
 assert "addobject 4" in scripts_indigo
 
+# Jessie and James should look north toward a player flying into the courtyard.
+for leader in ("OBJ_EVENT_GFX_JESSIE_HNS", "OBJ_EVENT_GFX_JAMES_HNS"):
+    rocket = next(o for o in indigo["object_events"] if o["graphics_id"] == leader)
+    assert rocket["movement_type"] == "MOVEMENT_TYPE_FACE_UP", f"{leader} does not face the Fly spot"
+
 # The 64x64 flying balloon must render above BG scenery (roof/trees) for
 # every subsprite, both when added mid-cutscene and when field sprites reload.
 renderer = read("src/event_object_movement.c")
