@@ -257,7 +257,10 @@ ViridianCity_Gym_EventScript_PRUHeistGiovanni::
 ViridianCity_Gym_EventScript_PRUMewtwoAlreadyCaught::
 	msgbox ViridianCity_Gym_Text_PRUHeistGiovanniAfter, MSGBOX_DEFAULT
 	closemessage
+	@ Giovanni escapes in a flash rather than blinking away mid-scene.
+	fadescreenswapbuffers FADE_TO_WHITE
 	removeobject 3
+	fadescreenswapbuffers FADE_FROM_WHITE
 	release
 	end
 

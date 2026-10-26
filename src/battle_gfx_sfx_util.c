@@ -37,17 +37,29 @@
 #if IS_HNS
 extern const u32 gPruArmouredMewtwoFrontGfx[];
 extern const u16 gPruArmouredMewtwoPalette[];
+extern const u32 gPruGiovanniAerodactylSkeletonFrontGfx[];
+extern const u16 gPruGiovanniAerodactylSkeletonPalette[];
+extern const u32 gPruGiovanniKabutopsSkeletonFrontGfx[];
+extern const u16 gPruGiovanniKabutopsSkeletonPalette[];
+extern const u32 gPruGiovanniRhyperiorTreAmpFrontGfx[];
+extern const u16 gPruGiovanniRhyperiorTreAmpPalette[];
 
-static bool8 IsPruGiovanniArmouredMewtwo(enum BattlerId battler, u32 species)
+// Do not change catchable/owned species, their move lists or other trainers.
+// Only the opponent's sprites in Giovanni's final heist battle use TRE art.
+static bool8 IsPruGiovanniSpecialArtOpponent(enum BattlerId battler)
 {
-    // Never replace ordinary Mewtwo, including the Cerulean Cave encounter,
-    // party sprites, other trainers, or a transformed battle participant.
     return (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
         && !IsOnPlayerSide(battler)
         && TRAINER_BATTLE_PARAM.opponentA == TRAINER_PRU_HEIST_GIOVANNI_HNS
-        && species == SPECIES_MEWTWO
         && gBattleSpritesDataPtr->battlerData[battler].transformSpecies == SPECIES_NONE;
 }
+
+
+static bool8 IsPruGiovanniArmouredMewtwo(enum BattlerId battler, u32 species)
+{
+    return IsPruGiovanniSpecialArtOpponent(battler) && species == SPECIES_MEWTWO;
+}
+
 #endif
 
 // PRU battle-only Kimono art uses existing Mega sprite *pictures* without
@@ -759,6 +771,39 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
 
 #if IS_HNS
     bool8 useGiovanniArmour = IsPruGiovanniArmouredMewtwo(battler, species);
+    // Giovanni-only fossils and Rocket-modified Rhyperior. Never alter
+    // their real species IDs, mega mechanics or the player's Pokemon.
+    const u32 *giovanniFossilGfx = NULL;
+    const u16 *giovanniFossilPal = NULL;
+    if (IsPruGiovanniSpecialArtOpponent(battler))
+    {
+        switch (species)
+        {
+        case SPECIES_AERODACTYL:
+            giovanniFossilGfx = gPruGiovanniAerodactylSkeletonFrontGfx;
+            giovanniFossilPal = gPruGiovanniAerodactylSkeletonPalette;
+            break;
+        case SPECIES_KABUTOPS:
+            giovanniFossilGfx = gPruGiovanniKabutopsSkeletonFrontGfx;
+            giovanniFossilPal = gPruGiovanniKabutopsSkeletonPalette;
+            break;
+        case SPECIES_RHYPERIOR:
+            giovanniFossilGfx = gPruGiovanniRhyperiorTreAmpFrontGfx;
+            giovanniFossilPal = gPruGiovanniRhyperiorTreAmpPalette;
+            break;
+        default:
+            break;
+        }
+    }
+    if (giovanniFossilGfx != NULL)
+    {
+        DecompressDataWithHeaderWram(giovanniFossilGfx, gMonSpritesGfxPtr->spritesGfx[position]);
+        // Repeat the donor frame through the vanilla animation buffers.
+        for (u32 frame = 1; frame < 4; frame++)
+            Dma3CopyLarge32_(gMonSpritesGfxPtr->spritesGfx[position],
+                             &gMonSpritesGfxPtr->spritesGfx[position][MON_PIC_SIZE * frame],
+                             MON_PIC_SIZE);
+    }
     if (useGiovanniArmour)
     {
         DecompressDataWithHeaderWram(gPruArmouredMewtwoFrontGfx, gMonSpritesGfxPtr->spritesGfx[position]);
@@ -838,6 +883,8 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
 #if IS_HNS
     if (useGiovanniArmour)
         paletteData = gPruArmouredMewtwoPalette;
+    if (giovanniFossilPal != NULL)
+        paletteData = giovanniFossilPal;
 #endif
 
     LoadPalette(paletteData, paletteOffset, PLTT_SIZE_4BPP);

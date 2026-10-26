@@ -44,6 +44,27 @@ def check() -> None:
     assert "paletteData = gPruArmouredMewtwoPalette" in battle
     assert ".frontPic = gMonFrontPic_Mewtwo," in species, "ordinary cave Mewtwo art changed"
     assert ".palette = gMonPalette_Mewtwo," in species, "ordinary cave Mewtwo palette changed"
+
+    # Three exact TRE donors, scoped to Giovanni's enemy party only.
+    assert "IsPruGiovanniSpecialArtOpponent" in battle
+    for species, name in (
+        ("AERODACTYL", "AerodactylSkeleton"),
+        ("KABUTOPS", "KabutopsSkeleton"),
+        ("RHYPERIOR", "RhyperiorTreAmp"),
+    ):
+        assert f"case SPECIES_{species}:" in battle
+        assert f"gPruGiovanni{name}FrontGfx" in gfx
+        assert f"gPruGiovanni{name}Palette" in gfx
+    assert "giovanniFossilPal != NULL" in battle
+    assert "if (giovanniFossilGfx != NULL)" in battle
+    assert "giovanniFossilGfx, gMonSpritesGfxPtr->spritesGfx[position]" in battle
+    assert "giovanniFossilPal" in battle
+    assert "IsPruGiovanniSpecialArtOpponent(battler)" in battle
+    scene = (ROOT / "data/maps/ViridianCity_Gym_hns/scripts.inc").read_text()
+    exit_script = scene.split("ViridianCity_Gym_EventScript_PRUMewtwoAlreadyCaught::", 1)[1].split(
+        "ViridianCity_Gym_EventScript_PRUHeistNotReady::", 1)[0]
+    assert exit_script.index("fadescreenswapbuffers FADE_TO_WHITE") < exit_script.index("removeobject 3")
+    assert exit_script.index("removeobject 3") < exit_script.index("fadescreenswapbuffers FADE_FROM_WHITE")
     print("PASS: exact TRE slot 0922 art, Giovanni-only Armoured Mewtwo visual, ordinary Mewtwo unchanged")
 
 
