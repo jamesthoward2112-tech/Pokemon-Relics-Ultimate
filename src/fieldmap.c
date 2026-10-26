@@ -1096,3 +1096,26 @@ void LoadMapTilesetPalettes(struct MapLayout const *mapLayout)
         LoadSecondaryTilesetPalette(mapLayout, FALSE);
     }
 }
+
+#if IS_HNS
+// Cerulean Gym's pool is decorative, not a surf route. Repair stray
+// walkable water collision bits on every load without changing the path.
+void PruCeruleanGymFixPoolCollision(void)
+{
+    int x, y;
+    int width = gMapHeader.mapLayout->width;
+    int height = gMapHeader.mapLayout->height;
+
+    for (y = MAP_OFFSET; y < height + MAP_OFFSET; y++)
+    {
+        for (x = MAP_OFFSET; x < width + MAP_OFFSET; x++)
+        {
+            u32 behavior = MapGridGetMetatileBehaviorAt(x, y);
+            if (behavior == MB_POND_WATER || behavior == MB_OCEAN_WATER
+             || behavior == MB_DEEP_WATER || behavior == MB_INTERIOR_DEEP_WATER
+             || behavior == MB_SOOTOPOLIS_DEEP_WATER)
+                MapGridSetMetatileImpassabilityAt(x, y, TRUE);
+        }
+    }
+}
+#endif

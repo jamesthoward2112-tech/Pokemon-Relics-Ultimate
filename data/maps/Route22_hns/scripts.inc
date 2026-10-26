@@ -5,6 +5,7 @@ Route22_hns_MapScripts::
 
 Route22_OnTransition: 
 	callnative SetTimeBasedEncounters
+	call Route22_EventScript_PRUSyncRocket
 	end
 
 Route22_EventScript_Sign::
@@ -342,3 +343,154 @@ Route22_Text_Silver5:
 Route22_Text_Silver6:
 	.string "{RIVAL}: ... What are you staring at?$"
 
+@ The heist now occurs outdoors at the Kanto Route 22 Reception Gate.
+@ Keep the separate Silver/Giovanni story and Johto gate progression untouched.
+@ The theft unlocks only after Blue's Earth Badge; no real badge is removed.
+Route22_EventScript_PRUSyncRocket::
+	setvar VAR_TEMP_1, 0
+	setflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
+	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	goto_if_unset FLAG_BADGE16_GET, Route22_EventScript_PRUSyncDone
+	goto_if_set FLAG_PRU_HEIST_STARTED, Route22_EventScript_PRUSyncDone
+	clearflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
+Route22_EventScript_PRUSyncDone::
+	return
+
+Route22_EventScript_PRURocket::
+	goto Route22_EventScript_PRUHeistTrigger
+
+Route22_EventScript_PRUHeistTrigger::
+	goto_if_unset FLAG_BADGE16_GET, Route22_EventScript_PRUHeistNoop
+	goto_if_set FLAG_PRU_HEIST_STARTED, Route22_EventScript_PRUHeistNoop
+	lockall
+	setvar VAR_TEMP_1, 1
+	playse SE_PIN
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement VAR_LAST_TALKED
+	msgbox Route22_Text_PRURocketStolen, MSGBOX_DEFAULT
+	@ The physical display case is stolen; the original badge bits remain
+	@ intact so HM use, 16-badge count and old save progression never regress.
+	setflag FLAG_PRU_HEIST_STARTED
+	msgbox Route22_Text_PRURocketBalloon, MSGBOX_DEFAULT
+	closemessage
+	@ Jessie, James and Meowth already stand together; now they react.
+	applymovement 12, Route22_Movement_PRUJessieGather
+	applymovement 13, Route22_Movement_PRUJamesGather
+	applymovement 14, Route22_Movement_PRUMeowthReady
+	waitmovement 12
+	waitmovement 13
+	waitmovement 14
+	@ Balloon flies in across OPEN COURTYARD from the right, clear of the roof.
+	playse SE_M_FLY
+	clearflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	addobject 15
+	applymovement 15, Route22_Movement_PRUBalloonArrive
+	waitmovement 15
+	delay 12
+	@ Each Rocket steps into the basket before leaving the scene.
+	applymovement 12, Route22_Movement_PRUJessieBoard
+	waitmovement 12
+	removeobject 12
+	applymovement 13, Route22_Movement_PRUJamesBoard
+	waitmovement 13
+	removeobject 13
+	applymovement 14, Route22_Movement_PRUMeowthBoard
+	waitmovement 14
+	removeobject 14
+	setflag FLAG_PRU_HIDE_ROCKET_HEIST_GATE
+	delay 18
+	playse SE_M_FLY
+	applymovement 15, Route22_Movement_PRUBalloonDepart
+	waitmovement 15
+	setflag FLAG_PRU_HIDE_MEOWTH_BALLOON
+	removeobject 15
+	releaseall
+	end
+
+Route22_EventScript_PRUHeistNoop::
+	end
+
+Route22_Text_PRURocketStolen:
+	.string "JESSIE: All sixteen BADGES?\p"
+	.string "JAMES: We'll be taking the\n"
+	.string "KANTO BADGE CASE!\p"
+	.string "MEOWTH: The LEAGUE can wait!\p"
+	.string "TEAM ROCKET snatches your\n"
+	.string "BADGE CASE!$"
+
+Route22_Text_PRURocketBalloon:
+	.string "JESSIE: Want your KANTO\n"
+	.string "BADGES back?\p"
+	.string "JAMES: Earn them ALL at\n"
+	.string "SAFFRON's FIGHTING DOJO!\p"
+	.string "MEOWTH: Every rematch!\n"
+	.string "No shortcuts!$"
+
+Route22_Movement_PRUJessieGather:
+	walk_in_place_down
+	step_end
+
+Route22_Movement_PRUJamesGather:
+	walk_in_place_down
+	step_end
+
+Route22_Movement_PRUMeowthReady:
+	jump_in_place_down
+	step_end
+
+Route22_Movement_PRUBalloonArrive:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	step_end
+
+Route22_Movement_PRUJessieBoard:
+	walk_fast_down
+	step_end
+
+Route22_Movement_PRUJamesBoard:
+	walk_fast_down
+	step_end
+
+Route22_Movement_PRUMeowthBoard:
+	walk_fast_down
+	step_end
+
+Route22_Movement_PRUBalloonDepart:
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	step_end
+
+
+Route22_EventScript_PRUKantoGymLocked::
+	lockall
+	msgbox Route22_Text_PRUKantoGymLocked, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Route22_Text_PRUKantoGymLocked:
+	.string "TEAM ROCKET sealed this GYM!\p"
+	.string "Beat its LEADER at SAFFRON's\n"
+	.string "FIGHTING DOJO to reopen it.$"
+
+Route22_EventScript_PRUViridianGymLocked::
+	lockall
+	msgbox Route22_Text_PRUViridianGymLocked, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Route22_Text_PRUViridianGymLocked:
+	.string "VIRIDIAN GYM is sealed!\p"
+	.string "Win all SEVEN DOJO rematches\n"
+	.string "before the final LEADER!$"

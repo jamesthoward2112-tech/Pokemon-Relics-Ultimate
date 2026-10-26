@@ -44,6 +44,63 @@
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
 
+// The League door can auto-warp before tile scripts run. Check the
+// Rocket badge-case quest at the field-engine boundary as well.
+#if IS_HNS
+extern const u8 IndigoPlateau_EventScript_PRUDoorGate[];
+
+extern const u8 Route22_EventScript_PRUKantoGymLocked[];
+extern const u8 Route22_EventScript_PRUViridianGymLocked[];
+
+// Check the destination rather than its position: all eight Kanto Gym
+// entrances are sealed by Rocket after the case theft, reopening per victory.
+static const u8 *GetPRULockedKantoGymDoorScript(s8 warpEventId)
+{
+    const struct WarpEvent *warp;
+
+    if (!FlagGet(FLAG_PRU_HEIST_STARTED) || warpEventId == WARP_ID_NONE)
+        return NULL;
+
+    warp = &gMapHeader.events->warps[warpEventId];
+#define PRU_WARP_TO(map) (warp->mapGroup == MAP_GROUP(map) && warp->mapNum == MAP_NUM(map))
+    if (PRU_WARP_TO(MAP_PEWTER_CITY_GYM_HNS))
+        return FlagGet(FLAG_PRU_HEIST_BROCK) ? NULL : Route22_EventScript_PRUKantoGymLocked;
+    if (PRU_WARP_TO(MAP_CERULEAN_CITY_GYM_HNS))
+        return FlagGet(FLAG_PRU_HEIST_MISTY) ? NULL : Route22_EventScript_PRUKantoGymLocked;
+    if (PRU_WARP_TO(MAP_VERMILION_CITY_GYM_HNS))
+        return FlagGet(FLAG_PRU_HEIST_SURGE) ? NULL : Route22_EventScript_PRUKantoGymLocked;
+    if (PRU_WARP_TO(MAP_CELADON_CITY_GYM_HNS))
+        return FlagGet(FLAG_PRU_HEIST_ERIKA) ? NULL : Route22_EventScript_PRUKantoGymLocked;
+    if (PRU_WARP_TO(MAP_FUCHSIA_CITY_GYM_HNS))
+        return FlagGet(FLAG_PRU_HEIST_JANINE) ? NULL : Route22_EventScript_PRUKantoGymLocked;
+    if (PRU_WARP_TO(MAP_SAFFRON_CITY_GYM_HNS))
+        return FlagGet(FLAG_PRU_HEIST_SABRINA) ? NULL : Route22_EventScript_PRUKantoGymLocked;
+    if (PRU_WARP_TO(MAP_SEAFOAM_ISLANDS_GYM_HNS))
+        return FlagGet(FLAG_PRU_HEIST_BLAINE) ? NULL : Route22_EventScript_PRUKantoGymLocked;
+    if (PRU_WARP_TO(MAP_VIRIDIAN_CITY_GYM_HNS))
+    {
+        if (!FlagGet(FLAG_PRU_HEIST_BROCK) || !FlagGet(FLAG_PRU_HEIST_MISTY)
+         || !FlagGet(FLAG_PRU_HEIST_SURGE) || !FlagGet(FLAG_PRU_HEIST_ERIKA)
+         || !FlagGet(FLAG_PRU_HEIST_JANINE) || !FlagGet(FLAG_PRU_HEIST_SABRINA)
+         || !FlagGet(FLAG_PRU_HEIST_BLAINE))
+            return Route22_EventScript_PRUViridianGymLocked;
+    }
+#undef PRU_WARP_TO
+    return NULL;
+}
+
+
+static bool8 ShouldBlockIndigoPlateauRocketDoor(const struct MapPosition *position)
+{
+    return gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_INDIGO_PLATEAU_HNS)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_INDIGO_PLATEAU_HNS)
+        && position->x == 11 + MAP_OFFSET
+        && position->y == 6 + MAP_OFFSET
+        && FlagGet(FLAG_PRU_HEIST_STARTED)
+        && !FlagGet(FLAG_PRU_HEIST_COMPLETED);
+}
+#endif
+
 static EWRAM_DATA u8 sWildEncounterImmunitySteps = 0;
 static EWRAM_DATA u16 sPrevMetatileBehavior = 0;
 static EWRAM_DATA u8 sPlayerSelectHoldFrames = 0;
@@ -1005,6 +1062,21 @@ static bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileB
 
     if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
     {
+#if IS_HNS
+        if (ShouldBlockIndigoPlateauRocketDoor(position))
+        {
+            ScriptContext_SetupScript(IndigoPlateau_EventScript_PRUDoorGate);
+            return TRUE;
+        }
+        {
+            const u8 *gymGateScript = GetPRULockedKantoGymDoorScript(warpEventId);
+            if (gymGateScript != NULL)
+            {
+                ScriptContext_SetupScript(gymGateScript);
+                return TRUE;
+            }
+        }
+#endif
         StoreInitialPlayerAvatarState();
         SetupWarp(&gMapHeader, warpEventId, position);
         if (MetatileBehavior_IsEscalator(metatileBehavior) == TRUE)
@@ -1148,6 +1220,21 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, enu
             warpEventId = GetWarpEventAtMapPosition(&gMapHeader, position);
             if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
             {
+#if IS_HNS
+                if (ShouldBlockIndigoPlateauRocketDoor(position))
+                {
+                    ScriptContext_SetupScript(IndigoPlateau_EventScript_PRUDoorGate);
+                    return TRUE;
+                }
+                {
+                    const u8 *gymGateScript = GetPRULockedKantoGymDoorScript(warpEventId);
+                    if (gymGateScript != NULL)
+                    {
+                        ScriptContext_SetupScript(gymGateScript);
+                        return TRUE;
+                    }
+                }
+#endif
                 StoreInitialPlayerAvatarState();
                 SetupWarp(&gMapHeader, warpEventId, position);
                 DoDoorWarp();

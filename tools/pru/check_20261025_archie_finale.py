@@ -44,13 +44,13 @@ assert archie_event.index("addobject LOCALID_PRU_KYOGRE") < archie_event.index(
 )
 
 bg = read("src/battle_bg.c")
-crystal = bg.split("static u8 GetPruCrystalBattleBgIndex(u16 environment)", 1)[1].split(
+rhythm = bg.split("static u8 GetPruRhythmBattleBgIndex(u16 environment)", 1)[1].split(
     "static void LoadBattleEnvironmentGfx", 1
 )[0]
 assert re.search(
-    r"case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS:\s*return 32;",
-    crystal,
-), "Kyogre cave needs the rocky-wave Crystal Redux environment, never snow"
+    r"case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS:\s*return 48;",
+    rhythm,
+), "Kyogre cave needs the rocky-wave Rhythm ocean environment, never snow"
 
 
 def palette(name, form, gba=False):

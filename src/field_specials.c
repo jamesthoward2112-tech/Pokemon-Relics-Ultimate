@@ -6194,3 +6194,19 @@ u16 PruIsJirachiCaught(void)
     }
     return FALSE;
 }
+
+// The reclaimed Viridian Gym boss frees Mewtwo without duplicating a Mewtwo
+// already caught by the player. Old saves may have party Mewtwo with no Dex bit.
+u16 PruIsMewtwoCaught(void)
+{
+    u8 i;
+
+    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_MEWTWO), FLAG_GET_CAUGHT))
+        return TRUE;
+    for (i = 0; i < gPlayerPartyCount; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL) == SPECIES_MEWTWO)
+            return TRUE;
+    }
+    return FALSE;
+}

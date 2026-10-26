@@ -7,9 +7,15 @@ ViridianCity_Gym_OnTransition::
 	call ViridianCity_Gym_EventScript_PRUHeistSync
 	goto_if_unset FLAG_DEFEATED_VIRIDIAN_GYM, ViridianCity_Gym_BlueNotDefeated
 	setflag FLAG_HIDE_CINNABAR_BLUE
+	setflag FLAG_HIDE_VIRIDIAN_BLUE
+	goto_if_set FLAG_PRU_HEIST_STARTED, ViridianCity_Gym_OnTransition_HideDojoBlue
 	goto_if_set FLAG_HIDE_DOJO_BLUE, ViridianCity_Gym_OnTransition_End
 	setflag FLAG_HIDE_VIRIDIAN_BLUE
 ViridianCity_Gym_OnTransition_End::
+	end
+
+ViridianCity_Gym_OnTransition_HideDojoBlue::
+	setflag FLAG_HIDE_DOJO_BLUE
 	end
 
 ViridianCity_Gym_BlueNotDefeated::
@@ -244,9 +250,17 @@ ViridianCity_Gym_EventScript_PRUHeistGiovanni::
 	trainerbattle_no_intro TRAINER_PRU_HEIST_GIOVANNI_HNS, ViridianCity_Gym_Text_PRUHeistGiovanniWin
 	setflag FLAG_PRU_HEIST_GIOVANNI
 	setflag FLAG_PRU_HIDE_HEIST_GIOVANNI
+	@ Armour cracks; do not duplicate a Mewtwo caught on an old save.
+	specialvar VAR_RESULT, PruIsMewtwoCaught
+	goto_if_eq VAR_RESULT, TRUE, ViridianCity_Gym_EventScript_PRUMewtwoAlreadyCaught
+	clearflag FLAG_HIDE_MEWTWO
+ViridianCity_Gym_EventScript_PRUMewtwoAlreadyCaught::
 	msgbox ViridianCity_Gym_Text_PRUHeistGiovanniAfter, MSGBOX_DEFAULT
+	@ Giovanni vanishes in a burst of white light after his final speech.
 	closemessage
+	fadescreenswapbuffers FADE_TO_WHITE
 	removeobject 3
+	fadescreenswapbuffers FADE_FROM_WHITE
 	release
 	end
 
@@ -257,19 +271,24 @@ ViridianCity_Gym_EventScript_PRUHeistNotReady::
 	end
 
 ViridianCity_Gym_Text_PRUHeistGiovanniIntro:
-	.string "GIOVANNI: You recovered seven\n"
-	.string "stolen KANTO BADGES.\p"
-	.string "Then face TEAM ROCKET's former\n"
-	.string "leader for the last one!$"
+	.string "GIOVANNI: BLUE is gone.\p"
+	.string "I have reclaimed VIRIDIAN GYM.\n"
+	.string "I am KANTO's EIGHTH LEADER!\p"
+	.string "ROCKET rebuilt ancient fossils\n"
+	.string "using forbidden RELIC power.\p"
+	.string "My final experiment wears\n"
+	.string "armour no attack can break!$"
 
 ViridianCity_Gym_Text_PRUHeistGiovanniWin:
-	.string "GIOVANNI: Even I cannot\n"
-	.string "overcome your strength.$"
+	.string "GIOVANNI: Impossible!\n"
+	.string "Even Armoured MEWTWO fell!$"
 
 ViridianCity_Gym_Text_PRUHeistGiovanniAfter:
-	.string "The final KANTO BADGE is back.\p"
-	.string "TEAM ROCKET awaits you near\n"
-	.string "INDIGO PLATEAU.$"
+	.string "MEWTWO's armour shatters!\p"
+	.string "Freed from ROCKET's control,\n"
+	.string "MEWTWO returns to Cerulean Cave.\p"
+	.string "GIOVANNI returns the final\n"
+	.string "KANTO BADGE. INDIGO is open!$"
 
 ViridianCity_Gym_Text_PRUHeistNotReady:
 	.string "GIOVANNI: Come back after all\n"

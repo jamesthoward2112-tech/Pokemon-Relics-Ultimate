@@ -3,6 +3,7 @@
 #include "constants/species.h"
 
 #include "level_up_learnsets/gen_3.h"
+#include "level_up_learnsets/pru.h"
 
 const struct LevelUpMove *const gLevelUpLearnsets_Gen3[NUM_SPECIES] = {
 #if P_FAMILY_BULBASAUR
@@ -1073,9 +1074,9 @@ const struct LevelUpMove *const gLevelUpLearnsets_Gen3[NUM_SPECIES] = {
 #endif // P_MEGA_EVOLUTIONS
 #endif // P_FAMILY_LATIOS
 #if P_FAMILY_KYOGRE
-    [SPECIES_KYOGRE] = sKyogreLevelUpLearnset,
+    [SPECIES_KYOGRE] = sPRUKyogreGen3LevelUpLearnset,
 #if P_PRIMAL_REVERSIONS
-    [SPECIES_KYOGRE_PRIMAL] = sKyogreLevelUpLearnset,
+    [SPECIES_KYOGRE_PRIMAL] = sPRUKyogreGen3LevelUpLearnset,
 #endif // P_PRIMAL_REVERSIONS
 #endif // P_FAMILY_KYOGRE
 #if P_FAMILY_GROUDON

@@ -1,5 +1,10 @@
 SaffronCity_Gym_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SaffronCity_Gym_OnTransitionPRUReturn
 	.byte 0
+
+SaffronCity_Gym_OnTransitionPRUReturn::
+	call SaffronCity_Gym_EventScript_PRUReturnSabrina
+	end
 
 SaffronCity_Gym_EventScript_GymGuy::
 	goto_if_set FLAG_DEFEATED_SAFFRON_GYM, SaffronCity_Gym_EventScript_GymGuy2
@@ -34,6 +39,7 @@ SaffronCity_Gym_EventScript_Sabrina::
 	lock
 	faceplayer
 	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_SABRINA, SaffronCity_Gym_EventScript_Sabrina_Defeated
 	goto_if_set FLAG_PRU_HEIST_STARTED, SaffronCity_Gym_EventScript_PRUHeistSabrina
 	goto_if_set FLAG_DEFEATED_SAFFRON_GYM, SaffronCity_Gym_EventScript_Sabrina_Defeated
 	msgbox SaffronCity_Gym_Text_SabrinaIntro, MSGBOX_DEFAULT
@@ -237,8 +243,6 @@ SaffronCity_Gym_Text_PRURewardBagFull:
 SaffronCity_Gym_EventScript_PRUHeistSabrina::
 	goto_if_set FLAG_PRU_HEIST_SABRINA, SaffronCity_Gym_EventScript_PRUHeistSabrinaDone
 	msgbox SaffronCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_SABRINA_HNS, SaffronCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_SABRINA
 	msgbox SaffronCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -262,3 +266,11 @@ SaffronCity_Gym_Text_PRUHeistAlready:
 	.string "SABRINA: One step closer\n"
 	.string "to stopping TEAM ROCKET!$"
 
+
+SaffronCity_Gym_EventScript_PRUReturnSabrina::
+	clearflag FLAG_PRU_HIDE_GYM_SABRINA
+	goto_if_unset FLAG_DEFEATED_VIRIDIAN_GYM, SaffronCity_Gym_EventScript_PRUReturnSabrinaDone
+	goto_if_set FLAG_PRU_HEIST_SABRINA, SaffronCity_Gym_EventScript_PRUReturnSabrinaDone
+	setflag FLAG_PRU_HIDE_GYM_SABRINA
+SaffronCity_Gym_EventScript_PRUReturnSabrinaDone::
+	return

@@ -2,6 +2,20 @@
 #include "graphics.h"
 
 #if IS_HNS
+// TRE 2026 slot 0922; Giovanni-only trainer artwork, not a global Mewtwo form.
+const u32 gPruArmouredMewtwoFrontGfx[] = INCBIN_U32("graphics/pokemon/mewtwo/armoured/front.4bpp.smol");
+const u16 gPruArmouredMewtwoPalette[] = INCBIN_U16("graphics/pokemon/mewtwo/armoured/normal.gbapal");
+// Authentic TRE 2026 visuals for Giovanni's three fossil/relic team members.
+// Keep the regular species graphics untouched elsewhere in the game.
+const u32 gPruGiovanniAerodactylFrontGfx[] = INCBIN_U32("graphics/pokemon/giovanni_relic/aerodactyl_front.4bpp.smol");
+const u16 gPruGiovanniAerodactylPalette[] = INCBIN_U16("graphics/pokemon/giovanni_relic/aerodactyl_normal.gbapal");
+const u32 gPruGiovanniKabutopsFrontGfx[] = INCBIN_U32("graphics/pokemon/giovanni_relic/kabutops_front.4bpp.smol");
+const u16 gPruGiovanniKabutopsPalette[] = INCBIN_U16("graphics/pokemon/giovanni_relic/kabutops_normal.gbapal");
+const u32 gPruGiovanniRhyperiorFrontGfx[] = INCBIN_U32("graphics/pokemon/giovanni_relic/rhyperior_front.4bpp.smol");
+const u16 gPruGiovanniRhyperiorPalette[] = INCBIN_U16("graphics/pokemon/giovanni_relic/rhyperior_normal.gbapal");
+#endif
+
+#if IS_HNS
 const u32 gBattleTextboxTiles[] = INCBIN_U32("graphics/battle_interface/hns/textbox.4bpp.smol");
 const u16 gBattleTextboxPalette[] = INCBIN_U16("graphics/battle_interface/hns/textbox.gbapal");
 const u32 gBattleTextboxTilemap[] = INCBIN_U32("graphics/battle_interface/hns/textbox_map.bin.smolTM");
@@ -2285,5 +2299,5 @@ const u16 gBattleIcons_Pal2[] = INCBIN_U16("graphics/types/battle_icons2.gbapal"
 const u16 gGhostPalette[] = INCBIN_U16("graphics/pokemon/ghost/front.gbapal");
 const u32 gGhostFrontPic[] = INCBIN_U32("graphics/pokemon/ghost/front.4bpp.smol");
 
-// PRU: 38 original GBA-ready Crystal Advance Redux battle environments.
-#include "data/pru_crystal_gfx.h"
+// PRU: 55 Pokémon Rhythm battle environments, optimized for GBA BG3 VRAM.
+#include "data/pru_rhythm_gfx.h"

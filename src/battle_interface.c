@@ -579,37 +579,38 @@ static const u16 sStatusIconColors[] =
     [PAL_STATUS_SLP] = RGB(20, 20, 17),
     [PAL_STATUS_FRZ] = RGB(17, 22, 28),
     [PAL_STATUS_BRN] = RGB(28, 14, 10),
-    [PAL_STATUS_BLD] = RGB(28, 5, 7), // PRU dark crimson
+    [PAL_STATUS_BLD] = RGB(31, 0, 0), // PRU vivid red on solid black
 };
 
-// PRU/HNS: readable crimson BLD indicator for all four battle healthboxes.
+// PRU/HNS: red BLD lettering on an opaque black 24x8 badge.
 // Three 8x8 4bpp tiles per battler, with the same per-battler palette slots
 // (12..15) used by the engine's ordinary poison/burn/paralysis indicators.
+// Color index 11 is the solid black badge background (index 0 is transparent).
 static const u32 sPruBleedingStatusGfx[4][24] =
 {
     {
-        0x000cccc0, 0x00c000c0, 0x00c000c0, 0x000cccc0, 0x00c000c0, 0x00c000c0,
-0x000cccc0, 0x00000000, 0xc000000c, 0xc000000c, 0xc000000c, 0xc000000c,
-0xc000000c, 0xc000000c, 0xc00ccccc, 0x00000000, 0x00000ccc, 0x0000c000,
-0x0000c000, 0x0000c000, 0x0000c000, 0x0000c000, 0x00000ccc, 0x00000000
+        0xbbbccccb, 0xbbcbbbcb, 0xbbcbbbcb, 0xbbbccccb, 0xbbcbbbcb, 0xbbcbbbcb,
+0xbbbccccb, 0xbbbbbbbb, 0xcbbbbbbc, 0xcbbbbbbc, 0xcbbbbbbc, 0xcbbbbbbc,
+0xcbbbbbbc, 0xcbbbbbbc, 0xcbbccccc, 0xbbbbbbbb, 0xbbbbbccc, 0xbbbbcbbb,
+0xbbbbcbbb, 0xbbbbcbbb, 0xbbbbcbbb, 0xbbbbcbbb, 0xbbbbbccc, 0xbbbbbbbb
     },
     {
-        0x000dddd0, 0x00d000d0, 0x00d000d0, 0x000dddd0, 0x00d000d0, 0x00d000d0,
-0x000dddd0, 0x00000000, 0xd000000d, 0xd000000d, 0xd000000d, 0xd000000d,
-0xd000000d, 0xd000000d, 0xd00ddddd, 0x00000000, 0x00000ddd, 0x0000d000,
-0x0000d000, 0x0000d000, 0x0000d000, 0x0000d000, 0x00000ddd, 0x00000000
+        0xbbbddddb, 0xbbdbbbdb, 0xbbdbbbdb, 0xbbbddddb, 0xbbdbbbdb, 0xbbdbbbdb,
+0xbbbddddb, 0xbbbbbbbb, 0xdbbbbbbd, 0xdbbbbbbd, 0xdbbbbbbd, 0xdbbbbbbd,
+0xdbbbbbbd, 0xdbbbbbbd, 0xdbbddddd, 0xbbbbbbbb, 0xbbbbbddd, 0xbbbbdbbb,
+0xbbbbdbbb, 0xbbbbdbbb, 0xbbbbdbbb, 0xbbbbdbbb, 0xbbbbbddd, 0xbbbbbbbb
     },
     {
-        0x000eeee0, 0x00e000e0, 0x00e000e0, 0x000eeee0, 0x00e000e0, 0x00e000e0,
-0x000eeee0, 0x00000000, 0xe000000e, 0xe000000e, 0xe000000e, 0xe000000e,
-0xe000000e, 0xe000000e, 0xe00eeeee, 0x00000000, 0x00000eee, 0x0000e000,
-0x0000e000, 0x0000e000, 0x0000e000, 0x0000e000, 0x00000eee, 0x00000000
+        0xbbbeeeeb, 0xbbebbbeb, 0xbbebbbeb, 0xbbbeeeeb, 0xbbebbbeb, 0xbbebbbeb,
+0xbbbeeeeb, 0xbbbbbbbb, 0xebbbbbbe, 0xebbbbbbe, 0xebbbbbbe, 0xebbbbbbe,
+0xebbbbbbe, 0xebbbbbbe, 0xebbeeeee, 0xbbbbbbbb, 0xbbbbbeee, 0xbbbbebbb,
+0xbbbbebbb, 0xbbbbebbb, 0xbbbbebbb, 0xbbbbebbb, 0xbbbbbeee, 0xbbbbbbbb
     },
     {
-        0x000ffff0, 0x00f000f0, 0x00f000f0, 0x000ffff0, 0x00f000f0, 0x00f000f0,
-0x000ffff0, 0x00000000, 0xf000000f, 0xf000000f, 0xf000000f, 0xf000000f,
-0xf000000f, 0xf000000f, 0xf00fffff, 0x00000000, 0x00000fff, 0x0000f000,
-0x0000f000, 0x0000f000, 0x0000f000, 0x0000f000, 0x00000fff, 0x00000000
+        0xbbbffffb, 0xbbfbbbfb, 0xbbfbbbfb, 0xbbbffffb, 0xbbfbbbfb, 0xbbfbbbfb,
+0xbbbffffb, 0xbbbbbbbb, 0xfbbbbbbf, 0xfbbbbbbf, 0xfbbbbbbf, 0xfbbbbbbf,
+0xfbbbbbbf, 0xfbbbbbbf, 0xfbbfffff, 0xbbbbbbbb, 0xbbbbbfff, 0xbbbbfbbb,
+0xbbbbfbbb, 0xbbbbfbbb, 0xbbbbfbbb, 0xbbbbfbbb, 0xbbbbbfff, 0xbbbbbbbb
     }
 };
 
@@ -2025,6 +2026,16 @@ static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
 
     pltAdder = PLTT_ID(gSprites[healthboxSpriteId].oam.paletteNum);
     pltAdder += battler + 12;
+
+    if (IS_HNS && statusPalId == PAL_STATUS_BLD)
+    {
+        // This healthbox palette leaves index 11 unused by its regular art.
+        // Set it explicitly so BLD is legible on both light and dark UI.
+        u32 blackPltOffset = PLTT_ID(gSprites[healthboxSpriteId].oam.paletteNum) + 11;
+        FillPalette(RGB(0, 0, 0), OBJ_PLTT_OFFSET + blackPltOffset, PLTT_SIZEOF(1));
+        CpuCopy16(&gPlttBufferUnfaded[OBJ_PLTT_OFFSET + blackPltOffset],
+                  (u16 *)OBJ_PLTT + blackPltOffset, PLTT_SIZEOF(1));
+    }
 
     FillPalette(sStatusIconColors[statusPalId], OBJ_PLTT_OFFSET + pltAdder, PLTT_SIZEOF(1));
     CpuCopy16(&gPlttBufferUnfaded[OBJ_PLTT_OFFSET + pltAdder], (u16 *)OBJ_PLTT + pltAdder, PLTT_SIZEOF(1));

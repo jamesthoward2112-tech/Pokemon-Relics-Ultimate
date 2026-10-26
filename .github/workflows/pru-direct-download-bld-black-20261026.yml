@@ -1,0 +1,55 @@
+name: Publish black-background BLD direct GBA
+
+on:
+  push:
+    branches:
+      - fix/pru-blaine-giovanni-art-exit-20261026
+    paths:
+      - .github/workflows/pru-direct-download-bld-black-20261026.yml
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Await validated BLD black-and-red ROM build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh run watch 40302164747 --repo "$GITHUB_REPOSITORY" --exit-status
+      - name: Verify and extract direct GBA
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p rom
+          gh run download 40302164747 --repo "$GITHUB_REPOSITORY" --name PRU-CANONICAL-SOURCE-VALIDATED --dir rom
+          test -s rom/pokehns.gba
+          test "$(stat -c%s rom/pokehns.gba)" -eq 33554432
+          cd rom
+          sha256sum --check pru-rom.sha256
+          mv pokehns.gba Pokemon-Relics-Ultimate-BLD-Black.gba
+      - name: Publish raw GBA GitHub prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag=pru-bld-black-20261026
+          file=rom/Pokemon-Relics-Ultimate-BLD-Black.gba
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "$file" --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$tag" "$file" \
+              --repo "$GITHUB_REPOSITORY" \
+              --target ce568fc39f35f1dc61d9ffe3097965d6028c422e \
+              --title "Pokémon Relics Ultimate — Black BLD Status Badge" \
+              --notes "Bleeding (BLD) battle status now shows bright red letters on a solid black 24x8 badge in all four battler positions. Preserves previous Meowth/Jessie/James interception and Giovanni TRE fixes. Source commit ce568fc3; 32 MB compiled ROM and SHA-256 validated by GitHub Actions run 40302164747. Gameplay visual testing remains to the player." \
+              --prerelease
+          fi
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fx "Pokemon-Relics-Ultimate-BLD-Black.gba"
+          echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/Pokemon-Relics-Ultimate-BLD-Black.gba"

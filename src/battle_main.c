@@ -2186,6 +2186,37 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                 CalculateMonStats(&party[i]);
             }
         }
+
+#if IS_HNS
+        // Giovanni's final Mewtwo alone has experimental armour: 120 base
+        // Defense and Sp. Defense rather than the ordinary species' 90.
+        // Derive trainer-only stats after challenge scaling so cave/caught
+        // Mewtwo, Mega forms and regular trainer Mewtwo remain unchanged.
+        if (trainer == GetTrainerStructFromId(TRAINER_PRU_HEIST_GIOVANNI_HNS))
+        {
+            for (i = 0; i < monsCount; i++)
+            {
+                if (GetMonData(&party[i], MON_DATA_SPECIES) == SPECIES_MEWTWO)
+                {
+                    u32 level = GetMonData(&party[i], MON_DATA_LEVEL);
+                    u8 nature = GetMonData(&party[i], MON_DATA_HIDDEN_NATURE);
+                    u8 friendship = GetMonData(&party[i], MON_DATA_FRIENDSHIP);
+                    u32 stats[] = {STAT_DEF, STAT_SPDEF};
+                    for (u32 j = 0; j < ARRAY_COUNT(stats); j++)
+                    {
+                        u32 stat = stats[j];
+                        u32 iv = GetMonData(&party[i], MON_DATA_HP_IV + stat);
+                        u32 ev = GetMonData(&party[i], MON_DATA_HP_EV + stat);
+                        u32 value = (((2 * 120 + iv + ev / 4) * level) / 100) + 5;
+                        value = ModifyStatByNature(nature, value, stat);
+                        if (B_FRIENDSHIP_BOOST == TRUE)
+                            value += (value * 10 * friendship) / (MAX_FRIENDSHIP * 100);
+                        SetMonData(&party[i], MON_DATA_MAX_HP + stat, &value);
+                    }
+                }
+            }
+        }
+#endif
     }
 
     return trainer->partySize;

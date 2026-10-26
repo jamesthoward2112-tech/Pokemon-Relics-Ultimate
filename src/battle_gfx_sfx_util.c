@@ -34,6 +34,57 @@
 #include "constants/event_objects.h" // only for SHADOW_SIZE constants
 #include "constants/opponents_hns.h"
 
+#if IS_HNS
+extern const u32 gPruArmouredMewtwoFrontGfx[];
+extern const u16 gPruArmouredMewtwoPalette[];
+extern const u32 gPruGiovanniAerodactylFrontGfx[];
+extern const u16 gPruGiovanniAerodactylPalette[];
+extern const u32 gPruGiovanniKabutopsFrontGfx[];
+extern const u16 gPruGiovanniKabutopsPalette[];
+extern const u32 gPruGiovanniRhyperiorFrontGfx[];
+extern const u16 gPruGiovanniRhyperiorPalette[];
+
+enum PruGiovanniRelicSprite
+{
+    PRU_GIOVANNI_RELIC_NONE,
+    PRU_GIOVANNI_RELIC_AERODACTYL,
+    PRU_GIOVANNI_RELIC_KABUTOPS,
+    PRU_GIOVANNI_RELIC_RHYPERIOR,
+};
+
+static enum PruGiovanniRelicSprite GetPruGiovanniRelicSprite(enum BattlerId battler, u32 species)
+{
+    if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     || IsOnPlayerSide(battler)
+     || TRAINER_BATTLE_PARAM.opponentA != TRAINER_PRU_HEIST_GIOVANNI_HNS
+     || gBattleSpritesDataPtr->battlerData[battler].transformSpecies != SPECIES_NONE)
+        return PRU_GIOVANNI_RELIC_NONE;
+
+    switch (species)
+    {
+    case SPECIES_AERODACTYL:
+        return PRU_GIOVANNI_RELIC_AERODACTYL;
+    case SPECIES_KABUTOPS:
+        return PRU_GIOVANNI_RELIC_KABUTOPS;
+    case SPECIES_RHYPERIOR:
+        return PRU_GIOVANNI_RELIC_RHYPERIOR;
+    default:
+        return PRU_GIOVANNI_RELIC_NONE;
+    }
+}
+
+static bool8 IsPruGiovanniArmouredMewtwo(enum BattlerId battler, u32 species)
+{
+    // Never replace ordinary Mewtwo, including the Cerulean Cave encounter,
+    // party sprites, other trainers, or a transformed battle participant.
+    return (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+        && !IsOnPlayerSide(battler)
+        && TRAINER_BATTLE_PARAM.opponentA == TRAINER_PRU_HEIST_GIOVANNI_HNS
+        && species == SPECIES_MEWTWO
+        && gBattleSpritesDataPtr->battlerData[battler].transformSpecies == SPECIES_NONE;
+}
+#endif
+
 // PRU battle-only Kimono art uses existing Mega sprite *pictures* without
 // enabling Mega Evolution or changing the underlying species/444 Pokédex.
 extern const u32 gMonFrontPic_GengarMega[];
@@ -741,6 +792,45 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
                              gMonSpritesGfxPtr->spritesGfx[position],
                              species, personalityValue);
 
+#if IS_HNS
+    bool8 useGiovanniArmour = IsPruGiovanniArmouredMewtwo(battler, species);
+    enum PruGiovanniRelicSprite giovanniRelic = GetPruGiovanniRelicSprite(battler, species);
+    const u32 *relicGfx = NULL;
+    switch (giovanniRelic)
+    {
+    case PRU_GIOVANNI_RELIC_AERODACTYL:
+        relicGfx = gPruGiovanniAerodactylFrontGfx;
+        break;
+    case PRU_GIOVANNI_RELIC_KABUTOPS:
+        relicGfx = gPruGiovanniKabutopsFrontGfx;
+        break;
+    case PRU_GIOVANNI_RELIC_RHYPERIOR:
+        relicGfx = gPruGiovanniRhyperiorFrontGfx;
+        break;
+    default:
+        break;
+    }
+    if (relicGfx != NULL)
+    {
+        DecompressDataWithHeaderWram(relicGfx, gMonSpritesGfxPtr->spritesGfx[position]);
+        // Normal frames would otherwise briefly flash over the relic art.
+        for (u32 frame = 1; frame < 4; frame++)
+            Dma3CopyLarge32_(gMonSpritesGfxPtr->spritesGfx[position],
+                             &gMonSpritesGfxPtr->spritesGfx[position][MON_PIC_SIZE * frame],
+                             MON_PIC_SIZE);
+    }
+    if (useGiovanniArmour)
+    {
+        DecompressDataWithHeaderWram(gPruArmouredMewtwoFrontGfx, gMonSpritesGfxPtr->spritesGfx[position]);
+        // Mewtwo's animation normally loads four standard sprite frames.
+        // Copy the authentic armour art to all four to avoid a vanilla flash.
+        for (u32 frame = 1; frame < 4; frame++)
+            Dma3CopyLarge32_(gMonSpritesGfxPtr->spritesGfx[position],
+                             &gMonSpritesGfxPtr->spritesGfx[position][MON_PIC_SIZE * frame],
+                             MON_PIC_SIZE);
+    }
+#endif
+
     // Art-only costumes for the five Lv48 Ecruteak Kimono Ghost battles.
     // Mega Evolution is disabled; these are NOT Mega-form species or boosts.
     // Draw the corresponding donor Mega front silhouette directly, while
@@ -804,6 +894,25 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
     default:
         break;
     }
+
+#if IS_HNS
+    if (useGiovanniArmour)
+        paletteData = gPruArmouredMewtwoPalette;
+    switch (giovanniRelic)
+    {
+    case PRU_GIOVANNI_RELIC_AERODACTYL:
+        paletteData = gPruGiovanniAerodactylPalette;
+        break;
+    case PRU_GIOVANNI_RELIC_KABUTOPS:
+        paletteData = gPruGiovanniKabutopsPalette;
+        break;
+    case PRU_GIOVANNI_RELIC_RHYPERIOR:
+        paletteData = gPruGiovanniRhyperiorPalette;
+        break;
+    default:
+        break;
+    }
+#endif
 
     LoadPalette(paletteData, paletteOffset, PLTT_SIZE_4BPP);
     LoadPalette(paletteData, BG_PLTT_ID(8) + BG_PLTT_ID(battler), PLTT_SIZE_4BPP);

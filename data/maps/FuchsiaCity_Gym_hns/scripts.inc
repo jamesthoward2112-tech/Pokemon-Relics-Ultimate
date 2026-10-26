@@ -3,6 +3,7 @@ FuchsiaCity_Gym_hns_MapScripts::
 	.byte 0
 
 FuchsiaCity_Gym_OnTransition::
+	call FuchsiaCity_Gym_EventScript_PRUReturnJanine
 	goto_if_set FLAG_DEFEATED_FUCHSIA_GYM, FuchsiaCity_Gym_OnTransitionAfter
 	setflag FLAG_TEMP_1
 	setflag FLAG_TEMP_3
@@ -45,6 +46,7 @@ FuchsiaCity_Gym_EventScript_Janine::
 	lock
 	faceplayer
 	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_JANINE, FuchsiaCity_Gym_EventScript_Janine_Defeated
 	goto_if_set FLAG_PRU_HEIST_STARTED, FuchsiaCity_Gym_EventScript_PRUHeistJanine
 	goto_if_set FLAG_DEFEATED_FUCHSIA_GYM, FuchsiaCity_Gym_EventScript_Janine_Defeated
 	msgbox FuchsiaCity_Gym_Text_Janine_DisappointYou, MSGBOX_DEFAULT
@@ -334,8 +336,6 @@ FuchsiaCity_Gym_Text_PRURewardBagFull:
 FuchsiaCity_Gym_EventScript_PRUHeistJanine::
 	goto_if_set FLAG_PRU_HEIST_JANINE, FuchsiaCity_Gym_EventScript_PRUHeistJanineDone
 	msgbox FuchsiaCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_JANINE_HNS, FuchsiaCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_JANINE
 	msgbox FuchsiaCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -359,3 +359,11 @@ FuchsiaCity_Gym_Text_PRUHeistAlready:
 	.string "JANINE: One step closer\n"
 	.string "to stopping TEAM ROCKET!$"
 
+
+FuchsiaCity_Gym_EventScript_PRUReturnJanine::
+	clearflag FLAG_PRU_HIDE_GYM_JANINE
+	goto_if_unset FLAG_DEFEATED_VIRIDIAN_GYM, FuchsiaCity_Gym_EventScript_PRUReturnJanineDone
+	goto_if_set FLAG_PRU_HEIST_JANINE, FuchsiaCity_Gym_EventScript_PRUReturnJanineDone
+	setflag FLAG_PRU_HIDE_GYM_JANINE
+FuchsiaCity_Gym_EventScript_PRUReturnJanineDone::
+	return

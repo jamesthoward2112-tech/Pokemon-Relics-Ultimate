@@ -1,0 +1,51 @@
+name: Publish Giovanni TRE Build 282 direct GBA
+
+on:
+  push:
+    branches:
+      - fix/pru-blaine-giovanni-art-exit-20261026
+    paths:
+      - .github/workflows/pru-direct-download-build282.yml
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish-validated-rom:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Download the already-validated Build 282 ROM
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p rom
+          gh run download 40290814438 --repo "$GITHUB_REPOSITORY" --name PRU-CANONICAL-SOURCE-VALIDATED --dir rom
+          test -s rom/pokehns.gba
+          test "$(stat -c%s rom/pokehns.gba)" -eq 33554432
+          cd rom
+          echo "ac9858b3dfd9c57f2c983f0f5859730e8a742c63964e160a6ff4b1dc40d9ef4d  pokehns.gba" | sha256sum -c -
+          sha256sum -c pru-rom.sha256
+          mv pokehns.gba Pokemon-Relics-Ultimate-Giovanni-TRE-Build282.gba
+      - name: Publish downloadable raw .gba GitHub prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag=pru-giovanni-tre-build282
+          file=rom/Pokemon-Relics-Ultimate-Giovanni-TRE-Build282.gba
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "$file" --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$tag" "$file" \
+              --repo "$GITHUB_REPOSITORY" \
+              --target 91f7b866521db959a438b860a1604db4c9612131 \
+              --title "Pokémon Relics Ultimate — Giovanni TRE Build 282" \
+              --notes "Verified 32 MB ROM built from the Giovanni TRE artwork and Viridian Gym story fixes. Blaine hints at the eighth badge; Giovanni has TRE skeleton Aerodactyl/Kabutops, TRE Rhyperior&, and an exit animation. Armoured Mewtwo finale is preserved. Built and SHA-256 checked by Actions run 40290814438. Draft source PR #48; not merged to main. Gameplay testing remains with the player." \
+              --prerelease
+          fi
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+            --jq '.assets[].name' | grep -Fx "Pokemon-Relics-Ultimate-Giovanni-TRE-Build282.gba"
+          echo "Direct GBA: https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/Pokemon-Relics-Ultimate-Giovanni-TRE-Build282.gba"

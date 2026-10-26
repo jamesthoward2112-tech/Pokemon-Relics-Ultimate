@@ -1,11 +1,11 @@
 // PRU source of truth: /Pokémon Relics Ultimate/Canonical Data/PRU_National_Pokedex_2026-10-16.csv
-// Preserve original 1..444. Append only the three approved species 445..447;
-// 448..450 are RESERVED for later stories. Battle forms do not add entries.
+// Preserve original 1..444 and append the approved 445..450 species.
+// Rhyperior #448, Electivire #449 and Magmortar #450 complete the 450-entry roster.
 // This mapping is used for HNS Pokémon summary numbers only, not the engine's vanilla National Dex flags.
 #ifndef GUARD_PRU_DEX_ORDER_H
 #define GUARD_PRU_DEX_ORDER_H
 
-#define PRU_DEX_COUNT 447
+#define PRU_DEX_COUNT 450
 
 static const u16 sPruDexSpecies[PRU_DEX_COUNT] =
 {
@@ -456,6 +456,9 @@ static const u16 sPruDexSpecies[PRU_DEX_COUNT] =
     SPECIES_GLACEON, // 445 Glaceon
     SPECIES_LEAFEON, // 446 Leafeon
     SPECIES_MIMIKYU_DISGUISED, // 447 Mimikyu
+    SPECIES_RHYPERIOR, // 448 Rhyperior
+    SPECIES_ELECTIVIRE, // 449 Electivire
+    SPECIES_MAGMORTAR, // 450 Magmortar
 };
 
 #endif // GUARD_PRU_DEX_ORDER_H

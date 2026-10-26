@@ -1,0 +1,55 @@
+name: Publish Meowth lookout direct GBA
+
+on:
+  push:
+    branches:
+      - fix/pru-blaine-giovanni-art-exit-20261026
+    paths:
+      - .github/workflows/pru-direct-download-meowth-20261026.yml
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Await verified Rocket lookout ROM build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh run watch 40298871055 --repo "$GITHUB_REPOSITORY" --exit-status
+      - name: Download and SHA-verify direct GBA
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p rom
+          gh run download 40298871055 --repo "$GITHUB_REPOSITORY" --name PRU-CANONICAL-SOURCE-VALIDATED --dir rom
+          test -s rom/pokehns.gba
+          test "$(stat -c%s rom/pokehns.gba)" -eq 33554432
+          cd rom
+          sha256sum --check pru-rom.sha256
+          mv pokehns.gba Pokemon-Relics-Ultimate-Meowth-Alert.gba
+      - name: Publish raw unzipped GBA GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag=pru-meowth-alert-20261026
+          file=rom/Pokemon-Relics-Ultimate-Meowth-Alert.gba
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "$file" --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$tag" "$file" \
+              --repo "$GITHUB_REPOSITORY" \
+              --target 03a1c13e6642a49856c7037a5548bd83284a326b \
+              --title "Pokémon Relics Ultimate — Meowth Lookout" \
+              --notes "Meowth now faces north with trainer vision from the Indigo Plateau Fly landing and triggers Jessie and James. Immediate Fly arrival plays Meowth's [!] before the duel; the League doorway prevents Victory Road players from skipping their finale. Previous Giovanni/TRE sprite improvements and Janine progression remain unchanged. Source commit 03a1c13e; build and checksum validated by GitHub Actions run 40298871055. Gameplay should be checked in the player's save." \
+              --prerelease
+          fi
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fx "Pokemon-Relics-Ultimate-Meowth-Alert.gba"
+          echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/Pokemon-Relics-Ultimate-Meowth-Alert.gba"
