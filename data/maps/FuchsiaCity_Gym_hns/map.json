@@ -81,7 +81,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "FuchsiaCity_Gym_EventScript_Janine",
-      "flag": "0",
+      "flag": "FLAG_PRU_HIDE_GYM_JANINE",
       "local_id": "LOCALID_FUCHSIAGYM_JANINE"
     },
     {

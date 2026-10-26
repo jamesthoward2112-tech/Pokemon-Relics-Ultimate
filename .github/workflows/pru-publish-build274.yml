@@ -1,0 +1,46 @@
+name: PRU Giovanni TRE — direct GBA release
+
+on:
+  push:
+    branches:
+      - pru/dojo-giovanni-e4-plan-20261025
+    paths:
+      - .github/workflows/pru-publish-build274.yml
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish-giovanni:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Publish checksum-verified Build 279 directly
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          mkdir -p verified-pru
+          gh run download 40288390022 --repo "$GITHUB_REPOSITORY" --name PRU-CANONICAL-SOURCE-VALIDATED --dir verified-pru
+          cd verified-pru
+          test "$(stat -c%s pokehns.gba)" -eq 33554432
+          sha256sum --check pru-rom.sha256
+
+          tag="pru-build-681881c398"
+          file="Pokemon-Relics-Ultimate-681881c398.gba"
+          cp pokehns.gba "$file"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "$file" --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$tag" "$file" \
+              --repo "$GITHUB_REPOSITORY" \
+              --target 681881c39832b67c736d7b14d233e4eeac810135 \
+              --title "Pokémon Relics Ultimate — Giovanni TRE Fossils and Escape" \
+              --notes "Exact 32 MiB ROM from successful PRU clean build #279, source commit 681881c398. Includes exact TRE Skeleton Aerodactyl, Skeleton Kabutops, Rhyper& trainer-only battle sprites, preserved Armoured Mewtwo ace, Giovanni white-flash exit and Blaine's eighth-badge hint. Automated regressions and ROM verification passed; live emulator QA remains." \
+              --prerelease
+          fi
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fx "$file"
+          echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/$file"

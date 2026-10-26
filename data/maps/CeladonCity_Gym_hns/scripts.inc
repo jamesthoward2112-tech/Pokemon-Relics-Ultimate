@@ -1,11 +1,17 @@
 CeladonCity_Gym_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, CeladonCity_Gym_OnTransitionPRUReturn
 	.byte 0
+
+CeladonCity_Gym_OnTransitionPRUReturn::
+	call CeladonCity_Gym_EventScript_PRUReturnErika
+	end
 
 
 CeladonCity_Gym_EventScript_Erika::
 	lock
 	faceplayer
 	@ Only enable recovery once Blue has been defeated and the physical case stolen.
+	goto_if_set FLAG_PRU_HEIST_ERIKA, CeladonCity_Gym_EventScript_Erika_Defeated
 	goto_if_set FLAG_PRU_HEIST_STARTED, CeladonCity_Gym_EventScript_PRUHeistErika
 	goto_if_set FLAG_DEFEATED_CELADON_GYM, CeladonCity_Gym_EventScript_Erika_Defeated
 	@ The twins must be beaten before Erika can be challenged, even if avoided.
@@ -244,8 +250,6 @@ CeladonCity_Gym_Text_PRURewardBagFull:
 CeladonCity_Gym_EventScript_PRUHeistErika::
 	goto_if_set FLAG_PRU_HEIST_ERIKA, CeladonCity_Gym_EventScript_PRUHeistErikaDone
 	msgbox CeladonCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_ERIKA_HNS, CeladonCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_ERIKA
 	msgbox CeladonCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -269,3 +273,11 @@ CeladonCity_Gym_Text_PRUHeistAlready:
 	.string "ERIKA: One step closer\n"
 	.string "to stopping TEAM ROCKET!$"
 
+
+CeladonCity_Gym_EventScript_PRUReturnErika::
+	clearflag FLAG_PRU_HIDE_GYM_ERIKA
+	goto_if_unset FLAG_DEFEATED_VIRIDIAN_GYM, CeladonCity_Gym_EventScript_PRUReturnErikaDone
+	goto_if_set FLAG_PRU_HEIST_ERIKA, CeladonCity_Gym_EventScript_PRUReturnErikaDone
+	setflag FLAG_PRU_HIDE_GYM_ERIKA
+CeladonCity_Gym_EventScript_PRUReturnErikaDone::
+	return

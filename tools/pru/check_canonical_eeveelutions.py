@@ -2,7 +2,7 @@
 """PRU/HNS whitelist evolution and easy-to-use Eeveelution source checks.
 
 The underlying multi-generation engine keeps species declarations for donors and
-approved special cases. Only canonical 444 targets may evolve in PRU/HNS.
+approved special cases. Only canonical 450 targets may evolve in PRU/HNS.
 No other game variant may gain these PRU-only Eevee/item behavior changes.
 """
 from pathlib import Path
@@ -12,11 +12,11 @@ import re
 root = Path(__file__).resolve().parents[2]
 read = lambda p: (root / p).read_text(encoding="utf-8")
 rows = list(csv.DictReader(open(root / "data/pru/PRU_National_Pokedex_2026-10-16.csv", encoding="utf-8-sig", newline="")))
-assert len(rows) == 444
+assert len(rows) == 450
 canonical = {row["Species_Constant"] for row in rows}
 dex = read("src/data/pokemon/pru_dex_order.h")
-assert "#define PRU_DEX_COUNT 444" in dex
-assert len(re.findall(r"^\s*SPECIES_[A-Z0-9_]+,\s*//\s*\d{3}\s", dex, re.M)) == 444
+assert "#define PRU_DEX_COUNT 450" in dex
+assert len(re.findall(r"^\s*SPECIES_[A-Z0-9_]+,\s*//\s*\d{3}\s", dex, re.M)) == 450
 
 pokemon = read("src/pokemon.c")
 assert '#include "data/pokemon/pru_dex_order.h"' in pokemon
@@ -74,7 +74,7 @@ assert "{EVO_ITEM, ITEM_MOON_STONE, SPECIES_NOXICHU}" in source
 assert "{EVO_ITEM, ITEM_THUNDER_STONE, SPECIES_RAICHU" in source
 assert "{EVO_ITEM, ITEM_ANCIENT_STONE, SPECIES_CHARAXIS" in source
 
-print("PASS: all 444 canonical evolution targets are whitelisted in 6 active evolution modes")
+print("PASS: all 450 canonical evolution targets are whitelisted in 6 active evolution modes")
 print("PASS: all 15 approved Eeveelutions use exactly one direct-use item, all stocked in Goldenrod")
 print("PASS: all seven alternate-item catalysts retain their original held effects and non-PRU behavior")
 print("PASS: Pikachu Moon/Thunder and Charaxis/Ancient Stone evolutions preserved")

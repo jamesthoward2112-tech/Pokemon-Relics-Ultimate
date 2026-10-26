@@ -32,7 +32,7 @@
 #include "constants/battle_partner.h"
 #include "rtc.h"
 #include "data/battle_environment.h"
-#include "data/pru_crystal_bg_table.h"
+#include "data/pru_rhythm_bg_table.h"
 
 // .rodata
 
@@ -895,22 +895,22 @@ static u32 GetBattleTerrainTimeOfDay(void)
     }
 }
 
-// Keep all Crystal Redux artwork on BG3 only. The original entrance curtains
-// stay intact on BG1/BG2, so no split/overlapping donor backdrop appears in
-// the battle slide; the complete matching tiles/map/palette appear together.
-static const u8 sPruCrystalGrass[] = {0, 1, 3, 9, 22, 23, 24, 28};
-static const u8 sPruCrystalWater[] = {2, 11, 15, 20, 21, 32};
-static const u8 sPruCrystalCave[] = {6, 7, 19, 25, 26, 27, 29, 36};
-static const u8 sPruCrystalRock[] = {7, 16, 25, 26, 29, 31, 35};
-static const u8 sPruCrystalIce[] = {4, 5, 6, 34};
-static const u8 sPruCrystalUrban[] = {8, 10, 12, 13, 14, 17, 18, 30, 35, 37};
-static const u8 sPruCrystalSpecial[] = {16, 27, 33, 36};
+// Pokémon Rhythm backdrops occupy BG3 as complete stationary scenes.
+// Match surroundings while keeping all 55 original Rhythm indices reachable.
+static const u8 sPruRhythmGrass[] = {0, 9, 21, 32, 33, 34, 37, 39, 42, 43};
+static const u8 sPruRhythmWater[] = {2, 4, 5, 20, 30, 40, 48, 53};
+static const u8 sPruRhythmCave[] = {3, 7, 16, 19, 36, 41, 47, 54};
+static const u8 sPruRhythmRock[] = {1, 6, 15, 35, 36, 45, 50, 52};
+static const u8 sPruRhythmIce[] = {3, 13, 14, 23, 24};
+static const u8 sPruRhythmUrban[] = {8, 10, 11, 12, 17, 22, 26, 28, 31, 41, 44, 46, 49, 51};
+static const u8 sPruRhythmVolcano[] = {16, 25, 54};
+static const u8 sPruRhythmBurial[] = {18, 19, 27, 29, 38, 44};
 
-static u8 GetPruCrystalBattleBgIndex(u16 environment)
+static u8 GetPruRhythmBattleBgIndex(u16 environment)
 {
 #if IS_HNS
-    const u8 *choices = sPruCrystalGrass;
-    u32 count = NELEMS(sPruCrystalGrass);
+    const u8 *choices = sPruRhythmGrass;
+    u32 count = NELEMS(sPruRhythmGrass);
     u32 mapSeed;
 
     // Do not affect link battles, battle facilities or forced test environments.
@@ -918,13 +918,14 @@ static u8 GetPruCrystalBattleBgIndex(u16 environment)
      || (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER)))
         return 0xFF;
 
-    // One haunting backdrop throughout Lavender Spirit Tower. Without a
-    // map-specific override the generic building/terrain map seed chooses a
-    // different (sometimes sunny) Crystal Redux scene on each floor.
+    // Fixed story scenery: Kyogre meets the crashing sea, Groudon the lava,
+    // and Lavender Spirit Tower keeps the graveyard on every floor.
     switch ((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
     {
     case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS:
-        return 32; // Crystal Redux's rocky ocean and breaking waves, for Archie and Kyogre.
+        return 48; // Rhythm's sea cave and waves, for Archie and Kyogre.
+    case MAP_MT_SILVER_1F_MOLTRES_ROOM_HNS:
+        return 16; // Rhythm's magma chamber, for Groudon.
     case MAP_LAVENDER_SPIRIT_TOWER_1F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_2F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_3F_HNS:
@@ -932,69 +933,88 @@ static u8 GetPruCrystalBattleBgIndex(u16 environment)
     case MAP_LAVENDER_SPIRIT_TOWER_5F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_6F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_7F_HNS:
-        return 19; // Original Crystal Redux tombstone/graveyard scene.
+        return 44; // Rhythm's moonlit ghostly stone circle.
     }
 
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
     {
-        // Distinct Gym Leader arenas; rematches and postgame challenges use
-        // the same leader's background, independent of their map location.
+        // Rocket badge-heist story battles use two intentionally different
+        // static, already approved Rhythm arenas. Rhythm's pillar-lined indoor hall
+        // suits the seven Dojo challengers; an ancient stone chamber gives
+        // Giovanni and his concealed Armoured Mewtwo a dramatic arena.
+        // Trainer-specific cases prevent changing regular Gym rematches.
+        switch (TRAINER_BATTLE_PARAM.opponentA)
+        {
+        case TRAINER_PRU_HEIST_BROCK_HNS:
+        case TRAINER_PRU_HEIST_MISTY_HNS:
+        case TRAINER_PRU_HEIST_SURGE_HNS:
+        case TRAINER_PRU_HEIST_ERIKA_HNS:
+        case TRAINER_PRU_HEIST_JANINE_HNS:
+        case TRAINER_PRU_HEIST_SABRINA_HNS:
+        case TRAINER_PRU_HEIST_BLAINE_HNS:
+            return 11; // Rhythm: indoor hall with pillars and a clear training floor.
+        case TRAINER_PRU_HEIST_GIOVANNI_HNS:
+            return 41; // Rhythm: ornate stone temple, Giovanni's dramatic finale.
+        }
+
+        // Distinct Gym Leader arenas; ordinary and postgame rematches keep
+        // their existing 16 separate scenes, wherever they are battled.
         switch (TRAINER_BATTLE_PARAM.opponentA)
         {
         case TRAINER_FALKNER_1_HNS:
         case TRAINER_FALKNER_2_HNS:
-        case TRAINER_FALKNER_POSTOBC_HNS: return 35;
+        case TRAINER_FALKNER_POSTOBC_HNS: return 0;
         case TRAINER_BUGSY_1_HNS:
         case TRAINER_BUGSY_2_HNS:
-        case TRAINER_BUGSY_POSTOBC_HNS: return 1;
+        case TRAINER_BUGSY_POSTOBC_HNS: return 43;
         case TRAINER_WHITNEY_1_HNS:
         case TRAINER_WHITNEY_2_HNS:
-        case TRAINER_WHITNEY_POSTOBC_HNS: return 17;
+        case TRAINER_WHITNEY_POSTOBC_HNS: return 8;
         case TRAINER_MORTY_1_HNS:
         case TRAINER_MORTY_2_HNS:
-        case TRAINER_MORTY_POSTOBC_HNS: return 19;
+        case TRAINER_MORTY_POSTOBC_HNS: return 44;
         case TRAINER_CHUCK_1_HNS:
         case TRAINER_CHUCK_2_HNS:
         case TRAINER_CHUCK_1_2_HNS:
         case TRAINER_CHUCK_1_3_HNS:
-        case TRAINER_CHUCK_POSTOBC_HNS: return 31;
+        case TRAINER_CHUCK_POSTOBC_HNS: return 45;
         case TRAINER_JASMINE_1_HNS:
         case TRAINER_JASMINE_2_HNS:
         case TRAINER_JASMINE_1_2_HNS:
         case TRAINER_JASMINE_1_3_HNS:
-        case TRAINER_JASMINE_POSTOBC_HNS: return 18;
+        case TRAINER_JASMINE_POSTOBC_HNS: return 30;
         case TRAINER_PRYCE_1_HNS:
         case TRAINER_PRYCE_2_HNS:
         case TRAINER_PRYCE_1_2_HNS:
         case TRAINER_PRYCE_1_3_HNS:
-        case TRAINER_PRYCE_POSTOBC_HNS: return 6;
+        case TRAINER_PRYCE_POSTOBC_HNS: return 14;
         case TRAINER_CLAIR_1_HNS:
         case TRAINER_CLAIR_2_HNS:
         case TRAINER_CLAIR_3_HNS:
-        case TRAINER_CLAIR_POSTOBC_HNS: return 36;
+        case TRAINER_CLAIR_POSTOBC_HNS: return 41;
         case TRAINER_BROCK_HNS:
-        case TRAINER_BROCK_POSTOBC_HNS: return 7;
+        case TRAINER_BROCK_POSTOBC_HNS: return 35;
         case TRAINER_MISTY_HNS:
-        case TRAINER_MISTY_POSTOBC_HNS: return 32;
+        case TRAINER_MISTY_POSTOBC_HNS: return 48;
         case TRAINER_LTSURGE_HNS:
-        case TRAINER_LTSURGE_POSTOBC_HNS: return 14;
+        case TRAINER_LTSURGE_POSTOBC_HNS: return 46;
         case TRAINER_ERIKA_HNS:
         case TRAINER_ERIKA_POSTOBC_HNS: return 9;
         case TRAINER_JANINE_HNS:
-        case TRAINER_JANINE_POSTOBC_HNS: return 12;
+        case TRAINER_JANINE_POSTOBC_HNS: return 31;
         case TRAINER_SABRINA_HNS:
-        case TRAINER_SABRINA_POSTOBC_HNS: return 8;
+        case TRAINER_SABRINA_POSTOBC_HNS: return 19;
         case TRAINER_BLAINE_HNS:
-        case TRAINER_BLAINE_POSTOBC_HNS: return 33;
+        case TRAINER_BLAINE_POSTOBC_HNS: return 16;
         case TRAINER_BLUE_HNS:
         case TRAINER_BLUE_2_HNS:
-        case TRAINER_BLUE_POSTOBC_HNS: return 10;
+        case TRAINER_BLUE_POSTOBC_HNS: return 51;
         default: break;
         }
     }
 
     // Wild and regular trainer fights use scenery appropriate to the map.
-    // Stable map-based variety makes all 38 donor environments accessible.
+    // Stable map-based variety makes all 55 donor entries accessible.
     switch (environment)
     {
     case BATTLE_ENVIRONMENT_WATER:
@@ -1002,39 +1022,42 @@ static u8 GetPruCrystalBattleBgIndex(u16 environment)
     case BATTLE_ENVIRONMENT_UNDERWATER:
     case BATTLE_ENVIRONMENT_CAVE_WATER:
     case BATTLE_ENVIRONMENT_GRAY_CAVE_WATER:
-        choices = sPruCrystalWater;
-        count = NELEMS(sPruCrystalWater);
+        choices = sPruRhythmWater;
+        count = NELEMS(sPruRhythmWater);
         break;
     case BATTLE_ENVIRONMENT_CAVE:
     case BATTLE_ENVIRONMENT_GRAY_CAVE:
-        choices = sPruCrystalCave;
-        count = NELEMS(sPruCrystalCave);
+        choices = sPruRhythmCave;
+        count = NELEMS(sPruRhythmCave);
         break;
     case BATTLE_ENVIRONMENT_MOUNTAIN:
     case BATTLE_ENVIRONMENT_SAND:
-        choices = sPruCrystalRock;
-        count = NELEMS(sPruCrystalRock);
+        choices = sPruRhythmRock;
+        count = NELEMS(sPruRhythmRock);
         break;
     case BATTLE_ENVIRONMENT_ROCK_SNOW:
     case BATTLE_ENVIRONMENT_MOUNTAIN_SNOW:
     case BATTLE_ENVIRONMENT_SNOW_CAVE:
     case BATTLE_ENVIRONMENT_ICE:
     case BATTLE_ENVIRONMENT_SNOW:
-        choices = sPruCrystalIce;
-        count = NELEMS(sPruCrystalIce);
+        choices = sPruRhythmIce;
+        count = NELEMS(sPruRhythmIce);
         break;
     case BATTLE_ENVIRONMENT_VOLCANO:
     case BATTLE_ENVIRONMENT_VOLCANO_CAVE:
+        choices = sPruRhythmVolcano;
+        count = NELEMS(sPruRhythmVolcano);
+        break;
     case BATTLE_ENVIRONMENT_BURIAL_GROUND:
-        choices = sPruCrystalSpecial;
-        count = NELEMS(sPruCrystalSpecial);
+        choices = sPruRhythmBurial;
+        count = NELEMS(sPruRhythmBurial);
         break;
     case BATTLE_ENVIRONMENT_BUILDING:
     case BATTLE_ENVIRONMENT_GYM:
     case BATTLE_ENVIRONMENT_LEADER:
     case BATTLE_ENVIRONMENT_BLUE_BUILDING:
-        choices = sPruCrystalUrban;
-        count = NELEMS(sPruCrystalUrban);
+        choices = sPruRhythmUrban;
+        count = NELEMS(sPruRhythmUrban);
         break;
     default:
         break;
@@ -1053,11 +1076,11 @@ static void LoadBattleEnvironmentGfx(u16 environment)
 {
     const void *tileset, *tilemap, *palette;
 
-    u8 pruCrystalBg = GetPruCrystalBattleBgIndex(environment);
-    if (pruCrystalBg != 0xFF)
+    u8 pruRhythmBg = GetPruRhythmBattleBgIndex(environment);
+    if (pruRhythmBg != 0xFF)
     {
         // Transfer one complete image; never mix separate donor entry panels.
-        const struct PruCrystalBattleBg *bg = &sPruCrystalBattleBgs[pruCrystalBg];
+        const struct PruRhythmBattleBg *bg = &sPruRhythmBattleBgs[pruRhythmBg];
         DecompressDataWithHeaderVram(bg->tiles, (void *)BG_CHAR_ADDR(2));
         DecompressDataWithHeaderVram(bg->tilemap, (void *)BG_SCREEN_ADDR(26));
         LoadPalette(bg->palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
@@ -1173,7 +1196,7 @@ bool8 IsPruCrystalBattleBgActive(void)
     if (gBattleTypeFlags & (BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_MULTI))
         return FALSE;
 
-    return GetPruCrystalBattleBgIndex(GetBattleEnvironmentOverride()) != 0xFF;
+    return GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride()) != 0xFF;
 }
 
 void BattleInitBgsAndWindows(void)
@@ -1503,7 +1526,7 @@ void InitLinkBattleVsScreen(u8 taskId)
 
 void DrawBattleEntryBackground(void)
 {
-    // The complete Crystal Redux BG3 scene is already visible. Do not load
+    // The complete Rhythm BG3 scene is already visible. Do not load
     // any extra entry tiles, grass, water, rocks or other foreground overlay.
     if (IsPruCrystalBattleBgActive())
         return;
@@ -1587,27 +1610,27 @@ bool8 LoadChosenBattleElement(u8 caseId)
         break;
     case 3:
         {
-            u8 pruBg = GetPruCrystalBattleBgIndex(GetBattleEnvironmentOverride());
+            u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
             if (pruBg != 0xFF)
-                DecompressDataWithHeaderVram(sPruCrystalBattleBgs[pruBg].tiles, (void *)BG_CHAR_ADDR(2));
+                DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tiles, (void *)BG_CHAR_ADDR(2));
             else
                 DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tileset, (void *)(BG_CHAR_ADDR(2)));
         }
         break;
     case 4:
         {
-            u8 pruBg = GetPruCrystalBattleBgIndex(GetBattleEnvironmentOverride());
+            u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
             if (pruBg != 0xFF)
-                DecompressDataWithHeaderVram(sPruCrystalBattleBgs[pruBg].tilemap, (void *)BG_SCREEN_ADDR(26));
+                DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tilemap, (void *)BG_SCREEN_ADDR(26));
             else
                 DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tilemap, (void *)(BG_SCREEN_ADDR(26)));
         }
         break;
     case 5:
         {
-            u8 pruBg = GetPruCrystalBattleBgIndex(GetBattleEnvironmentOverride());
+            u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
             if (pruBg != 0xFF)
-                LoadPalette(sPruCrystalBattleBgs[pruBg].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+                LoadPalette(sPruRhythmBattleBgs[pruBg].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
             else
                 LoadPalette(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
         }

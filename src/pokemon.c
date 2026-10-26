@@ -2899,7 +2899,9 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
 #include "data/pokemon/form_change_table_pointers.h"
 #include "data/object_events/object_event_pic_tables_followers.h"
 
+#define sKyogreLevelUpLearnset sPRUKyogreLevelUpLearnset
 #include "data/pokemon/species_info.h"
+#undef sKyogreLevelUpLearnset
 
 #define PP_UP_SHIFTS(val)           val,        (val) << 2,        (val) << 4,        (val) << 6
 #define PP_UP_SHIFTS_INV(val) (u8)~(val), (u8)~((val) << 2), (u8)~((val) << 4), (u8)~((val) << 6)

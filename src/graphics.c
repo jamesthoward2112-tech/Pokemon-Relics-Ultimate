@@ -2,6 +2,21 @@
 #include "graphics.h"
 
 #if IS_HNS
+// TRE 2026 slot 0922; Giovanni-only trainer artwork, not a global Mewtwo form.
+const u32 gPruArmouredMewtwoFrontGfx[] = INCBIN_U32("graphics/pokemon/mewtwo/armoured/front.4bpp.smol");
+const u16 gPruArmouredMewtwoPalette[] = INCBIN_U16("graphics/pokemon/mewtwo/armoured/normal.gbapal");
+
+// Authentic Team Rocket Edition 2026 battle-only boss costumes.
+// Skeletons: TRE slots 912 / 951, Rhyper&: TRE slot 936.
+const u32 gPruGiovanniAerodactylSkeletonFrontGfx[] = INCBIN_U32("graphics/pokemon/giovanni_tre/aerodactyl_skeleton/front.4bpp.smol");
+const u16 gPruGiovanniAerodactylSkeletonPalette[] = INCBIN_U16("graphics/pokemon/giovanni_tre/aerodactyl_skeleton/normal.gbapal");
+const u32 gPruGiovanniKabutopsSkeletonFrontGfx[] = INCBIN_U32("graphics/pokemon/giovanni_tre/kabutops_skeleton/front.4bpp.smol");
+const u16 gPruGiovanniKabutopsSkeletonPalette[] = INCBIN_U16("graphics/pokemon/giovanni_tre/kabutops_skeleton/normal.gbapal");
+const u32 gPruGiovanniRhyperiorTreAmpFrontGfx[] = INCBIN_U32("graphics/pokemon/giovanni_tre/rhyperior_tre_amp/front.4bpp.smol");
+const u16 gPruGiovanniRhyperiorTreAmpPalette[] = INCBIN_U16("graphics/pokemon/giovanni_tre/rhyperior_tre_amp/normal.gbapal");
+#endif
+
+#if IS_HNS
 const u32 gBattleTextboxTiles[] = INCBIN_U32("graphics/battle_interface/hns/textbox.4bpp.smol");
 const u16 gBattleTextboxPalette[] = INCBIN_U16("graphics/battle_interface/hns/textbox.gbapal");
 const u32 gBattleTextboxTilemap[] = INCBIN_U32("graphics/battle_interface/hns/textbox_map.bin.smolTM");
@@ -2285,5 +2300,5 @@ const u16 gBattleIcons_Pal2[] = INCBIN_U16("graphics/types/battle_icons2.gbapal"
 const u16 gGhostPalette[] = INCBIN_U16("graphics/pokemon/ghost/front.gbapal");
 const u32 gGhostFrontPic[] = INCBIN_U32("graphics/pokemon/ghost/front.4bpp.smol");
 
-// PRU: 38 original GBA-ready Crystal Advance Redux battle environments.
-#include "data/pru_crystal_gfx.h"
+// PRU: 55 Pokémon Rhythm battle environments, optimized for GBA BG3 VRAM.
+#include "data/pru_rhythm_gfx.h"

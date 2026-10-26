@@ -1967,6 +1967,22 @@ u16 LoadSheetGraphicsInfo(const struct ObjectEventGraphicsInfo *info, u16 uuid, 
     return tag;
 }
 
+#if IS_HNS
+// The large flying balloon must be drawn as a whole above roofs and treetops.
+// The field renderer normally derives priority from elevation each frame, and
+// subsprite tables may independently restore background OAM priorities.
+static void SetPRUMeowthBalloonFlightPriority(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    if (objectEvent->graphicsId != OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS)
+        return;
+
+    objectEvent->fixedPriority = TRUE;
+    sprite->oam.priority = 0;
+    sprite->subpriority = 0;
+    sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
+}
+#endif
+
 static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEventTemplate, struct SpriteTemplate *spriteTemplate, u8 mapNum, u8 mapGroup, s16 cameraX, s16 cameraY)
 {
     u8 spriteId;
@@ -2051,6 +2067,8 @@ u8 TrySpawnObjectEventTemplate(const struct ObjectEventTemplate *objectEventTemp
         SetSubspriteTables(&gSprites[gObjectEvents[objectEventId].spriteId], subspriteTables);
 
 #if IS_HNS
+    SetPRUMeowthBalloonFlightPriority(&gObjectEvents[objectEventId],
+                                      &gSprites[gObjectEvents[objectEventId].spriteId]);
     // Whirlpool sprites render below the player's surf sprite
     if (graphicsId == OBJ_EVENT_GFX_WHIRLPOOL_HNS)
     {
@@ -3249,6 +3267,7 @@ static void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
         ResetObjectEventFldEffData(objectEvent);
         SetObjectSubpriorityByElevation(objectEvent->previousElevation, sprite, 1);
 #if IS_HNS
+        SetPRUMeowthBalloonFlightPriority(objectEvent, sprite);
         if (objectEvent->graphicsId == OBJ_EVENT_GFX_WHIRLPOOL_HNS)
         {
             objectEvent->fixedPriority = TRUE;
