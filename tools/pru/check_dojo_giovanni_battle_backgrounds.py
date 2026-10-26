@@ -7,8 +7,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 source = (ROOT / "src/battle_bg.c").read_text()
 manifest = json.loads((ROOT / "assets/pru_rhythm/background_manifest.json").read_text())
-dojo = 45  # Already approved martial-arts hall used by Chuck.
-giovanni = 51  # Already approved final-challenge hall used by Blue.
+dojo = 11  # Bright pillar-lined indoor training hall.
+giovanni = 41  # Ornate stone temple arena for his Armoured Mewtwo finale.
 
 assert manifest["entries"][dojo]["visible_sha256"] != manifest["entries"][giovanni]["visible_sha256"]
 assert "TestRunner_Battle_GetForcedEnvironment()" in source
@@ -18,9 +18,9 @@ section = source.split("// Rocket badge-heist story battles", 1)[1].split(
 for leader in ("BROCK", "MISTY", "SURGE", "ERIKA", "JANINE", "SABRINA", "BLAINE"):
     assert f"case TRAINER_PRU_HEIST_{leader}_HNS:" in section
 dojo_block, finale_block = section.split("case TRAINER_PRU_HEIST_GIOVANNI_HNS:")
-assert "return 45;" in dojo_block
-assert "return 51;" in finale_block
-assert "return 45;" not in finale_block
+assert "return 11;" in dojo_block
+assert "return 41;" in finale_block
+assert "return 11;" not in finale_block
 assert source.index("// Rocket badge-heist story battles") < source.index("// Distinct Gym Leader arenas")
 
 # Guard against accidentally overriding each leader's ordinary Gym scenery.

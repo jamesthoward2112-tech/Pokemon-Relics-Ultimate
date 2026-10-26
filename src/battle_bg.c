@@ -939,8 +939,8 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
     {
         // Rocket badge-heist story battles use two intentionally different
-        // static, already approved Rhythm arenas. Chuck's martial-arts hall
-        // suits the seven Dojo challengers; Blue's final-challenge hall gives
+        // static, already approved Rhythm arenas. Rhythm's pillar-lined indoor hall
+        // suits the seven Dojo challengers; an ancient stone chamber gives
         // Giovanni and his concealed Armoured Mewtwo a dramatic arena.
         // Trainer-specific cases prevent changing regular Gym rematches.
         switch (TRAINER_BATTLE_PARAM.opponentA)
@@ -952,9 +952,9 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         case TRAINER_PRU_HEIST_JANINE_HNS:
         case TRAINER_PRU_HEIST_SABRINA_HNS:
         case TRAINER_PRU_HEIST_BLAINE_HNS:
-            return 45; // Rhythm: Chuck's martial-arts hall; shared Dojo backdrop.
+            return 11; // Rhythm: indoor hall with pillars and a clear training floor.
         case TRAINER_PRU_HEIST_GIOVANNI_HNS:
-            return 51; // Rhythm: Blue's final challenge hall; Giovanni finale.
+            return 41; // Rhythm: ornate stone temple, Giovanni's dramatic finale.
         }
 
         // Distinct Gym Leader arenas; ordinary and postgame rematches keep
