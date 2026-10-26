@@ -133,6 +133,13 @@ def check_dojo_layout():
         assert f"setflag FLAG_HIDE_DOJO_{leader}" in sync
         assert f"clearflag FLAG_HIDE_DOJO_{leader}" in sync
     assert "setflag FLAG_HIDE_DOJO_BLUE" in sync
+    for name in LEADERS:
+        leader = next(e for e in events if e["graphics_id"] == f"OBJ_EVENT_GFX_{name}_HNS")
+        assert leader["movement_type"] == "MOVEMENT_TYPE_FACE_DOWN", f"{name}: must be static"
+    for species in COMPANION_POSITIONS:
+        partner = next(e for e in events if e["graphics_id"] == f"OBJ_EVENT_GFX_MON_BASE+SPECIES_{species}")
+        assert partner["movement_type"] == "MOVEMENT_TYPE_FACE_DOWN", f"{species}: must be static"
+
     for i, (leader, companion) in enumerate(HEIST_PARTNER_IDS.items()):
         block = VIP.split(f"SaffronCity_FightingDojoVIP_EventScript_PRUHeist{leader.title()}::", 1)[1].split(
             "\nSaffronCity_FightingDojoVIP_EventScript_PRUHeist", 1
@@ -146,6 +153,15 @@ def check_dojo_layout():
 def check():
     check_heist_abilities_legal()
     check_dojo_layout()
+    for leader in LEADERS:
+        name = leader.title()
+        block_start = VIP.split(f"SaffronCity_FightingDojoVIP_EventScript_PRUHeist{name}::", 1)[1]
+        block = block_start.split("\nSaffronCity_FightingDojoVIP_EventScript_PRU", 1)[0]
+        farewell = f"msgbox SaffronCity_FightingDojoVIP_Text_PRUHeistNext{name}"
+        assert farewell in block, f"{leader}: farewell text missing"
+        assert block.index(farewell) < block.index("fadescreenswapbuffers FADE_TO_WHITE")
+        assert block.index("fadescreenswapbuffers FADE_TO_WHITE") < block.index(f"setflag FLAG_PRU_HEIST_{leader}")
+        assert block.index(f"setflag FLAG_PRU_HEIST_{leader}") < block.index("fadescreenswapbuffers FADE_FROM_WHITE")
     assert "Earn them ALL at" in ROCKET, "Rocket must demand every badge be earned at the Dojo"
     assert "FIGHTING DOJO" in ROCKET, "Rocket must point to Saffron Dojo"
     assert "GIOVANNI!" not in ROCKET.split("Route22_Text_PRURocketBalloon:", 1)[1].split("Route22_Movement_", 1)[0], "Rocket must preserve the 8th-leader twist"

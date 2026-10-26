@@ -1,7 +1,12 @@
 CeruleanCity_Gym_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_LOAD, CeruleanCity_Gym_OnLoadPRUPool
 	map_script MAP_SCRIPT_ON_TRANSITION, CeruleanCity_Gym_EventScript_PRUHideMistyAfterBlue
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, CeruleanCity_Gym_OnFrame
 	.byte 0
+
+CeruleanCity_Gym_OnLoadPRUPool::
+	callnative PruCeruleanGymFixPoolCollision
+	end
 
 CeruleanCity_Gym_EventScript_PRUHideMistyAfterBlue::
 	clearflag FLAG_HIDE_CERULEAN_GYM_TRAINERS

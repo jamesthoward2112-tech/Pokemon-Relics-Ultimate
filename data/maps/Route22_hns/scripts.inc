@@ -471,3 +471,26 @@ Route22_Movement_PRUBalloonDepart:
 	walk_fast_right
 	walk_fast_right
 	step_end
+
+
+Route22_EventScript_PRUKantoGymLocked::
+	lockall
+	msgbox Route22_Text_PRUKantoGymLocked, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Route22_Text_PRUKantoGymLocked:
+	.string "TEAM ROCKET sealed this GYM!\p"
+	.string "Beat its LEADER at SAFFRON's\n"
+	.string "FIGHTING DOJO to reopen it.$"
+
+Route22_EventScript_PRUViridianGymLocked::
+	lockall
+	msgbox Route22_Text_PRUViridianGymLocked, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Route22_Text_PRUViridianGymLocked:
+	.string "VIRIDIAN GYM is sealed!\p"
+	.string "Win all SEVEN DOJO rematches\n"
+	.string "before the final LEADER!$"
