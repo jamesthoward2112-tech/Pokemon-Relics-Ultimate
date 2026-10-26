@@ -92,6 +92,8 @@ typedef bool8 (*TransitionSpriteCallbackPartner)(struct Sprite *sprite);
 
 static void Task_PRL_JessieJames(u8 taskId);
 static void Task_PRL_EeveeTwins(u8 taskId);
+static void Task_PRU_RedBlue(u8 taskId);
+static void Task_PRU_OakElm(u8 taskId);
 static bool8 PRL_Emblem_Init(struct Task *task);
 static bool8 PRL_Emblem_SetGfx(struct Task *task);
 static bool8 Transition_StartIntro(struct Task *);
@@ -311,6 +313,12 @@ static const u16 sPRL_jessie_james_Palette[] = INCBIN_U16("graphics/battle_trans
 static const u32 sPRL_eevee_twins_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/eevee_twins.4bpp");
 static const u16 sPRL_eevee_twins_Map[] = INCBIN_U16("graphics/battle_transitions/prl/eevee_twins.bin");
 static const u16 sPRL_eevee_twins_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/eevee_twins.gbapal");
+static const u32 sPRU_red_blue_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/red_blue.4bpp");
+static const u16 sPRU_red_blue_Map[] = INCBIN_U16("graphics/battle_transitions/prl/red_blue.bin");
+static const u16 sPRU_red_blue_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/red_blue.gbapal");
+static const u32 sPRU_oak_elm_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/oak_elm.4bpp");
+static const u16 sPRU_oak_elm_Map[] = INCBIN_U16("graphics/battle_transitions/prl/oak_elm.bin");
+static const u16 sPRU_oak_elm_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/oak_elm.gbapal");
 static const u16 sEvilTeam_Palette[] = INCBIN_U16("graphics/battle_transitions/evil_team.gbapal");
 static const u32 sTeamAqua_Tileset[] = INCBIN_U32("graphics/battle_transitions/team_aqua.4bpp.smol");
 static const u32 sTeamAqua_Tilemap[] = INCBIN_U32("graphics/battle_transitions/team_aqua.bin.smolTM");
@@ -370,6 +378,8 @@ static const TaskFunc sTasks_Main[B_TRANSITION_COUNT] =
     [B_TRANSITION_MUGSHOT] = Task_Mugshot,
     [B_TRANSITION_JESSIE_JAMES] = Task_PRL_JessieJames,
     [B_TRANSITION_EEVEE_TWINS] = Task_PRL_EeveeTwins,
+    [B_TRANSITION_RED_BLUE] = Task_PRU_RedBlue,
+    [B_TRANSITION_OAK_ELM] = Task_PRU_OakElm,
     [B_TRANSITION_AQUA] = Task_Aqua,
     [B_TRANSITION_MAGMA] = Task_Magma,
     [B_TRANSITION_REGICE] = Task_Regice,
@@ -1363,6 +1373,16 @@ static void Task_PRL_EeveeTwins(u8 taskId)
     while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
+static void Task_PRU_RedBlue(u8 taskId)
+{
+    while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId]));
+}
+
+static void Task_PRU_OakElm(u8 taskId)
+{
+    while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId]));
+}
+
 static void Task_Aqua(u8 taskId)
 {
     while (sAqua_Funcs[gTasks[taskId].tState](&gTasks[taskId]));
@@ -1431,10 +1451,20 @@ static bool8 PRL_Emblem_Init(struct Task *task)
         CpuCopy16(sPRL_jessie_james_Tiles, tileset, sizeof(sPRL_jessie_james_Tiles));
         LoadPalette(sPRL_jessie_james_Palette, BG_PLTT_ID(13), sizeof(sPRL_jessie_james_Palette));
     }
-    else
+    else if (task->func == Task_PRL_EeveeTwins)
     {
         CpuCopy16(sPRL_eevee_twins_Tiles, tileset, sizeof(sPRL_eevee_twins_Tiles));
         LoadPalette(sPRL_eevee_twins_Palette, BG_PLTT_ID(13), sizeof(sPRL_eevee_twins_Palette));
+    }
+    else if (task->func == Task_PRU_RedBlue)
+    {
+        CpuCopy16(sPRU_red_blue_Tiles, tileset, sizeof(sPRU_red_blue_Tiles));
+        LoadPalette(sPRU_red_blue_Palette, BG_PLTT_ID(13), sizeof(sPRU_red_blue_Palette));
+    }
+    else // Task_PRU_OakElm
+    {
+        CpuCopy16(sPRU_oak_elm_Tiles, tileset, sizeof(sPRU_oak_elm_Tiles));
+        LoadPalette(sPRU_oak_elm_Palette, BG_PLTT_ID(13), sizeof(sPRU_oak_elm_Palette));
     }
     task->tState++;
     return FALSE;
@@ -1447,8 +1477,12 @@ static bool8 PRL_Emblem_SetGfx(struct Task *task)
     GetBg0TilesDst(&tilemap, &tileset);
     if (task->func == Task_PRL_JessieJames)
         CpuCopy16(sPRL_jessie_james_Map, tilemap, sizeof(sPRL_jessie_james_Map));
-    else
+    else if (task->func == Task_PRL_EeveeTwins)
         CpuCopy16(sPRL_eevee_twins_Map, tilemap, sizeof(sPRL_eevee_twins_Map));
+    else if (task->func == Task_PRU_RedBlue)
+        CpuCopy16(sPRU_red_blue_Map, tilemap, sizeof(sPRU_red_blue_Map));
+    else // Task_PRU_OakElm
+        CpuCopy16(sPRU_oak_elm_Map, tilemap, sizeof(sPRU_oak_elm_Map));
     SetSinWave((s16 *)gScanlineEffectRegBuffers[0], 0, task->tSinIndex, 132, task->tAmplitude, DISPLAY_HEIGHT);
     task->tState++;
     return FALSE;
