@@ -30,12 +30,20 @@ TEST("PRU tutor compatibility reaches move teaching without broad unlocks")
     EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_VALKYVOIR, MOVE_PSYCHIC_FANGS));
     EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_ALAKAZAM, MOVE_AGILITY));
     EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_MACHAMP, MOVE_SHOCKWAVE_FIST));
-    // Shockwave Fist must be offered to all Electric types, not merely
-    // Fighting types as the earlier tutor filter incorrectly required.
-    EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_PIKACHU, MOVE_SHOCKWAVE_FIST));
-    EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_ELECTABUZZ, MOVE_SHOCKWAVE_FIST));
+    // Fighting-type Shockwave Fist inherits Brick Break's exact tutor
+    // compatibility. Electric typing alone no longer grants access.
+    EXPECT_EQ(CanSpeciesLearnPruTutorMove(SPECIES_PIKACHU, MOVE_SHOCKWAVE_FIST),
+              CanSpeciesLearnPruTutorMove(SPECIES_PIKACHU, MOVE_BRICK_BREAK));
+    EXPECT_EQ(CanSpeciesLearnPruTutorMove(SPECIES_ELECTABUZZ, MOVE_SHOCKWAVE_FIST),
+              CanSpeciesLearnPruTutorMove(SPECIES_ELECTABUZZ, MOVE_BRICK_BREAK));
+    EXPECT_EQ(CanSpeciesLearnPruTutorMove(SPECIES_MAROWAK, MOVE_SHOCKWAVE_FIST),
+              CanSpeciesLearnPruTutorMove(SPECIES_MAROWAK, MOVE_BRICK_BREAK));
+    EXPECT_EQ(CanSpeciesLearnPruTutorMove(SPECIES_SKARMORY, MOVE_SHOCKWAVE_FIST),
+              CanSpeciesLearnPruTutorMove(SPECIES_SKARMORY, MOVE_BRICK_BREAK));
     EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_STEELIX, MOVE_METAL_BARRAGE));
     EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_SKARMORY, MOVE_METAL_BARRAGE));
+    EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_GEODUDE, MOVE_METAL_BARRAGE));
+    EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_MAROWAK, MOVE_METAL_BARRAGE));
     EXPECT(!CanSpeciesLearnPruTutorMove(SPECIES_PIKACHU, MOVE_MINDWAVE));
 
     // The party menu is a distinct path from the PC selection callback.
@@ -45,7 +53,8 @@ TEST("PRU tutor compatibility reaches move teaching without broad unlocks")
     EXPECT(CanSpeciesLearnPruTutorMoveForParty(SPECIES_BULBASAUR, MOVE_STICKY_WEB, TRUE));
     EXPECT(CanSpeciesLearnPruTutorMoveForParty(SPECIES_VALKYVOIR, MOVE_MINDWAVE, TRUE));
     EXPECT(CanSpeciesLearnPruTutorMoveForParty(SPECIES_MACHAMP, MOVE_SHOCKWAVE_FIST, TRUE));
-    EXPECT(CanSpeciesLearnPruTutorMoveForParty(SPECIES_PIKACHU, MOVE_SHOCKWAVE_FIST, TRUE));
+    EXPECT_EQ(CanSpeciesLearnPruTutorMoveForParty(SPECIES_PIKACHU, MOVE_SHOCKWAVE_FIST, TRUE),
+              CanSpeciesLearnPruTutorMove(SPECIES_PIKACHU, MOVE_BRICK_BREAK));
     EXPECT(CanSpeciesLearnPruTutorMoveForParty(SPECIES_STEELIX, MOVE_METAL_BARRAGE, TRUE));
     EXPECT(!CanSpeciesLearnPruTutorMoveForParty(SPECIES_SHUCKLE, MOVE_STICKY_WEB, FALSE));
     EXPECT(!CanSpeciesLearnPruTutorMoveForParty(SPECIES_PIKACHU, MOVE_STICKY_WEB, TRUE));

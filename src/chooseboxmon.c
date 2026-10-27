@@ -381,11 +381,18 @@ static bool32 CanSpeciesLearnPruDoubleTutorMove(u16 species, u16 move)
     switch (move)
     {
     case MOVE_SHOCKWAVE_FIST:
-        return IsSpeciesOfType(species, TYPE_ELECTRIC)
-            || IsSpeciesOfType(species, TYPE_FIGHTING);
+        // Share Brick Break's full tutor compatibility, including native
+        // learnsets and PRU's Fighting/Ground/Steel eligibility.
+        return CanSpeciesLearnPjrControlTutorMove(species, MOVE_BRICK_BREAK);
     case MOVE_FAULTLINE: type = TYPE_GROUND; break;
     case MOVE_WRAITH_CRY: type = TYPE_GHOST; break;
-    case MOVE_METAL_BARRAGE: type = TYPE_STEEL; break;
+    case MOVE_METAL_BARRAGE:
+        // Metal shards suit Steel, Rock and Ground species, as well as
+        // physical attackers that can already learn Iron Tail.
+        return IsSpeciesOfType(species, TYPE_STEEL)
+            || IsSpeciesOfType(species, TYPE_ROCK)
+            || IsSpeciesOfType(species, TYPE_GROUND)
+            || CanLearnTeachableMove(species, MOVE_IRON_TAIL);
     case MOVE_MINDWAVE: type = TYPE_PSYCHIC; break;
     default: return FALSE;
     }
