@@ -942,6 +942,30 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         // the same leader's background, independent of their map location.
         switch (TRAINER_BATTLE_PARAM.opponentA)
         {
+        // The reused League rooms select trainer IDs from the championship
+        // progression scripts, so route by the actual battle rather than room.
+        case TRAINER_WILL_1_HNS:
+        case TRAINER_WILL_2_HNS:
+        case TRAINER_WILL_POSTOBC_HNS: return 19; // Psychic Arena.
+        case TRAINER_KOGA_1_HNS:
+        case TRAINER_KOGA_2_HNS:
+        case TRAINER_KOGA_POSTOBC_HNS: return 39; // Shadowy Jungle.
+        case TRAINER_BRUNO_1_HNS:
+        case TRAINER_BRUNO_2_HNS:
+        case TRAINER_BRUNO_POSTOBC_HNS:
+        case TRAINER_PRU_KANTO_E4_BRUNO_HNS: return 8; // Fighting Stadium.
+        case TRAINER_KAREN_1_HNS:
+        case TRAINER_KAREN_2_HNS:
+        case TRAINER_KAREN_POSTOBC_HNS: return 38; // Dark Arena.
+        case TRAINER_LANCE_1_HNS:
+        case TRAINER_LANCE_2_HNS:
+        case TRAINER_LANCE_3_HNS:
+        case TRAINER_LANCE_POSTOBC_HNS:
+        case TRAINER_PRU_KANTO_E4_LANCE_HNS: return 30; // Mountain Bridge.
+        case TRAINER_PRU_KANTO_E4_LORELEI_HNS: return 14; // Snow Pass.
+        case TRAINER_PRU_KANTO_E4_AGATHA_HNS: return 18; // Graveyard.
+        case TRAINER_PRU_KANTO_E4_RED_HNS:
+        case TRAINER_RED_POSTOBC_HNS: return 13; // Mt. Silver Snowy Forest.
         case TRAINER_FALKNER_1_HNS:
         case TRAINER_FALKNER_2_HNS:
         case TRAINER_FALKNER_POSTOBC_HNS: return 0;
