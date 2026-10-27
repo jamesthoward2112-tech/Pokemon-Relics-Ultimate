@@ -20841,7 +20841,7 @@ Level: 40
 
 === TRAINER_PRU_E20_JASMINE_HNS ===
 Name: JASMINE
-Class: Leader Jasmine Hns
+Class: Leader Hns
 Pic: Leader Jasmine Hns
 Gender: Female
 Music: Hg Champion
@@ -20875,7 +20875,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
 === TRAINER_PRU_E20_CLAIR_HNS ===
 Name: CLAIR
-Class: Leader Clair Hns
+Class: Leader Hns
 Pic: Leader Clair Hns
 Gender: Female
 Music: Hg Champion
@@ -21011,8 +21011,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
 === TRAINER_PRU_E20_GIOVANNI_HNS ===
 Name: GIOVANNI
-Class: Rocket Boss Hns
-Pic: Team Rocket Giovanni Hns
+Class: Rocket Admin Hns
+Pic: Giovanni Hns
 Gender: Male
 Music: Hg Champion
 Double Battle: No
@@ -21045,7 +21045,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
 === TRAINER_PRU_E20_JASMINE_MASTER_HNS ===
 Name: JASMINE
-Class: Leader Jasmine Hns
+Class: Leader Hns
 Pic: Leader Jasmine Hns
 Gender: Female
 Music: Hg Champion
@@ -21079,7 +21079,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
 === TRAINER_PRU_E20_CLAIR_MASTER_HNS ===
 Name: CLAIR
-Class: Leader Clair Hns
+Class: Leader Hns
 Pic: Leader Clair Hns
 Gender: Female
 Music: Hg Champion
@@ -21215,8 +21215,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
 === TRAINER_PRU_E20_GIOVANNI_MASTER_HNS ===
 Name: GIOVANNI
-Class: Rocket Boss Hns
-Pic: Team Rocket Giovanni Hns
+Class: Rocket Admin Hns
+Pic: Giovanni Hns
 Gender: Male
 Music: Hg Champion
 Double Battle: No
