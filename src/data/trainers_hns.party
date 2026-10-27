@@ -20838,3 +20838,411 @@ Level: 40
 - Bite
 - Confuse Ray
 - Quick Attack
+
+=== TRAINER_PRU_E20_JASMINE_HNS ===
+Name: JASMINE
+Class: Leader Jasmine Hns
+Pic: Leader Jasmine Hns
+Gender: Female
+Music: Hg Champion
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Skarmory @ Sitrus Berry
+Level: 90
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brave Bird
+- Iron Head
+- Spikes
+- Roost
+
+Skarmadon @ Sitrus Berry
+Level: 91
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Gyro Ball
+- Play Rough
+- Rock Slide
+- Swords Dance
+
+Steelix @ Quick Claw
+Level: 92
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Heavy Slam
+- Earthquake
+- Head Smash
+- Curse
+
+=== TRAINER_PRU_E20_CLAIR_HNS ===
+Name: CLAIR
+Class: Leader Clair Hns
+Pic: Leader Clair Hns
+Gender: Female
+Music: Hg Champion
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Kingdra @ Scope Lens
+Level: 90
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Focus Energy
+- Dragon Pulse
+- Hydro Pump
+- Ice Beam
+
+Salamence @ Sitrus Berry
+Level: 91
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Dragon Dance
+- Dragon Rush
+- Iron Head
+- Flamethrower
+
+Dragonite @ Sitrus Berry
+Level: 92
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Extreme Speed
+- Dragon Pulse
+- Flamethrower
+- Protect
+
+=== TRAINER_PRU_E20_STEVEN_HNS ===
+Name: STEVEN
+Class: Pkmn Trainer 1 Hns
+Pic: Steven
+Gender: Male
+Music: Hg Champion
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Skarmory @ Sitrus Berry
+Level: 97
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brave Bird
+- Iron Head
+- Spikes
+- Roost
+
+Aggron @ Sitrus Berry
+Level: 98
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Head Smash
+- Heavy Slam
+- Earthquake
+- Rock Polish
+
+Metagross @ Sitrus Berry
+Level: 99
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Meteor Mash
+- Zen Headbutt
+- Earthquake
+- Bullet Punch
+
+=== TRAINER_PRU_E20_MAY_HNS ===
+Name: MAY
+Class: Pkmn Trainer 1 Hns
+Pic: May
+Gender: Female
+Music: Hg Champion
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Sceptitan @ Sitrus Berry
+Level: 97
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Leaf Blade
+- Dragon Claw
+- Earthquake
+- Swords Dance
+
+Swamplith @ Sitrus Berry
+Level: 98
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Liquidation
+- Earthquake
+- Ice Punch
+- Rock Slide
+
+Solaziken @ Sitrus Berry
+Level: 99
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Flamethrower
+- Fire Blast
+- Sunny Day
+- Protect
+
+=== TRAINER_PRU_E20_RIVAL_HNS ===
+Name: {B_RIVAL_NAME}
+Class: Rival Hns
+Pic: Silver Hns
+Gender: Male
+Music: Silver
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Crobat @ Sitrus Berry
+Level: 98
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brave Bird
+- Poison Fang
+- Roost
+- U-Turn
+
+Tyranitar @ Sitrus Berry
+Level: 99
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Crunch
+- Earthquake
+- Stone Edge
+- Fire Fang
+
+Typhlosion @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Eruption
+- Flamethrower
+- Focus Blast
+- Protect
+
+=== TRAINER_PRU_E20_GIOVANNI_HNS ===
+Name: GIOVANNI
+Class: Rocket Boss Hns
+Pic: Team Rocket Giovanni Hns
+Gender: Male
+Music: Hg Champion
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Nidoking @ Sitrus Berry
+Level: 98
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Earthquake
+- Poison Jab
+- Megahorn
+- Thunder Punch
+
+Donphalanx @ Sitrus Berry
+Level: 99
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Hammer Arm
+- Moonblast
+- Ancient Power
+- Rest
+
+Rhyperior @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Rock Wrecker
+- Earthquake
+- Megahorn
+- Protect
+
+=== TRAINER_PRU_E20_JASMINE_MASTER_HNS ===
+Name: JASMINE
+Class: Leader Jasmine Hns
+Pic: Leader Jasmine Hns
+Gender: Female
+Music: Hg Champion
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Skarmory @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brave Bird
+- Iron Head
+- Spikes
+- Roost
+
+Skarmadon @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Gyro Ball
+- Play Rough
+- Rock Slide
+- Swords Dance
+
+Steelix @ Quick Claw
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Heavy Slam
+- Earthquake
+- Head Smash
+- Curse
+
+=== TRAINER_PRU_E20_CLAIR_MASTER_HNS ===
+Name: CLAIR
+Class: Leader Clair Hns
+Pic: Leader Clair Hns
+Gender: Female
+Music: Hg Champion
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Kingdra @ Scope Lens
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Focus Energy
+- Dragon Pulse
+- Hydro Pump
+- Ice Beam
+
+Salamence @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Dragon Dance
+- Dragon Rush
+- Iron Head
+- Flamethrower
+
+Dragonite @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Extreme Speed
+- Dragon Pulse
+- Flamethrower
+- Protect
+
+=== TRAINER_PRU_E20_STEVEN_MASTER_HNS ===
+Name: STEVEN
+Class: Pkmn Trainer 1 Hns
+Pic: Steven
+Gender: Male
+Music: Hg Champion
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Skarmory @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brave Bird
+- Iron Head
+- Spikes
+- Roost
+
+Aggron @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Head Smash
+- Heavy Slam
+- Earthquake
+- Rock Polish
+
+Metagross @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Meteor Mash
+- Zen Headbutt
+- Earthquake
+- Bullet Punch
+
+=== TRAINER_PRU_E20_MAY_MASTER_HNS ===
+Name: MAY
+Class: Pkmn Trainer 1 Hns
+Pic: May
+Gender: Female
+Music: Hg Champion
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Sceptitan @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Leaf Blade
+- Dragon Claw
+- Earthquake
+- Swords Dance
+
+Swamplith @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Liquidation
+- Earthquake
+- Ice Punch
+- Rock Slide
+
+Solaziken @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Flamethrower
+- Fire Blast
+- Sunny Day
+- Protect
+
+=== TRAINER_PRU_E20_RIVAL_MASTER_HNS ===
+Name: {B_RIVAL_NAME}
+Class: Rival Hns
+Pic: Silver Hns
+Gender: Male
+Music: Silver
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Crobat @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brave Bird
+- Poison Fang
+- Roost
+- U-Turn
+
+Tyranitar @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Crunch
+- Earthquake
+- Stone Edge
+- Fire Fang
+
+Typhlosion @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Eruption
+- Flamethrower
+- Focus Blast
+- Protect
+
+=== TRAINER_PRU_E20_GIOVANNI_MASTER_HNS ===
+Name: GIOVANNI
+Class: Rocket Boss Hns
+Pic: Team Rocket Giovanni Hns
+Gender: Male
+Music: Hg Champion
+Double Battle: No
+AI: Smart Trainer / Prediction
+Items: Full Restore / Full Restore
+
+Nidoking @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Earthquake
+- Poison Jab
+- Megahorn
+- Thunder Punch
+
+Donphalanx @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Hammer Arm
+- Moonblast
+- Ancient Power
+- Rest
+
+Rhyperior @ Sitrus Berry
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Rock Wrecker
+- Earthquake
+- Megahorn
+- Protect

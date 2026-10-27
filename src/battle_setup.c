@@ -1164,6 +1164,12 @@ enum BattleTransition GetTrainerBattleTransition(void)
         if ((trainerId == TRAINER_PRU_E18_18_A_HNS && secondTrainerId == TRAINER_PRU_E18_18_B_HNS)
          || (trainerId == TRAINER_PRU_E18_18_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_18_B_MASTER_HNS))
             return B_TRANSITION_OAK_ELM;
+        if ((trainerId == TRAINER_PRU_E20_STEVEN_HNS && secondTrainerId == TRAINER_PRU_E20_MAY_HNS)
+         || (trainerId == TRAINER_PRU_E20_STEVEN_MASTER_HNS && secondTrainerId == TRAINER_PRU_E20_MAY_MASTER_HNS))
+            return B_TRANSITION_STEVEN_MAY;
+        if ((trainerId == TRAINER_PRU_E20_RIVAL_HNS && secondTrainerId == TRAINER_PRU_E20_GIOVANNI_HNS)
+         || (trainerId == TRAINER_PRU_E20_RIVAL_MASTER_HNS && secondTrainerId == TRAINER_PRU_E20_GIOVANNI_MASTER_HNS))
+            return B_TRANSITION_SILVER_GIOVANNI;
         bool8 redFirst = (trainerId == TRAINER_RED_HNS || trainerId == TRAINER_RED_POSTOBC_HNS);
         bool8 blueFirst = (trainerId == TRAINER_BLUE_HNS || trainerId == TRAINER_BLUE_2_HNS
                            || trainerId == TRAINER_BLUE_POSTOBC_HNS);

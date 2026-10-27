@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PRU's new Kanto League and Elite 18 save-safe source integration contract."""
+"""PRU's Kanto League, save-compatible Elite 20 and tutor integration contract."""
 from pathlib import Path
 import re
 
@@ -30,10 +30,28 @@ karen = read("data/maps/PokemonLeague_KarensRoom_hns/scripts.inc")
 champion = read("data/maps/PokemonLeague_ChampionsRoom_hns/scripts.inc")
 new_bark = read("data/maps/NewBarkTown_hns/scripts.inc")
 hof = read("data/maps/PokemonLeague_HallOfFame_hns/scripts.inc")
-names = ["BROCK_ROXANNE", "MISTY_WALLACE", "SURGE_WATTSON", "ERIKA_BUGSY", "JANINE_KOGA",
-         "SABRINA_WILL", "BLAINE_FLANNERY", "MAXIE_ARCHIE", "LORELEI_GLACIA", "BRUNO_CHUCK",
-         "AGATHA_PHOEBE", "KAREN_SIDNEY", "LANCE_DRAKE", "STEEVEE_NEEVEE", "JESSIE_JAMES",
-         "SILVER_MAY", "RED_BLUE", "OAK_ELM"]
+round_pairs = [
+    ("TRAINER_PRU_E18_01_A_HNS", "TRAINER_PRU_E18_01_B_HNS"),
+    ("TRAINER_PRU_E18_02_A_HNS", "TRAINER_PRU_E18_02_B_HNS"),
+    ("TRAINER_PRU_E18_03_A_HNS", "TRAINER_PRU_E18_03_B_HNS"),
+    ("TRAINER_PRU_E18_04_A_HNS", "TRAINER_PRU_E18_04_B_HNS"),
+    ("TRAINER_PRU_E18_05_A_HNS", "TRAINER_PRU_E18_05_B_HNS"),
+    ("TRAINER_PRU_E18_06_A_HNS", "TRAINER_PRU_E18_06_B_HNS"),
+    ("TRAINER_PRU_E18_07_A_HNS", "TRAINER_PRU_E18_07_B_HNS"),
+    ("TRAINER_PRU_E20_JASMINE_HNS", "TRAINER_PRU_E20_CLAIR_HNS"),
+    ("TRAINER_PRU_E18_09_A_HNS", "TRAINER_PRU_E18_09_B_HNS"),
+    ("TRAINER_PRU_E18_10_A_HNS", "TRAINER_PRU_E18_10_B_HNS"),
+    ("TRAINER_PRU_E18_11_A_HNS", "TRAINER_PRU_E18_11_B_HNS"),
+    ("TRAINER_PRU_E18_12_A_HNS", "TRAINER_PRU_E18_12_B_HNS"),
+    ("TRAINER_PRU_E18_13_A_HNS", "TRAINER_PRU_E18_13_B_HNS"),
+    ("TRAINER_PRU_E18_14_A_HNS", "TRAINER_PRU_E18_14_B_HNS"),
+    ("TRAINER_PRU_E18_15_A_HNS", "TRAINER_PRU_E18_15_B_HNS"),
+    ("TRAINER_PRU_E18_08_A_HNS", "TRAINER_PRU_E18_08_B_HNS"),
+    ("TRAINER_PRU_E20_STEVEN_HNS", "TRAINER_PRU_E20_MAY_HNS"),
+    ("TRAINER_PRU_E20_RIVAL_HNS", "TRAINER_PRU_E20_GIOVANNI_HNS"),
+    ("TRAINER_PRU_E18_17_A_HNS", "TRAINER_PRU_E18_17_B_HNS"),
+    ("TRAINER_PRU_E18_18_A_HNS", "TRAINER_PRU_E18_18_B_HNS"),
+]
 
 for league, room in zip(("LORELEI", "BRUNO", "AGATHA", "LANCE", "RED"),
                         (will, koga, bruno, karen, champion)):
@@ -45,14 +63,15 @@ for league, room in zip(("LORELEI", "BRUNO", "AGATHA", "LANCE", "RED"),
     assert re.search(r"Level: 9[0-5]\b", content), ident
     assert f"trainerbattle_no_intro {ident}" in room, f"{league} must fight in its League room"
 
-for i, name in enumerate(names, 1):
-    for suffix in ("A", "B"):
-        ident = f"TRAINER_PRU_E18_{i:02}_{suffix}_HNS"
+for i, pair in enumerate(round_pairs, 1):
+    for ident in pair:
         assert ident in ids
         content = block(party, ident)
         assert len(content.strip().split("\n\n")) == 4, (ident, "must have three Pokemon")
     assert f"PRU_Elite18_Round_{i:02}::" in center
-    assert f"trainerbattle_two_trainers TRAINER_PRU_E18_{i:02}_A_HNS" in center
+    round_script = center.split(f"PRU_Elite18_Round_{i:02}::", 1)[1].split("\n\n", 1)[0]
+    assert f"trainerbattle_two_trainers {pair[0]}" in round_script
+    assert pair[1] in round_script
 
 for flag in ("FLAG_PRU_KANTO_LEAGUE_CLEARED", "FLAG_PRU_ELITE18_CLEARED"):
     assert re.search(r"#define " + flag + r"\s+0x[0-9A-F]+", flags), flag
@@ -86,4 +105,4 @@ assert "SPECIES_TO_POKEDEX" not in choose.upper() or True
 
 ship = read("data/maps/SSAqua_1F_hns/map.json")
 assert '"script": "PRU_SSAnne_SteeveeNeevee"' in ship
-print("PASS: 5 single League fights, 18 paired Elite 18 doubles, unlocks, tutors, SS Anne")
+print("PASS: 5 single League fights, 20 paired Elite 20 doubles, unlocks, tutors, SS Anne")

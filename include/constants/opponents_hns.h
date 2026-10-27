@@ -816,7 +816,19 @@
 #define TRAINER_PRU_E18_18_A_MASTER_HNS               771
 #define TRAINER_PRU_E18_18_B_MASTER_HNS               772
 #define TRAINER_PRU_SS_AQUA_TWINS_HNS                  773
-#define TRAINERS_COUNT_HNS                       774
+#define TRAINER_PRU_E20_JASMINE_HNS                     774
+#define TRAINER_PRU_E20_CLAIR_HNS                       775
+#define TRAINER_PRU_E20_STEVEN_HNS                      776
+#define TRAINER_PRU_E20_MAY_HNS                         777
+#define TRAINER_PRU_E20_RIVAL_HNS                       778
+#define TRAINER_PRU_E20_GIOVANNI_HNS                    779
+#define TRAINER_PRU_E20_JASMINE_MASTER_HNS              780
+#define TRAINER_PRU_E20_CLAIR_MASTER_HNS                781
+#define TRAINER_PRU_E20_STEVEN_MASTER_HNS               782
+#define TRAINER_PRU_E20_MAY_MASTER_HNS                  783
+#define TRAINER_PRU_E20_RIVAL_MASTER_HNS                784
+#define TRAINER_PRU_E20_GIOVANNI_MASTER_HNS             785
+#define TRAINERS_COUNT_HNS                       786
 #define MAX_TRAINERS_COUNT_HNS                   864
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_HNS_H

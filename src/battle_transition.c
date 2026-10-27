@@ -94,6 +94,8 @@ static void Task_PRL_JessieJames(u8 taskId);
 static void Task_PRL_EeveeTwins(u8 taskId);
 static void Task_PRU_RedBlue(u8 taskId);
 static void Task_PRU_OakElm(u8 taskId);
+static void Task_PRU_StevenMay(u8 taskId);
+static void Task_PRU_SilverGiovanni(u8 taskId);
 static bool8 PRL_Emblem_Init(struct Task *task);
 static bool8 PRL_Emblem_SetGfx(struct Task *task);
 static bool8 Transition_StartIntro(struct Task *);
@@ -319,6 +321,12 @@ static const u16 sPRU_red_blue_Palette[] = INCBIN_U16("graphics/battle_transitio
 static const u32 sPRU_oak_elm_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/oak_elm.4bpp");
 static const u16 sPRU_oak_elm_Map[] = INCBIN_U16("graphics/battle_transitions/prl/oak_elm.bin");
 static const u16 sPRU_oak_elm_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/oak_elm.gbapal");
+static const u32 sPRU_steven_may_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/steven_may.4bpp");
+static const u16 sPRU_steven_may_Map[] = INCBIN_U16("graphics/battle_transitions/prl/steven_may.bin");
+static const u16 sPRU_steven_may_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/steven_may.gbapal");
+static const u32 sPRU_silver_giovanni_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/silver_giovanni.4bpp");
+static const u16 sPRU_silver_giovanni_Map[] = INCBIN_U16("graphics/battle_transitions/prl/silver_giovanni.bin");
+static const u16 sPRU_silver_giovanni_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/silver_giovanni.gbapal");
 static const u16 sEvilTeam_Palette[] = INCBIN_U16("graphics/battle_transitions/evil_team.gbapal");
 static const u32 sTeamAqua_Tileset[] = INCBIN_U32("graphics/battle_transitions/team_aqua.4bpp.smol");
 static const u32 sTeamAqua_Tilemap[] = INCBIN_U32("graphics/battle_transitions/team_aqua.bin.smolTM");
@@ -380,6 +388,8 @@ static const TaskFunc sTasks_Main[B_TRANSITION_COUNT] =
     [B_TRANSITION_EEVEE_TWINS] = Task_PRL_EeveeTwins,
     [B_TRANSITION_RED_BLUE] = Task_PRU_RedBlue,
     [B_TRANSITION_OAK_ELM] = Task_PRU_OakElm,
+    [B_TRANSITION_STEVEN_MAY] = Task_PRU_StevenMay,
+    [B_TRANSITION_SILVER_GIOVANNI] = Task_PRU_SilverGiovanni,
     [B_TRANSITION_AQUA] = Task_Aqua,
     [B_TRANSITION_MAGMA] = Task_Magma,
     [B_TRANSITION_REGICE] = Task_Regice,
@@ -1383,6 +1393,16 @@ static void Task_PRU_OakElm(u8 taskId)
     while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
+static void Task_PRU_StevenMay(u8 taskId)
+{
+    while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId]));
+}
+
+static void Task_PRU_SilverGiovanni(u8 taskId)
+{
+    while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId]));
+}
+
 static void Task_Aqua(u8 taskId)
 {
     while (sAqua_Funcs[gTasks[taskId].tState](&gTasks[taskId]));
@@ -1461,10 +1481,20 @@ static bool8 PRL_Emblem_Init(struct Task *task)
         CpuCopy16(sPRU_red_blue_Tiles, tileset, sizeof(sPRU_red_blue_Tiles));
         LoadPalette(sPRU_red_blue_Palette, BG_PLTT_ID(13), sizeof(sPRU_red_blue_Palette));
     }
-    else // Task_PRU_OakElm
+    else if (task->func == Task_PRU_OakElm)
     {
         CpuCopy16(sPRU_oak_elm_Tiles, tileset, sizeof(sPRU_oak_elm_Tiles));
         LoadPalette(sPRU_oak_elm_Palette, BG_PLTT_ID(13), sizeof(sPRU_oak_elm_Palette));
+    }
+    else if (task->func == Task_PRU_StevenMay)
+    {
+        CpuCopy16(sPRU_steven_may_Tiles, tileset, sizeof(sPRU_steven_may_Tiles));
+        LoadPalette(sPRU_steven_may_Palette, BG_PLTT_ID(13), sizeof(sPRU_steven_may_Palette));
+    }
+    else // Task_PRU_SilverGiovanni
+    {
+        CpuCopy16(sPRU_silver_giovanni_Tiles, tileset, sizeof(sPRU_silver_giovanni_Tiles));
+        LoadPalette(sPRU_silver_giovanni_Palette, BG_PLTT_ID(13), sizeof(sPRU_silver_giovanni_Palette));
     }
     task->tState++;
     return FALSE;
@@ -1481,8 +1511,12 @@ static bool8 PRL_Emblem_SetGfx(struct Task *task)
         CpuCopy16(sPRL_eevee_twins_Map, tilemap, sizeof(sPRL_eevee_twins_Map));
     else if (task->func == Task_PRU_RedBlue)
         CpuCopy16(sPRU_red_blue_Map, tilemap, sizeof(sPRU_red_blue_Map));
-    else // Task_PRU_OakElm
+    else if (task->func == Task_PRU_OakElm)
         CpuCopy16(sPRU_oak_elm_Map, tilemap, sizeof(sPRU_oak_elm_Map));
+    else if (task->func == Task_PRU_StevenMay)
+        CpuCopy16(sPRU_steven_may_Map, tilemap, sizeof(sPRU_steven_may_Map));
+    else // Task_PRU_SilverGiovanni
+        CpuCopy16(sPRU_silver_giovanni_Map, tilemap, sizeof(sPRU_silver_giovanni_Map));
     SetSinWave((s16 *)gScanlineEffectRegBuffers[0], 0, task->tSinIndex, 132, task->tAmplitude, DISPLAY_HEIGHT);
     task->tState++;
     return FALSE;
