@@ -91,7 +91,8 @@ assert "Steelix" in party_block("TRAINER_PRU_E20_JASMINE_HNS")
 assert "Kingdra" in party_block("TRAINER_PRU_E20_CLAIR_HNS")
 assert "Metagross" in party_block("TRAINER_PRU_E20_STEVEN_HNS")
 assert "Name: {B_RIVAL_NAME}" in party_block("TRAINER_PRU_E20_RIVAL_HNS")
-assert "Rhyperior" in party_block("TRAINER_PRU_E20_GIOVANNI_HNS")
+assert "Rhydon" in party_block("TRAINER_PRU_E20_GIOVANNI_HNS")
+assert "Rhyperior" not in party_block("TRAINER_PRU_E20_GIOVANNI_HNS")
 assert "Mewtwo" not in party_block("TRAINER_PRU_E20_GIOVANNI_HNS")
 
 assert "sPruElite20RhythmScenes[20]" in backgrounds
