@@ -106,6 +106,21 @@ static u16 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive
         if (gObjectEvents[objectEventId].graphicsId == expectedGfx)
             result |= 8;
     }
+    else if (kantoActive)
+    {
+        // Diagnostic fallback: verify the exact same actor sprite can spawn
+        // when the template uses its resolved static graphics ID.
+        template->graphicsId = expectedGfx;
+        objectEventId = TrySpawnObjectEventTemplate(template, MAP_NUM(mapId), MAP_GROUP(mapId), 0, 0);
+        if (objectEventId != OBJECT_EVENTS_COUNT && gObjectEvents[objectEventId].active)
+        {
+            if (gObjectEvents[objectEventId].graphicsId == expectedGfx)
+                result |= 512;
+            RemoveObjectEvent(&gObjectEvents[objectEventId]);
+        }
+        objectEventId = OBJECT_EVENTS_COUNT;
+        template->graphicsId = OBJ_EVENT_GFX_VAR_0;
+    }
 
     if (objectEventId != OBJECT_EVENTS_COUNT)
         RemoveObjectEvent(&gObjectEvents[objectEventId]);
