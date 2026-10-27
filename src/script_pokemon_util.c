@@ -210,6 +210,23 @@ void CreateShinyScriptedMon(u16 species, u8 level, enum Item item)
 
     CreateMonWithIVs(&gEnemyParty[0], species, level, shinyPersonality, OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
     GiveMonInitialMoveset(&gEnemyParty[0]);
+
+    // The two PRU Primal encounters keep their agreed signature attacks
+    // after capture; ordinary shiny scripted encounters remain untouched.
+    if (IS_HNS && species == SPECIES_GROUDON && item == ITEM_RED_ORB)
+    {
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_HONE_CLAWS, 0);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_PRECIPICE_BLADES, 1);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_FIRE_PUNCH, 2);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_CLAW, 3);
+    }
+    else if (IS_HNS && species == SPECIES_KYOGRE && item == ITEM_BLUE_ORB)
+    {
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_WATER_SPOUT, 0);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_ORIGIN_PULSE, 1);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_THUNDER, 2);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_ICE_BEAM, 3);
+    }
     if (item)
     {
         heldItem[0] = item;

@@ -67,6 +67,20 @@
       "flag": "FLAG_HIDE_SILVER_NEWBARKTOWN"
     },
     {
+      "local_id": "LOCALID_PRU_RELIC_ELM",
+      "graphics_id": "OBJ_EVENT_GFX_ELM_HNS",
+      "x": 20,
+      "y": 15,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NewBarkTown_EventScript_RelicCandyElm",
+      "flag": "FLAG_PRU_HIDE_ELM_RELIC_CANDY"
+    },
+    {
       "graphics_id": "OBJ_EVENT_GFX_MON_BASE+SPECIES_WOOPER",
       "x": 10,
       "y": 23,
