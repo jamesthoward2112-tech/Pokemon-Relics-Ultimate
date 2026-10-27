@@ -1445,15 +1445,79 @@ static void SpriteCB_CreditsMonBg(struct Sprite *sprite)
     sprite->y = gSprites[sprite->sMonSpriteId].y;
 }
 
+// Explicitly curated from PRU's current roster. Never iterate through the
+// legacy PJR ID range: retired slots still exist for save compatibility.
+static const u16 sPruCreditsSpecies[] =
+{
+    SPECIES_EDENSAUR,
+    SPECIES_CHARAXIS,
+    SPECIES_FORTOTOISE,
+    SPECIES_ADNOKANA,
+    SPECIES_NOXICHU,
+    SPECIES_GHOULBAT,
+    SPECIES_ANNIHILAPE,
+    SPECIES_OSTEODIAN,
+    SPECIES_MAROGHOST,
+    SPECIES_CHEAUKING,
+    SPECIES_FRYTNING,
+    SPECIES_KHANG,
+    SPECIES_MYSTYNX,
+    SPECIES_PINSIREX,
+    SPECIES_EEVEEON,
+    SPECIES_NIMBEON,
+    SPECIES_CHAMPEON,
+    SPECIES_LEPIDEON,
+    SPECIES_SPHYNXEON,
+    SPECIES_GUARDEON,
+    SPECIES_OBSIDEON,
+    SPECIES_TOXEON,
+    SPECIES_OMEON,
+    SPECIES_DRAKEON,
+    SPECIES_NOLAX,
+    SPECIES_FAERANIUM,
+    SPECIES_PYROCLAST,
+    SPECIES_FERALODON,
+    SPECIES_GRIMFOWL,
+    SPECIES_SUNFLORID,
+    SPECIES_CLODSIRE,
+    SPECIES_KABLOWFISH,
+    SPECIES_SHUCKOLOSSE,
+    SPECIES_SCARABUB,
+    SPECIES_HERACURION,
+    SPECIES_JOLLIBIRD,
+    SPECIES_SKARMET,
+    SPECIES_SKARMADON,
+    SPECIES_DONPHALANX,
+    SPECIES_MOOTINY,
+    SPECIES_MILTITAN,
+    SPECIES_SCEPTITAN,
+    SPECIES_SOLAZIKEN,
+    SPECIES_SWAMPLITH,
+    SPECIES_SKULBERUS,
+    SPECIES_VALKYVOIR,
+    SPECIES_GEMLIN,
+    SPECIES_GEMIGOYLE,
+    SPECIES_MAWYRM,
+    SPECIES_TORKALDERA,
+    SPECIES_CACTOMB,
+    SPECIES_TROPISAUR,
+    SPECIES_MEWSION,
+    SPECIES_ALPHORACLE,
+    SPECIES_COELOSSUS,
+    SPECIES_ASTRACHI,
+    SPECIES_GLACEON,
+    SPECIES_LEAFEON,
+    SPECIES_MIMIKYU_DISGUISED,
+};
+
 static void DeterminePokemonToShow(void)
 {
     u16 i;
-    const u16 customSpeciesCount = SPECIES_DRAGONITE_RELIC - SPECIES_SCARABUB + 1;
 
-    // PJR credits are a showcase for the Relic-series custom roster.
-    // Keep species IDs directly so forms sharing a National Dex number do not collapse to vanilla graphics.
+    // Keep species IDs directly so forms sharing a National Dex number do not
+    // collapse to vanilla graphics.
     for (i = 0; i < NUM_MON_SLIDES; i++)
-        sCreditsData->monToShow[i] = SPECIES_SCARABUB + (i % customSpeciesCount);
+        sCreditsData->monToShow[i] = sPruCreditsSpecies[i % ARRAY_COUNT(sPruCreditsSpecies)];
 
     sCreditsData->numCaughtMon = 0;
     sCreditsData->numMonToShow = NUM_MON_SLIDES;

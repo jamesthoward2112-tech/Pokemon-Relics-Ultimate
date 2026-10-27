@@ -4261,6 +4261,10 @@ static const struct SpriteFrameImage sPicTable_PruShinyPrimalGroudon_hns[] = {
     overworld_frame(gObjectEventPic_PruShinyPrimalGroudon_hns, 8, 8, 4),
     overworld_frame(gObjectEventPic_PruShinyPrimalGroudon_hns, 8, 8, 5),
 };
+static const struct SpriteFrameImage sPicTable_PruByoxys_hns[] = {
+    overworld_frame(gObjectEventPic_PruByoxys_hns, 4, 4, 0),
+    overworld_frame(gObjectEventPic_PruByoxys_hns, 4, 4, 1),
+};
 
 static const struct SpriteFrameImage sPicTable_Bill_hns[] = {
     overworld_frame(gObjectEventPic_Bill_hns, 2, 4, 0),
