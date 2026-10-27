@@ -182,13 +182,13 @@ def patch_title():
     path = "src/title_screen.c"
     # Preserve the separately animated sprite for PRESS START.
     replace_exact(path,
-        "        LoadPjrTitlePaletteBrightened();",
-        "        LoadPalette(sPjrTitlePalette, BG_PLTT_ID(0), sizeof(sPjrTitlePalette));")
+        "        LoadPruTitlePaletteBrightened();",
+        "        LoadPalette(sPruTitlePalette, BG_PLTT_ID(0), sizeof(sPruTitlePalette));")
     replace_exact(path,
         "        CreatePressStartBanner(START_BANNER_X, 138);\n"
-        "        CreateTask(Task_PjrTitleScreenInput, 0);",
+        "        CreateTask(Task_PruTitleScreenInput, 0);",
         "        CreatePressStartBanner(START_BANNER_X, 138);\n"
-        "        CreateTask(Task_PjrTitleScreenInput, 0);")
+        "        CreateTask(Task_PruTitleScreenInput, 0);")
     # The above equality no-op intentionally checks the native blinking
     # PRESS START path is preserved. Begin black -> normal palette fade.
     replace_exact(path,
@@ -199,7 +199,7 @@ def patch_title():
         "    }\n"
         "}\n"
         "\n"
-        "static void Task_PjrTitleScreenInput",
+        "static void Task_PruTitleScreenInput",
         "        SetVBlankCallback(VBlankCB);\n"
         "        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);\n"
         "        SetMainCallback2(MainCB2);\n"
@@ -208,7 +208,7 @@ def patch_title():
         "    }\n"
         "}\n"
         "\n"
-        "static void Task_PjrTitleScreenInput")
+        "static void Task_PruTitleScreenInput")
     print("TITLE_FLOW_PASS Last Wish black fade -> approved art with flashing sprite")
 
 def main():
