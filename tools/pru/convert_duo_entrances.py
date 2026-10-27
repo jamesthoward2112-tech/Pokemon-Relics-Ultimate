@@ -35,10 +35,16 @@ def reconstruct_preview(asset):
                     px[tx * 8 + x, ty * 8 + y] = palette[index]
     return im
 
-def convert_image(source):
+def convert_image(source, preserve_aspect=False):
     # A one-tile black border reduces 600 visible screen tiles to 504 unique
     # art tiles plus a border tile, fitting the native 512-tile/16 KB bank.
-    art = source.convert('RGB').resize((224, 144), Image.Resampling.LANCZOS)
+    if preserve_aspect:
+        wide_art = source.convert('RGB')
+        wide_art.thumbnail((224, 144), Image.Resampling.LANCZOS)
+        art = Image.new('RGB', (224, 144), (0, 0, 0))
+        art.paste(wide_art, ((224 - wide_art.width) // 2, (144 - wide_art.height) // 2))
+    else:
+        art = source.convert('RGB').resize((224, 144), Image.Resampling.LANCZOS)
     quant = art.quantize(colors=15, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
     raw = quant.getpalette()
     colors = [tuple(raw[i:i + 3]) for i in range(0, min(45, len(raw)), 3)]

@@ -17,5 +17,16 @@ class DuoEntranceTests(unittest.TestCase):
         self.assertTrue(all((entry >> 12) == 13 and (entry & 1023) < 512
                             for entry in struct.unpack("<1024H", result.tilemap)))
 
+    def test_extra_wide_banner_preserves_aspect_with_letterbox(self):
+        banner = Image.new("RGB", (1500, 500), (240, 55, 30))
+        result = convert_image(banner, preserve_aspect=True)
+        # Native widescreen art must not be squashed to 224x144. Its original
+        # 3:1 composition fits as a centered banner inside the GBA window.
+        self.assertEqual(result.preview.size, (240, 160))
+        self.assertEqual(result.preview.getpixel((120, 20)), (0, 0, 0))
+        self.assertNotEqual(result.preview.getpixel((120, 80)), (0, 0, 0))
+        self.assertEqual(len(result.tiles), 16384)
+        self.assertLessEqual(result.tile_count, 512)
+
 if __name__ == "__main__":
     unittest.main()
