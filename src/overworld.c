@@ -644,8 +644,38 @@ const struct MapLayout *GetMapLayout(u16 mapLayoutId)
     return gMapLayouts[mapLayoutId - 1];
 }
 
+// Choose Kanto's native room BEFORE loading its map. The old in-transition
+// script warp was asynchronous and caused a black screen on Pizza Boy.
+static bool32 PruShouldUseKantoLeagueRooms(void)
+{
+    return IS_HNS
+        && FlagGet(FLAG_IS_CHAMPION)
+        && FlagGet(FLAG_BADGE16_GET)
+        && FlagGet(FLAG_PRU_HEIST_COMPLETED)
+        && FlagGet(FLAG_PRU_HEIST_GIOVANNI)
+        && !FlagGet(FLAG_PRU_KANTO_LEAGUE_CLEARED);
+}
+
 void ApplyCurrentWarp(void)
 {
+    if (sWarpDestination.mapGroup == MAP_GROUP(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS)
+        && sWarpDestination.mapNum == MAP_NUM(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS)
+        && PruShouldUseKantoLeagueRooms())
+    {
+        // Will and Lorelei share entry warp 0 at (6, 12).
+        sWarpDestination.mapGroup = MAP_GROUP(MAP_POKEMON_LEAGUE_LORELEIS_ROOM);
+        sWarpDestination.mapNum = MAP_NUM(MAP_POKEMON_LEAGUE_LORELEIS_ROOM);
+        sWarpDestination.warpId = 0;
+        sWarpDestination.x = -1;
+        sWarpDestination.y = -1;
+        FlagClear(FLAG_DEFEATED_LORELEI);
+        FlagClear(FLAG_DEFEATED_BRUNO);
+        FlagClear(FLAG_DEFEATED_AGATHA);
+        FlagClear(FLAG_DEFEATED_LANCE);
+        FlagClear(FLAG_DEFEATED_CHAMP);
+        VarSet(VAR_MAP_SCENE_POKEMON_LEAGUE, 0);
+    }
+
     gLastUsedWarp = gSaveBlock1Ptr->location;
     gSaveBlock1Ptr->location = sWarpDestination;
     sFixedDiveWarp = sDummyWarpData;

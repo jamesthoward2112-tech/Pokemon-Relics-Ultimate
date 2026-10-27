@@ -1,28 +1,11 @@
 PokemonLeague_WillsRoom_hns_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, PRU_LeagueRoom_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, EliteFourRoom_OnFrame
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_WillsRoom_OnResume
 	map_script MAP_SCRIPT_ON_LOAD, EliteFourRoom_OnLoad
 	.byte 0
 
-@ The second championship uses FireRed's purpose-built Kanto rooms. This
-@ redirects before the Johto room is drawn, leaving its original actor and
-@ layout completely untouched for the first championship.
-PRU_LeagueRoom_OnTransition::
-	call PRU_KantoE4_CheckActive
-	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_EnterVisualRooms
-	end
-
-PRU_KantoE4_EnterVisualRooms::
-	clearflag FLAG_DEFEATED_LORELEI
-	clearflag FLAG_DEFEATED_BRUNO
-	clearflag FLAG_DEFEATED_AGATHA
-	clearflag FLAG_DEFEATED_LANCE
-	clearflag FLAG_DEFEATED_CHAMP
-	setvar VAR_MAP_SCENE_POKEMON_LEAGUE, 0
-	warpsilent MAP_POKEMON_LEAGUE_LORELEIS_ROOM, 0
-	waitstate
-	end
+@ The second League now selects its Kanto map in ApplyCurrentWarp.
+@ Johto's original room, object and battles remain untouched.
 
 @ A single visible actor per room avoids two co-located hidden events
 @ fighting over save flags at map entry. Both its sprite and battle use

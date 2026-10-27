@@ -10,6 +10,7 @@
 #include "sprite.h"
 #include "test/test.h"
 #include "constants/event_objects.h"
+#include "constants/layouts.h"
 #include "constants/vars.h"
 
 TEST("PRU tutor compatibility reaches move teaching without broad unlocks")
@@ -198,4 +199,79 @@ TEST("Kanto Elite Four actors spawn visibly in the five existing rooms")
     EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_BRUNOS_ROOM_HNS, OBJ_EVENT_GFX_BRUNO_HNS, FALSE), 4095);
     EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_KARENS_ROOM_HNS, OBJ_EVENT_GFX_KAREN_HNS, FALSE), 4095);
     EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM_HNS, OBJ_EVENT_GFX_LANCE_HNS, FALSE), 4095);
+}
+
+TEST("PRU Kanto Elite Four uses native five themed rooms and trainer sprites")
+{
+    static const u16 maps[] = {
+        MAP_POKEMON_LEAGUE_LORELEIS_ROOM, MAP_POKEMON_LEAGUE_BRUNOS_ROOM,
+        MAP_POKEMON_LEAGUE_AGATHAS_ROOM, MAP_POKEMON_LEAGUE_LANCES_ROOM,
+        MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM,
+    };
+    static const u16 layouts[] = {
+        LAYOUT_POKEMON_LEAGUE_LORELEIS_ROOM, LAYOUT_POKEMON_LEAGUE_BRUNOS_ROOM,
+        LAYOUT_POKEMON_LEAGUE_AGATHAS_ROOM, LAYOUT_POKEMON_LEAGUE_LANCES_ROOM,
+        LAYOUT_POKEMON_LEAGUE_CHAMPIONS_ROOM,
+    };
+    static const u16 graphics[] = {
+        OBJ_EVENT_GFX_LORELEI, OBJ_EVENT_GFX_BRUNO, OBJ_EVENT_GFX_AGATHA,
+        OBJ_EVENT_GFX_LANCE, OBJ_EVENT_GFX_RED,
+    };
+    struct WarpData savedLocation = gSaveBlock1Ptr->location;
+    struct WarpData savedLastWarp = gLastUsedWarp;
+    bool32 wasChampion = FlagGet(FLAG_IS_CHAMPION);
+    bool32 hadBadges = FlagGet(FLAG_BADGE16_GET);
+    bool32 hadHeist = FlagGet(FLAG_PRU_HEIST_COMPLETED);
+    bool32 hadGiovanni = FlagGet(FLAG_PRU_HEIST_GIOVANNI);
+    bool32 hadClear = FlagGet(FLAG_PRU_KANTO_LEAGUE_CLEARED);
+    bool32 defeatedLorelei = FlagGet(FLAG_DEFEATED_LORELEI);
+    bool32 defeatedBruno = FlagGet(FLAG_DEFEATED_BRUNO);
+    bool32 defeatedAgatha = FlagGet(FLAG_DEFEATED_AGATHA);
+    bool32 defeatedLance = FlagGet(FLAG_DEFEATED_LANCE);
+    bool32 defeatedChamp = FlagGet(FLAG_DEFEATED_CHAMP);
+    u16 oldScene = VarGet(VAR_MAP_SCENE_POKEMON_LEAGUE);
+    u32 i;
+
+    for (i = 0; i < ARRAY_COUNT(maps); i++)
+    {
+        const struct MapHeader *header =
+            Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(maps[i]), MAP_NUM(maps[i]));
+        EXPECT_EQ(header->mapLayoutId, layouts[i]);
+        EXPECT_EQ(header->events->objectEvents[0].graphicsId, graphics[i]);
+    }
+
+    FlagSet(FLAG_IS_CHAMPION);
+    FlagSet(FLAG_BADGE16_GET);
+    FlagSet(FLAG_PRU_HEIST_COMPLETED);
+    FlagSet(FLAG_PRU_HEIST_GIOVANNI);
+    FlagClear(FLAG_PRU_KANTO_LEAGUE_CLEARED);
+    SetWarpDestinationToMapWarp(MAP_GROUP(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS),
+                                MAP_NUM(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS), 0);
+    ApplyCurrentWarp();
+    EXPECT_EQ(gSaveBlock1Ptr->location.mapGroup, MAP_GROUP(MAP_POKEMON_LEAGUE_LORELEIS_ROOM));
+    EXPECT_EQ(gSaveBlock1Ptr->location.mapNum, MAP_NUM(MAP_POKEMON_LEAGUE_LORELEIS_ROOM));
+    EXPECT_EQ(gSaveBlock1Ptr->location.warpId, 0);
+    EXPECT_EQ(VarGet(VAR_MAP_SCENE_POKEMON_LEAGUE), 0);
+
+    // Without Kanto qualification the same door still goes to Will.
+    FlagClear(FLAG_BADGE16_GET);
+    SetWarpDestinationToMapWarp(MAP_GROUP(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS),
+                                MAP_NUM(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS), 0);
+    ApplyCurrentWarp();
+    EXPECT_EQ(gSaveBlock1Ptr->location.mapGroup, MAP_GROUP(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS));
+    EXPECT_EQ(gSaveBlock1Ptr->location.mapNum, MAP_NUM(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS));
+
+    gSaveBlock1Ptr->location = savedLocation;
+    gLastUsedWarp = savedLastWarp;
+    VarSet(VAR_MAP_SCENE_POKEMON_LEAGUE, oldScene);
+    if (wasChampion) FlagSet(FLAG_IS_CHAMPION); else FlagClear(FLAG_IS_CHAMPION);
+    if (hadBadges) FlagSet(FLAG_BADGE16_GET); else FlagClear(FLAG_BADGE16_GET);
+    if (hadHeist) FlagSet(FLAG_PRU_HEIST_COMPLETED); else FlagClear(FLAG_PRU_HEIST_COMPLETED);
+    if (hadGiovanni) FlagSet(FLAG_PRU_HEIST_GIOVANNI); else FlagClear(FLAG_PRU_HEIST_GIOVANNI);
+    if (hadClear) FlagSet(FLAG_PRU_KANTO_LEAGUE_CLEARED); else FlagClear(FLAG_PRU_KANTO_LEAGUE_CLEARED);
+    if (defeatedLorelei) FlagSet(FLAG_DEFEATED_LORELEI); else FlagClear(FLAG_DEFEATED_LORELEI);
+    if (defeatedBruno) FlagSet(FLAG_DEFEATED_BRUNO); else FlagClear(FLAG_DEFEATED_BRUNO);
+    if (defeatedAgatha) FlagSet(FLAG_DEFEATED_AGATHA); else FlagClear(FLAG_DEFEATED_AGATHA);
+    if (defeatedLance) FlagSet(FLAG_DEFEATED_LANCE); else FlagClear(FLAG_DEFEATED_LANCE);
+    if (defeatedChamp) FlagSet(FLAG_DEFEATED_CHAMP); else FlagClear(FLAG_DEFEATED_CHAMP);
 }
