@@ -213,6 +213,10 @@ jobs:
           sha256sum pokehns.gba | tee pru-rom.sha256
       - name: Boot the finished ROM in mGBA and capture title-screen evidence
         timeout-minutes: 3
+        # James requested a directly downloadable player-test ROM even if
+        # this headless screenshot-only check cannot be made reliable yet.
+        # Keep the hard gate intact for every other PRU release branch.
+        continue-on-error: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -310,7 +314,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Direct GBA built from PRU commit $GITHUB_SHA. The canonical gate covered the 20-round Saffron Dojo challenge, all Rhythm assignments, Kanto League rooms and actors, Oak's Hall of Fame path, the current credits roster, Relic Candy, the Indigo support row, tutor compatibility, emulator engine tests, a clean 32 MiB build, and a full-ROM mGBA boot capture." \
+              --notes "Direct GBA player-test build from PRU commit $GITHUB_SHA. Source checks, targeted GBA engine tutor/E4 tests and 32 MiB compiled binary validation passed. The headless mGBA title-screen capture is non-blocking for this isolated test branch; manual boot and gameplay verification are still needed. Target Dex remains 450 species, with the remaining unstaged entries not modified by this tutor repair." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
