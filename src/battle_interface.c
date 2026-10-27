@@ -582,34 +582,35 @@ static const u16 sStatusIconColors[] =
     [PAL_STATUS_BLD] = RGB(28, 5, 7), // PRU dark crimson
 };
 
-// PRU/HNS: readable crimson BLD indicator for all four battle healthboxes.
-// Three 8x8 4bpp tiles per battler, with the same per-battler palette slots
-// (12..15) used by the engine's ordinary poison/burn/paralysis indicators.
+// PRU/HNS: readable crimson BLD indicator on an OPAQUE black rectangle.
+// Palette index 0 is transparent in OBJ sprites even when RGB(0,0,0), so
+// every background pixel in these three 8x8 tiles must use index 1 instead.
+// Foreground indexes 12..15 select the appropriate battler's crimson ink.
 static const u32 sPruBleedingStatusGfx[4][24] =
 {
     {
-        0x000cccc0, 0x00c000c0, 0x00c000c0, 0x000cccc0, 0x00c000c0, 0x00c000c0,
-0x000cccc0, 0x00000000, 0xc000000c, 0xc000000c, 0xc000000c, 0xc000000c,
-0xc000000c, 0xc000000c, 0xc00ccccc, 0x00000000, 0x00000ccc, 0x0000c000,
-0x0000c000, 0x0000c000, 0x0000c000, 0x0000c000, 0x00000ccc, 0x00000000
+        0x111cccc1, 0x11c111c1, 0x11c111c1, 0x111cccc1, 0x11c111c1, 0x11c111c1,
+        0x111cccc1, 0x11111111, 0xc111111c, 0xc111111c, 0xc111111c, 0xc111111c,
+        0xc111111c, 0xc111111c, 0xc11ccccc, 0x11111111, 0x11111ccc, 0x1111c111,
+        0x1111c111, 0x1111c111, 0x1111c111, 0x1111c111, 0x11111ccc, 0x11111111
     },
     {
-        0x000dddd0, 0x00d000d0, 0x00d000d0, 0x000dddd0, 0x00d000d0, 0x00d000d0,
-0x000dddd0, 0x00000000, 0xd000000d, 0xd000000d, 0xd000000d, 0xd000000d,
-0xd000000d, 0xd000000d, 0xd00ddddd, 0x00000000, 0x00000ddd, 0x0000d000,
-0x0000d000, 0x0000d000, 0x0000d000, 0x0000d000, 0x00000ddd, 0x00000000
+        0x111dddd1, 0x11d111d1, 0x11d111d1, 0x111dddd1, 0x11d111d1, 0x11d111d1,
+        0x111dddd1, 0x11111111, 0xd111111d, 0xd111111d, 0xd111111d, 0xd111111d,
+        0xd111111d, 0xd111111d, 0xd11ddddd, 0x11111111, 0x11111ddd, 0x1111d111,
+        0x1111d111, 0x1111d111, 0x1111d111, 0x1111d111, 0x11111ddd, 0x11111111
     },
     {
-        0x000eeee0, 0x00e000e0, 0x00e000e0, 0x000eeee0, 0x00e000e0, 0x00e000e0,
-0x000eeee0, 0x00000000, 0xe000000e, 0xe000000e, 0xe000000e, 0xe000000e,
-0xe000000e, 0xe000000e, 0xe00eeeee, 0x00000000, 0x00000eee, 0x0000e000,
-0x0000e000, 0x0000e000, 0x0000e000, 0x0000e000, 0x00000eee, 0x00000000
+        0x111eeee1, 0x11e111e1, 0x11e111e1, 0x111eeee1, 0x11e111e1, 0x11e111e1,
+        0x111eeee1, 0x11111111, 0xe111111e, 0xe111111e, 0xe111111e, 0xe111111e,
+        0xe111111e, 0xe111111e, 0xe11eeeee, 0x11111111, 0x11111eee, 0x1111e111,
+        0x1111e111, 0x1111e111, 0x1111e111, 0x1111e111, 0x11111eee, 0x11111111
     },
     {
-        0x000ffff0, 0x00f000f0, 0x00f000f0, 0x000ffff0, 0x00f000f0, 0x00f000f0,
-0x000ffff0, 0x00000000, 0xf000000f, 0xf000000f, 0xf000000f, 0xf000000f,
-0xf000000f, 0xf000000f, 0xf00fffff, 0x00000000, 0x00000fff, 0x0000f000,
-0x0000f000, 0x0000f000, 0x0000f000, 0x0000f000, 0x00000fff, 0x00000000
+        0x111ffff1, 0x11f111f1, 0x11f111f1, 0x111ffff1, 0x11f111f1, 0x11f111f1,
+        0x111ffff1, 0x11111111, 0xf111111f, 0xf111111f, 0xf111111f, 0xf111111f,
+        0xf111111f, 0xf111111f, 0xf11fffff, 0x11111111, 0x11111fff, 0x1111f111,
+        0x1111f111, 0x1111f111, 0x1111f111, 0x1111f111, 0x11111fff, 0x11111111
     }
 };
 
@@ -2024,6 +2025,14 @@ static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
     }
 
     pltAdder = PLTT_ID(gSprites[healthboxSpriteId].oam.paletteNum);
+    if (IS_HNS && (status & STATUS1_BLEED))
+    {
+        // Index 1 is normally charcoal. Set it to genuine black so the
+        // opaque BLD background does not inherit grey from the healthbox.
+        FillPalette(RGB_BLACK, OBJ_PLTT_OFFSET + pltAdder + 1, PLTT_SIZEOF(1));
+        CpuCopy16(&gPlttBufferUnfaded[OBJ_PLTT_OFFSET + pltAdder + 1],
+                  (u16 *)OBJ_PLTT + pltAdder + 1, PLTT_SIZEOF(1));
+    }
     pltAdder += battler + 12;
 
     FillPalette(sStatusIconColors[statusPalId], OBJ_PLTT_OFFSET + pltAdder, PLTT_SIZEOF(1));

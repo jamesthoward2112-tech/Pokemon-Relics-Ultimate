@@ -120,3 +120,7 @@ const u8 gMonIcon_Mewsion[] = INCBIN_U8("graphics/pokemon/mewsion/icon.4bpp");
 const u32 gObjectEventPic_Astrachi[] = INCBIN_COMP("graphics/pokemon/astrachi/overworld.4bpp");
 const u16 gOverworldPalette_Astrachi[] = INCBIN_U16("graphics/pokemon/astrachi/overworld_normal.gbapal");
 const u16 gShinyOverworldPalette_Astrachi[] = INCBIN_U16("graphics/pokemon/astrachi/overworld_shiny.gbapal");
+// Birth Island's approved AlteRed BYOXYS replaces normal Deoxys artwork in PRU.
+const u32 gMonFrontPic_PruByoxys[] = INCBIN_U32("graphics/pokemon/deoxys/byoxys_anim_front_gba.4bpp.smol");
+const u32 gMonBackPic_PruByoxys[] = INCBIN_U32("graphics/pokemon/deoxys/byoxys_back_gba.4bpp.smol");
+const u16 gMonPalette_PruByoxys[] = INCBIN_U16("graphics/pokemon/deoxys/byoxys_normal.gbapal");

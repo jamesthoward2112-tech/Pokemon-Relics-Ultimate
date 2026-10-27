@@ -44,6 +44,7 @@ PokemonLeague_ChampionsRoom_OnFrame::
 	.2byte 0
 
 PokemonLeague_ChampionsRoom_EventScript_EnterRoom::
+	goto_if_set FLAG_PRU_HEIST_GIOVANNI, PRU_KantoChampionRoom_EventScript_Enter
 	lockall
 	textcolor NPC_TEXT_COLOR_MALE
 	setflag FLAG_TEMP_2
@@ -93,6 +94,50 @@ PokemonLeague_ChampionsRoom_EventScript_EnterRoom::
 	waitstate
 	releaseall
 	end
+
+@ PRU's second championship finishes in this native Kanto Champion room.
+@ Oak stays present from his entrance through the hand-off to the Hall of Fame.
+PRU_KantoChampionRoom_EventScript_Enter::
+	lockall
+	textcolor NPC_TEXT_COLOR_MALE
+	setflag FLAG_TEMP_2
+	applymovement LOCALID_PLAYER, PokemonLeague_ChampionsRoom_Movement_PlayerEnter
+	waitmovement 0
+	delay 20
+	msgbox PRU_KantoLeague_Text_RED, MSGBOX_DEFAULT
+	setflag FLAG_TEMP_3
+	setflag FLAG_TEMP_5
+	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_RED_HNS, PRU_KantoLeague_Text_Lost
+	clearflag FLAG_TEMP_5
+	setflag FLAG_DEFEATED_CHAMP
+	msgbox PRU_KantoLeague_Text_Cleared, MSGBOX_DEFAULT
+	playbgm MUS_RG_SLOW_PALLET, FALSE
+	clearflag FLAG_HIDE_OAK_IN_CHAMP_ROOM
+	addobject LOCALID_CHAMPIONS_ROOM_PROF_OAK
+	closemessage
+	applymovement LOCALID_PLAYER, PokemonLeague_ChampionsRoom_Movement_PlayerWatchOakEnter
+	applymovement LOCALID_KANTO_CHAMPIONS_ROOM_RIVAL, PokemonLeague_ChampionsRoom_Movement_RivalWatchOakEnter
+	applymovement LOCALID_CHAMPIONS_ROOM_PROF_OAK, PokemonLeague_ChampionsRoom_Movement_OakEnter
+	waitmovement 0
+	delay 25
+	msgbox PRU_KantoChampionRoom_Text_OakCongratulations, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_CHAMPIONS_ROOM_PROF_OAK, PokemonLeague_ChampionsRoom_Movement_OakExit
+	applymovement LOCALID_PLAYER, PokemonLeague_ChampionsRoom_Movement_PlayerExit
+	waitmovement 0
+	setflag FLAG_PRU_KANTO_LEAGUE_CLEARED
+	setvar VAR_LEAGUE_STATE, 6
+	setvar VAR_TEMP_1, 1
+	warpsilent MAP_POKEMON_LEAGUE_HALL_OF_FAME_HNS, 0
+	waitstate
+	releaseall
+	end
+
+PRU_KantoChampionRoom_Text_OakCongratulations:
+	.string "OAK: Magnificent, {PLAYER}!\p"
+	.string "You have conquered both LEAGUES.\n"
+	.string "Come. Your POKéMON belong in the\l"
+	.string "HALL OF FAME!$"
 
 PokemonLeague_ChampionsRoom_EventScript_QuestLogEnd::
 	call PokemonLeague_ChampionsRoom_EventScript_StopSceneTrigger
