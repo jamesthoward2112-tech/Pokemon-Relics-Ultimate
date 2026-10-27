@@ -22,7 +22,7 @@ PRL_C_FILE = "src/prl_intro_trial.c"
 PRL_HELPER = "tools/prl/prepare_hwl_scene0.py"
 BASE = "https://raw.githubusercontent.com"
 ASSET_B64 = Path("assets/pru_title/noxichu_relic_cavern_240.jpg.b64")
-TITLE_DIR = Path("graphics/title_screen/pjr")
+TITLE_DIR = Path("graphics/title_screen/pru")
 
 def fetch_prl(path):
     url = f"{BASE}/{PRL_REPO}/{PRL_COMMIT}/{path}"
@@ -174,8 +174,8 @@ def install_title_art():
         out_pal.extend(rgb555.to_bytes(2, "little"))
     assert len(out_pal) == 512
     TITLE_DIR.mkdir(parents=True, exist_ok=True)
-    (TITLE_DIR / "PJR_TitleScreen_Mode4.8bpp").write_bytes(raw)
-    (TITLE_DIR / "PJR_TitleScreen_Mode4.gbapal").write_bytes(out_pal)
+    (TITLE_DIR / "PRU_TitleScreen_Mode4.8bpp").write_bytes(raw)
+    (TITLE_DIR / "PRU_TitleScreen_Mode4.gbapal").write_bytes(out_pal)
     print("TITLE_ART_PASS Oct 17 APPROVED image SHA256=0cfdc68858e6818c771dd10e3d79b41a41658f642c0aaec7cd017b2cc60a2c64, GBA indexed 240x160 RGB555; NO image transformations")
 
 def patch_title():
