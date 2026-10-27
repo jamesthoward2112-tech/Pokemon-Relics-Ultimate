@@ -77,7 +77,7 @@ PokemonLeague_LoreleisRoom_EventScript_Battle::
 	return
 
 PokemonLeague_LoreleisRoom_EventScript_Rematch::
-	trainerbattle_no_intro TRAINER_ELITE_FOUR_LORELEI_2, PokemonLeague_LoreleisRoom_Text_Defeat
+	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_LORELEI_HNS, PokemonLeague_LoreleisRoom_Text_Defeat
 	return
 
 PokemonLeague_LoreleisRoom_EventScript_PostBattle::

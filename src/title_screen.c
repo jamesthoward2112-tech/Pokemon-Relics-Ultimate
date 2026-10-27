@@ -47,9 +47,9 @@ enum {
 
 static void MainCB2(void);
 #if IS_HNS
-static void CB2_InitPjrTitleScreen(void);
-static void Task_PjrTitleScreenInput(u8 taskId);
-static void LoadPjrTitlePaletteBrightened(void);
+static void CB2_InitPruTitleScreen(void);
+static void Task_PruTitleScreenInput(u8 taskId);
+static void LoadPruTitlePaletteBrightened(void);
 #endif
 static void Task_TitleScreenPhase1(u8);
 static void Task_TitleScreenPhase2(u8);
@@ -73,9 +73,9 @@ static const u16 sUnusedUnknownPal[] = INCBIN_U16("graphics/title_screen/unused.
 static const u32 sTitleScreenRayquazaGfx[] = INCBIN_U32("graphics/title_screen/hns/rayquaza.4bpp.smol");
 static const u32 sTitleScreenRayquazaTilemap[] = INCBIN_U32("graphics/title_screen/hns/rayquaza.bin.smolTM");
 static const u32 sTitleScreenLogoShineGfx[] = INCBIN_U32("graphics/title_screen/hns/logo_shine.4bpp.smol");
-#if 1 /* PJR rebuild title */
-static const ALIGNED(4) u8 sPjrTitleBitmap[] = INCBIN_U8("graphics/title_screen/pjr/PJR_TitleScreen_Mode4.8bpp");
-static const ALIGNED(4) u16 sPjrTitlePalette[] = INCBIN_U16("graphics/title_screen/pjr/PJR_TitleScreen_Mode4.gbapal");
+#if 1 /* approved PRU title */
+static const ALIGNED(4) u8 sPruTitleBitmap[] = INCBIN_U8("graphics/title_screen/pru/PRU_TitleScreen_Mode4.8bpp");
+static const ALIGNED(4) u16 sPruTitlePalette[] = INCBIN_U16("graphics/title_screen/pru/PRU_TitleScreen_Mode4.gbapal");
 #endif
 #else
 static const u32 sTitleScreenRayquazaGfx[] = INCBIN_U32("graphics/title_screen/rayquaza.4bpp.smol");
@@ -593,7 +593,7 @@ void CB2_InitTitleScreen(void)
         return;
     }
 #if IS_HNS
-    CB2_InitPjrTitleScreen();
+    CB2_InitPruTitleScreen();
     return;
 #endif
     switch (gMain.state)
@@ -709,14 +709,14 @@ void CB2_InitTitleScreen(void)
 }
 
 #if IS_HNS
-static void LoadPjrTitlePaletteBrightened(void)
+static void LoadPruTitlePaletteBrightened(void)
 {
-    u16 palette[ARRAY_COUNT(sPjrTitlePalette)];
+    u16 palette[ARRAY_COUNT(sPruTitlePalette)];
     u32 i;
 
-    for (i = 0; i < ARRAY_COUNT(sPjrTitlePalette); i++)
+    for (i = 0; i < ARRAY_COUNT(sPruTitlePalette); i++)
     {
-        u16 color = sPjrTitlePalette[i];
+        u16 color = sPruTitlePalette[i];
         u32 r = color & 31;
         u32 g = (color >> 5) & 31;
         u32 b = (color >> 10) & 31;
@@ -735,7 +735,7 @@ static void LoadPjrTitlePaletteBrightened(void)
     LoadPalette(palette, BG_PLTT_ID(0), sizeof(palette));
 }
 
-static void CB2_InitPjrTitleScreen(void)
+static void CB2_InitPruTitleScreen(void)
 {
     switch (gMain.state)
     {
@@ -755,12 +755,12 @@ static void CB2_InitPjrTitleScreen(void)
         gMain.state++;
         break;
     case 1:
-        DmaCopy16(3, sPjrTitleBitmap, (void *)VRAM, sizeof(sPjrTitleBitmap));
-        LoadPjrTitlePaletteBrightened();
+        DmaCopy16(3, sPruTitleBitmap, (void *)VRAM, sizeof(sPruTitleBitmap));
+        LoadPruTitlePaletteBrightened();
         LoadCompressedSpriteSheet(&sSpriteSheet_PressStart[0]);
         LoadSpritePalette(&sSpritePalette_PressStart[0]);
         CreatePressStartBanner(START_BANNER_X, 138);
-        CreateTask(Task_PjrTitleScreenInput, 0);
+        CreateTask(Task_PruTitleScreenInput, 0);
         SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(3));
         SetGpuReg(REG_OFFSET_BG2PA, 0x100);
         SetGpuReg(REG_OFFSET_BG2PB, 0);
@@ -781,7 +781,7 @@ static void CB2_InitPjrTitleScreen(void)
     }
 }
 
-static void Task_PjrTitleScreenInput(u8 taskId)
+static void Task_PruTitleScreenInput(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON) || JOY_NEW(START_BUTTON))
     {
