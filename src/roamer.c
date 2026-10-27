@@ -335,8 +335,8 @@ bool8 TryAddRoamer(u16 species, u8 level, u8 locationTableId)
 #if IS_HNS
 void InitRoamer(void)
 {
-    // PJR: Raikou, Entei, and Suicune are Relic encounter Pokémon, not roamers.
-    DeactivateRoamersByLocationTable(ROAMER_LOC_TABLE_JOHTO);
+    // Raikou, Entei, Suicune are stationary RELICS. Do not deactivate the
+    // existing Johto Latias/Latios roaming slots on later League clears.
 }
 
 static bool8 IsPruKantoBirdSpecies(u16 species)
@@ -344,21 +344,55 @@ static bool8 IsPruKantoBirdSpecies(u16 species)
     return species == SPECIES_ARTICUNO || species == SPECIES_ZAPDOS || species == SPECIES_MOLTRES;
 }
 
-// Retain the original Latias/Latios quest without wiping the three new roamers.
+static bool8 IsPruJohtoLatiSpecies(u16 species)
+{
+    return species == SPECIES_LATIAS || species == SPECIES_LATIOS;
+}
+
+// Keep the historical script special, but spawn BOTH Eon Pokémon in Johto.
 void InitKantoRoamers(void)
 {
-    u16 species = gSpecialVar_0x8004 == 0 ? SPECIES_LATIAS : SPECIES_LATIOS;
-    u32 i;
+    EnsurePruJohtoLatiRoamers();
+}
 
-    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT))
+// Reconcile older save files that had one Eon roamer assigned to Kanto.
+// Preserve its individual IVs, personality, current HP and capture state.
+void EnsurePruJohtoLatiRoamers(void)
+{
+    static const u16 sEonSpecies[] = { SPECIES_LATIAS, SPECIES_LATIOS };
+    u32 i, j;
+
+    if (!FlagGet(FLAG_IS_KANTO_CHAMPION) && !FlagGet(FLAG_LATIOS_OR_LATIAS_ROAMING))
         return;
 
-    for (i = 0; i < ROAMER_COUNT; i++)
-        if (ROAMER(i)->active && ROAMER(i)->species == species)
-            return;
+    for (i = 0; i < ARRAY_COUNT(sEonSpecies); i++)
+    {
+        u16 species = sEonSpecies[i];
+        if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT))
+            continue;
 
-    GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_SET_SEEN);
-    TryAddRoamer(species, 60, ROAMER_LOC_TABLE_KANTO);
+        for (j = 0; j < ROAMER_COUNT; j++)
+        {
+            if (ROAMER(j)->species != species)
+                continue;
+            if (ROAMER(j)->locationTableId != ROAMER_LOC_TABLE_JOHTO)
+            {
+                ROAMER(j)->locationTableId = ROAMER_LOC_TABLE_JOHTO;
+                ClearRoamerLocationHistory(j);
+                sRoamerLocation[j][MAP_GRP] = ROAMER_MAP_GROUP;
+                sRoamerLocation[j][MAP_NUM] = sRoamerLocationsJohto[Random() % (ARRAY_COUNT(sRoamerLocationsJohto) - 1)][0];
+            }
+            break;
+        }
+        if (j == ROAMER_COUNT)
+        {
+            GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_SET_SEEN);
+            if (species == SPECIES_LATIAS)
+                TryAddRoamer(SPECIES_LATIAS, 60, ROAMER_LOC_TABLE_JOHTO);
+            else
+                TryAddRoamer(SPECIES_LATIOS, 60, ROAMER_LOC_TABLE_JOHTO);
+        }
+    }
 }
 
 // An existing save with Kanto access automatically unlocks these three
@@ -406,8 +440,8 @@ void EnsurePruKantoBirdRoamers(void)
     }
 }
 
-// The temporary weather belongs only to a Kanto route occupied by an active
-// bird. When several arrive on the same route, the fixed order avoids flicker.
+// The temporary weather marks an occupied route. The Eon pair roams Johto;
+// Articuno/Zapdos/Moltres remain in Kanto. Fixed order avoids flicker.
 void ApplyPruKantoBirdWeather(void)
 {
     u32 i;
@@ -415,7 +449,9 @@ void ApplyPruKantoBirdWeather(void)
 
     for (i = 0; i < ROAMER_COUNT; i++)
     {
-        if (!ROAMER(i)->active || !IsPruKantoBirdSpecies(ROAMER(i)->species))
+        if (!ROAMER(i)->active
+            || (!IsPruKantoBirdSpecies(ROAMER(i)->species)
+                && !IsPruJohtoLatiSpecies(ROAMER(i)->species)))
             continue;
         if (!IsRoamerAt(i, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum))
             continue;
@@ -428,6 +464,8 @@ void ApplyPruKantoBirdWeather(void)
     case SPECIES_ARTICUNO: SetSavedWeather(WEATHER_SNOW); break;
     case SPECIES_ZAPDOS: SetSavedWeather(WEATHER_RAIN_THUNDERSTORM); break;
     case SPECIES_MOLTRES: SetSavedWeather(WEATHER_DROUGHT); break;
+    case SPECIES_LATIAS: SetSavedWeather(WEATHER_DROUGHT); break;      // Warm crimson sky.
+    case SPECIES_LATIOS: SetSavedWeather(WEATHER_SUNNY_CLOUDS); break; // Bright, breezy sky.
     default:
         // The caller has reset map-header weather on entry; leave scripted
         // weather intact if no legendary occupies this route.
@@ -448,6 +486,9 @@ void InitKantoRoamers(void)
 {
 }
 void EnsurePruKantoBirdRoamers(void)
+{
+}
+void EnsurePruJohtoLatiRoamers(void)
 {
 }
 void ApplyPruKantoBirdWeather(void)
@@ -603,7 +644,8 @@ void UpdateRoamerHPStatus(struct Pokemon *mon)
     RoamerMoveToOtherLocationSet(gEncounteredRoamerIndex);
 #if IS_HNS
     // The defeated/fled bird no longer controls the weather here.
-    if (IsPruKantoBirdSpecies(ROAMER(gEncounteredRoamerIndex)->species))
+    if (IsPruKantoBirdSpecies(ROAMER(gEncounteredRoamerIndex)->species)
+        || IsPruJohtoLatiSpecies(ROAMER(gEncounteredRoamerIndex)->species))
     {
         SetSavedWeatherFromCurrMapHeader();
         ApplyPruKantoBirdWeather();
@@ -627,9 +669,11 @@ void RestorePruDefeatedRoamers(void)
         const u8 (*locs)[6];
 
         if (ROAMER(i)->active || ROAMER(i)->hp != 0
-            || ROAMER(i)->locationTableId != ROAMER_LOC_TABLE_KANTO
-            || (species != SPECIES_LATIAS && species != SPECIES_LATIOS
-                && !IsPruKantoBirdSpecies(species)))
+            || (!IsPruJohtoLatiSpecies(species) && !IsPruKantoBirdSpecies(species))
+            || (ROAMER(i)->locationTableId != ROAMER_LOC_TABLE_KANTO
+                && ROAMER(i)->locationTableId != ROAMER_LOC_TABLE_JOHTO)
+            || (ROAMER(i)->locationTableId == ROAMER_LOC_TABLE_JOHTO
+                && !IsPruJohtoLatiSpecies(species)))
             continue;
         dexNum = SpeciesToNationalPokedexNum(species);
         if (!GetSetPokedexFlag(dexNum, FLAG_GET_SEEN)
@@ -652,13 +696,14 @@ void RestorePruDefeatedRoamers(void)
 void SetRoamerInactive(u32 roamerIndex)
 {
 #if IS_HNS
-    bool8 wasLocalBird = ROAMER(roamerIndex)->active
-        && IsPruKantoBirdSpecies(ROAMER(roamerIndex)->species)
+    bool8 wasLocalWeatherRoamer = ROAMER(roamerIndex)->active
+        && (IsPruKantoBirdSpecies(ROAMER(roamerIndex)->species)
+            || IsPruJohtoLatiSpecies(ROAMER(roamerIndex)->species))
         && IsRoamerAt(roamerIndex, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
 #endif
     ROAMER(roamerIndex)->active = FALSE;
 #if IS_HNS
-    if (wasLocalBird)
+    if (wasLocalWeatherRoamer)
     {
         SetSavedWeatherFromCurrMapHeader();
         ApplyPruKantoBirdWeather();

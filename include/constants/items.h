@@ -1093,6 +1093,9 @@ enum __attribute__((packed)) Item
     ITEM_ANCIENT_STONE,
     ITEM_ANCIENT_RAINBOW_CREST,
 
+    // Second League reward: reusable Rare Candy key item, gifted by Elm.
+    ITEM_RELIC_CANDY,
+
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };
