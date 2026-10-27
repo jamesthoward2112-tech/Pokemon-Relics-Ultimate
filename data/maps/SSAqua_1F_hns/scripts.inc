@@ -2,6 +2,24 @@ SSAqua_1F_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, SSAqua_1F_OnFrame
 	.byte 0
 
+@ Olivine's ferry is S.S. AQUA. The Eevee twins have their own save-safe
+@ victory flag rather than reusing the Route 47 donor trainer ID.
+PRU_SSAnne_SteeveeNeevee::
+	trainerbattle_double TRAINER_PRU_SS_AQUA_TWINS_HNS, PRU_SS_Aqua_Text_Intro, PRU_SS_Aqua_Text_Defeated, Route104_Text_GinaNotEnoughMons
+	msgbox PRU_SS_Aqua_Text_After, MSGBOX_AUTOCLOSE
+	end
+
+PRU_SS_Aqua_Text_Intro:
+	.string "STEEVEE: A ferry battle!\p"
+	.string "NEEVEE: Our EEVEELUTIONS are\n"
+	.string "ready. Let's go!$"
+
+PRU_SS_Aqua_Text_Defeated:
+	.string "STEEVEE: You beat us!$"
+
+PRU_SS_Aqua_Text_After:
+	.string "NEEVEE: See you in KANTO!$"
+
 SSAqua_1F_OnFrame::
 	map_script_2 VAR_SSAQUA_STATE, 5, SSAqua_1F_EventScript_Arrived
 	.2byte 0

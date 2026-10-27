@@ -230,6 +230,7 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Mew;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Red;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Leaf;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Deoxys;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruByoxys_hns;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BirthIslandStone;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Brandon;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RubySapphireBrendan;
@@ -1048,6 +1049,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS] = &gObjectEventGraphicsInfo_PruMeowthBalloon_hns,
     [OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_KYOGRE_HNS] = &gObjectEventGraphicsInfo_PruShinyPrimalKyogre_hns,
     [OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_GROUDON_HNS] = &gObjectEventGraphicsInfo_PruShinyPrimalGroudon_hns,
+    [OBJ_EVENT_GFX_PRU_BYOXYS_HNS] = &gObjectEventGraphicsInfo_PruByoxys_hns,
     [OBJ_EVENT_GFX_ANABEL_HNS] = &gObjectEventGraphicsInfo_Anabel_hns,
     [OBJ_EVENT_GFX_BRANDON_HNS] = &gObjectEventGraphicsInfo_Brandon_hns,
     [OBJ_EVENT_GFX_GRETA_HNS] = &gObjectEventGraphicsInfo_Greta_hns,

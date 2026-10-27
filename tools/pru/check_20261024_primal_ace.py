@@ -63,9 +63,9 @@ caught = script.split("SeafoamIslands_SecretCave_EventScript_KyogreCaught::", 1)
 assert "setflag FLAG_PRU_KYOGRE_CAUGHT" in caught
 assert "setflag FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE" in caught
 
-groudon = read("data/maps/MtSilver_1F_MoltresRoom_hns/scripts.inc")
-groudon_map = json.loads(read("data/maps/MtSilver_1F_MoltresRoom_hns/map.json"))
-groudon_obj = next(o for o in groudon_map["object_events"] if o["script"] == "MtSilver_1F_MoltresRoom_EventScript_Groudon")
+groudon = read("data/maps/Route45_GroudonCave_hns/scripts.inc")
+groudon_map = json.loads(read("data/maps/Route45_GroudonCave_hns/map.json"))
+groudon_obj = next(o for o in groudon_map["object_events"] if o["script"] == "Route45_GroudonCave_EventScript_Groudon")
 assert groudon_obj["graphics_id"] == "OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_GROUDON_HNS"
 assert "setwildbattleshiny SPECIES_GROUDON, 75, ITEM_RED_ORB" in groudon
 assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT" in groudon
