@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Regression contract for Indigo Plateau's compact postgame support row."""
 import json
+import struct
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -23,11 +24,21 @@ services = [
 objects = data["object_events"]
 row = [o for o in objects if o.get("script") in services]
 assert len(row) == len(services)
-assert sorted(o["x"] for o in row) == list(range(2, 11)), "nine NPCs must stand directly adjacent"
+assert sorted(o["x"] for o in row) == list(range(6, 15)), "all nine NPCs must stand together on the open floor"
 assert {o["y"] for o in row} == {15}
 assert {o["movement_type"] for o in row} == {"MOVEMENT_TYPE_FACE_UP"}
 assert len({o["graphics_id"] for o in row}) == len(row)
 assert [o["script"] for o in sorted(row, key=lambda o: o["x"])] == services
+
+# Characterization regression: this particular 35x18 GBA map has VOID at
+# x=2..4 and an occupied wall/statue at x=5. The previous source-only test
+# accepted nine coordinates even though only six NPCs rendered in-game.
+layout_path = ROOT / "data/layouts/IndigoPlateau_PokemonCenter_hns/map.bin"
+tiles = struct.unpack("<630H", layout_path.read_bytes())
+floor_metatiles = {641, 665, 666, 667}
+for npc in row:
+    tile = tiles[npc["y"] * 35 + npc["x"]] & 0x3FF
+    assert tile in floor_metatiles, f'{npc["script"]} is standing on a wall, statue or outside the room: ({npc["x"]}, {npc["y"]}), tile={tile}'
 for service in services:
     assert sum(o.get("script") == service for o in objects) == 1, service
     section = scripts.split(f"{service}::", 1)[1].split("\n\n", 1)[0]
