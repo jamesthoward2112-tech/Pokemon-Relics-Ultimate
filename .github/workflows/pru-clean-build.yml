@@ -232,7 +232,6 @@ jobs:
               sleep 1
             done
             test -n "${window_id:-}"
-            xdotool windowactivate --sync "$window_id"
             sleep 5
             import -window root PRU-QA-mgba/boot-05s.png
             # Start/A inputs skip the checked-in intro without modifying the ROM.
