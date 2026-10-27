@@ -1,4 +1,4 @@
-PokemonLeague_FrlgChampionsRoom_Frlg_MapScripts::
+PokemonLeague_ChampionsRoom_Frlg_MapScripts::
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PokemonLeague_FrlgChampionsRoom_OnWarp
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_FrlgChampionsRoom_OnResume
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, PokemonLeague_FrlgChampionsRoom_OnFrame
