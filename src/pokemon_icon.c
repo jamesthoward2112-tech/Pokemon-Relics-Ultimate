@@ -238,6 +238,8 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 12;
     if (species == SPECIES_MOLTRES)
         return 13;
+    if (species == SPECIES_KHANG)
+        return 11; // The PRL Khang icon has precisely Articuno-P's indexed palette.
     return original;
 }
 
