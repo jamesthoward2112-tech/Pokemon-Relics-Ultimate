@@ -30,7 +30,7 @@ TEST("PRU tutor compatibility reaches move teaching without broad unlocks")
     EXPECT_EQ(GetMonData(&mon, MON_DATA_MOVE1), MOVE_STICKY_WEB);
 }
 
-static u8 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive)
+static u16 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive)
 {
     const struct MapHeader *source = Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(mapId), MAP_NUM(mapId));
     struct MapHeader savedHeader = gMapHeader;
@@ -52,7 +52,7 @@ static u8 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive)
     };
     struct ObjectEventTemplate *template;
     u8 objectEventId;
-    u8 result = 0;
+    u16 result = 0;
 
     memcpy(savedObjectEvents, gObjectEvents, sizeof(savedObjectEvents));
     memcpy(savedTemplates, gSaveBlock1Ptr->objectEventTemplates, sizeof(savedTemplates));
