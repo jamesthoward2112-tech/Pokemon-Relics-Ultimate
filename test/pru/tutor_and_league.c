@@ -240,6 +240,14 @@ TEST("PRU Kanto Elite Four uses native five themed rooms and trainer sprites")
         EXPECT_EQ(header->events->objectEvents[0].graphicsId, graphics[i]);
     }
 
+    // Rendering smoke test: each Kanto trainer's actual overworld actor must
+    // spawn with the right graphics, not just carry the right map metadata.
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_LORELEIS_ROOM, OBJ_EVENT_GFX_LORELEI, TRUE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_BRUNOS_ROOM, OBJ_EVENT_GFX_BRUNO, TRUE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_AGATHAS_ROOM, OBJ_EVENT_GFX_AGATHA, TRUE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_LANCES_ROOM, OBJ_EVENT_GFX_LANCE, TRUE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM, OBJ_EVENT_GFX_RED, TRUE), 4095);
+
     FlagSet(FLAG_IS_CHAMPION);
     FlagSet(FLAG_BADGE16_GET);
     FlagSet(FLAG_PRU_HEIST_COMPLETED);
