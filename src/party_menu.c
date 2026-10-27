@@ -2,6 +2,7 @@
 #include "malloc.h"
 #include "battle.h"
 #include "challenge_menu.h"
+#include "chooseboxmon.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
 #include "battle_gfx_sfx_util.h"
@@ -1137,7 +1138,7 @@ static bool8 DisplayPartyPokemonDataForMoveTutorOrEvolutionItem(u8 slot)
     if (gPartyMenu.action == PARTY_ACTION_MOVE_TUTOR)
     {
         gSpecialVar_Result = FALSE;
-        DisplayPartyPokemonDataToTeachMove(slot, gSpecialVar_0x8005);
+        DisplayPartyPokemonDataToTeachMove(slot, GetSelectedBoxTutorMove());
     }
     else
     {
@@ -2298,9 +2299,13 @@ static void Task_HandleCancelParticipationYesNoInput(u8 taskId)
 
 static enum CanMoveBeLearned CanTeachMove(struct Pokemon *mon, enum Move move)
 {
+    u16 species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
+
     if (GetMonData(mon, MON_DATA_IS_EGG))
         return CANNOT_LEARN_MOVE_IS_EGG;
-    else if (!CanLearnTeachableMove(GetMonData(mon, MON_DATA_SPECIES_OR_EGG), move))
+    else if (!CanLearnTeachableMove(species, move)
+        && !CanSpeciesLearnPruTutorMoveForParty(species, move,
+            gPartyMenu.action == PARTY_ACTION_MOVE_TUTOR))
         return CANNOT_LEARN_MOVE;
     else if (MonKnowsMove(mon, move) == TRUE)
         return ALREADY_KNOWS_MOVE;
@@ -7140,7 +7145,7 @@ static void TryTutorSelectedMon(u8 taskId)
         mon = &gPlayerParty[gPartyMenu.slotId];
         move = &gPartyMenu.data1;
         GetMonNickname(mon, gStringVar1);
-        gPartyMenu.data1 = gSpecialVar_0x8005;
+        gPartyMenu.data1 = GetSelectedBoxTutorMove();
         StringCopy(gStringVar2, GetMoveName(gPartyMenu.data1));
         move[1] = 2;
         switch (CanTeachMove(mon, gPartyMenu.data1))
