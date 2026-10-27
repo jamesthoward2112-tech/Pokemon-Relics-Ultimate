@@ -15,12 +15,12 @@ with Image.open(png) as icon:
     assert icon.mode == "P" and icon.size == (32, 64)
     png_palette = icon.getpalette()[:48]
 
-block = re.search(r"sPRUArticunoPIconPalette\[16\]\s*=\s*\{(.*?)\};", icon_code, re.S)
-assert block, "The existing PRU indexed icon palette must remain available"
+block = re.search(r"sPRUKhangIconPalette\[16\]\s*=\s*\{(.*?)\};", icon_code, re.S)
+assert block, "Khang must use its own immutable indexed 4bpp palette"
 actual = [tuple(map(int, rgb)) for rgb in re.findall(r"RGB\((\d+),\s*(\d+),\s*(\d+)\)", block.group(1))]
 expected = [tuple(round(value * 31 / 255) for value in png_palette[i:i + 3]) for i in range(0, 48, 3)]
 assert actual == expected, "Khang palette differs from the approved PRL icon PNG"
-assert "{ sPRUArticunoPIconPalette, POKE_ICON_BASE_PAL_TAG + 11 }" in icon_code
-assert re.search(r"if \(species == SPECIES_KHANG\)\s*return 11;", icon_code)
+assert "{ sPRUKhangIconPalette, POKE_ICON_BASE_PAL_TAG + 14 }" in icon_code
+assert re.search(r"if \(species == SPECIES_KHANG\)\s*return 14;", icon_code)
 assert "gMonIcon_Khang" in species_code
-print("PASS: Khang icon keeps original PRL sprite and exact 16-colour party palette without another OBJ palette slot")
+print("PASS: Khang icon keeps original PRL sprite and its immutable 16-colour party palette")
