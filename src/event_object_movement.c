@@ -1696,10 +1696,16 @@ static u8 InitObjectEventStateFromTemplate(const struct ObjectEventTemplate *tem
     }
 
     if (GetAvailableObjectEventId(template->localId, mapNum, mapGroup, &objectEventId))
+    {
+        DebugPrintf("PRU E4 init: no free event id for local %u", template->localId);
         return OBJECT_EVENTS_COUNT;
+    }
 
     if (!ShouldInitObjectEventStateFromTemplate(template, isClone, x3, y3))
+    {
+        DebugPrintf("PRU E4 init: template rejected %u", template->localId);
         return OBJECT_EVENTS_COUNT;
+    }
     objectEvent = &gObjectEvents[objectEventId];
     ClearObjectEvent(objectEvent);
     if (isClone)
@@ -1978,7 +1984,10 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
 
     objectEventId = InitObjectEventStateFromTemplate(objectEventTemplate, mapNum, mapGroup);
     if (objectEventId == OBJECT_EVENTS_COUNT)
+    {
+        DebugPrintf("PRU E4 setup: object state rejected");
         return OBJECT_EVENTS_COUNT;
+    }
 
     objectEvent = &gObjectEvents[objectEventId];
     graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
@@ -1997,6 +2006,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     spriteId = CreateSpriteUnchecked(spriteTemplate, 0, 0, 0);
     if (spriteId == MAX_SPRITES)
     {
+        DebugPrintf("PRU E4 setup: sprite exhausted, free tiles %u", CountFreeSpriteTiles());
         gObjectEvents[objectEventId].active = FALSE;
         return OBJECT_EVENTS_COUNT;
     }
@@ -2004,6 +2014,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     sprite = &gSprites[spriteId];
     if (OW_GFX_COMPRESS && sprite->sheetTileStart == TAG_NONE)
     {
+        DebugPrintf("PRU E4 setup: sheet missing gfx %u tag %u", objectEvent->graphicsId, spriteTemplate->tileTag);
         DestroySprite(sprite);
         gObjectEvents[objectEventId].active = FALSE;
         return OBJECT_EVENTS_COUNT;
