@@ -91,6 +91,14 @@ static u16 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive
     FreeAllSpritePalettes();
     ResetObjectEvents();
     template = &gSaveBlock1Ptr->objectEventTemplates[0];
+    if (CountFreeSpriteTiles() >= 16)
+        result |= 256;
+    if (gReservedSpriteTileCount == 0)
+        result |= 512;
+    if (!gObjectEvents[0].active)
+        result |= 1024;
+    if (template->kind == OBJ_KIND_NORMAL)
+        result |= 2048;
     objectEventId = TrySpawnObjectEventTemplate(template, MAP_NUM(mapId), MAP_GROUP(mapId), 0, 0);
     if (template->flagId == 0)
         result |= 1;
@@ -132,14 +140,14 @@ static u16 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive
 
 TEST("Kanto Elite Four actors spawn visibly in the five existing rooms")
 {
-    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS, OBJ_EVENT_GFX_LORELEI, TRUE), 255);
-    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_KOGAS_ROOM_HNS, OBJ_EVENT_GFX_BRUNO_HNS, TRUE), 255);
-    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_BRUNOS_ROOM_HNS, OBJ_EVENT_GFX_AGATHA, TRUE), 255);
-    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_KARENS_ROOM_HNS, OBJ_EVENT_GFX_LANCE_HNS, TRUE), 255);
-    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM_HNS, OBJ_EVENT_GFX_RED_NORMAL_HNS, TRUE), 255);
-    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS, OBJ_EVENT_GFX_WILL_HNS, FALSE), 255);
-    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_KOGAS_ROOM_HNS, OBJ_EVENT_GFX_KOGA_HNS, FALSE), 255);
-    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_BRUNOS_ROOM_HNS, OBJ_EVENT_GFX_BRUNO_HNS, FALSE), 255);
-    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_KARENS_ROOM_HNS, OBJ_EVENT_GFX_KAREN_HNS, FALSE), 255);
-    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM_HNS, OBJ_EVENT_GFX_LANCE_HNS, FALSE), 255);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS, OBJ_EVENT_GFX_LORELEI, TRUE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_KOGAS_ROOM_HNS, OBJ_EVENT_GFX_BRUNO_HNS, TRUE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_BRUNOS_ROOM_HNS, OBJ_EVENT_GFX_AGATHA, TRUE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_KARENS_ROOM_HNS, OBJ_EVENT_GFX_LANCE_HNS, TRUE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM_HNS, OBJ_EVENT_GFX_RED_NORMAL_HNS, TRUE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS, OBJ_EVENT_GFX_WILL_HNS, FALSE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_KOGAS_ROOM_HNS, OBJ_EVENT_GFX_KOGA_HNS, FALSE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_BRUNOS_ROOM_HNS, OBJ_EVENT_GFX_BRUNO_HNS, FALSE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_KARENS_ROOM_HNS, OBJ_EVENT_GFX_KAREN_HNS, FALSE), 4095);
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM_HNS, OBJ_EVENT_GFX_LANCE_HNS, FALSE), 4095);
 }
