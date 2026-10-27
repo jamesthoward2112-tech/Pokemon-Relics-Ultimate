@@ -17,21 +17,18 @@ def script(label):
     return match.group(1)
 
 
-# The door is reached through a center coordinate trigger *before* its fixed
-# Johto warp. An ON_TRANSITION warp within Will's map does not reliably run.
+# The center door's fixed HNS warp is the proven playable path. Its
+# coordinate trigger must NOT enter the FRLG group directly: doing so
+# produced an unrecoverable black screen on actual hardware/emulators.
 trigger = next(e for e in MAP["coord_events"] if (e["x"], e["y"]) == (32, 3))
 assert trigger["script"] == "PRU_LeagueEntrance_Seal"
 entrance = script("PRU_LeagueEntrance_Seal")
 assert "FLAG_PRU_KANTO_LEAGUE_CLEARED" in entrance
 assert "PRU_LeagueEntrance_Unsealed" in entrance
 unsealed = script("PRU_LeagueEntrance_Unsealed")
-assert "PRU_KantoE4_CheckActive" in unsealed
-assert "PRU_LeagueEntrance_EnterKanto" in unsealed
-kanto_entry = script("PRU_LeagueEntrance_EnterKanto")
-assert "warp MAP_POKEMON_LEAGUE_LORELEIS_ROOM, 0" in kanto_entry
-for flag in ("LORELEI", "BRUNO", "AGATHA", "LANCE", "CHAMP"):
-    assert f"clearflag FLAG_DEFEATED_{flag}" in kanto_entry
-assert "setvar VAR_MAP_SCENE_POKEMON_LEAGUE, 0" in kanto_entry
+assert not re.search(r"^\s*warp\s", unsealed, re.M)
+assert "PRU_LeagueEntrance_EnterKanto" not in CENTER
+assert next(e for e in MAP["warp_events"] if (e["x"], e["y"]) == (32, 2))["dest_map"] == "MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS"
 
 # Silver must disappear permanently on battle completion, and legacy saves
 # must not find him waiting after the Kanto League has already been cleared.
@@ -46,4 +43,4 @@ assert len(pixels) == 4 * 24
 assert all("0" not in word for word in pixels), "Transparent pixel found inside BLD icon"
 assert "RGB_BLACK" in INTERFACE.split("static const u32 sPruBleedingStatusGfx", 1)[1]
 
-print("PASS: live Kanto door redirect, Silver retirement, opaque BLD icon")
+print("PASS: safe HNS League door, Silver retirement, opaque BLD icon")

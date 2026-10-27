@@ -47,28 +47,9 @@ PRU_LeagueEntrance_Seal::
 	end
 
 PRU_LeagueEntrance_Unsealed::
-	@ This coordinate trigger is at (32,3), one tile BEFORE the fixed
-	@ door warp at (32,2). Redirect here, in a normal field script:
-	@ a warpsilent command in Will's ON_TRANSITION immediate map script
-	@ was ignored, leaving all Kanto battles in Johto rooms/sprites.
-	call PRU_KantoE4_CheckActive
-	goto_if_eq VAR_RESULT, TRUE, PRU_LeagueEntrance_EnterKanto
-	end
-
-PRU_LeagueEntrance_EnterKanto::
-	lock
-	@ FRLG's five rooms use their own per-opponent door flags. Reset
-	@ them once when entering this championship, just as the old Will
-	@ redirect attempted to do (without changing Johto's flags).
-	clearflag FLAG_DEFEATED_LORELEI
-	clearflag FLAG_DEFEATED_BRUNO
-	clearflag FLAG_DEFEATED_AGATHA
-	clearflag FLAG_DEFEATED_LANCE
-	clearflag FLAG_DEFEATED_CHAMP
-	setvar VAR_MAP_SCENE_POKEMON_LEAGUE, 0
-	fadescreen FADE_TO_BLACK
-	warp MAP_POKEMON_LEAGUE_LORELEIS_ROOM, 0
-	waitstate
+	@ The original HNS door at (32,2) reliably enters Will's room.
+	@ Do not warp across the FRLG map-group here: that transition froze
+	@ Pizza Boy on a black screen during the second championship.
 	end
 
 PRU_LeagueEntrance_Text_Closed::

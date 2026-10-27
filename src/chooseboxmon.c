@@ -178,10 +178,9 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
         return TRUE;
 
     // These two free Indigo Plateau tutors are exclusively a PRU service.
-    // Use the mapped Pokédex species set instead of assuming engine species
-    // IDs form one contiguous range.
+    // Check the actual species types, including playable Relic forms that
+    // do not have their own Pokédex entry.
     if (!IS_HNS || species == SPECIES_NONE || species >= NUM_SPECIES
-        || SpeciesToPokedexNum(species) == 0xFFFF
         || !IsPjrControlTutorMove(move))
         return FALSE;
 
@@ -221,7 +220,8 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
             || IsSpeciesOfType(species, TYPE_BUG);
     case MOVE_STICKY_WEB:
     case MOVE_INFESTATION:
-        return IsSpeciesOfType(species, TYPE_BUG);
+        return IsSpeciesOfType(species, TYPE_BUG)
+            || (move == MOVE_STICKY_WEB && IsSpeciesOfType(species, TYPE_GRASS));
     case MOVE_STONE_AXE:
         return IsSpeciesOfType(species, TYPE_ROCK)
             || IsSpeciesOfType(species, TYPE_GROUND)
@@ -375,13 +375,14 @@ static bool32 CanSpeciesLearnPruDoubleTutorMove(u16 species, u16 move)
     enum Type type;
 
     if (!IS_HNS || species == SPECIES_NONE || species >= NUM_SPECIES
-        || SpeciesToPokedexNum(species) == 0xFFFF
         || !IsPruDoubleTutorMove(move))
         return FALSE;
 
     switch (move)
     {
-    case MOVE_SHOCKWAVE_FIST: type = TYPE_FIGHTING; break;
+    case MOVE_SHOCKWAVE_FIST:
+        return IsSpeciesOfType(species, TYPE_ELECTRIC)
+            || IsSpeciesOfType(species, TYPE_FIGHTING);
     case MOVE_FAULTLINE: type = TYPE_GROUND; break;
     case MOVE_WRAITH_CRY: type = TYPE_GHOST; break;
     case MOVE_METAL_BARRAGE: type = TYPE_STEEL; break;
@@ -465,7 +466,6 @@ static u32 CanMonLearnPruDoubleMove(struct BoxPokemon *boxmon)
 
     species = GetBoxMonData(boxmon, MON_DATA_SPECIES);
     if (!IS_HNS || species == SPECIES_NONE || species >= NUM_SPECIES
-        || SpeciesToPokedexNum(species) == 0xFFFF
         || !IsPruDoubleTutorMove(move))
         return CANNOT_LEARN_MOVE;
 

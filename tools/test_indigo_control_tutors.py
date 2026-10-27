@@ -100,7 +100,7 @@ class TestIndigoControlTutors(unittest.TestCase):
         # Both tutors preserve existing teachable compatibility and use the
         # same PRU-specific species/move predicate, without universal unlocks.
         self.assertIn("if (CanLearnTeachableMove(species, move))", choosebox)
-        self.assertIn("SpeciesToPokedexNum(species) == 0xFFFF", choosebox)
+        self.assertNotIn("SpeciesToPokedexNum(species) == 0xFFFF", choosebox)
         self.assertIn("!IS_HNS", choosebox)
         self.assertNotIn(
             "if (species < SPECIES_SCARABUB || species > SPECIES_DRAGONITE_RELIC)",
