@@ -164,9 +164,9 @@ class TestIndigoControlTutors(unittest.TestCase):
         data = json.loads(MAP.read_text(encoding="utf-8"))
         npc = next(
             obj for obj in data["object_events"]
-            if obj.get("script") == "IndigoPlateau_EventScript_ShigyNinja"
+            if obj.get("script") == "IndigoPlateau_EventScript_CleanupTutor"
         )
-        self.assertEqual(npc["movement_type"], "MOVEMENT_TYPE_NONE")
+        self.assertEqual(npc["movement_type"], "MOVEMENT_TYPE_FACE_UP")
         self.assertEqual(npc["movement_range_x"], 0)
         self.assertEqual(npc["movement_range_y"], 0)
 
