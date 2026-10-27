@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main]
+    branches: [main, fix/pru-indigo-tutors-20261027]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -16,8 +16,9 @@ permissions:
   contents: write
 
 # Each build is independent: never supersede a queued ROM build.
-# Pull requests compile for review. Only explicitly named release-candidate
-# branches can publish a prerelease from a PR build.
+# Pull requests compile for review. The isolated Indigo repair branch can
+# additionally publish via a normal push event, where release permissions are
+# available; its PR validation path remains unchanged.
 concurrency:
   group: pru-clean-build-${{ github.run_id }}
   cancel-in-progress: false
@@ -289,7 +290,7 @@ jobs:
             PRU-QA-mgba/
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027'))
+        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027'))
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
