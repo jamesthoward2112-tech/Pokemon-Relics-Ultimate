@@ -232,15 +232,20 @@ jobs:
               sleep 1
             done
             test -n "${window_id:-}"
+            # Xvfb has no window manager to activate Qt. XSetInputFocus works
+            # directly and lets XTEST keys reach the emulator reliably.
+            xdotool windowfocus "$window_id"
+            echo "mGBA X11 focus: $(xdotool getwindowfocus) / window: $window_id"
             sleep 5
             import -window root PRU-QA-mgba/boot-05s.png
             # A single Start press skips the checked-in intro. Capture before
             # each later press so the title cannot be skipped without evidence.
-            xdotool key --window "$window_id" Return
+            xdotool key Return
             for second in 11 17 23 29 35; do
               sleep 6
               import -window root "PRU-QA-mgba/frame-${second}s.png"
-              xdotool key --window "$window_id" Return
+              xdotool windowfocus "$window_id"
+              xdotool key Return
             done
           '
           test -s PRU-QA-mgba/boot-05s.png
@@ -262,6 +267,13 @@ jobs:
               print(f'{path}: {image.size[0]}x{image.size[1]}, {len(colors)} colors')
           assert len(digests) >= 2, 'mGBA captures never advanced beyond one static frame'
           PY
+      - name: Retain mGBA capture diagnostics if boot check fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: PRU-MGBA-CAPTURE-DIAGNOSTICS
+          path: PRU-QA-mgba/
+          if-no-files-found: warn
       - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4
         with:
