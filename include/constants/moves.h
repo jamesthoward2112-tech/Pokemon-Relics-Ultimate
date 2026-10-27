@@ -974,6 +974,12 @@ enum __attribute__((packed)) Move
     MOVE_TERROR_WAVE,
     // Appended to keep all existing move IDs and save data stable.
     MOVE_KABOOM,
+    // PRU free double-battle tutor; append-only save-safe move IDs.
+    MOVE_SHOCKWAVE_FIST,
+    MOVE_FAULTLINE,
+    MOVE_WRAITH_CRY,
+    MOVE_METAL_BARRAGE,
+    MOVE_MINDWAVE,
 
     MOVES_COUNT,
 

@@ -16,7 +16,7 @@ permissions:
   contents: write
 
 # Each build is independent: never supersede a queued ROM build.
-# Pull requests compile for review but only main publishes a direct ROM release.
+# Pull requests compile for review. Only the explicitly named repair branch can publish a prerelease from a PR build.
 concurrency:
   group: pru-clean-build-${{ github.run_id }}
   cancel-in-progress: false
@@ -112,6 +112,8 @@ jobs:
         run: |
           set -euo pipefail
           python3 tools/pru/check_crystal_battle_backgrounds.py
+          python3 tools/pru/check_rhythm_battle_background_assets.py
+          python3 tools/pru/check_rhythm_battle_backgrounds.py
           python3 tools/pru/check_static_battle_backgrounds.py
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_lavender_cubone_staging.py
@@ -135,6 +137,12 @@ jobs:
           python3 tools/pru/check_bell_tower_statue_placement.py
           python3 tools/pru/check_relic_battle_presentation.py
           python3 tools/test_indigo_control_tutors.py
+          python3 tools/pru/check_pru_tutor_party_gate.py
+          python3 tools/pru/check_kanto_league_elite18_tutors.py
+          python3 tools/pru/check_pru_e4_oak_elm_dojo_hotfix.py
+          python3 tools/pru/check_johto_lati_weather.py
+          python3 tools/pru/check_johto_groudon_cave.py
+          python3 tools/pru/check_birth_island_byoxys.py
           python3 tools/pru/check_johto_first_clear_ai.py
           python3 tools/pru/check_kanto_gym_custom_rebalance.py
           python3 tools/pru/check_kanto_gym_rewards.py
@@ -158,9 +166,24 @@ jobs:
             test -s "data/$file"
             echo "Restored pinned PJR build input: data/$file"
           done
+      - name: Run targeted GBA-emulator tutor and E4 actor regression tests
+        run: make -j2 check BUILD=hns TESTS=test/pru/tutor_and_league.c
       - name: Build the original PJR-derived PRU source
         run: |
           set -euo pipefail
+          make clean
+          # Some approved artwork is checked in only as compiled GBA graphics.
+          # clean removes those source-only files; restore their exact tracked bytes.
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+          files = subprocess.check_output(['git', 'ls-files', '*.4bpp', '*.8bpp', '*.gbapal', '*.lz'], text=True).splitlines()
+          for name in files:
+              path = Path(name)
+              source = path.with_suffix('') if path.suffix == '.lz' else path
+              if not source.exists() and not source.with_suffix('.png').exists() and not source.with_suffix('.pal').exists():
+                  subprocess.run(['git', 'restore', '--', name], check=True)
+          PY
           if make hns -j2 -O > /tmp/pru-build.log 2>&1; then
             echo 'ROM compilation completed successfully'
           else
@@ -189,7 +212,7 @@ jobs:
             pru-rom.sha256
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54')
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -197,11 +220,13 @@ jobs:
           set -euo pipefail
           test -s pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
-          # Older jobs must never publish a ROM after main has advanced.
-          latest_main="$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)"
-          if test "$latest_main" != "$GITHUB_SHA"; then
-            echo "SKIP_STALE_ROM: build $GITHUB_SHA is not current main $latest_main"
-            exit 0
+          # Older main jobs must never publish after main has advanced.
+          if test "$GITHUB_REF" = "refs/heads/main"; then
+            latest_main="$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)"
+            if test "$latest_main" != "$GITHUB_SHA"; then
+              echo "SKIP_STALE_ROM: build $GITHUB_SHA is not current main $latest_main"
+              exit 0
+            fi
           fi
           tag="pru-build-$(git rev-parse --short=10 HEAD)"
           file="Pokemon-Relics-Ultimate-${GITHUB_SHA:0:10}.gba"
@@ -213,7 +238,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Direct GBA compiled from canonical main commit $GITHUB_SHA. Restricted HNS trainer, wild and scripted encounters to the approved 444; corrected Sceptitan, Donphalanx and Swamplith offsets and all Steevee-Neevee sight ranges; installed the authentic Insurgence Mega Jirachi normal/shiny artwork in the existing Jirachi slot as 64x64 GBA battle sprites without changing species mechanics; added Claude Astrachi overworld art and the post-capture Lv70 Astrachi White Rock encounter with separate saved capture flags. Automated source regression and ROM compilation passed. Emulator boot and gameplay testing are intentionally left to the player for this hotfix." \
+              --notes "Direct GBA built from PRU commit $GITHUB_SHA. Tutor compatibility, party and PC selection, Move Relearner compatibility, and Indigo Plateau League room actor spawning are covered by targeted tests. The workflow completed emulator engine checks and a clean ROM build." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
