@@ -31,13 +31,14 @@ TEST("PRU tutor compatibility reaches move teaching without broad unlocks")
     EXPECT_EQ(GetMonData(&mon, MON_DATA_MOVE1), MOVE_STICKY_WEB);
 }
 
+static EWRAM_DATA struct ObjectEvent sSavedLeagueObjectEvents[OBJECT_EVENTS_COUNT];
+static EWRAM_DATA struct ObjectEventTemplate sSavedLeagueTemplates[OBJECT_EVENT_TEMPLATES_COUNT];
+
 static u16 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive)
 {
     const struct MapHeader *source = Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(mapId), MAP_NUM(mapId));
     struct MapHeader savedHeader = gMapHeader;
     struct WarpData savedLocation = gSaveBlock1Ptr->location;
-    struct ObjectEvent savedObjectEvents[OBJECT_EVENTS_COUNT];
-    struct ObjectEventTemplate savedTemplates[OBJECT_EVENT_TEMPLATES_COUNT];
     u16 savedMapLayoutId = gSaveBlock1Ptr->mapLayoutId;
     u16 savedLeagueState = VarGet(VAR_LEAGUE_STATE);
     u16 savedGfx = VarGet(VAR_OBJ_GFX_ID_0);
@@ -55,8 +56,8 @@ static u16 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive
     u8 objectEventId;
     u16 result = 0;
 
-    memcpy(savedObjectEvents, gObjectEvents, sizeof(savedObjectEvents));
-    memcpy(savedTemplates, gSaveBlock1Ptr->objectEventTemplates, sizeof(savedTemplates));
+    memcpy(sSavedLeagueObjectEvents, gObjectEvents, sizeof(sSavedLeagueObjectEvents));
+    memcpy(sSavedLeagueTemplates, gSaveBlock1Ptr->objectEventTemplates, sizeof(sSavedLeagueTemplates));
     gMapHeader = *source;
     gMapHeader.mapLayout = GetMapLayout(gMapHeader.mapLayoutId);
     gSaveBlock1Ptr->mapLayoutId = gMapHeader.mapLayoutId;
@@ -120,8 +121,8 @@ static u16 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive
     }
     if (objectEventId != OBJECT_EVENTS_COUNT)
         RemoveObjectEvent(&gObjectEvents[objectEventId]);
-    memcpy(gObjectEvents, savedObjectEvents, sizeof(savedObjectEvents));
-    memcpy(gSaveBlock1Ptr->objectEventTemplates, savedTemplates, sizeof(savedTemplates));
+    memcpy(gObjectEvents, sSavedLeagueObjectEvents, sizeof(sSavedLeagueObjectEvents));
+    memcpy(gSaveBlock1Ptr->objectEventTemplates, sSavedLeagueTemplates, sizeof(sSavedLeagueTemplates));
     gMapHeader = savedHeader;
     gSaveBlock1Ptr->location = savedLocation;
     gSaveBlock1Ptr->mapLayoutId = savedMapLayoutId;
