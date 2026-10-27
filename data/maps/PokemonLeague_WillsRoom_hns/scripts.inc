@@ -4,6 +4,28 @@ PokemonLeague_WillsRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, EliteFourRoom_OnLoad
 	.byte 0
 
+@ The second League now selects its Kanto map in ApplyCurrentWarp.
+@ Johto's original room, object and battles remain untouched.
+
+@ A single visible actor per room avoids two co-located hidden events
+@ fighting over save flags at map entry. Both its sprite and battle use
+@ this same predicate; preserve the historical hide-flag IDs for saves.
+PRU_KantoE4_CheckActive::
+	setvar VAR_RESULT, FALSE
+	goto_if_unset FLAG_IS_CHAMPION, PRU_KantoE4_CheckDone
+	goto_if_unset FLAG_BADGE16_GET, PRU_KantoE4_CheckDone
+	goto_if_unset FLAG_PRU_HEIST_COMPLETED, PRU_KantoE4_CheckDone
+	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, PRU_KantoE4_CheckDone
+	goto_if_set FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_KantoE4_CheckDone
+	setvar VAR_RESULT, TRUE
+PRU_KantoE4_CheckDone::
+	return
+
+PRU_KantoE4_WillOrLorelei::
+	call PRU_KantoE4_CheckActive
+	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_Lorelei
+	goto PokemonLeague_WillsRoom_EventScript_Will
+
 EliteFourRoom_OnLoad::
 	call_if_eq VAR_TEMP_0, 1, EliteFourRoom_CreateDoor
 	end
@@ -66,6 +88,28 @@ PokemonLeague_WillsRoom_EventScript_Will::
 	release
 	end
 
+PRU_KantoE4_Lorelei::
+	lock
+	faceplayer
+	goto_if_ge VAR_LEAGUE_STATE, 2, PRU_KantoE4_LoreleiAlreadyWon
+	msgbox PRU_KantoLeague_Text_LORELEI, MSGBOX_DEFAULT
+	setflag FLAG_TEMP_3
+	setflag FLAG_TEMP_5
+	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_LORELEI_HNS, PRU_KantoLeague_Text_Lost
+	clearflag FLAG_TEMP_5
+	msgbox PRU_KantoE4_LoreleiAfter, MSGBOX_DEFAULT
+	closemessage
+	goto PRU_KantoE4_LoreleiOpenExit
+
+PRU_KantoE4_LoreleiAlreadyWon::
+	msgbox PRU_KantoE4_LoreleiAfter, MSGBOX_DEFAULT
+	release
+	end
+
+PRU_KantoE4_LoreleiAfter:
+	.string "LORELEI: Incredible! You are\n"
+	.string "ready for BRUNO. Go on!$"
+
 PokemonLeague_WillsRoom_EventScript_PRUHeistCleared::
 	@ The final Kanto Eevee Twins match at Route 23 is also required.
 	goto_if_unset FLAG_BADGE16_GET, PokemonLeague_WillsRoom_EventScript_PRUAllCleared
@@ -110,6 +154,8 @@ PokemonLeague_WillsRoom_EventScript_WillOnDefeat::
 	clearflag FLAG_TEMP_5
 	msgbox PokemonLeague_WillsRoom_Text_Defeat, MSGBOX_DEFAULT
 	closemessage
+
+PRU_KantoE4_LoreleiOpenExit::
 	setmetatile 6, 1, 0x28E, FALSE
 	setmetatile 6, 2, 0x296, FALSE	
 	playse SE_BANG

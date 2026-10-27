@@ -1863,6 +1863,15 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 .if IS_HNS
 
+@ PRU's second championship uses five native FireRed arenas. Their labels
+@ and shared door/lighting helpers must be linked into the HNS binary.
+    .include "data/scripts/pokemon_league.inc"
+    .include "data/maps/PokemonLeague_LoreleisRoom_Frlg/scripts.inc"
+    .include "data/maps/PokemonLeague_BrunosRoom_Frlg/scripts.inc"
+    .include "data/maps/PokemonLeague_AgathasRoom_Frlg/scripts.inc"
+    .include "data/maps/PokemonLeague_LancesRoom_Frlg/scripts.inc"
+    .include "data/maps/PokemonLeague_ChampionsRoom_Frlg/scripts.inc"
+
 @ HnS scripts
 	.include "data/maps/TestMap2_hns/scripts.inc"
 
@@ -2263,6 +2272,7 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/SeafoamIslands_Gym_hns/scripts.inc"
 	.include "data/maps/SeafoamIslands_B1F_hns/scripts.inc"
 	.include "data/maps/SeafoamIslands_SecretCave_hns/scripts.inc"
+	.include "data/maps/Route45_GroudonCave_hns/scripts.inc"
 	.include "data/maps/MtSilver_Outside_hns/scripts.inc"
 	.include "data/maps/MtSilver_1F_ItemRoom_hns/scripts.inc"
 	.include "data/maps/MtSilver_1F_WaterfallRoom_hns/scripts.inc"

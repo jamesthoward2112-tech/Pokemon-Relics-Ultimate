@@ -230,6 +230,7 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Mew;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Red;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Leaf;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Deoxys;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruByoxys_hns;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BirthIslandStone;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Brandon;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RubySapphireBrendan;
@@ -949,6 +950,12 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_SS_ANNE]                  = &gObjectEventGraphicsInfo_SSAnne,
 #endif // IS_FRLG
 #if IS_HNS
+    // Native FRLG League maps run in PRU HNS with compatible actor data.
+    [OBJ_EVENT_GFX_LORELEI] = &gObjectEventGraphicsInfo_Lorelei,
+    [OBJ_EVENT_GFX_BRUNO] = &gObjectEventGraphicsInfo_Bruno_hns,
+    [OBJ_EVENT_GFX_AGATHA] = &gObjectEventGraphicsInfo_Agatha,
+    [OBJ_EVENT_GFX_LANCE] = &gObjectEventGraphicsInfo_Lance_hns,
+    [OBJ_EVENT_GFX_PROF_OAK] = &gObjectEventGraphicsInfo_ProfOak_hns,
     [OBJ_EVENT_GFX_ATTENDANT_F_HNS] = &gObjectEventGraphicsInfo_AttendantF_hns,
     [OBJ_EVENT_GFX_ATTENDANT_M_HNS] = &gObjectEventGraphicsInfo_AttendantM_hns,
     [OBJ_EVENT_GFX_BALDING_MAN_HNS] = &gObjectEventGraphicsInfo_BaldingMan_hns,
@@ -1048,6 +1055,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_PRU_MEOWTH_BALLOON_HNS] = &gObjectEventGraphicsInfo_PruMeowthBalloon_hns,
     [OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_KYOGRE_HNS] = &gObjectEventGraphicsInfo_PruShinyPrimalKyogre_hns,
     [OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_GROUDON_HNS] = &gObjectEventGraphicsInfo_PruShinyPrimalGroudon_hns,
+    [OBJ_EVENT_GFX_PRU_BYOXYS_HNS] = &gObjectEventGraphicsInfo_PruByoxys_hns,
     [OBJ_EVENT_GFX_ANABEL_HNS] = &gObjectEventGraphicsInfo_Anabel_hns,
     [OBJ_EVENT_GFX_BRANDON_HNS] = &gObjectEventGraphicsInfo_Brandon_hns,
     [OBJ_EVENT_GFX_GRETA_HNS] = &gObjectEventGraphicsInfo_Greta_hns,

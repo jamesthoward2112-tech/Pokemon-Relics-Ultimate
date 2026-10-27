@@ -7227,6 +7227,45 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SSAnne = {
 #endif // IS_FRLG
 
 #if IS_HNS
+// PRU Kanto League: retain FireRed Lorelei and Agatha sprites in HNS.
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Lorelei = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_NPC_WHITE,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 256,
+    .width = 16,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_4,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .compressed = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_16x32,
+    .subspriteTables = sOamTables_16x32,
+    .anims = sAnimTable_Standard,
+    .images = sPicTable_Lorelei,
+    .affineAnims = gDummySpriteAffineAnimTable,
+};
+
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Agatha = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_NPC_PINK,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 256,
+    .width = 16,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_2,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .compressed = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_16x32,
+    .subspriteTables = sOamTables_16x32,
+    .anims = sAnimTable_Standard,
+    .images = sPicTable_Agatha,
+    .affineAnims = gDummySpriteAffineAnimTable,
+};
+
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AttendantF_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_NPC_1_HNS, OBJ_EVENT_PAL_TAG_NONE, 256, 16, 32, 4, SHADOW_SIZE_M, FALSE, FALSE, TRACKS_FOOT, &gObjectEventBaseOam_16x32, sOamTables_16x32, sAnimTable_Standard, sPicTable_AttendantF_hns, gDummySpriteAffineAnimTable};
 
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AttendantM_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_NPC_1_HNS, OBJ_EVENT_PAL_TAG_NONE, 256, 16, 32, 3, SHADOW_SIZE_M, FALSE, FALSE, TRACKS_FOOT, &gObjectEventBaseOam_16x32, sOamTables_16x32, sAnimTable_Standard, sPicTable_AttendantM_hns, gDummySpriteAffineAnimTable};
@@ -7433,6 +7472,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruMeowthBalloon_h
 
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruShinyPrimalKyogre_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_PRU_SHINY_PRIMAL_KYOGRE_HNS, OBJ_EVENT_PAL_TAG_NONE, 2048, 64, 64, 5, SHADOW_SIZE_NONE, TRUE, FALSE, TRACKS_NONE, &gObjectEventBaseOam_64x64, sOamTables_64x64, sAnimTable_Inanimate, sPicTable_PruShinyPrimalKyogre_hns, gDummySpriteAffineAnimTable};
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruShinyPrimalGroudon_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_PRU_SHINY_PRIMAL_GROUDON_HNS, OBJ_EVENT_PAL_TAG_NONE, 2048, 64, 64, 5, SHADOW_SIZE_NONE, TRUE, FALSE, TRACKS_NONE, &gObjectEventBaseOam_64x64, sOamTables_64x64, sAnimTable_Inanimate, sPicTable_PruShinyPrimalGroudon_hns, gDummySpriteAffineAnimTable};
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PruByoxys_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_PRU_BYOXYS_HNS, OBJ_EVENT_PAL_TAG_NONE, 512, 32, 32, 5, SHADOW_SIZE_NONE, TRUE, FALSE, TRACKS_NONE, &gObjectEventBaseOam_32x32, sOamTables_32x32, sAnimTable_Inanimate, sPicTable_PruByoxys_hns, gDummySpriteAffineAnimTable};
 
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Bill_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_NPC_3_HNS, OBJ_EVENT_PAL_TAG_NONE, 256, 16, 32, 3, SHADOW_SIZE_M, FALSE, FALSE, TRACKS_FOOT, &gObjectEventBaseOam_16x32, sOamTables_16x32, sAnimTable_Standard, sPicTable_Bill_hns, gDummySpriteAffineAnimTable};
 
