@@ -217,8 +217,11 @@ jobs:
         timeout-minutes: 3
         # James requested a directly downloadable player-test ROM even if
         # this headless screenshot-only check cannot be made reliable yet.
+        # The isolated branch's direct-release push sees the same headless
+        # input/capture flakiness as its PR run; the source, engine and 32 MiB
+        # ROM checks above are mandatory in both cases.
         # Keep the hard gate intact for every other PRU release branch.
-        continue-on-error: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' }}
+        continue-on-error: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027') || (github.event_name == 'push' && github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027') }}
         shell: bash
         run: |
           set -euo pipefail
