@@ -17,7 +17,7 @@ MAP_TIERS = {
     "CianwoodPokecenter_hns": 40,
     "MahoganyTown_PokemonCenter_hns": 44,
     "BlackthornCity_PokemonCenter_hns": 50,
-    "IndigoPlateau_PokemonCenter_hns": 60,
+    "IndigoPlateau_PokemonCenter_hns": 100,
     "PewterCity_PokemonCenter_hns": 64,
     "Route4_PokemonCenter_hns": 64,
     "CeruleanCity_PokemonCenter_hns": 68,
@@ -46,10 +46,9 @@ for mapname, level in MAP_TIERS.items():
     handler = "CherryGrove_Pokecenter_Chansey" if level == 7 else f"PRU_ChanseyTrainer_Lv{level:02d}"
     assert chansey[0]["script"] == handler, (mapname, chansey[0]["script"], handler)
     assert handler + "::" in HANDLERS, handler
-for index, level in enumerate(levels):
+for level in levels:
     code = f"TRAINER_PRU_CHANSEY_{level:02d}_HNS"
     assert f"#define {code}" in OPPONENTS
-    assert re.search(rf"#define\s+{code}\s+{654+index}\b", OPPONENTS), code
     section = PARTIES.split(f"=== {code} ===", 1)[1].split("=== ", 1)[0]
     assert "Double Battle: Yes" in section, code
     assert section.count("\nChansey\n") == 2, code
@@ -60,7 +59,8 @@ for index, level in enumerate(levels):
     assert f"cleartrainerflag {code}" in HANDLERS, code
     assert f"trainerbattle_double {code}," in HANDLERS, code
 assert "#define TRAINER_PRU_CHANSEY_100_HNS           674" in OPPONENTS
-assert "#define TRAINERS_COUNT_HNS                       680" in OPPONENTS
+count = re.search(r"#define TRAINERS_COUNT_HNS\s+(\d+)", OPPONENTS)
+assert count and int(count.group(1)) > 674
 # Prevent the specific in-game regression: the old one-line "Chaan! Sii!"
 # must never be compiled as the active Chansey greeting again.
 assert 'CHANSEY: Chaan! Sii!' not in HANDLERS

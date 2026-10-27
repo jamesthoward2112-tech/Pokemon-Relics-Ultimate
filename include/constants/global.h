@@ -112,7 +112,7 @@ enum Language
 #define SAVED_TRENDS_COUNT 5
 #define PYRAMID_BAG_ITEMS_COUNT 10
 #if IS_HNS
-#define ROAMER_COUNT 4
+#define ROAMER_COUNT 5 // Three Kanto birds plus both Johto Eon Pokémon; save padding stays fixed.
 #else
 #define ROAMER_COUNT 1
 #endif

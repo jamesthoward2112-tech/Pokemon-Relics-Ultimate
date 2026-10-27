@@ -1,5 +1,10 @@
 # Crystal Advance Redux: all 38 PRU battle backgrounds
 
+**Historical backup (25 October 2026):** These 38 scenes are preserved in
+the repository but are no longer linked into the active battle renderer.
+Pokémon Rhythm's 55 scenes now replace them. See
+`docs/PRU_RHYTHM_BG_ASSET_PROVENANCE.md` for the active mapping.
+
 Source: approved PRU Library archive `PRU_Crystal_Advance_Redux_38_Backgrounds_GBA_Ready.zip`, dated 2026-10-17.
 
 * Original LZ77 4bpp tiles, 4096-byte tilemaps and 48-colour palettes imported unchanged for indices 00-37.
