@@ -5,6 +5,7 @@
 #include "fieldmap.h"
 #include "field_camera.h"
 #include "overworld.h"
+#include "party_menu.h"
 #include "script.h"
 #include "sprite.h"
 #include "test/test.h"
