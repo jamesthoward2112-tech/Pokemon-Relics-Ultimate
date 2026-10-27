@@ -170,6 +170,17 @@ jobs:
         run: |
           set -euo pipefail
           make clean
+          # Some approved artwork is checked in only as compiled GBA graphics.
+          # clean removes those source-only files; restore their exact tracked bytes.
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+          files = subprocess.check_output(['git', 'ls-files', '*.4bpp', '*.gbapal'], text=True).splitlines()
+          for name in files:
+              path = Path(name)
+              if not path.with_suffix('.png').exists() and not path.with_suffix('.pal').exists():
+                  subprocess.run(['git', 'restore', '--', name], check=True)
+          PY
           if make hns -j2 -O > /tmp/pru-build.log 2>&1; then
             echo 'ROM compilation completed successfully'
           else
