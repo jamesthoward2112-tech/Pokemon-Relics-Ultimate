@@ -246,7 +246,9 @@ TEST("PRU Kanto Elite Four uses native five themed rooms and trainer sprites")
     EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_BRUNOS_ROOM, OBJ_EVENT_GFX_BRUNO, TRUE), 4095);
     EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_AGATHAS_ROOM, OBJ_EVENT_GFX_AGATHA, TRUE), 4095);
     EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_LANCES_ROOM, OBJ_EVENT_GFX_LANCE, TRUE), 4095);
-    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM, OBJ_EVENT_GFX_RED, TRUE), 4095);
+    // Red is activated by the room's frame script, so his object intentionally
+    // has no direct interaction script (bit 2 unset); the actor must still spawn.
+    EXPECT_EQ(CheckLeagueRoomTrainer(MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM, OBJ_EVENT_GFX_RED, TRUE), 4093);
 
     FlagSet(FLAG_IS_CHAMPION);
     FlagSet(FLAG_BADGE16_GET);
