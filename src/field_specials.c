@@ -4642,7 +4642,7 @@ void CanTeachMoveBoxMon(void)
     u32 taskId = CreateTask(Task_LearnMove, 1);
     gTasks[taskId].tState = GetLearnMoveStartState();
     gTasks[taskId].tPartyIndex = gSpecialVar_0x8004;
-    gTasks[taskId].tMove = gSpecialVar_0x8005;
+    gTasks[taskId].tMove = GetSelectedBoxTutorMove();
 }
 
 static void FieldCB_ContinueLearningMove(void)

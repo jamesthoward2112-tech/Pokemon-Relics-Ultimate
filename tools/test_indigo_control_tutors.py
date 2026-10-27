@@ -106,7 +106,9 @@ class TestIndigoControlTutors(unittest.TestCase):
             "if (species < SPECIES_SCARABUB || species > SPECIES_DRAGONITE_RELIC)",
             choosebox,
         )
-        self.assertIn("CanSpeciesLearnPruTutorMove(species, gSpecialVar_0x8005)", choosebox)
+        self.assertIn("CanSpeciesLearnPruTutorMove(species, move)", choosebox)
+        self.assertIn("sActivePruTutorMove = gSpecialVar_0x8005", choosebox)
+        self.assertIn("u16 move = GetSelectedBoxTutorMove();", choosebox)
         self.assertIn("bool32 CanSpeciesLearnPruTutorMove(u16 species, u16 move)", choosebox)
         self.assertIn("CanSpeciesLearnPjrControlTutorMove(species, move)", choosebox)
         self.assertNotIn("if (IsPjrControlTutorMove(gSpecialVar_0x8005))", choosebox)

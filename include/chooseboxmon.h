@@ -19,5 +19,7 @@ s32 GetLearnMoveResumeAfterSummaryScreenState(void);
 bool32 CanSpeciesLearnPjrControlTutorMoveForRelearner(u16 species, u16 move);
 // Shared compatibility gate for the free PRU Control and doubles tutors.
 bool32 CanSpeciesLearnPruTutorMove(u16 species, u16 move);
+// Stable move selection shared by Indigo's party, PC and learning screens.
+u16 GetSelectedBoxTutorMove(void);
 
 #endif // GUARD_CHOOSEBOXMON_H

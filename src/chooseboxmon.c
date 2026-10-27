@@ -33,6 +33,10 @@ struct PcMonSelection
 };
 
 static EWRAM_DATA u8 sSelectionType = 0;
+// Field specials use VAR_0x8005 as shared scratch storage. Keep the specific
+// move chosen in Indigo before opening either the party or the PC UI, whose
+// callbacks may run many frames after the selection script.
+static EWRAM_DATA u16 sActivePruTutorMove = MOVE_NONE;
 
 // All these filter functions return 0 when a mon is a valid or a number corresponding to the type of error
 static u32 NoFilter(struct BoxPokemon *boxmon);
@@ -414,17 +418,27 @@ bool32 CanSpeciesLearnSelectedPruTutorMove(u16 species, u16 move)
     return CanSpeciesLearnPruTutorMove(species, move);
 }
 
+u16 GetSelectedBoxTutorMove(void)
+{
+    if ((sSelectionType == SELECT_PC_MON_PJR_CONTROL_TUTOR
+      || sSelectionType == SELECT_PC_MON_PRU_DOUBLE_TUTOR)
+     && sActivePruTutorMove != MOVE_NONE)
+        return sActivePruTutorMove;
+    return gSpecialVar_0x8005;
+}
+
 static u32 CanMonLearnPjrControlMove(struct BoxPokemon *boxmon)
 {
     u16 species;
+    u16 move = GetSelectedBoxTutorMove();
 
     if (GetBoxMonData(boxmon, MON_DATA_IS_EGG))
         return CANNOT_LEARN_MOVE_IS_EGG;
-    if (BoxMonKnowsMove(boxmon, gSpecialVar_0x8005))
+    if (BoxMonKnowsMove(boxmon, move))
         return ALREADY_KNOWS_MOVE;
 
     species = GetBoxMonData(boxmon, MON_DATA_SPECIES);
-    if (CanSpeciesLearnPruTutorMove(species, gSpecialVar_0x8005))
+    if (CanSpeciesLearnPruTutorMove(species, move))
         return VALID_MON;
 
     return CANNOT_LEARN_MOVE;
@@ -442,7 +456,7 @@ bool32 CanSpeciesLearnPjrControlTutorMoveForRelearner(u16 species, u16 move)
 static u32 CanMonLearnPruDoubleMove(struct BoxPokemon *boxmon)
 {
     u16 species;
-    u16 move = gSpecialVar_0x8005;
+    u16 move = GetSelectedBoxTutorMove();
 
     if (GetBoxMonData(boxmon, MON_DATA_IS_EGG))
         return CANNOT_LEARN_MOVE_IS_EGG;
@@ -621,6 +635,11 @@ static void Task_ChooseBoxMon(u8 taskId)
 void ChooseBoxMon(struct ScriptContext *ctx)
 {
     sSelectionType = ScriptReadByte(ctx);
+    if (sSelectionType == SELECT_PC_MON_PJR_CONTROL_TUTOR
+     || sSelectionType == SELECT_PC_MON_PRU_DOUBLE_TUTOR)
+        sActivePruTutorMove = gSpecialVar_0x8005;
+    else
+        sActivePruTutorMove = MOVE_NONE;
     if (!OW_CHOOSE_FROM_PC_AND_PARTY)
     {
         sPcMonSelectionTypes[sSelectionType].partyMonBackup();

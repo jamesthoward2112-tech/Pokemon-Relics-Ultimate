@@ -2,6 +2,7 @@
 #include "malloc.h"
 #include "battle.h"
 #include "challenge_menu.h"
+#include "chooseboxmon.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
 #include "battle_gfx_sfx_util.h"
@@ -1137,7 +1138,7 @@ static bool8 DisplayPartyPokemonDataForMoveTutorOrEvolutionItem(u8 slot)
     if (gPartyMenu.action == PARTY_ACTION_MOVE_TUTOR)
     {
         gSpecialVar_Result = FALSE;
-        DisplayPartyPokemonDataToTeachMove(slot, gSpecialVar_0x8005);
+        DisplayPartyPokemonDataToTeachMove(slot, GetSelectedBoxTutorMove());
     }
     else
     {
@@ -7144,7 +7145,7 @@ static void TryTutorSelectedMon(u8 taskId)
         mon = &gPlayerParty[gPartyMenu.slotId];
         move = &gPartyMenu.data1;
         GetMonNickname(mon, gStringVar1);
-        gPartyMenu.data1 = gSpecialVar_0x8005;
+        gPartyMenu.data1 = GetSelectedBoxTutorMove();
         StringCopy(gStringVar2, GetMoveName(gPartyMenu.data1));
         move[1] = 2;
         switch (CanTeachMove(mon, gPartyMenu.data1))

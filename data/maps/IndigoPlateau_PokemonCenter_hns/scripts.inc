@@ -23,10 +23,15 @@ IndigoPlateau_Pokecenter_OnTransition::
 	goto_if_unset FLAG_PRU_HEIST_COMPLETED, PRU_LeagueEntrance_KeepOldGuard
 	goto_if_unset FLAG_PRU_HEIST_GIOVANNI, PRU_LeagueEntrance_KeepOldGuard
 	setflag FLAG_HIDE_LEAGUE_BLACKBELT
+	@ A completed badge heist implies a late Kanto save. Do not make
+	@ returning players face Silver's old daily encounter again.
+	setflag FLAG_HIDE_INDIGO_PLATEAU_SILVER
 	end
 
 PRU_LeagueEntrance_ShowGuard::
 	clearflag FLAG_HIDE_LEAGUE_BLACKBELT
+	@ Retire Silver in existing post-League saves as well as new playthroughs.
+	setflag FLAG_HIDE_INDIGO_PLATEAU_SILVER
 	end
 
 PRU_LeagueEntrance_KeepOldGuard::
@@ -42,6 +47,28 @@ PRU_LeagueEntrance_Seal::
 	end
 
 PRU_LeagueEntrance_Unsealed::
+	@ This coordinate trigger is at (32,3), one tile BEFORE the fixed
+	@ door warp at (32,2). Redirect here, in a normal field script:
+	@ a warpsilent command in Will's ON_TRANSITION immediate map script
+	@ was ignored, leaving all Kanto battles in Johto rooms/sprites.
+	call PRU_KantoE4_CheckActive
+	goto_if_eq VAR_RESULT, TRUE, PRU_LeagueEntrance_EnterKanto
+	end
+
+PRU_LeagueEntrance_EnterKanto::
+	lock
+	@ FRLG's five rooms use their own per-opponent door flags. Reset
+	@ them once when entering this championship, just as the old Will
+	@ redirect attempted to do (without changing Johto's flags).
+	clearflag FLAG_DEFEATED_LORELEI
+	clearflag FLAG_DEFEATED_BRUNO
+	clearflag FLAG_DEFEATED_AGATHA
+	clearflag FLAG_DEFEATED_LANCE
+	clearflag FLAG_DEFEATED_CHAMP
+	setvar VAR_MAP_SCENE_POKEMON_LEAGUE, 0
+	fadescreen FADE_TO_BLACK
+	warp MAP_POKEMON_LEAGUE_LORELEIS_ROOM, 0
+	waitstate
 	end
 
 PRU_LeagueEntrance_Text_Closed::
@@ -91,6 +118,7 @@ IndigoPlateau_Text_CooltrainerM:
 IndigoPlateau_EventScript_Silver::
 	lock
 	faceplayer 
+	goto_if_set FLAG_HIDE_INDIGO_PLATEAU_SILVER, IndigoPlateau_EventScript_SilverBeat
 	goto_if_set FLAG_DAILY_BEAT_SILVER, IndigoPlateau_EventScript_SilverBeat
 	msgbox IndigoPlateau_Text_RivalEntrance1, MSGBOX_DEFAULT
 	call_if_eq VAR_STARTER_MON, 0, IndigoPlateau_Silver_Battle_Cyndaquil
@@ -98,6 +126,8 @@ IndigoPlateau_EventScript_Silver::
 	call_if_eq VAR_STARTER_MON, 2, IndigoPlateau_Silver_Battle_Chikorita
 	msgbox IndigoPlateau_Text_RivalAfter, MSGBOX_DEFAULT
 	setflag FLAG_DAILY_BEAT_SILVER
+	@ One Indigo battle only; no more daily rematches.
+	setflag FLAG_HIDE_INDIGO_PLATEAU_SILVER
 	release
 	end
 
