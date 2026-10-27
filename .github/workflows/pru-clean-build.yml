@@ -177,7 +177,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import subprocess
-          files = subprocess.check_output(['git', 'ls-files', '*.4bpp', '*.gbapal', '*.lz'], text=True).splitlines()
+          files = subprocess.check_output(['git', 'ls-files', '*.4bpp', '*.8bpp', '*.gbapal', '*.lz'], text=True).splitlines()
           for name in files:
               path = Path(name)
               source = path.with_suffix('') if path.suffix == '.lz' else path
