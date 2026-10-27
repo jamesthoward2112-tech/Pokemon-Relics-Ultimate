@@ -24,7 +24,13 @@ for name, layout, gfx in johto:
 
 # Kanto is routed to the native ice/fighting/ghost/dragon/champion rooms.
 will_script = read("data/maps/PokemonLeague_WillsRoom_hns/scripts.inc")
-assert "MAP_POKEMON_LEAGUE_LORELEIS_ROOM" in will_script
+overworld = read("src/overworld.c")
+assert "MAP_SCRIPT_ON_TRANSITION, PRU_LeagueRoom_OnTransition" not in will_script
+assert "warpsilent MAP_POKEMON_LEAGUE_LORELEIS_ROOM" not in will_script
+assert "PruShouldUseKantoLeagueRooms" in overworld
+assert "sWarpDestination.mapGroup = MAP_GROUP(MAP_POKEMON_LEAGUE_LORELEIS_ROOM)" in overworld
+assert "sWarpDestination.mapNum = MAP_NUM(MAP_POKEMON_LEAGUE_LORELEIS_ROOM)" in overworld
+assert "FlagGet(FLAG_PRU_KANTO_LEAGUE_CLEARED)" in overworld
 kanto = (
     ("PokemonLeague_LoreleisRoom_Frlg", "LAYOUT_POKEMON_LEAGUE_LORELEIS_ROOM", "OBJ_EVENT_GFX_LORELEI", "TRAINER_PRU_KANTO_E4_LORELEI_HNS"),
     ("PokemonLeague_BrunosRoom_Frlg", "LAYOUT_POKEMON_LEAGUE_BRUNOS_ROOM", "OBJ_EVENT_GFX_BRUNO", "TRAINER_PRU_KANTO_E4_BRUNO_HNS"),
