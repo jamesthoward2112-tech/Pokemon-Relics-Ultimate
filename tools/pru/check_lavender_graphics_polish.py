@@ -14,16 +14,16 @@ def read(path):
 
 
 # Every encounter on any of the seven Tower floors must use one existing,
-# unmodified haunted Crystal Redux environment, not the per-map random choice.
+# haunting Rhythm graveyard environment, not the per-map random choice.
 bg = read("src/battle_bg.c")
-scene_selector = bg.split("static u8 GetPruCrystalBattleBgIndex(u16 environment)", 1)[1]
-assert "return 19;" in scene_selector.split("if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)", 1)[0], (
+scene_selector = bg.split("static u8 GetPruRhythmBattleBgIndex(u16 environment)", 1)[1]
+assert "return 44;" in scene_selector.split("if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)", 1)[0], (
     "Tower override must run before any ordinary trainer or map-seeded scene selection"
 )
 for floor in range(1, 8):
     assert f"MAP_LAVENDER_SPIRIT_TOWER_{floor}F_HNS" in scene_selector, floor
 
-print("PASS: all seven Lavender Tower floors use the original graveyard battle scene")
+print("PASS: all seven Lavender Tower floors use the Rhythm ghostly stone circle")
 
 
 # Swamplith uses bespoke icon tag +8. The PC used to assign its fullscreen
