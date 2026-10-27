@@ -175,10 +175,11 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import subprocess
-          files = subprocess.check_output(['git', 'ls-files', '*.4bpp', '*.gbapal'], text=True).splitlines()
+          files = subprocess.check_output(['git', 'ls-files', '*.4bpp', '*.gbapal', '*.lz'], text=True).splitlines()
           for name in files:
               path = Path(name)
-              if not path.with_suffix('.png').exists() and not path.with_suffix('.pal').exists():
+              source = path.with_suffix('') if path.suffix == '.lz' else path
+              if not source.exists() and not source.with_suffix('.png').exists() and not source.with_suffix('.pal').exists():
                   subprocess.run(['git', 'restore', '--', name], check=True)
           PY
           if make hns -j2 -O > /tmp/pru-build.log 2>&1; then
