@@ -7358,6 +7358,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "frlg",
+      "also_in_versions": ["hns"],
       "layout_version": "frlg"
     },
     {
@@ -7372,6 +7373,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "frlg",
+      "also_in_versions": ["hns"],
       "layout_version": "frlg"
     },
     {
@@ -7386,6 +7388,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "frlg",
+      "also_in_versions": ["hns"],
       "layout_version": "frlg"
     },
     {
@@ -7400,6 +7403,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "frlg",
+      "also_in_versions": ["hns"],
       "layout_version": "frlg"
     },
     {
@@ -7414,6 +7418,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "frlg",
+      "also_in_versions": ["hns"],
       "layout_version": "frlg"
     },
     {

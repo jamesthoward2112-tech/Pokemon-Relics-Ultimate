@@ -2,6 +2,7 @@
   "id": "MAP_POKEMON_LEAGUE_LORELEIS_ROOM",
   "name": "PokemonLeague_LoreleisRoom_Frlg",
   "game_version": "frlg",
+  "also_in_versions": ["hns"],
   "layout": "LAYOUT_POKEMON_LEAGUE_LORELEIS_ROOM",
   "music": "MUS_RG_GYM",
   "region": "REGION_KANTO",

@@ -729,7 +729,13 @@ void process_groups(string groups_filepath, vector<string> &map_filepaths, strin
         if (expected_game_ver == "firered")
             expected_game_ver = "frlg";
 
-        if (game_ver != expected_game_ver) {
+        // PRU reuses a small set of Kanto League maps inside the HNS
+        // championship; other FRLG maps remain excluded from HNS builds.
+        bool supported = (game_ver == expected_game_ver);
+        for (auto extra : map_data["also_in_versions"].array_items())
+            if (json_to_string(extra) == expected_game_ver)
+                supported = true;
+        if (!supported) {
             invalid_maps.push_back(map_name);
         }
     }
@@ -758,7 +764,12 @@ bool layout_matches_version(const Json &layout) {
     string expected = version;
     if (expected == "firered")
         expected = "frlg";
-    return game_ver == expected;
+    if (game_ver == expected)
+        return true;
+    for (auto extra : layout["also_in_versions"].array_items())
+        if (json_to_string(extra) == expected)
+            return true;
+    return false;
 }
 
 string generate_layout_headers_text(Json layouts_data) {

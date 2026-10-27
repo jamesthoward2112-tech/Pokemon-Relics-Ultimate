@@ -950,6 +950,12 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_SS_ANNE]                  = &gObjectEventGraphicsInfo_SSAnne,
 #endif // IS_FRLG
 #if IS_HNS
+    // Native FRLG League maps run in PRU HNS with compatible actor data.
+    [OBJ_EVENT_GFX_LORELEI] = &gObjectEventGraphicsInfo_Lorelei,
+    [OBJ_EVENT_GFX_BRUNO] = &gObjectEventGraphicsInfo_Bruno_hns,
+    [OBJ_EVENT_GFX_AGATHA] = &gObjectEventGraphicsInfo_Agatha,
+    [OBJ_EVENT_GFX_LANCE] = &gObjectEventGraphicsInfo_Lance_hns,
+    [OBJ_EVENT_GFX_PROF_OAK] = &gObjectEventGraphicsInfo_ProfOak_hns,
     [OBJ_EVENT_GFX_ATTENDANT_F_HNS] = &gObjectEventGraphicsInfo_AttendantF_hns,
     [OBJ_EVENT_GFX_ATTENDANT_M_HNS] = &gObjectEventGraphicsInfo_AttendantM_hns,
     [OBJ_EVENT_GFX_BALDING_MAN_HNS] = &gObjectEventGraphicsInfo_BaldingMan_hns,

@@ -682,6 +682,12 @@ const u16 gObjectEventPic_ClefairyOld[] = INCBIN_U16("graphics/object_events/pic
 #endif // IS_FRLG
 
 #if IS_HNS
+// PRU Kanto League: retain FireRed Lorelei and Agatha sprites in HNS.
+const u16 gObjectEventPal_NpcPink[] = INCBIN_U16("graphics/object_events/palettes/npc_pink.gbapal");
+const u16 gObjectEventPal_NpcWhite[] = INCBIN_U16("graphics/object_events/palettes/npc_white.gbapal");
+const u16 gObjectEventPic_Lorelei[] = INCBIN_U16("graphics/object_events/pics/people/lorelei.4bpp");
+const u16 gObjectEventPic_Agatha[] = INCBIN_U16("graphics/object_events/pics/people/agatha.4bpp");
+
 // HnS sprite data
 const u32 gObjectEventPic_AttendantF_hns[] = INCBIN_U32("graphics/object_events/pics/people/attendant_f_hns.4bpp");
 const u32 gObjectEventPic_AttendantM_hns[] = INCBIN_U32("graphics/object_events/pics/people/attendant_m_hns.4bpp");

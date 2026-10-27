@@ -542,6 +542,9 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Seagallop,             OBJ_EVENT_PAL_TAG_SEAGALLOP},
 #endif // IS_FRLG
 #if IS_HNS
+    // Lorelei and Agatha use the original FireRed NPC colour ramps.
+    {gObjectEventPal_NpcPink, OBJ_EVENT_PAL_TAG_NPC_PINK},
+    {gObjectEventPal_NpcWhite, OBJ_EVENT_PAL_TAG_NPC_WHITE},
     {gObjectEventPal_BirthIslandStone_hns, OBJ_EVENT_PAL_TAG_BIRTH_ISLAND_STONE_HNS},
     {gObjectEventPal_Bugsy_hns, OBJ_EVENT_PAL_TAG_BUGSY_HNS},
     {gObjectEventPal_Train_hns, OBJ_EVENT_PAL_TAG_TRAIN_HNS},
