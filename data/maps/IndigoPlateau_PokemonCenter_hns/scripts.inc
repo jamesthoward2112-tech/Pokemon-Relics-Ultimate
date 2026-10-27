@@ -551,6 +551,204 @@ IndigoPlateau_Text_TutorMove_Nuzzle:
 IndigoPlateau_Text_TutorMove_Cancel:
 	.string "CANCEL$"
 
+@ Compact bottom-left support row. Closely related services share an NPC so
+@ the Centre remains easy to walk through.
+PRU_TrainingHub_Relearner::
+	goto Common_EventScript_MoveRelearner
+
+PRU_SetupTutor::
+	lock
+	faceplayer
+	message PRU_SetupTutor_Text_Intro
+	waitmessage
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, PRU_SetupTutor_Text_SwordsDance, PRU_SetupTutor_Text_NastyPlot, PRU_SetupTutor_Text_DragonDance, PRU_SetupTutor_Text_CalmMind, PRU_SetupTutor_Text_BulkUp, PRU_SetupTutor_Text_Agility, PRU_SetupTutor_Text_Protect, IndigoPlateau_Text_TutorMove_Cancel
+	switch VAR_RESULT
+	case 0, PRU_SetupTutor_SwordsDance
+	case 1, PRU_SetupTutor_NastyPlot
+	case 2, PRU_SetupTutor_DragonDance
+	case 3, PRU_SetupTutor_CalmMind
+	case 4, PRU_SetupTutor_BulkUp
+	case 5, PRU_SetupTutor_Agility
+	case 6, PRU_SetupTutor_Protect
+	case 7, IndigoPlateau_EventScript_TutorDecline
+	case MULTI_B_PRESSED, IndigoPlateau_EventScript_TutorDecline
+	end
+PRU_SetupTutor_SwordsDance::
+	setvar VAR_0x8005, MOVE_SWORDS_DANCE
+	goto IndigoPlateau_EventScript_TutorTeachMove
+PRU_SetupTutor_NastyPlot::
+	setvar VAR_0x8005, MOVE_NASTY_PLOT
+	goto IndigoPlateau_EventScript_TutorTeachMove
+PRU_SetupTutor_DragonDance::
+	setvar VAR_0x8005, MOVE_DRAGON_DANCE
+	goto IndigoPlateau_EventScript_TutorTeachMove
+PRU_SetupTutor_CalmMind::
+	setvar VAR_0x8005, MOVE_CALM_MIND
+	goto IndigoPlateau_EventScript_TutorTeachMove
+PRU_SetupTutor_BulkUp::
+	setvar VAR_0x8005, MOVE_BULK_UP
+	goto IndigoPlateau_EventScript_TutorTeachMove
+PRU_SetupTutor_Agility::
+	setvar VAR_0x8005, MOVE_AGILITY
+	goto IndigoPlateau_EventScript_TutorTeachMove
+PRU_SetupTutor_Protect::
+	setvar VAR_0x8005, MOVE_PROTECT
+	goto IndigoPlateau_EventScript_TutorTeachMove
+
+PRU_SetupTutor_Text_Intro:
+	.string "I teach free setup moves.\nWhich one will sharpen your plan?$"
+PRU_SetupTutor_Text_SwordsDance:
+	.string "SWORDS DANCE$"
+PRU_SetupTutor_Text_NastyPlot:
+	.string "NASTY PLOT$"
+PRU_SetupTutor_Text_DragonDance:
+	.string "DRAGON DANCE$"
+PRU_SetupTutor_Text_CalmMind:
+	.string "CALM MIND$"
+PRU_SetupTutor_Text_BulkUp:
+	.string "BULK UP$"
+PRU_SetupTutor_Text_Agility:
+	.string "AGILITY$"
+PRU_SetupTutor_Text_Protect:
+	.string "PROTECT$"
+
+PRU_TrainingHub_MoveDeleter::
+	lockall
+	faceplayer
+	msgbox BlackthornCity_MoveDeletersHouse_Text_ICanMakeMonForgetMove, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, BlackthornCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget
+	goto BlackthornCity_MoveDeletersHouse_EventScript_ComeAgain
+
+PRU_TrainingHub_AbilityNature::
+	lockall
+	faceplayer
+	message PRU_TrainingHub_Text_AbilityNature
+	waitmessage
+	dynmultichoice 0, 0, FALSE, 3, 0, DYN_MULTICHOICE_CB_NONE, PRU_TrainingHub_Text_Ability, PRU_TrainingHub_Text_Nature, PRU_TrainingHub_Text_Cancel
+	switch VAR_RESULT
+	case 0, PRU_TrainingHub_Ability
+	case 1, PRU_TrainingHub_Nature
+	case 2, PRU_TrainingHub_Exit
+	case MULTI_B_PRESSED, PRU_TrainingHub_Exit
+	end
+PRU_TrainingHub_Ability::
+	msgbox PRU_TrainingHub_Text_ChooseMon, MSGBOX_DEFAULT
+	special ChoosePartyMon
+	waitstate
+	goto_if_ge VAR_0x8004, PARTY_SIZE, PRU_TrainingHub_Exit
+	special SwitchMonAbility
+	goto_if_eq VAR_RESULT, FALSE, PRU_TrainingHub_AbilityFailed
+	msgbox PRU_TrainingHub_Text_AbilityDone, MSGBOX_DEFAULT
+	goto PRU_TrainingHub_Exit
+PRU_TrainingHub_AbilityFailed::
+	msgbox PRU_TrainingHub_Text_AbilityFailed, MSGBOX_DEFAULT
+	goto PRU_TrainingHub_Exit
+PRU_TrainingHub_Nature::
+	msgbox PRU_TrainingHub_Text_ChooseMon, MSGBOX_DEFAULT
+	special ChoosePartyMon
+	waitstate
+	goto_if_ge VAR_0x8004, PARTY_SIZE, PRU_TrainingHub_Exit
+	dynmultipush Debug_EventScript_ChangeNature_Text_Hardy, 0
+	dynmultipush Debug_EventScript_ChangeNature_Text_Lonely, 1
+	dynmultipush Debug_EventScript_ChangeNature_Text_Brave, 2
+	dynmultipush Debug_EventScript_ChangeNature_Text_Adamant, 3
+	dynmultipush Debug_EventScript_ChangeNature_Text_Naughty, 4
+	dynmultipush Debug_EventScript_ChangeNature_Text_Bold, 5
+	dynmultipush Debug_EventScript_ChangeNature_Text_Docile, 6
+	dynmultipush Debug_EventScript_ChangeNature_Text_Relaxed, 7
+	dynmultipush Debug_EventScript_ChangeNature_Text_Impish, 8
+	dynmultipush Debug_EventScript_ChangeNature_Text_Lax, 9
+	dynmultipush Debug_EventScript_ChangeNature_Text_Timid, 10
+	dynmultipush Debug_EventScript_ChangeNature_Text_Hasty, 11
+	dynmultipush Debug_EventScript_ChangeNature_Text_Serious, 12
+	dynmultipush Debug_EventScript_ChangeNature_Text_Jolly, 13
+	dynmultipush Debug_EventScript_ChangeNature_Text_Naive, 14
+	dynmultipush Debug_EventScript_ChangeNature_Text_Modest, 15
+	dynmultipush Debug_EventScript_ChangeNature_Text_Mild, 16
+	dynmultipush Debug_EventScript_ChangeNature_Text_Quiet, 17
+	dynmultipush Debug_EventScript_ChangeNature_Text_Bashful, 18
+	dynmultipush Debug_EventScript_ChangeNature_Text_Rash, 19
+	dynmultipush Debug_EventScript_ChangeNature_Text_Calm, 20
+	dynmultipush Debug_EventScript_ChangeNature_Text_Gentle, 21
+	dynmultipush Debug_EventScript_ChangeNature_Text_Sassy, 22
+	dynmultipush Debug_EventScript_ChangeNature_Text_Careful, 23
+	dynmultipush Debug_EventScript_ChangeNature_Text_Quirky, 24
+	dynmultistack 0, 0, TRUE, 7, FALSE, 0, NULL
+	goto_if_eq VAR_RESULT, MULTI_B_PRESSED, PRU_TrainingHub_Exit
+	special SetHiddenNature
+	msgbox PRU_TrainingHub_Text_NatureDone, MSGBOX_DEFAULT
+	goto PRU_TrainingHub_Exit
+
+PRU_TrainingHub_EvIv::
+	lockall
+	faceplayer
+	msgbox PRU_TrainingHub_Text_ChooseMon, MSGBOX_DEFAULT
+	special ChoosePartyMon
+	waitstate
+	goto_if_ge VAR_0x8004, PARTY_SIZE, PRU_TrainingHub_Exit
+	message PRU_TrainingHub_Text_EvIv
+	waitmessage
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, PRU_TrainingHub_Text_PerfectIVs, PRU_TrainingHub_Text_PhysicalEVs, PRU_TrainingHub_Text_SpecialEVs, PRU_TrainingHub_Text_BulkyEVs, PRU_TrainingHub_Text_ResetEVs, PRU_TrainingHub_Text_Cancel
+	switch VAR_RESULT
+	case 0, PRU_TrainingHub_PerfectIVs
+	case 1, PRU_TrainingHub_PhysicalEVs
+	case 2, PRU_TrainingHub_SpecialEVs
+	case 3, PRU_TrainingHub_BulkyEVs
+	case 4, PRU_TrainingHub_ResetEVs
+	case 5, PRU_TrainingHub_Exit
+	case MULTI_B_PRESSED, PRU_TrainingHub_Exit
+	end
+PRU_TrainingHub_PerfectIVs::
+	special PRU_SetSelectedMonPerfectIVs
+	goto PRU_TrainingHub_StatsDone
+PRU_TrainingHub_PhysicalEVs::
+	special PRU_SetSelectedMonPhysicalEVs
+	goto PRU_TrainingHub_StatsDone
+PRU_TrainingHub_SpecialEVs::
+	special PRU_SetSelectedMonSpecialEVs
+	goto PRU_TrainingHub_StatsDone
+PRU_TrainingHub_BulkyEVs::
+	special PRU_SetSelectedMonBulkyEVs
+	goto PRU_TrainingHub_StatsDone
+PRU_TrainingHub_ResetEVs::
+	special PRU_ResetSelectedMonEVs
+PRU_TrainingHub_StatsDone::
+	msgbox PRU_TrainingHub_Text_StatsDone, MSGBOX_DEFAULT
+PRU_TrainingHub_Exit::
+	releaseall
+	end
+
+PRU_TrainingHub_Text_AbilityNature:
+	.string "I specialise in ABILITIES and\nNATURES. Which should I change?$"
+PRU_TrainingHub_Text_Ability:
+	.string "ABILITY$"
+PRU_TrainingHub_Text_Nature:
+	.string "NATURE$"
+PRU_TrainingHub_Text_Cancel:
+	.string "CANCEL$"
+PRU_TrainingHub_Text_ChooseMon:
+	.string "Choose a POKéMON from your party.$"
+PRU_TrainingHub_Text_AbilityDone:
+	.string "Its alternate ABILITY is active!$"
+PRU_TrainingHub_Text_AbilityFailed:
+	.string "That POKéMON has no alternate\nABILITY to activate.$"
+PRU_TrainingHub_Text_NatureDone:
+	.string "Its effective NATURE was changed!$"
+PRU_TrainingHub_Text_EvIv:
+	.string "Perfect IVs or a legal EV spread?\nEvery service here is free.$"
+PRU_TrainingHub_Text_PerfectIVs:
+	.string "PERFECT IVS$"
+PRU_TrainingHub_Text_PhysicalEVs:
+	.string "PHYSICAL EVS$"
+PRU_TrainingHub_Text_SpecialEVs:
+	.string "SPECIAL EVS$"
+PRU_TrainingHub_Text_BulkyEVs:
+	.string "BULKY EVS$"
+PRU_TrainingHub_Text_ResetEVs:
+	.string "RESET EVS$"
+PRU_TrainingHub_Text_StatsDone:
+	.string "Training complete!$"
+
 PRU_Elite18_Steward::
 	lock
 	faceplayer
