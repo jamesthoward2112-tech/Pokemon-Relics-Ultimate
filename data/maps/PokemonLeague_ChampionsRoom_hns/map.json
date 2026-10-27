@@ -16,7 +16,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_LEAGUE_LANCE",
-      "graphics_id": "OBJ_EVENT_GFX_VAR_0",
+      "graphics_id": "OBJ_EVENT_GFX_LANCE_HNS",
       "x": 6,
       "y": 8,
       "elevation": 0,

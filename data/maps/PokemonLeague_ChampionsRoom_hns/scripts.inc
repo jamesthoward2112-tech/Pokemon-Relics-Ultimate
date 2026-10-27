@@ -1,18 +1,7 @@
 PokemonLeague_ChampionsRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, ChampionRoom_OnFrame
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_ChampionsRoom_OnResume
-	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_ChampionAppearance
 	.byte 0
-
-PRU_KantoE4_ChampionAppearance::
-	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_LANCE_HNS
-	call PRU_KantoE4_CheckActive
-	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_ChampionShowRed
-	end
-
-PRU_KantoE4_ChampionShowRed::
-	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_RED_NORMAL_HNS
-	end
 
 PRU_KantoE4_LanceOrRed::
 	call PRU_KantoE4_CheckActive

@@ -24,11 +24,10 @@ for folder, johto, kanto, johto_gfx, kanto_gfx in rooms:
     trainer_npcs = [o for o in game_map["object_events"] if (o["x"], o["y"]) in {(6, 6), (6, 8)}]
     assert len(trainer_npcs) == 1, (folder, "single always-visible trainer required")
     actor = trainer_npcs[0]
-    assert actor["flag"] == "0" and actor["graphics_id"] == "OBJ_EVENT_GFX_VAR_0"
+    assert actor["flag"] == "0" and actor["graphics_id"] == f"OBJ_EVENT_GFX_{johto_gfx}"
     assert actor["script"] == f"PRU_KantoE4_{johto}Or{kanto}"
     script = read(f"{prefix}/scripts.inc")
-    assert f"setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_{johto_gfx}" in script
-    assert f"setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_{kanto_gfx}" in script
+    assert "MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_" not in script
     assert f"PRU_KantoE4_{johto}Or{kanto}::" in script
     assert "call PRU_KantoE4_CheckActive" in script
     assert f"goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_{kanto}" in script

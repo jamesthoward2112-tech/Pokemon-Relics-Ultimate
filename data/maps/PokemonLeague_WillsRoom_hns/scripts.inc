@@ -2,7 +2,6 @@ PokemonLeague_WillsRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, EliteFourRoom_OnFrame
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_WillsRoom_OnResume
 	map_script MAP_SCRIPT_ON_LOAD, EliteFourRoom_OnLoad
-	map_script MAP_SCRIPT_ON_TRANSITION, PRU_KantoE4_WillAppearance
 	.byte 0
 
 @ A single visible actor per room avoids two co-located hidden events
@@ -18,16 +17,6 @@ PRU_KantoE4_CheckActive::
 	setvar VAR_RESULT, TRUE
 PRU_KantoE4_CheckDone::
 	return
-
-PRU_KantoE4_WillAppearance::
-	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_WILL_HNS
-	call PRU_KantoE4_CheckActive
-	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_WillShowLorelei
-	end
-
-PRU_KantoE4_WillShowLorelei::
-	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_LORELEI
-	end
 
 PRU_KantoE4_WillOrLorelei::
 	call PRU_KantoE4_CheckActive
