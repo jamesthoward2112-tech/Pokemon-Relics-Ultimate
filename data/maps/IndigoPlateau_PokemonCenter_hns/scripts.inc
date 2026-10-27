@@ -202,7 +202,9 @@ IndigoPlateau_Text_Abra:
 IndigoPlateau_EventScript_HazardTutor::
 	lock
 	faceplayer
-	message IndigoPlateau_Text_HazardTutorIntro
+	msgbox IndigoPlateau_Text_HazardTutorIntro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, IndigoPlateau_EventScript_TutorDecline
+	message IndigoPlateau_Text_HazardTutorChoose
 	waitmessage
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, IndigoPlateau_Text_TutorMove_StealthRock, IndigoPlateau_Text_TutorMove_Spikes, IndigoPlateau_Text_TutorMove_ToxicSpikes, IndigoPlateau_Text_TutorMove_StickyWeb, IndigoPlateau_Text_TutorMove_StoneAxe, IndigoPlateau_Text_TutorMove_CeaselessEdge, IndigoPlateau_Text_TutorMove_SaltCure, IndigoPlateau_Text_TutorMove_LeechSeed, IndigoPlateau_Text_TutorMove_Toxic, IndigoPlateau_Text_TutorMove_WillOWisp, IndigoPlateau_Text_TutorMove_ThunderWave, IndigoPlateau_Text_TutorMove_Taunt, IndigoPlateau_Text_TutorMove_Encore, IndigoPlateau_Text_TutorMove_KnockOff, IndigoPlateau_Text_TutorMove_Roar, IndigoPlateau_Text_TutorMove_Whirlwind, IndigoPlateau_Text_TutorMove_DragonTail, IndigoPlateau_Text_TutorMove_Infestation, IndigoPlateau_Text_TutorMove_Cancel
 	switch VAR_RESULT
@@ -231,7 +233,9 @@ IndigoPlateau_EventScript_HazardTutor::
 IndigoPlateau_EventScript_CleanupTutor::
 	lock
 	faceplayer
-	message IndigoPlateau_Text_CleanupTutorIntro
+	msgbox IndigoPlateau_Text_CleanupTutorIntro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, IndigoPlateau_EventScript_TutorDecline
+	message IndigoPlateau_Text_CleanupTutorChoose
 	waitmessage
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, IndigoPlateau_Text_TutorMove_RapidSpin, IndigoPlateau_Text_TutorMove_Defog, IndigoPlateau_Text_TutorMove_MortalSpin, IndigoPlateau_Text_TutorMove_TidyUp, IndigoPlateau_Text_TutorMove_CourtChange, IndigoPlateau_Text_TutorMove_Haze, IndigoPlateau_Text_TutorMove_ClearSmog, IndigoPlateau_Text_TutorMove_BrickBreak, IndigoPlateau_Text_TutorMove_PsychicFangs, IndigoPlateau_Text_TutorMove_IceSpinner, IndigoPlateau_Text_TutorMove_HealBell, IndigoPlateau_Text_TutorMove_Aromatherapy, IndigoPlateau_Text_TutorMove_UTurn, IndigoPlateau_Text_TutorMove_VoltSwitch, IndigoPlateau_Text_TutorMove_FlipTurn, IndigoPlateau_Text_TutorMove_PartingShot, IndigoPlateau_Text_TutorMove_Snarl, IndigoPlateau_Text_TutorMove_IcyWind, IndigoPlateau_Text_TutorMove_BreakingSwipe, IndigoPlateau_Text_TutorMove_ChillingWater, IndigoPlateau_Text_TutorMove_AcidSpray, IndigoPlateau_Text_TutorMove_Nuzzle, IndigoPlateau_Text_TutorMove_Cancel
 	switch VAR_RESULT
@@ -447,14 +451,18 @@ IndigoPlateau_EventScript_TutorDecline::
 	end
 
 IndigoPlateau_Text_HazardTutorIntro:
-	.string "I teach battlefield control.\p"
-	.string "Hazards, traps, status and phazing.\n"
-	.string "No fee. Which move do you want?$"
+	.string "I teach free battlefield HAZARDS,\n"
+	.string "traps and control. Want my help?$"
+
+IndigoPlateau_Text_HazardTutorChoose:
+	.string "Which control move do you want?$"
 
 IndigoPlateau_Text_CleanupTutorIntro:
-	.string "I teach cleanup and utility.\p"
-	.string "Clear hazards, screens and status,\n"
-	.string "then seize momentum. Pick a move.$"
+	.string "I teach free CLEANUP moves to\n"
+	.string "clear hazards. Want my help?$"
+
+IndigoPlateau_Text_CleanupTutorChoose:
+	.string "Which cleanup move do you want?$"
 
 IndigoPlateau_Text_TutorConfirm:
 	.string "Teach {STR_VAR_1}?$"
@@ -551,15 +559,64 @@ IndigoPlateau_Text_TutorMove_Nuzzle:
 IndigoPlateau_Text_TutorMove_Cancel:
 	.string "CANCEL$"
 
-@ Compact bottom-left support row. Closely related services share an NPC so
-@ the Centre remains easy to walk through.
+@ Nine individual specialists stand side-by-side along the lower-left wall.
+@ The early Daycare relearner is unchanged; these are additional services.
 PRU_TrainingHub_Relearner::
-	goto Common_EventScript_MoveRelearner
+	lockall
+	faceplayer
+	msgbox PRU_TrainingHub_Text_RelearnerIntro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, PRU_TrainingHub_Exit
+	setmoverelearnerstate MOVE_RELEARNER_LEVEL_UP_MOVES
+	bufferstring STR_VAR_3, MoveRelearner_Text_LevelUpMoveLWR
+	goto PRU_TrainingHub_RelearnerTeach
+
+PRU_TrainingHub_EggTutor::
+	lockall
+	faceplayer
+	msgbox PRU_TrainingHub_Text_EggTutorIntro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, PRU_TrainingHub_Exit
+	setmoverelearnerstate MOVE_RELEARNER_EGG_MOVES
+	bufferstring STR_VAR_3, MoveRelearner_Text_EggMoveLWR
+	goto PRU_TrainingHub_RelearnerTeach
+
+PRU_TrainingHub_RelearnerTeach::
+	getpartysize
+	goto_if_eq VAR_RESULT, 0, PRU_TrainingHub_RelearnerNoMon
+	msgbox MoveRelearner_Text_ChoosePkmn, MSGBOX_DEFAULT
+	chooseboxmon SELECT_PC_MON_MOVE_RELEARNER
+	waitstate
+	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, PRU_TrainingHub_Exit
+	special IsSelectedMonEgg
+	goto_if_eq VAR_RESULT, TRUE, PRU_TrainingHub_RelearnerNoMoves
+	special HasMovesToRelearn
+	goto_if_eq VAR_RESULT, FALSE, PRU_TrainingHub_RelearnerNoMoves
+	msgbox MoveRelearner_Text_WhichXmoveShouldTeach, MSGBOX_DEFAULT
+	special TeachMoveRelearnerMove
+	waitstate
+	goto PRU_TrainingHub_Exit
+
+PRU_TrainingHub_RelearnerNoMon::
+	msgbox MoveRelearner_Text_HaveNoPkmn, MSGBOX_DEFAULT
+	goto PRU_TrainingHub_Exit
+
+PRU_TrainingHub_RelearnerNoMoves::
+	msgbox MoveRelearner_Text_CantTeachMoveToPkmn, MSGBOX_DEFAULT
+	goto PRU_TrainingHub_Exit
+
+PRU_TrainingHub_Text_RelearnerIntro:
+	.string "I restore forgotten LEVEL-UP\n"
+	.string "moves for free. Want my help?$"
+
+PRU_TrainingHub_Text_EggTutorIntro:
+	.string "I teach inherited EGG MOVES\n"
+	.string "for free. Want my help?$"
 
 PRU_SetupTutor::
 	lock
 	faceplayer
-	message PRU_SetupTutor_Text_Intro
+	msgbox PRU_SetupTutor_Text_Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, IndigoPlateau_EventScript_TutorDecline
+	message PRU_SetupTutor_Text_Choose
 	waitmessage
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, PRU_SetupTutor_Text_SwordsDance, PRU_SetupTutor_Text_NastyPlot, PRU_SetupTutor_Text_DragonDance, PRU_SetupTutor_Text_CalmMind, PRU_SetupTutor_Text_BulkUp, PRU_SetupTutor_Text_Agility, PRU_SetupTutor_Text_Protect, IndigoPlateau_Text_TutorMove_Cancel
 	switch VAR_RESULT
@@ -596,7 +653,9 @@ PRU_SetupTutor_Protect::
 	goto IndigoPlateau_EventScript_TutorTeachMove
 
 PRU_SetupTutor_Text_Intro:
-	.string "I teach free setup moves.\nWhich one will sharpen your plan?$"
+	.string "I teach free SETUP moves.\nWant me to train your team?$"
+PRU_SetupTutor_Text_Choose:
+	.string "Which setup move do you want?$"
 PRU_SetupTutor_Text_SwordsDance:
 	.string "SWORDS DANCE$"
 PRU_SetupTutor_Text_NastyPlot:
@@ -615,14 +674,21 @@ PRU_SetupTutor_Text_Protect:
 PRU_TrainingHub_MoveDeleter::
 	lockall
 	faceplayer
-	msgbox BlackthornCity_MoveDeletersHouse_Text_ICanMakeMonForgetMove, MSGBOX_YESNO
+	msgbox PRU_TrainingHub_Text_DeleterIntro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, PRU_TrainingHub_Exit
 	goto_if_eq VAR_RESULT, YES, BlackthornCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget
 	goto BlackthornCity_MoveDeletersHouse_EventScript_ComeAgain
+
+PRU_TrainingHub_Text_DeleterIntro:
+	.string "I delete unwanted moves for\n"
+	.string "free. Want me to remove one?$"
 
 PRU_TrainingHub_AbilityNature::
 	lockall
 	faceplayer
-	message PRU_TrainingHub_Text_AbilityNature
+	msgbox PRU_TrainingHub_Text_AbilityNature, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, PRU_TrainingHub_Exit
+	message PRU_TrainingHub_Text_AbilityNatureChoose
 	waitmessage
 	dynmultichoice 0, 0, FALSE, 3, 0, DYN_MULTICHOICE_CB_NONE, PRU_TrainingHub_Text_Ability, PRU_TrainingHub_Text_Nature, PRU_TrainingHub_Text_Cancel
 	switch VAR_RESULT
@@ -682,6 +748,8 @@ PRU_TrainingHub_Nature::
 PRU_TrainingHub_EvIv::
 	lockall
 	faceplayer
+	msgbox PRU_TrainingHub_Text_EvIvIntro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, PRU_TrainingHub_Exit
 	msgbox PRU_TrainingHub_Text_ChooseMon, MSGBOX_DEFAULT
 	special ChoosePartyMon
 	waitstate
@@ -719,7 +787,10 @@ PRU_TrainingHub_Exit::
 	end
 
 PRU_TrainingHub_Text_AbilityNature:
-	.string "I specialise in ABILITIES and\nNATURES. Which should I change?$"
+	.string "I change ABILITIES and NATURES\n"
+	.string "for free. Want my help?$"
+PRU_TrainingHub_Text_AbilityNatureChoose:
+	.string "Which should I change?$"
 PRU_TrainingHub_Text_Ability:
 	.string "ABILITY$"
 PRU_TrainingHub_Text_Nature:
@@ -736,6 +807,9 @@ PRU_TrainingHub_Text_NatureDone:
 	.string "Its effective NATURE was changed!$"
 PRU_TrainingHub_Text_EvIv:
 	.string "Perfect IVs or a legal EV spread?\nEvery service here is free.$"
+PRU_TrainingHub_Text_EvIvIntro:
+	.string "I train EVs and perfect IVs\n"
+	.string "for free. Want my help?$"
 PRU_TrainingHub_Text_PerfectIVs:
 	.string "PERFECT IVS$"
 PRU_TrainingHub_Text_PhysicalEVs:
@@ -1274,7 +1348,9 @@ PRU_Elite18_Text_Option_Cancel:
 PRU_DoublesTutor::
 	lock
 	faceplayer
-	message PRU_DoublesTutor_Text_Intro
+	msgbox PRU_DoublesTutor_Text_Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, PRU_Elite18_Exit
+	message PRU_DoublesTutor_Text_Choose
 	waitmessage
 	dynmultichoice 0, 0, FALSE, 5, 0, DYN_MULTICHOICE_CB_NONE, PRU_DoublesTutor_Text_ShockwaveFist, PRU_DoublesTutor_Text_Faultline, PRU_DoublesTutor_Text_WraithCry, PRU_DoublesTutor_Text_MetalBarrage, PRU_DoublesTutor_Text_Mindwave, IndigoPlateau_Text_TutorMove_Cancel
 	switch VAR_RESULT
@@ -1317,8 +1393,10 @@ PRU_DoublesTutor_Teach::
 	end
 
 PRU_DoublesTutor_Text_Intro:
-	.string "Five moves strike BOTH foes!\p"
-	.string "Type-matched and completely free.\nWhich one will you learn?$"
+	.string "I teach five free moves that\n"
+	.string "strike BOTH foes. Want my help?$"
+PRU_DoublesTutor_Text_Choose:
+	.string "Which spread move do you want?$"
 PRU_DoublesTutor_Text_ShockwaveFist:
 	.string "SHOCKWAVE FIST$"
 PRU_DoublesTutor_Text_Faultline:

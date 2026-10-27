@@ -18,12 +18,13 @@ gate = match.group(0)
 assert "CanLearnTeachableMove(species, move)" in gate, (
     "ordinary TM/tutor compatibility was not preserved"
 )
-assert "CanSpeciesLearnSelectedPruTutorMove(species, move)" in gate, (
-    "party menu still rejects PRU tutor-only moves after the chooser accepts them"
+assert "CanSpeciesLearnPruTutorMoveForParty(species, move," in gate, (
+    "party menu still uses the fragile PC-selection-state gate"
 )
-assert "gPartyMenu.action != PARTY_ACTION_MOVE_TUTOR" in gate, (
+assert "gPartyMenu.action == PARTY_ACTION_MOVE_TUTOR" in gate, (
     "PRU-only eligibility could leak into TM teaching"
 )
+assert "CanSpeciesLearnPruTutorMoveForParty" in party_header
 assert "sSelectionType != SELECT_PC_MON_PJR_CONTROL_TUTOR" in choosebox
 assert "sSelectionType != SELECT_PC_MON_PRU_DOUBLE_TUTOR" in choosebox
 assert "CanSpeciesLearnSelectedPruTutorMove" in party_header

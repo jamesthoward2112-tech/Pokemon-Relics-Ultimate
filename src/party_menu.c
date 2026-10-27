@@ -2303,8 +2303,8 @@ static enum CanMoveBeLearned CanTeachMove(struct Pokemon *mon, enum Move move)
     if (GetMonData(mon, MON_DATA_IS_EGG))
         return CANNOT_LEARN_MOVE_IS_EGG;
     else if (!CanLearnTeachableMove(species, move)
-        && (gPartyMenu.action != PARTY_ACTION_MOVE_TUTOR
-            || !CanSpeciesLearnSelectedPruTutorMove(species, move)))
+        && !CanSpeciesLearnPruTutorMoveForParty(species, move,
+            gPartyMenu.action == PARTY_ACTION_MOVE_TUTOR))
         return CANNOT_LEARN_MOVE;
     else if (MonKnowsMove(mon, move) == TRUE)
         return ALREADY_KNOWS_MOVE;

@@ -152,6 +152,13 @@ static bool32 IsPjrControlTutorMove(u16 move)
     case MOVE_CHILLING_WATER:
     case MOVE_ACID_SPRAY:
     case MOVE_NUZZLE:
+    case MOVE_SWORDS_DANCE:
+    case MOVE_NASTY_PLOT:
+    case MOVE_DRAGON_DANCE:
+    case MOVE_CALM_MIND:
+    case MOVE_BULK_UP:
+    case MOVE_AGILITY:
+    case MOVE_PROTECT:
         return TRUE;
     default:
         return FALSE;
@@ -178,6 +185,23 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
     // anatomy. No universal move unlock; existing donor access still wins.
     switch (move)
     {
+    case MOVE_SWORDS_DANCE:
+        return IsSpeciesOfType(species, TYPE_NORMAL)
+            || IsSpeciesOfType(species, TYPE_FIGHTING);
+    case MOVE_NASTY_PLOT:
+        return IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_GHOST)
+            || IsSpeciesOfType(species, TYPE_PSYCHIC);
+    case MOVE_DRAGON_DANCE:
+        return IsSpeciesOfType(species, TYPE_DRAGON)
+            || species == SPECIES_GYARADOS;
+    case MOVE_CALM_MIND:
+    case MOVE_AGILITY:
+        return IsSpeciesOfType(species, TYPE_PSYCHIC);
+    case MOVE_BULK_UP:
+        return IsSpeciesOfType(species, TYPE_FIGHTING);
+    case MOVE_PROTECT:
+        return TRUE;
     case MOVE_STEALTH_ROCK:
     case MOVE_SALT_CURE:
         return IsSpeciesOfType(species, TYPE_ROCK)
@@ -271,8 +295,9 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
             || IsSpeciesOfType(species, TYPE_GROUND)
             || IsSpeciesOfType(species, TYPE_STEEL);
     case MOVE_PSYCHIC_FANGS:
-        // Sharp teeth/tusks only; Psychic typing alone implies no fangs.
-        return species == SPECIES_SKULBERUS
+        // All Psychic Pokémon may learn Psychic tutor moves as requested.
+        return IsSpeciesOfType(species, TYPE_PSYCHIC)
+            || species == SPECIES_SKULBERUS
             || species == SPECIES_DONPHALANX
             || species == SPECIES_NOXICHU
             || species == SPECIES_MIGHTYENA
@@ -368,6 +393,17 @@ bool32 CanSpeciesLearnPruTutorMove(u16 species, u16 move)
         return TRUE;
     return CanSpeciesLearnPjrControlTutorMove(species, move)
         || CanSpeciesLearnPruDoubleTutorMove(species, move);
+}
+
+// The party and PC screens use different menu state. Do not consult the
+// PC chooser's EWRAM selection type to decide what the party screen displays:
+// it may have changed while another selection task was active. Restrict this
+// fallback to a genuine tutor action and the moves offered by PRU's tutors.
+bool32 CanSpeciesLearnPruTutorMoveForParty(u16 species, u16 move, bool32 isTutorAction)
+{
+    if (!isTutorAction || (!IsPjrControlTutorMove(move) && !IsPruDoubleTutorMove(move)))
+        return FALSE;
+    return CanSpeciesLearnPruTutorMove(species, move);
 }
 
 bool32 CanSpeciesLearnSelectedPruTutorMove(u16 species, u16 move)

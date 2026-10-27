@@ -22,6 +22,22 @@ TEST("PRU tutor compatibility reaches move teaching without broad unlocks")
     EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_MAROWAK, MOVE_FAULTLINE));
     EXPECT(!CanSpeciesLearnPruTutorMove(SPECIES_PIKACHU, MOVE_FAULTLINE));
     EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_SCYTHER, MOVE_U_TURN));
+    EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_VALKYVOIR, MOVE_MINDWAVE));
+    EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_VALKYVOIR, MOVE_PSYCHIC_FANGS));
+    EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_ALAKAZAM, MOVE_AGILITY));
+    EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_MACHAMP, MOVE_SHOCKWAVE_FIST));
+    EXPECT(CanSpeciesLearnPruTutorMove(SPECIES_STEELIX, MOVE_METAL_BARRAGE));
+    EXPECT(!CanSpeciesLearnPruTutorMove(SPECIES_PIKACHU, MOVE_MINDWAVE));
+
+    // The party menu is a distinct path from the PC selection callback.
+    // A matching species must be accepted during a tutor session but never
+    // gain the same move through an ordinary TM/item action.
+    EXPECT(CanSpeciesLearnPruTutorMoveForParty(SPECIES_SHUCKLE, MOVE_STICKY_WEB, TRUE));
+    EXPECT(CanSpeciesLearnPruTutorMoveForParty(SPECIES_VALKYVOIR, MOVE_MINDWAVE, TRUE));
+    EXPECT(CanSpeciesLearnPruTutorMoveForParty(SPECIES_MACHAMP, MOVE_SHOCKWAVE_FIST, TRUE));
+    EXPECT(CanSpeciesLearnPruTutorMoveForParty(SPECIES_STEELIX, MOVE_METAL_BARRAGE, TRUE));
+    EXPECT(!CanSpeciesLearnPruTutorMoveForParty(SPECIES_SHUCKLE, MOVE_STICKY_WEB, FALSE));
+    EXPECT(!CanSpeciesLearnPruTutorMoveForParty(SPECIES_PIKACHU, MOVE_STICKY_WEB, TRUE));
 
     CreateMon(&mon, SPECIES_SHUCKLE, 50, 0, OTID_STRUCT_PLAYER_ID);
     SetMonData(&mon, MON_DATA_MOVE1, &none);
