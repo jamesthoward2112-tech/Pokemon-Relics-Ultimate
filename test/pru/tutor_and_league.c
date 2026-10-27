@@ -3,6 +3,7 @@
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "fieldmap.h"
+#include "field_camera.h"
 #include "overworld.h"
 #include "script.h"
 #include "sprite.h"
@@ -40,6 +41,10 @@ static u16 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive
     struct MapHeader savedHeader = gMapHeader;
     struct WarpData savedLocation = gSaveBlock1Ptr->location;
     u16 savedMapLayoutId = gSaveBlock1Ptr->mapLayoutId;
+    s16 savedPosX = gSaveBlock1Ptr->pos.x;
+    s16 savedPosY = gSaveBlock1Ptr->pos.y;
+    u16 savedCameraOffsetX = gTotalCameraPixelOffsetX;
+    u16 savedCameraOffsetY = gTotalCameraPixelOffsetY;
     u16 savedLeagueState = VarGet(VAR_LEAGUE_STATE);
     u16 savedResult = VarGet(VAR_RESULT);
     bool32 savedFlags[] = {
@@ -90,6 +95,11 @@ static u16 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive
     FreeAllSpritePalettes();
     ResetObjectEvents();
     template = &gSaveBlock1Ptr->objectEventTemplates[0];
+    // Model the doorway viewport: the trainer is six tiles ahead of the player.
+    gSaveBlock1Ptr->pos.x = template->x + MAP_OFFSET - 7;
+    gSaveBlock1Ptr->pos.y = template->y + MAP_OFFSET - 3;
+    gTotalCameraPixelOffsetX = 0;
+    gTotalCameraPixelOffsetY = 0;
     if (CountFreeSpriteTiles() >= 16)
         result |= 256;
     if (gReservedSpriteTileCount == 0)
@@ -124,6 +134,10 @@ static u16 CheckLeagueRoomTrainer(u16 mapId, u16 expectedGfx, bool32 kantoActive
     gMapHeader = savedHeader;
     gSaveBlock1Ptr->location = savedLocation;
     gSaveBlock1Ptr->mapLayoutId = savedMapLayoutId;
+    gSaveBlock1Ptr->pos.x = savedPosX;
+    gSaveBlock1Ptr->pos.y = savedPosY;
+    gTotalCameraPixelOffsetX = savedCameraOffsetX;
+    gTotalCameraPixelOffsetY = savedCameraOffsetY;
     VarSet(VAR_LEAGUE_STATE, savedLeagueState);
     VarSet(VAR_RESULT, savedResult);
     if (savedFlags[0]) FlagSet(FLAG_IS_CHAMPION); else FlagClear(FLAG_IS_CHAMPION);
