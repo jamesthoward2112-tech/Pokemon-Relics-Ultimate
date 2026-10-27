@@ -16,7 +16,8 @@ permissions:
   contents: write
 
 # Each build is independent: never supersede a queued ROM build.
-# Pull requests compile for review. Only the explicitly named repair branch can publish a prerelease from a PR build.
+# Pull requests compile for review. Only explicitly named release-candidate
+# branches can publish a prerelease from a PR build.
 concurrency:
   group: pru-clean-build-${{ github.run_id }}
   cancel-in-progress: false
@@ -35,7 +36,7 @@ jobs:
           # Use Ubuntu's standard archive directly so apt can complete before the step timeout.
           printf '%s\n' 'http://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt
           sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update
-          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil mgba-qt xvfb xdotool imagemagick
       - name: Install original working PJR Jessie James and Steevee Neevee production transition art
         run: |
           set -euo pipefail
@@ -141,6 +142,11 @@ jobs:
           python3 tools/test_indigo_control_tutors.py
           python3 tools/pru/check_pru_tutor_party_gate.py
           python3 tools/pru/check_kanto_league_elite18_tutors.py
+          python3 tools/pru/check_elite20_visuals.py
+          PYTHONPATH=. python3 tools/pru/test_elite20_duo_intros.py
+          python3 tools/pru/check_kanto_rooms_hof_credits.py
+          python3 tools/pru/check_indigo_support_row.py
+          python3 tools/pru/check_chansey_training.py
           python3 tools/pru/check_pru_e4_oak_elm_dojo_hotfix.py
           python3 tools/pru/check_johto_lati_weather.py
           python3 tools/pru/check_johto_groudon_cave.py
@@ -205,6 +211,52 @@ jobs:
           test -f pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           sha256sum pokehns.gba | tee pru-rom.sha256
+      - name: Boot the finished ROM in mGBA and capture title-screen evidence
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf PRU-QA-mgba
+          mkdir PRU-QA-mgba
+          xvfb-run -a -s '-screen 0 1280x960x24' bash -euo pipefail -c '
+            mgba-qt pokehns.gba >PRU-QA-mgba/mgba.log 2>&1 &
+            emulator_pid=$!
+            cleanup() {
+              kill "$emulator_pid" >/dev/null 2>&1 || true
+              wait "$emulator_pid" >/dev/null 2>&1 || true
+            }
+            trap cleanup EXIT
+            for attempt in $(seq 1 30); do
+              window_id=$(xdotool search --onlyvisible --name "mGBA" 2>/dev/null | head -n1 || true)
+              test -n "$window_id" && break
+              sleep 1
+            done
+            test -n "${window_id:-}"
+            xdotool windowactivate --sync "$window_id"
+            sleep 5
+            import -window root PRU-QA-mgba/boot-05s.png
+            # Start/A inputs skip the checked-in intro without modifying the ROM.
+            for attempt in $(seq 1 8); do
+              xdotool key --window "$window_id" Return x
+              sleep 2
+            done
+            import -window root PRU-QA-mgba/title-21s.png
+            sleep 8
+            import -window root PRU-QA-mgba/title-29s.png
+          '
+          test -s PRU-QA-mgba/boot-05s.png
+          test -s PRU-QA-mgba/title-21s.png
+          test -s PRU-QA-mgba/title-29s.png
+          ! grep -Eiq 'fatal|segmentation fault|could not load|failed to load' PRU-QA-mgba/mgba.log
+          python3 - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          for path in sorted(Path('PRU-QA-mgba').glob('*.png')):
+              image = Image.open(path).convert('RGB')
+              colors = image.getcolors(maxcolors=image.width * image.height)
+              assert colors and len(colors) > 32, f'{path}: blank or corrupt capture'
+              print(f'{path}: {image.size[0]}x{image.size[1]}, {len(colors)} colors')
+          PY
       - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4
         with:
@@ -212,9 +264,10 @@ jobs:
           path: |
             pokehns.gba
             pru-rom.sha256
+            PRU-QA-mgba/
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54')
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027'))
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -240,7 +293,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Direct GBA built from PRU commit $GITHUB_SHA. Tutor compatibility, party and PC selection, Move Relearner compatibility, and Indigo Plateau League room actor spawning are covered by targeted tests. The workflow completed emulator engine checks and a clean ROM build." \
+              --notes "Direct GBA built from PRU commit $GITHUB_SHA. The canonical gate covered the 20-round Saffron Dojo challenge, all Rhythm assignments, Kanto League rooms and actors, Oak's Hall of Fame path, the current credits roster, Relic Candy, the Indigo support row, tutor compatibility, emulator engine tests, a clean 32 MiB build, and a full-ROM mGBA boot capture." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
