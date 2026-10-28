@@ -139,8 +139,13 @@ function donorShinyPalette() {
 }
 
 function main() {
-    writePal(path.join(mewtwo, 'normal.pal'), palette);
-    writePal(path.join(mewtwo, 'shiny.pal'), donorShinyPalette());
+    const shinyPalette = donorShinyPalette();
+    // Battle/overworld and the optional GBA-style graphics have independent
+    // palette paths in PRU. All must match the exported indexed pixels.
+    for (const name of ['normal.pal', 'normal_gba.pal', 'overworld_normal.pal'])
+        writePal(path.join(mewtwo, name), palette);
+    for (const name of ['shiny.pal', 'shiny_gba.pal', 'overworld_shiny.pal'])
+        writePal(path.join(mewtwo, name), shinyPalette);
 
     const front = indices(resize(path.join(mewtwo, 'insurgence_shadow_front_source.png'), 64, 64, 64, 60), palette);
     const back = indices(resize(path.join(mewtwo, 'insurgence_shadow_back_source.png'), 64, 64, 64, 60), palette);

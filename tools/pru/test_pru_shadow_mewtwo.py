@@ -113,6 +113,10 @@ class ShadowMewtwoTests(unittest.TestCase):
         self.assertNotEqual(normal, shiny)
         self.assertIn("211 104 0", normal)  # orange-tipped normal shadow
         self.assertIn("3 19 37", shiny)  # blue-black shiny shadow
+        for name in ("normal_gba.pal", "overworld_normal.pal"):
+            self.assertEqual(normal, read(f"graphics/pokemon/mewtwo/{name}"))
+        for name in ("shiny_gba.pal", "overworld_shiny.pal"):
+            self.assertEqual(shiny, read(f"graphics/pokemon/mewtwo/{name}"))
 
     def test_mewsion_has_real_overworld_species_graphics(self):
         species = between(read("src/data/pokemon/species_info/pru_custom.h"),
