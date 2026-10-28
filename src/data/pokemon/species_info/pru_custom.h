@@ -413,5 +413,10 @@
     .palette = gMonPalette_Mewsion, .shinyPalette = gMonShinyPalette_Mewsion,
     .iconSprite = gMonIcon_Mewsion, .iconPalIndex = 1,
     .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+    OVERWORLD(
+        sPicTable_Mewsion, SIZE_32x32, SHADOW_SIZE_M, TRACKS_NONE,
+        sAnimTable_Following,
+        gOverworldPalette_Mewsion, gShinyOverworldPalette_Mewsion
+    )
     .levelUpLearnset = sMewsionLevelUpLearnset, .teachableLearnset = sMewsionTeachableLearnset,
 },

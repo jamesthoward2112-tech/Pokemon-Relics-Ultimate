@@ -23237,6 +23237,28 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_Explosion,
     },
 
+    // Insurgence Shadow Mewtwo's signature move, with no Burst Mode dependency.
+    [MOVE_DARK_NOVA] =
+    {
+        .name = COMPOUND_STRING("DARK NOVA"),
+        .description = COMPOUND_STRING(
+            "Dark energy strikes twice.\n"
+            "Uses the higher attack stat."),
+        // Photon Geyser already selects Atk or Sp. Atk correctly.
+        // strikeCount preserves Insurgence's two separate 135-power hits.
+        .effect = EFFECT_PHOTON_GEYSER,
+        .power = 135,
+        .type = TYPE_DARK,
+        .accuracy = 0,
+        .pp = 5,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .strikeCount = 2,
+        .metronomeBanned = TRUE,
+        .battleAnimScript = gBattleAnimMove_DarkPulse,
+    },
+
     // Unique Electric-type explosion for the Power Plant's shiny Electrode.
     // Kablowfish retains its original Steel-type Kablow! unchanged.
     [MOVE_KABOOM] =

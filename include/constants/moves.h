@@ -974,6 +974,8 @@ enum __attribute__((packed)) Move
     MOVE_TERROR_WAVE,
     // Appended to keep all existing move IDs and save data stable.
     MOVE_KABOOM,
+    // Insurgence Shadow Mewtwo's signature attack: no Burst Mode required.
+    MOVE_DARK_NOVA,
 
     MOVES_COUNT,
 
