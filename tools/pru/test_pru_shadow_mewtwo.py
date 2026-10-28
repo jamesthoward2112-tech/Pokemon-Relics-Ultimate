@@ -59,7 +59,7 @@ class ShadowMewtwoTests(unittest.TestCase):
             ".baseSpAttack  = 154", "MON_TYPES(TYPE_PSYCHIC, TYPE_DARK)",
             "ABILITY_INTIMIDATE", ".natDexNum = NATIONAL_DEX_MEWTWO",
             ".levelUpLearnset = sInsurgenceShadowMewtwoLevelUpLearnset",
-            ".teachableLearnset = sInsurgenceShadowMewtwoTeachableLearnset",
+            ".teachableLearnset = &sInsurgenceShadowMewtwoTeachableLearnset[0]",
         ):
             self.assertTrue(expected in data, f"Standard Mewtwo missing {expected}")
         self.assertIn(".formChangeTable = sMewtwoFormChangeTable", data)

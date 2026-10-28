@@ -21385,7 +21385,9 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .isFrontierBanned = TRUE,
         .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
         .levelUpLearnset = sInsurgenceShadowMewtwoLevelUpLearnset,
-        .teachableLearnset = sInsurgenceShadowMewtwoTeachableLearnset,
+        // Explicit table address: this pinned Insurgence list is not a
+        // generated species name for make_teaching_types.py to expand.
+        .teachableLearnset = &sInsurgenceShadowMewtwoTeachableLearnset[0],
         .formSpeciesIdTable = sMewtwoFormSpeciesIdTable,
         .formChangeTable = sMewtwoFormChangeTable,
     },
