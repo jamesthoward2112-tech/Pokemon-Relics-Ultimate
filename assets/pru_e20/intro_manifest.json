@@ -143,5 +143,12 @@
       "existing_asset": "oak_elm",
       "art_status": "replacement_requested"
     }
-  ]
+  ],
+  "observed_source_order_discrepancy": {
+    "round_8": "Jasmine & Clair (currently in source)",
+    "round_16": "Maxie & Archie (currently in source)",
+    "approved_round_8": "Maxie & Archie",
+    "approved_round_16": "Jasmine & Clair",
+    "requires_script_reconciliation": true
+  }
 }

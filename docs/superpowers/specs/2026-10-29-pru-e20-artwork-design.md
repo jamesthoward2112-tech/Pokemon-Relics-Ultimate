@@ -28,3 +28,6 @@ First batch fixes the double-rendered Steevee/Neevee and Jessie/James trainer ar
 
 ## Acceptance
 An mGBA E20 capture must show one pair for Steevee/Neevee, one established Rocket group for Jessie/James, separate Oak and Elm, the selected banner for each round, no broken palette/party icons, and unchanged battle teams/results. Do not merge until these checks pass.
+
+## Source discrepancy for integration
+The tutor-stable source's `PRU_Elite18_Round_08` currently selects Jasmine & Clair, while round 16 selects Maxie & Archie. The approved presentation list places Maxie & Archie at 8 and Jasmine & Clair at 16. Treat the artwork manifest as *approved intended order*, not as evidence that current scripts already match. Reconcile and test the round selection before enabling all twenty new banners; do not silently change this in the sprite-only batch.
