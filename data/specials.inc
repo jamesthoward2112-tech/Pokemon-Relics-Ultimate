@@ -663,6 +663,11 @@ gSpecials::
 	def_special RemoveSportBalls
 	def_special ShowBugContestChosenMon
 	def_special SwitchMonAbility
+	def_special PRU_SetSelectedMonPerfectIVs
+	def_special PRU_SetSelectedMonPhysicalEVs
+	def_special PRU_SetSelectedMonSpecialEVs
+	def_special PRU_SetSelectedMonBulkyEVs
+	def_special PRU_ResetSelectedMonEVs
 	def_special NameRival
 	def_special IsNuzlockeNicknamingActive
 	def_special IsRandomMovesActivated

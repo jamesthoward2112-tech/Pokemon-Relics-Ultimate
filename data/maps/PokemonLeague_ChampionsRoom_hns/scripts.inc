@@ -3,6 +3,52 @@ PokemonLeague_ChampionsRoom_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_ChampionsRoom_OnResume
 	.byte 0
 
+PRU_KantoE4_LanceOrRed::
+	call PRU_KantoE4_CheckActive
+	goto_if_eq VAR_RESULT, TRUE, PRU_KantoE4_Red
+	goto PokemonLeague_WillsRoom_EventScript_Lance
+
+PRU_KantoE4_Red::
+	lockall
+	faceplayer
+	msgbox PRU_KantoLeague_Text_RED, MSGBOX_DEFAULT
+	setflag FLAG_TEMP_3
+	setflag FLAG_TEMP_5
+	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_RED_HNS, PRU_KantoLeague_Text_Lost
+	clearflag FLAG_TEMP_5
+	msgbox PRU_KantoLeague_Text_Cleared, MSGBOX_DEFAULT
+	closemessage
+	@ Oak enters the actual Champion room before the Hall of Fame.
+	clearflag FLAG_HIDE_INDIGO_PLATEAU_MARY_OAK
+	addobject LOCALID_LEAGUE_OAK
+	applymovement LOCALID_LEAGUE_OAK, PRU_KantoE4_OakApproach
+	waitmovement LOCALID_LEAGUE_OAK
+	msgbox PRU_KantoE4_OakCongratulations, MSGBOX_DEFAULT
+	closemessage
+	setflag FLAG_PRU_KANTO_LEAGUE_CLEARED
+	setvar VAR_LEAGUE_STATE, 6
+	warpsilent MAP_POKEMON_LEAGUE_HALL_OF_FAME_HNS, 0
+	waitstate
+	releaseall
+	end
+
+PRU_KantoE4_OakApproach:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+PRU_KantoE4_OakCongratulations:
+	.string "OAK: {PLAYER}! Magnificent!\p"
+	.string "You defeated the entire\n"
+	.string "KANTO ELITE FOUR and RED!\p"
+	.string "Now visit the SAFFRON\n"
+	.string "FIGHTING DOJO VIP.\p"
+	.string "The ELITE 18 awaits you there.\n"
+	.string "It is the ultimate challenge!$"
+
 PokemonLeague_ChampionsRoom_OnResume::
 	setvar VAR_0x8004, 4
 	special DoPokemonLeagueLightingEffect

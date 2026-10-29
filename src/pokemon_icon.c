@@ -74,6 +74,16 @@ static const u16 sPRUAstrachiIconPalette[16] =
     RGB(6, 7, 7), RGB(5, 6, 13), RGB(4, 5, 8), RGB(3, 4, 6),
 };
 
+// AlteRed Mewduo icon uses its own white/grey/red six-colour palette.
+// The general-purpose icon palette #1 obscures its red tail in party menus.
+static const u16 sPRUMewduoIconPalette[16] =
+{
+    RGB(0, 0, 0), RGB(8, 8, 8), RGB(23, 23, 23), RGB(28, 9, 5),
+    RGB(12, 12, 11), RGB(14, 14, 14), RGB(31, 31, 31), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+};
+
 // Exact 16-entry indexed PNG icon palette for approved TRE Articuno-P.
 static const u16 sPRUArticunoPIconPalette[16] =
 {
@@ -117,6 +127,7 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUArticunoPIconPalette, POKE_ICON_BASE_PAL_TAG + 11 },
     { sPRUZapdosPIconPalette, POKE_ICON_BASE_PAL_TAG + 12 },
     { sPRUMoltresPIconPalette, POKE_ICON_BASE_PAL_TAG + 13 },
+    { sPRUMewduoIconPalette, POKE_ICON_BASE_PAL_TAG + 14 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -232,6 +243,8 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 9;
     if (species == SPECIES_ASTRACHI)
         return 10;
+    if (species == SPECIES_MEWSION)
+        return 14;
     if (species == SPECIES_ARTICUNO)
         return 11;
     if (species == SPECIES_ZAPDOS)
@@ -354,7 +367,12 @@ void FreeAndDestroyMonIconSprite(struct Sprite *sprite)
 void LoadMonIconPalettes(void)
 {
     u8 i;
-    for (i = 0; i < ARRAY_COUNT(gMonIconPaletteTable); i++)
+    // Sprite palettes have just 16 hardware slots. Menus already reserve
+    // several for their own sprites; preloading every PRU species-specific
+    // icon palette prevents the last icons (including Mewduo) from loading.
+    // The six shared vanilla palettes are sufficient as a base; custom ones
+    // are loaded as each icon is created.
+    for (i = 0; i < 6; i++)
         LoadSpritePalette(&gMonIconPaletteTable[i]);
 }
 
@@ -527,6 +545,7 @@ u8 UpdateMonIconFrame(struct Sprite *sprite)
 static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *iconTemplate, s16 x, s16 y, u8 subpriority)
 {
     u8 spriteId;
+    u16 paletteIndex = iconTemplate->paletteTag - POKE_ICON_BASE_PAL_TAG;
 
     struct SpriteFrameImage image = { NULL, sSpriteImageSizes[iconTemplate->oam->shape][iconTemplate->oam->size] };
 
@@ -540,6 +559,13 @@ static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *iconTemplate, s16 x,
         .affineAnims = iconTemplate->affineAnims,
         .callback = iconTemplate->callback,
     };
+
+    // Load only the palette required by this actual on-screen Pokemon.
+    // The party menu can show six icons, so this keeps its three UI palettes
+    // and six generic icon palettes within the 16-slot sprite-palette limit.
+    if (paletteIndex < ARRAY_COUNT(gMonIconPaletteTable)
+     && IndexOfSpritePaletteTag(iconTemplate->paletteTag) == 0xFF)
+        LoadSpritePalette(&gMonIconPaletteTable[paletteIndex]);
 
     spriteId = CreateSprite(&spriteTemplate, x, y, subpriority);
     gSprites[spriteId].animPaused = TRUE;

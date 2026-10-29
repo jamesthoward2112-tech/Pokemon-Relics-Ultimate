@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The 38 Crystal Redux scenes must render completely without entry overlays."""
+"""The 55 Rhythm scenes must render completely without entry overlays."""
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -23,6 +23,6 @@ for forbidden in (
     "gBattle_BG1_Y -=", "gBattle_BG1_X +=", "BLDALPHA_BLEND(",
     "EndPruCrystalBattleEntry", "IsPruCrystalBattleEntryActive", "gTasks[taskId].tState",
 ):
-    assert forbidden not in static, f"Unexpected Crystal entry animation: {forbidden}"
+    assert forbidden not in static, f"Unexpected entry animation: {forbidden}"
 
-print("PASS: Crystal Redux backdrops are static from the first frame; no extra BG1 layer")
+print("PASS: Rhythm backdrops are static from the first frame; no extra BG1 layer")

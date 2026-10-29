@@ -37,6 +37,9 @@
 #include "constants/items.h"
 #include "caps.h"
 #include "battle_gfx_sfx_util.h"
+#include "event_data.h"
+#include "pru_mewduo_caught_icon.h"
+#include "constants/vars_hns.h"
 
 #define HEALTHBOX_BG_INDEX 2
 
@@ -1885,6 +1888,8 @@ void TryAddPokeballIconToHealthbox(u8 healthboxSpriteId, bool8 noStatus)
 {
     enum BattlerId battler;
     u8 healthBarSpriteId, shinyIconOffset;
+    u16 species;
+    bool8 previouslyCaught;
 
     if (gBattleTypeFlags & BATTLE_TYPE_CATCH_TUTORIAL)
         return;
@@ -1897,20 +1902,25 @@ void TryAddPokeballIconToHealthbox(u8 healthboxSpriteId, bool8 noStatus)
     if (GetBattlerSide(battler) == B_SIDE_OPPONENT && IsGhostBattleWithoutScope())
         return;
     healthBarSpriteId = gSprites[healthboxSpriteId].hMain_HealthBarSpriteId;
+    species = GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES);
+    previouslyCaught = PruHasCaughtSpeciesForBattleIcon(
+        species == SPECIES_MEWSION,
+        GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT),
+        VarGet(VAR_PRU_MEWDUO_CAPTURE_MARKER) == 0x4D44);
 
     if (IsMonShiny(GetBattlerMon(battler)) && noStatus)
     {
         // Offset 18 shifts the shiny icon aside to make room for an indicator tile.
         // No indicator is drawn while the Nuzlocke's capture rule is suspended, so the
         // star stays in its unshifted position.
-        if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES)), FLAG_GET_CAUGHT) || (IsNuzlockeActive() && !IsNuzlockeCaptureSuspended() && !(NuzlockeIsSpeciesClauseActive || OneTypeChallengeCaptureBlocked || NuzlockeIsCaptureBlocked)))
+        if (previouslyCaught || (IsNuzlockeActive() && !IsNuzlockeCaptureSuspended() && !(NuzlockeIsSpeciesClauseActive || OneTypeChallengeCaptureBlocked || NuzlockeIsCaptureBlocked)))
             shinyIconOffset = 18;
         else
             shinyIconOffset = 17;
         CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_SHINY_ICON), (void *)(OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + shinyIconOffset) * TILE_SIZE_4BPP), 32);
     }
 
-    if (!GetSetPokedexFlag(SpeciesToNationalPokedexNum(GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES)), FLAG_GET_CAUGHT))
+    if (!previouslyCaught)
     {
         if (!IsNuzlockeActive() && !OneTypeChallengeCaptureBlocked)
             return;

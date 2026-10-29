@@ -17,7 +17,8 @@ HAZARD_MOVES = [
     "MOVE_STONE_AXE", "MOVE_CEASELESS_EDGE", "MOVE_SALT_CURE", "MOVE_LEECH_SEED",
     "MOVE_TOXIC", "MOVE_WILL_O_WISP", "MOVE_THUNDER_WAVE", "MOVE_TAUNT",
     "MOVE_ENCORE", "MOVE_KNOCK_OFF", "MOVE_ROAR", "MOVE_WHIRLWIND",
-    "MOVE_DRAGON_TAIL", "MOVE_INFESTATION",
+    "MOVE_DRAGON_TAIL", "MOVE_INFESTATION", "MOVE_ACHILLES_HEEL",
+    "MOVE_PERMAFROST", "MOVE_WILDFIRE", "MOVE_DARK_MATTER",
 ]
 
 CLEANUP_MOVES = [
@@ -97,8 +98,8 @@ class TestIndigoControlTutors(unittest.TestCase):
             choosebox,
         )
 
-        # Both tutors now cover the approved 444 Pokémon (including the
-        # appended PRU species), but never automatically unlock all moves.
+        # Both tutors preserve existing teachable compatibility and use the
+        # same PRU-specific species/move predicate, without universal unlocks.
         self.assertIn("if (CanLearnTeachableMove(species, move))", choosebox)
         self.assertIn("SpeciesToPokedexNum(species) == 0xFFFF", choosebox)
         self.assertIn("!IS_HNS", choosebox)
@@ -106,7 +107,9 @@ class TestIndigoControlTutors(unittest.TestCase):
             "if (species < SPECIES_SCARABUB || species > SPECIES_DRAGONITE_RELIC)",
             choosebox,
         )
-        self.assertIn("CanSpeciesLearnPjrControlTutorMove(species, gSpecialVar_0x8005)", choosebox)
+        self.assertIn("CanSpeciesLearnPruTutorMove(species, gSpecialVar_0x8005)", choosebox)
+        self.assertIn("bool32 CanSpeciesLearnPruTutorMove(u16 species, u16 move)", choosebox)
+        self.assertIn("CanSpeciesLearnPjrControlTutorMove(species, move)", choosebox)
         self.assertNotIn("if (IsPjrControlTutorMove(gSpecialVar_0x8005))", choosebox)
         compatibility = choosebox.split("static bool32 CanSpeciesLearnPjrControlTutorMove", 1)[1].split("static u32 CanMonLearnPjrControlMove", 1)[0]
         for move in HAZARD_MOVES + CLEANUP_MOVES:
@@ -162,9 +165,9 @@ class TestIndigoControlTutors(unittest.TestCase):
         data = json.loads(MAP.read_text(encoding="utf-8"))
         npc = next(
             obj for obj in data["object_events"]
-            if obj.get("script") == "IndigoPlateau_EventScript_ShigyNinja"
+            if obj.get("script") == "IndigoPlateau_EventScript_CleanupTutor"
         )
-        self.assertEqual(npc["movement_type"], "MOVEMENT_TYPE_NONE")
+        self.assertEqual(npc["movement_type"], "MOVEMENT_TYPE_FACE_UP")
         self.assertEqual(npc["movement_range_x"], 0)
         self.assertEqual(npc["movement_range_y"], 0)
 

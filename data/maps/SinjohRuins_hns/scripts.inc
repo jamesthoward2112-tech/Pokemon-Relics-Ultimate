@@ -10,11 +10,15 @@ SinjohRuins_OnFrame::
 
 SinjohRuins_hns_OnTransition::
     call_if_eq VAR_SINJOH_STORYLINE, 9, SinjohRuins_StevenLanding
-    call_if_eq VAR_SINJOH_STORYLINE, 10, SinjohRuins_StevenLanding
-    call_if_eq VAR_SINJOH_STORYLINE, 11, SinjohRuins_StevenLanding
-    call_if_eq VAR_SINJOH_STORYLINE, 12, SinjohRuins_StevenLanding
+    @ Save compatibility: players who already won his Plate battle
+    @ must also lose Steven from the main chamber on their next visit.
+    call_if_ge VAR_SINJOH_STORYLINE, 10, SinjohRuins_HideStevenAfterBattle
     callnative SetTimeBasedEncounters
 	end
+
+SinjohRuins_HideStevenAfterBattle::
+    setflag FLAG_HIDE_SINJOHRUINS_STEVEN
+    return
 
 SinjohRuins_StevenLanding::
     setobjectxyperm LOCALID_SINJOHRUINS_STEVEN, 24, 31
@@ -318,6 +322,8 @@ SinjohRuins_EventScript_StevenBattle::
 	waitfanfare
     fadescreenswapbuffers FADE_FROM_BLACK
     msgbox SinjohRuins_Text_StevenAfterPlate, MSGBOX_AUTOCLOSE
+    setflag FLAG_HIDE_SINJOHRUINS_STEVEN
+    removeobject LOCALID_SINJOHRUINS_STEVEN
     return
 
 SinjohRuins_Text_HealParty::
@@ -325,8 +331,9 @@ SinjohRuins_Text_HealParty::
     .string "before you go.$"
 
 SinjohRuins_Text_StevenAfterPlate:
-    .string "STEVEN: Good luck, {PLAYER}\p"
-    .string "Go on, I'm right behind you.$"
+    .string "STEVEN: Good luck, {PLAYER}.\p"
+    .string "My work here is done.\n"
+    .string "I'll leave you to explore!$"
 
 SinjohRuins_Text_StevenAfterBattle:
 	.string "STEVEN: To think, another trainer \n"

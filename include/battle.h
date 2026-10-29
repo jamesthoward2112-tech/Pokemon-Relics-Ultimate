@@ -136,6 +136,7 @@ struct SideTimer
     u16 safeguardTimer;
     u8 spikesAmount:4;
     u8 toxicSpikesAmount:4;
+    u8 permafrostAmount; // Insurgence: independent 0-5-layer freeze entry hazard
     u8 stickyWebBattlerId;
     u8 stickyWebBattlerSide; // Used for Court Change
     u16 auroraVeilTimer;
