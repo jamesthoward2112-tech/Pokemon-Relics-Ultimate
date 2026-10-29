@@ -878,6 +878,7 @@ PRU_Elite20_Steward_PendingReward::
 	@ and the professors' quest reveal without repeating any battles.
 	call PRU_Elite20_ClaimRewards
 	goto_if_unset FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite18_Exit
+	call PRU_Elite20_StartFinale
 	goto PRU_Elite18_AskChallenge
 
 PRU_Elite18_AskChallenge::
@@ -926,8 +927,27 @@ PRU_Elite18_Gauntlet::
 	special HealPlayerParty
 	msgbox PRU_Elite18_Text_Cleared, MSGBOX_DEFAULT
 	call PRU_Elite20_ClaimRewards
+	call PRU_Elite20_StartFinale
 	release
 	end
+
+PRU_Elite20_StartFinale::
+	goto_if_set FLAG_PRU_E20_CREDITS_SHOWN, PRU_Elite20_StartFinale_Return
+	goto_if_unset FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite20_StartFinale_Return
+	msgbox PRU_Elite20_Text_FinalCelebration, MSGBOX_DEFAULT
+	setflag FLAG_PRU_E20_CREDITS_SHOWN
+	setflag FLAG_PRU_E20_CREDITS_PENDING
+	special GameClear
+	waitstate
+PRU_Elite20_StartFinale_Return::
+	return
+
+PRU_Elite20_Text_FinalCelebration:
+	.string "OAK: You defeated the ELITE 20!\\p"
+	.string "ELM: Every region's finest have\\n"
+	.string "seen your extraordinary team.\\p"
+	.string "OAK: Let your journey be\\n"
+	.string "remembered among the RELICS!$"
 
 PRU_Elite20_ClaimRewards::
 	@ Both pockets must have room before giving either prize. The new flag

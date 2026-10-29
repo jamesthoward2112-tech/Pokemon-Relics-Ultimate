@@ -82,6 +82,7 @@ struct CreditsEntry
 
 static EWRAM_DATA u16 sSavedTaskId = 0;
 EWRAM_DATA bool8 gHasHallOfFameRecords = 0;
+EWRAM_DATA bool8 gPruElite20CreditsActive = FALSE;
 static EWRAM_DATA struct CreditsData *sCreditsData = {0};
 
 static const u16 sCredits_Pal[] = INCBIN_U16("graphics/credits/credits.gbapal");
@@ -162,6 +163,16 @@ static const u8 sTheEnd_LetterMap_D[] =
 };
 
 #include "data/credits_hns.h"
+static const struct CreditsEntry sE20Title = {0, TRUE, _("POKEMON RELICS ULTIMATE")};
+static const struct CreditsEntry sE20Champion = {0, TRUE, _("ELITE 20 CHAMPION")};
+static const struct CreditsEntry sE20Kanto = {0, TRUE, _("KANTO AND JOHTO")};
+static const struct CreditsEntry sE20Journey = {0, FALSE, _("YOUR JOURNEY CONTINUES")};
+static const struct CreditsEntry sE20Relics = {0, TRUE, _("THE GOLDEN RELIC HO-OH")};
+static const struct CreditsEntry *const sElite20CreditsIntroPages[][ENTRIES_PER_PAGE] = {
+ { &sE20Title, &sE20Champion, &sE20Kanto, &sE20Journey, &sCreditsEntry_EmptyString },
+ { &sE20Relics, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
+};
+#define E20_INTRO_PAGE_COUNT ARRAY_COUNT(sElite20CreditsIntroPages)
 
 static const struct BgTemplate sBackgroundTemplates[] =
 {
@@ -739,13 +750,15 @@ static void Task_UpdatePage(u8 taskId)
     case 2:
         if (gTasks[gTasks[taskId].tMainTaskId].func == Task_CreditsMain)
         {
-            if (gTasks[taskId].tCurrentPage < PAGE_COUNT)
+            if (gTasks[taskId].tCurrentPage < PAGE_COUNT + (gPruElite20CreditsActive ? E20_INTRO_PAGE_COUNT : 0))
             {
                 for (i = 0; i < ENTRIES_PER_PAGE; i++)
-                    PrintCreditsText(
-                        sCreditsEntryPointerTable[gTasks[taskId].tCurrentPage][i]->text,
-                         5 + i * 16,
-                         sCreditsEntryPointerTable[gTasks[taskId].tCurrentPage][i]->isTitle);
+                {
+                    const struct CreditsEntry *entry = gPruElite20CreditsActive && gTasks[taskId].tCurrentPage < E20_INTRO_PAGE_COUNT
+                        ? sElite20CreditsIntroPages[gTasks[taskId].tCurrentPage][i]
+                        : sCreditsEntryPointerTable[gTasks[taskId].tCurrentPage - (gPruElite20CreditsActive ? E20_INTRO_PAGE_COUNT : 0)][i];
+                    PrintCreditsText(entry->text, 5 + i * 16, entry->isTitle);
+                }
                 CopyWindowToVram(0, COPYWIN_GFX);
 
                 gTasks[taskId].tCurrentPage++;
@@ -809,7 +822,7 @@ static void Task_UpdatePage(u8 taskId)
 
 #undef tDelay
 
-#define PAGE_INTERVAL (PAGE_COUNT / 9)
+#define PAGE_INTERVAL ((PAGE_COUNT + (gPruElite20CreditsActive ? E20_INTRO_PAGE_COUNT : 0)) / 9)
 
 static u8 CheckChangeScene(u8 page, u8 taskId)
 {
@@ -1158,15 +1171,17 @@ static bool8 LoadBikeScene(u8 scene, u8 taskId)
         gMain.state++;
         break;
     case 2:
-        LoadCompressedSpriteSheet(gSpriteSheet_CreditsSuicune);
+        if (gPruElite20CreditsActive) LoadCompressedSpriteSheet(gSpriteSheet_CreditsRelicHoOh);
+        else LoadCompressedSpriteSheet(gSpriteSheet_CreditsSuicune);
         LoadCompressedSpriteSheet(gSpriteSheet_CreditsRivalMay);
         LoadCompressedSpriteSheet(gSpriteSheet_CreditsBicycle);
-        LoadSpritePalettes(gSpritePalettes_CreditsHnS);
+        if (gPruElite20CreditsActive) LoadSpritePalettes(gSpritePalettes_CreditsRelicHoOh);
+        else LoadSpritePalettes(gSpritePalettes_CreditsHnS);
 
-        spriteId = CreateCreditsSuicuneSprite(120, 46);
+        spriteId = gPruElite20CreditsActive ? CreateCreditsRelicHoOhSprite(120, 46) : CreateCreditsSuicuneSprite(120, 46);
         gTasks[taskId].tPlayerSpriteId = spriteId;
         gSprites[spriteId].callback = SpriteCB_Player;
-        gSprites[spriteId].anims = sAnims_Player;
+        if (!gPruElite20CreditsActive) gSprites[spriteId].anims = sAnims_Player;
 
         spriteId = CreateIntroMaySprite(DISPLAY_WIDTH + 32, 46);
         gTasks[taskId].tRivalSpriteId = spriteId;

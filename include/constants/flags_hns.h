@@ -3575,8 +3575,8 @@
 #define FLAG_PRU_HIDE_ELM_RELIC_CANDY                           0x945
 #define FLAG_PRU_HIDE_GROUDON_BEFORE_MAXIE                      0x946
 #define FLAG_PRU_E20_REWARD_CLAIMED                             0x947 // One-time E20 gift; old clears can claim on next Dojo visit.
-#define FLAG_UNUSED_0x948                                       0
-#define FLAG_UNUSED_0x949                                       0
+#define FLAG_PRU_E20_CREDITS_SHOWN                              0x948
+#define FLAG_PRU_E20_CREDITS_PENDING                            0x949
 #define FLAG_UNUSED_0x94A                                       0
 #define FLAG_UNUSED_0x94B                                       0
 #define FLAG_UNUSED_0x94C                                       0

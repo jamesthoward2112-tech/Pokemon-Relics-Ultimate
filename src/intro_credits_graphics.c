@@ -23,6 +23,7 @@
 #define TAG_FLYGON_LATIOS  1004
 #define TAG_FLYGON_LATIAS  1005
 #define TAG_SUICUNE        1006
+#define TAG_RELIC_HO_OH    1007
 
 // Used for the Clouds/Trees/Houses sprites that pass by in the background
 #define TAG_MOVING_SCENERY 2000
@@ -505,6 +506,9 @@ static const union AnimCmd *const sAnims_Bicycle[] =
 };
 
 #if IS_HNS
+static const union AnimCmd sAnim_CreditsRelicHoOh[] = { ANIMCMD_FRAME(0, 24), ANIMCMD_JUMP(0) };
+static const union AnimCmd *const sAnims_CreditsRelicHoOh[] = { sAnim_CreditsRelicHoOh, sAnim_CreditsRelicHoOh, sAnim_CreditsRelicHoOh, sAnim_CreditsRelicHoOh };
+static const struct SpriteTemplate sSpriteTemplate_CreditsRelicHoOh = { .tileTag = TAG_RELIC_HO_OH, .paletteTag = TAG_RELIC_HO_OH, .oam = &sOamData_Player, .anims = sAnims_CreditsRelicHoOh, .callback = SpriteCB_Player };
 static const struct SpriteTemplate sSpriteTemplate_Suicune =
 {
     .tileTag = TAG_SUICUNE,
@@ -719,6 +723,10 @@ const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalMay[] =
 };
 
 #if IS_HNS
+extern const u32 gMonFrontPic_HoOhRelic[];
+extern const u16 gMonPalette_HoOhRelic[];
+const struct CompressedSpriteSheet gSpriteSheet_CreditsRelicHoOh[] = { { .data = gMonFrontPic_HoOhRelic, .size = 0x800, .tag = TAG_RELIC_HO_OH }, {} };
+const struct SpritePalette gSpritePalettes_CreditsRelicHoOh[] = { { .data = gMonPalette_HoOhRelic, .tag = TAG_RELIC_HO_OH }, { .data = sMayCredits_Pal, .tag = TAG_MAY }, {} };
 const struct CompressedSpriteSheet gSpriteSheet_CreditsSuicune[] =
 {
     {
@@ -1152,6 +1160,11 @@ u8 CreateIntroMaySprite(s16 x, s16 y)
 }
 
 #if IS_HNS
+u8 CreateCreditsRelicHoOhSprite(s16 x, s16 y)
+{
+    return CreateSprite(&sSpriteTemplate_CreditsRelicHoOh, x, y, 2);
+}
+
 u8 CreateCreditsSuicuneSprite(s16 x, s16 y)
 {
     return CreateSprite(&sSpriteTemplate_Suicune, x, y, 2);

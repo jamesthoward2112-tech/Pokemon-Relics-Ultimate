@@ -70,8 +70,8 @@ MtSilver_SummitDay_EventScript_AfterCrest:
 MtSilver_SummitDay_EventScript_ContinueClear::
 	setflag FLAG_END_NUZLOCKE
 	clearflag FLAG_HIDE_MTSILVER_RED
-	special GameClear
-	waitstate
+	@ Red keeps the Crest but does not start the game's full credits.
+	fadescreen FADE_FROM_BLACK
 	releaseall
 	end
 
