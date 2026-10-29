@@ -15,5 +15,9 @@ bool32 CanBoxMonBeSelected(struct BoxPokemon *boxmon);
 s32 LearnMove(const struct MoveLearnUI *ui, u8 taskId);
 s32 GetLearnMoveStartState(void);
 s32 GetLearnMoveResumeAfterSummaryScreenState(void);
+// Used by both the free Indigo tutor and Move Expert's tutor-move list.
+bool32 CanSpeciesLearnPjrControlTutorMoveForRelearner(u16 species, u16 move);
+// Shared compatibility gate for the free PRU Control and doubles tutors.
+bool32 CanSpeciesLearnPruTutorMove(u16 species, u16 move);
 
 #endif // GUARD_CHOOSEBOXMON_H

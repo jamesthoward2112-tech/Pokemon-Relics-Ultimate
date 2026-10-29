@@ -86,6 +86,8 @@ void InitChooseHalfPartyForBattle(u8 unused);
 void ClearSelectedPartyOrder(void);
 void ChooseMonForTradingBoard(u8 menuType, MainCallback callback);
 void ChooseMonForMoveTutor(void);
+// Extends party-menu tutor selection only for the matching PRU tutor.
+bool32 CanSpeciesLearnSelectedPruTutorMove(u16 species, u16 move);
 void ChooseMonForWirelessMinigame(void);
 void OpenPartyMenuInBattle(u8 partyAction);
 void ChooseMonForInBattleItem(void);

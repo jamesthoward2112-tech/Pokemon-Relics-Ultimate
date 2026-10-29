@@ -2263,6 +2263,7 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/SeafoamIslands_Gym_hns/scripts.inc"
 	.include "data/maps/SeafoamIslands_B1F_hns/scripts.inc"
 	.include "data/maps/SeafoamIslands_SecretCave_hns/scripts.inc"
+	.include "data/maps/Route45_GroudonCave_hns/scripts.inc"
 	.include "data/maps/MtSilver_Outside_hns/scripts.inc"
 	.include "data/maps/MtSilver_1F_ItemRoom_hns/scripts.inc"
 	.include "data/maps/MtSilver_1F_WaterfallRoom_hns/scripts.inc"

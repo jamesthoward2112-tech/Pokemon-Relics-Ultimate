@@ -5908,6 +5908,67 @@ void SwitchMonAbility(void)
     }
 }
 
+static bool32 PRU_IsSelectedTrainingMonValid(void)
+{
+    return gSpecialVar_0x8004 < gPlayerPartyCount
+        && !GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_IS_EGG, NULL);
+}
+
+void PRU_SetSelectedMonPerfectIVs(void)
+{
+    u8 i;
+    u8 value = MAX_PER_STAT_IVS;
+
+    if (!PRU_IsSelectedTrainingMonValid())
+    {
+        gSpecialVar_Result = FALSE;
+        return;
+    }
+    for (i = 0; i < NUM_STATS; i++)
+        SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_HP_IV + i, &value);
+    CalculateMonStats(&gPlayerParty[gSpecialVar_0x8004]);
+    gSpecialVar_Result = TRUE;
+}
+
+static void PRU_SetSelectedMonEVSpread(const u8 evs[NUM_STATS])
+{
+    u8 i;
+
+    if (!PRU_IsSelectedTrainingMonValid())
+    {
+        gSpecialVar_Result = FALSE;
+        return;
+    }
+    for (i = 0; i < NUM_STATS; i++)
+        SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_HP_EV + i, &evs[i]);
+    CalculateMonStats(&gPlayerParty[gSpecialVar_0x8004]);
+    gSpecialVar_Result = TRUE;
+}
+
+void PRU_SetSelectedMonPhysicalEVs(void)
+{
+    static const u8 sPhysicalEvs[NUM_STATS] = {6, 252, 0, 252, 0, 0};
+    PRU_SetSelectedMonEVSpread(sPhysicalEvs);
+}
+
+void PRU_SetSelectedMonSpecialEVs(void)
+{
+    static const u8 sSpecialEvs[NUM_STATS] = {6, 0, 0, 252, 252, 0};
+    PRU_SetSelectedMonEVSpread(sSpecialEvs);
+}
+
+void PRU_SetSelectedMonBulkyEVs(void)
+{
+    static const u8 sBulkyEvs[NUM_STATS] = {252, 0, 129, 0, 0, 129};
+    PRU_SetSelectedMonEVSpread(sBulkyEvs);
+}
+
+void PRU_ResetSelectedMonEVs(void)
+{
+    static const u8 sZeroEvs[NUM_STATS] = {0};
+    PRU_SetSelectedMonEVSpread(sZeroEvs);
+}
+
 void CheckPartyForSpecies(void)
 {
     u16 species = gSpecialVar_0x8004;

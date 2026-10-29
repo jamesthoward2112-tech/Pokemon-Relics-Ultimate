@@ -83,7 +83,7 @@ assert "sPruDexSpecies[i] == baseSpecies" in summary
 
 for name, expected in [("Charaxis", 8), ("Grovyle", 285),
                        ("Mightyena", 297), ("Gardevoir", 318),
-                       ("Mewsion", 425), ("Deoxys", 444),
+                       ("Mewduo", 425), ("Deoxys", 444),
                        ("Glaceon", 445), ("Leafeon", 446), ("Mimikyu", 447)]:
     assert canonical[expected - 1]["Name"] == name, name
 

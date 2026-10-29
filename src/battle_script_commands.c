@@ -7383,6 +7383,7 @@ void BS_CourtChangeSwapSideStatuses(void)
         gBattleStruct->hazardsQueue[B_SIDE_OPPONENT][i] = tempQueue[i];
     SWAP(sideTimerPlayer->spikesAmount, sideTimerOpp->spikesAmount, temp);
     SWAP(sideTimerPlayer->toxicSpikesAmount, sideTimerOpp->toxicSpikesAmount, temp);
+    SWAP(sideTimerPlayer->permafrostAmount, sideTimerOpp->permafrostAmount, temp);
 
     // Change battler IDs of swapped effects. Needed for the correct string when they expire
     UPDATE_COURTCHANGED_BATTLER(stickyWebBattlerId);
@@ -9347,7 +9348,21 @@ static void Cmd_trysetspikes(void)
 
     enum BattleSide targetSide = GetBattlerSide(BATTLE_OPPOSITE(gBattlerAttacker));
 
-    if (gSideTimers[targetSide].spikesAmount == 3)
+    if (gCurrentMove == MOVE_PERMAFROST)
+    {
+        if (gSideTimers[targetSide].permafrostAmount < 5)
+        {
+            if (gSideTimers[targetSide].permafrostAmount == 0)
+                PushHazardTypeToQueue(targetSide, HAZARDS_PERMAFROST);
+            gSideTimers[targetSide].permafrostAmount++;
+            gBattlescriptCurrInstr = cmd->nextInstr;
+        }
+        else
+        {
+            gBattlescriptCurrInstr = cmd->failInstr;
+        }
+    }
+    else if (gSideTimers[targetSide].spikesAmount == 3)
     {
         gBattlescriptCurrInstr = cmd->failInstr;
     }
@@ -11745,6 +11760,48 @@ static void Cmd_jumpifcaptivateaffected(void)
     }
 }
 
+// Insurgence Wildfire spreads to reserve Pokémon weak to Fire, but only
+// after successfully burning a Grass-type target. Never burn active
+// Pokémon's separate party copy while its battle state is being synced.
+static void PRUWildfireBurnReserves(void)
+{
+    enum BattleSide side = GetBattlerSide(gBattlerTarget);
+    struct Pokemon *party = side == B_SIDE_PLAYER ? gPlayerParty : gEnemyParty;
+
+    if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER) && side == B_SIDE_OPPONENT)
+        return;
+
+    for (u32 i = 0; i < PARTY_SIZE; i++)
+    {
+        u32 species = GetMonData(&party[i], MON_DATA_SPECIES);
+        bool32 isActive = FALSE;
+        if (species == SPECIES_NONE
+         || GetMonData(&party[i], MON_DATA_IS_EGG)
+         || GetMonData(&party[i], MON_DATA_HP) == 0
+         || GetMonData(&party[i], MON_DATA_STATUS) != STATUS1_NONE)
+            continue;
+
+        for (u32 battler = 0; battler < gBattlersCount; battler++)
+        {
+            if (GetBattlerSide(battler) == side && gBattlerPartyIndexes[battler] == i)
+                isActive = TRUE;
+        }
+        if (isActive)
+            continue;
+
+        enum Type type1 = GetSpeciesType(species, 0);
+        enum Type type2 = GetSpeciesType(species, 1);
+        uq4_12_t effectiveness = GetTypeModifier(TYPE_FIRE, type1);
+        if (type2 != type1)
+            effectiveness = uq4_12_multiply(effectiveness, GetTypeModifier(TYPE_FIRE, type2));
+        if (effectiveness > UQ_4_12(1.0))
+        {
+            u32 burn = STATUS1_BURN;
+            SetMonData(&party[i], MON_DATA_STATUS, &burn);
+        }
+    }
+}
+
 static void Cmd_setnonvolatilestatus(void)
 {
     CMD_ARGS(u8 trigger);
@@ -11759,6 +11816,10 @@ static void Cmd_setnonvolatilestatus(void)
         break;
     case TRIGGER_ON_MOVE:
         SetNonVolatileStatus(gBattlerTarget, GetMoveNonVolatileStatus(gCurrentMove), cmd->nextInstr, TRIGGER_ON_MOVE);
+        if (gCurrentMove == MOVE_WILDFIRE
+         && IS_BATTLER_OF_TYPE(gBattlerTarget, TYPE_GRASS)
+         && (gBattleMons[gBattlerTarget].status1 & STATUS1_BURN))
+            PRUWildfireBurnReserves();
         break;
     case TRIGGER_ON_PROTECT:
         SetNonVolatileStatus(gBattlerAttacker, gBattleScripting.moveEffect, cmd->nextInstr, TRIGGER_ON_PROTECT);
