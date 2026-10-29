@@ -39,6 +39,13 @@ class E20TransitionWiringTests(unittest.TestCase):
             self.assertIn(f"B_TRANSITION_{stem}", IDS)
             self.assertIn(f"B_TRANSITION_{stem}", SETUP)
 
+    def test_original_rocket_and_eevee_twins_use_their_existing_prl_art_symbols(self):
+        # Existing assets are sPRL_*; the new sPRU_* macro cannot resolve them.
+        for stem, task in (("jessie_james", "Task_PRL_JessieJames"), ("eevee_twins", "Task_PRL_EeveeTwins")):
+            with self.subTest(stem=stem):
+                self.assertIn(f"PRL_DUO_ART({task}, {stem})", TRANSITION)
+                self.assertIn(f"sPRL_{stem}_Tiles[]", TRANSITION)
+
 
 if __name__ == "__main__":
     unittest.main()

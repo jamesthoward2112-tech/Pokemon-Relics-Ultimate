@@ -399,14 +399,16 @@ struct PruDuoTransitionArt
     u32 paletteSize;
 };
 
+#define PRL_DUO_ART(taskName, stem) \
+    {taskName, sPRL_##stem##_Tiles, sizeof(sPRL_##stem##_Tiles), sPRL_##stem##_Map, sizeof(sPRL_##stem##_Map), sPRL_##stem##_Palette, sizeof(sPRL_##stem##_Palette)}
 #define PRU_DUO_ART(taskName, stem) \
     {taskName, sPRU_##stem##_Tiles, sizeof(sPRU_##stem##_Tiles), sPRU_##stem##_Map, sizeof(sPRU_##stem##_Map), sPRU_##stem##_Palette, sizeof(sPRU_##stem##_Palette)}
 #define PRU_E20_DUO_ART(name, stem) \
     {Task_PRU_E20_##name, sPRU_E20_##stem##_Tiles, sizeof(sPRU_E20_##stem##_Tiles), sPRU_E20_##stem##_Map, sizeof(sPRU_E20_##stem##_Map), sPRU_E20_##stem##_Palette, sizeof(sPRU_E20_##stem##_Palette)}
 static const struct PruDuoTransitionArt sPruDuoTransitionArt[] =
 {
-    PRU_DUO_ART(Task_PRL_JessieJames, jessie_james),
-    PRU_DUO_ART(Task_PRL_EeveeTwins, eevee_twins),
+    PRL_DUO_ART(Task_PRL_JessieJames, jessie_james),
+    PRL_DUO_ART(Task_PRL_EeveeTwins, eevee_twins),
     PRU_DUO_ART(Task_PRU_RedBlue, red_blue),
     PRU_DUO_ART(Task_PRU_OakElm, oak_elm),
     PRU_DUO_ART(Task_PRU_StevenMay, steven_may),
