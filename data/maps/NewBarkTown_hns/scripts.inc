@@ -53,9 +53,11 @@ NewBarkTown_Text_ElmRelicCandy:
 
 NewBarkTown_Text_ElmRelicFarewell:
 	.string "ELM: OAK told you about the\n"
-	.string "ELITE 18 in SAFFRON, right?\p"
-	.string "That's the ultimate challenge.\n"
-	.string "Good luck!$"
+	.string "ELITE 20 in SAFFRON, right?\p"
+	.string "We've found strange echoes\n"
+	.string "around the RUINS OF ALPH.\p"
+	.string "See us after the tournament.\n"
+	.string "There's much to discuss!$"
 
 NewBarkTown_EventScript_ElmCallAfterLeague::
 	lock

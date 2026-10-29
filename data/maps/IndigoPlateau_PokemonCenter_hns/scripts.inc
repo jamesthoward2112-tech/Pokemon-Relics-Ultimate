@@ -866,6 +866,21 @@ PRU_Elite18_Steward::
 	lock
 	faceplayer
 	goto_if_unset FLAG_PRU_KANTO_LEAGUE_CLEARED, PRU_Elite18_Locked
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite20_Steward_Cleared
+	goto PRU_Elite18_AskChallenge
+
+PRU_Elite20_Steward_Cleared::
+	goto_if_unset FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite20_Steward_PendingReward
+	goto PRU_Elite18_AskChallenge
+
+PRU_Elite20_Steward_PendingReward::
+	@ Players whose saves already have the E20 clear flag receive the prize
+	@ and the professors' quest reveal without repeating any battles.
+	call PRU_Elite20_ClaimRewards
+	goto_if_unset FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite18_Exit
+	goto PRU_Elite18_AskChallenge
+
+PRU_Elite18_AskChallenge::
 	msgbox PRU_Elite18_Text_FullRun, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, PRU_Elite18_ChoosePair
 	goto PRU_Elite18_Gauntlet
@@ -910,8 +925,34 @@ PRU_Elite18_Gauntlet::
 	setflag FLAG_PRU_ELITE18_CLEARED
 	special HealPlayerParty
 	msgbox PRU_Elite18_Text_Cleared, MSGBOX_DEFAULT
+	call PRU_Elite20_ClaimRewards
 	release
 	end
+
+PRU_Elite20_ClaimRewards::
+	@ Both pockets must have room before giving either prize. The new flag
+	@ is only set after BOTH gifts succeed; old completed saves retry here.
+	goto_if_set FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite20_ClaimRewards_Return
+	checkitemspace ITEM_MASTER_BALL, 6
+	goto_if_eq VAR_RESULT, FALSE, PRU_Elite20_BagFull
+	checkitemspace ITEM_ANCIENT_STONE, 5
+	goto_if_eq VAR_RESULT, FALSE, PRU_Elite20_BagFull
+	msgbox PRU_Elite20_Text_ElmRelics, MSGBOX_DEFAULT
+	msgbox PRU_Elite20_Text_OakRelics, MSGBOX_DEFAULT
+	giveitem ITEM_MASTER_BALL, 6
+	goto_if_eq VAR_RESULT, FALSE, PRU_Elite20_BagFull
+	giveitem ITEM_ANCIENT_STONE, 5
+	goto_if_eq VAR_RESULT, FALSE, PRU_Elite20_BagFull
+	setflag FLAG_PRU_E20_REWARD_CLAIMED
+	msgbox PRU_Elite20_Text_Champion, MSGBOX_DEFAULT
+	return
+
+PRU_Elite20_BagFull::
+	msgbox PRU_Elite20_Text_NoRoom, MSGBOX_DEFAULT
+	return
+
+PRU_Elite20_ClaimRewards_Return::
+	return
 
 PRU_Elite18_ChoosePair::
 	message PRU_Elite18_Text_Choose
@@ -1298,8 +1339,32 @@ PRU_Elite18_Text_Victory:
 PRU_Elite18_Text_NeedTwo:
 	.string "Bring at least two healthy\nPOKEMON for DOUBLE BATTLES!$"
 PRU_Elite18_Text_Cleared:
-	.string "OAK: Extraordinary work!\p"
-	.string "Every pair is now Lv100\nwhen you return.$"
+	.string "OAK: Incredible! You've beaten\n"
+	.string "all twenty legendary pairs!\p"
+	.string "The ELITE 20 is yours.\n"
+	.string "Our MASTER teams await rematches!$"
+PRU_Elite20_Text_ElmRelics:
+	.string "ELM: Listen, {PLAYER}!\p"
+	.string "Our research found six ancient\n"
+	.string "RELICS, each with a hidden voice.\p"
+	.string "Follow R - E - L - I - C - S.\n"
+	.string "The RUINS OF ALPH hold clues.$"
+PRU_Elite20_Text_OakRelics:
+	.string "OAK: Their combined resonance\n"
+	.string "may awaken a GOLDEN RELIC HO-OH.\p"
+	.string "When the RELICS quest is done,\n"
+	.string "seek me atop MT. SILVER.\p"
+	.string "We've also prepared a prize\n"
+	.string "worthy of an ELITE 20 CHAMPION!$"
+PRU_Elite20_Text_Champion:
+	.string "ELITE 20 CHAMPION!\p"
+	.string "Your triumph is now recorded.\n"
+	.string "Enjoy the MASTER rematches!$"
+PRU_Elite20_Text_NoRoom:
+	.string "ELM: Keep room for SIX MASTER\n"
+	.string "BALLS and FIVE ANCIENT STONES!\p"
+	.string "Come back when your BAG has\n"
+	.string "space. Your prize is safe.$"
 PRU_Elite18_Text_Round_01:
 	.string "ROUND 01: BROCK and ROXANNE!$"
 PRU_Elite18_Text_Option_01:
