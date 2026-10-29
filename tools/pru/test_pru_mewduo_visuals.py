@@ -88,6 +88,17 @@ class MewduoVisualTests(unittest.TestCase):
         self.assertIn("{ sPRUMewduoIconPalette, POKE_ICON_BASE_PAL_TAG + 14 }", c_source)
         self.assertRegex(c_source, r"if \(species == SPECIES_MEWSION\)\s*return 14;")
 
+    def test_party_icon_palettes_are_loaded_on_demand(self):
+        # The party menu has three other sprite palettes. Loading all 15 icon
+        # palettes up front exceeds the GBA's 16 sprite palette slots.
+        source = (ROOT / "src/pokemon_icon.c").read_text()
+        preloads = source.split("void LoadMonIconPalettes(void)", 1)[1].split("}", 1)[0]
+        self.assertRegex(preloads, r"for \(i = 0; i < 6; i\+\+\)")
+        creator = source.split("static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *iconTemplate", 1)[1]
+        creator = creator.split("static void FreeAndDestroyMonIconSprite_", 1)[0]
+        self.assertIn("IndexOfSpritePaletteTag", creator)
+        self.assertIn("LoadSpritePalette(&gMonIconPaletteTable[paletteIndex])", creator)
+
     def test_first_mewduo_encounter_does_not_inherit_mewtwo_caught_icon(self):
         test_source = r'''
 #include "pru_mewduo_caught_icon.h"
