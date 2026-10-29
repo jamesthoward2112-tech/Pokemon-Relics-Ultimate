@@ -435,7 +435,7 @@ const u16 gTrainerPalette_ProfessorOakFrlg[] = INCBIN_U16("graphics/trainers/pal
 
 // James's supplied Professor Elm portrait is separate from Professor Oak.
 const u32 gTrainerFrontPic_ProfessorElmPru[] = INCBIN_U32("graphics/trainers/front_pics/professor_elm_pru.4bpp.smol");
-const u16 gTrainerPalette_ProfessorElmPru[] = INCBIN_U16("graphics/trainers/palettes/professor_elm_pru.gbapal");
+const u16 gTrainerPalette_ProfessorElmPru[] = INCBIN_U16("graphics/trainers/front_pics/professor_elm_pru.gbapal");
 
 const u32 gTrainerFrontPic_RocketGruntFFrlg[] = INCBIN_U32("graphics/trainers/front_pics/rocket_grunt_f_frlg.4bpp.smol");
 const u16 gTrainerPalette_RocketGruntFFrlg[] = INCBIN_U16("graphics/trainers/palettes/rocket_grunt_f_frlg.gbapal");

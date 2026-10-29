@@ -27,7 +27,7 @@ class ProfessorElmE20Tests(unittest.TestCase):
         graphics = (ROOT / "src/data/graphics/trainers.h").read_text()
         self.assertIn("TRAINER_PIC_FRONT_PROFESSOR_ELM_PRU", constants)
         self.assertIn('graphics/trainers/front_pics/professor_elm_pru.4bpp.smol', graphics)
-        self.assertIn('graphics/trainers/palettes/professor_elm_pru.gbapal', graphics)
+        self.assertIn('graphics/trainers/front_pics/professor_elm_pru.gbapal', graphics)
         self.assertIn("TRAINER_SPRITE(TRAINER_PIC_FRONT_PROFESSOR_ELM_PRU,", graphics)
 
     def test_uploaded_elm_sprite_is_gba_indexed(self):

@@ -13,6 +13,7 @@
     {"trainer": "PRU_E18_13_A", "trainer_name": "Lance", "replace": "Dragonite", "form": "Dragonite Relic"},
     {"trainer": "PRU_E18_15_A", "trainer_name": "Jessie", "replace": "Mimikyu", "form": "Asudem Jj", "moves": ["Poison Jab", "Crunch", "Coil", "Protect"]},
     {"trainer": "PRU_E18_15_B", "trainer_name": "James", "replace": "Victreebel", "form": "Victreebel Redux Jj"},
+    {"trainer": "PRU_E18_17_B", "trainer_name": "Blue", "replace": "Nidoking", "form": "Nidoking X Blue"},
     {"trainer": "PRU_E20_RIVAL", "trainer_name": "Silver", "replace": "Tyranitar", "form": "Tyranitar Redux Jj"},
     {"trainer": "PRU_E20_GIOVANNI", "trainer_name": "Giovanni", "replace": "Nidoking", "form": "Nidogod Jj"}
   ]
