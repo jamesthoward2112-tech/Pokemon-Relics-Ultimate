@@ -62,21 +62,40 @@ def main(source: Path, destination: Path):
     rgba = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
     rgba.alpha_composite(elm, ((64 - size[0]) // 2, 64 - size[1]))
 
-    # Reserve palette index 0 for transparency; use the remaining 15 GBA
-    # colours for Elm's glasses, hair, coat, blue top, trousers and shoes.
-    opaque = Image.new("RGB", (64, 64), (255, 255, 255))
-    opaque.paste(rgba, mask=rgba.getchannel("A"))
-    quantized = opaque.quantize(colors=15, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
-    palette = quantized.getpalette()[:45]
+    # A frequency-based 15-colour palette over-selects the large white lab
+    # coat and removes Elm's signature *blue* shirt and *yellow* chest stripe.
+    # Use the reference's colour families explicitly so both stay readable.
+    palette_colors = [
+        (20, 20, 28),     # outlines
+        (71, 49, 37),     # dark brown hair / shoes
+        (133, 98, 68),    # medium brown hair
+        (246, 197, 159),  # light skin
+        (182, 127, 89),   # skin shadows
+        (91, 94, 105),    # glasses and lab-coat definition
+        (255, 255, 255),  # coat highlights
+        (222, 228, 242),  # white coat
+        (142, 151, 170),  # coat shadows
+        (77, 146, 202),   # blue shirt
+        (42, 90, 141),    # dark blue shirt
+        (241, 198, 37),   # yellow shirt stripe
+        (156, 163, 103),  # olive trousers
+        (95, 105, 62),    # trouser shadows
+        (64, 45, 36),     # dark shoes
+    ]
+    palette = [component for color in palette_colors for component in color]
     output = Image.new("P", (64, 64), 0)
     output.putpalette([0, 0, 0] + palette + [0] * (768 - 3 - len(palette)))
     raw = output.load()
-    qraw = quantized.load()
     alpha = rgba.getchannel("A").load()
+    rgb = rgba.convert("RGB").load()
     for y in range(64):
         for x in range(64):
             if alpha[x, y] >= 128:
-                raw[x, y] = qraw[x, y] + 1
+                color = rgb[x, y]
+                raw[x, y] = min(
+                    range(15),
+                    key=lambda i: sum((color[c] - palette_colors[i][c]) ** 2 for c in range(3)),
+                ) + 1
     output.info["transparency"] = 0
     destination.parent.mkdir(parents=True, exist_ok=True)
     output.save(destination, optimize=True)

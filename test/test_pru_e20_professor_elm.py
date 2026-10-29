@@ -38,6 +38,9 @@ class ProfessorElmE20Tests(unittest.TestCase):
             self.assertEqual(pic.mode, "P")
             self.assertLessEqual(len(set(pic.getdata())), 16)
             self.assertEqual(pic.info.get("transparency"), 0)
+            colors = [tuple(pic.getpalette()[i * 3:i * 3 + 3]) for i in set(pic.getdata()) if i]
+            self.assertTrue(any(b > r * 1.25 for r, g, b in colors), "Elm's blue shirt disappeared")
+            self.assertTrue(any(r > 170 and g > 130 and b < 90 for r, g, b in colors), "Elm's yellow stripe disappeared")
 
 
 if __name__ == "__main__":
