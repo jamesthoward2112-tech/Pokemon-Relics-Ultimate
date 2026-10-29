@@ -303,7 +303,7 @@ static bool32 TryHazardsOnSwitchIn(enum BattlerId battler, enum Ability ability,
 {
     bool32 effect = FALSE;
     enum BattleSide side = GetBattlerSide(battler);
-    bool32 clearedToxicSpikes = FALSE;
+    bool32 clearedHazard = FALSE;
 
     switch (hazardType)
     {
@@ -340,7 +340,7 @@ static bool32 TryHazardsOnSwitchIn(enum BattlerId battler, enum Ability ability,
             RemoveHazardFromField(side, HAZARDS_TOXIC_SPIKES);
             gEffectBattler = battler;
             BattleScriptCall(BattleScript_ToxicSpikesAbsorbed);
-            clearedToxicSpikes = TRUE;
+            clearedHazard = TRUE;
             effect = TRUE;
         }
         else if (IsBattlerAffectedByHazards(battler, holdEffect, TRUE)
@@ -362,6 +362,40 @@ static bool32 TryHazardsOnSwitchIn(enum BattlerId battler, enum Ability ability,
             BtlController_EmitSetMonData(battler, B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE, 0, sizeof(gBattleMons[battler].status1), &gBattleMons[battler].status1);
             MarkBattlerForControllerExec(battler);
             effect = TRUE;
+        }
+        break;
+    case HAZARDS_PERMAFROST:
+        // PRU's Frostbite adaptation: 10% per layer, doubled by Hail.
+        // Fire/Ice entrants absorb the hazard. Flying/Levitate avoid it.
+        if (!IsBattlerGrounded(battler, ability, holdEffect))
+            break;
+        if (IS_BATTLER_OF_TYPE(battler, TYPE_FIRE) || IS_BATTLER_OF_TYPE(battler, TYPE_ICE))
+        {
+            RemoveHazardFromField(side, HAZARDS_PERMAFROST);
+            // Removing the active queue entry shifts the next hazard into
+            // this index, so do not advance past it on this switch-in.
+            clearedHazard = TRUE;
+            gBattleScripting.battler = battler;
+            BattleScriptCall(BattleScript_PermafrostAbsorbed);
+            effect = TRUE;
+        }
+        else if (IsBattlerAffectedByHazards(battler, holdEffect, TRUE)
+              && CanSetNonVolatileStatus(battler, battler, ABILITY_NONE, ability,
+                                         MOVE_EFFECT_FROSTBITE, CHECK_TRIGGER))
+        {
+            u32 chance = gSideTimers[side].permafrostAmount * 10;
+            if (gBattleWeather & B_WEATHER_HAIL)
+                chance *= 2;
+            if (RandomPercentage(RNG_ACCURACY, chance))
+            {
+                gBattleScripting.battler = battler;
+                gBattleMons[battler].status1 |= STATUS1_FROSTBITE;
+                BtlController_EmitSetMonData(battler, B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE,
+                                             0, sizeof(gBattleMons[battler].status1), &gBattleMons[battler].status1);
+                MarkBattlerForControllerExec(battler);
+                BattleScriptCall(BattleScript_PermafrostFrozen);
+                effect = TRUE;
+            }
         }
         break;
     case HAZARDS_STEALTH_ROCK:
@@ -390,7 +424,7 @@ static bool32 TryHazardsOnSwitchIn(enum BattlerId battler, enum Ability ability,
         break;
     }
 
-    if (!clearedToxicSpikes)
+    if (!clearedHazard)
         gBattleStruct->hazardsCounter++;
 
     return effect;

@@ -170,7 +170,7 @@ IndigoPlateau_EventScript_HazardTutor::
 	faceplayer
 	message IndigoPlateau_Text_HazardTutorIntro
 	waitmessage
-	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, IndigoPlateau_Text_TutorMove_StealthRock, IndigoPlateau_Text_TutorMove_Spikes, IndigoPlateau_Text_TutorMove_ToxicSpikes, IndigoPlateau_Text_TutorMove_StickyWeb, IndigoPlateau_Text_TutorMove_StoneAxe, IndigoPlateau_Text_TutorMove_CeaselessEdge, IndigoPlateau_Text_TutorMove_SaltCure, IndigoPlateau_Text_TutorMove_LeechSeed, IndigoPlateau_Text_TutorMove_Toxic, IndigoPlateau_Text_TutorMove_WillOWisp, IndigoPlateau_Text_TutorMove_ThunderWave, IndigoPlateau_Text_TutorMove_Taunt, IndigoPlateau_Text_TutorMove_Encore, IndigoPlateau_Text_TutorMove_KnockOff, IndigoPlateau_Text_TutorMove_Roar, IndigoPlateau_Text_TutorMove_Whirlwind, IndigoPlateau_Text_TutorMove_DragonTail, IndigoPlateau_Text_TutorMove_Infestation, IndigoPlateau_Text_TutorMove_Cancel
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, IndigoPlateau_Text_TutorMove_StealthRock, IndigoPlateau_Text_TutorMove_Spikes, IndigoPlateau_Text_TutorMove_ToxicSpikes, IndigoPlateau_Text_TutorMove_StickyWeb, IndigoPlateau_Text_TutorMove_StoneAxe, IndigoPlateau_Text_TutorMove_CeaselessEdge, IndigoPlateau_Text_TutorMove_SaltCure, IndigoPlateau_Text_TutorMove_LeechSeed, IndigoPlateau_Text_TutorMove_Toxic, IndigoPlateau_Text_TutorMove_WillOWisp, IndigoPlateau_Text_TutorMove_ThunderWave, IndigoPlateau_Text_TutorMove_Taunt, IndigoPlateau_Text_TutorMove_Encore, IndigoPlateau_Text_TutorMove_KnockOff, IndigoPlateau_Text_TutorMove_Roar, IndigoPlateau_Text_TutorMove_Whirlwind, IndigoPlateau_Text_TutorMove_DragonTail, IndigoPlateau_Text_TutorMove_Infestation, IndigoPlateau_Text_TutorMove_AchillesHeel, IndigoPlateau_Text_TutorMove_Permafrost, IndigoPlateau_Text_TutorMove_Wildfire, IndigoPlateau_Text_TutorMove_DarkMatter, IndigoPlateau_Text_TutorMove_Cancel
 	switch VAR_RESULT
 	case 0, IndigoPlateau_EventScript_TutorTeach_StealthRock
 	case 1, IndigoPlateau_EventScript_TutorTeach_Spikes
@@ -190,7 +190,11 @@ IndigoPlateau_EventScript_HazardTutor::
 	case 15, IndigoPlateau_EventScript_TutorTeach_Whirlwind
 	case 16, IndigoPlateau_EventScript_TutorTeach_DragonTail
 	case 17, IndigoPlateau_EventScript_TutorTeach_Infestation
-	case 18, IndigoPlateau_EventScript_TutorDecline
+	case 18, IndigoPlateau_EventScript_TutorTeach_AchillesHeel
+	case 19, IndigoPlateau_EventScript_TutorTeach_Permafrost
+	case 20, IndigoPlateau_EventScript_TutorTeach_Wildfire
+	case 21, IndigoPlateau_EventScript_TutorTeach_DarkMatter
+	case 22, IndigoPlateau_EventScript_TutorDecline
 	case MULTI_B_PRESSED, IndigoPlateau_EventScript_TutorDecline
 	end
 
@@ -297,6 +301,22 @@ IndigoPlateau_EventScript_TutorTeach_DragonTail::
 	end
 IndigoPlateau_EventScript_TutorTeach_Infestation::
 	setvar VAR_0x8005, MOVE_INFESTATION
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+IndigoPlateau_EventScript_TutorTeach_AchillesHeel::
+	setvar VAR_0x8005, MOVE_ACHILLES_HEEL
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+IndigoPlateau_EventScript_TutorTeach_Permafrost::
+	setvar VAR_0x8005, MOVE_PERMAFROST
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+IndigoPlateau_EventScript_TutorTeach_Wildfire::
+	setvar VAR_0x8005, MOVE_WILDFIRE
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+IndigoPlateau_EventScript_TutorTeach_DarkMatter::
+	setvar VAR_0x8005, MOVE_DARK_MATTER
 	goto IndigoPlateau_EventScript_TutorTeachMove
 	end
 
@@ -470,6 +490,14 @@ IndigoPlateau_Text_TutorMove_DragonTail:
 	.string "DRAGON TAIL$"
 IndigoPlateau_Text_TutorMove_Infestation:
 	.string "INFESTATION$"
+IndigoPlateau_Text_TutorMove_AchillesHeel:
+	.string "ACHILLES HEEL$"
+IndigoPlateau_Text_TutorMove_Permafrost:
+	.string "PERMAFROST$"
+IndigoPlateau_Text_TutorMove_Wildfire:
+	.string "WILDFIRE$"
+IndigoPlateau_Text_TutorMove_DarkMatter:
+	.string "DARK MATTER$"
 IndigoPlateau_Text_TutorMove_RapidSpin:
 	.string "RAPID SPIN$"
 IndigoPlateau_Text_TutorMove_Defog:

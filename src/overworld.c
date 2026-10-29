@@ -1,5 +1,6 @@
 #include "global.h"
 #include "overworld.h"
+#include "pru_mewsion_gate.h"
 #include "constants/heal_locations.h"
 #include "battle_pyramid.h"
 #include "battle_setup.h"
@@ -957,6 +958,31 @@ static void RestorePruDefeatedLegendariesOnMapEntry(void)
     // Keep the three stationary duplicates hidden after roaming unlock.
     EnsurePruKantoBirdRoamers();
     RestorePruDefeatedRoamers();
+
+    // Mewsion is unlocked only after returning to the outside of Cerulean
+    // Cave with both parental species marked caught. Simply taking the
+    // B2F-to-1F stairs after catching Mewtwo must not unlock it.
+    // Its National Dex identity is shared with Mewtwo, so use a distinct
+    // persistent caught flag rather than the ordinary legendary retry rule.
+    {
+        bool8 mewCaught = GetSetPokedexFlag(NATIONAL_DEX_MEW, FLAG_GET_CAUGHT);
+        bool8 mewtwoCaught = GetSetPokedexFlag(NATIONAL_DEX_MEWTWO, FLAG_GET_CAUGHT);
+        if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_CERULEAN_CITY_HNS)
+            && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_CERULEAN_CITY_HNS)
+            && mewCaught && mewtwoCaught)
+            FlagSet(FLAG_PRU_MEWSION_REENTRY_READY);
+
+        if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_CERULEAN_CAVE_B2F_HNS)
+            && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_CERULEAN_CAVE_B2F_HNS))
+        {
+            if (PruMewsionAllowed(mewCaught, mewtwoCaught,
+                                  FlagGet(FLAG_PRU_MEWSION_REENTRY_READY),
+                                  FlagGet(FLAG_PRU_MEWSION_CAUGHT)))
+                FlagClear(FLAG_TEMP_B);
+            else
+                FlagSet(FLAG_TEMP_B);
+        }
+    }
 
     for (i = 0; i < ARRAY_COUNT(sLegendaryHideFlags); i++)
     {
