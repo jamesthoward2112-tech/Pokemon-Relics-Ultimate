@@ -1,0 +1,19 @@
+name: PRU E20 artwork staging source checks
+
+on:
+  push:
+    branches:
+      - feature/pru-e20-artwork-staging-20261029
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual-source-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify E20 paired trainer artwork assignments
+        run: python3 test/test_pru_e20_visuals.py
