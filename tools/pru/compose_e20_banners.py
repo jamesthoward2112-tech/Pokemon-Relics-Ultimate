@@ -59,7 +59,10 @@ def _sprite(filename: str) -> Image.Image:
         # of whether the original PNG happens to contain a tRNS chunk.
         if image.mode == "P":
             mask = Image.new("L", image.size)
-            mask.putdata([0 if index == 0 else 255 for index in image.get_flattened_data()])
+            # GitHub's apt-installed Pillow predates get_flattened_data();
+            # modern Pillow deprecates getdata(). Support both explicitly.
+            indices = image.get_flattened_data() if hasattr(image, "get_flattened_data") else image.getdata()
+            mask.putdata([0 if index == 0 else 255 for index in indices])
             result = image.convert("RGBA")
             result.putalpha(mask)
         else:

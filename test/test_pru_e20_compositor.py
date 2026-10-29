@@ -16,7 +16,8 @@ class E20BannerTests(unittest.TestCase):
                 self.assertEqual(len(asset.tilemap), 2048)
                 self.assertEqual(len(asset.palette), 32)
                 self.assertLessEqual(asset.tile_count, 512)
-                self.assertGreater(len(set(asset.preview.get_flattened_data())), 6)
+                pixels = asset.preview.get_flattened_data() if hasattr(asset.preview, "get_flattened_data") else asset.preview.getdata()
+                self.assertGreater(len(set(pixels)), 6)
 
 
 if __name__ == "__main__":
