@@ -33,7 +33,8 @@ class ShadowMewtwoTests(unittest.TestCase):
     def test_dark_nova_is_appended_without_shifting_existing_move_ids(self):
         source = read("include/constants/moves.h")
         source = re.sub(r"//[^\n]*", "", source)
-        self.assertRegex(source, r"MOVE_KABOOM,\s*MOVE_DARK_NOVA,\s*MOVES_COUNT,")
+        self.assertRegex(source, r"MOVE_KABOOM,\s*MOVE_DARK_NOVA,")
+        self.assertLess(source.index("MOVE_DARK_NOVA,"), source.index("MOVES_COUNT,"))
 
     def test_dark_nova_is_a_two_hit_dynamic_category_dark_move(self):
         move = between(read("src/data/moves_info.h"), "[MOVE_DARK_NOVA] =", "\n    },")

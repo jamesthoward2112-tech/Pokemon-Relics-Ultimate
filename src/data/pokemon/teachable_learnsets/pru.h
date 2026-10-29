@@ -1,10 +1,10 @@
 // Pinned PRL teachable learnsets for selectively imported PRU species.
 
 // Insurgence Shadow Mewtwo: TM/HM and tutor compatibility from the official
-// Insurgence Pokedex.  Moves exclusive to Insurgence's extra TM catalogue
-// (Achilles Heel, Permafrost, Wildfire, Dark Matter) are not in PRU yet.
+// Insurgence Pokedex, including its four exclusive TM moves.
 static const u16 sInsurgenceShadowMewtwoTeachableLearnset[] =
 {
+    MOVE_ACHILLES_HEEL,
     MOVE_ACID,
     MOVE_AERIAL_ACE,
     MOVE_AQUA_TAIL,
@@ -20,6 +20,7 @@ static const u16 sInsurgenceShadowMewtwoTeachableLearnset[] =
     MOVE_CONFIDE,
     MOVE_COUNTER,
     MOVE_DARK_PULSE,
+    MOVE_DARK_MATTER,
     MOVE_DIG,
     MOVE_DIVE,
     MOVE_DOUBLE_EDGE,
@@ -63,6 +64,7 @@ static const u16 sInsurgenceShadowMewtwoTeachableLearnset[] =
     MOVE_MIMIC,
     MOVE_MUD_SLAP,
     MOVE_POISON_JAB,
+    MOVE_PERMAFROST,
     MOVE_POWER_UP_PUNCH,
     MOVE_PROTECT,
     MOVE_PSYCH_UP,
@@ -109,6 +111,7 @@ static const u16 sInsurgenceShadowMewtwoTeachableLearnset[] =
     MOVE_TRICK_ROOM,
     MOVE_WATER_PULSE,
     MOVE_WILL_O_WISP,
+    MOVE_WILDFIRE,
     MOVE_WONDER_ROOM,
     MOVE_ZAP_CANNON,
     MOVE_ZEN_HEADBUTT,

@@ -13,6 +13,13 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 
 class MewsionEncounterTests(unittest.TestCase):
+    def test_player_visible_species_name_is_mewduo_without_changing_species_id(self):
+        species = (ROOT / "src/data/pokemon/species_info/pru_custom.h").read_text()
+        enum = (ROOT / "include/constants/species.h").read_text()
+        self.assertIn('.speciesName = _("Mewduo")', species)
+        self.assertIn('#define SPECIES_MEWSION                                       1642', enum)
+        self.assertNotIn('.speciesName = _("Mewsion")', species)
+
     def test_unlock_rule_checks_every_capture_and_reentry_combination(self):
         source = r'''
 #include "pru_mewsion_gate.h"

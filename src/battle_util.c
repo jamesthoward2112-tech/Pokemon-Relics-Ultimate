@@ -8714,6 +8714,12 @@ static inline uq4_12_t CalcTypeEffectivenessMultiplierInternal(struct BattleCont
         modifier = UQ_4_12(0.0);
     }
 
+    // Insurgence Achilles Heel always treats a non-immune target as 2x
+    // effective regardless of its usual weaknesses and resistances. Check
+    // after all defender types are combined so dual types never become 4x.
+    if (ctx->move == MOVE_ACHILLES_HEEL && modifier > UQ_4_12(0.0) && !ctx->isAnticipation)
+        modifier = UQ_4_12(2.0);
+
     // Thousand Arrows ignores type modifiers for flying mons
     if (MoveIgnoresTypeIfFlyingAndUngrounded(ctx->move)
      && !IsBattlerGrounded(ctx->battlerDef, ctx->abilityDef, ctx->holdEffectDef)
@@ -10639,6 +10645,8 @@ bool32 IsHazardOnSideAndClear(enum BattleSide side, enum Hazards hazardType)
                 gSideTimers[side].spikesAmount = 0;
             else if (hazardType == HAZARDS_TOXIC_SPIKES)
                 gSideTimers[side].toxicSpikesAmount = 0;
+            else if (hazardType == HAZARDS_PERMAFROST)
+                gSideTimers[side].permafrostAmount = 0;
             return TRUE;
         }
     }
@@ -10649,6 +10657,7 @@ void RemoveAllHazardsFromField(enum BattleSide side)
 {
     gSideTimers[side].spikesAmount = 0;
     gSideTimers[side].toxicSpikesAmount = 0;
+    gSideTimers[side].permafrostAmount = 0;
     gBattleStruct->numHazards[side] = 0;
     for (u32 i = 0; i < HAZARDS_MAX_COUNT; i++)
         gBattleStruct->hazardsQueue[side][i] = HAZARDS_NONE;
@@ -10667,6 +10676,8 @@ void RemoveHazardFromField(enum BattleSide side, enum Hazards hazardType)
                 gSideTimers[side].spikesAmount = 0;
             else if (hazardType == HAZARDS_TOXIC_SPIKES)
                 gSideTimers[side].toxicSpikesAmount = 0;
+            else if (hazardType == HAZARDS_PERMAFROST)
+                gSideTimers[side].permafrostAmount = 0;
             break;
         }
     }
