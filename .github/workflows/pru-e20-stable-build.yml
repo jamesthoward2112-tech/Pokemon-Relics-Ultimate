@@ -1,0 +1,187 @@
+name: PRU E20 clean build from d468 stable base
+
+on:
+  push:
+    branches:
+      - feature/pru-e20-artwork-staging-20261029
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Build only on the isolated staging branch. Keep main and the currently
+# playable d468 ROM untouched. Pinned donor inputs and a downloadable QA-only
+# GBA artifact are explicitly approved; no repository write/release permissions.
+jobs:
+  compile-and-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install proven PJR GBA build dependencies
+        timeout-minutes: 20
+        run: |
+          set -euo pipefail
+          printf '%s\n' 'http://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt
+          sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil mgba-qt xvfb xdotool imagemagick
+      - name: Restore original approved PRU artwork and sprite inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 tools/pru/install_prl_duo_assets.py
+          python3 tools/pru/check_prl_duo_palette.py
+          python3 tools/pru/install_original_meowth_balloon.py
+          cat \
+            assets/pjr_infinity/parts/part00.txt \
+            assets/pjr_infinity/parts/part01.txt \
+            assets/pjr_infinity/parts/part02.txt \
+            assets/pjr_infinity/fixed/part030.txt \
+            assets/pjr_infinity/fixed/part031.txt \
+            assets/pjr_infinity/fixed/part032.txt \
+            assets/pjr_infinity/fixed/part0330.txt \
+            assets/pjr_infinity/fixed/part0331.txt \
+            assets/pjr_infinity/fixed/part0332.txt \
+            assets/pjr_infinity/fixed/part0333.txt \
+            assets/pjr_infinity/parts/part04.txt \
+            assets/pjr_infinity/parts/part05.txt \
+            assets/pjr_infinity/parts/part06.txt \
+            | base64 -d > /tmp/pru-e20-infinity.zip
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil, zipfile
+          destination = Path('/tmp/pru-e20-infinity')
+          with zipfile.ZipFile('/tmp/pru-e20-infinity.zip') as archive:
+              archive.extractall(destination)
+          for species in ('alphoracle', 'champeon', 'guardeon', 'lepideon', 'obsideon',
+                          'omeon', 'toxeon', 'sphynxeon', 'jollibird', 'grimfowl',
+                          'kablowfish', 'sunflorid'):
+              donor = destination / species
+              if not donor.is_dir():
+                  continue
+              target = Path('graphics/pokemon') / species
+              target.mkdir(parents=True, exist_ok=True)
+              for name in ('front.png', 'back.png'):
+                  shutil.copy2(donor / name, target / name)
+          PY
+          python3 tools/pru/prepare_external_donor_art.py
+          base64 -d assets/pru_chansey/approved_natural_64.png.b64 > graphics/trainers/front_pics/pru_chansey_twins.png
+          echo 'aabcca878b1e775d67886aa869e386fc9af99176945af1c377924654393123b1  graphics/trainers/front_pics/pru_chansey_twins.png' | sha256sum -c -
+          python3 tools/pru/sync_prl_authoritative_sprites.py
+          python3 tools/pru/install_insurgence_mega_jirachi.py
+          python3 tools/pru/install_p_bird_sprites.py
+          python3 tools/pru/build_noxichu_intro_trial.py
+          python3 tools/pru/add_route30_poochyena.py
+      - name: Check E20 and latest stable Mewduo source
+        run: |
+          set -euo pipefail
+          PYTHONPATH=. python3 -m unittest discover -s test -p 'test_pru_e20_*.py'
+          python3 tools/pru/check_elite20_visuals.py
+          PYTHONPATH=. python3 -m unittest \
+            tools.pru.test_pru_a4d_mewduo_merge \
+            tools.pru.test_pru_insurgence_extra_moves \
+            tools.pru.test_pru_mewsion_encounter \
+            tools.pru.test_pru_shadow_mewtwo
+      - name: Run GBA engine tutor and E4 actor regressions
+        run: make -j2 check BUILD=hns TESTS=test/pru/tutor_and_league.c
+      - name: Restore pinned PJR multiboot binary inputs
+        run: |
+          set -euo pipefail
+          donor_commit='6f26a381a13821fd63688cd53dd59de682148bab'
+          for file in mb_berry_fix.gba mb_colosseum.gba mb_ereader.gba; do
+            if test -s "data/$file"; then
+              continue
+            fi
+            curl --fail --location --retry 3 --connect-timeout 20 \
+              "https://raw.githubusercontent.com/jamesthoward2112-tech/Pokemon-Johto-Relics/$donor_commit/data/$file" \
+              --output "data/$file"
+            test -s "data/$file"
+          done
+      - name: Compile and verify a 32 MiB PRU E20 test ROM
+        run: |
+          set -euo pipefail
+          make clean
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+          files = subprocess.check_output(['git', 'ls-files', '*.4bpp', '*.8bpp', '*.gbapal', '*.lz'], text=True).splitlines()
+          for name in files:
+              path = Path(name)
+              source = path.with_suffix('') if path.suffix == '.lz' else path
+              if not source.exists() and not source.with_suffix('.png').exists() and not source.with_suffix('.pal').exists():
+                  subprocess.run(['git', 'restore', '--', name], check=True)
+          PY
+          if make hns -j2 -O > /tmp/pru-e20-build.log 2>&1; then
+            echo 'PRU E20 ROM compiled'
+          else
+            grep -n -m 60 -E 'error:|Error:|Failed to open|undefined reference|make: \*\*\*' /tmp/pru-e20-build.log || true
+            tail -n 80 /tmp/pru-e20-build.log
+            exit 1
+          fi
+          test -s pokehns.gba
+          test "$(stat -c%s pokehns.gba)" -eq 33554432
+          arm-none-eabi-nm -n pokehns.elf > PRU-QA-symbols.sym
+          python3 tools/pru/verify_compiled_rom.py
+          sha256sum pokehns.gba > pru-e20-d468.sha256
+      - name: Boot the completed ROM in mGBA and capture gameplay frames
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p PRU-E20-mgba
+          xvfb-run -a -s '-screen 0 1280x960x24' bash -euo pipefail -c '
+            mgba-qt pokehns.gba >PRU-E20-mgba/mgba.log 2>&1 &
+            emulator_pid=$!
+            trap "kill $emulator_pid >/dev/null 2>&1 || true; wait $emulator_pid >/dev/null 2>&1 || true" EXIT
+            for attempt in $(seq 1 30); do
+              window_id=$(xdotool search --onlyvisible --name "mGBA" 2>/dev/null | head -n1 || true)
+              test -n "$window_id" && break
+              sleep 1
+            done
+            test -n "${window_id:-}"
+            xdotool windowfocus "$window_id"
+            sleep 5
+            import -window root PRU-E20-mgba/boot-05s.png
+            xdotool key Return
+            sleep 6
+            import -window root PRU-E20-mgba/frame-11s.png
+          '
+          test -s PRU-E20-mgba/boot-05s.png
+          test -s PRU-E20-mgba/frame-11s.png
+          ! grep -Eiq 'fatal|segmentation fault|could not load|failed to load' PRU-E20-mgba/mgba.log
+          python3 - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          for path in sorted(Path('PRU-E20-mgba').glob('*.png')):
+              image = Image.open(path).convert('RGB')
+              colors = image.getcolors(maxcolors=image.width * image.height)
+              assert image.width >= 240 and image.height >= 160
+              assert colors and len(colors) > 32
+              print(f'{path}: {image.width}x{image.height}, {len(colors)} colors')
+          PY
+      - name: Upload test ROM without publishing a release
+        uses: actions/upload-artifact@v4
+        with:
+          name: PRU-E20-D468-COMPILED-QA
+          path: |
+            pokehns.gba
+            pru-e20-d468.sha256
+            PRU-E20-mgba/
+          if-no-files-found: error
+
+      - name: Publish raw PRU E20 GBA as QA prerelease
+        if: github.event_name == 'push' && github.ref == 'refs/heads/feature/pru-e20-artwork-staging-20261029'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          short="${GITHUB_SHA:0:10}"
+          tag="pru-e20-qa-${short}"
+          rom="Pokemon-Relics-Ultimate-E20-${short}.gba"
+          cp pokehns.gba "${rom}"
+          sha256sum "${rom}" > "${rom}.sha256"
+          gh release create "${tag}" "${rom}" "${rom}.sha256" \
+            --prerelease --title "PRU E20 QA ${short}" \
+            --notes "QA ROM from the latest E20 feature branch, built from the d468 stable lineage. E20, Mewduo, tutor/E4 engine checks, 32 MiB compilation, and mGBA boot/frame checks passed. The automated mGBA run boots the ROM; the complete E20 and Mt. Silver save-state story walkthrough remains a manual gameplay check. This prerelease does not replace the confirmed stable ROM."

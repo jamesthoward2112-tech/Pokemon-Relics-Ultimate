@@ -6,7 +6,58 @@ NewBarkTown_hns_MapScripts::
 
 NewBarkTown_OnFrame::
 	map_script_2 VAR_NEWBARK_TOWN_STATE, 6, NewBarkTown_EventScript_ElmCallAfterLeague
+	map_script_2 VAR_NEWBARK_TOWN_STATE, 8, NewBarkTown_EventScript_RelicCandyElm
 	.2byte 0
+
+@ After the second League credits, Elm personally gives the reusable
+@ Ancient Candy key item (legacy save ID). No other NPC dispenses it.
+NewBarkTown_EventScript_RelicCandyElm::
+	lockall
+	clearflag FLAG_PRU_HIDE_ELM_RELIC_CANDY
+	addobject LOCALID_PRU_RELIC_ELM
+	applymovement LOCALID_PRU_RELIC_ELM, NewBarkTown_Movement_ElmApproach
+	waitmovement LOCALID_PRU_RELIC_ELM
+	turnobject OBJ_EVENT_ID_PLAYER, DIR_SOUTH
+	msgbox NewBarkTown_Text_ElmRelicCandy, MSGBOX_DEFAULT
+	giveitem ITEM_RELIC_CANDY
+	setflag FLAG_PRU_ELM_RELIC_CANDY_GIVEN
+	setvar VAR_NEWBARK_TOWN_STATE, 7
+	msgbox NewBarkTown_Text_ElmRelicFarewell, MSGBOX_DEFAULT
+	applymovement LOCALID_PRU_RELIC_ELM, NewBarkTown_Movement_ElmLeave
+	waitmovement LOCALID_PRU_RELIC_ELM
+	removeobject LOCALID_PRU_RELIC_ELM
+	setflag FLAG_PRU_HIDE_ELM_RELIC_CANDY
+	releaseall
+	end
+
+NewBarkTown_Movement_ElmApproach:
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+NewBarkTown_Movement_ElmLeave:
+	walk_down
+	walk_down
+	step_end
+
+NewBarkTown_Text_ElmRelicCandy:
+	.string "ELM: {PLAYER}! There you are!\p"
+	.string "You've conquered the KANTO\n"
+	.string "LEAGUE as well! Incredible!\p"
+	.string "For your RELICS journey,\n"
+	.string "I made you something special.\p"
+	.string "Take this ANCIENT CANDY.\n"
+	.string "It can provide RARE CANDIES\l"
+	.string "whenever you need them!$"
+
+NewBarkTown_Text_ElmRelicFarewell:
+	.string "ELM: OAK told you about the\n"
+	.string "ELITE 20 in SAFFRON, right?\p"
+	.string "We've found strange echoes\n"
+	.string "around the RUINS OF ALPH.\p"
+	.string "See us after the tournament.\n"
+	.string "There's much to discuss!$"
 
 NewBarkTown_EventScript_ElmCallAfterLeague::
 	lock
@@ -23,6 +74,7 @@ NewBarkTown_Text_ElmName:
 	.string "PROF.ELM$"
 
 NewBarkTown_OnTransition::
+	setflag FLAG_PRU_HIDE_ELM_RELIC_CANDY
 	goto_if_eq VAR_NEWBARK_TOWN_STATE, 2, NewBarkTown_Set_TalkToElm
 	goto_if_eq VAR_NEWBARK_TOWN_STATE, 4, NewBarkTown_Set_TalkToMom
 	end

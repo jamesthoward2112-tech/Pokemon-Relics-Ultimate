@@ -925,6 +925,7 @@ static const struct {
     {MAP_BLACKTHORN_CITY_GYM_HNS,                 BATTLE_ENVIRONMENT_VOLCANO_CAVE},
     {MAP_SEAFOAM_ISLANDS_GYM_HNS,                BATTLE_ENVIRONMENT_VOLCANO_CAVE},
     {MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS,        BATTLE_ENVIRONMENT_VOLCANO_CAVE},
+    {MAP_ROUTE45_GROUDON_CAVE_HNS,               BATTLE_ENVIRONMENT_VOLCANO_CAVE},
     {MAP_NEWSINJOH_HOTSPRINGS_HNS,               BATTLE_ENVIRONMENT_VOLCANO_CAVE},
     {MAP_AKALA_CAVE_HNS,                         BATTLE_ENVIRONMENT_VOLCANO_CAVE},
     // SNOW_CAVE
@@ -1144,6 +1145,69 @@ enum BattleTransition GetTrainerBattleTransition(void)
     enum TrainerClassID trainerClass = GetTrainerClassFromId(TRAINER_BATTLE_PARAM.opponentA);
 
 #if IS_HNS
+    // The Oak/Elm transition is registered for the forthcoming professor
+    // duo encounter; its trainer IDs do not yet exist in this branch.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+    {
+        u32 secondTrainerId = SanitizeTrainerId(TRAINER_BATTLE_PARAM.opponentB);
+        // Use the pair identity, not a round number, because E20 can be
+        // revisited in normal and master modes from an existing save.
+        static const struct
+        {
+            u16 normalA, normalB, masterA, masterB;
+            enum BattleTransition transition;
+        } sElite20PairTransitions[] =
+        {
+            {TRAINER_PRU_E18_01_A_HNS, TRAINER_PRU_E18_01_B_HNS, TRAINER_PRU_E18_01_A_MASTER_HNS, TRAINER_PRU_E18_01_B_MASTER_HNS, B_TRANSITION_PRU_E20_BROCK_ROXANNE},
+            {TRAINER_PRU_E18_02_A_HNS, TRAINER_PRU_E18_02_B_HNS, TRAINER_PRU_E18_02_A_MASTER_HNS, TRAINER_PRU_E18_02_B_MASTER_HNS, B_TRANSITION_PRU_E20_MISTY_WALLACE},
+            {TRAINER_PRU_E18_03_A_HNS, TRAINER_PRU_E18_03_B_HNS, TRAINER_PRU_E18_03_A_MASTER_HNS, TRAINER_PRU_E18_03_B_MASTER_HNS, B_TRANSITION_PRU_E20_SURGE_WATTSON},
+            {TRAINER_PRU_E18_04_A_HNS, TRAINER_PRU_E18_04_B_HNS, TRAINER_PRU_E18_04_A_MASTER_HNS, TRAINER_PRU_E18_04_B_MASTER_HNS, B_TRANSITION_PRU_E20_ERIKA_BUGSY},
+            {TRAINER_PRU_E18_05_A_HNS, TRAINER_PRU_E18_05_B_HNS, TRAINER_PRU_E18_05_A_MASTER_HNS, TRAINER_PRU_E18_05_B_MASTER_HNS, B_TRANSITION_PRU_E20_JANINE_KOGA},
+            {TRAINER_PRU_E18_06_A_HNS, TRAINER_PRU_E18_06_B_HNS, TRAINER_PRU_E18_06_A_MASTER_HNS, TRAINER_PRU_E18_06_B_MASTER_HNS, B_TRANSITION_PRU_E20_SABRINA_WILL},
+            {TRAINER_PRU_E18_07_A_HNS, TRAINER_PRU_E18_07_B_HNS, TRAINER_PRU_E18_07_A_MASTER_HNS, TRAINER_PRU_E18_07_B_MASTER_HNS, B_TRANSITION_PRU_E20_BLAINE_FLANNERY},
+            {TRAINER_PRU_E18_08_A_HNS, TRAINER_PRU_E18_08_B_HNS, TRAINER_PRU_E18_08_A_MASTER_HNS, TRAINER_PRU_E18_08_B_MASTER_HNS, B_TRANSITION_PRU_E20_MAXIE_ARCHIE},
+            {TRAINER_PRU_E18_09_A_HNS, TRAINER_PRU_E18_09_B_HNS, TRAINER_PRU_E18_09_A_MASTER_HNS, TRAINER_PRU_E18_09_B_MASTER_HNS, B_TRANSITION_PRU_E20_LORELEI_GLACIA},
+            {TRAINER_PRU_E18_10_A_HNS, TRAINER_PRU_E18_10_B_HNS, TRAINER_PRU_E18_10_A_MASTER_HNS, TRAINER_PRU_E18_10_B_MASTER_HNS, B_TRANSITION_PRU_E20_BRUNO_CHUCK},
+            {TRAINER_PRU_E18_11_A_HNS, TRAINER_PRU_E18_11_B_HNS, TRAINER_PRU_E18_11_A_MASTER_HNS, TRAINER_PRU_E18_11_B_MASTER_HNS, B_TRANSITION_PRU_E20_AGATHA_PHOEBE},
+            {TRAINER_PRU_E18_12_A_HNS, TRAINER_PRU_E18_12_B_HNS, TRAINER_PRU_E18_12_A_MASTER_HNS, TRAINER_PRU_E18_12_B_MASTER_HNS, B_TRANSITION_PRU_E20_KAREN_SIDNEY},
+            {TRAINER_PRU_E18_13_A_HNS, TRAINER_PRU_E18_13_B_HNS, TRAINER_PRU_E18_13_A_MASTER_HNS, TRAINER_PRU_E18_13_B_MASTER_HNS, B_TRANSITION_PRU_E20_LANCE_DRAKE},
+            {TRAINER_PRU_E20_JASMINE_HNS, TRAINER_PRU_E20_CLAIR_HNS, TRAINER_PRU_E20_JASMINE_MASTER_HNS, TRAINER_PRU_E20_CLAIR_MASTER_HNS, B_TRANSITION_PRU_E20_JASMINE_CLAIR},
+        };
+        for (u32 i = 0; i < ARRAY_COUNT(sElite20PairTransitions); ++i)
+        {
+            if ((trainerId == sElite20PairTransitions[i].normalA && secondTrainerId == sElite20PairTransitions[i].normalB)
+             || (trainerId == sElite20PairTransitions[i].masterA && secondTrainerId == sElite20PairTransitions[i].masterB))
+                return sElite20PairTransitions[i].transition;
+        }
+        // The two-trainer mode presents both opponents; these event-specific
+        // transitions must not affect their normal solo encounters.
+        if ((trainerId == TRAINER_PRU_E18_14_A_HNS && secondTrainerId == TRAINER_PRU_E18_14_B_HNS)
+         || (trainerId == TRAINER_PRU_E18_14_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_14_B_MASTER_HNS))
+            return B_TRANSITION_EEVEE_TWINS;
+        if ((trainerId == TRAINER_PRU_E18_15_A_HNS && secondTrainerId == TRAINER_PRU_E18_15_B_HNS)
+         || (trainerId == TRAINER_PRU_E18_15_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_15_B_MASTER_HNS))
+            return B_TRANSITION_JESSIE_JAMES;
+        if ((trainerId == TRAINER_PRU_E18_17_A_HNS && secondTrainerId == TRAINER_PRU_E18_17_B_HNS)
+         || (trainerId == TRAINER_PRU_E18_17_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_17_B_MASTER_HNS))
+            return B_TRANSITION_RED_BLUE;
+        if ((trainerId == TRAINER_PRU_E18_18_A_HNS && secondTrainerId == TRAINER_PRU_E18_18_B_HNS)
+         || (trainerId == TRAINER_PRU_E18_18_A_MASTER_HNS && secondTrainerId == TRAINER_PRU_E18_18_B_MASTER_HNS))
+            return B_TRANSITION_OAK_ELM;
+        if ((trainerId == TRAINER_PRU_E20_STEVEN_HNS && secondTrainerId == TRAINER_PRU_E20_MAY_HNS)
+         || (trainerId == TRAINER_PRU_E20_STEVEN_MASTER_HNS && secondTrainerId == TRAINER_PRU_E20_MAY_MASTER_HNS))
+            return B_TRANSITION_STEVEN_MAY;
+        if ((trainerId == TRAINER_PRU_E20_RIVAL_HNS && secondTrainerId == TRAINER_PRU_E20_GIOVANNI_HNS)
+         || (trainerId == TRAINER_PRU_E20_RIVAL_MASTER_HNS && secondTrainerId == TRAINER_PRU_E20_GIOVANNI_MASTER_HNS))
+            return B_TRANSITION_SILVER_GIOVANNI;
+        bool8 redFirst = (trainerId == TRAINER_RED_HNS || trainerId == TRAINER_RED_POSTOBC_HNS);
+        bool8 blueFirst = (trainerId == TRAINER_BLUE_HNS || trainerId == TRAINER_BLUE_2_HNS
+                           || trainerId == TRAINER_BLUE_POSTOBC_HNS);
+        bool8 redSecond = (secondTrainerId == TRAINER_RED_HNS || secondTrainerId == TRAINER_RED_POSTOBC_HNS);
+        bool8 blueSecond = (secondTrainerId == TRAINER_BLUE_HNS || secondTrainerId == TRAINER_BLUE_2_HNS
+                            || secondTrainerId == TRAINER_BLUE_POSTOBC_HNS);
+        if ((redFirst && blueSecond) || (blueFirst && redSecond))
+            return B_TRANSITION_RED_BLUE;
+    }
     switch (trainerId)
     {
     case TRAINER_GRUNT_21_HNS:

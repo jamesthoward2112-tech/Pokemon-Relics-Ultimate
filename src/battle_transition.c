@@ -92,6 +92,26 @@ typedef bool8 (*TransitionSpriteCallbackPartner)(struct Sprite *sprite);
 
 static void Task_PRL_JessieJames(u8 taskId);
 static void Task_PRL_EeveeTwins(u8 taskId);
+static void Task_PRU_RedBlue(u8 taskId);
+static void Task_PRU_OakElm(u8 taskId);
+static void Task_PRU_StevenMay(u8 taskId);
+static void Task_PRU_SilverGiovanni(u8 taskId);
+#define DECLARE_PRU_E20_DUO(name) static void Task_PRU_E20_##name(u8 taskId);
+DECLARE_PRU_E20_DUO(BROCK_ROXANNE)
+DECLARE_PRU_E20_DUO(MISTY_WALLACE)
+DECLARE_PRU_E20_DUO(SURGE_WATTSON)
+DECLARE_PRU_E20_DUO(ERIKA_BUGSY)
+DECLARE_PRU_E20_DUO(JANINE_KOGA)
+DECLARE_PRU_E20_DUO(SABRINA_WILL)
+DECLARE_PRU_E20_DUO(BLAINE_FLANNERY)
+DECLARE_PRU_E20_DUO(MAXIE_ARCHIE)
+DECLARE_PRU_E20_DUO(LORELEI_GLACIA)
+DECLARE_PRU_E20_DUO(BRUNO_CHUCK)
+DECLARE_PRU_E20_DUO(AGATHA_PHOEBE)
+DECLARE_PRU_E20_DUO(KAREN_SIDNEY)
+DECLARE_PRU_E20_DUO(LANCE_DRAKE)
+DECLARE_PRU_E20_DUO(JASMINE_CLAIR)
+#undef DECLARE_PRU_E20_DUO
 static bool8 PRL_Emblem_Init(struct Task *task);
 static bool8 PRL_Emblem_SetGfx(struct Task *task);
 static bool8 Transition_StartIntro(struct Task *);
@@ -311,6 +331,113 @@ static const u16 sPRL_jessie_james_Palette[] = INCBIN_U16("graphics/battle_trans
 static const u32 sPRL_eevee_twins_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/eevee_twins.4bpp");
 static const u16 sPRL_eevee_twins_Map[] = INCBIN_U16("graphics/battle_transitions/prl/eevee_twins.bin");
 static const u16 sPRL_eevee_twins_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/eevee_twins.gbapal");
+static const u32 sPRU_red_blue_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/red_blue.4bpp");
+static const u16 sPRU_red_blue_Map[] = INCBIN_U16("graphics/battle_transitions/prl/red_blue.bin");
+static const u16 sPRU_red_blue_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/red_blue.gbapal");
+static const u32 sPRU_oak_elm_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/oak_elm.4bpp");
+static const u16 sPRU_oak_elm_Map[] = INCBIN_U16("graphics/battle_transitions/prl/oak_elm.bin");
+static const u16 sPRU_oak_elm_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/oak_elm.gbapal");
+static const u32 sPRU_steven_may_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/steven_may.4bpp");
+static const u16 sPRU_steven_may_Map[] = INCBIN_U16("graphics/battle_transitions/prl/steven_may.bin");
+static const u16 sPRU_steven_may_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/steven_may.gbapal");
+static const u32 sPRU_silver_giovanni_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/silver_giovanni.4bpp");
+static const u16 sPRU_silver_giovanni_Map[] = INCBIN_U16("graphics/battle_transitions/prl/silver_giovanni.bin");
+static const u16 sPRU_silver_giovanni_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/silver_giovanni.gbapal");
+// E20 originals use the same 4bpp, 512-tile, palette-13 format as the
+// already approved duo portraits. Every image is generated from repo art.
+static const u32 sPRU_E20_brock_roxanne_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/brock_roxanne.4bpp");
+static const u16 sPRU_E20_brock_roxanne_Map[] = INCBIN_U16("graphics/battle_transitions/prl/brock_roxanne.bin");
+static const u16 sPRU_E20_brock_roxanne_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/brock_roxanne.gbapal");
+static const u32 sPRU_E20_misty_wallace_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/misty_wallace.4bpp");
+static const u16 sPRU_E20_misty_wallace_Map[] = INCBIN_U16("graphics/battle_transitions/prl/misty_wallace.bin");
+static const u16 sPRU_E20_misty_wallace_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/misty_wallace.gbapal");
+static const u32 sPRU_E20_surge_wattson_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/surge_wattson.4bpp");
+static const u16 sPRU_E20_surge_wattson_Map[] = INCBIN_U16("graphics/battle_transitions/prl/surge_wattson.bin");
+static const u16 sPRU_E20_surge_wattson_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/surge_wattson.gbapal");
+static const u32 sPRU_E20_erika_bugsy_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/erika_bugsy.4bpp");
+static const u16 sPRU_E20_erika_bugsy_Map[] = INCBIN_U16("graphics/battle_transitions/prl/erika_bugsy.bin");
+static const u16 sPRU_E20_erika_bugsy_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/erika_bugsy.gbapal");
+static const u32 sPRU_E20_janine_koga_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/janine_koga.4bpp");
+static const u16 sPRU_E20_janine_koga_Map[] = INCBIN_U16("graphics/battle_transitions/prl/janine_koga.bin");
+static const u16 sPRU_E20_janine_koga_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/janine_koga.gbapal");
+static const u32 sPRU_E20_sabrina_will_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/sabrina_will.4bpp");
+static const u16 sPRU_E20_sabrina_will_Map[] = INCBIN_U16("graphics/battle_transitions/prl/sabrina_will.bin");
+static const u16 sPRU_E20_sabrina_will_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/sabrina_will.gbapal");
+static const u32 sPRU_E20_blaine_flannery_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/blaine_flannery.4bpp");
+static const u16 sPRU_E20_blaine_flannery_Map[] = INCBIN_U16("graphics/battle_transitions/prl/blaine_flannery.bin");
+static const u16 sPRU_E20_blaine_flannery_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/blaine_flannery.gbapal");
+static const u32 sPRU_E20_maxie_archie_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/maxie_archie.4bpp");
+static const u16 sPRU_E20_maxie_archie_Map[] = INCBIN_U16("graphics/battle_transitions/prl/maxie_archie.bin");
+static const u16 sPRU_E20_maxie_archie_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/maxie_archie.gbapal");
+static const u32 sPRU_E20_lorelei_glacia_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/lorelei_glacia.4bpp");
+static const u16 sPRU_E20_lorelei_glacia_Map[] = INCBIN_U16("graphics/battle_transitions/prl/lorelei_glacia.bin");
+static const u16 sPRU_E20_lorelei_glacia_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/lorelei_glacia.gbapal");
+static const u32 sPRU_E20_bruno_chuck_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/bruno_chuck.4bpp");
+static const u16 sPRU_E20_bruno_chuck_Map[] = INCBIN_U16("graphics/battle_transitions/prl/bruno_chuck.bin");
+static const u16 sPRU_E20_bruno_chuck_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/bruno_chuck.gbapal");
+static const u32 sPRU_E20_agatha_phoebe_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/agatha_phoebe.4bpp");
+static const u16 sPRU_E20_agatha_phoebe_Map[] = INCBIN_U16("graphics/battle_transitions/prl/agatha_phoebe.bin");
+static const u16 sPRU_E20_agatha_phoebe_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/agatha_phoebe.gbapal");
+static const u32 sPRU_E20_karen_sidney_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/karen_sidney.4bpp");
+static const u16 sPRU_E20_karen_sidney_Map[] = INCBIN_U16("graphics/battle_transitions/prl/karen_sidney.bin");
+static const u16 sPRU_E20_karen_sidney_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/karen_sidney.gbapal");
+static const u32 sPRU_E20_lance_drake_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/lance_drake.4bpp");
+static const u16 sPRU_E20_lance_drake_Map[] = INCBIN_U16("graphics/battle_transitions/prl/lance_drake.bin");
+static const u16 sPRU_E20_lance_drake_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/lance_drake.gbapal");
+static const u32 sPRU_E20_jasmine_clair_Tiles[] = INCBIN_U32("graphics/battle_transitions/prl/jasmine_clair.4bpp");
+static const u16 sPRU_E20_jasmine_clair_Map[] = INCBIN_U16("graphics/battle_transitions/prl/jasmine_clair.bin");
+static const u16 sPRU_E20_jasmine_clair_Palette[] = INCBIN_U16("graphics/battle_transitions/prl/jasmine_clair.gbapal");
+
+struct PruDuoTransitionArt
+{
+    TaskFunc task;
+    const u32 *tiles;
+    u32 tilesSize;
+    const u16 *map;
+    u32 mapSize;
+    const u16 *palette;
+    u32 paletteSize;
+};
+
+#define PRL_DUO_ART(taskName, stem) \
+    {taskName, sPRL_##stem##_Tiles, sizeof(sPRL_##stem##_Tiles), sPRL_##stem##_Map, sizeof(sPRL_##stem##_Map), sPRL_##stem##_Palette, sizeof(sPRL_##stem##_Palette)}
+#define PRU_DUO_ART(taskName, stem) \
+    {taskName, sPRU_##stem##_Tiles, sizeof(sPRU_##stem##_Tiles), sPRU_##stem##_Map, sizeof(sPRU_##stem##_Map), sPRU_##stem##_Palette, sizeof(sPRU_##stem##_Palette)}
+#define PRU_E20_DUO_ART(name, stem) \
+    {Task_PRU_E20_##name, sPRU_E20_##stem##_Tiles, sizeof(sPRU_E20_##stem##_Tiles), sPRU_E20_##stem##_Map, sizeof(sPRU_E20_##stem##_Map), sPRU_E20_##stem##_Palette, sizeof(sPRU_E20_##stem##_Palette)}
+static const struct PruDuoTransitionArt sPruDuoTransitionArt[] =
+{
+    PRL_DUO_ART(Task_PRL_JessieJames, jessie_james),
+    PRL_DUO_ART(Task_PRL_EeveeTwins, eevee_twins),
+    PRU_DUO_ART(Task_PRU_RedBlue, red_blue),
+    PRU_DUO_ART(Task_PRU_OakElm, oak_elm),
+    PRU_DUO_ART(Task_PRU_StevenMay, steven_may),
+    PRU_DUO_ART(Task_PRU_SilverGiovanni, silver_giovanni),
+    PRU_E20_DUO_ART(BROCK_ROXANNE, brock_roxanne),
+    PRU_E20_DUO_ART(MISTY_WALLACE, misty_wallace),
+    PRU_E20_DUO_ART(SURGE_WATTSON, surge_wattson),
+    PRU_E20_DUO_ART(ERIKA_BUGSY, erika_bugsy),
+    PRU_E20_DUO_ART(JANINE_KOGA, janine_koga),
+    PRU_E20_DUO_ART(SABRINA_WILL, sabrina_will),
+    PRU_E20_DUO_ART(BLAINE_FLANNERY, blaine_flannery),
+    PRU_E20_DUO_ART(MAXIE_ARCHIE, maxie_archie),
+    PRU_E20_DUO_ART(LORELEI_GLACIA, lorelei_glacia),
+    PRU_E20_DUO_ART(BRUNO_CHUCK, bruno_chuck),
+    PRU_E20_DUO_ART(AGATHA_PHOEBE, agatha_phoebe),
+    PRU_E20_DUO_ART(KAREN_SIDNEY, karen_sidney),
+    PRU_E20_DUO_ART(LANCE_DRAKE, lance_drake),
+    PRU_E20_DUO_ART(JASMINE_CLAIR, jasmine_clair),
+};
+#undef PRU_DUO_ART
+#undef PRU_E20_DUO_ART
+
+static const struct PruDuoTransitionArt *PruGetDuoTransitionArt(TaskFunc task)
+{
+    for (u32 i = 0; i < ARRAY_COUNT(sPruDuoTransitionArt); i++)
+        if (sPruDuoTransitionArt[i].task == task)
+            return &sPruDuoTransitionArt[i];
+    return NULL;
+}
 static const u16 sEvilTeam_Palette[] = INCBIN_U16("graphics/battle_transitions/evil_team.gbapal");
 static const u32 sTeamAqua_Tileset[] = INCBIN_U32("graphics/battle_transitions/team_aqua.4bpp.smol");
 static const u32 sTeamAqua_Tilemap[] = INCBIN_U32("graphics/battle_transitions/team_aqua.bin.smolTM");
@@ -370,6 +497,24 @@ static const TaskFunc sTasks_Main[B_TRANSITION_COUNT] =
     [B_TRANSITION_MUGSHOT] = Task_Mugshot,
     [B_TRANSITION_JESSIE_JAMES] = Task_PRL_JessieJames,
     [B_TRANSITION_EEVEE_TWINS] = Task_PRL_EeveeTwins,
+    [B_TRANSITION_RED_BLUE] = Task_PRU_RedBlue,
+    [B_TRANSITION_OAK_ELM] = Task_PRU_OakElm,
+    [B_TRANSITION_STEVEN_MAY] = Task_PRU_StevenMay,
+    [B_TRANSITION_SILVER_GIOVANNI] = Task_PRU_SilverGiovanni,
+    [B_TRANSITION_PRU_E20_BROCK_ROXANNE] = Task_PRU_E20_BROCK_ROXANNE,
+    [B_TRANSITION_PRU_E20_MISTY_WALLACE] = Task_PRU_E20_MISTY_WALLACE,
+    [B_TRANSITION_PRU_E20_SURGE_WATTSON] = Task_PRU_E20_SURGE_WATTSON,
+    [B_TRANSITION_PRU_E20_ERIKA_BUGSY] = Task_PRU_E20_ERIKA_BUGSY,
+    [B_TRANSITION_PRU_E20_JANINE_KOGA] = Task_PRU_E20_JANINE_KOGA,
+    [B_TRANSITION_PRU_E20_SABRINA_WILL] = Task_PRU_E20_SABRINA_WILL,
+    [B_TRANSITION_PRU_E20_BLAINE_FLANNERY] = Task_PRU_E20_BLAINE_FLANNERY,
+    [B_TRANSITION_PRU_E20_MAXIE_ARCHIE] = Task_PRU_E20_MAXIE_ARCHIE,
+    [B_TRANSITION_PRU_E20_LORELEI_GLACIA] = Task_PRU_E20_LORELEI_GLACIA,
+    [B_TRANSITION_PRU_E20_BRUNO_CHUCK] = Task_PRU_E20_BRUNO_CHUCK,
+    [B_TRANSITION_PRU_E20_AGATHA_PHOEBE] = Task_PRU_E20_AGATHA_PHOEBE,
+    [B_TRANSITION_PRU_E20_KAREN_SIDNEY] = Task_PRU_E20_KAREN_SIDNEY,
+    [B_TRANSITION_PRU_E20_LANCE_DRAKE] = Task_PRU_E20_LANCE_DRAKE,
+    [B_TRANSITION_PRU_E20_JASMINE_CLAIR] = Task_PRU_E20_JASMINE_CLAIR,
     [B_TRANSITION_AQUA] = Task_Aqua,
     [B_TRANSITION_MAGMA] = Task_Magma,
     [B_TRANSITION_REGICE] = Task_Regice,
@@ -1363,6 +1508,49 @@ static void Task_PRL_EeveeTwins(u8 taskId)
     while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
+static void Task_PRU_RedBlue(u8 taskId)
+{
+    while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId]));
+}
+
+static void Task_PRU_OakElm(u8 taskId)
+{
+    while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId]));
+}
+
+static void Task_PRU_StevenMay(u8 taskId)
+{
+    while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId]));
+}
+
+static void Task_PRU_SilverGiovanni(u8 taskId)
+{
+    while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId]));
+}
+
+// Dedicated entry points let the shared transition select one pair's tiles,
+// without changing any of the six existing approved E20 duo transitions.
+#define DEFINE_PRU_E20_DUO(name) \
+    static void Task_PRU_E20_##name(u8 taskId) \
+    { \
+        while (sPRL_EmblemFuncs[gTasks[taskId].tState](&gTasks[taskId])); \
+    }
+DEFINE_PRU_E20_DUO(BROCK_ROXANNE)
+DEFINE_PRU_E20_DUO(MISTY_WALLACE)
+DEFINE_PRU_E20_DUO(SURGE_WATTSON)
+DEFINE_PRU_E20_DUO(ERIKA_BUGSY)
+DEFINE_PRU_E20_DUO(JANINE_KOGA)
+DEFINE_PRU_E20_DUO(SABRINA_WILL)
+DEFINE_PRU_E20_DUO(BLAINE_FLANNERY)
+DEFINE_PRU_E20_DUO(MAXIE_ARCHIE)
+DEFINE_PRU_E20_DUO(LORELEI_GLACIA)
+DEFINE_PRU_E20_DUO(BRUNO_CHUCK)
+DEFINE_PRU_E20_DUO(AGATHA_PHOEBE)
+DEFINE_PRU_E20_DUO(KAREN_SIDNEY)
+DEFINE_PRU_E20_DUO(LANCE_DRAKE)
+DEFINE_PRU_E20_DUO(JASMINE_CLAIR)
+#undef DEFINE_PRU_E20_DUO
+
 static void Task_Aqua(u8 taskId)
 {
     while (sAqua_Funcs[gTasks[taskId].tState](&gTasks[taskId]));
@@ -1421,20 +1609,16 @@ static void InitPatternWeaveTransition(struct Task *task)
 static bool8 PRL_Emblem_Init(struct Task *task)
 {
     u16 *tilemap, *tileset;
+    const struct PruDuoTransitionArt *art = PruGetDuoTransitionArt(task->func);
 
     task->tEndDelay = 60;
     InitPatternWeaveTransition(task);
     GetBg0TilesDst(&tilemap, &tileset);
     CpuFill16(13 << 12, tilemap, BG_SCREEN_SIZE);
-    if (task->func == Task_PRL_JessieJames)
+    if (art != NULL)
     {
-        CpuCopy16(sPRL_jessie_james_Tiles, tileset, sizeof(sPRL_jessie_james_Tiles));
-        LoadPalette(sPRL_jessie_james_Palette, BG_PLTT_ID(13), sizeof(sPRL_jessie_james_Palette));
-    }
-    else
-    {
-        CpuCopy16(sPRL_eevee_twins_Tiles, tileset, sizeof(sPRL_eevee_twins_Tiles));
-        LoadPalette(sPRL_eevee_twins_Palette, BG_PLTT_ID(13), sizeof(sPRL_eevee_twins_Palette));
+        CpuCopy16(art->tiles, tileset, art->tilesSize);
+        LoadPalette(art->palette, BG_PLTT_ID(13), art->paletteSize);
     }
     task->tState++;
     return FALSE;
@@ -1443,12 +1627,11 @@ static bool8 PRL_Emblem_Init(struct Task *task)
 static bool8 PRL_Emblem_SetGfx(struct Task *task)
 {
     u16 *tilemap, *tileset;
+    const struct PruDuoTransitionArt *art = PruGetDuoTransitionArt(task->func);
 
     GetBg0TilesDst(&tilemap, &tileset);
-    if (task->func == Task_PRL_JessieJames)
-        CpuCopy16(sPRL_jessie_james_Map, tilemap, sizeof(sPRL_jessie_james_Map));
-    else
-        CpuCopy16(sPRL_eevee_twins_Map, tilemap, sizeof(sPRL_eevee_twins_Map));
+    if (art != NULL)
+        CpuCopy16(art->map, tilemap, art->mapSize);
     SetSinWave((s16 *)gScanlineEffectRegBuffers[0], 0, task->tSinIndex, 132, task->tAmplitude, DISPLAY_HEIGHT);
     task->tState++;
     return FALSE;

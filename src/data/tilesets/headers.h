@@ -1541,6 +1541,29 @@ const struct Tileset gTileset_HallOfFame =
 };
 
 #elif IS_HNS
+// PRU: native Kanto League uses these two FRLG tilesets in HNS only.
+const struct Tileset gTileset_BuildingFrlg =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_Building_Frlg,
+    .palettes = gTilesetPalettes_Building_Frlg,
+    .metatiles = gMetatiles_Building_Frlg,
+    .metatileAttributes = gMetatileAttributes_Building_Frlg,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_PokemonLeague =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_PokemonLeague,
+    .palettes = gTilesetPalettes_PokemonLeague,
+    .metatiles = gMetatiles_PokemonLeague,
+    .metatileAttributes = gMetatileAttributes_PokemonLeague,
+    .callback = NULL,
+};
+
 
 
 // HnS tilesets

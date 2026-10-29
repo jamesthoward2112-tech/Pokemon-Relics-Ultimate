@@ -1773,7 +1773,11 @@
 
 #define SPECIES_EGG                                     (SPECIES_MEWSION + 1)
 
-#define NUM_SPECIES SPECIES_EGG
+// Blue's trainer-only TRE Nidoking-X.  Egg remains at its prior numeric ID,
+// so existing saved Eggs and all 450 legitimate Pokédex species stay stable.
+#define SPECIES_NIDOKING_X_BLUE                         1644
+
+#define NUM_SPECIES (SPECIES_NIDOKING_X_BLUE + 1)
 
 #define SPECIES_SHINY_TAG 5000
 

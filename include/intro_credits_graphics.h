@@ -48,6 +48,9 @@ u8 CreateIntroMaySprite(s16 x, s16 y);
 u8 CreateIntroFlygonSprite(s16 x, s16 y);
 #if IS_HNS
 u8 CreateCreditsSuicuneSprite(s16 x, s16 y);
+u8 CreateCreditsRelicHoOhSprite(s16 x, s16 y);
+extern const struct CompressedSpriteSheet gSpriteSheet_CreditsRelicHoOh[];
+extern const struct SpritePalette gSpritePalettes_CreditsRelicHoOh[];
 #endif
 
 #endif // GUARD_INTRO_CREDITS_GRAPHICS_H

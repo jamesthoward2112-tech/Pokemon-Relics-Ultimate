@@ -3203,6 +3203,15 @@ BattleScript_EffectSpikes::
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
 
+BattleScript_EffectPermafrost::
+	attackcanceler
+	trysetspikes BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PERMAFROSTSCATTERED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
 BattleScript_EffectForesight::
 	attackcanceler
 	accuracycheck BattleScript_ButItFailed
@@ -4824,6 +4833,19 @@ BattleScript_PrintHurtByDmgHazards::
 BattleScript_ToxicSpikesAbsorbed::
 	printstring STRINGID_TOXICSPIKESABSORBED
 	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_PermafrostAbsorbed::
+	printstring STRINGID_PERMAFROSTABSORBED
+	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_PermafrostFrozen::
+	printstring STRINGID_PERMAFROSTFROZE
+	waitmessage B_WAIT_TIME_LONG
+	statusanimation BS_SCRIPTING
+	updatestatusicon BS_SCRIPTING
+	waitstate
 	return
 
 BattleScript_ToxicSpikesPoisoned::

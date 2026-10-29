@@ -7358,6 +7358,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "frlg",
+      "also_in_versions": ["hns"],
       "layout_version": "frlg"
     },
     {
@@ -7372,6 +7373,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "frlg",
+      "also_in_versions": ["hns"],
       "layout_version": "frlg"
     },
     {
@@ -7386,6 +7388,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "frlg",
+      "also_in_versions": ["hns"],
       "layout_version": "frlg"
     },
     {
@@ -7400,6 +7403,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "frlg",
+      "also_in_versions": ["hns"],
       "layout_version": "frlg"
     },
     {
@@ -7414,6 +7418,7 @@
       "border_height": 2,
       "border_width": 2,
       "game_version": "frlg",
+      "also_in_versions": ["hns"],
       "layout_version": "frlg"
     },
     {
@@ -16311,6 +16316,18 @@
       "secondary_tileset": "gTileset_EcruteakTheater_Hns",
       "border_filepath": "data/layouts/NewSinjoh_KimonoHideout_hns/border.bin",
       "blockdata_filepath": "data/layouts/NewSinjoh_KimonoHideout_hns/map.bin",
+      "game_version": "hns",
+      "layout_version": "hns"
+    },
+    {
+      "id": "LAYOUT_ROUTE45_GROUDON_CAVE_HNS",
+      "name": "Route45_GroudonCave_hns_Layout",
+      "width": 35,
+      "height": 28,
+      "primary_tileset": "gTileset_Johto_Building_Hns",
+      "secondary_tileset": "gTileset_BlackthornGym_Hns",
+      "border_filepath": "data/layouts/SeafoamIslands_SecretCave_hns/border.bin",
+      "blockdata_filepath": "data/layouts/SeafoamIslands_SecretCave_hns/map.bin",
       "game_version": "hns",
       "layout_version": "hns"
     }

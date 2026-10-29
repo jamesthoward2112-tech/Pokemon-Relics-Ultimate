@@ -87,6 +87,7 @@
 #include "pokemon_storage_system.h"
 #include "pokemon.h"
 #include "pokedex.h"
+#include "pru_mewsion_gate.h"
 
 STATIC_ASSERT((B_FLAG_FOLLOWERS_DISABLED == 0 || OW_FOLLOWERS_ENABLED), FollowersFlagAssignedWithoutEnablingThem);
 
@@ -644,8 +645,38 @@ const struct MapLayout *GetMapLayout(u16 mapLayoutId)
     return gMapLayouts[mapLayoutId - 1];
 }
 
+// Choose Kanto's native room BEFORE loading its map. The old in-transition
+// script warp was asynchronous and caused a black screen on Pizza Boy.
+static bool32 PruShouldUseKantoLeagueRooms(void)
+{
+    return IS_HNS
+        && FlagGet(FLAG_IS_CHAMPION)
+        && FlagGet(FLAG_BADGE16_GET)
+        && FlagGet(FLAG_PRU_HEIST_COMPLETED)
+        && FlagGet(FLAG_PRU_HEIST_GIOVANNI)
+        && !FlagGet(FLAG_PRU_KANTO_LEAGUE_CLEARED);
+}
+
 void ApplyCurrentWarp(void)
 {
+    if (sWarpDestination.mapGroup == MAP_GROUP(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS)
+        && sWarpDestination.mapNum == MAP_NUM(MAP_POKEMON_LEAGUE_WILLS_ROOM_HNS)
+        && PruShouldUseKantoLeagueRooms())
+    {
+        // Will and Lorelei share entry warp 0 at (6, 12).
+        sWarpDestination.mapGroup = MAP_GROUP(MAP_POKEMON_LEAGUE_LORELEIS_ROOM);
+        sWarpDestination.mapNum = MAP_NUM(MAP_POKEMON_LEAGUE_LORELEIS_ROOM);
+        sWarpDestination.warpId = 0;
+        sWarpDestination.x = -1;
+        sWarpDestination.y = -1;
+        FlagClear(FLAG_DEFEATED_LORELEI);
+        FlagClear(FLAG_DEFEATED_BRUNO);
+        FlagClear(FLAG_DEFEATED_AGATHA);
+        FlagClear(FLAG_DEFEATED_LANCE);
+        FlagClear(FLAG_DEFEATED_CHAMP);
+        VarSet(VAR_MAP_SCENE_POKEMON_LEAGUE, 0);
+    }
+
     gLastUsedWarp = gSaveBlock1Ptr->location;
     gSaveBlock1Ptr->location = sWarpDestination;
     sFixedDiveWarp = sDummyWarpData;
@@ -956,7 +987,23 @@ static void RestorePruDefeatedLegendariesOnMapEntry(void)
     // Initialize old/new saves when the player first enters a Kanto route.
     // Keep the three stationary duplicates hidden after roaming unlock.
     EnsurePruKantoBirdRoamers();
+    EnsurePruJohtoLatiRoamers();
     RestorePruDefeatedRoamers();
+
+    // Returning to B2F is the unlock boundary, including on existing saves.
+    // Neither a prior Mewtwo capture nor a previously seen Mewduo should
+    // accidentally suppress the first Mewduo encounter.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_CERULEAN_CAVE_B2F_HNS)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_CERULEAN_CAVE_B2F_HNS))
+    {
+        bool8 mewCaught = GetSetPokedexFlag(NATIONAL_DEX_MEW, FLAG_GET_CAUGHT);
+        bool8 mewtwoCaught = GetSetPokedexFlag(NATIONAL_DEX_MEWTWO, FLAG_GET_CAUGHT);
+        if (PruMewsionAllowed(mewCaught, mewtwoCaught,
+                VarGet(VAR_PRU_MEWDUO_CAPTURE_MARKER) == 0x4D44))
+            FlagClear(FLAG_TEMP_B);
+        else
+            FlagSet(FLAG_TEMP_B);
+    }
 
     for (i = 0; i < ARRAY_COUNT(sLegendaryHideFlags); i++)
     {

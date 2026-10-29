@@ -19,6 +19,7 @@ for battler in range(4):
     data = b"".join(int(v,16).to_bytes(4,"little") for v in words[battler*24:(battler+1)*24])
     assert len(data)==96
     pixels = [(byte >> nibble) & 15 for byte in data for nibble in (0,4)]
-    nonzero = {x for x in pixels if x}
-    assert nonzero == {12+battler}, (battler,nonzero)
-print("PRU_BLD_STATUS_PASS: visible BLD glyph, crimson palette, 4 battler tile palettes and rendering path")
+    colors = set(pixels)
+    assert colors == {1, 12+battler}, (battler, colors)
+assert "FillPalette(RGB_BLACK, OBJ_PLTT_OFFSET + pltAdder + 1" in src
+print("PRU_BLD_STATUS_PASS: opaque black BLD backing, crimson text, 4 battler palettes")

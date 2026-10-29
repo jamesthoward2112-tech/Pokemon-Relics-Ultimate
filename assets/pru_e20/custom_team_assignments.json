@@ -1,0 +1,22 @@
+{
+  "intent": "Add already-approved PRU species and their existing sprites to the E20 normal and master teams. Preserve signature aces and each trainer's theme.",
+  "based_on": "a4d393129ec3683f0443a80272df71653a3874af",
+  "assignments": [
+    {"trainer": "PRU_E18_01_B", "trainer_name": "Roxanne", "replace": "Nosepass", "species": "Obsideon", "moves": ["Stone Edge", "Rock Slide", "Earthquake", "Protect"]},
+    {"trainer": "PRU_E18_02_A", "trainer_name": "Misty", "replace": "Lapras", "species": "Kablowfish", "moves": ["Liquidation", "Iron Head", "Spikes", "Toxic"]},
+    {"trainer": "PRU_E18_02_B", "trainer_name": "Wallace", "replace": "Wailord", "species": "Swamplith", "moves": ["Liquidation", "Earthquake", "Ice Punch", "Rock Slide"]},
+    {"trainer": "PRU_E18_03_A", "trainer_name": "Surge", "replace": "Jolteon", "species": "Frytning", "moves": ["Discharge", "Dark Pulse", "Thunder Wave", "Protect"]},
+    {"trainer": "PRU_E18_04_A", "trainer_name": "Erika", "replace": "Bellossom", "species": "Faeranium", "moves": ["Giga Drain", "Dazzling Gleam", "Leech Seed", "Calm Mind"]},
+    {"trainer": "PRU_E18_07_B", "trainer_name": "Flannery", "replace": "Torkoal", "species": "Torkaldera", "moves": ["Lava Plume", "Rock Slide", "Earth Power", "Protect"]},
+    {"trainer": "PRU_E18_09_A", "trainer_name": "Lorelei", "replace": "Dewgong", "species": "Mystynx", "moves": ["Ice Beam", "Moonblast", "Light Screen", "Freeze-Dry"]},
+    {"trainer": "PRU_E18_09_B", "trainer_name": "Glacia", "replace": "Glalie", "species": "Jollibird", "moves": ["Ice Beam", "Dazzling Gleam", "Icy Wind", "Roost"]},
+    {"trainer": "PRU_E18_10_A", "trainer_name": "Bruno", "replace": "Hitmontop", "species": "Heracurion", "moves": ["Close Combat", "Megahorn", "Bullet Punch", "Protect"]},
+    {"trainer": "PRU_E18_10_B", "trainer_name": "Chuck", "replace": "Primeape", "species": "Champeon", "moves": ["Close Combat", "Drain Punch", "Bulk Up", "Protect"]},
+    {"trainer": "PRU_E18_11_B", "trainer_name": "Phoebe", "replace": "Dusclops", "species": "Gemigoyle", "moves": ["Shadow Ball", "Power Gem", "Will O Wisp", "Protect"]},
+    {"trainer": "PRU_E18_12_B", "trainer_name": "Sidney", "replace": "Shiftry", "species": "Grimfowl", "moves": ["Dark Pulse", "Brave Bird", "Roost", "Tailwind"]},
+    {"trainer": "PRU_E18_13_A", "trainer_name": "Lance", "replace": "Gyarados", "species": "Drakeon", "moves": ["Dragon Dance", "Dragon Claw", "Fire Punch", "Extreme Speed"]},
+    {"trainer": "PRU_E18_13_B", "trainer_name": "Drake", "replace": "Altaria", "species": "Feralodon", "moves": ["Dragon Claw", "Liquidation", "Ice Punch", "Protect"]},
+    {"trainer": "PRU_E20_CLAIR", "trainer_name": "Clair", "replace": "Salamence", "species": "Mawyrm", "moves": ["Dragon Pulse", "Iron Head", "Flamethrower", "Protect"]},
+    {"trainer": "PRU_E20_STEVEN", "trainer_name": "Steven", "replace": "Skarmory", "species": "Skarmadon", "moves": ["Brave Bird", "Iron Head", "Spikes", "Roost"]}
+  ]
+}

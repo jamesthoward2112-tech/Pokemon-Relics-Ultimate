@@ -1,92 +1,93 @@
 PokemonLeague_ChampionsRoom_Frlg_MapScripts::
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PokemonLeague_ChampionsRoom_OnWarp
-	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_ChampionsRoom_OnResume
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, PokemonLeague_ChampionsRoom_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PokemonLeague_FrlgChampionsRoom_OnWarp
+	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_FrlgChampionsRoom_OnResume
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, PokemonLeague_FrlgChampionsRoom_OnFrame
 	.byte 0
 
-PokemonLeague_ChampionsRoom_OnResume::
+PokemonLeague_FrlgChampionsRoom_OnResume::
 	setvar VAR_0x8004, 4
 	call PokemonLeague_EventScript_DoLightingEffect
-	call_if_eq VAR_STARTER_MON, 2, PokemonLeague_ChampionsRoom_EventScript_CheckStopTriggerSquirtle
-	call_if_eq VAR_STARTER_MON, 1, PokemonLeague_ChampionsRoom_EventScript_CheckStopTriggerBulbasaur
-	call_if_eq VAR_STARTER_MON, 0, PokemonLeague_ChampionsRoom_EventScript_CheckStopTriggerCharmander
+	call_if_eq VAR_STARTER_MON, 2, PokemonLeague_FrlgChampionsRoom_EventScript_CheckStopTriggerSquirtle
+	call_if_eq VAR_STARTER_MON, 1, PokemonLeague_FrlgChampionsRoom_EventScript_CheckStopTriggerBulbasaur
+	call_if_eq VAR_STARTER_MON, 0, PokemonLeague_FrlgChampionsRoom_EventScript_CheckStopTriggerCharmander
 	end
 
-PokemonLeague_ChampionsRoom_EventScript_CheckStopTriggerSquirtle::
-	goto_if_defeated TRAINER_CHAMPION_FIRST_SQUIRTLE, PokemonLeague_ChampionsRoom_EventScript_StopSceneTrigger
-	goto_if_defeated TRAINER_CHAMPION_REMATCH_SQUIRTLE, PokemonLeague_ChampionsRoom_EventScript_StopSceneTrigger
+PokemonLeague_FrlgChampionsRoom_EventScript_CheckStopTriggerSquirtle::
+	goto_if_defeated TRAINER_CHAMPION_FIRST_SQUIRTLE, PokemonLeague_FrlgChampionsRoom_EventScript_StopSceneTrigger
+	goto_if_defeated TRAINER_CHAMPION_REMATCH_SQUIRTLE, PokemonLeague_FrlgChampionsRoom_EventScript_StopSceneTrigger
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_CheckStopTriggerBulbasaur::
-	goto_if_defeated TRAINER_CHAMPION_FIRST_BULBASAUR, PokemonLeague_ChampionsRoom_EventScript_StopSceneTrigger
-	goto_if_defeated TRAINER_CHAMPION_REMATCH_BULBASAUR, PokemonLeague_ChampionsRoom_EventScript_StopSceneTrigger
+PokemonLeague_FrlgChampionsRoom_EventScript_CheckStopTriggerBulbasaur::
+	goto_if_defeated TRAINER_CHAMPION_FIRST_BULBASAUR, PokemonLeague_FrlgChampionsRoom_EventScript_StopSceneTrigger
+	goto_if_defeated TRAINER_CHAMPION_REMATCH_BULBASAUR, PokemonLeague_FrlgChampionsRoom_EventScript_StopSceneTrigger
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_CheckStopTriggerCharmander::
-	goto_if_defeated TRAINER_CHAMPION_FIRST_CHARMANDER, PokemonLeague_ChampionsRoom_EventScript_StopSceneTrigger
-	goto_if_defeated TRAINER_CHAMPION_REMATCH_CHARMANDER, PokemonLeague_ChampionsRoom_EventScript_StopSceneTrigger
+PokemonLeague_FrlgChampionsRoom_EventScript_CheckStopTriggerCharmander::
+	goto_if_defeated TRAINER_CHAMPION_FIRST_CHARMANDER, PokemonLeague_FrlgChampionsRoom_EventScript_StopSceneTrigger
+	goto_if_defeated TRAINER_CHAMPION_REMATCH_CHARMANDER, PokemonLeague_FrlgChampionsRoom_EventScript_StopSceneTrigger
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_StopSceneTrigger::
+PokemonLeague_FrlgChampionsRoom_EventScript_StopSceneTrigger::
 	setvar VAR_TEMP_1, 1
 	return
 
-PokemonLeague_ChampionsRoom_OnWarp::
-	map_script_2 VAR_TEMP_1, 0, PokemonLeague_ChampionsRoom_EventScript_TurnPlayerNorth
+PokemonLeague_FrlgChampionsRoom_OnWarp::
+	map_script_2 VAR_TEMP_1, 0, PokemonLeague_FrlgChampionsRoom_EventScript_TurnPlayerNorth
 	.2byte 0
 
-PokemonLeague_ChampionsRoom_EventScript_TurnPlayerNorth::
+PokemonLeague_FrlgChampionsRoom_EventScript_TurnPlayerNorth::
 	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
-PokemonLeague_ChampionsRoom_OnFrame::
-	map_script_2 VAR_TEMP_1, 0, PokemonLeague_ChampionsRoom_EventScript_EnterRoom
+PokemonLeague_FrlgChampionsRoom_OnFrame::
+	map_script_2 VAR_TEMP_1, 0, PokemonLeague_FrlgChampionsRoom_EventScript_EnterRoom
 	.2byte 0
 
-PokemonLeague_ChampionsRoom_EventScript_EnterRoom::
+PokemonLeague_FrlgChampionsRoom_EventScript_EnterRoom::
+	goto_if_set FLAG_PRU_HEIST_GIOVANNI, PRU_KantoChampionRoom_EventScript_Enter
 	lockall
 	textcolor NPC_TEXT_COLOR_MALE
 	setflag FLAG_TEMP_2
-	applymovement LOCALID_PLAYER, PokemonLeague_ChampionsRoom_Movement_PlayerEnter
+	applymovement LOCALID_PLAYER, PokemonLeague_FrlgChampionsRoom_Movement_PlayerEnter
 	waitmovement 0
 	delay 20
-	call_if_unset FLAG_SYS_GAME_CLEAR, PokemonLeague_ChampionsRoom_EventScript_Intro
-	call_if_set FLAG_SYS_GAME_CLEAR, PokemonLeague_ChampionsRoom_EventScript_RematchIntro
+	call_if_unset FLAG_SYS_GAME_CLEAR, PokemonLeague_FrlgChampionsRoom_EventScript_Intro
+	call_if_set FLAG_SYS_GAME_CLEAR, PokemonLeague_FrlgChampionsRoom_EventScript_RematchIntro
 	setflag FLAG_TEMP_3
 	setflag FLAG_TEMP_5
 	savebgm MUS_VICTORY_GYM_LEADER
-	call_if_unset FLAG_IS_CHAMPION, PokemonLeague_ChampionsRoom_EventScript_Battle
-	call_if_set FLAG_IS_CHAMPION, PokemonLeague_ChampionsRoom_EventScript_Rematch
+	call_if_unset FLAG_IS_CHAMPION, PokemonLeague_FrlgChampionsRoom_EventScript_Battle
+	call_if_set FLAG_IS_CHAMPION, PokemonLeague_FrlgChampionsRoom_EventScript_Rematch
 	setflag FLAG_TEMP_4
 	clearflag FLAG_TEMP_5
 	setflag FLAG_DEFEATED_CHAMP
 	setflag FLAG_TEMP_4
-	msgbox PokemonLeague_ChampionsRoom_Text_PostBattle
+	msgbox PokemonLeague_FrlgChampionsRoom_Text_PostBattle
 	playbgm MUS_RG_SLOW_PALLET, 0
 	addobject LOCALID_CHAMPIONS_ROOM_PROF_OAK
-	msgbox PokemonLeague_ChampionsRoom_Text_OakPlayer
+	msgbox PokemonLeague_FrlgChampionsRoom_Text_OakPlayer
 	closemessage
-	applymovement LOCALID_PLAYER, PokemonLeague_ChampionsRoom_Movement_PlayerWatchOakEnter
-	applymovement LOCALID_KANTO_CHAMPIONS_ROOM_RIVAL, PokemonLeague_ChampionsRoom_Movement_RivalWatchOakEnter
-	applymovement LOCALID_CHAMPIONS_ROOM_PROF_OAK, PokemonLeague_ChampionsRoom_Movement_OakEnter
+	applymovement LOCALID_PLAYER, PokemonLeague_FrlgChampionsRoom_Movement_PlayerWatchOakEnter
+	applymovement LOCALID_KANTO_CHAMPIONS_ROOM_RIVAL, PokemonLeague_FrlgChampionsRoom_Movement_RivalWatchOakEnter
+	applymovement LOCALID_CHAMPIONS_ROOM_PROF_OAK, PokemonLeague_FrlgChampionsRoom_Movement_OakEnter
 	waitmovement 0
 	delay 25
 	specialvar VAR_RESULT, GetStarterPokemon
 	bufferspeciesname STR_VAR_1, VAR_RESULT
-	msgbox PokemonLeague_ChampionsRoom_Text_OakCongratulations
+	msgbox PokemonLeague_FrlgChampionsRoom_Text_OakCongratulations
 	applymovement LOCALID_CHAMPIONS_ROOM_PROF_OAK, Common_Movement_WalkInPlaceFasterRight
 	applymovement LOCALID_KANTO_CHAMPIONS_ROOM_RIVAL, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
-	msgbox PokemonLeague_ChampionsRoom_Text_OakImDisappointedRival
+	msgbox PokemonLeague_FrlgChampionsRoom_Text_OakImDisappointedRival
 	closemessage
 	applymovement LOCALID_CHAMPIONS_ROOM_PROF_OAK, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 20
-	msgbox PokemonLeague_ChampionsRoom_Text_OakPlayerComeWithMe
+	msgbox PokemonLeague_FrlgChampionsRoom_Text_OakPlayerComeWithMe
 	closemessage
 	delay 13
-	applymovement LOCALID_CHAMPIONS_ROOM_PROF_OAK, PokemonLeague_ChampionsRoom_Movement_OakExit
-	applymovement LOCALID_PLAYER, PokemonLeague_ChampionsRoom_Movement_PlayerExit
+	applymovement LOCALID_CHAMPIONS_ROOM_PROF_OAK, PokemonLeague_FrlgChampionsRoom_Movement_OakExit
+	applymovement LOCALID_PLAYER, PokemonLeague_FrlgChampionsRoom_Movement_PlayerExit
 	waitmovement 0
 	setvar VAR_TEMP_1, 1
 	warp MAP_POKEMON_LEAGUE_HALL_OF_FAME, 5, 12
@@ -94,56 +95,100 @@ PokemonLeague_ChampionsRoom_EventScript_EnterRoom::
 	releaseall
 	end
 
-PokemonLeague_ChampionsRoom_EventScript_QuestLogEnd::
-	call PokemonLeague_ChampionsRoom_EventScript_StopSceneTrigger
+@ PRU's second championship finishes in this native Kanto Champion room.
+@ Oak stays present from his entrance through the hand-off to the Hall of Fame.
+PRU_KantoChampionRoom_EventScript_Enter::
+	lockall
+	textcolor NPC_TEXT_COLOR_MALE
+	setflag FLAG_TEMP_2
+	applymovement LOCALID_PLAYER, PokemonLeague_FrlgChampionsRoom_Movement_PlayerEnter
+	waitmovement 0
+	delay 20
+	msgbox PRU_KantoLeague_Text_RED, MSGBOX_DEFAULT
+	setflag FLAG_TEMP_3
+	setflag FLAG_TEMP_5
+	trainerbattle_no_intro TRAINER_PRU_KANTO_E4_RED_HNS, PRU_KantoLeague_Text_Lost
+	clearflag FLAG_TEMP_5
+	setflag FLAG_DEFEATED_CHAMP
+	msgbox PRU_KantoLeague_Text_Cleared, MSGBOX_DEFAULT
+	playbgm MUS_RG_SLOW_PALLET, FALSE
+	clearflag FLAG_HIDE_OAK_IN_CHAMP_ROOM
+	addobject LOCALID_CHAMPIONS_ROOM_PROF_OAK
+	closemessage
+	applymovement LOCALID_PLAYER, PokemonLeague_FrlgChampionsRoom_Movement_PlayerWatchOakEnter
+	applymovement LOCALID_KANTO_CHAMPIONS_ROOM_RIVAL, PokemonLeague_FrlgChampionsRoom_Movement_RivalWatchOakEnter
+	applymovement LOCALID_CHAMPIONS_ROOM_PROF_OAK, PokemonLeague_FrlgChampionsRoom_Movement_OakEnter
+	waitmovement 0
+	delay 25
+	msgbox PRU_KantoChampionRoom_Text_OakCongratulations, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_CHAMPIONS_ROOM_PROF_OAK, PokemonLeague_FrlgChampionsRoom_Movement_OakExit
+	applymovement LOCALID_PLAYER, PokemonLeague_FrlgChampionsRoom_Movement_PlayerExit
+	waitmovement 0
+	setflag FLAG_PRU_KANTO_LEAGUE_CLEARED
+	setvar VAR_LEAGUE_STATE, 6
+	setvar VAR_TEMP_1, 1
+	warpsilent MAP_POKEMON_LEAGUE_HALL_OF_FAME_HNS, 0
+	waitstate
 	releaseall
 	end
 
-PokemonLeague_ChampionsRoom_EventScript_Battle::
-	call_if_eq VAR_STARTER_MON, 2, PokemonLeague_ChampionsRoom_EventScript_BattleSquirtle
-	call_if_eq VAR_STARTER_MON, 1, PokemonLeague_ChampionsRoom_EventScript_BattleBulbasaur
-	call_if_eq VAR_STARTER_MON, 0, PokemonLeague_ChampionsRoom_EventScript_BattleCharmander
+PRU_KantoChampionRoom_Text_OakCongratulations:
+	.string "OAK: Magnificent, {PLAYER}!\p"
+	.string "You have conquered both LEAGUES.\n"
+	.string "Come. Your POKéMON belong in the\l"
+	.string "HALL OF FAME!$"
+
+PokemonLeague_FrlgChampionsRoom_EventScript_QuestLogEnd::
+	call PokemonLeague_FrlgChampionsRoom_EventScript_StopSceneTrigger
+	releaseall
+	end
+
+PokemonLeague_FrlgChampionsRoom_EventScript_Battle::
+	call_if_eq VAR_STARTER_MON, 2, PokemonLeague_FrlgChampionsRoom_EventScript_BattleSquirtle
+	call_if_eq VAR_STARTER_MON, 1, PokemonLeague_FrlgChampionsRoom_EventScript_BattleBulbasaur
+	call_if_eq VAR_STARTER_MON, 0, PokemonLeague_FrlgChampionsRoom_EventScript_BattleCharmander
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_Rematch::
-	call_if_eq VAR_STARTER_MON, 2, PokemonLeague_ChampionsRoom_EventScript_RematchSquirtle
-	call_if_eq VAR_STARTER_MON, 1, PokemonLeague_ChampionsRoom_EventScript_RematchBulbasaur
-	call_if_eq VAR_STARTER_MON, 0, PokemonLeague_ChampionsRoom_EventScript_RematchCharmander
+PokemonLeague_FrlgChampionsRoom_EventScript_Rematch::
+	call_if_eq VAR_STARTER_MON, 2, PokemonLeague_FrlgChampionsRoom_EventScript_RematchSquirtle
+	call_if_eq VAR_STARTER_MON, 1, PokemonLeague_FrlgChampionsRoom_EventScript_RematchBulbasaur
+	call_if_eq VAR_STARTER_MON, 0, PokemonLeague_FrlgChampionsRoom_EventScript_RematchCharmander
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_Intro::
-	msgbox PokemonLeague_ChampionsRoom_Text_Intro
+PokemonLeague_FrlgChampionsRoom_EventScript_Intro::
+	msgbox PokemonLeague_FrlgChampionsRoom_Text_Intro
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_RematchIntro::
-	msgbox PokemonLeague_ChampionsRoom_Text_RematchIntro
+PokemonLeague_FrlgChampionsRoom_EventScript_RematchIntro::
+	msgbox PokemonLeague_FrlgChampionsRoom_Text_RematchIntro
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_BattleSquirtle::
-	trainerbattle_no_intro TRAINER_CHAMPION_FIRST_SQUIRTLE, PokemonLeague_ChampionsRoom_Text_Defeat
+PokemonLeague_FrlgChampionsRoom_EventScript_BattleSquirtle::
+	trainerbattle_no_intro TRAINER_CHAMPION_FIRST_SQUIRTLE, PokemonLeague_FrlgChampionsRoom_Text_Defeat
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_BattleBulbasaur::
-	trainerbattle_no_intro TRAINER_CHAMPION_FIRST_BULBASAUR, PokemonLeague_ChampionsRoom_Text_Defeat
+PokemonLeague_FrlgChampionsRoom_EventScript_BattleBulbasaur::
+	trainerbattle_no_intro TRAINER_CHAMPION_FIRST_BULBASAUR, PokemonLeague_FrlgChampionsRoom_Text_Defeat
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_BattleCharmander::
-	trainerbattle_no_intro TRAINER_CHAMPION_FIRST_CHARMANDER, PokemonLeague_ChampionsRoom_Text_Defeat
+PokemonLeague_FrlgChampionsRoom_EventScript_BattleCharmander::
+	trainerbattle_no_intro TRAINER_CHAMPION_FIRST_CHARMANDER, PokemonLeague_FrlgChampionsRoom_Text_Defeat
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_RematchSquirtle::
-	trainerbattle_no_intro TRAINER_CHAMPION_REMATCH_SQUIRTLE, PokemonLeague_ChampionsRoom_Text_Defeat
+PokemonLeague_FrlgChampionsRoom_EventScript_RematchSquirtle::
+	trainerbattle_no_intro TRAINER_CHAMPION_REMATCH_SQUIRTLE, PokemonLeague_FrlgChampionsRoom_Text_Defeat
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_RematchBulbasaur::
-	trainerbattle_no_intro TRAINER_CHAMPION_REMATCH_BULBASAUR, PokemonLeague_ChampionsRoom_Text_Defeat
+PokemonLeague_FrlgChampionsRoom_EventScript_RematchBulbasaur::
+	trainerbattle_no_intro TRAINER_CHAMPION_REMATCH_BULBASAUR, PokemonLeague_FrlgChampionsRoom_Text_Defeat
 	return
 
-PokemonLeague_ChampionsRoom_EventScript_RematchCharmander::
-	trainerbattle_no_intro TRAINER_CHAMPION_REMATCH_CHARMANDER, PokemonLeague_ChampionsRoom_Text_Defeat
+PokemonLeague_FrlgChampionsRoom_EventScript_RematchCharmander::
+	trainerbattle_no_intro TRAINER_CHAMPION_REMATCH_CHARMANDER, PokemonLeague_FrlgChampionsRoom_Text_Defeat
 	return
 
-PokemonLeague_ChampionsRoom_Movement_PlayerEnter::
+PokemonLeague_FrlgChampionsRoom_Movement_PlayerEnter::
 	walk_up
 	walk_up
 	walk_up
@@ -156,7 +201,7 @@ PokemonLeague_ChampionsRoom_Movement_PlayerEnter::
 	walk_up
 	step_end
 
-PokemonLeague_ChampionsRoom_Movement_PlayerExit::
+PokemonLeague_FrlgChampionsRoom_Movement_PlayerExit::
 	delay_16
 	walk_left
 	walk_up
@@ -171,7 +216,7 @@ PokemonLeague_ChampionsRoom_Movement_PlayerExit::
 	set_invisible
 	step_end
 
-PokemonLeague_ChampionsRoom_Movement_PlayerWatchOakEnter::
+PokemonLeague_FrlgChampionsRoom_Movement_PlayerWatchOakEnter::
 	delay_8
 	walk_in_place_faster_down
 	delay_16
@@ -184,7 +229,7 @@ PokemonLeague_ChampionsRoom_Movement_PlayerWatchOakEnter::
 	walk_in_place_faster_left
 	step_end
 
-PokemonLeague_ChampionsRoom_Movement_OakEnter::
+PokemonLeague_FrlgChampionsRoom_Movement_OakEnter::
 	delay_16
 	delay_16
 	walk_up
@@ -199,7 +244,7 @@ PokemonLeague_ChampionsRoom_Movement_OakEnter::
 	delay_16
 	step_end
 
-PokemonLeague_ChampionsRoom_Movement_OakExit::
+PokemonLeague_FrlgChampionsRoom_Movement_OakExit::
 	walk_up
 	walk_up
 	walk_right
@@ -211,7 +256,7 @@ PokemonLeague_ChampionsRoom_Movement_OakExit::
 	set_invisible
 	step_end
 
-PokemonLeague_ChampionsRoom_Movement_RivalWatchOakEnter::
+PokemonLeague_FrlgChampionsRoom_Movement_RivalWatchOakEnter::
 	delay_16
 	delay_16
 	delay_16
@@ -224,7 +269,7 @@ PokemonLeague_ChampionsRoom_Movement_RivalWatchOakEnter::
 	walk_in_place_faster_left
 	step_end
 
-PokemonLeague_ChampionsRoom_Text_Intro::
+PokemonLeague_FrlgChampionsRoom_Text_Intro::
 	.string "{RIVAL}: Hey, {PLAYER}!\p"
 	.string "I was looking forward to seeing\n"
 	.string "you, {PLAYER}.\p"
@@ -242,7 +287,7 @@ PokemonLeague_ChampionsRoom_Text_Intro::
 	.string "I am the most powerful TRAINER in\n"
 	.string "the world!$"
 
-PokemonLeague_ChampionsRoom_Text_RematchIntro::
+PokemonLeague_FrlgChampionsRoom_Text_RematchIntro::
 	.string "{RIVAL}: Hey, {PLAYER}!\p"
 	.string "You came back, {PLAYER}!\n"
 	.string "Hahah, that is so great!\p"
@@ -260,7 +305,7 @@ PokemonLeague_ChampionsRoom_Text_RematchIntro::
 	.string "I am the most powerful TRAINER in\n"
 	.string "the world!$"
 
-PokemonLeague_ChampionsRoom_Text_Defeat::
+PokemonLeague_FrlgChampionsRoom_Text_Defeat::
 	.string "NO!\n"
 	.string "That can't be!\l"
 	.string "You beat me at my best!\p"
@@ -269,7 +314,7 @@ PokemonLeague_ChampionsRoom_Text_Defeat::
 	.string "My reign is over already?\n"
 	.string "It's not fair!$"
 
-PokemonLeague_ChampionsRoom_Text_Victory::
+PokemonLeague_FrlgChampionsRoom_Text_Victory::
 	.string "はーはッ！\n"
 	.string "かった！　かった！　かった！\p"
 	.string "{PLAYER}に　まける　ような\n"
@@ -280,7 +325,7 @@ PokemonLeague_ChampionsRoom_Text_Victory::
 	.string "ほめて　つかわす！\n"
 	.string "はーッ！　はーはッはッ！$"
 
-PokemonLeague_ChampionsRoom_Text_PostBattle::
+PokemonLeague_FrlgChampionsRoom_Text_PostBattle::
 	.string "Why?\n"
 	.string "Why did I lose?\p"
 	.string "I never made any mistakes raising\n"
@@ -289,10 +334,10 @@ PokemonLeague_ChampionsRoom_Text_PostBattle::
 	.string "LEAGUE CHAMPION!\p"
 	.string "Although I don't like to admit it…$"
 
-PokemonLeague_ChampionsRoom_Text_OakPlayer::
+PokemonLeague_FrlgChampionsRoom_Text_OakPlayer::
 	.string "OAK: {PLAYER}!$"
 
-PokemonLeague_ChampionsRoom_Text_OakCongratulations::
+PokemonLeague_FrlgChampionsRoom_Text_OakCongratulations::
 	.string "OAK: So, you've won!\n"
 	.string "Sincerely, congratulations!\p"
 	.string "You're the new POKéMON LEAGUE\n"
@@ -302,7 +347,7 @@ PokemonLeague_ChampionsRoom_Text_OakCongratulations::
 	.string "on the POKéDEX.\p"
 	.string "{PLAYER}, you have come of age!$"
 
-PokemonLeague_ChampionsRoom_Text_OakImDisappointedRival::
+PokemonLeague_FrlgChampionsRoom_Text_OakImDisappointedRival::
 	.string "OAK: {RIVAL}…\n"
 	.string "I'm disappointed in you.\p"
 	.string "I came when I heard you'd beaten\n"
@@ -316,7 +361,7 @@ PokemonLeague_ChampionsRoom_Text_OakImDisappointedRival::
 	.string "Without them, you will never\n"
 	.string "become a CHAMP again!$"
 
-PokemonLeague_ChampionsRoom_Text_OakPlayerComeWithMe::
+PokemonLeague_FrlgChampionsRoom_Text_OakPlayerComeWithMe::
 	.string "OAK: {PLAYER}.\p"
 	.string "You understand that your victory\n"
 	.string "was not just your own doing.\p"

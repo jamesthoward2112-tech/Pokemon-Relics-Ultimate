@@ -33,6 +33,10 @@ struct PcMonSelection
 };
 
 static EWRAM_DATA u8 sSelectionType = 0;
+// Field specials use VAR_0x8005 as shared scratch storage. Keep the specific
+// move chosen in Indigo before opening either the party or the PC UI, whose
+// callbacks may run many frames after the selection script.
+static EWRAM_DATA u16 sActivePruTutorMove = MOVE_NONE;
 
 // All these filter functions return 0 when a mon is a valid or a number corresponding to the type of error
 static u32 NoFilter(struct BoxPokemon *boxmon);
@@ -41,6 +45,7 @@ static u32 IsMatchingSpecies(struct BoxPokemon *boxmon);
 static u32 CanMonDeleteMove(struct BoxPokemon *boxmon);
 static u32 CanMonLearnMove(struct BoxPokemon *boxmon);
 static u32 CanMonLearnPjrControlMove(struct BoxPokemon *boxmon);
+static u32 CanMonLearnPruDoubleMove(struct BoxPokemon *boxmon);
 static u32 CanMonLearnPLAMove(struct BoxPokemon *boxmon);
 static u32 CanRelearnMoves(struct BoxPokemon *boxmon);
 
@@ -54,6 +59,7 @@ static const struct PcMonSelection sPcMonSelectionTypes[] =
     [SELECT_PC_MON_MOVE_RELEARNER] = {ChooseMonForMoveRelearner, CanRelearnMoves, NULL, FALSE},
     [SELECT_PC_MON_PLA_TUTOR] = {ChooseMonForMoveTutor, CanMonLearnPLAMove, MoveTutor_AfterChooseBoxMon, FALSE},
     [SELECT_PC_MON_PJR_CONTROL_TUTOR] = {ChooseMonForMoveTutor, CanMonLearnPjrControlMove, MoveTutor_AfterChooseBoxMon, FALSE},
+    [SELECT_PC_MON_PRU_DOUBLE_TUTOR] = {ChooseMonForMoveTutor, CanMonLearnPruDoubleMove, MoveTutor_AfterChooseBoxMon, FALSE},
 };
 
 static u32 NoFilter(struct BoxPokemon *boxmon)
@@ -128,6 +134,10 @@ static bool32 IsPjrControlTutorMove(u16 move)
     case MOVE_WHIRLWIND:
     case MOVE_DRAGON_TAIL:
     case MOVE_INFESTATION:
+    case MOVE_ACHILLES_HEEL:
+    case MOVE_PERMAFROST:
+    case MOVE_WILDFIRE:
+    case MOVE_DARK_MATTER:
     case MOVE_RAPID_SPIN:
     case MOVE_DEFOG:
     case MOVE_MORTAL_SPIN:
@@ -150,6 +160,13 @@ static bool32 IsPjrControlTutorMove(u16 move)
     case MOVE_CHILLING_WATER:
     case MOVE_ACID_SPRAY:
     case MOVE_NUZZLE:
+    case MOVE_SWORDS_DANCE:
+    case MOVE_NASTY_PLOT:
+    case MOVE_DRAGON_DANCE:
+    case MOVE_CALM_MIND:
+    case MOVE_BULK_UP:
+    case MOVE_AGILITY:
+    case MOVE_PROTECT:
         return TRUE;
     default:
         return FALSE;
@@ -165,11 +182,9 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
         return TRUE;
 
     // These two free Indigo Plateau tutors are exclusively a PRU service.
-    // The former SCARABUB..DRAGONITE_RELIC range omitted Gen 1-3 and
-    // PRU's appended species 1624-1642. Check the actual 444-entry Dex
-    // instead of guessing eligibility from a contiguous engine ID range.
+    // Check the actual species types, including playable Relic forms that
+    // do not have their own Pokédex entry.
     if (!IS_HNS || species == SPECIES_NONE || species >= NUM_SPECIES
-        || SpeciesToPokedexNum(species) == 0xFFFF
         || !IsPjrControlTutorMove(move))
         return FALSE;
 
@@ -177,6 +192,31 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
     // anatomy. No universal move unlock; existing donor access still wins.
     switch (move)
     {
+    case MOVE_ACHILLES_HEEL:
+        return species == SPECIES_MEWTWO;
+    case MOVE_PERMAFROST:
+        return IsSpeciesOfType(species, TYPE_ICE);
+    case MOVE_WILDFIRE:
+        return IsSpeciesOfType(species, TYPE_FIRE);
+    case MOVE_DARK_MATTER:
+        return IsSpeciesOfType(species, TYPE_DARK);
+    case MOVE_SWORDS_DANCE:
+        return IsSpeciesOfType(species, TYPE_NORMAL)
+            || IsSpeciesOfType(species, TYPE_FIGHTING);
+    case MOVE_NASTY_PLOT:
+        return IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_GHOST)
+            || IsSpeciesOfType(species, TYPE_PSYCHIC);
+    case MOVE_DRAGON_DANCE:
+        return IsSpeciesOfType(species, TYPE_DRAGON)
+            || species == SPECIES_GYARADOS;
+    case MOVE_CALM_MIND:
+    case MOVE_AGILITY:
+        return IsSpeciesOfType(species, TYPE_PSYCHIC);
+    case MOVE_BULK_UP:
+        return IsSpeciesOfType(species, TYPE_FIGHTING);
+    case MOVE_PROTECT:
+        return TRUE;
     case MOVE_STEALTH_ROCK:
     case MOVE_SALT_CURE:
         return IsSpeciesOfType(species, TYPE_ROCK)
@@ -192,7 +232,8 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
             || IsSpeciesOfType(species, TYPE_BUG);
     case MOVE_STICKY_WEB:
     case MOVE_INFESTATION:
-        return IsSpeciesOfType(species, TYPE_BUG);
+        return IsSpeciesOfType(species, TYPE_BUG)
+            || (move == MOVE_STICKY_WEB && IsSpeciesOfType(species, TYPE_GRASS));
     case MOVE_STONE_AXE:
         return IsSpeciesOfType(species, TYPE_ROCK)
             || IsSpeciesOfType(species, TYPE_GROUND)
@@ -270,8 +311,9 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
             || IsSpeciesOfType(species, TYPE_GROUND)
             || IsSpeciesOfType(species, TYPE_STEEL);
     case MOVE_PSYCHIC_FANGS:
-        // Sharp teeth/tusks only; Psychic typing alone implies no fangs.
-        return species == SPECIES_SKULBERUS
+        // All Psychic Pokémon may learn Psychic tutor moves as requested.
+        return IsSpeciesOfType(species, TYPE_PSYCHIC)
+            || species == SPECIES_SKULBERUS
             || species == SPECIES_DONPHALANX
             || species == SPECIES_NOXICHU
             || species == SPECIES_MIGHTYENA
@@ -325,20 +367,128 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
     return FALSE;
 }
 
+static bool32 IsPruDoubleTutorMove(u16 move)
+{
+    switch (move)
+    {
+    case MOVE_SHOCKWAVE_FIST:
+    case MOVE_FAULTLINE:
+    case MOVE_WRAITH_CRY:
+    case MOVE_METAL_BARRAGE:
+    case MOVE_MINDWAVE:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
+static bool32 CanSpeciesLearnPruDoubleTutorMove(u16 species, u16 move)
+{
+    enum Type type;
+
+    if (!IS_HNS || species == SPECIES_NONE || species >= NUM_SPECIES
+        || !IsPruDoubleTutorMove(move))
+        return FALSE;
+
+    switch (move)
+    {
+    case MOVE_SHOCKWAVE_FIST:
+        // Share Brick Break's full tutor compatibility, including native
+        // learnsets and PRU's Fighting/Ground/Steel eligibility.
+        return CanSpeciesLearnPjrControlTutorMove(species, MOVE_BRICK_BREAK);
+    case MOVE_FAULTLINE: type = TYPE_GROUND; break;
+    case MOVE_WRAITH_CRY: type = TYPE_GHOST; break;
+    case MOVE_METAL_BARRAGE:
+        // Metal shards suit Steel, Rock and Ground species, as well as
+        // physical attackers that can already learn Iron Tail.
+        return IsSpeciesOfType(species, TYPE_STEEL)
+            || IsSpeciesOfType(species, TYPE_ROCK)
+            || IsSpeciesOfType(species, TYPE_GROUND)
+            || CanLearnTeachableMove(species, MOVE_IRON_TAIL);
+    case MOVE_MINDWAVE: type = TYPE_PSYCHIC; break;
+    default: return FALSE;
+    }
+    return IsSpeciesOfType(species, type);
+}
+
+bool32 CanSpeciesLearnPruTutorMove(u16 species, u16 move)
+{
+    if (CanLearnTeachableMove(species, move))
+        return TRUE;
+    return CanSpeciesLearnPjrControlTutorMove(species, move)
+        || CanSpeciesLearnPruDoubleTutorMove(species, move);
+}
+
+// The party and PC screens use different menu state. Do not consult the
+// PC chooser's EWRAM selection type to decide what the party screen displays:
+// it may have changed while another selection task was active. Restrict this
+// fallback to a genuine tutor action and the moves offered by PRU's tutors.
+bool32 CanSpeciesLearnPruTutorMoveForParty(u16 species, u16 move, bool32 isTutorAction)
+{
+    if (!isTutorAction || (!IsPjrControlTutorMove(move) && !IsPruDoubleTutorMove(move)))
+        return FALSE;
+    return CanSpeciesLearnPruTutorMove(species, move);
+}
+
+bool32 CanSpeciesLearnSelectedPruTutorMove(u16 species, u16 move)
+{
+    if (sSelectionType != SELECT_PC_MON_PJR_CONTROL_TUTOR
+        && sSelectionType != SELECT_PC_MON_PRU_DOUBLE_TUTOR)
+        return FALSE;
+    return CanSpeciesLearnPruTutorMove(species, move);
+}
+
+u16 GetSelectedBoxTutorMove(void)
+{
+    if ((sSelectionType == SELECT_PC_MON_PJR_CONTROL_TUTOR
+      || sSelectionType == SELECT_PC_MON_PRU_DOUBLE_TUTOR)
+     && sActivePruTutorMove != MOVE_NONE)
+        return sActivePruTutorMove;
+    return gSpecialVar_0x8005;
+}
+
 static u32 CanMonLearnPjrControlMove(struct BoxPokemon *boxmon)
 {
     u16 species;
+    u16 move = GetSelectedBoxTutorMove();
 
     if (GetBoxMonData(boxmon, MON_DATA_IS_EGG))
         return CANNOT_LEARN_MOVE_IS_EGG;
-    if (BoxMonKnowsMove(boxmon, gSpecialVar_0x8005))
+    if (BoxMonKnowsMove(boxmon, move))
         return ALREADY_KNOWS_MOVE;
 
     species = GetBoxMonData(boxmon, MON_DATA_SPECIES);
-    if (CanSpeciesLearnPjrControlTutorMove(species, gSpecialVar_0x8005))
+    if (CanSpeciesLearnPruTutorMove(species, move))
         return VALID_MON;
 
     return CANNOT_LEARN_MOVE;
+}
+
+bool32 CanSpeciesLearnPjrControlTutorMoveForRelearner(u16 species, u16 move)
+{
+    return CanSpeciesLearnPjrControlTutorMove(species, move);
+}
+
+// An intentionally narrow tutor. For the active PRU Dex, primary OR
+// secondary typing makes a species eligible for its corresponding spread
+// move. All five share this check; no move can be accidentally taught to
+// every species by a broad numeric ID-range fallback.
+static u32 CanMonLearnPruDoubleMove(struct BoxPokemon *boxmon)
+{
+    u16 species;
+    u16 move = GetSelectedBoxTutorMove();
+
+    if (GetBoxMonData(boxmon, MON_DATA_IS_EGG))
+        return CANNOT_LEARN_MOVE_IS_EGG;
+    if (BoxMonKnowsMove(boxmon, move))
+        return ALREADY_KNOWS_MOVE;
+
+    species = GetBoxMonData(boxmon, MON_DATA_SPECIES);
+    if (!IS_HNS || species == SPECIES_NONE || species >= NUM_SPECIES
+        || !IsPruDoubleTutorMove(move))
+        return CANNOT_LEARN_MOVE;
+
+    return CanSpeciesLearnPruTutorMove(species, move) ? VALID_MON : CANNOT_LEARN_MOVE;
 }
 
 static const u16 sPLATutorLearnsets[][2] =
@@ -504,6 +654,11 @@ static void Task_ChooseBoxMon(u8 taskId)
 void ChooseBoxMon(struct ScriptContext *ctx)
 {
     sSelectionType = ScriptReadByte(ctx);
+    if (sSelectionType == SELECT_PC_MON_PJR_CONTROL_TUTOR
+     || sSelectionType == SELECT_PC_MON_PRU_DOUBLE_TUTOR)
+        sActivePruTutorMove = gSpecialVar_0x8005;
+    else
+        sActivePruTutorMove = MOVE_NONE;
     if (!OW_CHOOSE_FROM_PC_AND_PARTY)
     {
         sPcMonSelectionTypes[sSelectionType].partyMonBackup();

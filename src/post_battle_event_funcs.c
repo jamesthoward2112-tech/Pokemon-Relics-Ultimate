@@ -21,6 +21,11 @@ int GameClear(void)
 
     HealPlayerParty();
 
+#if IS_HNS
+    gPruElite20CreditsActive = FlagGet(FLAG_PRU_E20_CREDITS_PENDING);
+    FlagClear(FLAG_PRU_E20_CREDITS_PENDING);
+#endif
+
     if (FlagGet(FLAG_SYS_GAME_CLEAR) == TRUE)
     {
         gHasHallOfFameRecords = TRUE;

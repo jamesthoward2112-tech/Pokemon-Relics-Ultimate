@@ -82,6 +82,7 @@ struct CreditsEntry
 
 static EWRAM_DATA u16 sSavedTaskId = 0;
 EWRAM_DATA bool8 gHasHallOfFameRecords = 0;
+EWRAM_DATA bool8 gPruElite20CreditsActive = FALSE;
 static EWRAM_DATA struct CreditsData *sCreditsData = {0};
 
 static const u16 sCredits_Pal[] = INCBIN_U16("graphics/credits/credits.gbapal");
@@ -107,10 +108,13 @@ static u8 CheckChangeScene(u8, u8);
 static void Task_ShowMons(u8);
 static void Task_CycleSceneryPalette(u8);
 static void Task_BikeScene(u8);
+static void Task_E20CreditsOpening(u8);
+static void SpriteCB_CreditsRelicHoOh(struct Sprite *);
 static bool8 LoadBikeScene(u8 data, u8);
 static void ResetCreditsTasks(u8);
 static void LoadTheEndScreen(u16, u16, u16);
 static void DrawTheEnd(u16, u16);
+static void DrawElite20ChampionScreen(void);
 static void SpriteCB_Player(struct Sprite *);
 static void SpriteCB_Rival(struct Sprite *);
 static u8 CreateCreditsMonSprite(u16, s16, s16, u16);
@@ -161,7 +165,22 @@ static const u8 sTheEnd_LetterMap_D[] =
     1, 0x86, 0x87,
 };
 
+static const u8 sPRUE20Text_Title[] = _("POKEMON RELICS ULTIMATE");
+static const u8 sPRUE20Text_Champion[] = _("ELITE 20 CHAMPION");
+static const u8 sPRUE20Text_Kanto[] = _("KANTO AND JOHTO");
+static const u8 sPRUE20Text_Journey[] = _("YOUR JOURNEY CONTINUES");
+static const u8 sPRUE20Text_Relics[] = _("THE GOLDEN RELIC HO-OH");
 #include "data/credits_hns.h"
+static const struct CreditsEntry sE20Title = {0, TRUE, sPRUE20Text_Title};
+static const struct CreditsEntry sE20Champion = {0, TRUE, sPRUE20Text_Champion};
+static const struct CreditsEntry sE20Kanto = {0, TRUE, sPRUE20Text_Kanto};
+static const struct CreditsEntry sE20Journey = {0, FALSE, sPRUE20Text_Journey};
+static const struct CreditsEntry sE20Relics = {0, TRUE, sPRUE20Text_Relics};
+static const struct CreditsEntry *const sElite20CreditsIntroPages[][ENTRIES_PER_PAGE] = {
+ { &sE20Title, &sE20Champion, &sE20Kanto, &sE20Journey, &sCreditsEntry_EmptyString },
+ { &sE20Relics, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
+};
+#define E20_INTRO_PAGE_COUNT ARRAY_COUNT(sElite20CreditsIntroPages)
 
 static const struct BgTemplate sBackgroundTemplates[] =
 {
@@ -455,7 +474,8 @@ static void Task_CreditsMain(u8 taskId)
     if (gTasks[taskId].tEndCredits)
     {
         s16 bikeTaskId = gTasks[taskId].tTaskId_BikeScene;
-        gTasks[bikeTaskId].tState = 30;
+        if (bikeTaskId != 0)
+            gTasks[bikeTaskId].tState = 30;
 
         gTasks[taskId].tTheEndDelay = 256;
         gTasks[taskId].func = Task_CreditsTheEnd1;
@@ -646,7 +666,10 @@ static void Task_CreditsTheEnd5(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        DrawTheEnd(0x3800, 0);
+        if (gPruElite20CreditsActive)
+            DrawElite20ChampionScreen();
+        else
+            DrawTheEnd(0x3800, 0);
 
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0, RGB_BLACK);
         gTasks[taskId].tDelay = 7200;
@@ -739,13 +762,15 @@ static void Task_UpdatePage(u8 taskId)
     case 2:
         if (gTasks[gTasks[taskId].tMainTaskId].func == Task_CreditsMain)
         {
-            if (gTasks[taskId].tCurrentPage < PAGE_COUNT)
+            if (gTasks[taskId].tCurrentPage < PAGE_COUNT + (gPruElite20CreditsActive ? E20_INTRO_PAGE_COUNT : 0))
             {
                 for (i = 0; i < ENTRIES_PER_PAGE; i++)
-                    PrintCreditsText(
-                        sCreditsEntryPointerTable[gTasks[taskId].tCurrentPage][i]->text,
-                         5 + i * 16,
-                         sCreditsEntryPointerTable[gTasks[taskId].tCurrentPage][i]->isTitle);
+                {
+                    const struct CreditsEntry *entry = gPruElite20CreditsActive && gTasks[taskId].tCurrentPage < E20_INTRO_PAGE_COUNT
+                        ? sElite20CreditsIntroPages[gTasks[taskId].tCurrentPage][i]
+                        : sCreditsEntryPointerTable[gTasks[taskId].tCurrentPage - (gPruElite20CreditsActive ? E20_INTRO_PAGE_COUNT : 0)][i];
+                    PrintCreditsText(entry->text, 5 + i * 16, entry->isTitle);
+                }
                 CopyWindowToVram(0, COPYWIN_GFX);
 
                 gTasks[taskId].tCurrentPage++;
@@ -809,10 +834,22 @@ static void Task_UpdatePage(u8 taskId)
 
 #undef tDelay
 
-#define PAGE_INTERVAL (PAGE_COUNT / 9)
+#define PAGE_INTERVAL ((PAGE_COUNT + (gPruElite20CreditsActive ? E20_INTRO_PAGE_COUNT : 0)) / 9)
 
 static u8 CheckChangeScene(u8 page, u8 taskId)
 {
+    // E20 gets one Golden Relic Ho-Oh flyby, then stays with the curated
+    // three-at-a-time Relic montage for the remainder of the credits.
+    if (gPruElite20CreditsActive)
+    {
+        if (page == PAGE_INTERVAL * 1)
+        {
+            gTasks[taskId].tNextMode = MODE_SHOW_MONS;
+            return TRUE;
+        }
+        return FALSE;
+    }
+
     if (page == PAGE_INTERVAL * 1)
     {
         gTasks[taskId].tNextMode = MODE_SHOW_MONS;
@@ -1007,6 +1044,33 @@ static void Task_BikeScene(u8 taskId)
     }
 }
 
+static void Task_E20CreditsOpening(u8 taskId)
+{
+    // Task_CreditsMain sets this sentinel when the credits finish.
+    if (gTasks[taskId].tState == 30)
+        DestroyTask(taskId);
+}
+
+static void SpriteCB_CreditsRelicHoOh(struct Sprite *sprite)
+{
+    if (gIntroCredits_MovingSceneryState != INTROCRED_SCENERY_NORMAL)
+    {
+        DestroySprite(sprite);
+        return;
+    }
+
+    sprite->x--;
+    sprite->data[0] += 2;
+    sprite->y2 = Sin(sprite->data[0], 3);
+    if (sprite->x < -32)
+    {
+        sprite->x = DISPLAY_WIDTH + 32;
+        sprite->data[1]++;
+        if (sprite->data[1] >= 3)
+            sprite->invisible = TRUE;
+    }
+}
+
 #define TIMER_STOP  0x7FFF
 #define tTimer      data[1]
 #define tMainTaskId data[2]
@@ -1069,6 +1133,19 @@ static void Task_CycleSceneryPalette(u8 taskId)
 
 static void SetBikeScene(u8 scene, u8 taskId)
 {
+    if (gPruElite20CreditsActive)
+    {
+        // Keep the established moving credits scenery and palette cycle, but
+        // omit the standard player, rival and bicycle actors for E20.
+        gTasks[taskId].tTaskId_BgScenery = CreateBicycleBgAnimationTask(0, 0x2000, 0x20, 8);
+        gTasks[taskId].tTaskId_SceneryPal = CreateTask(Task_CycleSceneryPalette, 0);
+        gTasks[gTasks[taskId].tTaskId_SceneryPal].tState = SCENE_OCEAN_MORNING;
+        gTasks[gTasks[taskId].tTaskId_SceneryPal].tTimer = 0;
+        gTasks[gTasks[taskId].tTaskId_SceneryPal].tMainTaskId = taskId;
+        gTasks[taskId].tTaskId_BikeScene = CreateTask(Task_E20CreditsOpening, 0);
+        return;
+    }
+
     switch (scene)
     {
     case SCENE_OCEAN_MORNING:
@@ -1158,21 +1235,32 @@ static bool8 LoadBikeScene(u8 scene, u8 taskId)
         gMain.state++;
         break;
     case 2:
-        LoadCompressedSpriteSheet(gSpriteSheet_CreditsSuicune);
-        LoadCompressedSpriteSheet(gSpriteSheet_CreditsRivalMay);
-        LoadCompressedSpriteSheet(gSpriteSheet_CreditsBicycle);
-        LoadSpritePalettes(gSpritePalettes_CreditsHnS);
+        if (gPruElite20CreditsActive)
+        {
+            LoadCompressedSpriteSheet(gSpriteSheet_CreditsRelicHoOh);
+            LoadSpritePalettes(gSpritePalettes_CreditsRelicHoOh);
+            spriteId = CreateCreditsRelicHoOhSprite(DISPLAY_WIDTH + 32, 46);
+            gSprites[spriteId].callback = SpriteCB_CreditsRelicHoOh;
+            gTasks[taskId].tPlayerSpriteId = spriteId;
+            gTasks[taskId].tRivalSpriteId = 0;
+        }
+        else
+        {
+            LoadCompressedSpriteSheet(gSpriteSheet_CreditsSuicune);
+            LoadCompressedSpriteSheet(gSpriteSheet_CreditsRivalMay);
+            LoadCompressedSpriteSheet(gSpriteSheet_CreditsBicycle);
+            LoadSpritePalettes(gSpritePalettes_CreditsHnS);
+            spriteId = CreateCreditsSuicuneSprite(120, 46);
+            gTasks[taskId].tPlayerSpriteId = spriteId;
+            gSprites[spriteId].callback = SpriteCB_Player;
+            gSprites[spriteId].anims = sAnims_Player;
 
-        spriteId = CreateCreditsSuicuneSprite(120, 46);
-        gTasks[taskId].tPlayerSpriteId = spriteId;
-        gSprites[spriteId].callback = SpriteCB_Player;
-        gSprites[spriteId].anims = sAnims_Player;
-
-        spriteId = CreateIntroMaySprite(DISPLAY_WIDTH + 32, 46);
-        gTasks[taskId].tRivalSpriteId = spriteId;
-        gSprites[spriteId].callback = SpriteCB_Rival;
-        gSprites[spriteId].anims = sAnims_Rival;
-        gSprites[spriteId].invisible = TRUE;
+            spriteId = CreateIntroMaySprite(DISPLAY_WIDTH + 32, 46);
+            gTasks[taskId].tRivalSpriteId = spriteId;
+            gSprites[spriteId].callback = SpriteCB_Rival;
+            gSprites[spriteId].anims = sAnims_Rival;
+            gSprites[spriteId].invisible = TRUE;
+        }
         gMain.state++;
         break;
     case 3:
@@ -1268,6 +1356,27 @@ static void DrawTheEnd(u16 offset, u16 palette)
     DrawLetterMapTiles(sTheEnd_LetterMap_E, 16, 7, offset, palette);
     DrawLetterMapTiles(sTheEnd_LetterMap_N, 20, 7, offset, palette);
     DrawLetterMapTiles(sTheEnd_LetterMap_D, 24, 7, offset, palette);
+}
+
+static void DrawElite20ChampionScreen(void)
+{
+    ResetGpuAndVram();
+    ResetPaletteFade();
+    InitCreditsBgsAndWindows();
+    FillWindowPixelBuffer(0, PIXEL_FILL(0));
+    PrintCreditsText(sPRUE20Text_Title, 20, TRUE);
+    PrintCreditsText(sPRUE20Text_Champion, 44, TRUE);
+    CopyWindowToVram(0, COPYWIN_FULL);
+
+    SetGpuReg(REG_OFFSET_BG0CNT, BGCNT_PRIORITY(0)
+                               | BGCNT_CHARBASE(2)
+                               | BGCNT_SCREENBASE(28)
+                               | BGCNT_16COLOR
+                               | BGCNT_TXT256x256);
+    EnableInterrupts(INTR_FLAG_VBLANK);
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
+                                | DISPCNT_BG0_ON);
+    BeginNormalPaletteFade(PALETTES_ALL, 8, 16, 0, RGB_BLACK);
 }
 
 #define sState data[0]
@@ -1445,15 +1554,79 @@ static void SpriteCB_CreditsMonBg(struct Sprite *sprite)
     sprite->y = gSprites[sprite->sMonSpriteId].y;
 }
 
+// Explicitly curated from PRU's current roster. Never iterate through the
+// legacy PJR ID range: retired slots still exist for save compatibility.
+static const u16 sPruCreditsSpecies[] =
+{
+    SPECIES_EDENSAUR,
+    SPECIES_CHARAXIS,
+    SPECIES_FORTOTOISE,
+    SPECIES_ADNOKANA,
+    SPECIES_NOXICHU,
+    SPECIES_GHOULBAT,
+    SPECIES_ANNIHILAPE,
+    SPECIES_OSTEODIAN,
+    SPECIES_MAROGHOST,
+    SPECIES_CHEAUKING,
+    SPECIES_FRYTNING,
+    SPECIES_KHANG,
+    SPECIES_MYSTYNX,
+    SPECIES_PINSIREX,
+    SPECIES_EEVEEON,
+    SPECIES_NIMBEON,
+    SPECIES_CHAMPEON,
+    SPECIES_LEPIDEON,
+    SPECIES_SPHYNXEON,
+    SPECIES_GUARDEON,
+    SPECIES_OBSIDEON,
+    SPECIES_TOXEON,
+    SPECIES_OMEON,
+    SPECIES_DRAKEON,
+    SPECIES_NOLAX,
+    SPECIES_FAERANIUM,
+    SPECIES_PYROCLAST,
+    SPECIES_FERALODON,
+    SPECIES_GRIMFOWL,
+    SPECIES_SUNFLORID,
+    SPECIES_CLODSIRE,
+    SPECIES_KABLOWFISH,
+    SPECIES_SHUCKOLOSSE,
+    SPECIES_SCARABUB,
+    SPECIES_HERACURION,
+    SPECIES_JOLLIBIRD,
+    SPECIES_SKARMET,
+    SPECIES_SKARMADON,
+    SPECIES_DONPHALANX,
+    SPECIES_MOOTINY,
+    SPECIES_MILTITAN,
+    SPECIES_SCEPTITAN,
+    SPECIES_SOLAZIKEN,
+    SPECIES_SWAMPLITH,
+    SPECIES_SKULBERUS,
+    SPECIES_VALKYVOIR,
+    SPECIES_GEMLIN,
+    SPECIES_GEMIGOYLE,
+    SPECIES_MAWYRM,
+    SPECIES_TORKALDERA,
+    SPECIES_CACTOMB,
+    SPECIES_TROPISAUR,
+    SPECIES_MEWSION,
+    SPECIES_ALPHORACLE,
+    SPECIES_COELOSSUS,
+    SPECIES_ASTRACHI,
+    SPECIES_GLACEON,
+    SPECIES_LEAFEON,
+    SPECIES_MIMIKYU_DISGUISED,
+};
+
 static void DeterminePokemonToShow(void)
 {
     u16 i;
-    const u16 customSpeciesCount = SPECIES_DRAGONITE_RELIC - SPECIES_SCARABUB + 1;
 
-    // PJR credits are a showcase for the Relic-series custom roster.
-    // Keep species IDs directly so forms sharing a National Dex number do not collapse to vanilla graphics.
+    // Keep species IDs directly so forms sharing a National Dex number do not
+    // collapse to vanilla graphics.
     for (i = 0; i < NUM_MON_SLIDES; i++)
-        sCreditsData->monToShow[i] = SPECIES_SCARABUB + (i % customSpeciesCount);
+        sCreditsData->monToShow[i] = sPruCreditsSpecies[i % ARRAY_COUNT(sPruCreditsSpecies)];
 
     sCreditsData->numCaughtMon = 0;
     sCreditsData->numMonToShow = NUM_MON_SLIDES;

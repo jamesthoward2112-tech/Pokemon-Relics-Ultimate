@@ -1,0 +1,26 @@
+name: PRU E20 artwork staging source checks
+
+on:
+  push:
+    branches:
+      - feature/pru-e20-artwork-staging-20261029
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual-source-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install native artwork preview test dependency
+        run: python -m pip install 'Pillow>=12,<13'
+      - name: Verify E20 duo intros, normal/master routing, and custom rosters
+        run: |
+          PYTHONPATH=. python -m unittest discover -s test -p 'test_pru_e20_*.py'
+          python tools/pru/check_elite20_visuals.py
