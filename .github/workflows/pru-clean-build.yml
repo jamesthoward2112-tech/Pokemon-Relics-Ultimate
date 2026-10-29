@@ -255,17 +255,22 @@ jobs:
           assert len(captures) == 6
           digests = set()
           nonblank_captures = []
+          richly_coloured_captures = []
           for path in captures:
               image = Image.open(path).convert('RGB')
               colors = image.getcolors(maxcolors=image.width * image.height)
               assert image.width >= 240 and image.height >= 160, f'{path}: missing GBA viewport'
               # The opening fade can legitimately be solid black at 5s.
-              # Check that later frames contain real game artwork instead.
-              if colors and len(colors) > 32:
+              # A started game may legitimately land on a sparse 23-colour
+              # menu after Return; don't mistake that for a failed boot.
+              if colors and len(colors) > 16:
                   nonblank_captures.append(path)
+              if colors and len(colors) >= 64:
+                  richly_coloured_captures.append(path)
               digests.add(hashlib.sha256(path.read_bytes()).hexdigest())
               print(f'{path}: {image.size[0]}x{image.size[1]}, {len(colors) if colors else 0} colors')
           assert len(nonblank_captures) >= 2, 'mGBA never rendered two usable game frames'
+          assert richly_coloured_captures, 'mGBA never displayed detailed game artwork'
           assert len(digests) >= 2, 'mGBA captures never advanced beyond one static frame'
           PY
       - name: Upload direct GBA test artifact after successful source build
