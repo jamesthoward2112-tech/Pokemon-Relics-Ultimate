@@ -39,6 +39,18 @@ form_pattern = re.compile(r"SPECIES_UNOWN_[A-Z_]+|SPECIES_CASTFORM_(NORMAL|SUNNY
 def valid_constant(species):
     return species in allowed or species in {"SPECIES_NONE", "SPECIES_EGG", "SPECIES_WOOPER_PALDEA"} or bool(form_pattern.fullmatch(species))
 
+# E20 trainer-only art exception: these are reserved opponent visual forms,
+# not new Pokédex entries or wild encounters. Scope permission to the exact
+# trainer pair named in the approved artwork manifest (normal + master).
+visual_forms = json.loads((ROOT / "assets/pru_e20/visual_form_assignments.json").read_text(encoding="utf-8"))
+assert visual_forms.get("purpose", "").startswith("E20-only alternate battle sprites")
+approved_e20_form_slots = set()
+for entry in visual_forms["forms"]:
+    trainer_base = "TRAINER_" + entry["trainer"]
+    for suffix in ("_HNS", "_MASTER_HNS"):
+        approved_e20_form_slots.add((trainer_base + suffix, entry["form"]))
+assert len(visual_forms["forms"]) == 15, "E20 custom art manifest changed; re-audit approved visuals"
+
 errors = []
 trainer_count = 0
 pokemon_count = 0
@@ -56,7 +68,7 @@ for section in re.split(r"(?=^=== TRAINER_[^\n]+ ===\s*$)", party, flags=re.M):
         species = name.split(" @ ", 1)[0].strip()
         species = re.sub(r" \([FM]\)$", "", species)
         pokemon_count += 1
-        if species not in allowed_names and name_aliases.get(species) not in allowed_names:
+        if species not in allowed_names and name_aliases.get(species) not in allowed_names and (trainer, species) not in approved_e20_form_slots:
             errors.append(f"{trainer}: forbidden trainer Pokémon {species}")
 assert trainer_count >= 650 and pokemon_count >= 1800, (
     "Trainer file was unexpectedly truncated or audit skipped trainer data"
@@ -93,7 +105,12 @@ for path in sorted((ROOT / "data/maps").glob("*_hns/scripts.inc")):
             continue
         for species in re.findall(r"\bSPECIES_[A-Z0-9_]+\b", line):
             if not valid_constant(species):
-                errors.append(f"{path.relative_to(ROOT)}:{line_number}: forbidden scripted Pokémon {species}")
+                # The approved one-time Golden Relic Ho-Oh encounter is an
+                # intentional quest-only special form; reject it everywhere else.
+                relic_summit = path.name == "scripts.inc" and path.parent.name == "MtSilver_SummitDay_hns"
+                relic_command = line.lstrip().startswith(("playmoncry SPECIES_RELIC_HO_OH", "seteventmon SPECIES_RELIC_HO_OH"))
+                if not (species == "SPECIES_RELIC_HO_OH" and relic_summit and relic_command):
+                    errors.append(f"{path.relative_to(ROOT)}:{line_number}: forbidden scripted Pokémon {species}")
 
 evolution = (ROOT / "src/pokemon.c").read_text(encoding="utf-8")
 assert "IsPruApprovedEvolutionTarget(targetSpecies)" in evolution
@@ -105,8 +122,8 @@ if errors:
     for problem in errors[:120]:
         print("  " + problem)
     raise SystemExit(1)
-print(f"PASS: {trainer_count} HNS trainers / {pokemon_count} legal Pokémon")
+print(f"PASS: {trainer_count} HNS trainers / {pokemon_count} legal Pokémon (including exact approved E20 trainer-only forms)")
 print(f"PASS: {len(wild_maps)} HNS wild maps / {wild_slots} legal wild slots")
-print(f"PASS: {event_scripts} HNS map scripts with no out-of-dex species constants")
+print(f"PASS: {event_scripts} HNS map scripts with no unapproved out-of-dex species constants")
 print("PASS: evolution targets remain confined to the approved 447")
 print("PASS: Ursaluna / Ursalina explicitly excluded from approved 444")
