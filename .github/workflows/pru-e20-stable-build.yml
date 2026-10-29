@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 # Build only on the isolated staging branch. Keep main and the currently
 # playable d468 ROM untouched. Pinned donor inputs and a downloadable QA-only
@@ -130,3 +130,19 @@ jobs:
             pokehns.gba
             pru-e20-d468.sha256
           if-no-files-found: error
+
+      - name: Publish raw PRU E20 GBA as QA prerelease
+        if: github.event_name == 'push' && github.ref == 'refs/heads/feature/pru-e20-artwork-staging-20261029'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          short="${GITHUB_SHA:0:10}"
+          tag="pru-e20-qa-${short}"
+          rom="Pokemon-Relics-Ultimate-E20-${short}.gba"
+          cp pokehns.gba "${rom}"
+          sha256sum "${rom}" > "${rom}.sha256"
+          gh release create "${tag}" "${rom}" "${rom}.sha256" \
+            --prerelease --title "PRU E20 QA ${short}" \
+            --notes "QA ROM from the latest E20 feature branch. Built from the d468 stable lineage. E20 source regression checks and 32 MiB compilation/ROM verification passed. Gameplay/save-specific mGBA testing is separately gated by the canonical PR #62 CI workflow. This prerelease does not replace the confirmed stable ROM."
