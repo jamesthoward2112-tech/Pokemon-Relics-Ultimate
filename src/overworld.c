@@ -1,5 +1,6 @@
 #include "global.h"
 #include "overworld.h"
+#include "pru_mewsion_gate.h"
 #include "constants/heal_locations.h"
 #include "battle_pyramid.h"
 #include "battle_setup.h"
@@ -958,6 +959,23 @@ static void RestorePruDefeatedLegendariesOnMapEntry(void)
     EnsurePruKantoBirdRoamers();
     EnsurePruJohtoLatiRoamers();
     RestorePruDefeatedRoamers();
+
+    // Returning to B2F after both Mew and Mewtwo have been registered
+    // unlocks Mewduo. Older saves may already have the retired caught flag
+    // set, so only the new dedicated capture marker can gate this encounter.
+    {
+        bool8 mewCaught = GetSetPokedexFlag(NATIONAL_DEX_MEW, FLAG_GET_CAUGHT);
+        bool8 mewtwoCaught = GetSetPokedexFlag(NATIONAL_DEX_MEWTWO, FLAG_GET_CAUGHT);
+        if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_CERULEAN_CAVE_B2F_HNS)
+            && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_CERULEAN_CAVE_B2F_HNS))
+        {
+            if (PruMewsionAllowed(mewCaught, mewtwoCaught,
+                                  VarGet(VAR_PRU_MEWDUO_CAPTURE_MARKER) == 0x4D44))
+                FlagClear(FLAG_TEMP_B);
+            else
+                FlagSet(FLAG_TEMP_B);
+        }
+    }
 
     for (i = 0; i < ARRAY_COUNT(sLegendaryHideFlags); i++)
     {

@@ -403,7 +403,7 @@
     .genderRatio = MON_GENDERLESS, .eggCycles = 120, .friendship = 0,
     .growthRate = GROWTH_SLOW, .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
     .abilities = { ABILITY_PRESSURE, ABILITY_PRESSURE, ABILITY_NONE }, .bodyColor = BODY_COLOR_PURPLE,
-    .speciesName = _("Mewsion"), .cryId = CRY_MEWTWO, .natDexNum = NATIONAL_DEX_MEWTWO,
+    .speciesName = _("Mewduo"), .cryId = CRY_MEWTWO, .natDexNum = NATIONAL_DEX_MEWTWO,
     .categoryName = _("Fusion"), .height = 20, .weight = 1220,
     .description = COMPOUND_STRING("Dark matter fused the genes of two legendary\nPokemon into an unstable new life-form."),
     .pokemonScale = 256, .pokemonOffset = 0, .trainerScale = 256, .trainerOffset = 0,
@@ -413,5 +413,10 @@
     .palette = gMonPalette_Mewsion, .shinyPalette = gMonShinyPalette_Mewsion,
     .iconSprite = gMonIcon_Mewsion, .iconPalIndex = 1,
     .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+    OVERWORLD(
+        sPicTable_Mewsion, SIZE_32x32, SHADOW_SIZE_M, TRACKS_NONE,
+        sAnimTable_Following,
+        gOverworldPalette_Mewsion, gShinyOverworldPalette_Mewsion
+    )
     .levelUpLearnset = sMewsionLevelUpLearnset, .teachableLearnset = sMewsionTeachableLearnset,
 },

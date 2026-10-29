@@ -3053,6 +3053,11 @@ static const struct SpriteFrameImage sPicTable_RayquazaMega[] = {
 #endif //P_FAMILY_RAYQUAZA
 
 // Astrachi is a PRU-only species, not part of the original Jirachi family.
+// Mewsion is also a PRU-only species, with its own (non-Substitute) art.
+static const struct SpriteFrameImage sPicTable_Mewsion[] = {
+    overworld_ascending_frames(gObjectEventPic_Mewsion, 4, 4),
+};
+
 static const struct SpriteFrameImage sPicTable_Astrachi[] = {
     overworld_ascending_frames(gObjectEventPic_Astrachi, 4, 4),
 };
