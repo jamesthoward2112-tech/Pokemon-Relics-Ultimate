@@ -871,6 +871,8 @@ PRU_Elite18_Steward::
 
 PRU_Elite20_Steward_Cleared::
 	goto_if_unset FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite20_Steward_PendingReward
+	@ Saves that claimed the prize in an earlier build still get their finale.
+	call PRU_Elite20_StartFinale
 	goto PRU_Elite18_AskChallenge
 
 PRU_Elite20_Steward_PendingReward::
