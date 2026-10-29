@@ -37,7 +37,7 @@ def main() -> None:
     colours = [tuple(map(int, line.split())) for line in PALETTE.read_text().splitlines()[3:19]]
     if len(colours) != 16:
         raise ValueError("Mewduo palette must contain exactly sixteen colours")
-    source_indices = list(base.get_flattened_data())
+    source_indices = list(base.getdata())
     if set(source_indices) != set(INDEX_MAP):
         raise ValueError("Unexpected vanilla Mewtwo palette indexes; source art changed")
 

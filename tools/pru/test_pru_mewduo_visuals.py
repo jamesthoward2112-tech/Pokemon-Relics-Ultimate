@@ -14,6 +14,12 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def pixels(image):
+    # The hosted runner's apt-installed Pillow may predate this newer API.
+    getter = getattr(image, "get_flattened_data", None)
+    return getter() if getter else image.getdata()
+
+
 class MewduoVisualTests(unittest.TestCase):
     def test_level_90_spawn_and_late_level_moves(self):
         text = (ROOT / "src/data/pokemon/level_up_learnsets/pru.h").read_text()
@@ -34,10 +40,10 @@ class MewduoVisualTests(unittest.TestCase):
         self.assertEqual(source.size, (192, 32))
         self.assertEqual(recoloured.size, source.size)
         self.assertEqual(recoloured.mode, "P")
-        self.assertLess(max(recoloured.get_flattened_data()), 16)
+        self.assertLess(max(pixels(recoloured)), 16)
 
-        source_mask = bytes(pixel != 0 for pixel in source.get_flattened_data())
-        result_mask = bytes(pixel != 0 for pixel in recoloured.get_flattened_data())
+        source_mask = bytes(pixel != 0 for pixel in pixels(source))
+        result_mask = bytes(pixel != 0 for pixel in pixels(recoloured))
         self.assertTrue(result_mask == source_mask, "Overworld silhouette differs from Mewtwo")
 
         frames = [recoloured.crop((32 * i, 0, 32 * (i + 1), 32)) for i in range(6)]
@@ -55,14 +61,22 @@ class MewduoVisualTests(unittest.TestCase):
         )
         # The tail's red shades are shared across every walking direction.
         for index in range(6):
-            pixels = sprite.crop((32 * index, 0, 32 * (index + 1), 32))
-            count = Counter(pixels.get_flattened_data())
+            frame = sprite.crop((32 * index, 0, 32 * (index + 1), 32))
+            count = Counter(pixels(frame))
             self.assertGreater(sum(count[c] for c in (6, 7, 8, 9)), 3)
 
     def test_party_icon_uses_its_own_exact_red_and_grey_palette(self):
-        source = Image.open(ROOT / "graphics/pokemon/mewsion/icon.png").convert("RGBA")
-        colours = Counter(px[:3] for px in source.get_flattened_data() if px[3] >= 128)
-        expected = [(0, 0, 0)] + [tuple(c // 8 for c in rgb) for rgb, _ in colours.most_common(15)]
+        source = Image.open(ROOT / "graphics/pokemon/mewsion/icon.png")
+        if source.mode == "P":
+            # The canonical CI normalises RGBA donor icons to 4bpp *before*
+            # invoking regression tests. Index zero is transparent there.
+            source_palette = source.getpalette()
+            used = sorted(set(pixels(source)) - {0})
+            colours = [(0, 0, 0)] + [tuple(source_palette[3 * i:3 * i + 3]) for i in used]
+        else:
+            counts = Counter(px[:3] for px in pixels(source.convert("RGBA")) if px[3] >= 128)
+            colours = [(0, 0, 0)] + [rgb for rgb, _ in counts.most_common(15)]
+        expected = [tuple(c // 8 for c in rgb) for rgb in colours]
 
         c_source = (ROOT / "src/pokemon_icon.c").read_text()
         palette = re.search(r"sPRUMewduoIconPalette\[16\]\s*=\s*\{([^}]+)\}", c_source, re.S)
