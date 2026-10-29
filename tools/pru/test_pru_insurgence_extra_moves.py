@@ -68,6 +68,8 @@ class InsurgenceExtraMoveTests(unittest.TestCase):
         setter = read("src/battle_script_commands.c")
         self.assertIn("gCurrentMove == MOVE_PERMAFROST", setter)
         self.assertIn("gSideTimers[targetSide].permafrostAmount < 5", setter)
+        starter = read("src/battle_util.c").split("static bool32 SetStartingHazardStatus", 1)[1].split("if (effect)", 1)[0]
+        self.assertIn("case HAZARDS_PERMAFROST:", starter)
         switch = read("src/battle_switch_in.c")
         self.assertIn("case HAZARDS_PERMAFROST:", switch)
         self.assertIn("MOVE_EFFECT_FROSTBITE", switch)

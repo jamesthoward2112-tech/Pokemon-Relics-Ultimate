@@ -2662,6 +2662,15 @@ static bool32 SetStartingHazardStatus(enum Hazards hazard, u32 targetSide, u8 la
             effect = TRUE;
         }
         break;
+    case HAZARDS_PERMAFROST:
+        if (layers != 0)
+        {
+            if (!IsHazardOnSide(targetSide, HAZARDS_PERMAFROST))
+                PushHazardTypeToQueue(targetSide, HAZARDS_PERMAFROST);
+            gSideTimers[targetSide].permafrostAmount = layers > 5 ? 5 : layers;
+            effect = TRUE;
+        }
+        break;
     case HAZARDS_NONE:
     case HAZARDS_MAX_COUNT:
         break;
