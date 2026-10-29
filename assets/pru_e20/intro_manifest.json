@@ -1,0 +1,147 @@
+{
+  "title": "PRU E20 duo transition asset assignments",
+  "base_commit": "a4d393129ec3683f0443a80272df71653a3874af",
+  "status": "visual staging only; not merged or verified in game",
+  "rounds": [
+    {
+      "round": 1,
+      "pair": "Brock & Roxanne",
+      "motif": "stone and fossil",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 2,
+      "pair": "Misty & Wallace",
+      "motif": "tides and deep sea",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 3,
+      "pair": "Surge & Wattson",
+      "motif": "electric circuit",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 4,
+      "pair": "Erika & Bugsy",
+      "motif": "verdant meadow and bug silk",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 5,
+      "pair": "Janine & Koga",
+      "motif": "ninja poison smoke",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 6,
+      "pair": "Sabrina & Will",
+      "motif": "psychic mirror and runes",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 7,
+      "pair": "Blaine & Flannery",
+      "motif": "volcanic flame",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 8,
+      "pair": "Maxie & Archie",
+      "motif": "magma versus storm",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 9,
+      "pair": "Lorelei & Glacia",
+      "motif": "frost and aurora",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 10,
+      "pair": "Bruno & Chuck",
+      "motif": "martial-arts tournament",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 11,
+      "pair": "Agatha & Phoebe",
+      "motif": "haunted spirits",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 12,
+      "pair": "Karen & Sidney",
+      "motif": "moonlight shadows",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 13,
+      "pair": "Lance & Drake",
+      "motif": "dragon storm",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 14,
+      "pair": "Steevee & Neevee",
+      "motif": "approved Eevee twins",
+      "existing_asset": "eevee_twins",
+      "art_status": "preserve_existing"
+    },
+    {
+      "round": 15,
+      "pair": "Jessie & James",
+      "motif": "approved Team Rocket trio",
+      "existing_asset": "jessie_james",
+      "art_status": "preserve_existing"
+    },
+    {
+      "round": 16,
+      "pair": "Jasmine & Clair",
+      "motif": "steel and dragon scales",
+      "existing_asset": null,
+      "art_status": "new_banner_required"
+    },
+    {
+      "round": 17,
+      "pair": "Steven & May",
+      "motif": "approved blue/red champions",
+      "existing_asset": "steven_may",
+      "art_status": "preserve_existing"
+    },
+    {
+      "round": 18,
+      "pair": "Silver & Giovanni",
+      "motif": "approved Rocket/ground duo",
+      "existing_asset": "silver_giovanni",
+      "art_status": "preserve_existing"
+    },
+    {
+      "round": 19,
+      "pair": "Red & Blue",
+      "motif": "approved legendary rivals",
+      "existing_asset": "red_blue",
+      "art_status": "preserve_existing"
+    },
+    {
+      "round": 20,
+      "pair": "Oak & Elm",
+      "motif": "professors and ancient golden relic",
+      "existing_asset": "oak_elm",
+      "art_status": "replacement_requested"
+    }
+  ]
+}

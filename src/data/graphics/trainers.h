@@ -605,6 +605,9 @@ const u16 gTrainerPalette_JessieHns[] = INCBIN_U16("graphics/trainers/palettes/j
 const u32 gTrainerFrontPic_JamesHns[] = INCBIN_U32("graphics/trainers/front_pics/james_hns.4bpp.smol");
 const u16 gTrainerPalette_JamesHns[] = INCBIN_U16("graphics/trainers/palettes/james_hns.gbapal");
 
+const u32 gTrainerFrontPic_PruInvisible[] = INCBIN_U32("graphics/trainers/front_pics/pru_invisible.4bpp.smol");
+const u16 gTrainerPalette_PruInvisible[] = INCBIN_U16("graphics/trainers/front_pics/pru_invisible.gbapal");
+
 const u32 gTrainerFrontPic_ChanseyTwins[] = INCBIN_U32("graphics/trainers/front_pics/pru_chansey_twins.4bpp.smol");
 const u16 gTrainerPalette_ChanseyTwins[] = INCBIN_U16("graphics/trainers/front_pics/pru_chansey_twins.gbapal");
 
@@ -886,6 +889,7 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_FRONT_JESSIE_HNS, gTrainerFrontPic_JessieHns, gTrainerPalette_JessieHns),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_JAMES_HNS, gTrainerFrontPic_JamesHns, gTrainerPalette_JamesHns),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_CHANSEY_TWINS, gTrainerFrontPic_ChanseyTwins, gTrainerPalette_ChanseyTwins),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_PRU_INVISIBLE, gTrainerFrontPic_PruInvisible, gTrainerPalette_PruInvisible),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_RUNNING_TRIATHLETE_F_HNS, gTrainerFrontPic_RunningTriathleteFHns, gTrainerPalette_RunningTriathleteFHns),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_RUNNING_TRIATHLETE_FE_HNS, gTrainerFrontPic_RunningTriathleteFeHns, gTrainerPalette_RunningTriathleteFeHns),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_SAGE_HNS, gTrainerFrontPic_SageHns, gTrainerPalette_SageHns),

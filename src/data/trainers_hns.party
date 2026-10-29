@@ -19275,7 +19275,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_PRU_E18_14_B_HNS ===
 Name: NEEVEE
 Class: Pkmn Trainer 1 Hns
-Pic: Twins Hns
+Pic: Pru Invisible
 Gender: Female
 Music: Hg Champion
 Double Battle: No
@@ -19309,7 +19309,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_PRU_E18_15_A_HNS ===
 Name: JESSIE
 Class: Pkmn Trainer 1 Hns
-Pic: Jessie Hns
+Pic: James Hns
 Gender: Female
 Music: Hg Champion
 Double Battle: No
@@ -19343,7 +19343,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_PRU_E18_15_B_HNS ===
 Name: JAMES
 Class: Pkmn Trainer 1 Hns
-Pic: James Hns
+Pic: Pru Invisible
 Gender: Male
 Music: Hg Champion
 Double Battle: No
@@ -20499,7 +20499,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_PRU_E18_14_B_MASTER_HNS ===
 Name: NEEVEE
 Class: Pkmn Trainer 1 Hns
-Pic: Twins Hns
+Pic: Pru Invisible
 Gender: Female
 Music: Hg Champion
 Double Battle: No
@@ -20533,7 +20533,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_PRU_E18_15_A_MASTER_HNS ===
 Name: JESSIE
 Class: Pkmn Trainer 1 Hns
-Pic: Jessie Hns
+Pic: James Hns
 Gender: Female
 Music: Hg Champion
 Double Battle: No
@@ -20567,7 +20567,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_PRU_E18_15_B_MASTER_HNS ===
 Name: JAMES
 Class: Pkmn Trainer 1 Hns
-Pic: James Hns
+Pic: Pru Invisible
 Gender: Male
 Music: Hg Champion
 Double Battle: No
