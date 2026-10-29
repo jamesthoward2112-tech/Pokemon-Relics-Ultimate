@@ -518,6 +518,11 @@
 #define FLAG_PRU_HIDE_HEIST_GIOVANNI                   0x4FC
 #define FLAG_PRU_HIDE_MEOWTH_BALLOON                   0x4FD
 #define FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE             0x4FE // Hidden until Archie loses; re-entry checks catch flag.
+// Mewsion shares Mewtwo's National Dex index, so its own caught flag is required.
+// Ready is set only on Cerulean City's side of the cave entrance; both bits
+// occupy previously unused content-flag slots and are safe for older saves.
+#define FLAG_PRU_MEWSION_REENTRY_READY                 0x4DF
+#define FLAG_PRU_MEWSION_CAUGHT                        0x4FF
 #define FLAG_COMPLETED_AERODACTYL_PUZZLE            0x1E2
 #define FLAG_COMPLETED_HOOH_PUZZLE                  0x1E3
 #define FLAG_COMPLETED_KABUTO_PUZZLE                0x1E4

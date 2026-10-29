@@ -181,7 +181,7 @@
 #define VAR_UNUSED_HNS_0x40FD                            0x40FD // UNSAFE - VAR_SURF_MON_SLOT, src/field_effect.c, src/surfable.c, src/party_menu.c
 #define VAR_UNUSED_HNS_0x40FE                            0x40FE // UNSAFE - VAR_FREEZE_SURF_BLOB, src/field_effect.c, src/surfable.c
 
-#define VAR_UNUSED_HNS_0x40FF                            0x40FF // Emerald VAR_UNUSED_0x40FF - no references in any build
+#define VAR_PRU_MEWDUO_CAPTURE_MARKER                    0x40FF // Dedicated persistent marker; legacy 0x4FF flag may already be set in saves.
 
 // Alola Vars
 #define VAR_ALOLA_TRAVEL                                 0x40AD // var for setting up mapscripts when traveling to and from alola.

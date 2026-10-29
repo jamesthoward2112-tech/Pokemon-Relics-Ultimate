@@ -87,6 +87,7 @@
 #include "pokemon_storage_system.h"
 #include "pokemon.h"
 #include "pokedex.h"
+#include "pru_mewsion_gate.h"
 
 STATIC_ASSERT((B_FLAG_FOLLOWERS_DISABLED == 0 || OW_FOLLOWERS_ENABLED), FollowersFlagAssignedWithoutEnablingThem);
 
@@ -988,6 +989,21 @@ static void RestorePruDefeatedLegendariesOnMapEntry(void)
     EnsurePruKantoBirdRoamers();
     EnsurePruJohtoLatiRoamers();
     RestorePruDefeatedRoamers();
+
+    // Returning to B2F is the unlock boundary, including on existing saves.
+    // Neither a prior Mewtwo capture nor a previously seen Mewduo should
+    // accidentally suppress the first Mewduo encounter.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_CERULEAN_CAVE_B2F_HNS)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_CERULEAN_CAVE_B2F_HNS))
+    {
+        bool8 mewCaught = GetSetPokedexFlag(NATIONAL_DEX_MEW, FLAG_GET_CAUGHT);
+        bool8 mewtwoCaught = GetSetPokedexFlag(NATIONAL_DEX_MEWTWO, FLAG_GET_CAUGHT);
+        if (PruMewsionAllowed(mewCaught, mewtwoCaught,
+                VarGet(VAR_PRU_MEWDUO_CAPTURE_MARKER) == 0x4D44))
+            FlagClear(FLAG_TEMP_B);
+        else
+            FlagSet(FLAG_TEMP_B);
+    }
 
     for (i = 0; i < ARRAY_COUNT(sLegendaryHideFlags); i++)
     {
