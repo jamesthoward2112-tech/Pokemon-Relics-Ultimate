@@ -153,11 +153,12 @@ const u16 gMonShinyPalette_Donphalanx[] = INCBIN_U16("graphics/pokemon/great_tus
 const u32 gMonBackPic_Donphalanx[] = INCBIN_U32("graphics/pokemon/great_tusk/back.4bpp.smol");
 const u8 gMonIcon_Donphalanx[] = INCBIN_U8("graphics/pokemon/great_tusk/icon.4bpp");
 
-const u32 gMonFrontPic_Faeranium[] = INCBIN_U32("graphics/pokemon/prl_authoritative/faeranium/front.4bpp.smol");
-const u16 gMonPalette_Faeranium[] = INCBIN_U16("graphics/pokemon/prl_authoritative/faeranium/normal.gbapal");
-const u16 gMonShinyPalette_Faeranium[] = INCBIN_U16("graphics/pokemon/prl_authoritative/faeranium/shiny.gbapal");
-const u32 gMonBackPic_Faeranium[] = INCBIN_U32("graphics/pokemon/prl_authoritative/faeranium/back.4bpp.smol");
-const u8 gMonIcon_Faeranium[] = INCBIN_U8("graphics/pokemon/prl_authoritative/faeranium/icon.4bpp");
+// Approved PJR Relic lock: Faeranium uses the Mega Meganium battle set.
+const u32 gMonFrontPic_Faeranium[] = INCBIN_U32("graphics/pokemon/meganium/mega/front.4bpp.smol");
+const u16 gMonPalette_Faeranium[] = INCBIN_U16("graphics/pokemon/meganium/mega/normal.gbapal");
+const u16 gMonShinyPalette_Faeranium[] = INCBIN_U16("graphics/pokemon/meganium/mega/shiny.gbapal");
+const u32 gMonBackPic_Faeranium[] = INCBIN_U32("graphics/pokemon/meganium/mega/back.4bpp.smol");
+const u8 gMonIcon_Faeranium[] = INCBIN_U8("graphics/pokemon/meganium/mega/icon.4bpp");
 
 const u32 gMonFrontPic_Pyroclast[] = INCBIN_U32("graphics/pokemon/prl_authoritative/pyroclast/front.4bpp.smol");
 const u16 gMonPalette_Pyroclast[] = INCBIN_U16("graphics/pokemon/prl_authoritative/pyroclast/normal.gbapal");
