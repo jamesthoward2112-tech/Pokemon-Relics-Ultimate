@@ -16,6 +16,7 @@ MtSilver_SummitDay_OnTransition:
 	setescapewarp MAP_MT_SILVER_OUTSIDE_HNS, 17, 8
 	call_if_set FLAG_DAY_POKEMON, MtSilver_SummitDay_EventScript_SetNight
 	call_if_unset FLAG_DAY_POKEMON, MtSilver_SummitDay_EventScript_SetDay
+	call MtSilver_SummitDay_EventScript_SyncRelicOak
 	end
 
 MtSilver_SummitDay_EventScript_SetNight::
@@ -127,4 +128,121 @@ MtSilver_SummitDay_Text_Crest:
 	.string "spotted at the top of TIN TOWER.\p"
 	.string "The CREST is reacting. Go.$"
 
+
+
+@ Endgame epilogue: the professors' E20 invitation pays off on Mt Silver.
+@ Use only established quest flags. The original Tin Tower route is retained
+@ for saves already in that quest, but both locations share the same catch flag.
+MtSilver_SummitDay_EventScript_SyncRelicOak::
+	setflag FLAG_PRU_HIDE_MT_SILVER_RELIC_OAK
+	goto_if_set FLAG_PRU_RELIC_OAK_EPILOGUE_COMPLETE, MtSilver_SummitDay_EventScript_SyncOakDone
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, MtSilver_SummitDay_EventScript_SyncOakDone
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, MtSilver_SummitDay_EventScript_SyncOakDone
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, MtSilver_SummitDay_EventScript_SyncOakDone
+	goto_if_unset FLAG_PJR_RELIC_LUGIA, MtSilver_SummitDay_EventScript_SyncOakDone
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, MtSilver_SummitDay_EventScript_SyncOakDone
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, MtSilver_SummitDay_EventScript_SyncOakDone
+	goto_if_unset FLAG_PJR_RELIC_SUICUNE, MtSilver_SummitDay_EventScript_SyncOakDone
+	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, MtSilver_SummitDay_EventScript_SyncOakDone
+	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_SyncOakDone
+	clearflag FLAG_PRU_HIDE_MT_SILVER_RELIC_OAK
+	@ On completion, Oak replaces the original Red rematch at the same tile.
+	setflag FLAG_HIDE_MTSILVER_RED
+	return
+
+MtSilver_SummitDay_EventScript_SyncOakDone::
+	@ Red remains independently rematchable once Oak's epilogue is complete.
+	clearflag FLAG_HIDE_MTSILVER_RED
+	return
+
+MtSilver_SummitDay_EventScript_RelicOak::
+	lock
+	faceplayer
+	goto_if_set FLAG_PJR_RELIC_HO_OH, MtSilver_SummitDay_EventScript_OakEpilogue
+	goto_if_set FLAG_PRU_RELIC_OAK_BATTLE_WON, MtSilver_SummitDay_EventScript_OakSummon
+	msgbox MtSilver_SummitDay_Text_OakChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_E18_18_A_MASTER_HNS, MtSilver_SummitDay_Text_OakBeaten
+	setflag FLAG_PRU_RELIC_OAK_BATTLE_WON
+	msgbox MtSilver_SummitDay_Text_OakReady, MSGBOX_DEFAULT
+	release
+	end
+
+MtSilver_SummitDay_EventScript_OakSummon::
+	checkitem ITEM_ANCIENT_RAINBOW_CREST
+	goto_if_eq VAR_RESULT, FALSE, MtSilver_SummitDay_EventScript_OakNeedCrest
+	msgbox MtSilver_SummitDay_Text_OakSummon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, MtSilver_SummitDay_EventScript_OakDecline
+	playmoncry SPECIES_RELIC_HO_OH, CRY_MODE_ENCOUNTER
+	waitmoncry
+	playbgm MUS_HG_VS_HO_OH, 0
+	seteventmon SPECIES_RELIC_HO_OH, 85
+	special BattleSetup_StartLegendaryBattle
+	waitstate
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, MtSilver_SummitDay_EventScript_OakRelicCaught
+	msgbox MtSilver_SummitDay_Text_OakRetry, MSGBOX_DEFAULT
+	release
+	end
+
+MtSilver_SummitDay_EventScript_OakRelicCaught::
+	setflag FLAG_PJR_RELIC_HO_OH
+	setvar VAR_COMPLETED_HO_OH, 3
+	setflag FLAG_HIDE_HO_OH
+	goto MtSilver_SummitDay_EventScript_OakEpilogue
+
+MtSilver_SummitDay_EventScript_OakEpilogue::
+	msgbox MtSilver_SummitDay_Text_OakEpilogue, MSGBOX_DEFAULT
+	setflag FLAG_PRU_RELIC_OAK_EPILOGUE_COMPLETE
+	setflag FLAG_PRU_HIDE_MT_SILVER_RELIC_OAK
+	clearflag FLAG_HIDE_MTSILVER_RED
+	release
+	end
+
+MtSilver_SummitDay_EventScript_OakNeedCrest::
+	msgbox MtSilver_SummitDay_Text_OakNeedCrest, MSGBOX_DEFAULT
+	release
+	end
+
+MtSilver_SummitDay_EventScript_OakDecline::
+	msgbox MtSilver_SummitDay_Text_OakDecline, MSGBOX_DEFAULT
+	release
+	end
+
+MtSilver_SummitDay_Text_OakChallenge:
+	.string "OAK: You followed every RELIC\n"
+	.string "and reached the summit!\p"
+	.string "But one final test remains.\p"
+	.string "Show me the strength that\n"
+	.string "conquered the ELITE 20!$"
+
+MtSilver_SummitDay_Text_OakBeaten:
+	.string "OAK: Magnificent!$"
+
+MtSilver_SummitDay_Text_OakReady:
+	.string "OAK: The GOLDEN RELIC HO-OH\n"
+	.string "has heard your victory.\p"
+	.string "Heal your team if you need to.\n"
+	.string "Return when you're ready.$"
+
+MtSilver_SummitDay_Text_OakSummon:
+	.string "OAK: Shall we summon the\n"
+	.string "GOLDEN RELIC HO-OH now?$"
+
+MtSilver_SummitDay_Text_OakNeedCrest:
+	.string "OAK: Bring the ANCIENT RAINBOW\n"
+	.string "CREST before we begin.$"
+
+MtSilver_SummitDay_Text_OakDecline:
+	.string "OAK: Take your time.\n"
+	.string "History can wait a little!$"
+
+MtSilver_SummitDay_Text_OakRetry:
+	.string "OAK: The RELIC HO-OH is still\n"
+	.string "out there. Try again!$"
+
+MtSilver_SummitDay_Text_OakEpilogue:
+	.string "OAK: You have united the RELICS!\p"
+	.string "ELM and I could not be prouder.\p"
+	.string "Your legend will live on,\n"
+	.string "ELITE 20 CHAMPION!$"
 

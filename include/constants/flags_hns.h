@@ -3577,9 +3577,9 @@
 #define FLAG_PRU_E20_REWARD_CLAIMED                             0x947 // One-time E20 gift; old clears can claim on next Dojo visit.
 #define FLAG_PRU_E20_CREDITS_SHOWN                              0x948
 #define FLAG_PRU_E20_CREDITS_PENDING                            0x949
-#define FLAG_UNUSED_0x94A                                       0
-#define FLAG_UNUSED_0x94B                                       0
-#define FLAG_UNUSED_0x94C                                       0
+#define FLAG_PRU_RELIC_OAK_BATTLE_WON                            0x94A
+#define FLAG_PRU_HIDE_MT_SILVER_RELIC_OAK                       0x94B
+#define FLAG_PRU_RELIC_OAK_EPILOGUE_COMPLETE                    0x94C
 #define FLAG_UNUSED_0x94D                                       0
 #define FLAG_UNUSED_0x94E                                       0
 #define FLAG_UNUSED_0x94F                                       0
