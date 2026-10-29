@@ -119,6 +119,7 @@ jobs:
           fi
           test -s pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
+          arm-none-eabi-nm -n pokehns.elf > PRU-QA-symbols.sym
           python3 tools/pru/verify_compiled_rom.py
           sha256sum pokehns.gba > pru-e20-d468.sha256
       - name: Upload test ROM without publishing a release
