@@ -112,6 +112,15 @@ static const u16 sPRUKhangIconPalette[16] =
     RGB(24, 20, 25), RGB(23, 5, 19), RGB(12, 12, 11), RGB(8, 8, 8)
 };
 
+// The approved Mewduo icon needs a red/white palette, distinct from Khang.
+static const u16 sPRUMewduoIconPalette[16] =
+{
+    RGB(0, 0, 0), RGB(8, 8, 8), RGB(23, 23, 23), RGB(28, 9, 5),
+    RGB(12, 12, 11), RGB(14, 14, 14), RGB(31, 31, 31), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+};
+
 const struct SpritePalette gMonIconPaletteTable[] =
 {
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
@@ -129,6 +138,7 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUZapdosPIconPalette, POKE_ICON_BASE_PAL_TAG + 12 },
     { sPRUMoltresPIconPalette, POKE_ICON_BASE_PAL_TAG + 13 },
     { sPRUKhangIconPalette, POKE_ICON_BASE_PAL_TAG + 14 },
+    { sPRUMewduoIconPalette, POKE_ICON_BASE_PAL_TAG + 15 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -244,6 +254,8 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 9;
     if (species == SPECIES_ASTRACHI)
         return 10;
+    if (species == SPECIES_MEWSION)
+        return 15;
     if (species == SPECIES_ARTICUNO)
         return 11;
     if (species == SPECIES_ZAPDOS)
@@ -368,7 +380,9 @@ void FreeAndDestroyMonIconSprite(struct Sprite *sprite)
 void LoadMonIconPalettes(void)
 {
     u8 i;
-    for (i = 0; i < ARRAY_COUNT(gMonIconPaletteTable); i++)
+    // Six shared palettes are always useful; load custom palettes only as
+    // icons appear so the menu's other sprite palettes retain their slots.
+    for (i = 0; i < 6; i++)
         LoadSpritePalette(&gMonIconPaletteTable[i]);
 }
 
@@ -541,6 +555,7 @@ u8 UpdateMonIconFrame(struct Sprite *sprite)
 static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *iconTemplate, s16 x, s16 y, u8 subpriority)
 {
     u8 spriteId;
+    u16 paletteIndex = iconTemplate->paletteTag - POKE_ICON_BASE_PAL_TAG;
 
     struct SpriteFrameImage image = { NULL, sSpriteImageSizes[iconTemplate->oam->shape][iconTemplate->oam->size] };
 
@@ -554,6 +569,10 @@ static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *iconTemplate, s16 x,
         .affineAnims = iconTemplate->affineAnims,
         .callback = iconTemplate->callback,
     };
+
+    if (paletteIndex < ARRAY_COUNT(gMonIconPaletteTable)
+        && IndexOfSpritePaletteTag(iconTemplate->paletteTag) == 0xFF)
+        LoadSpritePalette(&gMonIconPaletteTable[paletteIndex]);
 
     spriteId = CreateSprite(&spriteTemplate, x, y, subpriority);
     gSprites[spriteId].animPaused = TRUE;

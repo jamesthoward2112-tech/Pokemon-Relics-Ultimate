@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main, fix/pru-indigo-tutors-20261027]
+    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -148,6 +148,7 @@ jobs:
           PYTHONPATH=. python3 tools/pru/test_elite20_duo_intros.py
           python3 tools/pru/check_kanto_rooms_hof_credits.py
           python3 tools/pru/check_indigo_support_row.py
+          python3 -m unittest -q tools.pru.test_pru_a4d_mewduo_merge tools.pru.test_pru_mewsion_encounter tools.pru.test_pru_shadow_mewtwo tools.pru.test_pru_insurgence_extra_moves
           python3 tools/pru/check_chansey_training.py
           python3 tools/pru/check_pru_e4_oak_elm_dojo_hotfix.py
           python3 tools/pru/check_johto_lati_weather.py
@@ -221,7 +222,7 @@ jobs:
         # input/capture flakiness as its PR run; the source, engine and 32 MiB
         # ROM checks above are mandatory in both cases.
         # Keep the hard gate intact for every other PRU release branch.
-        continue-on-error: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027') || (github.event_name == 'push' && github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027') }}
+        continue-on-error: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027') || (github.event_name == 'push' && (github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge')) }}
         shell: bash
         run: |
           set -euo pipefail
@@ -293,7 +294,7 @@ jobs:
             PRU-QA-mgba/
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027'))
+        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027'))
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}

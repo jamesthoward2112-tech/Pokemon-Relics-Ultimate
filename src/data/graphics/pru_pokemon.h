@@ -115,6 +115,13 @@ const u32 gMonBackPic_Mewsion[] = INCBIN_U32("graphics/pokemon/mewsion/back.4bpp
 const u16 gMonShinyPalette_Mewsion[] = INCBIN_U16("graphics/pokemon/mewsion/shiny.gbapal");
 const u8 gMonIcon_Mewsion[] = INCBIN_U8("graphics/pokemon/mewsion/icon.4bpp");
 
+// Reuse the original, correctly framed Mewtwo overworld graphic *byte for
+// byte*. Mewduo differs only by its dedicated red-tail palette, so no new
+// spritesheet can accidentally replace its recognisable silhouette.
+const u32 gObjectEventPic_Mewsion[] = INCBIN_COMP("graphics/pokemon/mewtwo/overworld.4bpp");
+const u16 gOverworldPalette_Mewsion[] = INCBIN_U16("graphics/pokemon/mewsion/overworld_normal.gbapal");
+const u16 gShinyOverworldPalette_Mewsion[] = INCBIN_U16("graphics/pokemon/mewsion/overworld_shiny.gbapal");
+
 
 // Claude-created Astrachi overworld, adapted from the owner's 22 Oct 2026 strips.
 const u32 gObjectEventPic_Astrachi[] = INCBIN_COMP("graphics/pokemon/astrachi/overworld.4bpp");

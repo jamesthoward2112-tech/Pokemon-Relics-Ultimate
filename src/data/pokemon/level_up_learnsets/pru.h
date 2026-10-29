@@ -332,6 +332,38 @@ static const struct LevelUpMove sMewsionLevelUpLearnset[] =
     LEVEL_UP_MOVE(48, MOVE_NIGHT_DAZE),
     LEVEL_UP_MOVE(52, MOVE_RECOVER),
     LEVEL_UP_MOVE(56, MOVE_SUPER_GLITCH),
+    // Mewduo appears at level 90: teach the Frostbite hazard on encounter,
+    // then give the player meaningful new attacks on the road to level 100.
+    LEVEL_UP_MOVE(90, MOVE_PERMAFROST),
+    LEVEL_UP_MOVE(95, MOVE_PSYSTRIKE),
+    LEVEL_UP_MOVE(100, MOVE_DARK_MATTER),
+    LEVEL_UP_END
+};
+
+// Direct Insurgence Shadow Mewtwo donor (1.2): distinct from Mewsion's
+// AlteRed learnset and the stock Mega Mewtwo level-up tables.
+static const struct LevelUpMove sInsurgenceShadowMewtwoLevelUpLearnset[] =
+{
+    LEVEL_UP_MOVE(  1, MOVE_NIGHT_SLASH),
+    LEVEL_UP_MOVE(  1, MOVE_CONFUSION),
+    LEVEL_UP_MOVE(  1, MOVE_DISABLE),
+    LEVEL_UP_MOVE(  1, MOVE_SAFEGUARD),
+    LEVEL_UP_MOVE(  8, MOVE_SWIFT),
+    LEVEL_UP_MOVE( 15, MOVE_FUTURE_SIGHT),
+    LEVEL_UP_MOVE( 22, MOVE_PSYCH_UP),
+    LEVEL_UP_MOVE( 29, MOVE_MIRACLE_EYE),
+    LEVEL_UP_MOVE( 36, MOVE_PSYCHO_CUT),
+    LEVEL_UP_MOVE( 43, MOVE_POWER_SWAP),
+    LEVEL_UP_MOVE( 43, MOVE_GUARD_SWAP),
+    LEVEL_UP_MOVE( 50, MOVE_RECOVER),
+    LEVEL_UP_MOVE( 57, MOVE_PSYCHIC),
+    LEVEL_UP_MOVE( 64, MOVE_BARRIER),
+    LEVEL_UP_MOVE( 70, MOVE_AURA_SPHERE),
+    LEVEL_UP_MOVE( 79, MOVE_AMNESIA),
+    LEVEL_UP_MOVE( 86, MOVE_MIST),
+    LEVEL_UP_MOVE( 93, MOVE_ME_FIRST),
+    LEVEL_UP_MOVE(100, MOVE_PSYSTRIKE),
+    LEVEL_UP_MOVE(100, MOVE_DARK_NOVA),
     LEVEL_UP_END
 };
 

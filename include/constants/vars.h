@@ -277,7 +277,7 @@
 #define VAR_UNUSED_0x40FC                                0x40FC // Unused Var
 #define VAR_SURF_MON_SLOT                                0x40FD // Added new VAR for Surfing Overworld Sprites - Holds Surfing Party Mon index
 #define VAR_FREEZE_SURF_BLOB                             0x40FE // Added new VAR for Surfing Overworld Sprites - Set on surf init to stop blob overlay being offset incorrectly
-#define VAR_UNUSED_0x40FF                                0x40FF // Unused Var
+#define VAR_PRU_MEWDUO_CAPTURE_MARKER                    0x40FF // Capture marker, 0x4D44 = Mewduo caught.
 
 #define VARS_END                                         0x40FF
 #define VARS_COUNT                                       (VARS_END - VARS_START + 1)

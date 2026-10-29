@@ -134,6 +134,10 @@ static bool32 IsPjrControlTutorMove(u16 move)
     case MOVE_WHIRLWIND:
     case MOVE_DRAGON_TAIL:
     case MOVE_INFESTATION:
+    case MOVE_ACHILLES_HEEL:
+    case MOVE_PERMAFROST:
+    case MOVE_WILDFIRE:
+    case MOVE_DARK_MATTER:
     case MOVE_RAPID_SPIN:
     case MOVE_DEFOG:
     case MOVE_MORTAL_SPIN:
@@ -188,6 +192,14 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
     // anatomy. No universal move unlock; existing donor access still wins.
     switch (move)
     {
+    case MOVE_ACHILLES_HEEL:
+        return species == SPECIES_MEWTWO;
+    case MOVE_PERMAFROST:
+        return IsSpeciesOfType(species, TYPE_ICE);
+    case MOVE_WILDFIRE:
+        return IsSpeciesOfType(species, TYPE_FIRE);
+    case MOVE_DARK_MATTER:
+        return IsSpeciesOfType(species, TYPE_DARK);
     case MOVE_SWORDS_DANCE:
         return IsSpeciesOfType(species, TYPE_NORMAL)
             || IsSpeciesOfType(species, TYPE_FIGHTING);

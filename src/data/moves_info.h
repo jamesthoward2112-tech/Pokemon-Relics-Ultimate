@@ -23237,6 +23237,95 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_Explosion,
     },
 
+    // Insurgence Shadow Mewtwo's signature move, with no Burst Mode dependency.
+    [MOVE_DARK_NOVA] =
+    {
+        .name = COMPOUND_STRING("DARK NOVA"),
+        .description = COMPOUND_STRING(
+            "Dark energy strikes twice.\n"
+            "Uses the higher attack stat."),
+        // Photon Geyser already selects Atk or Sp. Atk correctly.
+        // strikeCount preserves Insurgence's two separate 135-power hits.
+        .effect = EFFECT_PHOTON_GEYSER,
+        .power = 135,
+        .type = TYPE_DARK,
+        .accuracy = 0,
+        .pp = 5,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .strikeCount = 2,
+        .metronomeBanned = TRUE,
+        .battleAnimScript = gBattleAnimMove_DarkPulse,
+    },
+
+    // Insurgence-exclusive TM102. Normal immunities still apply, but every
+    // non-immune target is treated as 2x effective in battle_util.c.
+    [MOVE_ACHILLES_HEEL] =
+    {
+        .name = COMPOUND_STRING("ACHILLES HEEL"),
+        .description = COMPOUND_STRING("Finds a weakness to deal\n2x damage unless immune."),
+        .effect = EFFECT_HIT,
+        .power = 45,
+        .type = TYPE_NORMAL,
+        .accuracy = 100,
+        .pp = 15,
+        .target = TARGET_SELECTED,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .battleAnimScript = gBattleAnimMove_BrickBreak,
+    },
+
+    // Insurgence-exclusive TM112, adapted to PRU Frostbite: five layers.
+    [MOVE_PERMAFROST] =
+    {
+        .name = COMPOUND_STRING("PERMAFROST"),
+        .description = COMPOUND_STRING("Lays icy ground that may\nfrostbite incoming foes."),
+        .effect = EFFECT_PRU_PERMAFROST,
+        .type = TYPE_ICE,
+        .accuracy = 0,
+        .pp = 15,
+        .target = TARGET_OPPONENTS_FIELD,
+        .category = DAMAGE_CATEGORY_STATUS,
+        .ignoresProtect = TRUE,
+        .magicCoatAffected = TRUE,
+        .battleAnimScript = gBattleAnimMove_Hail,
+    },
+
+    // Insurgence-exclusive TM119: burns foes, with a Grass-party chain effect.
+    [MOVE_WILDFIRE] =
+    {
+        .name = COMPOUND_STRING("WILDFIRE"),
+        .description = COMPOUND_STRING("Burns foes; Grass targets\nmay spread it to reserves."),
+        .effect = EFFECT_NON_VOLATILE_STATUS,
+        .type = TYPE_FIRE,
+        .accuracy = 70,
+        .pp = 10,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_STATUS,
+        .argument = { .nonVolatileStatus = MOVE_EFFECT_BURN },
+        .magicCoatAffected = TRUE,
+        .battleAnimScript = gBattleAnimMove_WillOWisp,
+    },
+
+    // Insurgence-exclusive TM120: Dark-type Hyper Beam.
+    [MOVE_DARK_MATTER] =
+    {
+        .name = COMPOUND_STRING("DARK MATTER"),
+        .description = COMPOUND_STRING("A dark blast. The user\nmust recharge next turn."),
+        .effect = EFFECT_HIT,
+        .power = 150,
+        .type = TYPE_DARK,
+        .accuracy = 90,
+        .pp = 5,
+        .target = TARGET_SELECTED,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_RECHARGE,
+            .self = TRUE,
+        }),
+        .battleAnimScript = gBattleAnimMove_DarkPulse,
+    },
+
     // Unique Electric-type explosion for the Power Plant's shiny Electrode.
     // Kablowfish retains its original Steel-type Kablow! unchanged.
     [MOVE_KABOOM] =

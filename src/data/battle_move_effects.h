@@ -634,6 +634,13 @@ const struct BattleMoveEffect gBattleMoveEffects[NUM_BATTLE_MOVE_EFFECTS] =
         .battleFactoryStyle = FACTORY_STYLE_SLOW_STEADY,
     },
 
+    [EFFECT_PRU_PERMAFROST] =
+    {
+        .battleScript = BattleScript_EffectPermafrost,
+        .battleTvScore = 4,
+        .battleFactoryStyle = FACTORY_STYLE_SLOW_STEADY,
+    },
+
     [EFFECT_FORESIGHT] =
     {
         .battleScript = BattleScript_EffectForesight,

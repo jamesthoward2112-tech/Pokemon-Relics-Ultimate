@@ -1,0 +1,13 @@
+name: PRU E20 clean build from d468 stable base
+
+on:
+  push:
+    branches:
+      - feature/pru-e20-artwork-staging-20261029
+  workflow_dispatch:
+
+# Build only on the isolated staging branch. Keep main and the currently
+# playable d468 ROM untouched while we validate the new Elite 20 art/rosters.
+jobs:
+  compile-and-check:
+    uses: ./.github/workflows/pru-clean-build.yml

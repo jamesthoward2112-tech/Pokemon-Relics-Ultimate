@@ -18398,7 +18398,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Nosepass @ Sitrus Berry
+Obsideon @ Sitrus Berry
 Level: 86
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Stone Edge
@@ -18440,13 +18440,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunderbolt
 - Recover
 
-Lapras @ Sitrus Berry
+Kablowfish @ Sitrus Berry
 Level: 87
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Freeze-Dry
-- Surf
-- Thunderbolt
-- Reflect
+- Liquidation
+- Iron Head
+- Spikes
+- Toxic
 
 Blastoise @ Sitrus Berry
 Level: 88
@@ -18474,13 +18474,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rest
 - Sleep Talk
 
-Wailord @ Sitrus Berry
+Swamplith @ Sitrus Berry
 Level: 87
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Water Spout
-- Aqua Ring
-- Noble Roar
-- Ice Beam
+- Liquidation
+- Earthquake
+- Ice Punch
+- Rock Slide
 
 Ludicolo @ Sitrus Berry
 Level: 88
@@ -18508,12 +18508,12 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Discharge
 - Protect
 
-Jolteon @ Sitrus Berry
+Frytning @ Sitrus Berry
 Level: 88
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Thunderbolt
-- Thunder Wave
 - Discharge
+- Dark Pulse
+- Thunder Wave
 - Protect
 
 Raichu @ Sitrus Berry
@@ -18576,13 +18576,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Body Slam
 - Mud-Slap
 
-Bellossom @ Sitrus Berry
+Faeranium @ Sitrus Berry
 Level: 88
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Grassy Terrain
-- Quiver Dance
-- Petal Dance
-- Attract
+- Giga Drain
+- Dazzling Gleam
+- Leech Seed
+- Calm Mind
 
 Vileplume @ Sitrus Berry
 Level: 89
@@ -18806,13 +18806,13 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Torkoal @ Sitrus Berry
+Torkaldera @ Sitrus Berry
 Level: 89
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Solar Beam
-- Heat Wave
-- Gyro Ball
-- Iron Defense
+- Lava Plume
+- Rock Slide
+- Earth Power
+- Protect
 
 Camerupt @ Sitrus Berry
 Level: 90
@@ -18916,13 +18916,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunderbolt
 - Reflect
 
-Dewgong @ Sitrus Berry
+Mystynx @ Sitrus Berry
 Level: 91
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Aqua Tail
 - Ice Beam
-- Rest
-- Aqua Ring
+- Moonblast
+- Light Screen
+- Freeze-Dry
 
 Articuno @ Sitrus Berry
 Level: 92
@@ -18950,13 +18950,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Moonblast
 - Freeze-Dry
 
-Glalie @ Sitrus Berry
+Jollibird @ Sitrus Berry
 Level: 91
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Shadow Ball
-- Blizzard
-- Will O Wisp
-- Destiny Bond
+- Ice Beam
+- Dazzling Gleam
+- Icy Wind
+- Roost
 
 Glaceon @ Sitrus Berry
 Level: 92
@@ -18984,13 +18984,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 - Rock Slide
 
-Hitmontop @ Sitrus Berry
+Heracurion @ Sitrus Berry
 Level: 92
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Triple Kick
-- Rolling Kick
-- Dig
-- Pursuit
+- Close Combat
+- Megahorn
+- Bullet Punch
+- Protect
 
 Coelossus @ Sitrus Berry
 Level: 93
@@ -19018,13 +19018,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Belly Drum
 - Skull Bash
 
-Primeape @ Sitrus Berry
+Champeon @ Sitrus Berry
 Level: 92
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Low Kick
-- Karate Chop
-- Ice Punch
-- Rage Fist
+- Close Combat
+- Drain Punch
+- Bulk Up
+- Protect
 
 Hitmonlee @ Sitrus Berry
 Level: 93
@@ -19086,12 +19086,12 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Will O Wisp
 - Knock Off
 
-Dusclops @ Sitrus Berry
+Gemigoyle @ Sitrus Berry
 Level: 93
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Shadow Ball
-- Will-O-Wisp
-- Dark Pulse
+- Power Gem
+- Will O Wisp
 - Protect
 
 Sableye @ Sitrus Berry
@@ -19154,13 +19154,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Psycho Cut
 - Protect
 
-Shiftry @ Sitrus Berry
+Grimfowl @ Sitrus Berry
 Level: 94
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Energy Ball
-- Giga Drain
-- Leech Seed
-- Protect
+- Dark Pulse
+- Brave Bird
+- Roost
+- Tailwind
 
 Cacturne @ Sitrus Berry
 Level: 95
@@ -19196,13 +19196,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Crunch
 - Temper Flare
 
-Gyarados @ Sitrus Berry
+Drakeon @ Sitrus Berry
 Level: 96
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Waterfall
-- Crunch
 - Dragon Dance
-- Protect
+- Dragon Claw
+- Fire Punch
+- Extreme Speed
 
 === TRAINER_PRU_E18_13_B_HNS ===
 Name: DRAKE
@@ -19214,12 +19214,12 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Altaria @ Sitrus Berry
+Feralodon @ Sitrus Berry
 Level: 94
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Dragon Claw
-- Dragon Pulse
-- Flamethrower
+- Liquidation
+- Ice Punch
 - Protect
 
 Flygon @ Sitrus Berry
@@ -19622,7 +19622,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Nosepass @ Sitrus Berry
+Obsideon @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Stone Edge
@@ -19664,13 +19664,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunderbolt
 - Recover
 
-Lapras @ Sitrus Berry
+Kablowfish @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Freeze-Dry
-- Surf
-- Thunderbolt
-- Reflect
+- Liquidation
+- Iron Head
+- Spikes
+- Toxic
 
 Blastoise @ Sitrus Berry
 Level: 100
@@ -19698,13 +19698,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rest
 - Sleep Talk
 
-Wailord @ Sitrus Berry
+Swamplith @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Water Spout
-- Aqua Ring
-- Noble Roar
-- Ice Beam
+- Liquidation
+- Earthquake
+- Ice Punch
+- Rock Slide
 
 Ludicolo @ Sitrus Berry
 Level: 100
@@ -19732,12 +19732,12 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Discharge
 - Protect
 
-Jolteon @ Sitrus Berry
+Frytning @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Thunderbolt
-- Thunder Wave
 - Discharge
+- Dark Pulse
+- Thunder Wave
 - Protect
 
 Raichu @ Sitrus Berry
@@ -19800,13 +19800,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Body Slam
 - Mud-Slap
 
-Bellossom @ Sitrus Berry
+Faeranium @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Grassy Terrain
-- Quiver Dance
-- Petal Dance
-- Attract
+- Giga Drain
+- Dazzling Gleam
+- Leech Seed
+- Calm Mind
 
 Vileplume @ Sitrus Berry
 Level: 100
@@ -20030,13 +20030,13 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Torkoal @ Sitrus Berry
+Torkaldera @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Solar Beam
-- Heat Wave
-- Gyro Ball
-- Iron Defense
+- Lava Plume
+- Rock Slide
+- Earth Power
+- Protect
 
 Camerupt @ Sitrus Berry
 Level: 100
@@ -20140,13 +20140,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunderbolt
 - Reflect
 
-Dewgong @ Sitrus Berry
+Mystynx @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Aqua Tail
 - Ice Beam
-- Rest
-- Aqua Ring
+- Moonblast
+- Light Screen
+- Freeze-Dry
 
 Articuno @ Sitrus Berry
 Level: 100
@@ -20174,13 +20174,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Moonblast
 - Freeze-Dry
 
-Glalie @ Sitrus Berry
+Jollibird @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Shadow Ball
-- Blizzard
-- Will O Wisp
-- Destiny Bond
+- Ice Beam
+- Dazzling Gleam
+- Icy Wind
+- Roost
 
 Glaceon @ Sitrus Berry
 Level: 100
@@ -20208,13 +20208,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 - Rock Slide
 
-Hitmontop @ Sitrus Berry
+Heracurion @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Triple Kick
-- Rolling Kick
-- Dig
-- Pursuit
+- Close Combat
+- Megahorn
+- Bullet Punch
+- Protect
 
 Coelossus @ Sitrus Berry
 Level: 100
@@ -20242,13 +20242,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Belly Drum
 - Skull Bash
 
-Primeape @ Sitrus Berry
+Champeon @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Low Kick
-- Karate Chop
-- Ice Punch
-- Rage Fist
+- Close Combat
+- Drain Punch
+- Bulk Up
+- Protect
 
 Hitmonlee @ Sitrus Berry
 Level: 100
@@ -20310,12 +20310,12 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Will O Wisp
 - Knock Off
 
-Dusclops @ Sitrus Berry
+Gemigoyle @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Shadow Ball
-- Will-O-Wisp
-- Dark Pulse
+- Power Gem
+- Will O Wisp
 - Protect
 
 Sableye @ Sitrus Berry
@@ -20378,13 +20378,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Psycho Cut
 - Protect
 
-Shiftry @ Sitrus Berry
+Grimfowl @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Energy Ball
-- Giga Drain
-- Leech Seed
-- Protect
+- Dark Pulse
+- Brave Bird
+- Roost
+- Tailwind
 
 Cacturne @ Sitrus Berry
 Level: 100
@@ -20420,13 +20420,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Crunch
 - Temper Flare
 
-Gyarados @ Sitrus Berry
+Drakeon @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Waterfall
-- Crunch
 - Dragon Dance
-- Protect
+- Dragon Claw
+- Fire Punch
+- Extreme Speed
 
 === TRAINER_PRU_E18_13_B_MASTER_HNS ===
 Name: DRAKE
@@ -20438,12 +20438,12 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Altaria @ Sitrus Berry
+Feralodon @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Dragon Claw
-- Dragon Pulse
-- Flamethrower
+- Liquidation
+- Ice Punch
 - Protect
 
 Flygon @ Sitrus Berry
@@ -20891,13 +20891,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Hydro Pump
 - Ice Beam
 
-Salamence @ Sitrus Berry
+Mawyrm @ Sitrus Berry
 Level: 91
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Dragon Dance
-- Dragon Rush
+- Dragon Pulse
 - Iron Head
 - Flamethrower
+- Protect
 
 Dragonite @ Sitrus Berry
 Level: 92
@@ -20917,7 +20917,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Skarmory @ Sitrus Berry
+Skarmadon @ Sitrus Berry
 Level: 97
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Brave Bird
@@ -21095,13 +21095,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Hydro Pump
 - Ice Beam
 
-Salamence @ Sitrus Berry
+Mawyrm @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Dragon Dance
-- Dragon Rush
+- Dragon Pulse
 - Iron Head
 - Flamethrower
+- Protect
 
 Dragonite @ Sitrus Berry
 Level: 100
@@ -21121,7 +21121,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Skarmory @ Sitrus Berry
+Skarmadon @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Brave Bird

@@ -18,6 +18,9 @@ HAZARD_MOVES = [
     "MOVE_TOXIC", "MOVE_WILL_O_WISP", "MOVE_THUNDER_WAVE", "MOVE_TAUNT",
     "MOVE_ENCORE", "MOVE_KNOCK_OFF", "MOVE_ROAR", "MOVE_WHIRLWIND",
     "MOVE_DRAGON_TAIL", "MOVE_INFESTATION",
+    # Four new Insurgence moves are additive; all pre-existing move choices
+    # and species compatibility remain identical to stable a4d393.
+    "MOVE_ACHILLES_HEEL", "MOVE_PERMAFROST", "MOVE_WILDFIRE", "MOVE_DARK_MATTER",
 ]
 
 CLEANUP_MOVES = [
