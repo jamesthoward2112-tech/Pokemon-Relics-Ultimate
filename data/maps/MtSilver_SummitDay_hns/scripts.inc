@@ -70,7 +70,11 @@ MtSilver_SummitDay_EventScript_AfterCrest:
 	call_if_set FLAG_PJR_RELIC_ALPHORACLE, MtSilver_SummitDay_EventScript_UnlockRelicHoOh
 MtSilver_SummitDay_EventScript_ContinueClear::
 	setflag FLAG_END_NUZLOCKE
+	goto_if_set FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_RedVictoryComplete
+	@ Keep the defeated Red available only if a full bag blocked the Crest.
+	@ His saved defeat flag routes this conversation to item recovery, not battle.
 	clearflag FLAG_HIDE_MTSILVER_RED
+	MtSilver_SummitDay_EventScript_RedVictoryComplete:
 	@ Red keeps the Crest but does not start the game's full credits.
 	fadescreen FADE_FROM_BLACK
 	releaseall
@@ -94,6 +98,13 @@ MtSilver_SummitDay_EventScript_CheckPendingCrest::
 	msgbox MtSilver_SummitDay_Text_CrestPending, MSGBOX_DEFAULT
 	call MtSilver_SummitDay_EventScript_AwardCrest
 	call_if_set FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_UnlockRelicHoOh
+	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_RedCrestStillPending
+	setflag FLAG_HIDE_MTSILVER_RED
+	removeobject LOCALID_MTSILVER_RED
+	release
+	end
+
+MtSilver_SummitDay_EventScript_RedCrestStillPending::
 	release
 	end
 
@@ -151,8 +162,7 @@ MtSilver_SummitDay_EventScript_SyncRelicOak::
 	return
 
 MtSilver_SummitDay_EventScript_SyncOakDone::
-	@ Red remains independently rematchable once Oak's epilogue is complete.
-	clearflag FLAG_HIDE_MTSILVER_RED
+	@ Red's first summit victory is permanent, including after Oak's finale.
 	return
 
 MtSilver_SummitDay_EventScript_RelicOak::
@@ -194,7 +204,6 @@ MtSilver_SummitDay_EventScript_OakEpilogue::
 	msgbox MtSilver_SummitDay_Text_OakEpilogue, MSGBOX_DEFAULT
 	setflag FLAG_PRU_RELIC_OAK_EPILOGUE_COMPLETE
 	setflag FLAG_PRU_HIDE_MT_SILVER_RELIC_OAK
-	clearflag FLAG_HIDE_MTSILVER_RED
 	release
 	end
 

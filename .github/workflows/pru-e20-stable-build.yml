@@ -24,7 +24,7 @@ jobs:
           set -euo pipefail
           printf '%s\n' 'http://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt
           sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update
-          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil mgba-qt xvfb xdotool imagemagick
       - name: Restore original approved PRU artwork and sprite inputs
         env:
           GH_TOKEN: ${{ github.token }}
@@ -83,6 +83,8 @@ jobs:
             tools.pru.test_pru_insurgence_extra_moves \
             tools.pru.test_pru_mewsion_encounter \
             tools.pru.test_pru_shadow_mewtwo
+      - name: Run GBA engine tutor and E4 actor regressions
+        run: make -j2 check BUILD=hns TESTS=test/pru/tutor_and_league.c
       - name: Restore pinned PJR multiboot binary inputs
         run: |
           set -euo pipefail
@@ -122,6 +124,42 @@ jobs:
           arm-none-eabi-nm -n pokehns.elf > PRU-QA-symbols.sym
           python3 tools/pru/verify_compiled_rom.py
           sha256sum pokehns.gba > pru-e20-d468.sha256
+      - name: Boot the completed ROM in mGBA and capture gameplay frames
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p PRU-E20-mgba
+          xvfb-run -a -s '-screen 0 1280x960x24' bash -euo pipefail -c '
+            mgba-qt pokehns.gba >PRU-E20-mgba/mgba.log 2>&1 &
+            emulator_pid=$!
+            trap "kill $emulator_pid >/dev/null 2>&1 || true; wait $emulator_pid >/dev/null 2>&1 || true" EXIT
+            for attempt in $(seq 1 30); do
+              window_id=$(xdotool search --onlyvisible --name "mGBA" 2>/dev/null | head -n1 || true)
+              test -n "$window_id" && break
+              sleep 1
+            done
+            test -n "${window_id:-}"
+            xdotool windowfocus "$window_id"
+            sleep 5
+            import -window root PRU-E20-mgba/boot-05s.png
+            xdotool key Return
+            sleep 6
+            import -window root PRU-E20-mgba/frame-11s.png
+          '
+          test -s PRU-E20-mgba/boot-05s.png
+          test -s PRU-E20-mgba/frame-11s.png
+          ! grep -Eiq 'fatal|segmentation fault|could not load|failed to load' PRU-E20-mgba/mgba.log
+          python3 - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          for path in sorted(Path('PRU-E20-mgba').glob('*.png')):
+              image = Image.open(path).convert('RGB')
+              colors = image.getcolors(maxcolors=image.width * image.height)
+              assert image.width >= 240 and image.height >= 160
+              assert colors and len(colors) > 32
+              print(f'{path}: {image.width}x{image.height}, {len(colors)} colors')
+          PY
       - name: Upload test ROM without publishing a release
         uses: actions/upload-artifact@v4
         with:
@@ -129,6 +167,7 @@ jobs:
           path: |
             pokehns.gba
             pru-e20-d468.sha256
+            PRU-E20-mgba/
           if-no-files-found: error
 
       - name: Publish raw PRU E20 GBA as QA prerelease
@@ -145,4 +184,4 @@ jobs:
           sha256sum "${rom}" > "${rom}.sha256"
           gh release create "${tag}" "${rom}" "${rom}.sha256" \
             --prerelease --title "PRU E20 QA ${short}" \
-            --notes "QA ROM from the latest E20 feature branch. Built from the d468 stable lineage. E20 source regression checks and 32 MiB compilation/ROM verification passed. Gameplay/save-specific mGBA testing is separately gated by the canonical PR #62 CI workflow. This prerelease does not replace the confirmed stable ROM."
+            --notes "QA ROM from the latest E20 feature branch, built from the d468 stable lineage. E20, Mewduo, tutor/E4 engine checks, 32 MiB compilation, and mGBA boot/frame checks passed. The automated mGBA run boots the ROM; the complete E20 and Mt. Silver save-state story walkthrough remains a manual gameplay check. This prerelease does not replace the confirmed stable ROM."

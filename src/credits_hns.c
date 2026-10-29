@@ -108,10 +108,13 @@ static u8 CheckChangeScene(u8, u8);
 static void Task_ShowMons(u8);
 static void Task_CycleSceneryPalette(u8);
 static void Task_BikeScene(u8);
+static void Task_E20CreditsOpening(u8);
+static void SpriteCB_CreditsRelicHoOh(struct Sprite *);
 static bool8 LoadBikeScene(u8 data, u8);
 static void ResetCreditsTasks(u8);
 static void LoadTheEndScreen(u16, u16, u16);
 static void DrawTheEnd(u16, u16);
+static void DrawElite20ChampionScreen(void);
 static void SpriteCB_Player(struct Sprite *);
 static void SpriteCB_Rival(struct Sprite *);
 static u8 CreateCreditsMonSprite(u16, s16, s16, u16);
@@ -471,7 +474,8 @@ static void Task_CreditsMain(u8 taskId)
     if (gTasks[taskId].tEndCredits)
     {
         s16 bikeTaskId = gTasks[taskId].tTaskId_BikeScene;
-        gTasks[bikeTaskId].tState = 30;
+        if (bikeTaskId != 0)
+            gTasks[bikeTaskId].tState = 30;
 
         gTasks[taskId].tTheEndDelay = 256;
         gTasks[taskId].func = Task_CreditsTheEnd1;
@@ -662,7 +666,10 @@ static void Task_CreditsTheEnd5(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        DrawTheEnd(0x3800, 0);
+        if (gPruElite20CreditsActive)
+            DrawElite20ChampionScreen();
+        else
+            DrawTheEnd(0x3800, 0);
 
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0, RGB_BLACK);
         gTasks[taskId].tDelay = 7200;
@@ -831,6 +838,18 @@ static void Task_UpdatePage(u8 taskId)
 
 static u8 CheckChangeScene(u8 page, u8 taskId)
 {
+    // E20 gets one Golden Relic Ho-Oh flyby, then stays with the curated
+    // three-at-a-time Relic montage for the remainder of the credits.
+    if (gPruElite20CreditsActive)
+    {
+        if (page == PAGE_INTERVAL * 1)
+        {
+            gTasks[taskId].tNextMode = MODE_SHOW_MONS;
+            return TRUE;
+        }
+        return FALSE;
+    }
+
     if (page == PAGE_INTERVAL * 1)
     {
         gTasks[taskId].tNextMode = MODE_SHOW_MONS;
@@ -1025,6 +1044,33 @@ static void Task_BikeScene(u8 taskId)
     }
 }
 
+static void Task_E20CreditsOpening(u8 taskId)
+{
+    // Task_CreditsMain sets this sentinel when the credits finish.
+    if (gTasks[taskId].tState == 30)
+        DestroyTask(taskId);
+}
+
+static void SpriteCB_CreditsRelicHoOh(struct Sprite *sprite)
+{
+    if (gIntroCredits_MovingSceneryState != INTROCRED_SCENERY_NORMAL)
+    {
+        DestroySprite(sprite);
+        return;
+    }
+
+    sprite->x--;
+    sprite->data[0] += 2;
+    sprite->y2 = Sin(sprite->data[0], 3);
+    if (sprite->x < -32)
+    {
+        sprite->x = DISPLAY_WIDTH + 32;
+        sprite->data[1]++;
+        if (sprite->data[1] >= 3)
+            sprite->invisible = TRUE;
+    }
+}
+
 #define TIMER_STOP  0x7FFF
 #define tTimer      data[1]
 #define tMainTaskId data[2]
@@ -1087,6 +1133,19 @@ static void Task_CycleSceneryPalette(u8 taskId)
 
 static void SetBikeScene(u8 scene, u8 taskId)
 {
+    if (gPruElite20CreditsActive)
+    {
+        // Keep the established moving credits scenery and palette cycle, but
+        // omit the standard player, rival and bicycle actors for E20.
+        gTasks[taskId].tTaskId_BgScenery = CreateBicycleBgAnimationTask(0, 0x2000, 0x20, 8);
+        gTasks[taskId].tTaskId_SceneryPal = CreateTask(Task_CycleSceneryPalette, 0);
+        gTasks[gTasks[taskId].tTaskId_SceneryPal].tState = SCENE_OCEAN_MORNING;
+        gTasks[gTasks[taskId].tTaskId_SceneryPal].tTimer = 0;
+        gTasks[gTasks[taskId].tTaskId_SceneryPal].tMainTaskId = taskId;
+        gTasks[taskId].tTaskId_BikeScene = CreateTask(Task_E20CreditsOpening, 0);
+        return;
+    }
+
     switch (scene)
     {
     case SCENE_OCEAN_MORNING:
@@ -1176,23 +1235,32 @@ static bool8 LoadBikeScene(u8 scene, u8 taskId)
         gMain.state++;
         break;
     case 2:
-        if (gPruElite20CreditsActive) LoadCompressedSpriteSheet(gSpriteSheet_CreditsRelicHoOh);
-        else LoadCompressedSpriteSheet(gSpriteSheet_CreditsSuicune);
-        LoadCompressedSpriteSheet(gSpriteSheet_CreditsRivalMay);
-        LoadCompressedSpriteSheet(gSpriteSheet_CreditsBicycle);
-        if (gPruElite20CreditsActive) LoadSpritePalettes(gSpritePalettes_CreditsRelicHoOh);
-        else LoadSpritePalettes(gSpritePalettes_CreditsHnS);
+        if (gPruElite20CreditsActive)
+        {
+            LoadCompressedSpriteSheet(gSpriteSheet_CreditsRelicHoOh);
+            LoadSpritePalettes(gSpritePalettes_CreditsRelicHoOh);
+            spriteId = CreateCreditsRelicHoOhSprite(DISPLAY_WIDTH + 32, 46);
+            gSprites[spriteId].callback = SpriteCB_CreditsRelicHoOh;
+            gTasks[taskId].tPlayerSpriteId = spriteId;
+            gTasks[taskId].tRivalSpriteId = 0;
+        }
+        else
+        {
+            LoadCompressedSpriteSheet(gSpriteSheet_CreditsSuicune);
+            LoadCompressedSpriteSheet(gSpriteSheet_CreditsRivalMay);
+            LoadCompressedSpriteSheet(gSpriteSheet_CreditsBicycle);
+            LoadSpritePalettes(gSpritePalettes_CreditsHnS);
+            spriteId = CreateCreditsSuicuneSprite(120, 46);
+            gTasks[taskId].tPlayerSpriteId = spriteId;
+            gSprites[spriteId].callback = SpriteCB_Player;
+            gSprites[spriteId].anims = sAnims_Player;
 
-        spriteId = gPruElite20CreditsActive ? CreateCreditsRelicHoOhSprite(120, 46) : CreateCreditsSuicuneSprite(120, 46);
-        gTasks[taskId].tPlayerSpriteId = spriteId;
-        gSprites[spriteId].callback = SpriteCB_Player;
-        if (!gPruElite20CreditsActive) gSprites[spriteId].anims = sAnims_Player;
-
-        spriteId = CreateIntroMaySprite(DISPLAY_WIDTH + 32, 46);
-        gTasks[taskId].tRivalSpriteId = spriteId;
-        gSprites[spriteId].callback = SpriteCB_Rival;
-        gSprites[spriteId].anims = sAnims_Rival;
-        gSprites[spriteId].invisible = TRUE;
+            spriteId = CreateIntroMaySprite(DISPLAY_WIDTH + 32, 46);
+            gTasks[taskId].tRivalSpriteId = spriteId;
+            gSprites[spriteId].callback = SpriteCB_Rival;
+            gSprites[spriteId].anims = sAnims_Rival;
+            gSprites[spriteId].invisible = TRUE;
+        }
         gMain.state++;
         break;
     case 3:
@@ -1288,6 +1356,27 @@ static void DrawTheEnd(u16 offset, u16 palette)
     DrawLetterMapTiles(sTheEnd_LetterMap_E, 16, 7, offset, palette);
     DrawLetterMapTiles(sTheEnd_LetterMap_N, 20, 7, offset, palette);
     DrawLetterMapTiles(sTheEnd_LetterMap_D, 24, 7, offset, palette);
+}
+
+static void DrawElite20ChampionScreen(void)
+{
+    ResetGpuAndVram();
+    ResetPaletteFade();
+    InitCreditsBgsAndWindows();
+    FillWindowPixelBuffer(0, PIXEL_FILL(0));
+    PrintCreditsText(sPRUE20Text_Title, 20, TRUE);
+    PrintCreditsText(sPRUE20Text_Champion, 44, TRUE);
+    CopyWindowToVram(0, COPYWIN_FULL);
+
+    SetGpuReg(REG_OFFSET_BG0CNT, BGCNT_PRIORITY(0)
+                               | BGCNT_CHARBASE(2)
+                               | BGCNT_SCREENBASE(28)
+                               | BGCNT_16COLOR
+                               | BGCNT_TXT256x256);
+    EnableInterrupts(INTR_FLAG_VBLANK);
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
+                                | DISPCNT_BG0_ON);
+    BeginNormalPaletteFade(PALETTES_ALL, 8, 16, 0, RGB_BLACK);
 }
 
 #define sState data[0]
