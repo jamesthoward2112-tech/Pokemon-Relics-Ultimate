@@ -943,10 +943,10 @@ PRU_Elite20_StartFinale_Return::
 	return
 
 PRU_Elite20_Text_FinalCelebration:
-	.string "OAK: You defeated the ELITE 20!\\p"
-	.string "ELM: Every region's finest have\\n"
-	.string "seen your extraordinary team.\\p"
-	.string "OAK: Let your journey be\\n"
+	.string "OAK: You defeated the ELITE 20!\p"
+	.string "ELM: Every region's finest have\n"
+	.string "seen your extraordinary team.\p"
+	.string "OAK: Let your journey be\n"
 	.string "remembered among the RELICS!$"
 
 PRU_Elite20_ClaimRewards::
