@@ -162,12 +162,17 @@ static const u8 sTheEnd_LetterMap_D[] =
     1, 0x86, 0x87,
 };
 
+static const u8 sPRUE20Text_Title[] = _("POKEMON RELICS ULTIMATE");
+static const u8 sPRUE20Text_Champion[] = _("ELITE 20 CHAMPION");
+static const u8 sPRUE20Text_Kanto[] = _("KANTO AND JOHTO");
+static const u8 sPRUE20Text_Journey[] = _("YOUR JOURNEY CONTINUES");
+static const u8 sPRUE20Text_Relics[] = _("THE GOLDEN RELIC HO-OH");
 #include "data/credits_hns.h"
-static const struct CreditsEntry sE20Title = {0, TRUE, _("POKEMON RELICS ULTIMATE")};
-static const struct CreditsEntry sE20Champion = {0, TRUE, _("ELITE 20 CHAMPION")};
-static const struct CreditsEntry sE20Kanto = {0, TRUE, _("KANTO AND JOHTO")};
-static const struct CreditsEntry sE20Journey = {0, FALSE, _("YOUR JOURNEY CONTINUES")};
-static const struct CreditsEntry sE20Relics = {0, TRUE, _("THE GOLDEN RELIC HO-OH")};
+static const struct CreditsEntry sE20Title = {0, TRUE, sPRUE20Text_Title};
+static const struct CreditsEntry sE20Champion = {0, TRUE, sPRUE20Text_Champion};
+static const struct CreditsEntry sE20Kanto = {0, TRUE, sPRUE20Text_Kanto};
+static const struct CreditsEntry sE20Journey = {0, FALSE, sPRUE20Text_Journey};
+static const struct CreditsEntry sE20Relics = {0, TRUE, sPRUE20Text_Relics};
 static const struct CreditsEntry *const sElite20CreditsIntroPages[][ENTRIES_PER_PAGE] = {
  { &sE20Title, &sE20Champion, &sE20Kanto, &sE20Journey, &sCreditsEntry_EmptyString },
  { &sE20Relics, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
