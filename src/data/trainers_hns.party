@@ -18482,12 +18482,12 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Ice Punch
 - Rock Slide
 
-Ludicolo @ Sitrus Berry
+Gyarados Relic @ Sitrus Berry
 Level: 88
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Energy Ball
-- Giga Drain
-- Leech Seed
+- Waterfall
+- Crunch
+- Dragon Dance
 - Protect
 
 === TRAINER_PRU_E18_03_A_HNS ===
@@ -18610,13 +18610,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Swords Dance
 - Roost
 
-Heracross @ Sitrus Berry
+Beedrill Relic @ Sitrus Berry
 Level: 88
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Facade
-- Close Combat
-- Throat Chop
-- Megahorn
+- Poison Jab
+- X-Scissor
+- Swords Dance
+- Protect
 
 Shuckolosse @ Sitrus Berry
 Level: 89
@@ -18636,7 +18636,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Crobat @ Sitrus Berry
+Crobat Relic @ Sitrus Berry
 Level: 88
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Brave Bird
@@ -18704,7 +18704,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Alakazam @ Sitrus Berry
+Alakazam Relic @ Sitrus Berry
 Level: 88
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunderbolt
@@ -18746,7 +18746,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Heat Wave
 - Protect
 
-Slowking @ Sitrus Berry
+Slowking Relic @ Sitrus Berry
 Level: 89
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Surf
@@ -18976,7 +18976,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Machamp @ Sitrus Berry
+Machamp Relic @ Sitrus Berry
 Level: 91
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Facade
@@ -19010,13 +19010,13 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Poliwrath @ Sitrus Berry
+Hitmonchan Relic @ Sitrus Berry
 Level: 91
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Liquidation
-- Submission
-- Belly Drum
-- Skull Bash
+- Mach Punch
+- Ice Punch
+- Thunder Punch
+- Drain Punch
 
 Champeon @ Sitrus Berry
 Level: 92
@@ -19026,7 +19026,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Bulk Up
 - Protect
 
-Hitmonlee @ Sitrus Berry
+Hitmonlee Relic @ Sitrus Berry
 Level: 93
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Close Combat
@@ -19120,7 +19120,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Confuse Ray
 - Moonlight
 
-Houndoom @ Sitrus Berry
+Houndoom Relic @ Sitrus Berry
 Level: 94
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Dark Pulse
@@ -19180,7 +19180,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Dragonite @ Sitrus Berry
+Dragonite Relic @ Sitrus Berry
 Level: 94
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Dragon Breath
@@ -19324,12 +19324,12 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Encore
 - Destiny Bond
 
-Mimikyu @ Sitrus Berry
+Asudem Jj @ Sitrus Berry
 Level: 98
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Shadow Ball
-- Will-O-Wisp
-- Dark Pulse
+- Poison Jab
+- Crunch
+- Coil
 - Protect
 
 Adnokana @ Sitrus Berry
@@ -19350,7 +19350,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Victreebel @ Sitrus Berry
+Victreebel Redux Jj @ Sitrus Berry
 Level: 97
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Leaf Blade
@@ -19706,12 +19706,12 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Ice Punch
 - Rock Slide
 
-Ludicolo @ Sitrus Berry
+Gyarados Relic @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Energy Ball
-- Giga Drain
-- Leech Seed
+- Waterfall
+- Crunch
+- Dragon Dance
 - Protect
 
 === TRAINER_PRU_E18_03_A_MASTER_HNS ===
@@ -19834,13 +19834,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Swords Dance
 - Roost
 
-Heracross @ Sitrus Berry
+Beedrill Relic @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Facade
-- Close Combat
-- Throat Chop
-- Megahorn
+- Poison Jab
+- X-Scissor
+- Swords Dance
+- Protect
 
 Shuckolosse @ Sitrus Berry
 Level: 100
@@ -19860,7 +19860,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Crobat @ Sitrus Berry
+Crobat Relic @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Brave Bird
@@ -19928,7 +19928,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Alakazam @ Sitrus Berry
+Alakazam Relic @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunderbolt
@@ -19970,7 +19970,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Heat Wave
 - Protect
 
-Slowking @ Sitrus Berry
+Slowking Relic @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Surf
@@ -20200,7 +20200,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Machamp @ Sitrus Berry
+Machamp Relic @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Facade
@@ -20234,13 +20234,13 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Poliwrath @ Sitrus Berry
+Hitmonchan Relic @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Liquidation
-- Submission
-- Belly Drum
-- Skull Bash
+- Mach Punch
+- Ice Punch
+- Thunder Punch
+- Drain Punch
 
 Champeon @ Sitrus Berry
 Level: 100
@@ -20250,7 +20250,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Bulk Up
 - Protect
 
-Hitmonlee @ Sitrus Berry
+Hitmonlee Relic @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Close Combat
@@ -20344,7 +20344,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Confuse Ray
 - Moonlight
 
-Houndoom @ Sitrus Berry
+Houndoom Relic @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Dark Pulse
@@ -20404,7 +20404,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Dragonite @ Sitrus Berry
+Dragonite Relic @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Dragon Breath
@@ -20548,12 +20548,12 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Encore
 - Destiny Bond
 
-Mimikyu @ Sitrus Berry
+Asudem Jj @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Shadow Ball
-- Will-O-Wisp
-- Dark Pulse
+- Poison Jab
+- Crunch
+- Coil
 - Protect
 
 Adnokana @ Sitrus Berry
@@ -20574,7 +20574,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Victreebel @ Sitrus Berry
+Victreebel Redux Jj @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Leaf Blade
@@ -20993,7 +20993,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Roost
 - U-Turn
 
-Tyranitar @ Sitrus Berry
+Tyranitar Redux Jj @ Sitrus Berry
 Level: 99
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Crunch
@@ -21019,7 +21019,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Nidoking @ Sitrus Berry
+Nidogod Jj @ Sitrus Berry
 Level: 98
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
@@ -21197,7 +21197,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Roost
 - U-Turn
 
-Tyranitar @ Sitrus Berry
+Tyranitar Redux Jj @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Crunch
@@ -21223,7 +21223,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction
 Items: Full Restore / Full Restore
 
-Nidoking @ Sitrus Berry
+Nidogod Jj @ Sitrus Berry
 Level: 100
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake

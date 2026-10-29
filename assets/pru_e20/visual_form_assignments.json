@@ -1,0 +1,19 @@
+{
+  "purpose": "E20-only alternate battle sprites for familiar Pokémon; reuse already registered trainer visual forms, not new Pokédex entries.",
+  "forms": [
+    {"trainer": "PRU_E18_02_B", "trainer_name": "Wallace", "replace": "Ludicolo", "form": "Gyarados Relic", "moves": ["Waterfall", "Crunch", "Dragon Dance", "Protect"]},
+    {"trainer": "PRU_E18_04_B", "trainer_name": "Bugsy", "replace": "Heracross", "form": "Beedrill Relic", "moves": ["Poison Jab", "X-Scissor", "Swords Dance", "Protect"]},
+    {"trainer": "PRU_E18_05_A", "trainer_name": "Janine", "replace": "Crobat", "form": "Crobat Relic"},
+    {"trainer": "PRU_E18_06_A", "trainer_name": "Sabrina", "replace": "Alakazam", "form": "Alakazam Relic"},
+    {"trainer": "PRU_E18_06_B", "trainer_name": "Will", "replace": "Slowking", "form": "Slowking Relic"},
+    {"trainer": "PRU_E18_10_A", "trainer_name": "Bruno", "replace": "Machamp", "form": "Machamp Relic"},
+    {"trainer": "PRU_E18_10_B", "trainer_name": "Chuck", "replace": "Poliwrath", "form": "Hitmonchan Relic", "moves": ["Mach Punch", "Ice Punch", "Thunder Punch", "Drain Punch"]},
+    {"trainer": "PRU_E18_10_B", "trainer_name": "Chuck", "replace": "Hitmonlee", "form": "Hitmonlee Relic"},
+    {"trainer": "PRU_E18_12_A", "trainer_name": "Karen", "replace": "Houndoom", "form": "Houndoom Relic"},
+    {"trainer": "PRU_E18_13_A", "trainer_name": "Lance", "replace": "Dragonite", "form": "Dragonite Relic"},
+    {"trainer": "PRU_E18_15_A", "trainer_name": "Jessie", "replace": "Mimikyu", "form": "Asudem Jj", "moves": ["Poison Jab", "Crunch", "Coil", "Protect"]},
+    {"trainer": "PRU_E18_15_B", "trainer_name": "James", "replace": "Victreebel", "form": "Victreebel Redux Jj"},
+    {"trainer": "PRU_E20_RIVAL", "trainer_name": "Silver", "replace": "Tyranitar", "form": "Tyranitar Redux Jj"},
+    {"trainer": "PRU_E20_GIOVANNI", "trainer_name": "Giovanni", "replace": "Nidoking", "form": "Nidogod Jj"}
+  ]
+}
