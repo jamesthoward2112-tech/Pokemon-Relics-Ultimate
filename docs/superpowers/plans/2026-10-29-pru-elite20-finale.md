@@ -64,3 +64,7 @@
 ## Integration
 
 Do not promote to stable until all three tasks compile and the original stable-feature regressions pass. A direct `.gba` artifact should be provided whenever a new verified build is available.
+
+## Checkpoint (2026-10-29)
+
+Task 1 reward and dialogue: five focused source tests plus 28 PRU tests and E20 integration checks green. Full CI build pending; local restricted shell cannot create temp files for the unrelated Mewduo test.
