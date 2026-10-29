@@ -332,6 +332,11 @@ static const struct LevelUpMove sMewsionLevelUpLearnset[] =
     LEVEL_UP_MOVE(48, MOVE_NIGHT_DAZE),
     LEVEL_UP_MOVE(52, MOVE_RECOVER),
     LEVEL_UP_MOVE(56, MOVE_SUPER_GLITCH),
+    // Mewduo appears at level 90: teach the Frostbite hazard on encounter,
+    // then give the player meaningful new attacks on the road to level 100.
+    LEVEL_UP_MOVE(90, MOVE_PERMAFROST),
+    LEVEL_UP_MOVE(95, MOVE_PSYSTRIKE),
+    LEVEL_UP_MOVE(100, MOVE_DARK_MATTER),
     LEVEL_UP_END
 };
 

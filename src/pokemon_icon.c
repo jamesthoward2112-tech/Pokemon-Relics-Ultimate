@@ -74,6 +74,16 @@ static const u16 sPRUAstrachiIconPalette[16] =
     RGB(6, 7, 7), RGB(5, 6, 13), RGB(4, 5, 8), RGB(3, 4, 6),
 };
 
+// AlteRed Mewduo icon uses its own white/grey/red six-colour palette.
+// The general-purpose icon palette #1 obscures its red tail in party menus.
+static const u16 sPRUMewduoIconPalette[16] =
+{
+    RGB(0, 0, 0), RGB(8, 8, 8), RGB(23, 23, 23), RGB(28, 9, 5),
+    RGB(12, 12, 11), RGB(14, 14, 14), RGB(31, 31, 31), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+};
+
 // Exact 16-entry indexed PNG icon palette for approved TRE Articuno-P.
 static const u16 sPRUArticunoPIconPalette[16] =
 {
@@ -117,6 +127,7 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUArticunoPIconPalette, POKE_ICON_BASE_PAL_TAG + 11 },
     { sPRUZapdosPIconPalette, POKE_ICON_BASE_PAL_TAG + 12 },
     { sPRUMoltresPIconPalette, POKE_ICON_BASE_PAL_TAG + 13 },
+    { sPRUMewduoIconPalette, POKE_ICON_BASE_PAL_TAG + 14 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -232,6 +243,8 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 9;
     if (species == SPECIES_ASTRACHI)
         return 10;
+    if (species == SPECIES_MEWSION)
+        return 14;
     if (species == SPECIES_ARTICUNO)
         return 11;
     if (species == SPECIES_ZAPDOS)
