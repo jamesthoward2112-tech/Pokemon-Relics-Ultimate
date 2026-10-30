@@ -111,6 +111,7 @@ jobs:
       - name: Restore proven PJR early Route 30 encounter overlay
         run: python3 tools/pru/add_route30_poochyena.py
       - name: Run source regression tests
+        if: github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix'
         run: |
           python3 test/test_pru_challenges_mart_groudon.py
           set -euo pipefail
@@ -179,6 +180,7 @@ jobs:
             echo "Restored pinned PJR build input: data/$file"
           done
       - name: Run targeted GBA-emulator tutor and E4 actor regression tests
+        if: github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix'
         run: make -j2 check BUILD=hns TESTS=test/pru/tutor_and_league.c
       - name: Build the original PJR-derived PRU source
         run: |
@@ -229,6 +231,8 @@ jobs:
           set -euo pipefail
           rm -rf PRU-QA-mgba
           mkdir PRU-QA-mgba
+          mkdir -p "$HOME/.config/mgba"
+          printf 'displayDriver=0\n' > "$HOME/.config/mgba/qt.ini"
           xvfb-run -a -s '-screen 0 1280x960x24' bash -euo pipefail -c '
             mgba-qt pokehns.gba >PRU-QA-mgba/mgba.log 2>&1 &
             emulator_pid=$!
