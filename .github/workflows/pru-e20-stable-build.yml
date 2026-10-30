@@ -5,6 +5,7 @@ on:
     branches:
       - feature/pru-e20-artwork-staging-20261029
       - workmode/pru-permanent-forms-20261030
+      - fix/pru-storm-shrine-door-20261030
   workflow_dispatch:
 
 permissions:
@@ -79,6 +80,7 @@ jobs:
           set -euo pipefail
           PYTHONPATH=. python3 -m unittest discover -s test -p 'test_pru_e20_*.py'
           PYTHONPATH=. python3 -m unittest discover -s test -p 'test_pru_permanent_legendary_forms.py' -v
+          PYTHONPATH=. python3 -m unittest discover -s test -p 'test_pru_storm_shrine_entry.py' -v
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_lavender_cubone_staging.py
           python3 tools/pru/check_pru_444_gameplay.py
@@ -178,13 +180,13 @@ jobs:
           if-no-files-found: error
 
       - name: Publish raw PRU E20 GBA as QA prerelease
-        if: github.event_name == 'push' && github.ref == 'refs/heads/workmode/pru-permanent-forms-20261030'
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/workmode/pru-permanent-forms-20261030' || github.ref == 'refs/heads/fix/pru-storm-shrine-door-20261030')
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
-          latest="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/workmode/pru-permanent-forms-20261030" --jq '.object.sha')"
+          latest="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/${GITHUB_REF_NAME}" --jq '.object.sha')"
           if [[ "${latest}" != "${GITHUB_SHA}" ]]; then
             echo "Skipping release for superseded commit ${GITHUB_SHA}; branch is at ${latest}."
             exit 0
