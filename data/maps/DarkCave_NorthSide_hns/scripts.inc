@@ -26,7 +26,7 @@ DarkCave_NorthSide_EventScript_GroudonSideRock::
 	end
 
 DarkCave_NorthSide_Text_GroudonSideRock:
-	.string "A massive boulder blocks the\\n"
+	.string "A massive boulder blocks the\n"
 	.string "side of the ladder.$"
 
 DarkCave_NorthSide_Text_GroudonGuard:
