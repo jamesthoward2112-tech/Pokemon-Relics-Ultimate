@@ -22,7 +22,7 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
     def test_debug_is_inaccessible(self):
         cfg = source("include/config/debug.h")
         for setting in ("DEBUG_OVERWORLD_MENU", "DEBUG_BATTLE_MENU", "DEBUG_POKEMON_SPRITE_VISUALIZER"):
-            self.assertRegex(cfg, r"#define\\s+" + setting + r"\\s+FALSE")
+            self.assertRegex(cfg, r"#define\s+" + setting + r"\s+FALSE")
 
     def test_mart_clerk_and_held_items(self):
         map_data = json.loads(source("data/maps/IndigoPlateau_PokemonCenter_hns/map.json"))
