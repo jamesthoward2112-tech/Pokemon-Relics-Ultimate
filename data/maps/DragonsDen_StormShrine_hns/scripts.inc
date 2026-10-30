@@ -44,7 +44,9 @@ DragonsDen_StormShrine_RayquazaCaught::
 
 DragonsDen_Shrine_Trigger_StormShrine::
 	lock
+	goto_if_unset FLAG_BADGE08_GET, DragonsDen_Shrine_StormShrineLocked
 	goto_if_unset FLAG_IS_CHAMPION, DragonsDen_Shrine_StormShrineLocked
+	msgbox DragonsDen_Shrine_StormShrineOpenText, MSGBOX_DEFAULT
 	playse SE_THUNDER
 	fadescreenswapbuffers FADE_TO_BLACK
 	warp MAP_DRAGONS_DEN_STORM_SHRINE_HNS, 6, 15
@@ -60,6 +62,11 @@ DragonsDen_Shrine_StormShrineLockedText:
 	.string "A powerful wind resists your passage...\p"
 	.string "Only a JOHTO LEAGUE Champion who has\n"
 	.string "earned CLAIR's trust may enter.$"
+
+DragonsDen_Shrine_StormShrineOpenText:
+	.string "The dragon seal recognises you...\\p"
+	.string "Beyond this door lies the STORM\\n"
+	.string "SHRINE. A strong wind draws you in!$"
 
 DragonsDen_StormShrine_Text_Intro:
 	.string "A violent wind fills the chamber...\p"
