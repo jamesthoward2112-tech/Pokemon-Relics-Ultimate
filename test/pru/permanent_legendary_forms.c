@@ -50,7 +50,7 @@ TEST("PRU permanent Groudon Kyogre and Rayquaza use approved battle data")
     EXPECT_EQ(rayquaza->abilities[0], ABILITY_DELTA_STREAM);
     EXPECT_EQ(rayquaza->abilities[1], ABILITY_DELTA_STREAM);
     EXPECT_EQ(rayquaza->abilities[2], ABILITY_DELTA_STREAM);
-    EXPECT_EQ(rayquaza->perfectIVCount, 3);
+    EXPECT(rayquaza->perfectIVCount == 3);
     EXPECT_EQ(rayquaza->palette, rayquaza->shinyPalette);
 
     EXPECT_EQ(gSpeciesInfo[SPECIES_MEWSION].abilities[0], ABILITY_PARENTAL_BOND);
