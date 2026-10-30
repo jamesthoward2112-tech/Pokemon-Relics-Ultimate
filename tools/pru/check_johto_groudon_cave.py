@@ -21,7 +21,18 @@ assert any(o["script"] == "DarkCave_NorthSide_EventScript_GroudonGuard" and o["f
            for o in dark["object_events"])
 assert "callnative PruOpenDarkCaveGroudonDoor" in read("data/maps/DarkCave_NorthSide_hns/scripts.inc")
 fieldmap = read("src/fieldmap.c")
-assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 4 + MAP_OFFSET, 0x3287)" in fieldmap
+for x, entry in ((45, 0x83B2), (46, 0x33B3), (47, 0x83B4)):
+    assert f"MapGridSetMetatileEntryAt({x} + MAP_OFFSET, 4 + MAP_OFFSET, 0x{entry:04X})" in fieldmap
+# The bottom 16px of the existing cave-door art, not another disguised floor tile.
+art = (root / "data/tilesets/secondary/cave_default_hns/metatiles.bin").read_bytes()
+attr = (root / "data/tilesets/secondary/cave_default_hns/metatile_attributes.bin").read_bytes()
+import struct
+assert len(art) >= (0x3B5 - 0x280) * 16
+assert len(attr) >= (0x3B5 - 0x280) * 2
+for offset, start in enumerate((1002, 1004, 1006)):
+    metatile = struct.unpack_from("<8H", art, (0x3B2 - 0x280 + offset) * 16)
+    assert metatile == tuple(0x8000 | v for v in (start, start + 1, start + 16, start + 17)) + (0, 0, 0, 0)
+assert [struct.unpack_from("<H", attr, (0x3B2 - 0x280 + i) * 2)[0] for i in range(3)] == [0x1000, 0x0065, 0x1000]
 assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 5 + MAP_OFFSET, 0x3281)" in fieldmap
 assert cave["layout"] == "LAYOUT_ROUTE45_GROUDON_CAVE_HNS"
 assert any(x["id"] == cave["layout"] and x["secondary_tileset"] == "gTileset_BlackthornGym_Hns"

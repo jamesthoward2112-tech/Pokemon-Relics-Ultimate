@@ -10,9 +10,10 @@ DarkCave_NorthSide_OnTransition:
 
 
 @ Offshoot immediately right of the Blackthorn/Route 45 entrance.
-@ Use the existing BLACK cave-mouth graphic, clearing the solid rock below.
-@ Native code replaces complete metatile entries (including elevation),
-@ whereas setmetatile leaves the former impassable rock's elevation intact.
+@ Assemble the actual 3-metatile carved black cave-mouth strip from
+@ Cave_Default_Hns (0x3B2..0x3B4); its centre is the warp at (46,4).
+@ Native code installs full entries, keeping stone sides solid and opening
+@ only the centre plus the safe approach.
 @ The old man stands in the new approach until FLAG_IS_CHAMPION is set.
 DarkCave_NorthSide_OnLoadGroudonPassage::
 	callnative PruOpenDarkCaveGroudonDoor

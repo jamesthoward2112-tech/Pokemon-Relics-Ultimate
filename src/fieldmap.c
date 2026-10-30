@@ -503,13 +503,17 @@ void MapGridSetMetatileEntryAt(int x, int y, u16 metatile)
     }
 }
 
-// Blackthorn-side Dark Cave: the original wall and its approach are both
-// solid rock at elevation zero. setmetatile keeps that elevation, so use
-// full entries to create a visible black cave mouth and a walkable approach.
-// Reuse proven Cave_Default_Hns traversable entrance 0x287 at (45, 9), floor 0x281.
+// Blackthorn-side Dark Cave: use the ACTUAL carved black cave-mouth art
+// already present in Cave_Default_Hns/tiles.png (bottom row, x=80..127).
+// Metatiles 0x3B2..0x3B4 assemble its 48x16 doorway strip into the rock wall.
+// The centre is a passable warp; the stone shoulders stay solid.  The single
+// tile immediately south is the walkable approach; no permanent map edits,
+// story flags, or save conversions are necessary.
 void PruOpenDarkCaveGroudonDoor(void)
 {
-    MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 4 + MAP_OFFSET, 0x3287);
+    MapGridSetMetatileEntryAt(45 + MAP_OFFSET, 4 + MAP_OFFSET, 0x83B2);
+    MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 4 + MAP_OFFSET, 0x33B3);
+    MapGridSetMetatileEntryAt(47 + MAP_OFFSET, 4 + MAP_OFFSET, 0x83B4);
     MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 5 + MAP_OFFSET, 0x3281);
 }
 
