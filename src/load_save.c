@@ -175,6 +175,17 @@ void SavePlayerParty(void)
         SavePlayerPartyMon(i, &gPlayerParty[i]);
 }
 
+// Rebuild calculated party stats for saves created before PRU made these
+// species' alternate battle data permanent. CalculateMonStats preserves the
+// absolute HP loss, and this migration leaves identity and IV data untouched.
+void RecalculatePermanentLegendaryStats(struct Pokemon *mon)
+{
+    u16 species = GetMonData(mon, MON_DATA_SPECIES);
+
+    if (species == SPECIES_GROUDON || species == SPECIES_KYOGRE || species == SPECIES_RAYQUAZA)
+        CalculateMonStats(mon);
+}
+
 void LoadPlayerParty(void)
 {
     int i;

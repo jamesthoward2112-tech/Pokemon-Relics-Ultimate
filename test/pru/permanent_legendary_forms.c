@@ -90,12 +90,13 @@ TEST("PRU old legendary party stats migrate without changing identity or IVs")
 
     // Simulate an older save's calculated stat block, retaining a fixed HP loss.
     mon.attack = 1;
-    mon.maxHP = 1;
-    mon.hp = 1;
+    mon.maxHP = 500;
+    mon.hp = 450;
     RecalculatePermanentLegendaryStats(&mon);
 
     EXPECT(mon.attack != 1);
     EXPECT(mon.maxHP != 1);
+    EXPECT_EQ(mon.maxHP - mon.hp, 50);
     EXPECT_EQ(GetMonData(&mon, MON_DATA_PERSONALITY), personality);
     for (u32 i = 0; i < NUM_STATS; i++)
         EXPECT_EQ(GetMonData(&mon, MON_DATA_HP_IV + i), ivs[i]);
