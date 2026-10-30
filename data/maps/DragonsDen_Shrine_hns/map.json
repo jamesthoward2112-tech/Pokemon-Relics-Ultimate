@@ -85,15 +85,6 @@
       "y": 15,
       "elevation": 0,
       "var": "VAR_BLACKTHORN_CITY_STATE",
-      "var_value": "4",
-      "script": "DragonsDen_Shrine_Trigger_StormShrine"
-    },
-    {
-      "type": "trigger",
-      "x": 6,
-      "y": 15,
-      "elevation": 0,
-      "var": "VAR_BLACKTHORN_CITY_STATE",
       "var_value": "2",
       "script": "DragonsDen_Shrine_Trigger_ElderQuizTop"
     },
@@ -132,6 +123,14 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "RuinsOfAlph_PuzzleAndRewardChambers_MapScript_StatueDescription"
+    },
+    {
+      "type": "sign",
+      "x": 6,
+      "y": 7,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "DragonsDen_Shrine_Trigger_StormShrine"
     }
   ],
   "game_version": "hns",
