@@ -21,18 +21,22 @@ assert any(o["script"] == "DarkCave_NorthSide_EventScript_GroudonGuard" and o["f
            for o in dark["object_events"])
 assert "callnative PruOpenDarkCaveGroudonDoor" in read("data/maps/DarkCave_NorthSide_hns/scripts.inc")
 fieldmap = read("src/fieldmap.c")
-for x, entry in ((45, 0x83B2), (46, 0x33B3), (47, 0x83B4)):
-    assert f"MapGridSetMetatileEntryAt({x} + MAP_OFFSET, 4 + MAP_OFFSET, 0x{entry:04X})" in fieldmap
-# The bottom 16px of the existing cave-door art, not another disguised floor tile.
+# Preserve the actual existing Cave_Default_Hns ladder tile and native ladder behavior.
+assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 4 + MAP_OFFSET, 0x3285)" in fieldmap
+assert "MapGridSetMetatileEntryAt(45 + MAP_OFFSET, 4 + MAP_OFFSET" not in fieldmap
+assert "MapGridSetMetatileEntryAt(47 + MAP_OFFSET, 4 + MAP_OFFSET" not in fieldmap
 art = (root / "data/tilesets/secondary/cave_default_hns/metatiles.bin").read_bytes()
 attr = (root / "data/tilesets/secondary/cave_default_hns/metatile_attributes.bin").read_bytes()
 import struct
-assert len(art) >= (0x3B5 - 0x280) * 16
-assert len(attr) >= (0x3B5 - 0x280) * 2
-for offset, start in enumerate((1002, 1004, 1006)):
-    metatile = struct.unpack_from("<8H", art, (0x3B2 - 0x280 + offset) * 16)
-    assert metatile == tuple(0x8000 | v for v in (start, start + 1, start + 16, start + 17)) + (0, 0, 0, 0)
-assert [struct.unpack_from("<H", attr, (0x3B2 - 0x280 + i) * 2)[0] for i in range(3)] == [0x1000, 0x0065, 0x1000]
+assert len(art) == 306 * 16  # Corrupt extra cave-mouth tiles removed
+assert len(attr) == 306 * 2
+assert struct.unpack_from("<8H", art, (0x285 - 0x280) * 16) == (0x9288, 0x9289, 0x9298, 0x9299, 0, 0, 0, 0)
+assert struct.unpack_from("<H", attr, (0x285 - 0x280) * 2)[0] == 0x0061
+rocks = [o for o in dark["object_events"] if o["script"] == "DarkCave_NorthSide_EventScript_GroudonSideRock"]
+assert len(rocks) == 1
+assert (rocks[0]["x"], rocks[0]["y"]) == (47, 5) and rocks[0]["flag"] == "0"
+assert rocks[0]["graphics_id"] == "OBJ_EVENT_GFX_BREAKABLE_ROCK_HNS"
+assert "DarkCave_NorthSide_Text_GroudonSideRock" in read("data/maps/DarkCave_NorthSide_hns/scripts.inc")
 assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 5 + MAP_OFFSET, 0x3281)" in fieldmap
 assert cave["layout"] == "LAYOUT_ROUTE45_GROUDON_CAVE_HNS"
 assert any(x["id"] == cave["layout"] and x["secondary_tileset"] == "gTileset_BlackthornGym_Hns"

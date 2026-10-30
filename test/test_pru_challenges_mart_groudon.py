@@ -62,6 +62,15 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
         self.assertEqual(len(guards), 1)
         self.assertEqual((guards[0]["x"], guards[0]["y"]), (46, 5))
         self.assertEqual(guards[0]["flag"], "FLAG_IS_CHAMPION")
+        # Permanent rock alongside the ladder, never Rock Smash.
+        rocks = [o for o in interior["object_events"]
+                 if o["script"] == "DarkCave_NorthSide_EventScript_GroudonSideRock"]
+        self.assertEqual(len(rocks), 1)
+        self.assertEqual((rocks[0]["x"], rocks[0]["y"]), (47, 5))
+        self.assertEqual(rocks[0]["graphics_id"], "OBJ_EVENT_GFX_BREAKABLE_ROCK_HNS")
+        self.assertEqual(rocks[0]["flag"], "0")
+        self.assertIn("DarkCave_NorthSide_Text_GroudonSideRock",
+                      source("data/maps/DarkCave_NorthSide_hns/scripts.inc"))
 
         entrance = [i for i, w in enumerate(interior["warp_events"])
                     if w["dest_map"] == "MAP_ROUTE45_GROUDON_CAVE_HNS"]
@@ -80,17 +89,17 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
         import struct
         raw = (ROOT / "data/layouts/DarkCave_NorthSide_hns/map.bin").read_bytes()
         self.assertEqual(struct.unpack_from("<H", raw, 2 * (9 * 57 + 45))[0], 0x3287)
-        for x, entry in ((45, 0x83B2), (46, 0x33B3), (47, 0x83B4)):
-            self.assertIn(f"MapGridSetMetatileEntryAt({x} + MAP_OFFSET, 4 + MAP_OFFSET, 0x{entry:04X})", map_patch)
+        # Existing Cave_Default_Hns ladder tile, not the corrupt 0x3B2..0x3B4 cutout.
+        self.assertIn("MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 4 + MAP_OFFSET, 0x3285)", map_patch)
+        self.assertNotIn("MapGridSetMetatileEntryAt(45 + MAP_OFFSET, 4 + MAP_OFFSET", map_patch)
+        self.assertNotIn("MapGridSetMetatileEntryAt(47 + MAP_OFFSET, 4 + MAP_OFFSET", map_patch)
         art = (ROOT / "data/tilesets/secondary/cave_default_hns/metatiles.bin").read_bytes()
         attrs = (ROOT / "data/tilesets/secondary/cave_default_hns/metatile_attributes.bin").read_bytes()
-        for offset, first_tile in enumerate((1002, 1004, 1006)):
-            offset_metatile = (0x3B2 - 0x280 + offset)
-            graphic = struct.unpack_from("<8H", art, offset_metatile * 16)
-            expected = tuple(0x8000 | tile for tile in (first_tile, first_tile + 1, first_tile + 16, first_tile + 17)) + (0, 0, 0, 0)
-            self.assertEqual(graphic, expected)
-            self.assertEqual(struct.unpack_from("<H", attrs, offset_metatile * 2)[0],
-                             0x0065 if offset == 1 else 0x1000)
+        self.assertEqual(len(art), 306 * 16)  # Failed 0x3B2..0x3B4 tiles removed
+        self.assertEqual(len(attrs), 306 * 2)
+        self.assertEqual(struct.unpack_from("<8H", art, (0x285 - 0x280) * 16),
+                         (0x9288, 0x9289, 0x9298, 0x9299, 0, 0, 0, 0))
+        self.assertEqual(struct.unpack_from("<H", attrs, (0x285 - 0x280) * 2)[0], 0x0061)
         self.assertIn("MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 5 + MAP_OFFSET, 0x3281)", map_patch)
         self.assertIn("DarkCave_NorthSide_Text_GroudonGuard", script)
         self.assertIn("FLAG_IS_CHAMPION", source("include/constants/flags_hns.h"))

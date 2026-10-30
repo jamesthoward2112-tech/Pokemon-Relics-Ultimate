@@ -503,17 +503,16 @@ void MapGridSetMetatileEntryAt(int x, int y, u16 metatile)
     }
 }
 
-// Blackthorn-side Dark Cave: use the ACTUAL carved black cave-mouth art
-// already present in Cave_Default_Hns/tiles.png (bottom row, x=80..127).
-// Metatiles 0x3B2..0x3B4 assemble its 48x16 doorway strip into the rock wall.
-// The centre is a passable warp; the stone shoulders stay solid.  The single
-// tile immediately south is the walkable approach; no permanent map edits,
-// story flags, or save conversions are necessary.
+// Blackthorn-side Dark Cave: a real down ladder, NOT a wall cutout.
+// 0x285 is the native Cave_Default_Hns ladder metatile (MB_LADDER) using
+// the existing tileset art. The prior 0x3B2..0x3B4 fake cave mouth is gone.
+// The original stone wall to the left and right is NOT overwritten.
+// Put the centre ladder on the existing Groudon warp and open only its
+// immediate approach; the Champion-gated old man blocks the approach,
+// while the permanent boulder on the right prevents side-entry.
 void PruOpenDarkCaveGroudonDoor(void)
 {
-    MapGridSetMetatileEntryAt(45 + MAP_OFFSET, 4 + MAP_OFFSET, 0x83B2);
-    MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 4 + MAP_OFFSET, 0x33B3);
-    MapGridSetMetatileEntryAt(47 + MAP_OFFSET, 4 + MAP_OFFSET, 0x83B4);
+    MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 4 + MAP_OFFSET, 0x3285);
     MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 5 + MAP_OFFSET, 0x3281);
 }
 
