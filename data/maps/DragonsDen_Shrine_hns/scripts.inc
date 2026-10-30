@@ -460,3 +460,5 @@ DragonsDen_Shrine_Text_ClairsGrandfather:
     .string "CLAIR appears to have learned an\n"
     .string "invaluable lesson from you.\p"
     .string "I thank you as her grandfather.$"
+
+.include "data/maps/DragonsDen_StormShrine_hns/scripts.inc"
