@@ -580,38 +580,10 @@ static void Task_NewGameHnsSpeech_SlideInNewGenderSprite(u8 taskId)
 
 static void Task_NewGameHnsSpeech_ChallengeDisclaimer(u8 taskId)
 {
-    struct ChallengeSettings savedOptions = gSaveBlock3Ptr->challengeSettings;
-
-    // PJR uses one curated ruleset. Keep ordinary user-facing options, but
-    // initialise the hidden challenge flags to their recommended defaults.
-    memset(&gSaveBlock3Ptr->challengeSettings, 0, sizeof(struct ChallengeSettings));
-    SetDefaultChallengeSettings();
-    gSaveBlock3Ptr->challengeSettings.followerEnable      = savedOptions.followerEnable;
-    gSaveBlock3Ptr->challengeSettings.followerLargeEnable = savedOptions.followerLargeEnable;
-    gSaveBlock3Ptr->challengeSettings.autoRun             = savedOptions.autoRun;
-    gSaveBlock3Ptr->challengeSettings.autorunSurf         = savedOptions.autorunSurf;
-    gSaveBlock3Ptr->challengeSettings.fishing             = savedOptions.fishing;
-    gSaveBlock3Ptr->challengeSettings.evenFasterJoy       = savedOptions.evenFasterJoy;
-    gSaveBlock3Ptr->challengeSettings.unitSystem          = savedOptions.unitSystem;
-    gSaveBlock3Ptr->challengeSettings.disableMatchCall    = savedOptions.disableMatchCall;
-    gSaveBlock3Ptr->challengeSettings.fastIntro           = savedOptions.fastIntro;
-    gSaveBlock3Ptr->challengeSettings.fastBattle          = savedOptions.fastBattle;
-    gSaveBlock3Ptr->challengeSettings.newBackgrounds      = savedOptions.newBackgrounds;
-    gSaveBlock3Ptr->challengeSettings.newBattleUI         = savedOptions.newBattleUI;
-    gSaveBlock3Ptr->challengeSettings.ballPrompt          = savedOptions.ballPrompt;
-    gSaveBlock3Ptr->challengeSettings.lrToRun             = savedOptions.lrToRun;
-    gSaveBlock3Ptr->challengeSettings.runType             = savedOptions.runType;
-    gSaveBlock3Ptr->challengeSettings.musicOnOff          = savedOptions.musicOnOff;
-    gSaveBlock3Ptr->challengeSettings.bikeMusic           = savedOptions.bikeMusic;
-    gSaveBlock3Ptr->challengeSettings.surfMusic           = savedOptions.surfMusic;
-
-    // Skip the inherited HnS MODE / FEATURES / NUZLOCKE / DIFFICULTY /
-    // CHALLENGES setup screens, but preserve the same fade/platform transition
-    // the challenge-menu return path normally performs before resuming.
-    gSprites[gTasks[taskId].tPlayerSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
-    NewGameHnsSpeech_StartFadeOutTarget1InTarget2(taskId, 2);
-    NewGameHnsSpeech_StartFadePlatformIn(taskId, 1);
-    gTasks[taskId].func = Task_NewGameHnsSpeech_SlidePlatformAway2;
+    // Restore the existing H&S new-game rules selection. The challenge menu
+    // supplies Classic defaults and optional Nuzlocke, Randomizer and difficulty
+    // settings; no character sprite-set selection is added here.
+    gTasks[taskId].func = Task_NewGameHnsSpeech_ChallengeMenu;
 }
 
 static void Task_NewGameHnsSpeech_WaitDisclaimerText(u8 taskId)
