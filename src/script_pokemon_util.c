@@ -159,7 +159,7 @@ void CreateScriptedWildMon(u16 species, u8 level, enum Item item)
         RANDOM_UNOWN_LETTER);
     CreateMonWithIVs(&gEnemyParty[0], species, level, personality, OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
     GiveMonInitialMoveset(&gEnemyParty[0]);
-    else if (IS_HNS && species == SPECIES_RAYQUAZA)
+    if (IS_HNS && species == SPECIES_RAYQUAZA)
     {
         SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_ASCENT, 0);
         SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_PULSE, 1);
