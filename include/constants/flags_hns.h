@@ -3580,8 +3580,8 @@
 #define FLAG_PRU_RELIC_OAK_BATTLE_WON                            0x94A
 #define FLAG_PRU_HIDE_MT_SILVER_RELIC_OAK                       0x94B
 #define FLAG_PRU_RELIC_OAK_EPILOGUE_COMPLETE                    0x94C
-#define FLAG_UNUSED_0x94D                                       0
-#define FLAG_UNUSED_0x94E                                       0
+#define FLAG_PRU_RAYQUAZA_CAUGHT                                0x94D
+#define FLAG_PRU_HIDE_RAYQUAZA                                  0x94E
 #define FLAG_UNUSED_0x94F                                       0
 #define FLAG_UNUSED_0x950                                       0
 #define FLAG_UNUSED_0x951                                       0

@@ -20,6 +20,8 @@
 #define P_NEW_EVOS_IN_REGIONAL_DEX       TRUE
 
 // Battle gimmick specific Forms.
+#define P_PRU_DYNAMIC_FORM_CHANGES      FALSE
+#define P_PRU_PERMANENT_LEGENDARY_FORMS TRUE // Reuse approved battle-form art as permanent base-species art.
 #define P_MEGA_EVOLUTIONS                FALSE
 #define P_PRIMAL_REVERSIONS              FALSE // Groudon and Kyogre only.
 #define P_ULTRA_BURST_FORMS              FALSE // Ultra Necrozma only.

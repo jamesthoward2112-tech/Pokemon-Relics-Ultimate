@@ -46,7 +46,7 @@ Route45_GroudonCave_EventScript_Groudon::
 	waitmoncry
 	@ The Red Orb reverts shiny base Groudon into its black Primal form.
 	@ Only capture is permanent: a knockout or loss lets it return.
-	setwildbattleshiny SPECIES_GROUDON, 75, ITEM_RED_ORB
+	setwildbattleshiny SPECIES_GROUDON, 75
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome

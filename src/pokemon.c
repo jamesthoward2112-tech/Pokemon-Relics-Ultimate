@@ -9519,6 +9519,12 @@ static struct PartyState *GetBattlerPartyStateByPokemon(struct Pokemon *partyMon
 
 bool32 TryFormChange(struct Pokemon *mon, enum FormChanges method)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)mon;
+    (void)method;
+    return FALSE;
+#else
+
     if (GetMonData(mon, MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_NONE
      || GetMonData(mon, MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_EGG)
         return FALSE;
@@ -9553,10 +9559,18 @@ bool32 TryFormChange(struct Pokemon *mon, enum FormChanges method)
     }
 
     return FALSE;
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 bool32 TryBoxMonFormChange(struct BoxPokemon *boxMon, enum FormChanges method)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)boxMon;
+    (void)method;
+    return FALSE;
+#else
+
     if (GetBoxMonData(boxMon, MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_NONE
      || GetBoxMonData(boxMon, MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_EGG)
         return FALSE;
@@ -9575,6 +9589,8 @@ bool32 TryBoxMonFormChange(struct BoxPokemon *boxMon, enum FormChanges method)
         return TRUE;
     }
     return FALSE;
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 u16 SanitizeSpeciesId(u16 species)

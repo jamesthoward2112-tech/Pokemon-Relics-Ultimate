@@ -5,7 +5,7 @@
 #ifndef GUARD_PRU_DEX_ORDER_H
 #define GUARD_PRU_DEX_ORDER_H
 
-#define PRU_DEX_COUNT 447
+#define PRU_DEX_COUNT 450
 
 static const u16 sPruDexSpecies[PRU_DEX_COUNT] =
 {
@@ -456,6 +456,9 @@ static const u16 sPruDexSpecies[PRU_DEX_COUNT] =
     SPECIES_GLACEON, // 445 Glaceon
     SPECIES_LEAFEON, // 446 Leafeon
     SPECIES_MIMIKYU_DISGUISED, // 447 Mimikyu
+    SPECIES_RHYPERIOR, // 448 Rhyperior
+    SPECIES_MAGMORTAR, // 449 Magmortar
+    SPECIES_ELECTIVIRE, // 450 Electivire
 };
 
 #endif // GUARD_PRU_DEX_ORDER_H

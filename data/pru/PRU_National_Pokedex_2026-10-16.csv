@@ -443,6 +443,9 @@ PRU_No,Name,Species_Key,Species_Constant,Category,Type_Source,Source_Tier,Notes
 442,Jirachi,jirachi,SPECIES_JIRACHI,Legendary / Mythical / special,"MON_TYPES(TYPE_STEEL, TYPE_PSYCHIC)",PRL-Hoenn,
 443,Astrachi,astrachi,SPECIES_ASTRACHI,Legendary / Mythical / special,"MON_TYPES(TYPE_PSYCHIC, TYPE_FAIRY)",PRL-custom,"Hoenn special story creature, counted individually; legendary-end placement."
 444,Deoxys,deoxys-normal,SPECIES_DEOXYS,Legendary / Mythical / special,MON_TYPES(TYPE_PSYCHIC),PRL Deoxys plus AlteRed Byoxys artwork (source index 410),Existing PRU Psychic Deoxys abilities/stats/moves/other forms unchanged. AlteRed BYOXYS exact original Normal battle front/back/shiny/party icon only; CRY_DEOXYS. Other three form sprites remain their current versions. Source original cry archived. Engine import/QA pending.
-445,Glaceon,glaceon,SPECIES_GLACEON,Approved 450 expansion,MON_TYPES(TYPE_ICE),Gen4 cross-evolution,Append-only Eevee evolution; Ice Stone or approved cold route; future entries 448-450 reserved.
-446,Leafeon,leafeon,SPECIES_LEAFEON,Approved 450 expansion,MON_TYPES(TYPE_GRASS),Gen4 cross-evolution,Append-only Eevee evolution; Leaf Stone or approved forest route; future entries 448-450 reserved.
+445,Glaceon,glaceon,SPECIES_GLACEON,Approved 450 expansion,MON_TYPES(TYPE_ICE),Gen4 cross-evolution,Append-only Eevee evolution; Ice Stone or approved cold route.
+446,Leafeon,leafeon,SPECIES_LEAFEON,Approved 450 expansion,MON_TYPES(TYPE_GRASS),Gen4 cross-evolution,Append-only Eevee evolution; Leaf Stone or approved forest route.
 447,Mimikyu,mimikyu,SPECIES_MIMIKYU_DISGUISED,Approved 450 expansion,"MON_TYPES(TYPE_GHOST, TYPE_FAIRY)",Lavender Soul House ghost quest,Single species with Disguised and Busted battle forms; Eerie Fog move; encounter after Maroghost and Osteodian.
+448,Rhyperior,rhyperior,SPECIES_RHYPERIOR,Approved 450 expansion,"MON_TYPES(TYPE_GROUND, TYPE_ROCK)",PRU roster expansion,Approved by project owner as #448.
+449,Magmortar,magmortar,SPECIES_MAGMORTAR,Approved 450 expansion,MON_TYPES(TYPE_FIRE),PRU roster expansion,Approved by project owner as #449.
+450,Electivire,electivire,SPECIES_ELECTIVIRE,Approved 450 expansion,MON_TYPES(TYPE_ELECTRIC),PRU roster expansion,Approved by project owner as #450.

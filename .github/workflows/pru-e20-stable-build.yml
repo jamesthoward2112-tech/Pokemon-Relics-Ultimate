@@ -4,14 +4,15 @@ on:
   push:
     branches:
       - feature/pru-e20-artwork-staging-20261029
+      - workmode/pru-permanent-forms-20261030
   workflow_dispatch:
 
 permissions:
   contents: write
 
-# Build only on the isolated staging branch. Keep main and the currently
-# playable d468 ROM untouched. Pinned donor inputs and a downloadable QA-only
-# GBA artifact are explicitly approved; no repository write/release permissions.
+# Build only on isolated QA branches. Keep main and the currently playable
+# stable ROM untouched. The permanent-form branch publishes a distinct QA
+# prerelease only after source, engine, ROM-size and mGBA smoke checks pass.
 jobs:
   compile-and-check:
     runs-on: ubuntu-latest
@@ -77,14 +78,20 @@ jobs:
         run: |
           set -euo pipefail
           PYTHONPATH=. python3 -m unittest discover -s test -p 'test_pru_e20_*.py'
+          PYTHONPATH=. python3 -m unittest test.test_pru_permanent_legendary_forms -v
+          python3 tools/pru/check_444_species_dex.py
+          python3 tools/pru/check_lavender_cubone_staging.py
+          python3 tools/pru/check_pru_444_gameplay.py
           python3 tools/pru/check_elite20_visuals.py
           PYTHONPATH=. python3 -m unittest \
             tools.pru.test_pru_a4d_mewduo_merge \
             tools.pru.test_pru_insurgence_extra_moves \
             tools.pru.test_pru_mewsion_encounter \
             tools.pru.test_pru_shadow_mewtwo
-      - name: Run GBA engine tutor and E4 actor regressions
-        run: make -j2 check BUILD=hns TESTS=test/pru/tutor_and_league.c
+      - name: Run GBA engine tutor, E4, and Parental Bond regressions
+        run: |
+          make -j2 check BUILD=hns TESTS=test/pru/tutor_and_league.c
+          make -j2 check BUILD=hns TESTS=test/battle/ability/parental_bond.c
       - name: Restore pinned PJR multiboot binary inputs
         run: |
           set -euo pipefail
@@ -171,7 +178,7 @@ jobs:
           if-no-files-found: error
 
       - name: Publish raw PRU E20 GBA as QA prerelease
-        if: github.event_name == 'push' && github.ref == 'refs/heads/feature/pru-e20-artwork-staging-20261029'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/workmode/pru-permanent-forms-20261030'
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -184,4 +191,4 @@ jobs:
           sha256sum "${rom}" > "${rom}.sha256"
           gh release create "${tag}" "${rom}" "${rom}.sha256" \
             --prerelease --title "PRU E20 QA ${short}" \
-            --notes "QA ROM from the latest E20 feature branch, built from the d468 stable lineage. E20, Mewduo, tutor/E4 engine checks, 32 MiB compilation, and mGBA boot/frame checks passed. The automated mGBA run boots the ROM; the complete E20 and Mt. Silver save-state story walkthrough remains a manual gameplay check. This prerelease does not replace the confirmed stable ROM."
+            --notes "QA ROM from the isolated permanent-legendary-form and Mewduo-Parental-Bond branch. Source regressions, engine checks, 32 MiB compilation, and mGBA boot/frame checks passed. The automated mGBA run boots the ROM; the complete story walkthrough remains a manual gameplay check. This prerelease does not replace the confirmed stable ROM."

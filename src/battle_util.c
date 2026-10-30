@@ -5125,6 +5125,11 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
 
 bool32 TryPrimalReversion(enum BattlerId battler)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)battler;
+    return FALSE;
+#else
+
     if (TryBattleFormChange(battler, FORM_CHANGE_BATTLE_PRIMAL_REVERSION, GetBattlerAbility(battler)))
     {
         gBattleScripting.battler = battler;
@@ -5132,6 +5137,8 @@ bool32 TryPrimalReversion(enum BattlerId battler)
         return TRUE;
     }
     return FALSE;
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 bool32 IsNeutralizingGasOnField(void)
@@ -8959,6 +8966,11 @@ bool32 DoesSpeciesUseHoldItemToChangeForm(u16 species, u16 heldItemId)
 
 bool32 CanMegaEvolve(enum BattlerId battler)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)battler;
+    return FALSE;
+#else
+
     enum HoldEffect holdEffect = GetBattlerHoldEffectIgnoreNegation(battler);
     enum BattlerPosition position = GetBattlerPosition(battler);
 
@@ -8996,10 +9008,17 @@ bool32 CanMegaEvolve(enum BattlerId battler)
 
     // No checks passed, the mon CAN'T mega evolve.
     return FALSE;
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 bool32 CanUltraBurst(enum BattlerId battler)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)battler;
+    return FALSE;
+#else
+
     enum HoldEffect holdEffect = GetBattlerHoldEffectIgnoreNegation(battler);
     enum BattlerPosition position = GetBattlerPosition(battler);
 
@@ -9029,10 +9048,17 @@ bool32 CanUltraBurst(enum BattlerId battler)
 
     // No checks passed, the mon CAN'T ultra burst.
     return FALSE;
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 void ActivateMegaEvolution(enum BattlerId battler)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)battler;
+    return;
+#else
+
     enum Ability ability = GetBattlerAbility(battler);
     gLastUsedItem = gBattleMons[battler].item;
     SetActiveGimmick(battler, GIMMICK_MEGA);
@@ -9047,16 +9073,25 @@ void ActivateMegaEvolution(enum BattlerId battler)
         TryBattleFormChange(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM, ability);
         BattleScriptPushCursorAndCallback(BattleScript_MegaEvolution);
     }
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 void ActivateUltraBurst(enum BattlerId battler)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)battler;
+    return;
+#else
+
     enum Ability ability = GetBattlerAbility(battler);
     gLastUsedItem = gBattleMons[battler].item;
     SetActiveGimmick(battler, GIMMICK_ULTRA_BURST);
     SetGimmickAsActivated(battler, GIMMICK_ULTRA_BURST);
     TryBattleFormChange(battler, FORM_CHANGE_BATTLE_ULTRA_BURST, ability);
     BattleScriptPushCursorAndCallback(BattleScript_UltraBurst);
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 bool32 IsBattlerMegaEvolved(enum BattlerId battler)
@@ -9171,6 +9206,13 @@ bool32 TryRevertPartyMonFormChange(u32 partyIndex)
 
 bool32 TryBattleFormChange(enum BattlerId battler, enum FormChanges method, enum Ability ability)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)battler;
+    (void)method;
+    (void)ability;
+    return FALSE;
+#else
+
     struct Pokemon *mon = GetBattlerMon(battler);
 
     if (!CanBattlerFormChange(battler, method))
@@ -9210,6 +9252,8 @@ bool32 TryBattleFormChange(enum BattlerId battler, enum FormChanges method, enum
     }
 
     return FALSE;
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 bool32 DoBattlersShareType(enum BattlerId battler1, enum BattlerId battler2)

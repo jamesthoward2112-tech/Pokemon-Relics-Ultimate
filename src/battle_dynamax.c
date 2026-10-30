@@ -72,6 +72,11 @@ static const struct GMaxMove sGMaxMoveTable[] =
 // Returns whether a battler can Dynamax.
 bool32 CanDynamax(enum BattlerId battler)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)battler;
+    return FALSE;
+#else
+
     u16 species = GetBattlerVisualSpecies(battler);
     enum HoldEffect holdEffect = GetBattlerHoldEffectIgnoreNegation(battler);
 
@@ -117,6 +122,8 @@ bool32 CanDynamax(enum BattlerId battler)
 
     // No checks failed, all set!
     return TRUE;
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 // Returns whether a battler is transformed into a Gigantamax form.
@@ -174,6 +181,11 @@ u32 GetNonDynamaxMaxHP(enum BattlerId battler)
 // Sets flags used for Dynamaxing and checks Gigantamax forms.
 void ActivateDynamax(enum BattlerId battler)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)battler;
+    return;
+#else
+
     // Set appropriate use flags.
     SetActiveGimmick(battler, GIMMICK_DYNAMAX);
     SetGimmickAsActivated(battler, GIMMICK_DYNAMAX);
@@ -191,6 +203,8 @@ void ActivateDynamax(enum BattlerId battler)
         TryBattleFormChange(battler, FORM_CHANGE_BATTLE_GIGANTAMAX, GetBattlerAbility(battler));
 
     BattleScriptPushCursorAndCallback(BattleScript_DynamaxBegins);
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 // Unsets the flags used for Dynamaxing and reverts max HP if needed.

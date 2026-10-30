@@ -19,6 +19,11 @@
 // Sets flags and variables upon a battler's Terastallization.
 void ActivateTera(enum BattlerId battler)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)battler;
+    return;
+#else
+
     // Set appropriate flags.
     SetActiveGimmick(battler, GIMMICK_TERA);
     SetGimmickAsActivated(battler, GIMMICK_TERA);
@@ -41,6 +46,8 @@ void ActivateTera(enum BattlerId battler)
         BattleScriptPushCursorAndCallback(BattleScript_IllusionOffAndTerastallization);
     else
         BattleScriptPushCursorAndCallback(BattleScript_Terastallization);
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 // Applies palette blend and enables UI indicator after animation has played
@@ -61,6 +68,11 @@ void ApplyBattlerVisualsForTeraAnim(enum BattlerId battler)
 // Returns whether a battler can Terastallize.
 bool32 CanTerastallize(enum BattlerId battler)
 {
+#if !P_PRU_DYNAMIC_FORM_CHANGES
+    (void)battler;
+    return FALSE;
+#else
+
     enum HoldEffect holdEffect = GetBattlerHoldEffectIgnoreNegation(battler);
 
     if (gBattleMons[battler].volatiles.transformed && GET_BASE_SPECIES_ID(gBattleMons[battler].species) == SPECIES_TERAPAGOS)
@@ -105,6 +117,8 @@ bool32 CanTerastallize(enum BattlerId battler)
 
     // Every check passed!
     return TRUE;
+
+#endif // !P_PRU_DYNAMIC_FORM_CHANGES
 }
 
 // Returns a battler's Tera type.

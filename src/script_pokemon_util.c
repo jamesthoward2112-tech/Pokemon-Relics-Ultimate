@@ -159,6 +159,13 @@ void CreateScriptedWildMon(u16 species, u8 level, enum Item item)
         RANDOM_UNOWN_LETTER);
     CreateMonWithIVs(&gEnemyParty[0], species, level, personality, OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
     GiveMonInitialMoveset(&gEnemyParty[0]);
+    else if (IS_HNS && species == SPECIES_RAYQUAZA)
+    {
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_ASCENT, 0);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_PULSE, 1);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_EXTREME_SPEED, 2);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_EARTHQUAKE, 3);
+    }
     if (item)
     {
         heldItem[0] = item;
@@ -211,16 +218,15 @@ void CreateShinyScriptedMon(u16 species, u8 level, enum Item item)
     CreateMonWithIVs(&gEnemyParty[0], species, level, shinyPersonality, OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
     GiveMonInitialMoveset(&gEnemyParty[0]);
 
-    // The two PRU Primal encounters keep their agreed signature attacks
-    // after capture; ordinary shiny scripted encounters remain untouched.
-    if (IS_HNS && species == SPECIES_GROUDON && item == ITEM_RED_ORB)
+    // PRU permanent legendary encounters retain their signature attacks after capture.
+    if (IS_HNS && species == SPECIES_GROUDON)
     {
         SetMonMoveSlot(&gEnemyParty[0], MOVE_HONE_CLAWS, 0);
         SetMonMoveSlot(&gEnemyParty[0], MOVE_PRECIPICE_BLADES, 1);
         SetMonMoveSlot(&gEnemyParty[0], MOVE_FIRE_PUNCH, 2);
         SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_CLAW, 3);
     }
-    else if (IS_HNS && species == SPECIES_KYOGRE && item == ITEM_BLUE_ORB)
+    else if (IS_HNS && species == SPECIES_KYOGRE)
     {
         SetMonMoveSlot(&gEnemyParty[0], MOVE_WATER_SPOUT, 0);
         SetMonMoveSlot(&gEnemyParty[0], MOVE_ORIGIN_PULSE, 1);
@@ -233,10 +239,9 @@ void CreateShinyScriptedMon(u16 species, u8 level, enum Item item)
         heldItem[1] = item >> 8;
         SetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM, heldItem);
     }
-    // Orb legends retain the unique fateful-encounter identity of seteventmon
-    // while using the game's proper shiny-Pokémon creation path.
-    if ((species == SPECIES_KYOGRE && item == ITEM_BLUE_ORB)
-     || (species == SPECIES_GROUDON && item == ITEM_RED_ORB))
+    // Preserve the original one-time legendary encounter identity without
+    // relying on held Orbs to activate their now-permanent appearances.
+    if (IS_HNS && (species == SPECIES_KYOGRE || species == SPECIES_GROUDON))
     {
         bool32 fateful = TRUE;
         SetMonData(&gEnemyParty[0], MON_DATA_MODERN_FATEFUL_ENCOUNTER, &fateful);

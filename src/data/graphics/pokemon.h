@@ -14045,7 +14045,7 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS
 
-#if P_PRIMAL_REVERSIONS
+#if (P_PRIMAL_REVERSIONS || P_PRU_PERMANENT_LEGENDARY_FORMS)
     const u32 gMonFrontPic_KyogrePrimal[] = INCBIN_U32("graphics/pokemon/kyogre/primal/front.4bpp.smol");
     const u16 gMonPalette_KyogrePrimal[] = INCBIN_U16("graphics/pokemon/kyogre/primal/normal.gbapal");
     const u32 gMonBackPic_KyogrePrimal[] = INCBIN_U32("graphics/pokemon/kyogre/primal/back.4bpp.smol");
@@ -14089,7 +14089,7 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS
 
-#if P_PRIMAL_REVERSIONS
+#if (P_PRIMAL_REVERSIONS || P_PRU_PERMANENT_LEGENDARY_FORMS)
     const u32 gMonFrontPic_GroudonPrimal[] = INCBIN_U32("graphics/pokemon/groudon/primal/front.4bpp.smol");
     const u16 gMonPalette_GroudonPrimal[] = INCBIN_U16("graphics/pokemon/groudon/primal/normal.gbapal");
     const u32 gMonBackPic_GroudonPrimal[] = INCBIN_U32("graphics/pokemon/groudon/primal/back.4bpp.smol");
@@ -14133,7 +14133,7 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS
 
-#if P_MEGA_EVOLUTIONS
+#if (P_MEGA_EVOLUTIONS || P_PRU_PERMANENT_LEGENDARY_FORMS)
     const u32 gMonFrontPic_RayquazaMega[] = INCBIN_U32("graphics/pokemon/rayquaza/mega/front.4bpp.smol");
     const u16 gMonPalette_RayquazaMega[] = INCBIN_U16("graphics/pokemon/rayquaza/mega/normal.gbapal");
     const u32 gMonBackPic_RayquazaMega[] = INCBIN_U32("graphics/pokemon/rayquaza/mega/back.4bpp.smol");

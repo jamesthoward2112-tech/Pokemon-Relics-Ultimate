@@ -12,7 +12,7 @@ root = Path(__file__).resolve().parents[2]
 party = (root / "src/data/trainers_hns.party").read_text(encoding="utf-8")
 with (root / "data/pru/PRU_National_Pokedex_2026-10-16.csv").open(encoding="utf-8", newline="") as f:
     canonical = {row["Name"] for row in csv.DictReader(f)}
-assert len(canonical) == 447  # Original 444 plus Glaceon, Leafeon and Mimikyu.
+assert len(canonical) == 450  # Canonical PRU roster, including the three owner-approved additions.
 
 teams = {
     "BROCK": [("Golem", 64), ("Kabutops", 64), ("Relicanth", 65),

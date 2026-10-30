@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 """Source-only Cubone/Lavender regression audit. No ROM build or emulator launch.
 
-The user approved *exactly three* new Pokédex species (#445-447), with three
-future slots intentionally RESERVED. This script MUST NOT treat 448-450 as
-already populated, and MUST NOT change main until the other integrated ROM
-has completed and this branch has been explicitly approved.
+The Lavender quest occupies the approved #445-447 slots; the project owner
+subsequently approved Rhyperior, Magmortar, and Electivire at #448-450.
 """
 import csv
 import json
@@ -15,13 +13,15 @@ ROOT = Path(__file__).resolve().parents[2]
 READ = lambda p: (ROOT / p).read_text(encoding="utf-8")
 dex = list(csv.DictReader((ROOT / "data/pru/PRU_National_Pokedex_2026-10-16.csv").open(
     encoding="utf-8-sig", newline="")))
-assert len(dex) == 447, "444 original plus only three approved additions"
-assert [r["PRU_No"] for r in dex[-3:]] == ["445", "446", "447"]
-assert [r["Name"] for r in dex[-3:]] == ["Glaceon", "Leafeon", "Mimikyu"]
-assert [r["Species_Constant"] for r in dex[-3:]] == [
+assert len(dex) == 450, "canonical PRU roster includes six approved additions"
+assert [r["PRU_No"] for r in dex[444:447]] == ["445", "446", "447"]
+assert [r["Name"] for r in dex[-3:]] == ["Rhyperior", "Magmortar", "Electivire"]
+assert [r["PRU_No"] for r in dex[-3:]] == ["448", "449", "450"]
+assert [r["Name"] for r in dex[444:447]] == ["Glaceon", "Leafeon", "Mimikyu"]
+assert [r["Species_Constant"] for r in dex[444:447]] == [
     "SPECIES_GLACEON", "SPECIES_LEAFEON", "SPECIES_MIMIKYU_DISGUISED"]
 order = READ("src/data/pokemon/pru_dex_order.h")
-assert "#define PRU_DEX_COUNT 447" in order
+assert "#define PRU_DEX_COUNT 450" in order
 assert "SPECIES_MIMIKYU_DISGUISED, // 447 Mimikyu" in order
 assert "SPECIES_DUSKNOIR, // 448" not in order
 assert "SPECIES_ROTOM, // 450" not in order

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Fail the PRU build if any Johto/Kanto trainer, wild slot or static
-HNS event exposes a species outside the approved 447 staged roster.
+HNS event exposes a species outside the approved 450 staged roster.
 
-This is deliberately separate from the Pokédex-numbering test: a 447-entry
+This is deliberately separate from the Pokédex-numbering test: a 450-entry
 Pokédex does not prevent Gen 4+ Pokémon appearing in battles or encounters.
 Other game modes are not affected by the HNS checks.
 """
@@ -16,7 +16,7 @@ with (ROOT / "data/pru/PRU_National_Pokedex_2026-10-16.csv").open(
     encoding="utf-8-sig", newline=""
 ) as fh:
     rows = list(csv.DictReader(fh))
-assert len(rows) == 447
+assert len(rows) == 450
 allowed = {row["Species_Constant"] for row in rows}
 allowed_names = {row["Name"] for row in rows}
 # Internal source name for Valkiri, and the shared species name for Sevii Noivern.
@@ -115,7 +115,7 @@ for path in sorted((ROOT / "data/maps").glob("*_hns/scripts.inc")):
 evolution = (ROOT / "src/pokemon.c").read_text(encoding="utf-8")
 assert "IsPruApprovedEvolutionTarget(targetSpecies)" in evolution
 assert "sPruDexSpecies[i] == species" in evolution
-assert "#define PRU_DEX_COUNT 447" in (ROOT / "src/data/pokemon/pru_dex_order.h").read_text()
+assert "#define PRU_DEX_COUNT 450" in (ROOT / "src/data/pokemon/pru_dex_order.h").read_text()
 
 if errors:
     print(f"FAIL: {len(errors)} forbidden PRU species placements:")
@@ -125,5 +125,5 @@ if errors:
 print(f"PASS: {trainer_count} HNS trainers / {pokemon_count} legal Pokémon (including exact approved E20 trainer-only forms)")
 print(f"PASS: {len(wild_maps)} HNS wild maps / {wild_slots} legal wild slots")
 print(f"PASS: {event_scripts} HNS map scripts with no unapproved out-of-dex species constants")
-print("PASS: evolution targets remain confined to the approved 447")
+print("PASS: evolution targets remain confined to the approved 450")
 print("PASS: Ursaluna / Ursalina explicitly excluded from approved 444")

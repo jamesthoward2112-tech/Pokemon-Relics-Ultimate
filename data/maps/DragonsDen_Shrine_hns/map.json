@@ -85,6 +85,15 @@
       "y": 15,
       "elevation": 0,
       "var": "VAR_BLACKTHORN_CITY_STATE",
+      "var_value": "4",
+      "script": "DragonsDen_Shrine_Trigger_StormShrine"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 15,
+      "elevation": 0,
+      "var": "VAR_BLACKTHORN_CITY_STATE",
       "var_value": "2",
       "script": "DragonsDen_Shrine_Trigger_ElderQuizTop"
     },

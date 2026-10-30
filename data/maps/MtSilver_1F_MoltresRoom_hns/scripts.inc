@@ -26,7 +26,7 @@ MtSilver_1F_MoltresRoom_EventScript_Groudon::
 	waitmoncry
 	@ Groudon holds the Red Orb and automatically becomes Primal on entry.
 	@ Capture keeps base Groudon plus the Orb for future Primal Reversion.
-	setwildbattleshiny SPECIES_GROUDON, 75, ITEM_RED_ORB
+	setwildbattleshiny SPECIES_GROUDON, 75
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
