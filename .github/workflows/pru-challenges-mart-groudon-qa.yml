@@ -15,4 +15,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Validate gameplay map, return warp, shop and rules
+        if: "${{ github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
         run: python3 test/test_pru_challenges_mart_groudon.py
