@@ -57,7 +57,7 @@ post = script.split("SeafoamIslands_SecretCave_EventScript_Archie::", 1)[1].spli
 assert post.index("setflag FLAG_PRU_ARCHIE_KYOGRE_DEFEATED") < post.index("addobject LOCALID_PRU_KYOGRE")
 assert post.index("addobject LOCALID_PRU_KYOGRE") < post.index("removeobject LOCALID_PRU_ARCHIE")
 assert "ancient RELIC" in script
-assert "setwildbattleshiny SPECIES_KYOGRE, 75, ITEM_BLUE_ORB" in script
+assert "setwildbattleshiny SPECIES_KYOGRE, 75" in script
 assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT" in script
 caught = script.split("SeafoamIslands_SecretCave_EventScript_KyogreCaught::", 1)[1]
 assert "setflag FLAG_PRU_KYOGRE_CAUGHT" in caught
@@ -67,13 +67,14 @@ groudon = read("data/maps/Route45_GroudonCave_hns/scripts.inc")
 groudon_map = json.loads(read("data/maps/Route45_GroudonCave_hns/map.json"))
 groudon_obj = next(o for o in groudon_map["object_events"] if o["script"] == "Route45_GroudonCave_EventScript_Groudon")
 assert groudon_obj["graphics_id"] == "OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_GROUDON_HNS"
-assert "setwildbattleshiny SPECIES_GROUDON, 75, ITEM_RED_ORB" in groudon
+assert "setwildbattleshiny SPECIES_GROUDON, 75" in groudon
 assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT" in groudon
 util = read("src/script_pokemon_util.c")
 shiny = util.split("void CreateShinyScriptedMon(", 1)[1].split("void PruPrepareChargedElectrode(", 1)[0]
 assert "MON_DATA_MODERN_FATEFUL_ENCOUNTER" in shiny
-assert "SPECIES_KYOGRE" in shiny and "ITEM_BLUE_ORB" in shiny
-assert "SPECIES_GROUDON" in shiny and "ITEM_RED_ORB" in shiny
+assert "SPECIES_KYOGRE" in shiny and "SPECIES_GROUDON" in shiny
+assert "MON_DATA_MODERN_FATEFUL_ENCOUNTER" in shiny
+assert "SetMonData(&gEnemyParty[0], MON_DATA_MODERN_FATEFUL_ENCOUNTER" in shiny
 
 for name in ("kyogre", "groudon"):
     art = root / "graphics" / "pokemon" / name / "primal"
