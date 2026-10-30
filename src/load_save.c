@@ -193,7 +193,9 @@ void RecalculatePermanentLegendaryStats(struct Pokemon *mon)
         // CalculateMonStats preserves a fainted state and generally carries HP
         // forward, but a save migration must preserve the exact absolute loss
         // even when the new permanent species data changes calculated max HP.
-        hp = wasFainted ? 0 : MAX(0, GetMonData(mon, MON_DATA_MAX_HP) - oldHpLoss);
+        hp = wasFainted ? 0 : GetMonData(mon, MON_DATA_MAX_HP) - oldHpLoss;
+        if (hp < 0)
+            hp = 0;
         SetMonData(mon, MON_DATA_HP, &hp);
     }
 }
