@@ -192,6 +192,13 @@ void LoadPlayerParty(void)
         SetBoxMonData(&gPlayerParty[i].box, MON_DATA_HP_LOST, &data);
         data = gPlayerParty[i].status;
         SetBoxMonData(&gPlayerParty[i].box, MON_DATA_STATUS, &data);
+
+        // Existing saves store calculated party stats. Rebuild only the three
+        // species whose permanent PRU base stats changed, then refresh boxed
+        // HP loss so subsequent PC storage remains consistent.
+        RecalculatePermanentLegendaryStats(&gPlayerParty[i]);
+        data = gPlayerParty[i].maxHP - gPlayerParty[i].hp;
+        SetBoxMonData(&gPlayerParty[i].box, MON_DATA_HP_LOST, &data);
     }
 }
 
