@@ -31,6 +31,15 @@ class PermanentLegendaryFormTests(unittest.TestCase):
             with self.subTest(species=species, field=field):
                 self.assertIn(re.sub(r"\s+", " ", field), compact)
 
+    def test_permanent_legendary_overworlds_use_black_approved_art(self):
+        for species, form in (("groudon", "primal"), ("kyogre", "primal"), ("rayquaza", "mega")):
+            base = ROOT / "graphics/pokemon" / species
+            approved = base / form
+            self.assertEqual((base / "overworld.png").read_bytes(), (approved / "overworld.png").read_bytes())
+            black_palette = (approved / "overworld_shiny.pal").read_bytes()
+            self.assertEqual((base / "overworld_normal.pal").read_bytes(), black_palette)
+            self.assertEqual((base / "overworld_shiny.pal").read_bytes(), black_palette)
+
     def test_groudon_base_species_is_permanent_black_primal(self):
         self.assert_species_fields("SPECIES_GROUDON", (
             ".baseHP        = 100", ".baseAttack    = 180", ".baseDefense   = 160",
