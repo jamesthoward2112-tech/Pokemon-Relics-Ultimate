@@ -90,8 +90,8 @@ TEST("PRU old legendary party stats migrate without changing identity or IVs")
 
     // Simulate an older save's calculated stat block, retaining a fixed HP loss.
     mon.attack = 1;
-    mon.maxHP = oldMaxHp + 50;
-    mon.hp = oldMaxHp;
+    mon.maxHP = oldMaxHp;
+    mon.hp = oldMaxHp - 50;
     RecalculatePermanentLegendaryStats(&mon);
 
     EXPECT(mon.attack != 1);
