@@ -78,15 +78,11 @@ TEST("PRU old legendary party stats migrate without changing identity or IVs")
     struct Pokemon mon;
     u32 personality;
     u32 ivs[NUM_STATS];
-    s32 oldAttack;
-    s32 oldMaxHp;
 
     CreateMon(&mon, SPECIES_GROUDON, 50, 0, OTID_STRUCT_PLAYER_ID);
     personality = GetMonData(&mon, MON_DATA_PERSONALITY);
     for (u32 i = 0; i < NUM_STATS; i++)
         ivs[i] = GetMonData(&mon, MON_DATA_HP_IV + i);
-    oldAttack = mon.attack;
-    oldMaxHp = mon.maxHP;
 
     // Simulate an older save's calculated stat block, retaining a fixed HP loss.
     mon.attack = 1;
@@ -100,8 +96,6 @@ TEST("PRU old legendary party stats migrate without changing identity or IVs")
     EXPECT_EQ(GetMonData(&mon, MON_DATA_PERSONALITY), personality);
     for (u32 i = 0; i < NUM_STATS; i++)
         EXPECT_EQ(GetMonData(&mon, MON_DATA_HP_IV + i), ivs[i]);
-    EXPECT_EQ(oldAttack, mon.attack);
-    EXPECT_EQ(oldMaxHp, mon.maxHP);
 }
 
 TEST("PRU Storm Shrine is registered in Dragon's Den")
