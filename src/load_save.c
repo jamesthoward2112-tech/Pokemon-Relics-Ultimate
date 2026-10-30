@@ -183,7 +183,19 @@ void RecalculatePermanentLegendaryStats(struct Pokemon *mon)
     u16 species = GetMonData(mon, MON_DATA_SPECIES);
 
     if (species == SPECIES_GROUDON || species == SPECIES_KYOGRE || species == SPECIES_RAYQUAZA)
+    {
+        s32 oldHpLoss = GetMonData(mon, MON_DATA_MAX_HP) - GetMonData(mon, MON_DATA_HP);
+        bool32 wasFainted = GetMonData(mon, MON_DATA_HP) == 0;
+        s32 hp;
+
         CalculateMonStats(mon);
+
+        // CalculateMonStats preserves a fainted state and generally carries HP
+        // forward, but a save migration must preserve the exact absolute loss
+        // even when the new permanent species data changes calculated max HP.
+        hp = wasFainted ? 0 : MAX(0, GetMonData(mon, MON_DATA_MAX_HP) - oldHpLoss);
+        SetMonData(mon, MON_DATA_HP, &hp);
+    }
 }
 
 void LoadPlayerParty(void)
