@@ -86,6 +86,8 @@ class PermanentLegendaryFormTests(unittest.TestCase):
         folder = ROOT / "data/maps/DragonsDen_StormShrine_hns"
         self.assertTrue((folder / "map.json").is_file())
         script = (folder / "scripts.inc").read_text()
+        map_data = (folder / "map.json").read_text()
+        self.assertIn("OBJ_EVENT_GFX_SPECIES_SHINY(RAYQUAZA)", map_data)
         for expected in ("FLAG_IS_CHAMPION", "setwildbattleshiny SPECIES_RAYQUAZA, 85",
                          "FLAG_PRU_RAYQUAZA_CAUGHT", "CRY_MODE_ENCOUNTER"):
             self.assertIn(expected, script)

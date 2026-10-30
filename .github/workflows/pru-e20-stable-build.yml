@@ -184,6 +184,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          latest="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/workmode/pru-permanent-forms-20261030" --jq '.object.sha')"
+          if [[ "${latest}" != "${GITHUB_SHA}" ]]; then
+            echo "Skipping release for superseded commit ${GITHUB_SHA}; branch is at ${latest}."
+            exit 0
+          fi
           short="${GITHUB_SHA:0:10}"
           tag="pru-e20-qa-${short}"
           rom="Pokemon-Relics-Ultimate-E20-${short}.gba"
