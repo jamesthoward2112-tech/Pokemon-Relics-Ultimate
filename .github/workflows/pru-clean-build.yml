@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge]
+    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -112,6 +112,7 @@ jobs:
         run: python3 tools/pru/add_route30_poochyena.py
       - name: Run source regression tests
         run: |
+          python3 test/test_pru_challenges_mart_groudon.py
           set -euo pipefail
           python3 tools/pru/check_crystal_battle_backgrounds.py
           python3 tools/pru/check_rhythm_battle_background_assets.py
