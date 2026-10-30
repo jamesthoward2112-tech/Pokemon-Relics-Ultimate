@@ -65,7 +65,7 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
 
         script = source("data/maps/DarkCave_NorthSide_hns/scripts.inc")
         self.assertIn("map_script MAP_SCRIPT_ON_LOAD, DarkCave_NorthSide_OnLoadGroudonPassage", script)
-        self.assertIn("setmetatile 46, 4, 0x287, TRUE", script)
+        self.assertIn("setmetatile 46, 4, 0x287, FALSE", script)
         self.assertIn("DarkCave_NorthSide_Text_GroudonGuard", script)
         self.assertIn("FLAG_IS_CHAMPION", source("include/constants/flags_hns.h"))
 

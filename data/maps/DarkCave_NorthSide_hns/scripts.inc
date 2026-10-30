@@ -13,7 +13,7 @@ DarkCave_NorthSide_OnTransition:
 @ Reuse the existing Dark Cave passable exit metatile (x45, y9).
 @ The old man occupies the approach until FLAG_IS_CHAMPION is set.
 DarkCave_NorthSide_OnLoadGroudonPassage::
-	setmetatile 46, 4, 0x287, TRUE
+	setmetatile 46, 4, 0x287, FALSE
 	end
 
 DarkCave_NorthSide_EventScript_GroudonGuard::
