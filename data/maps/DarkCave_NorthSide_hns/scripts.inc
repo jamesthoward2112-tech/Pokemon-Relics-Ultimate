@@ -10,10 +10,12 @@ DarkCave_NorthSide_OnTransition:
 
 
 @ Offshoot immediately right of the Blackthorn/Route 45 entrance.
-@ Reuse the existing Dark Cave passable exit metatile (x45, y9).
-@ The old man occupies the approach until FLAG_IS_CHAMPION is set.
+@ Use the existing BLACK cave-mouth graphic, clearing the solid rock below.
+@ Native code replaces complete metatile entries (including elevation),
+@ whereas setmetatile leaves the former impassable rock's elevation intact.
+@ The old man stands in the new approach until FLAG_IS_CHAMPION is set.
 DarkCave_NorthSide_OnLoadGroudonPassage::
-	setmetatile 46, 4, 0x287, FALSE
+	callnative PruOpenDarkCaveGroudonDoor
 	end
 
 DarkCave_NorthSide_EventScript_GroudonGuard::

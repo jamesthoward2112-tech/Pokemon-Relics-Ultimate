@@ -19,7 +19,10 @@ assert any(w["dest_map"] == "MAP_DARK_CAVE_NORTH_SIDE_HNS" and w["dest_warp_id"]
            for w in cave["warp_events"])
 assert any(o["script"] == "DarkCave_NorthSide_EventScript_GroudonGuard" and o["flag"] == "FLAG_IS_CHAMPION"
            for o in dark["object_events"])
-assert "setmetatile 46, 4, 0x287, FALSE" in read("data/maps/DarkCave_NorthSide_hns/scripts.inc")
+assert "callnative PruOpenDarkCaveGroudonDoor" in read("data/maps/DarkCave_NorthSide_hns/scripts.inc")
+fieldmap = read("src/fieldmap.c")
+assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 4 + MAP_OFFSET, 0x32ED)" in fieldmap
+assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 5 + MAP_OFFSET, 0x3281)" in fieldmap
 assert cave["layout"] == "LAYOUT_ROUTE45_GROUDON_CAVE_HNS"
 assert any(x["id"] == cave["layout"] and x["secondary_tileset"] == "gTileset_BlackthornGym_Hns"
            for x in layouts["layouts"]), "Red magma tileset must replace Seafoam blue"
