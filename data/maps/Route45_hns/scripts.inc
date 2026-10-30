@@ -7,6 +7,19 @@ Route45_EventScript_GroudonCaveEntrance::
 	setmetatile 16, 4, 0x0A9, TRUE
 	end
 
+@ The elder blocks the volcanic passage until the first Johto League victory.
+@ Object's FLAG_IS_CHAMPION hides him on all completed saves without
+@ adding any new save flags or requiring Rock Smash.
+Route45_EventScript_GroudonCaveGuard::
+	msgbox Route45_Text_GroudonCaveGuard, MSGBOX_NPC
+	end
+
+Route45_Text_GroudonCaveGuard:
+	.string "Only a JOHTO CHAMPION may\\n"
+	.string "enter the volcanic sanctuary.\\p"
+	.string "Return after you defeat\\n"
+	.string "LANCE at the POKEMON LEAGUE.$"
+
 Route45_EventScript_Erik::
 	trainerbattle_single TRAINER_ERIK_HNS, Route45_Text_HikerErikSeen, Route45_Text_HikerErikBeaten
 	msgbox Route45_Text_HikerErikAfter, MSGBOX_AUTOCLOSE
