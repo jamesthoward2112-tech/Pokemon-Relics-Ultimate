@@ -90,8 +90,8 @@ TEST("PRU old legendary party stats migrate without changing identity or IVs")
 
     // Simulate an older save's calculated stat block, retaining a fixed HP loss.
     mon.attack = 1;
-    mon.maxHP = 500;
-    mon.hp = 450;
+    mon.maxHP = oldMaxHp + 50;
+    mon.hp = oldMaxHp;
     RecalculatePermanentLegendaryStats(&mon);
 
     EXPECT(mon.attack != 1);
@@ -100,8 +100,8 @@ TEST("PRU old legendary party stats migrate without changing identity or IVs")
     EXPECT_EQ(GetMonData(&mon, MON_DATA_PERSONALITY), personality);
     for (u32 i = 0; i < NUM_STATS; i++)
         EXPECT_EQ(GetMonData(&mon, MON_DATA_HP_IV + i), ivs[i]);
-    EXPECT(oldAttack != mon.attack);
-    EXPECT(oldMaxHp != mon.maxHP);
+    EXPECT_EQ(oldAttack, mon.attack);
+    EXPECT_EQ(oldMaxHp, mon.maxHP);
 }
 
 TEST("PRU Storm Shrine is registered in Dragon's Den")
