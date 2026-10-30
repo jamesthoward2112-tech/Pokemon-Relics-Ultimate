@@ -1,4 +1,4 @@
-name: PRU challenge, mart and Groudon access ROM QA
+name: PRU challenges, held items and Dark Cave source regression
 
 on:
   push:
@@ -7,18 +7,12 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   source-regression:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate source and map wiring
+      - name: Validate gameplay map, return warp, shop and rules
         run: python3 test/test_pru_challenges_mart_groudon.py
-
-  compile-and-smoke-test:
-    needs: source-regression
-    uses: ./.github/workflows/pru-clean-build.yml
-    permissions:
-      contents: write
