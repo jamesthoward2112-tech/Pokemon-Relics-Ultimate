@@ -21,7 +21,7 @@ assert any(o["script"] == "DarkCave_NorthSide_EventScript_GroudonGuard" and o["f
            for o in dark["object_events"])
 assert "callnative PruOpenDarkCaveGroudonDoor" in read("data/maps/DarkCave_NorthSide_hns/scripts.inc")
 fieldmap = read("src/fieldmap.c")
-assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 4 + MAP_OFFSET, 0x32ED)" in fieldmap
+assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 4 + MAP_OFFSET, 0x3287)" in fieldmap
 assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 5 + MAP_OFFSET, 0x3281)" in fieldmap
 assert cave["layout"] == "LAYOUT_ROUTE45_GROUDON_CAVE_HNS"
 assert any(x["id"] == cave["layout"] and x["secondary_tileset"] == "gTileset_BlackthornGym_Hns"
