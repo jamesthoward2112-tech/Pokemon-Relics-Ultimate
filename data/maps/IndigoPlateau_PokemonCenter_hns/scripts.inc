@@ -4,7 +4,8 @@
 PRU_IndigoPlateau_HeldItemsClerk::
 	lock
 	faceplayer
-	msgbox PRU_IndigoPlateau_Text_HeldItemsIntro, MSGBOX_DEFAULT
+	message PRU_IndigoPlateau_Text_HeldItemsIntro
+	waitmessage
 	pokemart PRU_IndigoPlateau_HeldItemMart
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
