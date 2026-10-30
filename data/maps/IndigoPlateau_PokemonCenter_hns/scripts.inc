@@ -34,7 +34,7 @@ PRU_IndigoPlateau_HeldItemMart:
 	pokemartlistend
 
 PRU_IndigoPlateau_Text_HeldItemsIntro:
-	.string "Welcome to the INDIGO LEAGUE\\n"
+	.string "Welcome to the INDIGO LEAGUE\n"
 	.string "competitive held-item shop!$"
 
 IndigoPlateau_PokemonCenter_hns_MapScripts::

@@ -30,6 +30,8 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
         self.assertEqual(len(clerks), 1)
         script = source("data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc")
         self.assertIn("pokemart PRU_IndigoPlateau_HeldItemMart", script)
+        self.assertIn(r'.string "Welcome to the INDIGO LEAGUE\n"', script)
+        self.assertNotIn(r'.string "Welcome to the INDIGO LEAGUE\\n"', script)
         for item in ("WEAKNESS_POLICY", "THROAT_SPRAY", "CHOICE_BAND", "FOCUS_SASH", "HEAVY_DUTY_BOOTS"):
             self.assertIn("ITEM_" + item, script)
 
