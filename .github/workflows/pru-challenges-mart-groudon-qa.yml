@@ -1,0 +1,24 @@
+name: PRU challenge, mart and Groudon access ROM QA
+
+on:
+  push:
+    branches:
+      - fix/pru-challenges-mart-groudon-20261030
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  source-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate source and map wiring
+        run: python3 test/test_pru_challenges_mart_groudon.py
+
+  compile-and-smoke-test:
+    needs: source-regression
+    uses: ./.github/workflows/pru-clean-build.yml
+    permissions:
+      contents: write
