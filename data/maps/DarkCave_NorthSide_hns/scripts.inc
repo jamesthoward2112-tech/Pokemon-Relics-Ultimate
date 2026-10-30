@@ -64,3 +64,14 @@ DarkCave2_Text_Nerd:
 DarkCave2_Text_Nerd2:
     .string "BLACK-GLASSES ups the power of\n"
     .string "DARK-type moves.$"
+
+DarkCave_NorthSide_EventScript_GroudonGuard::
+	msgbox DarkCave_NorthSide_Text_GroudonGuard, MSGBOX_NPC
+	end
+
+DarkCave_NorthSide_Text_GroudonGuard:
+	.string "Beyond this passage sleeps a\\n"
+	.string "legend of the land.\\p"
+	.string "Only a JOHTO CHAMPION may\\n"
+	.string "enter. Defeat LANCE first.$"
+
