@@ -159,13 +159,6 @@ void CreateScriptedWildMon(u16 species, u8 level, enum Item item)
         RANDOM_UNOWN_LETTER);
     CreateMonWithIVs(&gEnemyParty[0], species, level, personality, OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
     GiveMonInitialMoveset(&gEnemyParty[0]);
-    if (IS_HNS && species == SPECIES_RAYQUAZA)
-    {
-        SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_ASCENT, 0);
-        SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_PULSE, 1);
-        SetMonMoveSlot(&gEnemyParty[0], MOVE_EXTREME_SPEED, 2);
-        SetMonMoveSlot(&gEnemyParty[0], MOVE_EARTHQUAKE, 3);
-    }
     if (item)
     {
         heldItem[0] = item;
@@ -198,7 +191,7 @@ void CreateShinyScriptedMon(u16 species, u8 level, enum Item item)
     u8 heldItem[2];
 
     #if RANDOMIZER_AVAILABLE
-    if (RandomizerFeatureEnabled(RANDOMIZE_FIXED_MON))
+    if (species != SPECIES_RAYQUAZA && RandomizerFeatureEnabled(RANDOMIZE_FIXED_MON))
         species = RandomizeMon(RANDOMIZER_REASON_FIXED_ENCOUNTER, GetRandomizerOption(RANDOMIZER_OPTION_SPECIES_MODE), Random32(), species);
     #endif
 
@@ -232,6 +225,13 @@ void CreateShinyScriptedMon(u16 species, u8 level, enum Item item)
         SetMonMoveSlot(&gEnemyParty[0], MOVE_ORIGIN_PULSE, 1);
         SetMonMoveSlot(&gEnemyParty[0], MOVE_THUNDER, 2);
         SetMonMoveSlot(&gEnemyParty[0], MOVE_ICE_BEAM, 3);
+    }
+    else if (IS_HNS && species == SPECIES_RAYQUAZA)
+    {
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_ASCENT, 0);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_PULSE, 1);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_EXTREME_SPEED, 2);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_EARTHQUAKE, 3);
     }
     if (item)
     {
