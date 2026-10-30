@@ -92,6 +92,7 @@ jobs:
         run: |
           make -j2 check BUILD=hns TESTS=test/pru/tutor_and_league.c
           make -j2 check BUILD=hns TESTS=test/battle/ability/parental_bond.c
+          make -j2 check BUILD=hns TESTS=test/pru/permanent_legendary_forms.c
       - name: Restore pinned PJR multiboot binary inputs
         run: |
           set -euo pipefail
