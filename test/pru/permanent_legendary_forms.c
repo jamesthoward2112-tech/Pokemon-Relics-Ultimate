@@ -4,7 +4,7 @@
 #include "battle_terastal.h"
 #include "overworld.h"
 #include "pokemon.h"
-#include "test/test.h"
+#include "test/battle.h"
 #include "constants/layouts.h"
 #include "constants/maps.h"
 
@@ -112,4 +112,74 @@ TEST("PRU Storm Shrine is registered in Dragon's Den")
 
     EXPECT(map != NULL);
     EXPECT_EQ(map->mapLayoutId, LAYOUT_DRAGONS_DEN_SHRINE_HNS);
+}
+
+SINGLE_BATTLE_TEST("PRU Mewduo Parental Bond strikes twice at reduced damage")
+{
+    enum Move move;
+    s16 damage[2];
+    PARAMETRIZE { move = MOVE_FACADE; }   // Physical
+    PARAMETRIZE { move = MOVE_PSYSTRIKE; } // Special
+
+    GIVEN {
+        ASSUME(GetMoveCategory(move) != DAMAGE_CATEGORY_STATUS);
+        ASSUME(GetMoveStrikeCount(move) < 2);
+        PLAYER(SPECIES_MEWSION);
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, move); MOVE(opponent, MOVE_CELEBRATE); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, move, player);
+        HP_BAR(opponent, captureDamage: &damage[0]);
+        HP_BAR(opponent, captureDamage: &damage[1]);
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_CELEBRATE, opponent);
+    } THEN {
+        EXPECT_EQ(player->ability, ABILITY_PARENTAL_BOND);
+        EXPECT_MUL_EQ(damage[0], Q_4_12(0.25), damage[1]);
+    }
+}
+
+SINGLE_BATTLE_TEST("PRU Mewduo Parental Bond does not add a strike to multi-hit attacks")
+{
+    GIVEN {
+        ASSUME(GetMoveCategory(MOVE_TRIPLE_KICK) != DAMAGE_CATEGORY_STATUS);
+        ASSUME(GetMoveStrikeCount(MOVE_TRIPLE_KICK) == 3);
+        PLAYER(SPECIES_MEWSION);
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, MOVE_TRIPLE_KICK); MOVE(opponent, MOVE_CELEBRATE); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_TRIPLE_KICK, player);
+        HP_BAR(opponent);
+        HP_BAR(opponent);
+        HP_BAR(opponent);
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_CELEBRATE, opponent);
+    } THEN {
+        EXPECT_EQ(player->ability, ABILITY_PARENTAL_BOND);
+    }
+}
+
+DOUBLE_BATTLE_TEST("PRU Mewduo Parental Bond does not duplicate spread attacks")
+{
+    GIVEN {
+        ASSUME(GetMoveStrikeCount(MOVE_EARTHQUAKE) < 2);
+        ASSUME(GetMoveTarget(MOVE_EARTHQUAKE) == TARGET_FOES_AND_ALLY);
+        ASSUME(GetSpeciesType(SPECIES_PIDGEY, 1) == TYPE_FLYING);
+        PLAYER(SPECIES_MEWSION);
+        PLAYER(SPECIES_PIDGEY);
+        OPPONENT(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_PIDGEY);
+    } WHEN {
+        TURN { MOVE(playerLeft, MOVE_EARTHQUAKE); MOVE(playerRight, MOVE_CELEBRATE); MOVE(opponentLeft, MOVE_CELEBRATE); MOVE(opponentRight, MOVE_CELEBRATE); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_EARTHQUAKE, playerLeft);
+        HP_BAR(opponentLeft);
+        MESSAGE("It doesn't affect Pidgey…");
+        MESSAGE("It doesn't affect the opposing Pidgey…");
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_CELEBRATE, playerRight);
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_CELEBRATE, opponentLeft);
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_CELEBRATE, opponentRight);
+    } THEN {
+        EXPECT_EQ(playerLeft->ability, ABILITY_PARENTAL_BOND);
+    }
 }
