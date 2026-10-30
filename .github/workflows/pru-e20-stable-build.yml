@@ -78,7 +78,7 @@ jobs:
         run: |
           set -euo pipefail
           PYTHONPATH=. python3 -m unittest discover -s test -p 'test_pru_e20_*.py'
-          PYTHONPATH=. python3 -m unittest test.test_pru_permanent_legendary_forms -v
+          PYTHONPATH=. python3 -m unittest discover -s test -p 'test_pru_permanent_legendary_forms.py' -v
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_lavender_cubone_staging.py
           python3 tools/pru/check_pru_444_gameplay.py
