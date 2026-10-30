@@ -1,3 +1,41 @@
+
+@ Indigo Plateau's existing clerk now stocks competitive held items.
+@ Keep the nine tutor NPCs, the normal healing service, and map layout unchanged.
+PRU_IndigoPlateau_HeldItemsClerk::
+	lock
+	faceplayer
+	msgbox PRU_IndigoPlateau_Text_HeldItemsIntro, MSGBOX_DEFAULT
+	pokemart PRU_IndigoPlateau_HeldItemMart
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
+	release
+	end
+
+	.align 2
+PRU_IndigoPlateau_HeldItemMart:
+	.2byte ITEM_WEAKNESS_POLICY
+	.2byte ITEM_THROAT_SPRAY
+	.2byte ITEM_CHOICE_BAND
+	.2byte ITEM_CHOICE_SPECS
+	.2byte ITEM_CHOICE_SCARF
+	.2byte ITEM_LIFE_ORB
+	.2byte ITEM_FOCUS_SASH
+	.2byte ITEM_ASSAULT_VEST
+	.2byte ITEM_HEAVY_DUTY_BOOTS
+	.2byte ITEM_EJECT_BUTTON
+	.2byte ITEM_EJECT_PACK
+	.2byte ITEM_LIGHT_CLAY
+	.2byte ITEM_EXPERT_BELT
+	.2byte ITEM_SAFETY_GOGGLES
+	.2byte ITEM_BLUNDER_POLICY
+	.2byte ITEM_AIR_BALLOON
+	.2byte ITEM_ROCKY_HELMET
+	.2byte ITEM_LEFTOVERS
+	pokemartlistend
+
+PRU_IndigoPlateau_Text_HeldItemsIntro:
+	.string "Welcome to the INDIGO LEAGUE\\n"
+	.string "competitive held-item shop!$"
+
 IndigoPlateau_PokemonCenter_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, IndigoPlateau_PokemonCenter_OnFrame 
 	map_script MAP_SCRIPT_ON_TRANSITION, IndigoPlateau_Pokecenter_OnTransition
