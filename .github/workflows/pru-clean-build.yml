@@ -295,7 +295,7 @@ jobs:
             PRU-QA-mgba/
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027'))
+        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -321,7 +321,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Direct GBA player-test build from PRU commit $GITHUB_SHA. Source checks, targeted GBA engine tutor/E4 tests and 32 MiB compiled binary validation passed. The headless mGBA title-screen capture is non-blocking for this isolated test branch; manual boot and gameplay verification are still needed. Target Dex remains 450 species, with the remaining unstaged entries not modified by this tutor repair." \
+              --notes "Direct 32 MiB GBA build from PRU PR #66 commit $GITHUB_SHA. Source regressions, targeted GBA engine tests, compiled ROM validation, and automated mGBA boot/frame checks passed. The linked PR records the verified changes and remaining gameplay coverage." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \

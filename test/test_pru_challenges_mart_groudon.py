@@ -24,6 +24,13 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
         for setting in ("DEBUG_OVERWORLD_MENU", "DEBUG_BATTLE_MENU", "DEBUG_POKEMON_SPRITE_VISUALIZER"):
             self.assertRegex(cfg, r"#define\s+" + setting + r"\s+FALSE")
 
+    def test_rayquaza_shrine_dialogue_uses_assembler_escapes(self):
+        script = source("data/maps/DragonsDen_StormShrine_hns/scripts.inc")
+        self.assertIn(r'.string "The dragon seal recognises you...\p"', script)
+        self.assertIn(r'.string "Beyond this door lies the STORM\n"', script)
+        self.assertNotIn(r'\\p"', script)
+        self.assertNotIn(r'\\n"', script)
+
     def test_mart_clerk_and_held_items(self):
         map_data = json.loads(source("data/maps/IndigoPlateau_PokemonCenter_hns/map.json"))
         clerks = [o for o in map_data["object_events"] if o["script"] == "PRU_IndigoPlateau_HeldItemsClerk"]
