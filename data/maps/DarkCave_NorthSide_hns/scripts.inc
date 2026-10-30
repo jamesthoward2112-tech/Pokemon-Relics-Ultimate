@@ -1,4 +1,5 @@
 DarkCave_NorthSide_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_LOAD, DarkCave_NorthSide_OnLoadGroudonPassage
 	map_script MAP_SCRIPT_ON_TRANSITION, DarkCave_NorthSide_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
@@ -6,6 +7,24 @@ DarkCave_NorthSide_hns_MapScripts::
 DarkCave_NorthSide_OnTransition: 
 	callnative SetTimeBasedEncounters
 	end
+
+
+@ Offshoot immediately right of the Blackthorn/Route 45 entrance.
+@ Reuse the existing Dark Cave passable exit metatile (x45, y9).
+@ The old man occupies the approach until FLAG_IS_CHAMPION is set.
+DarkCave_NorthSide_OnLoadGroudonPassage::
+	setmetatile 46, 4, 0x287, TRUE
+	end
+
+DarkCave_NorthSide_EventScript_GroudonGuard::
+	msgbox DarkCave_NorthSide_Text_GroudonGuard, MSGBOX_NPC
+	end
+
+DarkCave_NorthSide_Text_GroudonGuard:
+	.string "Only the JOHTO CHAMPION may\n"
+	.string "enter this ancient magma cave.\p"
+	.string "Defeat LANCE at the POKEMON\n"
+	.string "LEAGUE, then return here.$"
 
 DarkCave2_EventScript_Item_BlackFlute::
 	finditem ITEM_BLACK_FLUTE
