@@ -3,8 +3,13 @@ Route10_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
-Route10_OnTransition: 
+Route10_OnTransition:
 	callnative SetTimeBasedEncounters
+	goto_if_unset FLAG_IS_CHAMPION, Route10_RelicWeatherDone
+	goto_if_set FLAG_PJR_RELIC_RAIKOU, Route10_RelicWeatherDone
+	setweather WEATHER_RAIN_THUNDERSTORM
+	doweather
+Route10_RelicWeatherDone:
 	end
 
 Route10_EventScript_Surge::
@@ -106,3 +111,29 @@ Route10_Text_PowerPlant:
 Route10_Text_Sign:
 	.string "ROUTE 10\p"
 	.string "CERULEAN CITY - LAVENDER TOWN$"
+
+@ PRU RELICS: the lab guide supplies clues; encounters are on this map.
+Route10_hns_RelicRaikou::
+	lock
+	faceplayer
+	goto_if_unset FLAG_IS_CHAMPION, Route10_hns_RelicRaikou_Unavailable
+	goto_if_set FLAG_PJR_RELIC_RAIKOU, Route10_hns_RelicRaikou_Complete
+	goto RuinsOfAlph_Lab_EventScript_RelicRaikou
+
+Route10_hns_RelicRaikou_Unavailable::
+	msgbox Route10_hns_RelicRaikou_TextUnavailable, MSGBOX_DEFAULT
+	release
+	end
+
+Route10_hns_RelicRaikou_Complete::
+	msgbox Route10_hns_RelicRaikou_TextComplete, MSGBOX_DEFAULT
+	release
+	end
+
+Route10_hns_RelicRaikou_TextUnavailable:
+	.string "The ancient RELIC is still sealed.\n"
+	.string "Ask the ALPH RUINS scientist.$"
+Route10_hns_RelicRaikou_TextComplete:
+	.string "This RELIC has already answered.\n"
+	.string "Return to the ALPH scientist.$"
+
