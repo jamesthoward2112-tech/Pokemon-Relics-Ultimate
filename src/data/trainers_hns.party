@@ -7613,13 +7613,14 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Sludge Bomb
 - Psychic
 
-Gengar
-Level: 63
+Shedinja @ Focus Sash
+Ability: Wonder Guard
+Level: 64
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Shadow Ball
-- Magical Leaf
-- Pain Split
-- Perish Song
+- Shadow Sneak
+- X Scissor
+- Will O Wisp
+- Protect
 
 Gengar @ Sitrus Berry
 Ability: Levitate
