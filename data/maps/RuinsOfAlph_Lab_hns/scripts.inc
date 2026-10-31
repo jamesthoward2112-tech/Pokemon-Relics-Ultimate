@@ -61,8 +61,9 @@ RuinsOfAlph_Lab_EventScript_HintRaikou::
 	end
 
 RuinsOfAlph_Lab_Text_HintRaikou:
-	.string "RAIKOU is near the POWER PLANT!\p"
-	.string "Seek the thunderstorm on ROUTE 10.$"
+	.string "Storms gather on ROUTE 10.\p"
+	.string "RAIKOU waits by the generators\n"
+	.string "inside the POWER PLANT.$"
 
 RuinsOfAlph_Lab_EventScript_HintEntei::
 	msgbox RuinsOfAlph_Lab_Text_HintEntei, MSGBOX_DEFAULT
