@@ -815,6 +815,7 @@ const u32 gObjectEventPic_TrainWest_hns[] = INCBIN_U32("graphics/object_events/p
 const u32 gObjectEventPic_Whirlpool_hns[] = INCBIN_U32("graphics/object_events/pics/misc/whirlpool_hns.4bpp");
 const u32 gObjectEventPic_AlolaOak_hns[] = INCBIN_U32("graphics/object_events/pics/people/alola_oak_hns.4bpp");
 
+const u32 gObjectEventPic_RelicLadder_hns[] = INCBIN_U32("graphics/object_events/pics/misc/relic_ladder.4bpp");
 const u32 gObjectEventPic_EyeOfAlph_hns[] = INCBIN_U32("graphics/object_events/pics/misc/eye_of_alph.4bpp");
 const u32 gObjectEventPic_AlphoracleMonolith_hns[] = INCBIN_U32("graphics/object_events/pics/misc/alphoracle_monolith.4bpp");
 
