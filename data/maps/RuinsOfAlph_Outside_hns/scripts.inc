@@ -173,8 +173,8 @@ RuinsOfAlph_Outside_RelicLadderLeave::
 	release
 	end
 RuinsOfAlph_Outside_RelicLadderTextOpen:
-	.string "Six runes shine on the ladder.\\p"
+	.string "Six runes shine on the ladder.\p"
 	.string "Descend to the FIRST VOICE?$"
 RuinsOfAlph_Outside_RelicLadderTextSealed:
-	.string "Six stone symbols are dormant.\\p"
+	.string "Six stone symbols are dormant.\p"
 	.string "Find all six RELICS first.$"
