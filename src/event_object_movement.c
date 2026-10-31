@@ -542,6 +542,8 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Seagallop,             OBJ_EVENT_PAL_TAG_SEAGALLOP},
 #endif // IS_FRLG
 #if IS_HNS
+    {gObjectEventPal_EyeOfAlph_hns, OBJ_EVENT_PAL_TAG_EYE_OF_ALPH_HNS},
+    {gObjectEventPal_AlphoracleMonolith_hns, OBJ_EVENT_PAL_TAG_ALPHORACLE_MONOLITH_HNS},
     {gObjectEventPal_BirthIslandStone_hns, OBJ_EVENT_PAL_TAG_BIRTH_ISLAND_STONE_HNS},
     {gObjectEventPal_Bugsy_hns, OBJ_EVENT_PAL_TAG_BUGSY_HNS},
     {gObjectEventPal_Train_hns, OBJ_EVENT_PAL_TAG_TRAIN_HNS},
