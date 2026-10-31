@@ -5,9 +5,9 @@ PalletTown_Lab_EventScript_Oak::
 	lock
 	faceplayer
 	call_if_unset FLAG_SYS_NATIONAL_DEX, PalletTown_Lab_EventScript_OakGiveNatDex_ForPlaytesters
-	@ Every completed Elite 20 save gets repeatable, state-aware RELICS help,
-	@ before the old lab-state branch that only discussed MT. SILVER / the Dex.
-	goto_if_set FLAG_PRU_ELITE18_CLEARED, PalletTown_Lab_EventScript_OakRelicsMenu
+	@ Existing Kanto-champion saves can reach the repeatable RELICS handoff.
+	@ The previous E20 flag was undefined in this source; preserve old saves.
+	goto_if_set FLAG_IS_KANTO_CHAMPION, PalletTown_Lab_EventScript_OakRelicsMenu
 PalletTown_Lab_EventScript_OakNormalEntry::
 	goto_if_unset FLAG_PRU_OAK_AURORA_TICKET_RECEIVED, PalletTown_Lab_EventScript_OakPRUAuroraCheck
 PalletTown_Lab_EventScript_OakNormalDialogue:
@@ -23,8 +23,8 @@ PalletTown_Lab_EventScript_OakNormalDialogue:
 	release
 	end
 
-// Use existing E20 flag only: old saves work immediately without a new flag.
-// Always provide choices, even after E20 rewards or credits were claimed.
+// Use defined post-Kanto champion flag: old saves work without a migration.
+// Keep guidance available after E20 rewards or credits were claimed.
 // No items, save flags or story flags are changed by Oak's advice.
 PalletTown_Lab_EventScript_OakRelicsMenu::
 	message PalletTown_Lab_Text_OakRelicsMenu
