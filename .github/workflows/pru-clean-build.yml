@@ -110,6 +110,8 @@ jobs:
         run: python3 tools/pru/install_insurgence_mega_jirachi.py
       - name: Install approved TRE P-form legendary bird sprites and palettes
         run: python3 tools/pru/install_p_bird_sprites.py
+      - name: Install user-approved Heracurion relic sprite after all donor syncs
+        run: python3 tools/pru/install_approved_heracurion.py
       - name: Restore proven Hoenn Last Wish and Noxichu title boot sequence
         env:
           GH_TOKEN: ${{ github.token }}
