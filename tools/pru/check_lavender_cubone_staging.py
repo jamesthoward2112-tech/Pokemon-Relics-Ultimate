@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Source-only Cubone/Lavender regression audit. No ROM build or emulator launch.
 
-The Lavender quest occupies the approved #445-447 slots; the project owner
-subsequently approved Rhyperior, Magmortar, and Electivire at #448-450.
+The Lavender quest retains its approved Mimikyu, and all six late-added
+species are displayed beside their relevant evolutionary families.
 """
 import csv
 import json
@@ -14,15 +14,16 @@ READ = lambda p: (ROOT / p).read_text(encoding="utf-8")
 dex = list(csv.DictReader((ROOT / "data/pru/PRU_National_Pokedex_2026-10-16.csv").open(
     encoding="utf-8-sig", newline="")))
 assert len(dex) == 450, "canonical PRU roster includes six approved additions"
-assert [r["PRU_No"] for r in dex[444:447]] == ["445", "446", "447"]
-assert [r["Name"] for r in dex[-3:]] == ["Rhyperior", "Magmortar", "Electivire"]
-assert [r["PRU_No"] for r in dex[-3:]] == ["448", "449", "450"]
-assert [r["Name"] for r in dex[444:447]] == ["Glaceon", "Leafeon", "Mimikyu"]
-assert [r["Species_Constant"] for r in dex[444:447]] == [
-    "SPECIES_GLACEON", "SPECIES_LEAFEON", "SPECIES_MIMIKYU_DISGUISED"]
+# Approved post-444 species are now displayed beside their families.
+names=[r["Name"] for r in dex]
+assert len(set(names)) == 450
+for old, newer in [("Noxichu","Mimikyu"),("Rhydon","Rhyperior"),
+                   ("Electabuzz","Electivire"),("Magmar","Magmortar"),
+                   ("Umbreon","Leafeon"),("Leafeon","Glaceon")]:
+    assert names.index(newer) == names.index(old)+1, (old,newer)
 order = READ("src/data/pokemon/pru_dex_order.h")
 assert "#define PRU_DEX_COUNT 450" in order
-assert "SPECIES_MIMIKYU_DISGUISED, // 447 Mimikyu" in order
+assert "SPECIES_MIMIKYU_DISGUISED" in order
 assert "SPECIES_DUSKNOIR, // 448" not in order
 assert "SPECIES_ROTOM, // 450" not in order
 evo = READ("src/data/pokemon/species_info/gen_1_families.h")
