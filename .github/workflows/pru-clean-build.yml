@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main, workmode/pru-relic-hunt-implementation-20261031]
+    branches: [main, workmode/pru-relic-hunt-implementation-20261031, workmode/pru-final-polish-20261031]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -102,6 +102,8 @@ jobs:
         run: python3 tools/pru/install_insurgence_mega_jirachi.py
       - name: Install approved TRE P-form legendary bird sprites and palettes
         run: python3 tools/pru/install_p_bird_sprites.py
+      - name: Install approved final Relic palette sprites and G-Max Charaxis
+        run: python3 tools/pru/finalise_relic_art_20261031.py
       - name: Restore proven Hoenn Last Wish and Noxichu title boot sequence
         env:
           GH_TOKEN: ${{ github.token }}
@@ -189,7 +191,7 @@ jobs:
             pru-rom.sha256
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/workmode/pru-relic-hunt-implementation-20261031')
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/workmode/pru-relic-hunt-implementation-20261031' || github.ref == 'refs/heads/workmode/pru-final-polish-20261031')
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -213,7 +215,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "PRU RELICS hunt build from $GITHUB_SHA. Implements scientist location hints, static lab scientist, overworld RELICS encounters and custom Eye of Alph/Six-Rune Monolith sprites, with gated ladder to the existing Ruins underground map. Compiled source and checked binary; player gameplay testing pending. Exact donor special Pokémon battle art remains subject to separate source verification." \
+              --notes "PRU source-build from $GITHUB_SHA. Contains the upstream RELICS hunt lineage and Oct 31 polishing: 450 Dex display order, Quagsire-Moon Stone-Clodsire, Seviian Noibat/Noivern mechanics and Dark Cave encounter, Wonder Guard opponent Shedinja, Golden Ho-Oh battle art, Relic starter palettes and G-Max Charaxis. Compiled ROM only; player save/gameplay verification pending." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
