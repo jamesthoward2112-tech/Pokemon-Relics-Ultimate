@@ -64,8 +64,8 @@ DragonsDen_Shrine_StormShrineLockedText:
 	.string "earned CLAIR's trust may enter.$"
 
 DragonsDen_Shrine_StormShrineOpenText:
-	.string "The dragon seal recognises you...\\p"
-	.string "Beyond this door lies the STORM\\n"
+	.string "The dragon seal recognises you...\p"
+	.string "Beyond this door lies the STORM\n"
 	.string "SHRINE. A strong wind draws you in!$"
 
 DragonsDen_StormShrine_Text_Intro:

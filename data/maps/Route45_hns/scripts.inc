@@ -1,11 +1,5 @@
 Route45_hns_MapScripts::
-	map_script MAP_SCRIPT_ON_LOAD, Route45_EventScript_GroudonCaveEntrance
 	.byte 0
-
-Route45_EventScript_GroudonCaveEntrance::
-	@ A second cave entrance just east of DARK CAVE: the magma fissure.
-	setmetatile 16, 4, 0x0A9, TRUE
-	end
 
 Route45_EventScript_Erik::
 	trainerbattle_single TRAINER_ERIK_HNS, Route45_Text_HikerErikSeen, Route45_Text_HikerErikBeaten

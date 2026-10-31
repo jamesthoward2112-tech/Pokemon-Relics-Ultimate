@@ -15,7 +15,8 @@ for map_name, mon, orb, boss, caught, defeated in (
 ):
     script = read(f"data/maps/{map_name}/scripts.inc")
     data = json.loads(read(f"data/maps/{map_name}/map.json"))
-    assert f"setwildbattleshiny SPECIES_{mon}, 75, ITEM_{orb}_ORB" in script, mon
+    assert f"setwildbattleshiny SPECIES_{mon}, 75" in script, mon
+    assert f"setwildbattleshiny SPECIES_{mon}, 75, ITEM_{orb}_ORB" not in script, mon
     assert f"seteventmon SPECIES_{mon}_PRIMAL" not in script, mon
     assert f"playmoncry SPECIES_{mon}, CRY_MODE_ENCOUNTER" in script, mon
     assert f"goto_if_unset {defeated}" in script, mon
@@ -104,4 +105,4 @@ assert "goto_if_eq VAR_RESULT, FALSE, PalletTown_Lab_EventScript_OakPRUAuroraBag
 assert "setflag FLAG_PRU_OAK_AURORA_TICKET_RECEIVED" in oak
 assert "checkitem ITEM_AURORA_TICKET" in olivine
 assert "warpsilent MAP_BIRTH_ISLAND_EXTERIOR_HNS" in olivine
-print("PRU_LEGENDARY_20261022_PASS: canonical Primal Orb encounters, boss gates, unique Electrode, Aurora Ticket")
+print("PRU_LEGENDARY_20261022_PASS: permanent Primal encounters, boss gates, unique Electrode, Aurora Ticket")

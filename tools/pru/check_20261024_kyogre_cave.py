@@ -35,7 +35,8 @@ assert "removeobject LOCALID_PRU_ARCHIE" in post
 assert "setflag FLAG_PRU_ARCHIE_KYOGRE_DEFEATED" in post
 
 encounter = script.split("SeafoamIslands_SecretCave_EventScript_Kyogre::", 1)[1].split("SeafoamIslands_SecretCave_Text_ArchieIntro:", 1)[0]
-assert "setwildbattleshiny SPECIES_KYOGRE, 75, ITEM_BLUE_ORB" in encounter
+assert "setwildbattleshiny SPECIES_KYOGRE, 75" in encounter
+assert "setwildbattleshiny SPECIES_KYOGRE, 75, ITEM_BLUE_ORB" not in encounter
 assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT" in encounter
 assert "goto_if_set FLAG_PRU_KYOGRE_CAUGHT, SeafoamIslands_SecretCave_EventScript_KyogreUnavailable" in encounter, "capture must keep Kyogre permanently unavailable"
 before_capture, after_capture = encounter.split("SeafoamIslands_SecretCave_EventScript_KyogreCaught::", 1)

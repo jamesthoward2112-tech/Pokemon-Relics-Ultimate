@@ -1864,12 +1864,20 @@ static enum CancelerResult CancelerNotFullyProtected(struct BattleContext *ctx)
     return CANCELER_RESULT_SUCCESS;
 }
 
+// DUEL SOUL repeats each damaging hit against each opposing target.
+// Ordinary Parental Bond still excludes moves hitting both foes.
+static bool32 IsDuelSoulSpreadMove(enum BattlerId attacker, enum Move move)
+{
+    return GetBattlerAbility(attacker) == ABILITY_DUEL_SOUL
+        && GetBattlerMoveTargetType(attacker, move) == TARGET_BOTH;
+}
+
 static bool32 IsMoveParentalBondAffected(struct BattleContext *ctx)
 {
     enum BattleMoveEffects effect = GetMoveEffect(ctx->move);
 
-    if (ctx->abilityAtk != ABILITY_PARENTAL_BOND
-     || gBattleStruct->numSpreadTargets > 1
+    if ((ctx->abilityAtk != ABILITY_PARENTAL_BOND && ctx->abilityAtk != ABILITY_DUEL_SOUL)
+     || (ctx->abilityAtk == ABILITY_PARENTAL_BOND && gBattleStruct->numSpreadTargets > 1)
      || IsMoveParentalBondBanned(ctx->move)
      || GetMoveCategory(ctx->move) == DAMAGE_CATEGORY_STATUS
      || gBattleMoveEffects[effect].twoTurnEffect
@@ -2746,6 +2754,15 @@ static enum MoveEndResult MoveEndNextTarget(void)
 
     gBattleStruct->battlerState[gBattlerAttacker].targetsDone[gBattlerTarget] = TRUE;
 
+    // Each enemy must receive both strikes BEFORE we advance to the next.
+    if (IsDuelSoulSpreadMove(gBattlerAttacker, gCurrentMove)
+     && gSpecialStatuses[gBattlerAttacker].parentalBondState != PARENTAL_BOND_OFF
+     && gMultiHitCounter != 0)
+    {
+        gBattleScripting.moveendState++;
+        return MOVEEND_RESULT_CONTINUE;
+    }
+
     if (gBattleStruct->unableToUseMove || gProtectStructs[gBattlerAttacker].chargingTurn)
     {
         // unable to use move
@@ -2770,6 +2787,13 @@ static enum MoveEndResult MoveEndNextTarget(void)
         if (nextTarget != MAX_BATTLERS_COUNT)
         {
             gBattleStruct->moveTarget[gBattlerAttacker] = gBattlerTarget = nextTarget; // Fix for moxie spread moves
+            // Restart the two-hit sequence for the NEXT opposing target.
+            if (IsDuelSoulSpreadMove(gBattlerAttacker, gCurrentMove))
+            {
+                gSpecialStatuses[gBattlerAttacker].parentalBondState = PARENTAL_BOND_1ST_HIT;
+                gMultiHitCounter = 2;
+                PREPARE_BYTE_NUMBER_BUFFER(gBattleScripting.multihitString, 1, 0)
+            }
             gBattleScripting.moveendState = 0;
             MoveValuesCleanUp();
             BattleScriptPush(GetMoveBattleScript(gCurrentMove));
@@ -2823,6 +2847,8 @@ static enum MoveEndResult MoveEndHpThresholdItemsTarget(void)
 static enum MoveEndResult MoveEndMultihitMove(void)
 {
     enum MoveEndResult result = MOVEEND_RESULT_CONTINUE;
+    bool32 resumeDuelSoulSpread = IsDuelSoulSpreadMove(gBattlerAttacker, gCurrentMove)
+        && gSpecialStatuses[gBattlerAttacker].parentalBondState != PARENTAL_BOND_OFF;
 
     if (!IsBattlerUnaffectedByMove(gBattlerTarget)
      && !gBattleStruct->unableToUseMove
@@ -2881,7 +2907,11 @@ static enum MoveEndResult MoveEndMultihitMove(void)
     gMultiHitCounter = 0;
     gSpecialStatuses[gBattlerAttacker].parentalBondState = PARENTAL_BOND_OFF;
     gSpecialStatuses[gBattlerAttacker].multiHitOn = 0;
-    gBattleScripting.moveendState++;
+    // The second hit (or a failed first hit) is finished: advance opponent.
+    if (resumeDuelSoulSpread)
+        gBattleScripting.moveendState = MOVEEND_NEXT_TARGET;
+    else
+        gBattleScripting.moveendState++;
     return result;
 }
 

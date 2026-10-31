@@ -1,4 +1,5 @@
 DarkCave_NorthSide_hns_MapScripts::
+	map_script MAP_SCRIPT_ON_LOAD, DarkCave_NorthSide_OnLoadGroudonPassage
 	map_script MAP_SCRIPT_ON_TRANSITION, DarkCave_NorthSide_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
@@ -6,6 +7,25 @@ DarkCave_NorthSide_hns_MapScripts::
 DarkCave_NorthSide_OnTransition: 
 	callnative SetTimeBasedEncounters
 	end
+
+
+@ A real down ladder immediately right of the Blackthorn/Route 45 entrance.
+@ The original 3-metatile fake cave opening is removed completely.
+@ Ladder (46,4) is blocked by the old man at (46,5) until Champion.
+@ Existing map rocks on the right already block the side; no extra boulder.
+DarkCave_NorthSide_OnLoadGroudonPassage::
+	callnative PruOpenDarkCaveGroudonDoor
+	end
+
+DarkCave_NorthSide_EventScript_GroudonGuard::
+	msgbox DarkCave_NorthSide_Text_GroudonGuard, MSGBOX_NPC
+	end
+
+DarkCave_NorthSide_Text_GroudonGuard:
+	.string "Only the JOHTO CHAMPION may\n"
+	.string "enter this ancient magma cave.\p"
+	.string "Defeat LANCE at the POKEMON\n"
+	.string "LEAGUE, then return here.$"
 
 DarkCave2_EventScript_Item_BlackFlute::
 	finditem ITEM_BLACK_FLUTE

@@ -8106,6 +8106,24 @@ u8 CanLearnTeachableMove(u16 species, enum Move move)
     teachableLearnset = GetSpeciesTeachableLearnset(species);
     if (species == SPECIES_EGG)
         return FALSE;
+
+    // Achilles Heel is a free Indigo tutor move, not a donor-only novelty.
+    // All Normal/Fighting/Dark/Psychic Pokémon and all Brick Break learners
+    // are eligible, in addition to anyone with the move in their learnset.
+    if (move == MOVE_ACHILLES_HEEL)
+    {
+        u16 actual = SanitizeSpeciesId(species);
+        u8 type1 = gSpeciesInfo[actual].types[0];
+        u8 type2 = gSpeciesInfo[actual].types[1];
+        if (type1 == TYPE_NORMAL || type2 == TYPE_NORMAL
+         || type1 == TYPE_FIGHTING || type2 == TYPE_FIGHTING
+         || type1 == TYPE_DARK || type2 == TYPE_DARK
+         || type1 == TYPE_PSYCHIC || type2 == TYPE_PSYCHIC)
+            return TRUE;
+        for (u32 i = 0; teachableLearnset[i] != MOVE_UNAVAILABLE; i++)
+            if (teachableLearnset[i] == MOVE_BRICK_BREAK)
+                return TRUE;
+    }
     for (u32 i = 0; teachableLearnset[i] != MOVE_UNAVAILABLE; i++)
     {
         if (teachableLearnset[i] == move)

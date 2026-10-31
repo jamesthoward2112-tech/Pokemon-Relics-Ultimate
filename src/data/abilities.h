@@ -2539,4 +2539,14 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 7,
     },
 
+    [ABILITY_DUEL_SOUL] =
+    {
+        .name = _("DUEL SOUL"),
+        .description = COMPOUND_STRING("Damaging moves hit twice,\neven when hitting both foes."),
+        .aiRating = 10,
+        .cantBeCopied = TRUE,
+        .cantBeSwapped = TRUE,
+        .cantBeTraced = TRUE,
+    },
+
 };

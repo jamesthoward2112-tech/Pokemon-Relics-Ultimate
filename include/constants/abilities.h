@@ -352,7 +352,9 @@ enum __attribute__((packed)) Ability
     ABILITY_CITADEL_SHELL,
     ABILITY_STYGIAN_RUSH,
     ABILITIES_COUNT_PJR,
-    ABILITIES_COUNT = ABILITIES_COUNT_PJR,
+    // PRU append-only signature; original ability IDs remain save-compatible.
+    ABILITY_DUEL_SOUL = ABILITIES_COUNT_PJR,
+    ABILITIES_COUNT,
 };
 
 #endif  // GUARD_CONSTANTS_ABILITIES_H

@@ -5,6 +5,10 @@ PalletTown_Lab_EventScript_Oak::
 	lock
 	faceplayer
 	call_if_unset FLAG_SYS_NATIONAL_DEX, PalletTown_Lab_EventScript_OakGiveNatDex_ForPlaytesters
+	@ Every completed Elite 20 save gets repeatable, state-aware RELICS help,
+	@ before the old lab-state branch that only discussed MT. SILVER / the Dex.
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PalletTown_Lab_EventScript_OakRelicsMenu
+PalletTown_Lab_EventScript_OakNormalEntry::
 	goto_if_unset FLAG_PRU_OAK_AURORA_TICKET_RECEIVED, PalletTown_Lab_EventScript_OakPRUAuroraCheck
 PalletTown_Lab_EventScript_OakNormalDialogue:
 	goto_if_eq VAR_PALLETTOWN_LABSTATE, 1, PalletTown_Lab_EventScript_OakBadgeCheck
@@ -18,6 +22,143 @@ PalletTown_Lab_EventScript_OakNormalDialogue:
 	closemessage
 	release
 	end
+
+// Use existing E20 flag only: old saves work immediately without a new flag.
+// Always provide choices, even after E20 rewards or credits were claimed.
+// No items, save flags or story flags are changed by Oak's advice.
+PalletTown_Lab_EventScript_OakRelicsMenu::
+	message PalletTown_Lab_Text_OakRelicsMenu
+	waitmessage
+	dynmultichoice 0, 0, FALSE, 3, 0, DYN_MULTICHOICE_CB_NONE, PalletTown_Lab_Text_OakRelicsOptionAbout, PalletTown_Lab_Text_OakRelicsOptionNext, PalletTown_Lab_Text_OakRelicsOptionOther
+	switch VAR_RESULT
+	case 0, PalletTown_Lab_EventScript_OakRelicsExplain
+	case 1, PalletTown_Lab_EventScript_OakRelicsNext
+	case 2, PalletTown_Lab_EventScript_OakNormalEntry
+	case MULTI_B_PRESSED, PalletTown_Lab_EventScript_OakNormalEntry
+	goto PalletTown_Lab_EventScript_OakNormalEntry
+
+PalletTown_Lab_EventScript_OakRelicsExplain::
+	msgbox PalletTown_Lab_Text_OakRelicsExplain, MSGBOX_DEFAULT
+	goto PalletTown_Lab_EventScript_OakRelicsNext
+
+PalletTown_Lab_EventScript_OakRelicsNext::
+	goto_if_set FLAG_PJR_RELIC_HO_OH, PalletTown_Lab_EventScript_OakRelicsComplete
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, PalletTown_Lab_EventScript_OakRelicsStart
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, PalletTown_Lab_EventScript_OakRelicsEntei
+	goto_if_unset FLAG_PJR_RELIC_LUGIA, PalletTown_Lab_EventScript_OakRelicsLugia
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, PalletTown_Lab_EventScript_OakRelicsUnown
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, PalletTown_Lab_EventScript_OakRelicsCelebi
+	goto_if_unset FLAG_PJR_RELIC_SUICUNE, PalletTown_Lab_EventScript_OakRelicsSuicune
+	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, PalletTown_Lab_EventScript_OakRelicsAlphoracle
+	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, PalletTown_Lab_EventScript_OakRelicsCrest
+	goto PalletTown_Lab_EventScript_OakRelicsHoOh
+
+PalletTown_Lab_EventScript_OakRelicsStart::
+	msgbox PalletTown_Lab_Text_OakRelicsStart, MSGBOX_DEFAULT
+	release
+	end
+PalletTown_Lab_EventScript_OakRelicsEntei::
+	msgbox PalletTown_Lab_Text_OakRelicsEntei, MSGBOX_DEFAULT
+	release
+	end
+PalletTown_Lab_EventScript_OakRelicsLugia::
+	msgbox PalletTown_Lab_Text_OakRelicsLugia, MSGBOX_DEFAULT
+	release
+	end
+PalletTown_Lab_EventScript_OakRelicsUnown::
+	msgbox PalletTown_Lab_Text_OakRelicsUnown, MSGBOX_DEFAULT
+	release
+	end
+PalletTown_Lab_EventScript_OakRelicsCelebi::
+	msgbox PalletTown_Lab_Text_OakRelicsCelebi, MSGBOX_DEFAULT
+	release
+	end
+PalletTown_Lab_EventScript_OakRelicsSuicune::
+	msgbox PalletTown_Lab_Text_OakRelicsSuicune, MSGBOX_DEFAULT
+	release
+	end
+PalletTown_Lab_EventScript_OakRelicsAlphoracle::
+	msgbox PalletTown_Lab_Text_OakRelicsAlphoracle, MSGBOX_DEFAULT
+	release
+	end
+PalletTown_Lab_EventScript_OakRelicsCrest::
+	msgbox PalletTown_Lab_Text_OakRelicsCrest, MSGBOX_DEFAULT
+	release
+	end
+PalletTown_Lab_EventScript_OakRelicsHoOh::
+	msgbox PalletTown_Lab_Text_OakRelicsHoOh, MSGBOX_DEFAULT
+	release
+	end
+PalletTown_Lab_EventScript_OakRelicsComplete::
+	msgbox PalletTown_Lab_Text_OakRelicsComplete, MSGBOX_DEFAULT
+	release
+	end
+
+PalletTown_Lab_Text_OakRelicsMenu:
+	.string "OAK: Congratulations on the\n"
+	.string "ELITE 20! What shall we discuss?$"
+PalletTown_Lab_Text_OakRelicsOptionAbout:
+	.string "About the RELICS$"
+PalletTown_Lab_Text_OakRelicsOptionNext:
+	.string "Where next?$"
+PalletTown_Lab_Text_OakRelicsOptionOther:
+	.string "Other research$"
+PalletTown_Lab_Text_OakRelicsExplain:
+	.string "OAK: ELM and I discovered six\n"
+	.string "ancient powers in JOHTO.\p"
+	.string "Their names spell R-E-L-I-C-S.\n"
+	.string "Each holds an ancient voice.\p"
+	.string "Their combined RESONANCE may\n"
+	.string "awaken GOLDEN RELIC HO-OH.\p"
+	.string "I'll help you track each clue.\n"
+	.string "Here's where to go next!$"
+PalletTown_Lab_Text_OakRelicsStart:
+	.string "OAK: Fly to VIOLET CITY.\n"
+	.string "Head SOUTH onto ROUTE 32,\p"
+	.string "then take the WEST path to\n"
+	.string "the RUINS OF ALPH.\p"
+	.string "Enter the RESEARCH LAB and\n"
+	.string "speak to the SCIENTIST.\p"
+	.string "Start with R: RAIKOU.\n"
+	.string "Tell me what you discover!$"
+PalletTown_Lab_Text_OakRelicsEntei:
+	.string "OAK: RAIKOU is recorded!\p"
+	.string "Return to the RUINS OF ALPH\n"
+	.string "RESEARCH LAB for E: ENTEI.$"
+PalletTown_Lab_Text_OakRelicsLugia:
+	.string "OAK: ENTEI's power is ours!\p"
+	.string "The scientist at the RUINS\n"
+	.string "OF ALPH seeks L: LUGIA.$"
+PalletTown_Lab_Text_OakRelicsUnown:
+	.string "OAK: LUGIA is recorded!\p"
+	.string "At the RUINS OF ALPH LAB,\n"
+	.string "the next mark is I: UNOWN I.$"
+PalletTown_Lab_Text_OakRelicsCelebi:
+	.string "OAK: The UNOWN clue is done!\p"
+	.string "Return to the RUINS OF ALPH\n"
+	.string "LAB for C: CELEBI.$"
+PalletTown_Lab_Text_OakRelicsSuicune:
+	.string "OAK: CELEBI is recorded!\p"
+	.string "The last letter waits at the\n"
+	.string "RUINS OF ALPH: S, SUICUNE.$"
+PalletTown_Lab_Text_OakRelicsAlphoracle:
+	.string "OAK: All six letters shine!\p"
+	.string "Visit the RUINS OF ALPH LAB\n"
+	.string "for the FIRST VOICE: ALPHORACLE.$"
+PalletTown_Lab_Text_OakRelicsCrest:
+	.string "OAK: The FIRST VOICE is awake!\p"
+	.string "Climb MT. SILVER and challenge\n"
+	.string "RED for the RAINBOW CREST.$"
+PalletTown_Lab_Text_OakRelicsHoOh:
+	.string "OAK: You have the CREST!\p"
+	.string "Go to MT. SILVER's summit.\n"
+	.string "I'll await your final test,\p"
+	.string "then we'll summon the GOLDEN\n"
+	.string "RELIC HO-OH together!$"
+PalletTown_Lab_Text_OakRelicsComplete:
+	.string "OAK: The RELICS are united!\p"
+	.string "ELM and I are proud of you,\n"
+	.string "ELITE 20 CHAMPION!$"
 
 // Deoxys' Aurora Ticket is now an obtainable post-League Kanto milestone.
 // Preserve Oak's normal badge/Indigo Plateau story on every other visit.

@@ -1,84 +1,42 @@
-# AGENTS.md — Pokémon Johto Relics
+# AGENTS.md — Pokémon Relics Ultimate
+Updated 2026-10-30. Supersedes outdated Johto Relics / pjr-rebuild guidance.
 
-This file defines the default working rules for AI-assisted development of **Pokémon Johto Relics (PJR)**.
+Repository: jamesthoward2112-tech/Pokemon-Relics-Ultimate.
+Read PRU_HANDOFF.md and docs/PRU_RELEASE_LEDGER.md at the beginning of every task.
+Current game is standalone PRU, not a PJR donor fork release.
 
-## Repository / branch
+## Player instructions
+- Deliver a real raw .gba quickly. The player handles gameplay testing in Pizza Boy.
+- Never add optional mGBA screenshot/boot tests as delivery gates.
+- Do not claim 'done' until a genuine file exists, with exact SHA and build provenance.
+- Report DONE / CURRENT / NEXT / COMMIT, distinguishing source, compiled, released and player-tested.
+- Never substitute generated pictures or Work prompts for changes to the ROM.
+- Protect existing saves, items, flags, species IDs, moves, approved artwork, E4/E20 and quests.
+- Exactly 450 species. Final three: Rhyperior, Magmortar, Electivire.
+- Preserve all Indigo tutor/specialist functions and broad compatibility.
+- Groudon/Kyogre are permanently black Primal appearances; Rayquaza has permanent black Mega appearance;
+  no form changing, Mega Stones or Orb-triggered transformations.
+- Mewduo ability is DUEL SOUL including eligible two-foe moves.
+- Dragon Ascent has 10 PP; Achilles Heel needs actual learners.
+- Challenge menu should reuse H&S options. No player sprite selector without a separate request.
 
-- Repository: `jamesthoward2112-tech/Pokemon-Johto-Relics`
-- Active development branch: `pjr-rebuild`
-- Do not silently switch to `master`, `1.3-shop-ui`, an old checkout, an old ROM, or an earlier rescue state.
-- Always read the live `pjr-rebuild` HEAD before editing. GitHub HEAD and GitHub Actions are the source of truth, not chat/session state.
+## Branch policy
+- Do not blindly merge parallel PRs #55/#58/#60/#61/#62/#65/#66.
+- Start from last player-confirmed good source lineage; reconcile later changes and feature owners.
+- One integration writer. No force pushes. Never overwrite separate active branches.
+- Before integrating, inspect all deletions/reversions from protected tables:
+  species, move tutor compatibility, item 910, map warps/flags, graphics/icon registrations and save IDs.
+- Source success is not binary success; compilation is not a release; release is not player-testing.
 
-## Crash-resistant execution rule
-
-The priority is to make useful work survive an interrupted ChatGPT/agent session.
-
-For every implementation task:
-
-1. Inspect only what is needed to locate the requested change.
-2. Make a **small real implementation batch** as soon as practical.
-3. As soon as that batch is internally coherent, **commit and push it to `pjr-rebuild` immediately**.
-4. Verify the pushed commit SHA.
-5. Build/check the real GitHub Actions run for that SHA.
-6. If it fails, inspect the actual error, fix that error, commit/push the fix, and rebuild.
-7. Repeat **FIX → COMMIT/PUSH → BUILD → INSPECT** until the requested batch is successful.
-8. Do not hold a large amount of completed work only inside a chat or temporary workspace waiting for the whole job to finish.
-
-A session crash must never require rediscovering or recreating already completed work if that work could have been committed.
-
-## Keep passes short
-
-- Prefer one to three closely related implementation jobs per batch.
-- Do not perform a broad project audit unless the user explicitly asks for one.
-- Do not repeatedly re-check completed systems merely because a new run has started.
-- Preserve working features unless the current task explicitly changes them.
-- When a task is large, checkpoint working subsets to GitHub before continuing.
-
-## Asset / Library discipline
-
-Repeated broad Library searches are a known source of wasted time and fragile sessions.
-
-- Search for an external asset only when the repository does not already contain the required asset.
-- Reuse exact asset locations discovered earlier in the same task.
-- Do not repeatedly list the same Library folders with slightly different queries.
-- Once an asset has been imported into the repository, treat the repository copy as canonical for future builds.
-- When a reusable external asset location is discovered, record it in the repository documentation or the commit message so a later session does not have to rediscover it.
-- Prefer targeted filename/folder searches over recursive exploratory searches.
-- Never redo an asset search just to “double check” if the asset has already been positively identified.
-
-## PJR project invariants
-
-- PJR is a sequel to Project Kanto Relics and Project Hoenn Relics.
-- Core PJR work must not regress already working QoL or completed fixes.
-- Followers are intentionally removed.
-- Starter line is Scarabub → Heracross → Heracurion, Skarmet → Skarmory → Skarmadon, and Mootiny → Miltank → Miltitan.
-- Silver receives the mapped unchosen baby starter, not a vanilla Johto starter.
-- Jessie and James are recurring Team Rocket agents; their late-game Pikachu must remain Pikachu because Noxichu is reserved for Red.
-- Red's exclusive PKR team is Edensaur, Charaxis, Fortotoise, Khang, Nolax, and Noxichu.
-- RELICS/postgame content and custom species/assets already implemented must be preserved unless the user explicitly requests a change.
-- Avoid frustrating puzzle redesigns; this project intentionally favors streamlined progression.
-
-## Build
-
-The upstream project documentation specifies:
-
-```sh
-make hns
-```
-
-and the resulting base build ROM is `pokehns.gba`. When GitHub Actions has a project-specific build/package workflow, use that workflow as the authoritative build result and artifact source.
-
-## Reporting a run
-
-A status report must distinguish between:
-
-- edits only present in the current workspace,
-- committed/pushed changes,
-- a GitHub Actions run that is queued or running,
-- a failed build,
-- a successful build,
-- and an artifact that actually exists.
-
-Never describe work as continuing in the background unless GitHub/automation state actually shows that it is running.
-
-For implementation requests, do not stop at an audit or plan when the requested code change can be made. The normal terminal result is a pushed implementation plus a verified build/artifact, or a clearly identified external blocker.
+## Build/artwork/release
+- make hns -j2 -O produces pokehns.gba (33,554,432 bytes).
+- Minimum essential checks: roster, important tutor interfaces, item IDs, map/warp references,
+  compiled size/header, and exact ROM SHA256. No unrelated emulator gates.
+- Approved artwork must not silently revert. Existing CI mutates sources by restoring/importing
+  donor art; migrate carefully by committing approved outputs and hash-pinning a sprite manifest.
+  Do not remove required CI restorations before migration is complete.
+- GitHub Actions ZIP does not count as direct .gba release. Verify actual asset URLs.
+- If GitHub Release upload fails, preserve/recover the EXACT successful compiled ROM and record SHA.
+- 'Add a door' requires artwork, walkable collision, correct warp in both directions and
+  compatibility with previous saves; text-only source checks cannot prove gameplay.
+- Keep a release ledger with source SHA, parent, included PRs, binary checksum, status and URL.

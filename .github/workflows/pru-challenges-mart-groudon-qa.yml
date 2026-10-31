@@ -1,0 +1,19 @@
+name: PRU challenges, held items and Dark Cave source regression
+
+on:
+  push:
+    branches:
+      - fix/pru-challenges-mart-groudon-20261030
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate gameplay map, return warp, shop and rules
+        if: "${{ github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
+        run: python3 test/test_pru_challenges_mart_groudon.py

@@ -48,7 +48,9 @@ assert all(o.get("script") != "PRU_Elite18_Steward" for o in objects)
 
 # Healing, Mart, BP/legitimate NPCs and the user-requested two Lv100 Chansey remain.
 assert any(o.get("script") == "OldaleTown_PokemonCenter_1F_EventScript_Nurse" for o in objects)
-assert any(o.get("script") == "BattleFrontier_Mart_EventScript_Clerk" for o in objects)
+assert any(o.get("script") == "PRU_IndigoPlateau_HeldItemsClerk" for o in objects)
+assert "pokemart PRU_IndigoPlateau_HeldItemMart" in scripts
+assert "ITEM_WEAKNESS_POLICY" in scripts and "ITEM_THROAT_SPRAY" in scripts
 chansey = [o for o in objects if o.get("graphics_id") == "OBJ_EVENT_GFX_NURSE_CHANSEY_HNS"]
 assert len(chansey) == 1 and chansey[0]["script"] == "PRU_ChanseyTrainer_Lv100"
 

@@ -7,11 +7,36 @@ root = Path(__file__).resolve().parents[2]
 read = lambda p: (root / p).read_text()
 group = json.loads(read("data/maps/map_groups.json"))
 route = json.loads(read("data/maps/Route45_hns/map.json"))
+dark = json.loads(read("data/maps/DarkCave_NorthSide_hns/map.json"))
 cave = json.loads(read("data/maps/Route45_GroudonCave_hns/map.json"))
 layouts = json.loads(read("data/layouts/layouts.json"))
 
 assert "Route45_GroudonCave_hns" in group["gMapGroup_Dungeons_Hns"]
-assert any(w["dest_map"] == "MAP_ROUTE45_GROUDON_CAVE_HNS" for w in route["warp_events"])
+assert not any(w["dest_map"] == "MAP_ROUTE45_GROUDON_CAVE_HNS" for w in route["warp_events"])
+assert any(w["dest_map"] == "MAP_ROUTE45_GROUDON_CAVE_HNS" and (w["x"], w["y"]) == (46, 4)
+           for w in dark["warp_events"])
+assert any(w["dest_map"] == "MAP_DARK_CAVE_NORTH_SIDE_HNS" and w["dest_warp_id"] == "2"
+           for w in cave["warp_events"])
+assert any(o["script"] == "DarkCave_NorthSide_EventScript_GroudonGuard" and o["flag"] == "FLAG_IS_CHAMPION"
+           for o in dark["object_events"])
+assert "callnative PruOpenDarkCaveGroudonDoor" in read("data/maps/DarkCave_NorthSide_hns/scripts.inc")
+fieldmap = read("src/fieldmap.c")
+# Preserve the actual existing Cave_Default_Hns ladder tile and native ladder behavior.
+assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 4 + MAP_OFFSET, 0x3285)" in fieldmap
+assert "MapGridSetMetatileEntryAt(45 + MAP_OFFSET, 4 + MAP_OFFSET" not in fieldmap
+assert "MapGridSetMetatileEntryAt(47 + MAP_OFFSET, 4 + MAP_OFFSET" not in fieldmap
+art = (root / "data/tilesets/secondary/cave_default_hns/metatiles.bin").read_bytes()
+attr = (root / "data/tilesets/secondary/cave_default_hns/metatile_attributes.bin").read_bytes()
+import struct
+assert len(art) == 306 * 16  # Corrupt extra cave-mouth tiles removed
+assert len(attr) == 306 * 2
+assert struct.unpack_from("<8H", art, (0x285 - 0x280) * 16) == (0x9288, 0x9289, 0x9298, 0x9299, 0, 0, 0, 0)
+assert struct.unpack_from("<H", attr, (0x285 - 0x280) * 2)[0] == 0x0061
+assert not any(o["script"] == "DarkCave_NorthSide_EventScript_GroudonSideRock"
+               for o in dark["object_events"])
+assert not any((o["x"], o["y"]) == (47, 5) for o in dark["object_events"])
+assert "DarkCave_NorthSide_EventScript_GroudonSideRock" not in read("data/maps/DarkCave_NorthSide_hns/scripts.inc")
+assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 5 + MAP_OFFSET, 0x3281)" in fieldmap
 assert cave["layout"] == "LAYOUT_ROUTE45_GROUDON_CAVE_HNS"
 assert any(x["id"] == cave["layout"] and x["secondary_tileset"] == "gTileset_BlackthornGym_Hns"
            for x in layouts["layouts"]), "Red magma tileset must replace Seafoam blue"
@@ -27,10 +52,10 @@ assert "AI: Smart Trainer / Prediction / Ace Pokemon" in maxie_party
 assert maxie_party.rfind("Groudon @ Red Orb") > maxie_party.rfind("Houndoom @ Wise Glasses")
 assert "FLAG_PRU_MAXIE_GROUDON_DEFEATED" in scene
 assert "FLAG_PRU_GROUDON_CAUGHT" in scene
-assert "setwildbattleshiny SPECIES_GROUDON, 75, ITEM_RED_ORB" in scene
+assert "setwildbattleshiny SPECIES_GROUDON, 75" in scene
 assert "B_OUTCOME_CAUGHT" in scene
 src = read("src/script_pokemon_util.c")
 for move in ("HONE_CLAWS", "PRECIPICE_BLADES", "FIRE_PUNCH", "DRAGON_CLAW"):
     assert f"MOVE_{move}" in src
 
-print("PASS: Route 45 magma cave, Maxie, shiny Primal Groudon and moves")
+print("PASS: gated Dark Cave magma passage, reciprocal warp, Maxie and permanent shiny Primal Groudon")
