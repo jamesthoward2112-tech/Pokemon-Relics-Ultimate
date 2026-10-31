@@ -113,8 +113,12 @@ def install() -> None:
 
         if species in {"armaldo", "cradily"}:
             battle_palette = exact_battle_palette(species)
+            # The locked Odyssey II donor archive has front and back filenames
+            # reversed. Use the visually front-facing image for the in-game
+            # front to match the player's confirmed sprite orientation.
             for side in ("front", "back"):
-                with Image.open(source / f"{side}.png") as image:
+                donor_side = "back" if side == "front" else "front"
+                with Image.open(source / f"{donor_side}.png") as image:
                     installed = indexed_from_rgba(image, battle_palette, nearest=False)
                 installed.save(destination / f"{side}.png", optimize=False)
             save_jasc(destination / "normal.pal", battle_palette)
