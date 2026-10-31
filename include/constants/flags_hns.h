@@ -3562,6 +3562,9 @@
 #define FLAG_PRU_CUBONE_MIMIKYU_CAUGHT                         0x93D
 #define FLAG_PRU_CUBONE_MEMORIAL_REWARDED                      0x93E
 #define FLAG_PRU_CUBONE_MIMIKYU_RESOLVED                       0x93F // KO or catch; saved permanently
+
+// Existing Elite 20/Dojo clear bit from established PRU builds; preserve old saves.
+#define FLAG_PRU_ELITE18_CLEARED                               0x941
 #define FLAG_UNUSED_0x940                                       0
 #define FLAG_UNUSED_0x941                                       0
 #define FLAG_UNUSED_0x942                                       0
