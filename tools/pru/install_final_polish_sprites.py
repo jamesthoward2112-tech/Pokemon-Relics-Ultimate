@@ -121,8 +121,22 @@ def install() -> None:
                 with Image.open(source / f"{donor_side}.png") as image:
                     installed = indexed_from_rgba(image, battle_palette, nearest=False)
                 installed.save(destination / f"{side}.png", optimize=False)
-            save_jasc(destination / "normal.pal", battle_palette)
-            save_jasc(destination / "shiny.pal", battle_palette)
+                if side == "front":
+                    # The ROM reads anim_front(.4bpp), not front(.4bpp).
+                    # Supply the corrected facing as BOTH identical animation frames.
+                    sheet = Image.new("P", (64, 128), 0)
+                    sheet.putpalette(installed.getpalette())
+                    sheet.paste(installed, (0, 0))
+                    sheet.paste(installed, (0, 64))
+                    sheet.info["transparency"] = 0
+                    for variant in ("anim_front.png", "anim_front_gba.png"):
+                        sheet.save(destination / variant, optimize=False)
+                else:
+                    # The alternate GBA-style art table uses back_gba.
+                    installed.save(destination / "back_gba.png", optimize=False)
+            # Both normal and GBA-style graphics routes must use the installed palette.
+            for palette_name in ("normal.pal", "shiny.pal", "normal_gba.pal", "shiny_gba.pal"):
+                save_jasc(destination / palette_name, battle_palette)
         else:
             for side in ("front", "back"):
                 shutil.copyfile(source / f"{side}.png", destination / f"{side}.png")
