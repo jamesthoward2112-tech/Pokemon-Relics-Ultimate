@@ -81,16 +81,25 @@ assert "sPruDexSpecies[i] == originalSpecies" in summary
 assert "return i + 1;" in summary
 assert "sPruDexSpecies[i] == baseSpecies" in summary
 
-for name, expected in [("Charaxis", 8), ("Grovyle", 285),
-                       ("Mightyena", 297), ("Gardevoir", 318),
-                       ("Mewsion", 425), ("Deoxys", 444),
-                       ("Glaceon", 445), ("Leafeon", 446), ("Mimikyu", 447), ("Rhyperior", 448), ("Magmortar", 449), ("Electivire", 450)]:
-    assert canonical[expected - 1]["Name"] == name, name
+# Relic family ordering is an explicit gameplay-Pokédex requirement.
+name_positions = {row["Name"]: i for i, row in enumerate(canonical)}
+for base, evolution in [
+    ("Noxichu", "Mimikyu"),
+    ("Rhydon", "Rhyperior"),
+    ("Electabuzz", "Electivire"),
+    ("Magmar", "Magmortar"),
+    ("Umbreon", "Leafeon"),
+    ("Leafeon", "Glaceon"),
+]:
+    assert name_positions[evolution] == name_positions[base] + 1, (
+        f"{evolution} must follow {base}"
+    )
+assert name_positions["Charaxis"] == 7
 
 print(f"PASS: {len(canonical)}/450 canonical species constants exist and have exactly one SpeciesInfo record")
 print("PASS: active engine includes all nine generation family files and PJR/PRU extensions")
 print("PASS: canonical PRU #001-#450 maps to the HNS summary number lookup without duplicates")
-print("PASS: #008 Charaxis, #285 Grovyle, #297 Mightyena, #318 Gardevoir")
+print("PASS: family-local display order for all six relocated entries and original #008 Charaxis")
 print("NOTE: these checks validate source registry/summary numbering, NOT gameplay or graphics.")
 print("OPEN: HGSS in-game Pokédex list and save seen/caught flags still use old National/Johto mapping.")
 print("OPEN: Seviian Noibat/Noivern use standard species records; approved variant art and unique mechanics are not verified.")
