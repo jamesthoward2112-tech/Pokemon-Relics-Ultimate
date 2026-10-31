@@ -12,15 +12,16 @@ Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 - Root-caused Actions run 41207838869: `tools/pru/check_astrachi_jirachi_encounter.py` still expected obsolete Astrachi dex number 443 after the family-order reorganisation.
 - Updated the Astrachi regression assertion and message to canonical display number 449 without changing its internal species ID.
 - GitHub Actions run 41208617652 passed every source check, compiled successfully, verified the 33,554,432-byte ROM and published it.
+- Verified Armaldo and Cradily against the James-locked `PHR_OdysseyII_Selected_Hoenn_Sprites.zip` and installed that exact front/back orientation.
+- Installed approved PKR/PRL Kantomon Fortotoise and pinned Elite Redux Tortemple/Brontonana front, back, palette and icon artwork.
+- Added a deterministic post-PRL-sync installer and regression lock; no species IDs, forms or icon-palette table entries were added.
 
 ## In progress
 
-- Installing the five approved final-polish sprite donor sets after the automatic PRL asset synchronisation step.
+- Awaiting GitHub Actions compilation of the five-species sprite milestone.
 
 ## Remaining
 
-- Replace Fortotoise, Torkaldera/Tortemple and Tropisaur/Brontonana with their documented approved authentic donor artwork.
-- Install the identity-verified, James-locked Hoenn Relics Odyssey II Armaldo and Cradily alternatives.
 - Replace Noibat/Noivern with authentic Radical Red Seviian Rock/Ghost artwork and mechanics; level-36 evolution; Dark Cave South Side encounter; no extra species/form switching.
 - Make Golden Relic Ho-Oh the only Ho-Oh presentation across battle, icon, trainers, encounters and overworld.
 - Add counterable Wonder Guard Shedinja to suitable Agatha Kanto Championship and Ghost-themed Elite 20 teams without altering aces, team sizes or progression.
@@ -30,6 +31,20 @@ Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 
 - `tools/pru/check_astrachi_jirachi_encounter.py`
 - `docs/PRU_FINAL_POLISH_PROGRESS.md`
+- `.github/workflows/pru-clean-build.yml`
+- `assets/pru_final_polish/manifest.txt`
+- `assets/pru_final_polish/fortotoise/{front.png,back.png,normal.pal}`
+- `assets/pru_final_polish/torkaldera/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
+- `assets/pru_final_polish/tropisaur/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
+- `assets/pru_final_polish/armaldo/{front.png,back.png}`
+- `assets/pru_final_polish/cradily/{front.png,back.png}`
+- `tools/pru/install_final_polish_sprites.py`
+- `tools/pru/check_final_polish_sprite_sources.py`
+- `graphics/pokemon/prl_authoritative/fortotoise/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
+- `graphics/pokemon/prl_authoritative/torkaldera/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
+- `graphics/pokemon/prl_authoritative/tropisaur/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
+- `graphics/pokemon/armaldo/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
+- `graphics/pokemon/cradily/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
 
 ## Latest successful commit
 
@@ -39,6 +54,7 @@ Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 
 - Current run: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41208617652
 - Status: successful; source regression, compilation, 32 MiB ROM validation, artifact upload and release publication all passed.
+- Next run: pending push of the five-species sprite checkpoint.
 
 ## Latest successfully published ROM
 
@@ -50,7 +66,7 @@ Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 ## Compilation errors or blockers
 
 - No current compilation blocker.
-- Armaldo and Cradily were verified against the James-locked `PHR_OdysseyII_Selected_Hoenn_Sprites.zip` selection; installation remains in progress.
+- Five-species focused source/format check passes locally; full compilation is delegated to GitHub Actions as required.
 
 ## Next-session instructions
 

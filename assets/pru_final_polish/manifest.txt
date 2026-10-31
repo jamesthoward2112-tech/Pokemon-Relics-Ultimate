@@ -1,0 +1,11 @@
+Approved final-polish battle-sprite donors
+
+fortotoise: icon palette 2; PKR/PRL Kantomon approved Porypal export
+torkaldera: icon palette 1; Elite Redux Tortemple, upcoming@52ac885b4d094faf26412530a00d526e8a319935
+tropisaur: icon palette 1; Elite Redux Brontonana, upcoming@52ac885b4d094faf26412530a00d526e8a319935
+armaldo: icon palette 0; James-locked PHR Odyssey II selected Hoenn package
+cradily: icon palette 0; James-locked PHR Odyssey II selected Hoenn package
+
+The original donor front/back orientation is retained. Icons unavailable in
+the approved Fortotoise and Odyssey II selections are deterministic nearest-
+neighbour reductions of the approved front art, not generated artwork.

@@ -100,6 +100,8 @@ jobs:
           PY
       - name: Import pinned PRL-approved existing sprites and palettes
         run: python3 tools/pru/sync_prl_authoritative_sprites.py
+      - name: Install approved final-polish sprite donors after PRL sync
+        run: python3 tools/pru/install_final_polish_sprites.py
       - name: Install approved black Relic G-Max Charaxis artwork
         run: python3 tools/pru/install_charaxis_gmax_relic.py
       - name: Apply approved Relic starter palettes after PRL sprite sync
@@ -140,6 +142,7 @@ jobs:
           python3 tools/pru/check_insurgence_space_mew.py
           python3 tools/pru/check_p_bird_sprites.py
           python3 tools/pru/check_astrachi_jirachi_encounter.py
+          python3 tools/pru/check_final_polish_sprite_sources.py
           python3 tools/pru/check_khang_party_icon_palette.py
           python3 tools/pru/check_legendary_catching_respawns.py
           python3 tools/pru/check_bld_status_icon.py
