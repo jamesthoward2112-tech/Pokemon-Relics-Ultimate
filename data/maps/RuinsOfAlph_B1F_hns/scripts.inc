@@ -70,3 +70,55 @@ RuinsOfAlph_B1F_Text_Gramps:
 	.string "tombs of kings.\p"
 	.string "Like the pyramids, for\n"
 	.string "instance.$"
+
+@ PRU RELICS: the lab guide supplies clues; encounters are on this map.
+RuinsOfAlph_B1F_hns_RelicUnownI::
+	lock
+	faceplayer
+	goto_if_unset FLAG_IS_CHAMPION, RuinsOfAlph_B1F_hns_RelicUnownI_Unavailable
+	goto_if_unset FLAG_PJR_RELIC_LUGIA, RuinsOfAlph_B1F_hns_RelicUnownI_Unavailable
+	goto_if_set FLAG_PJR_RELIC_UNOWN_I, RuinsOfAlph_B1F_hns_RelicUnownI_Complete
+	goto RuinsOfAlph_Lab_EventScript_RelicUnownI
+
+RuinsOfAlph_B1F_hns_RelicUnownI_Unavailable::
+	msgbox RuinsOfAlph_B1F_hns_RelicUnownI_TextUnavailable, MSGBOX_DEFAULT
+	release
+	end
+
+RuinsOfAlph_B1F_hns_RelicUnownI_Complete::
+	msgbox RuinsOfAlph_B1F_hns_RelicUnownI_TextComplete, MSGBOX_DEFAULT
+	release
+	end
+
+RuinsOfAlph_B1F_hns_RelicUnownI_TextUnavailable:
+	.string "The ancient RELIC is still sealed.\n"
+	.string "Ask the ALPH RUINS scientist.$"
+RuinsOfAlph_B1F_hns_RelicUnownI_TextComplete:
+	.string "This RELIC has already answered.\n"
+	.string "Return to the ALPH scientist.$"
+
+RuinsOfAlph_B1F_hns_RelicAlphoracle::
+	lock
+	faceplayer
+	goto_if_unset FLAG_IS_CHAMPION, RuinsOfAlph_B1F_hns_RelicAlphoracle_Unavailable
+	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_B1F_hns_RelicAlphoracle_Unavailable
+	goto_if_set FLAG_PJR_RELIC_ALPHORACLE, RuinsOfAlph_B1F_hns_RelicAlphoracle_Complete
+	goto RuinsOfAlph_Lab_EventScript_RelicAlphoracle
+
+RuinsOfAlph_B1F_hns_RelicAlphoracle_Unavailable::
+	msgbox RuinsOfAlph_B1F_hns_RelicAlphoracle_TextUnavailable, MSGBOX_DEFAULT
+	release
+	end
+
+RuinsOfAlph_B1F_hns_RelicAlphoracle_Complete::
+	msgbox RuinsOfAlph_B1F_hns_RelicAlphoracle_TextComplete, MSGBOX_DEFAULT
+	release
+	end
+
+RuinsOfAlph_B1F_hns_RelicAlphoracle_TextUnavailable:
+	.string "The ancient RELIC is still sealed.\n"
+	.string "Ask the ALPH RUINS scientist.$"
+RuinsOfAlph_B1F_hns_RelicAlphoracle_TextComplete:
+	.string "This RELIC has already answered.\n"
+	.string "Return to the ALPH scientist.$"
+
