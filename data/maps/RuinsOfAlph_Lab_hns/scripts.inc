@@ -10,7 +10,7 @@ RuinsOfAlph_Lab_EventScript_Scientist1::
 	lock
 	faceplayer
 	goto_if_unset FLAG_IS_CHAMPION, RuinsOfAlph_Lab_EventScript_Scientist1Standard
-	goto_if_unset FLAG_PJR_RELIC_RAIKOU, RuinsOfAlph_Lab_EventScript_HintRaikou
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, RuinsOfAlph_Lab_EventScript_IntroduceRelics
 	goto_if_unset FLAG_PJR_RELIC_ENTEI, RuinsOfAlph_Lab_EventScript_HintEntei
 	goto_if_unset FLAG_PJR_RELIC_LUGIA, RuinsOfAlph_Lab_EventScript_HintLugia
 	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, RuinsOfAlph_Lab_EventScript_HintUnownI
@@ -33,6 +33,26 @@ RuinsOfAlph_Lab_EventScript_RelicsFullyComplete::
 	msgbox RuinsOfAlph_Lab_Text_RelicsFullyComplete, MSGBOX_DEFAULT
 	release
 	end
+
+@ One clear introduction on the first RELIC, then the route clue.
+@ Old saves retain their recorded catch flags and bypass already caught marks.
+RuinsOfAlph_Lab_EventScript_IntroduceRelics::
+	msgbox RuinsOfAlph_Lab_Text_IntroduceRelics, MSGBOX_DEFAULT
+	goto RuinsOfAlph_Lab_EventScript_HintRaikou
+
+RuinsOfAlph_Lab_Text_IntroduceRelics:
+	.string "Ah, the CHAMPION! Welcome to\n"
+	.string "the RUINS research lab.\p"
+	.string "Six ancient POKeMON bear the\n"
+	.string "marks R-E-L-I-C-S.\p"
+	.string "Each carries a lost fragment\n"
+	.string "of a power called RESONANCE.\p"
+	.string "Collect all six, and the\n"
+	.string "FIRST VOICE beneath ALPH may\n"
+	.string "finally awaken.\p"
+	.string "Catch each RELIC, then return\n"
+	.string "here. I'll decipher the next\n"
+	.string "location. Our first mark: R.$"
 
 RuinsOfAlph_Lab_EventScript_HintRaikou::
 	msgbox RuinsOfAlph_Lab_Text_HintRaikou, MSGBOX_DEFAULT
@@ -335,11 +355,16 @@ RuinsOfAlph_Lab_Text_Scientist1:
 	.string "We named that energy RESONANCE.$"
 
 RuinsOfAlph_Lab_Text_Scientist2:
-	.string "The wall patterns are more than\n"
-	.string "decoration.\p"
-	.string "Some repeat whenever unusual\n"
-	.string "POKéMON react to RESONANCE.\p"
-	.string "They may be a record, not a code.$"
+	.string "The patterns spell RELICS:\n"
+	.string "RAIKOU, ENTEI, LUGIA, UNOWN I,\n"
+	.string "CELEBI and SUICUNE.\p"
+	.string "Our instruments call their\n"
+	.string "strange energy RESONANCE.\p"
+	.string "Find and capture each one.\n"
+	.string "The six marks may awaken the\n"
+	.string "FIRST VOICE beneath ALPH.\p"
+	.string "Our colleague by the wall\n"
+	.string "will guide your next search.$"
 
 RuinsOfAlph_Lab_Text_Fossils:
 	.string "Fossils found within the RUINS.\p"
