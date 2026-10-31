@@ -153,3 +153,28 @@ RuinsOfAlph_Outside_Text_Youngster2:
 	.string "V... O... I... C... E...\p"
 	.string "These old symbols keep spelling\n"
 	.string "VOICE. Weird, huh?$"
+
+@ Six RELICS unlock a direct ladder into an existing B1F area near Alphoracle.
+RuinsOfAlph_Outside_RelicLadder::
+	lock
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, RuinsOfAlph_Outside_RelicLadderSealed
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, RuinsOfAlph_Outside_RelicLadderSealed
+	goto_if_unset FLAG_PJR_RELIC_LUGIA, RuinsOfAlph_Outside_RelicLadderSealed
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, RuinsOfAlph_Outside_RelicLadderSealed
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, RuinsOfAlph_Outside_RelicLadderSealed
+	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_Outside_RelicLadderSealed
+	msgbox RuinsOfAlph_Outside_RelicLadderTextOpen, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, RuinsOfAlph_Outside_RelicLadderLeave
+	warp MAP_RUINS_OF_ALPH_B1F_HNS, 14, 22
+	end
+RuinsOfAlph_Outside_RelicLadderSealed::
+	msgbox RuinsOfAlph_Outside_RelicLadderTextSealed, MSGBOX_DEFAULT
+RuinsOfAlph_Outside_RelicLadderLeave::
+	release
+	end
+RuinsOfAlph_Outside_RelicLadderTextOpen:
+	.string "Six runes shine on the ladder.\\p"
+	.string "Descend to the FIRST VOICE?$"
+RuinsOfAlph_Outside_RelicLadderTextSealed:
+	.string "Six stone symbols are dormant.\\p"
+	.string "Find all six RELICS first.$"
