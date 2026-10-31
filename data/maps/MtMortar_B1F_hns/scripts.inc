@@ -84,3 +84,30 @@ MountMortar4_Text_KiyoGotTyrogue:
 
 MountMortar4_Text_KiyoFullParty:
 	.string "You have no room in your party!$"
+
+@ PRU RELICS: the lab guide supplies clues; encounters are on this map.
+MtMortar_B1F_hns_RelicEntei::
+	lock
+	faceplayer
+	goto_if_unset FLAG_IS_CHAMPION, MtMortar_B1F_hns_RelicEntei_Unavailable
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, MtMortar_B1F_hns_RelicEntei_Unavailable
+	goto_if_set FLAG_PJR_RELIC_ENTEI, MtMortar_B1F_hns_RelicEntei_Complete
+	goto RuinsOfAlph_Lab_EventScript_RelicEntei
+
+MtMortar_B1F_hns_RelicEntei_Unavailable::
+	msgbox MtMortar_B1F_hns_RelicEntei_TextUnavailable, MSGBOX_DEFAULT
+	release
+	end
+
+MtMortar_B1F_hns_RelicEntei_Complete::
+	msgbox MtMortar_B1F_hns_RelicEntei_TextComplete, MSGBOX_DEFAULT
+	release
+	end
+
+MtMortar_B1F_hns_RelicEntei_TextUnavailable:
+	.string "The ancient RELIC is still sealed.\n"
+	.string "Ask the ALPH RUINS scientist.$"
+MtMortar_B1F_hns_RelicEntei_TextComplete:
+	.string "This RELIC has already answered.\n"
+	.string "Return to the ALPH scientist.$"
+
