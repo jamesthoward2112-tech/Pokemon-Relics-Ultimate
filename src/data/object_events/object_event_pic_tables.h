@@ -4398,6 +4398,9 @@ static const struct SpriteFrameImage sPicTable_AlolaOak_hns[] = {
     overworld_frame(gObjectEventPic_AlolaOak_hns, 2, 4, 8),
 };
 
+static const struct SpriteFrameImage sPicTable_RelicLadder_hns[] = {
+    obj_frame_tiles(gObjectEventPic_RelicLadder_hns),
+};
 static const struct SpriteFrameImage sPicTable_EyeOfAlph_hns[] = {
     obj_frame_tiles(gObjectEventPic_EyeOfAlph_hns),
 };
