@@ -590,7 +590,8 @@
 #define OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_GROUDON_HNS 552
 #define OBJ_EVENT_GFX_EYE_OF_ALPH_HNS            553
 #define OBJ_EVENT_GFX_ALPHORACLE_MONOLITH_HNS    554
-#define NUM_OBJ_EVENT_GFX                        555
+#define OBJ_EVENT_GFX_RELIC_LADDER_HNS           555
+#define NUM_OBJ_EVENT_GFX                        556
 
 
 // These are dynamic object gfx ids.
