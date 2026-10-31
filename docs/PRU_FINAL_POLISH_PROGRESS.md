@@ -21,6 +21,8 @@ Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 
 ## Chat-mode continuation — 31 October 2026
 
+- GitHub commit: `dd1d0360ffba95ef4f3197c2add3246c86df174b`; current source HEAD for final polish at this checkpoint.
+- Latest source build: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41211551209 (still in progress when checkpoint recorded).
 - Restored a failing Seviian regression check: `.gitattributes` checks out `*.pal` as CRLF while authoritative asset hashes were generated from LF. Palette hashes now normalise line endings; PNG hashes remain byte-exact. Commit `13702932dcf00856bd6d1b798f96497b6de8a35a`.
 - [Pending CI] Golden Relic Ho-Oh presentation: existing `SPECIES_HO_OH` now shares the proven Relic species' front, back, icon and standard palette (including for shinies) without changing either species ID. Relic Ho-Oh also uses the locked gold palette for shiny presentation. Both species' overworld sprites share a gold-toned normal palette rather than ordinary red or a separate shiny colourway.
 - [Pending CI] Shedinja replaces Agatha's non-ace Omeon in Kanto Championship and in both normal and Master Agatha/Phoebe Elite 20 teams. Preserves 6-mon championship roster, 3 per Elite 20 trainer, Gengar/Maroghost and Ghoulbat aces, and Wonder Guard counterplay. Morty's rematch remains unchanged.
