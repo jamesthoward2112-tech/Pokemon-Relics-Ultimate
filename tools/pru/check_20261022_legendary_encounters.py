@@ -34,8 +34,9 @@ pokemon = read("src/pokemon.c")
 util = read("src/script_pokemon_util.c")
 assert "setwildbattleshiny SPECIES_ELECTRODE, 80" in electrode
 assert "special PruPrepareChargedElectrode" in electrode
-# The Power Plant Electrode stays visible after Kaboom! self-KO, any other
-# knockout, fleeing or whiteout. Capture is the *only* permanent removal.
+# The blue shiny Electrode is now retired from Route 10. Preserve the
+# original donor battle setup, signature move, Levitate, and catch logic for
+# possible future reuse with Surge or the Elite Four.
 encounter, caught_block = electrode.split("Route10_EventScript_PRU_ElectrodeCaught::", 1)
 encounter = encounter.split("Route10_EventScript_PRU_ShinyElectrode::", 1)[1]
 caught_block = caught_block.split("Route10_Text_PRU_ShinyElectrode:", 1)[0]
@@ -43,10 +44,26 @@ assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, Route10_EventScript_PRU_Electro
 assert "removeobject LOCALID_ROUTE10_PRU_ELECTRODE" not in encounter
 assert "setflag FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT" not in encounter
 assert "setflag FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT" in caught_block
-assert "removeobject LOCALID_ROUTE10_PRU_ELECTRODE" in caught_block
-assert any(o.get("graphics_id") == "OBJ_EVENT_GFX_SPECIES_SHINY(ELECTRODE)"
-           and o.get("flag") == "FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT"
-           for o in route["object_events"])
+assert not any(o.get("graphics_id") == "OBJ_EVENT_GFX_SPECIES_SHINY(ELECTRODE)"
+               for o in route["object_events"]), "Retired shiny Electrode must not appear"
+# Raikou replaces Electrode at the exact former podium tile, not on an
+# impassable wall in the adjacent Power Plant back-room.
+raikou = [o for o in route["object_events"]
+          if o.get("script") == "Route10_hns_RelicRaikou"]
+assert len(raikou) == 1
+assert (raikou[0]["x"], raikou[0]["y"]) == (5, 48)
+assert raikou[0]["flag"] == "FLAG_TEMP_5"
+backroom = json.loads(read("data/maps/Route10_PowerPlantBackRoom_hns/map.json"))
+assert not any(o.get("script") == "Route10_hns_RelicRaikou"
+               for o in backroom["object_events"])
+# One evaluated visibility flag: empty until E20, visible after E20,
+# hidden again after capture. Failed battles do not consume the RELIC.
+assert "setflag FLAG_TEMP_5" in electrode
+assert "goto_if_unset FLAG_PRU_ELITE18_CLEARED, Route10_RelicWeatherDone" in electrode
+assert "goto_if_set FLAG_PJR_RELIC_RAIKOU, Route10_RelicWeatherDone" in electrode
+assert "clearflag FLAG_TEMP_5" in electrode
+assert "removeobject LOCALID_ROUTE10_PRU_RAIKOU" in electrode
+assert "goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, Route10_hns_RelicRaikou_Caught" in electrode
 assert "MON_DATA_MODERN_FATEFUL_ENCOUNTER" in util
 assert "return ABILITY_LEVITATE;" in pokemon and "IsPruChargedElectrode" in pokemon
 # Ability must survive initial battle setup and display in party/PC summaries.
@@ -104,4 +121,4 @@ assert "goto_if_eq VAR_RESULT, FALSE, PalletTown_Lab_EventScript_OakPRUAuroraBag
 assert "setflag FLAG_PRU_OAK_AURORA_TICKET_RECEIVED" in oak
 assert "checkitem ITEM_AURORA_TICKET" in olivine
 assert "warpsilent MAP_BIRTH_ISLAND_EXTERIOR_HNS" in olivine
-print("PRU_LEGENDARY_20261022_PASS: canonical Primal Orb encounters, boss gates, unique Electrode, Aurora Ticket")
+print("PRU_LEGENDARY_20261022_PASS: canonical Primals, E20-gated Raikou podium, preserved retired Electrode donor, Aurora Ticket")
