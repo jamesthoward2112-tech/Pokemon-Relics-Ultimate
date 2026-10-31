@@ -2,6 +2,7 @@
 """Install approved final-polish sprite donors after PRL synchronisation."""
 from __future__ import annotations
 
+import json
 import shutil
 from pathlib import Path
 
@@ -149,6 +150,28 @@ def install() -> None:
             animated.save(destination / "anim_front.png", optimize=False)
         for name in ("back.png", "icon.png", "normal.pal", "shiny.pal"):
             shutil.copyfile(source / name, destination / name)
+
+    encounters_path = ROOT / "src/data/wild_encounters.json"
+    encounters = json.loads(encounters_path.read_text())
+    south = [
+        header
+        for group in encounters["wild_encounter_groups"]
+        for header in group["encounters"]
+        if header.get("map") == "MAP_DARK_CAVE_SOUTH_SIDE_HNS"
+    ]
+    assert len(south) == 1
+    slot = south[0]["land_mons"]["mons"][7]
+    assert slot == {
+        "min_level": 3,
+        "max_level": 4,
+        "species": "SPECIES_ZUBAT",
+    } or slot == {
+        "min_level": 3,
+        "max_level": 4,
+        "species": "SPECIES_NOIBAT",
+    }
+    slot["species"] = "SPECIES_NOIBAT"
+    encounters_path.write_text(json.dumps(encounters, indent=2) + "\n")
 
     print("Installed approved five-species polish and authentic RR Seviian Noibat family sprites")
 

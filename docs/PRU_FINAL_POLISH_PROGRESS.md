@@ -53,7 +53,6 @@ Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 - `graphics/pokemon/noivern/{anim_front.png,back.png,icon.png,normal.pal,shiny.pal}`
 - `src/data/pokemon/species_info/gen_6_families.h`
 - `src/data/pokemon/level_up_learnsets/gen_3.h`
-- `src/data/wild_encounters.json`
 - `tools/pru/check_seviian_noibat.py`
 - `tools/pru/check_444_species_dex.py`
 
