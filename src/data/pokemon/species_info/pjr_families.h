@@ -683,7 +683,7 @@ PJR_FINAL_SPECIES(SPECIES_GHOULBAT, 95, 110, 90, 80, 95, 130, TYPE_GHOST, TYPE_F
     .enemyMonElevation = 6,
     .backPic = gMonBackPic_HoOhRelic, .backPicSize = MON_COORDS_SIZE(64, 64), .backPicYOffset = 1,
     .backAnimId = BACK_ANIM_SHAKE_GLOW_RED,
-    .palette = gMonPalette_HoOhRelic, .shinyPalette = gMonShinyPalette_HoOhRelic,
+    .palette = gMonPalette_HoOhRelic, .shinyPalette = gMonPalette_HoOhRelic,
     .iconSprite = gMonIcon_HoOhRelic, .iconPalIndex = 1,
     .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
     SHADOW(1, 17, SHADOW_SIZE_L)
@@ -695,7 +695,7 @@ PJR_FINAL_SPECIES(SPECIES_GHOULBAT, 95, 110, 90, 80, 95, 130, TYPE_GHOST, TYPE_F
         TRACKS_NONE,
         sAnimTable_Following,
         gOverworldPalette_HoOh,
-        gShinyOverworldPalette_HoOh
+        gOverworldPalette_HoOh
     )
     .isRestrictedLegendary = TRUE,
     .isFrontierBanned = TRUE,

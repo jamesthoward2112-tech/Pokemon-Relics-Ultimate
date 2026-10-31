@@ -19,6 +19,13 @@ Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 - Recovered the exact Radical Red 4.1 Seviian Noibat/Noivern front, back, icon, normal and shiny palette bytes from the official UPS expansion; no base ROM or generated artwork was used.
 - Replaced the existing Noibat/Noivern slots with Rock/Ghost stats, Levitate/Rock Head/Sturdy, their RR level-up sets, level-36 evolution and a Dark Cave South Side encounter.
 
+## Chat-mode continuation — 31 October 2026
+
+- Restored a failing Seviian regression check: `.gitattributes` checks out `*.pal` as CRLF while authoritative asset hashes were generated from LF. Palette hashes now normalise line endings; PNG hashes remain byte-exact. Commit `13702932dcf00856bd6d1b798f96497b6de8a35a`.
+- [Pending CI] Golden Relic Ho-Oh presentation: existing `SPECIES_HO_OH` now shares the proven Relic species' front, back, icon and standard palette (including for shinies) without changing either species ID. Relic Ho-Oh also uses the locked gold palette for shiny presentation. Both species' overworld sprites share a gold-toned normal palette rather than ordinary red or a separate shiny colourway.
+- [Pending CI] Shedinja replaces Agatha's non-ace Omeon in Kanto Championship and in both normal and Master Agatha/Phoebe Elite 20 teams. Preserves 6-mon championship roster, 3 per Elite 20 trainer, Gengar/Maroghost and Ghoulbat aces, and Wonder Guard counterplay. Morty's rematch remains unchanged.
+- Next: review newest Actions run and its first real failure. Preserve older successful `c0d98e67df00e1b1340c7b4fb3f851e922bf328a` ROM as fallback until a new successful player-test build. Recheck Ho-Oh actual overworld appearance and Shedinja parties in the user's save; CI proves source/compile only.
+
 ## In progress
 
 - Awaiting GitHub Actions compilation of the Seviian Noibat/Noivern milestone.

@@ -8829,22 +8829,19 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .pokemonOffset = 0,
         .trainerScale = 610,
         .trainerOffset = 17,
-        .frontPic = gMonFrontPic_HoOh,
+        .frontPic = gMonFrontPic_HoOhRelic,
         .frontPicSize = MON_COORDS_SIZE(64, 64),
         .frontPicYOffset = 0,
-        .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(1, 20),
-            ANIMCMD_FRAME(0, 20),
-        ),
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
         .frontAnimId = ANIM_GROW_VIBRATE,
         .enemyMonElevation = 6,
-        .backPic = gMonBackPic_HoOh,
+        .backPic = gMonBackPic_HoOhRelic,
         .backPicSize = MON_COORDS_SIZE(64, 64),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 1 : 2,
         .backAnimId = BACK_ANIM_SHAKE_GLOW_RED,
-        .palette = gMonPalette_HoOh,
-        .shinyPalette = gMonShinyPalette_HoOh,
-        .iconSprite = gMonIcon_HoOh,
+        .palette = gMonPalette_HoOhRelic,
+        .shinyPalette = gMonPalette_HoOhRelic,
+        .iconSprite = gMonIcon_HoOhRelic,
         .iconPalIndex = 1,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(1, 17, SHADOW_SIZE_L)
@@ -8856,7 +8853,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
             TRACKS_NONE,
             sAnimTable_Following,
             gOverworldPalette_HoOh,
-            gShinyOverworldPalette_HoOh
+            gOverworldPalette_HoOh
         )
         .isRestrictedLegendary = TRUE,
         .isFrontierBanned = TRUE,
