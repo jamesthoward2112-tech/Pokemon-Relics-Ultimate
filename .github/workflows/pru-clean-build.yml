@@ -102,6 +102,8 @@ jobs:
         run: python3 tools/pru/sync_prl_authoritative_sprites.py
       - name: Install approved black Relic G-Max Charaxis artwork
         run: python3 tools/pru/install_charaxis_gmax_relic.py
+      - name: Apply approved Relic starter palettes after PRL sprite sync
+        run: python3 tools/pru/install_approved_relic_palettes.py
       - name: Install Insurgence Mega Jirachi from pinned 64x64 donor assets
         run: python3 tools/pru/install_insurgence_mega_jirachi.py
       - name: Install approved TRE P-form legendary bird sprites and palettes
