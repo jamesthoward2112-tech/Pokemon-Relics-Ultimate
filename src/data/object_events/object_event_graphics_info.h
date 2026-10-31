@@ -7456,6 +7456,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Silver_hns = {TAG_
 
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Steven_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_STEVEN_HNS, OBJ_EVENT_PAL_TAG_NONE, 256, 16, 32, 5, SHADOW_SIZE_M, FALSE, FALSE, TRACKS_FOOT, &gObjectEventBaseOam_16x32, sOamTables_16x32, sAnimTable_Standard, sPicTable_Steven_hns, gDummySpriteAffineAnimTable};
 
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RelicLadder_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_EYE_OF_ALPH_HNS, OBJ_EVENT_PAL_TAG_NONE, 128, 16, 16, 10, SHADOW_SIZE_NONE, TRUE, FALSE, TRACKS_NONE, &gObjectEventBaseOam_16x16, sOamTables_16x16, sAnimTable_Inanimate, sPicTable_RelicLadder_hns, gDummySpriteAffineAnimTable};
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_EyeOfAlph_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_EYE_OF_ALPH_HNS, OBJ_EVENT_PAL_TAG_NONE, 512, 32, 32, 10, SHADOW_SIZE_M, TRUE, FALSE, TRACKS_NONE, &gObjectEventBaseOam_32x32, sOamTables_32x32, sAnimTable_Inanimate, sPicTable_EyeOfAlph_hns, gDummySpriteAffineAnimTable};
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AlphoracleMonolith_hns = {TAG_NONE, OBJ_EVENT_PAL_TAG_ALPHORACLE_MONOLITH_HNS, OBJ_EVENT_PAL_TAG_NONE, 512, 32, 32, 10, SHADOW_SIZE_M, TRUE, FALSE, TRACKS_NONE, &gObjectEventBaseOam_32x32, sOamTables_32x32, sAnimTable_Inanimate, sPicTable_AlphoracleMonolith_hns, gDummySpriteAffineAnimTable};
 
