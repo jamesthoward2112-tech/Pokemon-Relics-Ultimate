@@ -2662,6 +2662,15 @@ static bool32 SetStartingHazardStatus(enum Hazards hazard, u32 targetSide, u8 la
             effect = TRUE;
         }
         break;
+    case HAZARDS_PERMAFROST:
+        if (layers != 0)
+        {
+            if (!IsHazardOnSide(targetSide, HAZARDS_PERMAFROST))
+                PushHazardTypeToQueue(targetSide, HAZARDS_PERMAFROST);
+            gSideTimers[targetSide].permafrostAmount = layers > 5 ? 5 : layers;
+            effect = TRUE;
+        }
+        break;
     case HAZARDS_NONE:
     case HAZARDS_MAX_COUNT:
         break;
@@ -8714,6 +8723,10 @@ static inline uq4_12_t CalcTypeEffectivenessMultiplierInternal(struct BattleCont
         modifier = UQ_4_12(0.0);
     }
 
+    // PRU Achilles Heel always deals 2x damage unless the defender is immune.
+    if (ctx->move == MOVE_ACHILLES_HEEL && modifier > UQ_4_12(0.0) && !ctx->isAnticipation)
+        modifier = UQ_4_12(2.0);
+
     // Thousand Arrows ignores type modifiers for flying mons
     if (MoveIgnoresTypeIfFlyingAndUngrounded(ctx->move)
      && !IsBattlerGrounded(ctx->battlerDef, ctx->abilityDef, ctx->holdEffectDef)
@@ -10639,6 +10652,8 @@ bool32 IsHazardOnSideAndClear(enum BattleSide side, enum Hazards hazardType)
                 gSideTimers[side].spikesAmount = 0;
             else if (hazardType == HAZARDS_TOXIC_SPIKES)
                 gSideTimers[side].toxicSpikesAmount = 0;
+            else if (hazardType == HAZARDS_PERMAFROST)
+                gSideTimers[side].permafrostAmount = 0;
             return TRUE;
         }
     }
@@ -10649,6 +10664,7 @@ void RemoveAllHazardsFromField(enum BattleSide side)
 {
     gSideTimers[side].spikesAmount = 0;
     gSideTimers[side].toxicSpikesAmount = 0;
+    gSideTimers[side].permafrostAmount = 0;
     gBattleStruct->numHazards[side] = 0;
     for (u32 i = 0; i < HAZARDS_MAX_COUNT; i++)
         gBattleStruct->hazardsQueue[side][i] = HAZARDS_NONE;
@@ -10667,6 +10683,8 @@ void RemoveHazardFromField(enum BattleSide side, enum Hazards hazardType)
                 gSideTimers[side].spikesAmount = 0;
             else if (hazardType == HAZARDS_TOXIC_SPIKES)
                 gSideTimers[side].toxicSpikesAmount = 0;
+            else if (hazardType == HAZARDS_PERMAFROST)
+                gSideTimers[side].permafrostAmount = 0;
             break;
         }
     }

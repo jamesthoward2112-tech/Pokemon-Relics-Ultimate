@@ -336,6 +336,7 @@ enum __attribute__((packed)) BattleMoveEffects
     EFFECT_CEASELESS_EDGE, // Same applies to spikes
     EFFECT_SPECIES_POWER_OVERRIDE, // Uses argument field to for the species, power and (number of hits, used only for multi hit moves)
     EFFECT_PRU_EEVOBOOST, // PRL Eevoboost (+1 each, distinct from Z-Move +2)
+    EFFECT_PRU_PERMAFROST, // Restore PRU Frostbite entry hazard
     NUM_BATTLE_MOVE_EFFECTS,
 };
 

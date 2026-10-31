@@ -364,6 +364,37 @@ static bool32 TryHazardsOnSwitchIn(enum BattlerId battler, enum Ability ability,
             effect = TRUE;
         }
         break;
+    case HAZARDS_PERMAFROST:
+        // Ten-percent Frostbite chance per layer; doubled in Hail.
+        if (!IsBattlerGrounded(battler, ability, holdEffect))
+            break;
+        if (IS_BATTLER_OF_TYPE(battler, TYPE_FIRE) || IS_BATTLER_OF_TYPE(battler, TYPE_ICE))
+        {
+            RemoveHazardFromField(side, HAZARDS_PERMAFROST);
+            clearedToxicSpikes = TRUE; // Removal shifts the hazard queue.
+            gBattleScripting.battler = battler;
+            BattleScriptCall(BattleScript_PermafrostAbsorbed);
+            effect = TRUE;
+        }
+        else if (IsBattlerAffectedByHazards(battler, holdEffect, TRUE)
+              && CanSetNonVolatileStatus(battler, battler, ABILITY_NONE, ability,
+                                         MOVE_EFFECT_FROSTBITE, CHECK_TRIGGER))
+        {
+            u32 chance = gSideTimers[side].permafrostAmount * 10;
+            if (gBattleWeather & B_WEATHER_HAIL)
+                chance *= 2;
+            if (RandomPercentage(RNG_ACCURACY, chance))
+            {
+                gBattleScripting.battler = battler;
+                gBattleMons[battler].status1 |= STATUS1_FROSTBITE;
+                BtlController_EmitSetMonData(battler, B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE,
+                                             0, sizeof(gBattleMons[battler].status1), &gBattleMons[battler].status1);
+                MarkBattlerForControllerExec(battler);
+                BattleScriptCall(BattleScript_PermafrostFrozen);
+                effect = TRUE;
+            }
+        }
+        break;
     case HAZARDS_STEALTH_ROCK:
         if (IsBattlerAffectedByHazards(battler, holdEffect, FALSE) && ability != ABILITY_MAGIC_GUARD)
         {

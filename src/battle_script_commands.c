@@ -7383,6 +7383,7 @@ void BS_CourtChangeSwapSideStatuses(void)
         gBattleStruct->hazardsQueue[B_SIDE_OPPONENT][i] = tempQueue[i];
     SWAP(sideTimerPlayer->spikesAmount, sideTimerOpp->spikesAmount, temp);
     SWAP(sideTimerPlayer->toxicSpikesAmount, sideTimerOpp->toxicSpikesAmount, temp);
+    SWAP(sideTimerPlayer->permafrostAmount, sideTimerOpp->permafrostAmount, temp);
 
     // Change battler IDs of swapped effects. Needed for the correct string when they expire
     UPDATE_COURTCHANGED_BATTLER(stickyWebBattlerId);
@@ -9347,7 +9348,21 @@ static void Cmd_trysetspikes(void)
 
     enum BattleSide targetSide = GetBattlerSide(BATTLE_OPPOSITE(gBattlerAttacker));
 
-    if (gSideTimers[targetSide].spikesAmount == 3)
+    if (gCurrentMove == MOVE_PERMAFROST)
+    {
+        if (gSideTimers[targetSide].permafrostAmount < 5)
+        {
+            if (gSideTimers[targetSide].permafrostAmount == 0)
+                PushHazardTypeToQueue(targetSide, HAZARDS_PERMAFROST);
+            gSideTimers[targetSide].permafrostAmount++;
+            gBattlescriptCurrInstr = cmd->nextInstr;
+        }
+        else
+        {
+            gBattlescriptCurrInstr = cmd->failInstr;
+        }
+    }
+    else if (gSideTimers[targetSide].spikesAmount == 3)
     {
         gBattlescriptCurrInstr = cmd->failInstr;
     }
