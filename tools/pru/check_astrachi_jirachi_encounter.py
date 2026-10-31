@@ -73,7 +73,7 @@ assert scene.count('"movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_DOWN"') >= 2
 info = read("src/data/pokemon/species_info/pru_custom.h")
 assert "sPicTable_Astrachi" in info and "gOverworldPalette_Astrachi" in info
 dex = read("data/pru/PRU_National_Pokedex_2026-10-16.csv")
-assert "443,Astrachi,astrachi,SPECIES_ASTRACHI" in dex
+assert "449,Astrachi,astrachi,SPECIES_ASTRACHI" in dex
 workflow = read(".github/workflows/pru-clean-build.yml")
 assert "install_insurgence_mega_jirachi.py" in workflow
 assert "check_insurgence_mega_jirachi.py" in workflow
@@ -111,4 +111,4 @@ assert '"astrachi",  # Locally corrected 32x64 icon' in sync
 print("PASS: Astrachi exact 32x64 4bpp two-frame compact icon, dedicated palette #10, party/PC asset wiring")
 
 print("PASS: Jirachi caught-only gate, Level 70 Astrachi, independent capture flags and retry")
-print("PASS: Astrachi #443 + Claude overworld and Insurgence Jirachi art guards")
+print("PASS: Astrachi #449 + Claude overworld and Insurgence Jirachi art guards")
