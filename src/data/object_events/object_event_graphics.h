@@ -815,7 +815,12 @@ const u32 gObjectEventPic_TrainWest_hns[] = INCBIN_U32("graphics/object_events/p
 const u32 gObjectEventPic_Whirlpool_hns[] = INCBIN_U32("graphics/object_events/pics/misc/whirlpool_hns.4bpp");
 const u32 gObjectEventPic_AlolaOak_hns[] = INCBIN_U32("graphics/object_events/pics/people/alola_oak_hns.4bpp");
 
+const u32 gObjectEventPic_EyeOfAlph_hns[] = INCBIN_U32("graphics/object_events/pics/misc/eye_of_alph.4bpp");
+const u32 gObjectEventPic_AlphoracleMonolith_hns[] = INCBIN_U32("graphics/object_events/pics/misc/alphoracle_monolith.4bpp");
+
 // HnS palette data
+const u16 gObjectEventPal_EyeOfAlph_hns[] = INCBIN_U16("graphics/object_events/palettes/eye_of_alph.gbapal");
+const u16 gObjectEventPal_AlphoracleMonolith_hns[] = INCBIN_U16("graphics/object_events/palettes/alphoracle_monolith.gbapal");
 const u16 gObjectEventPal_BirthIslandStone_hns[] = INCBIN_U16("graphics/object_events/palettes/birth_island_stone_hns.gbapal");
 const u16 gObjectEventPal_Bugsy_hns[] = INCBIN_U16("graphics/object_events/palettes/bugsy_hns.gbapal");
 const u16 gObjectEventPal_Train_hns[] = INCBIN_U16("graphics/object_events/palettes/train_hns.gbapal");
