@@ -24215,4 +24215,163 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_ShadowBall,
     },
 
+
+    // PRU append-only moves restored from tutor-stable release (save compatibility).
+    [MOVE_SHOCKWAVE_FIST] =
+    {
+        .name = COMPOUND_STRING("SHOCKWAVE FIST"),
+        .description = COMPOUND_STRING("Strikes both foes. Has a\n10% flinch chance."),
+        .effect = EFFECT_HIT,
+        .power = 60,
+        .type = TYPE_FIGHTING,
+        .accuracy = 100,
+        .pp = 15,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({ .moveEffect = MOVE_EFFECT_FLINCH, .chance = 10, }),
+        .battleAnimScript = gBattleAnimMove_MachPunch,
+    },
+
+    [MOVE_FAULTLINE] =
+    {
+        .name = COMPOUND_STRING("FAULTLINE"),
+        .description = COMPOUND_STRING("Hits both foes and sets\nStealth Rock."),
+        .effect = EFFECT_STONE_AXE,
+        .power = 70,
+        .type = TYPE_GROUND,
+        .accuracy = 95,
+        .pp = 10,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .battleAnimScript = gBattleAnimMove_Earthquake,
+    },
+
+    [MOVE_WRAITH_CRY] =
+    {
+        .name = COMPOUND_STRING("WRAITH CRY"),
+        .description = COMPOUND_STRING("A ghostly cry hits both.\nMay inflict FEAR."),
+        .effect = EFFECT_HIT,
+        .power = 60,
+        .type = TYPE_GHOST,
+        .accuracy = 100,
+        .pp = 15,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({ .moveEffect = MOVE_EFFECT_FEAR, .chance = 10, }),
+        .battleAnimScript = gBattleAnimMove_Snarl,
+    },
+
+    [MOVE_METAL_BARRAGE] =
+    {
+        .name = COMPOUND_STRING("METAL BARRAGE"),
+        .description = COMPOUND_STRING("Hits both foes and scatters\nSpikes on their side."),
+        .effect = EFFECT_CEASELESS_EDGE,
+        .power = 60,
+        .type = TYPE_STEEL,
+        .accuracy = 100,
+        .pp = 15,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .battleAnimScript = gBattleAnimMove_MetalClaw,
+    },
+
+    [MOVE_MINDWAVE] =
+    {
+        .name = COMPOUND_STRING("MINDWAVE"),
+        .description = COMPOUND_STRING("Hits both foes. May lower\nSp. Def by one stage."),
+        .effect = EFFECT_HIT,
+        .power = 60,
+        .type = TYPE_PSYCHIC,
+        .accuracy = 100,
+        .pp = 15,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({ .moveEffect = MOVE_EFFECT_SP_DEF_MINUS_1, .chance = 10, }),
+        .battleAnimScript = gBattleAnimMove_Psychic,
+    },
+
+    [MOVE_DARK_NOVA] =
+    {
+        .name = COMPOUND_STRING("DARK NOVA"),
+        .description = COMPOUND_STRING(
+            "Dark energy strikes twice.\n"
+            "Uses the higher attack stat."),
+        // Photon Geyser already selects Atk or Sp. Atk correctly.
+        // strikeCount preserves Insurgence's two separate 135-power hits.
+        .effect = EFFECT_PHOTON_GEYSER,
+        .power = 135,
+        .type = TYPE_DARK,
+        .accuracy = 0,
+        .pp = 5,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .strikeCount = 2,
+        .metronomeBanned = TRUE,
+        .battleAnimScript = gBattleAnimMove_DarkPulse,
+    },
+
+    [MOVE_ACHILLES_HEEL] =
+    {
+        .name = COMPOUND_STRING("ACHILLES HEEL"),
+        .description = COMPOUND_STRING("Finds a weakness to deal\n2x damage unless immune."),
+        .effect = EFFECT_HIT,
+        .power = 45,
+        .type = TYPE_NORMAL,
+        .accuracy = 100,
+        .pp = 15,
+        .target = TARGET_SELECTED,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .battleAnimScript = gBattleAnimMove_BrickBreak,
+    },
+
+    [MOVE_PERMAFROST] =
+    {
+        .name = COMPOUND_STRING("PERMAFROST"),
+        .description = COMPOUND_STRING("Lays icy ground that may\nfrostbite incoming foes."),
+        .effect = EFFECT_PRU_PERMAFROST,
+        .type = TYPE_ICE,
+        .accuracy = 0,
+        .pp = 15,
+        .target = TARGET_OPPONENTS_FIELD,
+        .category = DAMAGE_CATEGORY_STATUS,
+        .ignoresProtect = TRUE,
+        .magicCoatAffected = TRUE,
+        .battleAnimScript = gBattleAnimMove_Hail,
+    },
+
+    [MOVE_WILDFIRE] =
+    {
+        .name = COMPOUND_STRING("WILDFIRE"),
+        .description = COMPOUND_STRING("Burns foes; Grass targets\nmay spread it to reserves."),
+        .effect = EFFECT_NON_VOLATILE_STATUS,
+        .type = TYPE_FIRE,
+        .accuracy = 70,
+        .pp = 10,
+        .target = TARGET_BOTH,
+        .category = DAMAGE_CATEGORY_STATUS,
+        .argument = { .nonVolatileStatus = MOVE_EFFECT_BURN },
+        .magicCoatAffected = TRUE,
+        .battleAnimScript = gBattleAnimMove_WillOWisp,
+    },
+
+    [MOVE_DARK_MATTER] =
+    {
+        .name = COMPOUND_STRING("DARK MATTER"),
+        .description = COMPOUND_STRING("A dark blast. The user\nmust recharge next turn."),
+        .effect = EFFECT_HIT,
+        .power = 150,
+        .type = TYPE_DARK,
+        .accuracy = 90,
+        .pp = 5,
+        .target = TARGET_SELECTED,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_RECHARGE,
+            .self = TRUE,
+        }),
+        .battleAnimScript = gBattleAnimMove_DarkPulse,
+    },
+
 };

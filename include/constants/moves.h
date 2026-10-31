@@ -975,6 +975,21 @@ enum __attribute__((packed)) Move
     // Appended to keep all existing move IDs and save data stable.
     MOVE_KABOOM,
 
+    // PRU free double-battle tutor; append-only save-safe move IDs.
+    MOVE_SHOCKWAVE_FIST,
+    MOVE_FAULTLINE,
+    MOVE_WRAITH_CRY,
+    MOVE_METAL_BARRAGE,
+    MOVE_MINDWAVE,
+    // Insurgence additions follow existing PRU moves to preserve move IDs.
+    // Insurgence Shadow Mewtwo's signature attack: no Burst Mode required.
+    MOVE_DARK_NOVA,
+    // Insurgence's four extra TMs (append-only for save compatibility).
+    MOVE_ACHILLES_HEEL,
+    MOVE_PERMAFROST,
+    MOVE_WILDFIRE,
+    MOVE_DARK_MATTER,
+
     MOVES_COUNT,
 
     // Z Moves
