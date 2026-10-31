@@ -1066,6 +1066,8 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_PROF_OAK_HNS] = &gObjectEventGraphicsInfo_ProfOak_hns,
     [OBJ_EVENT_GFX_RED_NORMAL_HNS] = &gObjectEventGraphicsInfo_RedNormal_hns,
     [OBJ_EVENT_GFX_SILVER_HNS] = &gObjectEventGraphicsInfo_Silver_hns,
+    [OBJ_EVENT_GFX_EYE_OF_ALPH_HNS] = &gObjectEventGraphicsInfo_EyeOfAlph_hns,
+    [OBJ_EVENT_GFX_ALPHORACLE_MONOLITH_HNS] = &gObjectEventGraphicsInfo_AlphoracleMonolith_hns,
     [OBJ_EVENT_GFX_BIRTH_ISLAND_STONE_HNS] = &gObjectEventGraphicsInfo_BirthIslandStone_hns,
     [OBJ_EVENT_GFX_BREAKABLE_ROCK_HNS] = &gObjectEventGraphicsInfo_BreakableRock_hns,
     [OBJ_EVENT_GFX_CUTTABLE_TREE_HNS] = &gObjectEventGraphicsInfo_CuttableTree_hns,
