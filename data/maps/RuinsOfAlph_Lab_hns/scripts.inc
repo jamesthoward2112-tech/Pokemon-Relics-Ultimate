@@ -41,18 +41,19 @@ RuinsOfAlph_Lab_EventScript_IntroduceRelics::
 	goto RuinsOfAlph_Lab_EventScript_HintRaikou
 
 RuinsOfAlph_Lab_Text_IntroduceRelics:
-	.string "Ah, the CHAMPION! Welcome to\n"
-	.string "the RUINS research lab.\p"
-	.string "Six ancient POKeMON bear the\n"
-	.string "marks R-E-L-I-C-S.\p"
-	.string "Each carries a lost fragment\n"
-	.string "of a power called RESONANCE.\p"
-	.string "Collect all six, and the\n"
-	.string "FIRST VOICE beneath ALPH may\n"
-	.string "finally awaken.\p"
+	.string "Ah, CHAMPION! Welcome to\n"
+	.string "the RUINS OF ALPH lab.\p"
+	.string "We've deciphered six marks:\n"
+	.string "R-E-L-I-C-S.\p"
+	.string "Each marks a rare POKeMON\n"
+	.string "carrying ancient RESONANCE.\p"
+	.string "If their powers unite,\n"
+	.string "the FIRST VOICE may awaken.\p"
+	.string "ALPHORACLE lies dormant\n"
+	.string "beneath these ruins.\p"
 	.string "Catch each RELIC, then return\n"
-	.string "here. I'll decipher the next\n"
-	.string "location. Our first mark: R.$"
+	.string "here for your next clue.\p"
+	.string "Let's begin with R: RAIKOU.$"
 
 RuinsOfAlph_Lab_EventScript_HintRaikou::
 	msgbox RuinsOfAlph_Lab_Text_HintRaikou, MSGBOX_DEFAULT
@@ -355,16 +356,16 @@ RuinsOfAlph_Lab_Text_Scientist1:
 	.string "We named that energy RESONANCE.$"
 
 RuinsOfAlph_Lab_Text_Scientist2:
-	.string "The patterns spell RELICS:\n"
-	.string "RAIKOU, ENTEI, LUGIA, UNOWN I,\n"
-	.string "CELEBI and SUICUNE.\p"
-	.string "Our instruments call their\n"
-	.string "strange energy RESONANCE.\p"
-	.string "Find and capture each one.\n"
-	.string "The six marks may awaken the\n"
-	.string "FIRST VOICE beneath ALPH.\p"
+	.string "The wall inscriptions spell\n"
+	.string "one word: R-E-L-I-C-S.\p"
+	.string "Our instruments have found\n"
+	.string "a power called RESONANCE.\p"
+	.string "Six POKeMON carry its marks.\n"
+	.string "Together, they may awaken\p"
+	.string "the FIRST VOICE sleeping\n"
+	.string "beneath these ancient ruins.\p"
 	.string "Our colleague by the wall\n"
-	.string "will guide your next search.$"
+	.string "can decode the next clue.$"
 
 RuinsOfAlph_Lab_Text_Fossils:
 	.string "Fossils found within the RUINS.\p"
