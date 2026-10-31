@@ -44,20 +44,6 @@
       "flag": "FLAG_ITEM_ROUTE10_TM_ROCK_POLISH"
     },
     {
-      "local_id": "LOCALID_ROUTE10_PRU_ELECTRODE",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES_SHINY(ELECTRODE)",
-      "x": 5,
-      "y": 48,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_DOWN",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route10_EventScript_PRU_ShinyElectrode",
-      "flag": "FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_HIKER_HNS",
       "x": 30,
       "y": 68,
@@ -252,6 +238,20 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MON_BASE+SPECIES_RAIKOU",
+      "x": 5,
+      "y": 48,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route10_hns_RelicRaikou",
+      "flag": "FLAG_TEMP_5",
+      "local_id": "LOCALID_ROUTE10_PRU_RAIKOU"
     }
   ],
   "warp_events": [

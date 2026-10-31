@@ -62,7 +62,7 @@ RuinsOfAlph_Lab_EventScript_HintRaikou::
 
 RuinsOfAlph_Lab_Text_HintRaikou:
 	.string "Storms gather on ROUTE 10.\p"
-	.string "RAIKOU waits by the generators\n"
+	.string "RAIKOU waits on the old podium\n"
 	.string "inside the POWER PLANT.$"
 
 RuinsOfAlph_Lab_EventScript_HintEntei::

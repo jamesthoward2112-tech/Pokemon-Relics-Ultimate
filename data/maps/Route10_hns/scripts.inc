@@ -5,8 +5,12 @@ Route10_hns_MapScripts::
 
 Route10_OnTransition:
 	callnative SetTimeBasedEncounters
-	goto_if_unset FLAG_IS_CHAMPION, Route10_RelicWeatherDone
+	@ Hide podium Raikou unless E20 is complete and Raikou is uncaught.
+	@ The TEMP flag is re-evaluated every time Route 10 is entered.
+	setflag FLAG_TEMP_5
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, Route10_RelicWeatherDone
 	goto_if_set FLAG_PJR_RELIC_RAIKOU, Route10_RelicWeatherDone
+	clearflag FLAG_TEMP_5
 	setweather WEATHER_RAIN_THUNDERSTORM
 	doweather
 Route10_RelicWeatherDone:
@@ -75,7 +79,8 @@ Route10_EventScript_PRU_ShinyElectrode::
 
 Route10_EventScript_PRU_ElectrodeCaught::
 	setflag FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT
-	removeobject LOCALID_ROUTE10_PRU_ELECTRODE
+	@ Encounter retired from the map. Keep the shiny Electrode and Levitate
+	@ battle setup intact for potential reuse with Surge or an E4 trainer.
 	release
 	end
 
@@ -112,13 +117,37 @@ Route10_Text_Sign:
 	.string "ROUTE 10\p"
 	.string "CERULEAN CITY - LAVENDER TOWN$"
 
-@ PRU RELICS: the lab guide supplies clues; encounters are on this map.
+@ PRU RELICS: Raikou replaces the retired shiny Electrode on its podium.
 Route10_hns_RelicRaikou::
 	lock
 	faceplayer
-	goto_if_unset FLAG_IS_CHAMPION, Route10_hns_RelicRaikou_Unavailable
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, Route10_hns_RelicRaikou_Unavailable
 	goto_if_set FLAG_PJR_RELIC_RAIKOU, Route10_hns_RelicRaikou_Complete
-	goto RuinsOfAlph_Lab_EventScript_RelicRaikou
+	msgbox RuinsOfAlph_Lab_Text_RelicRaikou, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route10_hns_RelicRaikou_Decline
+	seteventmon SPECIES_RAIKOU, 65
+	playmoncry SPECIES_RAIKOU, CRY_MODE_ENCOUNTER
+	waitmoncry
+	special BattleSetup_StartLegendaryBattle
+	waitstate
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, Route10_hns_RelicRaikou_Caught
+	msgbox RuinsOfAlph_Lab_Text_RelicRetry, MSGBOX_DEFAULT
+	release
+	end
+
+Route10_hns_RelicRaikou_Caught::
+	setflag FLAG_PJR_RELIC_RAIKOU
+	setflag FLAG_TEMP_5
+	removeobject LOCALID_ROUTE10_PRU_RAIKOU
+	msgbox RuinsOfAlph_Lab_Text_RelicRecorded, MSGBOX_DEFAULT
+	release
+	end
+
+Route10_hns_RelicRaikou_Decline::
+	msgbox RuinsOfAlph_Lab_Text_RelicDecline, MSGBOX_DEFAULT
+	release
+	end
 
 Route10_hns_RelicRaikou_Unavailable::
 	msgbox Route10_hns_RelicRaikou_TextUnavailable, MSGBOX_DEFAULT
