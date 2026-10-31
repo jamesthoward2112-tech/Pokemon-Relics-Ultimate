@@ -526,8 +526,8 @@ Route25_RelicAlready::
 	release
 	end
 Route25_RelicTextLocked:
-	.string "A mysterious energy stirs here.\\n"
+	.string "A mysterious energy stirs here.\n"
 	.string "Seek the ALPH RUINS scientist.$"
 Route25_RelicTextCaught:
-	.string "SUICUNE's RELIC is recorded.\\n"
+	.string "SUICUNE's RELIC is recorded.\n"
 	.string "Return to the scientist.$"
