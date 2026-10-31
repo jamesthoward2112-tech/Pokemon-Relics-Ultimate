@@ -5,9 +5,9 @@ PalletTown_Lab_EventScript_Oak::
 	lock
 	faceplayer
 	call_if_unset FLAG_SYS_NATIONAL_DEX, PalletTown_Lab_EventScript_OakGiveNatDex_ForPlaytesters
-	@ Existing Kanto-champion saves can reach the repeatable RELICS handoff.
-	@ The previous E20 flag was undefined in this source; preserve old saves.
-	goto_if_set FLAG_IS_KANTO_CHAMPION, PalletTown_Lab_EventScript_OakRelicsMenu
+	@ Existing Elite 20 clear flag is now defined at its saved-game slot.
+	@ Keep RELICS available on previously completed Elite 20 saves.
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PalletTown_Lab_EventScript_OakRelicsMenu
 PalletTown_Lab_EventScript_OakNormalEntry::
 	goto_if_unset FLAG_PRU_OAK_AURORA_TICKET_RECEIVED, PalletTown_Lab_EventScript_OakPRUAuroraCheck
 PalletTown_Lab_EventScript_OakNormalDialogue:
@@ -23,7 +23,7 @@ PalletTown_Lab_EventScript_OakNormalDialogue:
 	release
 	end
 
-// Use defined post-Kanto champion flag: old saves work without a migration.
+// Reuse established saved Elite 20 completion bit; no save migration needed.
 // Keep guidance available after E20 rewards or credits were claimed.
 // No items, save flags or story flags are changed by Oak's advice.
 PalletTown_Lab_EventScript_OakRelicsMenu::
