@@ -100,7 +100,9 @@ jobs:
           PY
       - name: Import pinned PRL-approved existing sprites and palettes
         run: python3 tools/pru/sync_prl_authoritative_sprites.py
-      - name: Install approved black Relic G-Max Charaxis artwork\n        run: python3 tools/pru/install_charaxis_gmax_relic.py\n      - name: Install Insurgence Mega Jirachi from pinned 64x64 donor assets
+      - name: Install approved black Relic G-Max Charaxis artwork
+        run: python3 tools/pru/install_charaxis_gmax_relic.py
+      - name: Install Insurgence Mega Jirachi from pinned 64x64 donor assets
         run: python3 tools/pru/install_insurgence_mega_jirachi.py
       - name: Install approved TRE P-form legendary bird sprites and palettes
         run: python3 tools/pru/install_p_bird_sprites.py
@@ -118,7 +120,8 @@ jobs:
           python3 tools/pru/check_crystal_battle_backgrounds.py
           python3 tools/pru/check_rhythm_battle_background_assets.py
           python3 tools/pru/check_rhythm_battle_backgrounds.py
-          python3 tools/pru/check_pru_title_screen.py\n          python3 tools/pru/install_charaxis_gmax_relic.py
+          python3 tools/pru/check_pru_title_screen.py
+          python3 tools/pru/install_charaxis_gmax_relic.py
           python3 tools/pru/check_pru_e4_rhythm_backgrounds.py
           python3 tools/pru/check_static_battle_backgrounds.py
           python3 tools/pru/check_444_species_dex.py
