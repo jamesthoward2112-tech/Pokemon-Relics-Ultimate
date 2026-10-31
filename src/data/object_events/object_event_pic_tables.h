@@ -4398,6 +4398,13 @@ static const struct SpriteFrameImage sPicTable_AlolaOak_hns[] = {
     overworld_frame(gObjectEventPic_AlolaOak_hns, 2, 4, 8),
 };
 
+static const struct SpriteFrameImage sPicTable_EyeOfAlph_hns[] = {
+    obj_frame_tiles(gObjectEventPic_EyeOfAlph_hns),
+};
+static const struct SpriteFrameImage sPicTable_AlphoracleMonolith_hns[] = {
+    obj_frame_tiles(gObjectEventPic_AlphoracleMonolith_hns),
+};
+
 static const struct SpriteFrameImage sPicTable_BirthIslandStone_hns[] = {
     obj_frame_tiles(gObjectEventPic_BirthIslandStone_hns),
 };
