@@ -508,3 +508,26 @@ Route25_Text_BillsHouseSign:
 	.string "SEA COTTAGE\n"
 	.string "BILL'S HOUSE$"
 
+@ Independent postgame RELICS encounter: does not replace the original Eusine scene.
+Route25_RelicSuicune::
+	lock
+	faceplayer
+	goto_if_unset FLAG_IS_CHAMPION, Route25_RelicUnavailable
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, Route25_RelicUnavailable
+	goto_if_set FLAG_PJR_RELIC_SUICUNE, Route25_RelicAlready
+	goto RuinsOfAlph_Lab_EventScript_RelicSuicune
+
+Route25_RelicUnavailable::
+	msgbox Route25_RelicTextLocked, MSGBOX_DEFAULT
+	release
+	end
+Route25_RelicAlready::
+	msgbox Route25_RelicTextCaught, MSGBOX_DEFAULT
+	release
+	end
+Route25_RelicTextLocked:
+	.string "A mysterious energy stirs here.\\n"
+	.string "Seek the ALPH RUINS scientist.$"
+Route25_RelicTextCaught:
+	.string "SUICUNE's RELIC is recorded.\\n"
+	.string "Return to the scientist.$"
