@@ -915,8 +915,8 @@ PRU_Elite20_Steward_Cleared::
 	goto PRU_Elite18_AskChallenge
 
 PRU_Elite20_Steward_PendingReward::
-	@ Players whose saves already have the E20 clear flag receive the prize
-	@ and the professors' quest reveal without repeating any battles.
+	@ Older E20-cleared saves can still claim missed one-time rewards.
+	@ Oak's repeatable RELICS explanation is also available in his lab.
 	call PRU_Elite20_ClaimRewards
 	goto_if_unset FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite18_Exit
 	call PRU_Elite20_StartFinale
@@ -967,6 +967,11 @@ PRU_Elite18_Gauntlet::
 	setflag FLAG_PRU_ELITE18_CLEARED
 	special HealPlayerParty
 	msgbox PRU_Elite18_Text_Cleared, MSGBOX_DEFAULT
+	@ Independent of rewards / credits flags, so every E20 gauntlet win
+	@ receives Oak and Elm's story reveal (including repeat victories).
+	msgbox PRU_Elite20_Text_ElmRelics, MSGBOX_DEFAULT
+	msgbox PRU_Elite20_Text_OakRelics, MSGBOX_DEFAULT
+	msgbox PRU_Elite20_Text_RuinsDirections, MSGBOX_DEFAULT
 	call PRU_Elite20_ClaimRewards
 	call PRU_Elite20_StartFinale
 	release
@@ -998,8 +1003,6 @@ PRU_Elite20_ClaimRewards::
 	goto_if_eq VAR_RESULT, FALSE, PRU_Elite20_BagFull
 	checkitemspace ITEM_ANCIENT_STONE, 5
 	goto_if_eq VAR_RESULT, FALSE, PRU_Elite20_BagFull
-	msgbox PRU_Elite20_Text_ElmRelics, MSGBOX_DEFAULT
-	msgbox PRU_Elite20_Text_OakRelics, MSGBOX_DEFAULT
 	giveitem ITEM_MASTER_BALL, 6
 	goto_if_eq VAR_RESULT, FALSE, PRU_Elite20_BagFull
 	giveitem ITEM_ANCIENT_STONE, 5
@@ -1417,6 +1420,13 @@ PRU_Elite20_Text_OakRelics:
 	.string "seek me atop MT. SILVER.\p"
 	.string "We've also prepared a prize\n"
 	.string "worthy of an ELITE 20 CHAMPION!$"
+PRU_Elite20_Text_RuinsDirections:
+	.string "OAK: To begin, fly to VIOLET\n"
+	.string "CITY and go SOUTH to ROUTE 32.\p"
+	.string "Take the WEST path to the\n"
+	.string "RUINS OF ALPH RESEARCH LAB.\p"
+	.string "Speak to the SCIENTIST there.\n"
+	.string "Our first clue is R: RAIKOU.$"
 PRU_Elite20_Text_Champion:
 	.string "ELITE 20 CHAMPION!\p"
 	.string "Your triumph is now recorded.\n"

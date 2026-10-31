@@ -62,15 +62,13 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
         self.assertEqual(len(guards), 1)
         self.assertEqual((guards[0]["x"], guards[0]["y"]), (46, 5))
         self.assertEqual(guards[0]["flag"], "FLAG_IS_CHAMPION")
-        # Permanent rock alongside the ladder, never Rock Smash.
-        rocks = [o for o in interior["object_events"]
-                 if o["script"] == "DarkCave_NorthSide_EventScript_GroudonSideRock"]
-        self.assertEqual(len(rocks), 1)
-        self.assertEqual((rocks[0]["x"], rocks[0]["y"]), (47, 5))
-        self.assertEqual(rocks[0]["graphics_id"], "OBJ_EVENT_GFX_BREAKABLE_ROCK_HNS")
-        self.assertEqual(rocks[0]["flag"], "0")
-        self.assertIn("DarkCave_NorthSide_Text_GroudonSideRock",
-                      source("data/maps/DarkCave_NorthSide_hns/scripts.inc"))
+        # Player-tested existing rock already blocks the right side.
+        self.assertFalse(any(o["script"] == "DarkCave_NorthSide_EventScript_GroudonSideRock"
+                             for o in interior["object_events"]))
+        self.assertFalse(any((o["x"], o["y"]) == (47, 5)
+                             for o in interior["object_events"]))
+        self.assertNotIn("DarkCave_NorthSide_EventScript_GroudonSideRock",
+                         source("data/maps/DarkCave_NorthSide_hns/scripts.inc"))
 
         entrance = [i for i, w in enumerate(interior["warp_events"])
                     if w["dest_map"] == "MAP_ROUTE45_GROUDON_CAVE_HNS"]
@@ -103,6 +101,47 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
         self.assertIn("MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 5 + MAP_OFFSET, 0x3281)", map_patch)
         self.assertIn("DarkCave_NorthSide_Text_GroudonGuard", script)
         self.assertIn("FLAG_IS_CHAMPION", source("include/constants/flags_hns.h"))
+
+
+    def test_existing_e20_save_receives_oak_relics_advice(self):
+        oak = source("data/maps/PalletTown_Lab_hns/scripts.inc")
+        e20 = source("data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc")
+        lab = json.loads(source("data/maps/PalletTown_Lab_hns/map.json"))
+        self.assertEqual(sum(o["script"] == "PalletTown_Lab_EventScript_Oak"
+                             for o in lab["object_events"]), 1)
+        entry = oak.split("PalletTown_Lab_EventScript_Oak::", 1)[1].split(
+            "PalletTown_Lab_EventScript_OakNormalEntry::", 1)[0]
+        self.assertIn("goto_if_set FLAG_PRU_ELITE18_CLEARED, PalletTown_Lab_EventScript_OakRelicsMenu", entry)
+        self.assertNotIn("FLAG_PRU_E20_REWARD_CLAIMED", entry)
+        self.assertNotIn("FLAG_PRU_E20_CREDITS_SHOWN", entry)
+        menu = oak.split("PalletTown_Lab_EventScript_OakRelicsMenu::", 1)[1].split(
+            "PalletTown_Lab_EventScript_OakRelicsExplain::", 1)[0]
+        for choice in ("About the RELICS", "Where next?", "Other research"):
+            self.assertIn(choice, oak)
+        self.assertIn("dynmultichoice 0, 0, FALSE, 3", menu)
+        self.assertIn("case MULTI_B_PRESSED, PalletTown_Lab_EventScript_OakNormalEntry", menu)
+        self.assertIn("PalletTown_Lab_EventScript_OakDex", oak)
+        for flag in (
+            "FLAG_PJR_RELIC_RAIKOU", "FLAG_PJR_RELIC_ENTEI", "FLAG_PJR_RELIC_LUGIA",
+            "FLAG_PJR_RELIC_UNOWN_I", "FLAG_PJR_RELIC_CELEBI", "FLAG_PJR_RELIC_SUICUNE",
+            "FLAG_PJR_RELIC_ALPHORACLE", "FLAG_PJR_GOT_RAINBOW_CREST",
+            "FLAG_PJR_RELIC_HO_OH",
+        ):
+            self.assertIn(flag, oak)
+        for location in ("VIOLET CITY", "ROUTE 32", "RUINS OF ALPH", "RESEARCH LAB", "RAIKOU"):
+            self.assertIn(location, oak)
+        # The final Oak/Elm round now tells everyone where the quest starts
+        # regardless of any previous one-time rewards/credits flags.
+        cleared = e20.split("PRU_Elite18_Gauntlet::", 1)[1].split(
+            "PRU_Elite20_StartFinale::", 1)[0]
+        self.assertLess(cleared.index("call PRU_Elite18_Round_20"),
+                        cleared.index("msgbox PRU_Elite20_Text_RuinsDirections"))
+        self.assertLess(cleared.index("msgbox PRU_Elite20_Text_RuinsDirections"),
+                        cleared.index("call PRU_Elite20_ClaimRewards"))
+        self.assertIn("goto_if_set FLAG_PRU_E20_REWARD_CLAIMED", e20)
+        self.assertIn("goto_if_set FLAG_PRU_E20_CREDITS_SHOWN", e20)
+        self.assertNotIn(r'\\n"', oak)
+        self.assertNotIn(r'\\p"', oak)
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ DarkCave_NorthSide_OnTransition:
 @ A real down ladder immediately right of the Blackthorn/Route 45 entrance.
 @ The original 3-metatile fake cave opening is removed completely.
 @ Ladder (46,4) is blocked by the old man at (46,5) until Champion.
-@ The permanent, unsmashable side boulder at (47,5) prevents bypassing him.
+@ Existing map rocks on the right already block the side; no extra boulder.
 DarkCave_NorthSide_OnLoadGroudonPassage::
 	callnative PruOpenDarkCaveGroudonDoor
 	end
@@ -20,14 +20,6 @@ DarkCave_NorthSide_OnLoadGroudonPassage::
 DarkCave_NorthSide_EventScript_GroudonGuard::
 	msgbox DarkCave_NorthSide_Text_GroudonGuard, MSGBOX_NPC
 	end
-
-DarkCave_NorthSide_EventScript_GroudonSideRock::
-	msgbox DarkCave_NorthSide_Text_GroudonSideRock, MSGBOX_NPC
-	end
-
-DarkCave_NorthSide_Text_GroudonSideRock:
-	.string "A massive boulder blocks the\n"
-	.string "side of the ladder.$"
 
 DarkCave_NorthSide_Text_GroudonGuard:
 	.string "Only the JOHTO CHAMPION may\n"

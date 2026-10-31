@@ -32,11 +32,10 @@ assert len(art) == 306 * 16  # Corrupt extra cave-mouth tiles removed
 assert len(attr) == 306 * 2
 assert struct.unpack_from("<8H", art, (0x285 - 0x280) * 16) == (0x9288, 0x9289, 0x9298, 0x9299, 0, 0, 0, 0)
 assert struct.unpack_from("<H", attr, (0x285 - 0x280) * 2)[0] == 0x0061
-rocks = [o for o in dark["object_events"] if o["script"] == "DarkCave_NorthSide_EventScript_GroudonSideRock"]
-assert len(rocks) == 1
-assert (rocks[0]["x"], rocks[0]["y"]) == (47, 5) and rocks[0]["flag"] == "0"
-assert rocks[0]["graphics_id"] == "OBJ_EVENT_GFX_BREAKABLE_ROCK_HNS"
-assert "DarkCave_NorthSide_Text_GroudonSideRock" in read("data/maps/DarkCave_NorthSide_hns/scripts.inc")
+assert not any(o["script"] == "DarkCave_NorthSide_EventScript_GroudonSideRock"
+               for o in dark["object_events"])
+assert not any((o["x"], o["y"]) == (47, 5) for o in dark["object_events"])
+assert "DarkCave_NorthSide_EventScript_GroudonSideRock" not in read("data/maps/DarkCave_NorthSide_hns/scripts.inc")
 assert "MapGridSetMetatileEntryAt(46 + MAP_OFFSET, 5 + MAP_OFFSET, 0x3281)" in fieldmap
 assert cave["layout"] == "LAYOUT_ROUTE45_GROUDON_CAVE_HNS"
 assert any(x["id"] == cave["layout"] and x["secondary_tileset"] == "gTileset_BlackthornGym_Hns"
