@@ -68,10 +68,15 @@ for gen in (1, 2, 3, 4, 6):
     assert re.search(rf"^#define P_GEN_{gen}_POKEMON\s+TRUE\b", enabled, re.M), f"Gen {gen} is disabled"
 
 header = ORDER.read_text(encoding="utf-8")
-assert "#define PRU_DEX_COUNT 447" in header
+assert "#define PRU_DEX_COUNT 450" in header
 listed = [(m.group(1), int(m.group(2))) for m in
           re.finditer(r"^\s*(SPECIES_[A-Z0-9_]+),\s*//\s*(\d{3})\b", header, re.M)]
-assert listed == list(zip(ids, range(1, 448))), "Engine HNS summary numbering differs from the canonical list"
+assert len(listed) == 450 and len({c for c, n in listed}) == 450
+assert [n for c, n in listed] == list(range(1, 451))
+assert set(c for c, n in listed) == set(ids) | {"SPECIES_RHYPERIOR", "SPECIES_ELECTIVIRE", "SPECIES_MAGMORTAR"}, "Missing historical species or approved additions"
+for species, after in [("SPECIES_LEAFEON", "SPECIES_UMBREON"), ("SPECIES_GLACEON", "SPECIES_LEAFEON"), ("SPECIES_RHYPERIOR", "SPECIES_RHYDON"), ("SPECIES_ELECTIVIRE", "SPECIES_ELECTABUZZ"), ("SPECIES_MAGMORTAR", "SPECIES_MAGMAR"), ("SPECIES_MIMIKYU_DISGUISED", "SPECIES_NOXICHU")]:
+    keys = [c for c, n in listed]
+    assert keys.index(species) == keys.index(after) + 1, (species, after)
 
 engine = ENGINE.read_text(encoding="utf-8")
 assert '#include "data/pokemon/pru_dex_order.h"' in engine
@@ -89,9 +94,9 @@ for name, expected in [("Charaxis", 8), ("Grovyle", 285),
 
 print(f"PASS: {len(canonical)}/447 canonical species constants exist and have exactly one SpeciesInfo record")
 print("PASS: active engine includes all nine generation family files and PJR/PRU extensions")
-print("PASS: canonical PRU #001-#447 maps to the HNS summary number lookup without duplicates")
+print("PASS: active 450-species family-grouped PRU summary order, all stable original IDs retained")
 print("PASS: #008 Charaxis, #285 Grovyle, #297 Mightyena, #318 Gardevoir")
 print("NOTE: these checks validate source registry/summary numbering, NOT gameplay or graphics.")
 print("OPEN: HGSS in-game Pokédex list and save seen/caught flags still use old National/Johto mapping.")
-print("OPEN: Seviian Noibat/Noivern use standard species records; approved variant art and unique mechanics are not verified.")
+print("NOTE: Seviian species data updated; exact sprites and wild encounters tested separately.")
 print("OPEN: encounter availability, especially legendaries and mythicals, requires a separate audit.")

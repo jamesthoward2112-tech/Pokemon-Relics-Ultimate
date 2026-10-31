@@ -3616,6 +3616,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         )
         .levelUpLearnset = sQuagsireLevelUpLearnset,
         .teachableLearnset = sQuagsireTeachableLearnset,
+        .evolutions = EVOLUTION({EVO_ITEM, ITEM_MOON_STONE, SPECIES_CLODSIRE}),
     },
 
 #if P_PALDEAN_FORMS
@@ -3702,12 +3703,12 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
     [SPECIES_CLODSIRE] =
     {
         .dexNotRequired = TRUE,
-        .baseHP        = 130,
-        .baseAttack    = 75,
-        .baseDefense   = 60,
+        .baseHP        = 135,
+        .baseAttack    = 95,
+        .baseDefense   = 90,
         .baseSpeed     = 20,
-        .baseSpAttack  = 45,
-        .baseSpDefense = 100,
+        .baseSpAttack  = 55,
+        .baseSpDefense = 125,
         .types = MON_TYPES(TYPE_POISON, TYPE_GROUND),
         .catchRate = 90,
         .expYield = 151,
