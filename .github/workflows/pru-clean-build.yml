@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main]
+    branches: [main, workmode/pru-relic-hunt-implementation-20261031]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -189,7 +189,7 @@ jobs:
             pru-rom.sha256
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/workmode/pru-relic-hunt-implementation-20261031')
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -198,9 +198,9 @@ jobs:
           test -s pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           # Older jobs must never publish a ROM after main has advanced.
-          latest_main="$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)"
-          if test "$latest_main" != "$GITHUB_SHA"; then
-            echo "SKIP_STALE_ROM: build $GITHUB_SHA is not current main $latest_main"
+          latest_head="$(gh api "repos/$GITHUB_REPOSITORY/commits/${GITHUB_REF#refs/heads/}" --jq .sha)"
+          if test "$latest_head" != "$GITHUB_SHA"; then
+            echo "SKIP_STALE_ROM: build $GITHUB_SHA is not the branch head $latest_head"
             exit 0
           fi
           tag="pru-build-$(git rev-parse --short=10 HEAD)"
@@ -213,7 +213,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Direct GBA compiled from canonical main commit $GITHUB_SHA. Restricted HNS trainer, wild and scripted encounters to the approved 444; corrected Sceptitan, Donphalanx and Swamplith offsets and all Steevee-Neevee sight ranges; installed the authentic Insurgence Mega Jirachi normal/shiny artwork in the existing Jirachi slot as 64x64 GBA battle sprites without changing species mechanics; added Claude Astrachi overworld art and the post-capture Lv70 Astrachi White Rock encounter with separate saved capture flags. Automated source regression and ROM compilation passed. Emulator boot and gameplay testing are intentionally left to the player for this hotfix." \
+              --notes "PRU RELICS hunt build from $GITHUB_SHA. Implements scientist location hints, static lab scientist, overworld RELICS encounters and custom Eye of Alph/Six-Rune Monolith sprites, with gated ladder to the existing Ruins underground map. Compiled source and checked binary; player gameplay testing pending. Exact donor special Pokémon battle art remains subject to separate source verification." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
