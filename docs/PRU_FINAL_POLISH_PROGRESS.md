@@ -4,6 +4,17 @@ Updated: 2026-10-31
 Branch: `feat/pru-locked-gmax-charaxis-polish-20261031`
 Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 
+## VERIFIED CHAT-MODE RELEASE — 31 October 2026
+
+- Final-polish source commit: `dd1d0360ffba95ef4f3197c2add3246c86df174b`; latest branch head at verification: `74f41884205b33053e28ae9692f48c1e80618381` (documentation-only commit).
+- GitHub Actions **SUCCESS**: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41211551209. All enabled source tests, compilation, size validation and release publication passed.
+- Playable .gba: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-dd1d0360ff/Pokemon-Relics-Ultimate-dd1d0360ff.gba
+- Asset size: 33,554,432 bytes. SHA256: `d759409cdccbbb7eca8c56c692c96abbbf943548d8500b95ac6e5d1d415075c7` (GitHub release digest).
+- Source-implemented and compiled: family-ordered 450 HNS display records; black G-Max Charaxis; Solaziken, Sceptitan, Faeranium palettes; five corrected sprites; Moon Stone Quagsire->buffed Clodsire; RR Seviian Noibat/Noivern Rock/Ghost and Dark Cave South Side; Relic Golden Ho-Oh art assignments and gold overworld palette; Morty rematch, Agatha Kanto E4 and Agatha/Phoebe Elite20 Shedinja.
+- **Not personally gameplay-tested:** Ho-Oh overworld and trainer appearances, actual encounters and existing-save behaviour are pending owner test.
+- **Known limitation from the Dex source check:** HNS summary maps all 450 to family-local numbering, but HGSS in-game Pokédex list and seen/caught flags retain older National/Johto mappings. Investigate separately if full in-game list reordering was intended; no internal ID rewrites.
+- Do not restart from a stale ancestor; keep the dd1 release as proven compiled baseline.
+
 ## Completed
 
 - Resumed the existing branch at `19a5f364cd2831fb40791286e6c599a5364e034d`; no replacement branch or restart.
