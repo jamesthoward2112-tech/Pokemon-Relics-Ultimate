@@ -11,16 +11,16 @@ Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 - Confirmed the latest workflow reached source regression tests with 450 species and preserved the approved Charaxis/relic-palette installation steps.
 - Root-caused Actions run 41207838869: `tools/pru/check_astrachi_jirachi_encounter.py` still expected obsolete Astrachi dex number 443 after the family-order reorganisation.
 - Updated the Astrachi regression assertion and message to canonical display number 449 without changing its internal species ID.
+- GitHub Actions run 41208617652 passed every source check, compiled successfully, verified the 33,554,432-byte ROM and published it.
 
 ## In progress
 
-- Re-running source regression checks and GitHub Actions compilation after the Astrachi test correction.
+- Installing the five approved final-polish sprite donor sets after the automatic PRL asset synchronisation step.
 
 ## Remaining
 
-- Resolve any subsequent source or compilation failures while preserving approved work.
 - Replace Fortotoise, Torkaldera/Tortemple and Tropisaur/Brontonana with their documented approved authentic donor artwork.
-- Verify the recovered historical Hoenn Relics Odyssey II Armaldo and Cradily alternatives before installing them.
+- Install the identity-verified, James-locked Hoenn Relics Odyssey II Armaldo and Cradily alternatives.
 - Replace Noibat/Noivern with authentic Radical Red Seviian Rock/Ghost artwork and mechanics; level-36 evolution; Dark Cave South Side encounter; no extra species/form switching.
 - Make Golden Relic Ho-Oh the only Ho-Oh presentation across battle, icon, trainers, encounters and overworld.
 - Add counterable Wonder Guard Shedinja to suitable Agatha Kanto Championship and Ghost-themed Elite 20 teams without altering aces, team sizes or progression.
@@ -33,25 +33,24 @@ Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 
 ## Latest successful commit
 
-- Previous branch HEAD: `19a5f364cd2831fb40791286e6c599a5364e034d` (workflow failed before compilation).
-- Current checkpoint commit: pending.
+- `5f927ef0a64bc318f24a0e1391d13d1b5b445478` (successful source checks, compilation and release).
 
 ## GitHub Actions
 
-- Current run: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41207838869
-- Status: failed at obsolete Astrachi `#443` source assertion; compilation steps were skipped.
+- Current run: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41208617652
+- Status: successful; source regression, compilation, 32 MiB ROM validation, artifact upload and release publication all passed.
 
 ## Latest successfully published ROM
 
-- Source: `401214913d3809a5e82f565bce9553f9a438a1fd`
-- Tag: `pru-build-401214913d`
-- Status: direct 32 MiB GitHub `.gba` published; player validation incomplete. This predates final-polish work.
+- Source: `5f927ef0a64bc318f24a0e1391d13d1b5b445478`
+- Tag: `pru-build-5f927ef0a6`
+- Direct asset: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-5f927ef0a6/Pokemon-Relics-Ultimate-5f927ef0a6.gba
+- Size: 33,554,432 bytes; SHA256 `f055a780c8325d3d615d22fb6c5e99fce8883625de226f6baec91631e59e253e`.
 
 ## Compilation errors or blockers
 
-- No compiler error reached yet for the current branch.
-- The latest run stopped at `assert "443,Astrachi,astrachi,SPECIES_ASTRACHI" in dex`; canonical CSV places Astrachi at display number 449.
-- Armaldo and Cradily historical alternatives require identity verification before installation.
+- No current compilation blocker.
+- Armaldo and Cradily were verified against the James-locked `PHR_OdysseyII_Selected_Hoenn_Sprites.zip` selection; installation remains in progress.
 
 ## Next-session instructions
 
