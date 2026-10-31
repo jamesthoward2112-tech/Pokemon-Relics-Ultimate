@@ -27,7 +27,7 @@ EXPECTED = {
 for relative, expected in EXPECTED.items():
     path = ASSETS / relative
     assert path.is_file(), f"missing authentic Radical Red donor: {relative}"
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == expected, relative
+    # Repository .gitattributes uses CRLF on *.pal at checkout; source hashes are LF.\n    # Normalise line endings ONLY for ASCII JASC palettes; PNG hashes stay byte-exact.\n    payload = path.read_bytes()\n    if path.suffix == ".pal":\n        payload = payload.replace(b"\\r\\n", b"\\n")\n    assert hashlib.sha256(payload).hexdigest() == expected, relative
 
 for species in ("noibat", "noivern"):
     folder = ROOT / "graphics/pokemon" / species
