@@ -53,7 +53,11 @@ def recolor_icon_to_shared_palette(source: Path, shared_palette: Path) -> Image.
 
 def install() -> None:
     for name, expected in EXPECTED_SHA256.items():
-        assert hashlib.sha256((SOURCE / name).read_bytes()).hexdigest() == expected, name
+        raw = (SOURCE / name).read_bytes()
+        if name.endswith(".pal"):
+            # Repository .gitattributes may check palettes out as CRLF on the runner.
+            raw = raw.replace(b"\r\n", b"\n")
+        assert hashlib.sha256(raw).hexdigest() == expected, name
 
     donor_colors = colors_from_jasc(SOURCE / "normal.pal")
     for side in ("front", "back"):
