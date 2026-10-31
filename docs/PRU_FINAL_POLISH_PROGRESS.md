@@ -15,14 +15,16 @@ Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 - Verified Armaldo and Cradily against the James-locked `PHR_OdysseyII_Selected_Hoenn_Sprites.zip` and installed that exact front/back orientation.
 - Installed approved PKR/PRL Kantomon Fortotoise and pinned Elite Redux Tortemple/Brontonana front, back, palette and icon artwork.
 - Added a deterministic post-PRL-sync installer and regression lock; no species IDs, forms or icon-palette table entries were added.
+- Five-species checkpoint `c0d98e67df00e1b1340c7b4fb3f851e922bf328a` compiled and published successfully.
+- Recovered the exact Radical Red 4.1 Seviian Noibat/Noivern front, back, icon, normal and shiny palette bytes from the official UPS expansion; no base ROM or generated artwork was used.
+- Replaced the existing Noibat/Noivern slots with Rock/Ghost stats, Levitate/Rock Head/Sturdy, their RR level-up sets, level-36 evolution and a Dark Cave South Side encounter.
 
 ## In progress
 
-- Awaiting GitHub Actions compilation of the five-species sprite milestone.
+- Awaiting GitHub Actions compilation of the Seviian Noibat/Noivern milestone.
 
 ## Remaining
 
-- Replace Noibat/Noivern with authentic Radical Red Seviian Rock/Ghost artwork and mechanics; level-36 evolution; Dark Cave South Side encounter; no extra species/form switching.
 - Make Golden Relic Ho-Oh the only Ho-Oh presentation across battle, icon, trainers, encounters and overworld.
 - Add counterable Wonder Guard Shedinja to suitable Agatha Kanto Championship and Ghost-themed Elite 20 teams without altering aces, team sizes or progression.
 - Run final source/invariant verification, compile a 33,554,432-byte ROM, publish a direct GitHub release asset and record SHA256/provenance.
@@ -45,28 +47,38 @@ Original branch base: `d5308c8c239207130291378f3d0b8c28d2883650`
 - `graphics/pokemon/prl_authoritative/tropisaur/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
 - `graphics/pokemon/armaldo/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
 - `graphics/pokemon/cradily/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
+- `assets/pru_final_polish/seviian_noibat/noibat/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
+- `assets/pru_final_polish/seviian_noibat/noivern/{front.png,back.png,icon.png,normal.pal,shiny.pal}`
+- `graphics/pokemon/noibat/{anim_front.png,back.png,icon.png,normal.pal,shiny.pal}`
+- `graphics/pokemon/noivern/{anim_front.png,back.png,icon.png,normal.pal,shiny.pal}`
+- `src/data/pokemon/species_info/gen_6_families.h`
+- `src/data/pokemon/level_up_learnsets/gen_3.h`
+- `src/data/wild_encounters.json`
+- `tools/pru/check_seviian_noibat.py`
+- `tools/pru/check_444_species_dex.py`
 
 ## Latest successful commit
 
-- `5f927ef0a64bc318f24a0e1391d13d1b5b445478` (successful source checks, compilation and release).
+- `c0d98e67df00e1b1340c7b4fb3f851e922bf328a` (successful five-sprite source checks, compilation and release).
 
 ## GitHub Actions
 
 - Current run: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41208617652
+- Five-sprite run: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41209515617
 - Status: successful; source regression, compilation, 32 MiB ROM validation, artifact upload and release publication all passed.
-- Next run: pending push of the five-species sprite checkpoint.
+- Next run: pending push of the Seviian checkpoint.
 
 ## Latest successfully published ROM
 
-- Source: `5f927ef0a64bc318f24a0e1391d13d1b5b445478`
-- Tag: `pru-build-5f927ef0a6`
-- Direct asset: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-5f927ef0a6/Pokemon-Relics-Ultimate-5f927ef0a6.gba
-- Size: 33,554,432 bytes; SHA256 `f055a780c8325d3d615d22fb6c5e99fce8883625de226f6baec91631e59e253e`.
+- Source: `c0d98e67df00e1b1340c7b4fb3f851e922bf328a`
+- Tag: `pru-build-c0d98e67df`
+- Direct asset: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-c0d98e67df/Pokemon-Relics-Ultimate-c0d98e67df.gba
+- Size: 33,554,432 bytes; SHA256 `a85bde3b7a754cddf40a7396eeac7be057bf3d855b82f13683db9ef1179974db`.
 
 ## Compilation errors or blockers
 
 - No current compilation blocker.
-- Five-species focused source/format check passes locally; full compilation is delegated to GitHub Actions as required.
+- Seviian focused source/format/mechanics/encounter check passes locally; full compilation is delegated to GitHub Actions as required.
 
 ## Next-session instructions
 

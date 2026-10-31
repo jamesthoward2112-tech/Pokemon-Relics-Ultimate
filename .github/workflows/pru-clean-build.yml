@@ -143,6 +143,7 @@ jobs:
           python3 tools/pru/check_p_bird_sprites.py
           python3 tools/pru/check_astrachi_jirachi_encounter.py
           python3 tools/pru/check_final_polish_sprite_sources.py
+          python3 tools/pru/check_seviian_noibat.py
           python3 tools/pru/check_khang_party_icon_palette.py
           python3 tools/pru/check_legendary_catching_respawns.py
           python3 tools/pru/check_bld_status_icon.py

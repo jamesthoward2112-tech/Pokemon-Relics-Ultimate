@@ -102,5 +102,5 @@ print("PASS: canonical PRU #001-#450 maps to the HNS summary number lookup witho
 print("PASS: family-local display order for all six relocated entries and original #008 Charaxis")
 print("NOTE: these checks validate source registry/summary numbering, NOT gameplay or graphics.")
 print("OPEN: HGSS in-game Pokédex list and save seen/caught flags still use old National/Johto mapping.")
-print("OPEN: Seviian Noibat/Noivern use standard species records; approved variant art and unique mechanics are not verified.")
+print("PASS: Seviian Noibat/Noivern reuse their existing IDs with separately locked RR 4.1 graphics/mechanics checks.")
 print("OPEN: encounter availability, especially legendaries and mythicals, requires a separate audit.")

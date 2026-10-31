@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the five approved final-polish sprite donors after PRL synchronisation."""
+"""Install approved final-polish sprite donors after PRL synchronisation."""
 from __future__ import annotations
 
 import shutil
@@ -134,7 +134,23 @@ def install() -> None:
             with Image.open(destination / f"{side}.png") as image:
                 assert image.size == (64, 64) and max(image.getdata()) < 16, (species, side)
 
-    print("Installed approved Fortotoise, Tortemple, Brontonana and Odyssey II fossil sprites")
+    sevii = SRC / "seviian_noibat"
+    for species in ("noibat", "noivern"):
+        source = sevii / species
+        destination = POKEMON / species
+        with Image.open(source / "front.png") as donor:
+            donor.load()
+            assert donor.mode == "P" and donor.size == (64, 64)
+            animated = Image.new("P", (64, 128), 0)
+            animated.putpalette(donor.getpalette())
+            animated.paste(donor, (0, 0))
+            animated.paste(donor, (0, 64))
+            animated.info["transparency"] = 0
+            animated.save(destination / "anim_front.png", optimize=False)
+        for name in ("back.png", "icon.png", "normal.pal", "shiny.pal"):
+            shutil.copyfile(source / name, destination / name)
+
+    print("Installed approved five-species polish and authentic RR Seviian Noibat family sprites")
 
 
 if __name__ == "__main__":

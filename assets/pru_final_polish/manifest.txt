@@ -5,7 +5,17 @@ torkaldera: icon palette 1; Elite Redux Tortemple, upcoming@52ac885b4d094faf2641
 tropisaur: icon palette 1; Elite Redux Brontonana, upcoming@52ac885b4d094faf26412530a00d526e8a319935
 armaldo: icon palette 0; James-locked PHR Odyssey II selected Hoenn package
 cradily: icon palette 0; James-locked PHR Odyssey II selected Hoenn package
+noibat/noivern: official Radical Red 4.1 UPS; exact species 0x362/0x363 front, back, icon, normal and shiny palette data
 
 The original donor front/back orientation is retained. Icons unavailable in
 the approved Fortotoise and Odyssey II selections are deterministic nearest-
 neighbour reductions of the approved front art, not generated artwork.
+
+Radical Red 4.1 extraction provenance: official patch archive SHA256
+0413e4c4072fe03e909c65d737d94ef1bb30b91ef8c1b673c5b3e8c22e85102a.
+Noibat ROM offsets: front 0x1638F88, back 0x15010AC, icon 0x1792F70,
+normal palette 0x16392C0, shiny palette 0x1597E08. Noivern: front
+0x16392E8, back 0x1501400, icon 0x1793390, normal palette 0x16398D8,
+shiny palette 0x159841C. The patch expands FireRed from 16 to 32 MiB, so all
+listed donor bytes reside in the patch-owned expansion and were recovered
+without a base ROM or emulator.
