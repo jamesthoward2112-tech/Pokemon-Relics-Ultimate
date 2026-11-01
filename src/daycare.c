@@ -1212,26 +1212,30 @@ void GiveEggFromDaycare(void)
 }
 
 #if IS_HNS
-// PRU Day-Care Mystery Egg pool. All twelve species are entries in the
-// canonical 450 and have playable egg cycles, graphics, and hatch data.
-// The custom pre-evolutions are SCARABUB (Herabub), SKARMET and MOOTINY.
-// Keep this separate from the existing one-off Odd Egg clerk and breeding.
+// PRU Day-Care Mystery Egg pool: all nine Kanto/Johto/Hoenn starter
+// species plus the four approved Relic babies. One uniformly chosen
+// species per paid Egg. Preserve the existing Odd Egg and daycare breeding.
 #define PRU_MYSTERY_EGG_PRICE 5000
 
 static const u16 sPruMysteryEggSpecies[] =
 {
-    SPECIES_PICHU,
-    SPECIES_CLEFFA,
-    SPECIES_IGGLYBUFF,
-    SPECIES_TYROGUE,
-    SPECIES_SMOOCHUM,
-    SPECIES_ELEKID,
-    SPECIES_MAGBY,
-    SPECIES_TOGEPI,
-    SPECIES_AZURILL,
-    SPECIES_SCARABUB,
+    // Kanto starters
+    SPECIES_BULBASAUR,
+    SPECIES_CHARMANDER,
+    SPECIES_SQUIRTLE,
+    // Johto starters
+    SPECIES_CHIKORITA,
+    SPECIES_CYNDAQUIL,
+    SPECIES_TOTODILE,
+    // Hoenn starters
+    SPECIES_TREECKO,
+    SPECIES_TORCHIC,
+    SPECIES_MUDKIP,
+    // Relic babies
+    SPECIES_SCARABUB, // Also called Herabub by the user
     SPECIES_SKARMET,
     SPECIES_MOOTINY,
+    SPECIES_GEMLIN,
 };
 
 // Return codes for the Day-Care seller's script:
