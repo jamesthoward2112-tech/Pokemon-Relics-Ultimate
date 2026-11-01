@@ -53,11 +53,10 @@ TinTower_1F_EventScript_SageC_Hooh::
 
 
 TinTower_1F_Sage1_Text:
-	.string "According to the oldest scrolls,\n"
-	.string "HO-OH answers when JOHTO's\n"
-	.string "hidden current awakens.\p"
-	.string "Some of those marks match ALPH.\n"
-	.string "We now call it RESONANCE.$"
+	.string "Old scrolls speak of a bird\n"
+	.string "with golden wings.\p"
+	.string "No one here has seen it.\n"
+	.string "Some symbols resemble ALPH.$"
 
 TinTower_1F_Sage2_Text:
 	.string "When the BRASS TOWER burned,\n"
@@ -101,16 +100,10 @@ TinTower_1F_EusineHoOh_Text:
 	.string "I'll keep researching it.$"
 
 TinTower_1F_EusineSuicune_Text:
-	.string "EUSINE: Awesome! Too awesome, even!\n"
-	.string "I've never seen a battle that great.\p"
-	.string "That was truly inspiring to see.\n"
-	.string "SUICUNE was tough, but you were even\p"
-	.string "more incredible, <PLAYER>.\n"
-	.string "I heard SUICUNE's mystic power\p"
-	.string "summons a rainbow-colored POKéMON.\n"
-	.string "Maybe, just maybe, what went on today\p"
-	.string "will cause that POKéMON to appear.\n"
-	.string "I'm going to study the legends more.\p"
-	.string "Thanks for showing me that fantastic\n"
-	.string "battle.\p"
-	.string "Later, <PLAYER>!$"
+	.string "EUSINE: That was amazing!\p"
+	.string "SUICUNE was tough, but your\n"
+	.string "bond was stronger, <PLAYER>.\p"
+	.string "I have heard rumours of a bird\n"
+	.string "with rainbow-coloured wings.\p"
+	.string "It is still only a legend.\n"
+	.string "I shall keep studying!$"
