@@ -256,7 +256,7 @@ IndigoPlateau_EventScript_HazardTutor::
 	goto_if_eq VAR_RESULT, NO, IndigoPlateau_EventScript_TutorDecline
 	message IndigoPlateau_Text_HazardTutorChoose
 	waitmessage
-	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, IndigoPlateau_Text_TutorMove_StealthRock, IndigoPlateau_Text_TutorMove_Spikes, IndigoPlateau_Text_TutorMove_ToxicSpikes, IndigoPlateau_Text_TutorMove_StickyWeb, IndigoPlateau_Text_TutorMove_StoneAxe, IndigoPlateau_Text_TutorMove_CeaselessEdge, IndigoPlateau_Text_TutorMove_SaltCure, IndigoPlateau_Text_TutorMove_LeechSeed, IndigoPlateau_Text_TutorMove_Toxic, IndigoPlateau_Text_TutorMove_WillOWisp, IndigoPlateau_Text_TutorMove_ThunderWave, IndigoPlateau_Text_TutorMove_Taunt, IndigoPlateau_Text_TutorMove_Encore, IndigoPlateau_Text_TutorMove_KnockOff, IndigoPlateau_Text_TutorMove_Roar, IndigoPlateau_Text_TutorMove_Whirlwind, IndigoPlateau_Text_TutorMove_DragonTail, IndigoPlateau_Text_TutorMove_Infestation, IndigoPlateau_Text_TutorMove_AchillesHeel, IndigoPlateau_Text_TutorMove_Permafrost, IndigoPlateau_Text_TutorMove_Wildfire, IndigoPlateau_Text_TutorMove_DarkMatter, IndigoPlateau_Text_TutorMove_Cancel
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, IndigoPlateau_Text_TutorMove_StealthRock, IndigoPlateau_Text_TutorMove_Spikes, IndigoPlateau_Text_TutorMove_ToxicSpikes, IndigoPlateau_Text_TutorMove_StickyWeb, IndigoPlateau_Text_TutorMove_StoneAxe, IndigoPlateau_Text_TutorMove_CeaselessEdge, IndigoPlateau_Text_TutorMove_SaltCure, IndigoPlateau_Text_TutorMove_LeechSeed, IndigoPlateau_Text_TutorMove_Toxic, IndigoPlateau_Text_TutorMove_WillOWisp, IndigoPlateau_Text_TutorMove_ThunderWave, IndigoPlateau_Text_TutorMove_Taunt, IndigoPlateau_Text_TutorMove_Encore, IndigoPlateau_Text_TutorMove_KnockOff, IndigoPlateau_Text_TutorMove_Roar, IndigoPlateau_Text_TutorMove_Whirlwind, IndigoPlateau_Text_TutorMove_DragonTail, IndigoPlateau_Text_TutorMove_Infestation, IndigoPlateau_Text_TutorMove_AchillesHeel, IndigoPlateau_Text_TutorMove_Permafrost, IndigoPlateau_Text_TutorMove_Wildfire, IndigoPlateau_Text_TutorMove_DarkMatter, IndigoPlateau_Text_TutorMove_EerieFog, IndigoPlateau_Text_TutorMove_ScaryFace, IndigoPlateau_Text_TutorMove_Cancel
 	switch VAR_RESULT
 	case 0, IndigoPlateau_EventScript_TutorTeach_StealthRock
 	case 1, IndigoPlateau_EventScript_TutorTeach_Spikes
@@ -280,7 +280,9 @@ IndigoPlateau_EventScript_HazardTutor::
 	case 19, IndigoPlateau_EventScript_TutorTeach_Permafrost
 	case 20, IndigoPlateau_EventScript_TutorTeach_Wildfire
 	case 21, IndigoPlateau_EventScript_TutorTeach_DarkMatter
-	case 22, IndigoPlateau_EventScript_TutorDecline
+	case 22, IndigoPlateau_EventScript_TutorTeach_EerieFog
+	case 23, IndigoPlateau_EventScript_TutorTeach_ScaryFace
+	case 24, IndigoPlateau_EventScript_TutorDecline
 	case MULTI_B_PRESSED, IndigoPlateau_EventScript_TutorDecline
 	end
 
@@ -497,6 +499,15 @@ IndigoPlateau_EventScript_TutorTeach_Nuzzle::
 	goto IndigoPlateau_EventScript_TutorTeachMove
 	end
 
+IndigoPlateau_EventScript_TutorTeach_EerieFog::
+	setvar VAR_0x8005, MOVE_EERIE_FOG
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+IndigoPlateau_EventScript_TutorTeach_ScaryFace::
+	setvar VAR_0x8005, MOVE_SCARY_FACE
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+
 IndigoPlateau_EventScript_TutorTeachMove::
 	buffermovename STR_VAR_1, VAR_0x8005
 	msgbox IndigoPlateau_Text_TutorConfirm, MSGBOX_YESNO
@@ -590,6 +601,10 @@ IndigoPlateau_Text_TutorMove_Wildfire:
 	.string "WILDFIRE$"
 IndigoPlateau_Text_TutorMove_DarkMatter:
 	.string "DARK MATTER$"
+IndigoPlateau_Text_TutorMove_EerieFog:
+	.string "EERIE FOG$"
+IndigoPlateau_Text_TutorMove_ScaryFace:
+	.string "SCARY FACE$"
 IndigoPlateau_Text_TutorMove_RapidSpin:
 	.string "RAPID SPIN$"
 IndigoPlateau_Text_TutorMove_Defog:
