@@ -91,30 +91,30 @@ Route34_DayCare_EventScript_MysteryEggDecline::
 	end
 
 Route34_DayCare_Text_MysteryEggOffer:
-	.string "I sell MYSTERY EGGS!\\p"
-	.string "Each costs ¥5,000 and may hatch\\n"
-	.string "into a special baby POKéMON.\\p"
+	.string "I sell MYSTERY EGGS!\p"
+	.string "Each costs ¥5,000 and may hatch\n"
+	.string "into a special baby POKéMON.\p"
 	.string "Would you like one?$"
 
 Route34_DayCare_Text_MysteryEggReceived:
-	.string "You received a MYSTERY EGG!\\n"
+	.string "You received a MYSTERY EGG!\n"
 	.string "Take good care of it!$"
 
 Route34_DayCare_Text_MysteryEggPartyFull:
-	.string "Your party has no room,\\n"
-	.string "even with your challenge limit.\\p"
+	.string "Your party has no room,\n"
+	.string "even with your challenge limit.\p"
 	.string "Make space and come back!$"
 
 Route34_DayCare_Text_MysteryEggNoMoney:
-	.string "You need ¥5,000 for one EGG.\\n"
+	.string "You need ¥5,000 for one EGG.\n"
 	.string "Come back when you have it!$"
 
 Route34_DayCare_Text_MysteryEggUnavailable:
-	.string "Sorry, that EGG isn't ready.\\n"
+	.string "Sorry, that EGG isn't ready.\n"
 	.string "You haven't been charged.$"
 
 Route34_DayCare_Text_MysteryEggDecline:
-	.string "No problem! My EGG stock\\n"
+	.string "No problem! My EGG stock\n"
 	.string "is always changing. Come back!$"
 
 
