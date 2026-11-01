@@ -239,9 +239,9 @@ def _clear_original_statue_tiles():
         offset = row * width + col
         values[offset] = (values[offset] & 0xFC00) | (640 + clone)
 
-    # The existing lower ladder tile had the 0x4000 collision flag set.
-    # MB_LADDER and the warp cannot fire unless the player can enter it.
-    # Clear only that flag, preserving the artwork and all other map data.
+    # The lower exit ladder had erroneous elevation 4 (bit 0x4000),
+    # unlike its transition-elevation approach/upper half (elevation 0).
+    # Clear only this elevation bit; preserve graphics and collision values.
     lower_exit_index = 16 * width + 15
     assert values[lower_exit_index] & 0x3FF == 640 + 101, (
         "Unexpected Alph ladder metatile; aborting unrelated layout edit")

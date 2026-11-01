@@ -143,14 +143,14 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         for metatile in (100, 101):
             self.assertEqual(struct.unpack_from("<H", attrs, metatile * 2)[0] & 0xFF,
                              0x61, f"Ladder metatile {metatile} must be MB_LADDER")
-        # The lower visible ladder tile must NOT be marked impassable.
-        # A metatile behavior check alone missed this actual regression.
+        # The lower ladder needs transition elevation, not elevation 4.
+        # MB_LADDER by itself missed the elevation mismatch.
         layout = (ROOT / "data/layouts/RuinsOfAlph_B1F_hns/map.bin").read_bytes()
         cells = struct.unpack(f"<{len(layout) // 2}H", layout)
         upper, lower = cells[15 * 29 + 15], cells[16 * 29 + 15]
         self.assertEqual((upper & 0x3FF, lower & 0x3FF), (740, 741))
-        self.assertFalse(lower & 0x4000, "Lower ladder tile blocks player movement")
-        self.assertFalse(upper & 0x4000, "Upper ladder tile blocks player movement")
+        self.assertEqual(lower & 0xF000, 0, "Lower ladder must have transition elevation")
+        self.assertEqual(upper & 0xF000, 0, "Upper ladder must have transition elevation")
         header = (ROOT / "include/constants/metatile_behaviors.h").read_text()
         enum = header.split("enum {", 1)[1].split("};", 1)[0]
         enum = re.sub(r"//[^\n]*", "", enum)

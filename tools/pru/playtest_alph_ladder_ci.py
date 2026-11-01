@@ -3,8 +3,8 @@
 
 Rebuilds a throwaway ROM that starts a new game one step below the EXISTING
 Alph B1F ladder. It never alters the published ROM or the user's save. mGBA
-receives a real Up keypress. Visual evidence distinguishes the grey basement
-from the green overworld after the warp.
+receives a real Up keypress. Visual evidence distinguishes the pale basement
+from the brown rocky outside entrance after the warp.
 """
 import os
 import shutil
@@ -99,11 +99,21 @@ def main():
     # with only ~6% green; the previous false-positive began at 66.
     assert interior_brightness > 140 and 0.015 < baseline < 0.13, (
         "Not yet inside Alph B1F; test never reached the starting map")
-    # Only a predominantly grassy exterior frame can prove the exit;
-    # the prior false-positive ended INSIDE Alph at just 5.88% green.
-    assert destination > 0.20 and destination - baseline > 0.12, (
-        "Warp to the exterior NOT proven; examine both screenshots")
-    print("PASS: verified mGBA B1F interior BEFORE and green exterior AFTER Up")
+    # Confirm actual exit scenery; grass is not present near this entrance.
+    # Outside Alph is a BROWN rocky entrance, not grassy green.
+    # A verified screenshot at the actual exit is ~75 luminance, while the
+    # interior is ~169. Reject fades using variation AND textured brown ground.
+    exterior_luminance = ImageStat.Stat(after.convert("L")).mean[0]
+    brown_fraction = sum(1 for r, g, b in after.getdata()
+                         if 45 <= r <= 125 and 30 <= g <= 115
+                         and 25 <= b <= 105 and r >= g + 3 and g >= b
+                         ) / (after.width * after.height)
+    print("mGBA rocky Ruins outside luminance:", round(exterior_luminance, 2))
+    print("mGBA rocky outside brown fraction:", round(brown_fraction, 4))
+    assert 45 < exterior_luminance < 120, "No textured exterior frame after warp"
+    assert interior_brightness - exterior_luminance > 45 and brown_fraction > 0.35, (
+        "Warp to the actual Ruins exterior NOT proven")
+    print("PASS: verified mGBA B1F interior BEFORE and rocky exterior AFTER Up")
 
     assert ROM.read_bytes() == CANONICAL.read_bytes(), "Canonical ROM changed!"
     CANONICAL.unlink(missing_ok=True)
