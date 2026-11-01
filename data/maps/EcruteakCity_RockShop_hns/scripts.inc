@@ -39,6 +39,9 @@ EcruteakCity_RockShop_Basic:
 	.2byte ITEM_ICE_STONE
 	.2byte ITEM_MOON_STONE
 	.2byte ITEM_SUN_STONE
+	.2byte ITEM_OVAL_STONE
+	.2byte ITEM_EVERSTONE
+	.2byte ITEM_ANCIENT_STONE
 	pokemartlistend
 
 	.align 2
@@ -50,6 +53,9 @@ EcruteakCity_RockShop_Advanced:
 	.2byte ITEM_ICE_STONE
 	.2byte ITEM_MOON_STONE
 	.2byte ITEM_SUN_STONE
+	.2byte ITEM_OVAL_STONE
+	.2byte ITEM_EVERSTONE
+	.2byte ITEM_ANCIENT_STONE
 	.2byte ITEM_SHINY_STONE
 	.2byte ITEM_DUSK_STONE
 	.2byte ITEM_DAWN_STONE
