@@ -8,7 +8,7 @@ SeafoamIslands_B1F_EventScript_Articuno::
 	msgbox SeafoamIslands_B1F_Text_ArticunoBattle
 	delay 40
 	waitmoncry
-	seteventmon SPECIES_ARTICUNO, 50
+	seteventmon SPECIES_ARTICUNO, 80
 	special BattleSetup_StartLegendaryBattle
 waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
