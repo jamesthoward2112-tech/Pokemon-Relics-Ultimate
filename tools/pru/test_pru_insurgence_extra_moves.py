@@ -33,7 +33,7 @@ class InsurgenceExtraMoveTests(unittest.TestCase):
              "MOVE_METAL_BARRAGE", "MOVE_MINDWAVE", "MOVE_DARK_NOVA",
              "MOVE_ACHILLES_HEEL", "MOVE_PERMAFROST",
              "MOVE_WILDFIRE", "MOVE_DARK_MATTER"])
-        self.assertEqual(all_ids[10:], ["MOVE_RELIC_GAZE"])
+        self.assertEqual(all_ids[10:], ["MOVE_OMEN_EYE"])
 
     def test_relic_eye_is_battle_ready_and_uses_original_statue(self):
         import json
@@ -45,8 +45,14 @@ class InsurgenceExtraMoveTests(unittest.TestCase):
                       "ABILITY_RELIC_EYE", "gMonFrontPic_UnownEye",
                       "gMonIcon_UnownEye"):
             self.assertIn(field, eye)
-        self.assertIn("MOVE_RELIC_GAZE", read("src/data/pokemon/level_up_learnsets/pjr.h"))
-        self.assertIn(".power = 105", move_block("RELIC_GAZE"))
+        self.assertIn("MOVE_OMEN_EYE", read("src/data/pokemon/level_up_learnsets/pjr.h"))
+        omen = move_block("OMEN_EYE")
+        for detail in ('.name = COMPOUND_STRING("OMEN EYE")',
+                       ".power = 95", ".accuracy = 100", ".pp = 10",
+                       ".type = TYPE_GHOST", ".category = DAMAGE_CATEGORY_SPECIAL",
+                       ".moveEffect = MOVE_EFFECT_FEAR", ".chance = 20",
+                       ".battleAnimScript = gBattleAnimMove_MeanLook"):
+            self.assertIn(detail, omen)
         battle = read("src/battle_util.c")
         self.assertIn("ctx->abilityDef == ABILITY_RELIC_EYE", battle)
         self.assertIn("calc = (calc * 120) / 100", battle)

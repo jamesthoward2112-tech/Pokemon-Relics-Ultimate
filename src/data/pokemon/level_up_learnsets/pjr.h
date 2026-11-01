@@ -637,7 +637,7 @@ static const struct LevelUpMove sFeralodonLevelUpLearnset[] =
 
 static const struct LevelUpMove sUnownEyeLevelUpLearnset[] =
 {
-    LEVEL_UP_MOVE(1, MOVE_RELIC_GAZE),
+    LEVEL_UP_MOVE(1, MOVE_OMEN_EYE),
     LEVEL_UP_MOVE(1, MOVE_HIDDEN_POWER),
     LEVEL_UP_MOVE(1, MOVE_CONFUSION),
     LEVEL_UP_MOVE(20, MOVE_ANCIENT_POWER),
@@ -646,7 +646,7 @@ static const struct LevelUpMove sUnownEyeLevelUpLearnset[] =
     LEVEL_UP_MOVE(50, MOVE_PSYCHIC),
     LEVEL_UP_MOVE(60, MOVE_FUTURE_SIGHT),
     LEVEL_UP_MOVE(65, MOVE_PSYSTRIKE),
-    LEVEL_UP_MOVE(65, MOVE_RELIC_GAZE),
+    LEVEL_UP_MOVE(65, MOVE_OMEN_EYE),
     LEVEL_UP_MOVE(70, MOVE_DAZZLING_GLEAM),
     LEVEL_UP_MOVE(75, MOVE_COSMIC_POWER),
     LEVEL_UP_MOVE(80, MOVE_STORED_POWER),

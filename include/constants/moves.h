@@ -989,7 +989,7 @@ enum __attribute__((packed)) Move
     MOVE_WILDFIRE,
     MOVE_DARK_MATTER,
     // Exclusive I-Unown signature; append only to preserve the existing PRU move IDs.
-    MOVE_RELIC_GAZE,
+    MOVE_OMEN_EYE,
 
     MOVES_COUNT,
 
