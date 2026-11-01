@@ -145,7 +145,8 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
                              0x61, f"Ladder metatile {metatile} must be MB_LADDER")
         header = (ROOT / "include/constants/metatile_behaviors.h").read_text()
         enum = header.split("enum {", 1)[1].split("};", 1)[0]
-        behaviors = [part.split("//", 1)[0].strip() for part in enum.split(",")]
+        enum = re.sub(r"//[^\n]*", "", enum)
+        behaviors = [part.strip() for part in enum.split(",") if part.strip()]
         self.assertEqual(behaviors.index("MB_LADDER"), 0x61)
 
         self.assertEqual((ladder_exit[0]["dest_map"], ladder_exit[0]["dest_warp_id"]),
