@@ -10,13 +10,14 @@ RuinsOfAlph_Lab_EventScript_Scientist1::
 	lock
 	faceplayer
 	goto_if_unset FLAG_IS_CHAMPION, RuinsOfAlph_Lab_EventScript_Scientist1Standard
-	goto_if_unset FLAG_PJR_RELIC_RAIKOU, RuinsOfAlph_Lab_EventScript_RelicRaikou
-	goto_if_unset FLAG_PJR_RELIC_ENTEI, RuinsOfAlph_Lab_EventScript_RelicEntei
-	goto_if_unset FLAG_PJR_RELIC_LUGIA, RuinsOfAlph_Lab_EventScript_RelicLugia
-	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, RuinsOfAlph_Lab_EventScript_RelicUnownI
-	goto_if_unset FLAG_PJR_RELIC_CELEBI, RuinsOfAlph_Lab_EventScript_RelicCelebi
-	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_Lab_EventScript_RelicSuicune
-	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, RuinsOfAlph_Lab_EventScript_RelicAlphoracle
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_Lab_EventScript_Scientist1Standard
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, RuinsOfAlph_Lab_EventScript_IntroduceRelics
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, RuinsOfAlph_Lab_EventScript_HintEntei
+	goto_if_unset FLAG_PJR_RELIC_LUGIA, RuinsOfAlph_Lab_EventScript_HintLugia
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, RuinsOfAlph_Lab_EventScript_HintUnownI
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, RuinsOfAlph_Lab_EventScript_HintCelebi
+	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_Lab_EventScript_HintSuicune
+	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, RuinsOfAlph_Lab_EventScript_HintAlphoracle
 	@ PRU: after ALPHORACLE, guide by actual crest/Ho-Oh capture flags.
 	goto_if_set FLAG_PJR_RELIC_HO_OH, RuinsOfAlph_Lab_EventScript_RelicsFullyComplete
 	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, RuinsOfAlph_Lab_EventScript_RelicNeedsCrest
@@ -33,6 +34,92 @@ RuinsOfAlph_Lab_EventScript_RelicsFullyComplete::
 	msgbox RuinsOfAlph_Lab_Text_RelicsFullyComplete, MSGBOX_DEFAULT
 	release
 	end
+
+@ One clear introduction on the first RELIC, then the route clue.
+@ Old saves retain their recorded catch flags and bypass already caught marks.
+RuinsOfAlph_Lab_EventScript_IntroduceRelics::
+	msgbox RuinsOfAlph_Lab_Text_IntroduceRelics, MSGBOX_DEFAULT
+	goto RuinsOfAlph_Lab_EventScript_HintRaikou
+
+RuinsOfAlph_Lab_Text_IntroduceRelics:
+	.string "Ah, CHAMPION! Welcome to\n"
+	.string "the RUINS OF ALPH lab.\p"
+	.string "We've deciphered six marks:\n"
+	.string "R-E-L-I-C-S.\p"
+	.string "Each marks a rare POKeMON\n"
+	.string "carrying ancient RESONANCE.\p"
+	.string "If their powers unite,\n"
+	.string "the FIRST VOICE may awaken.\p"
+	.string "ALPHORACLE lies dormant\n"
+	.string "beneath these ruins.\p"
+	.string "Catch each RELIC, then return\n"
+	.string "here for your next clue.\p"
+	.string "Let's begin with R: RAIKOU.$"
+
+RuinsOfAlph_Lab_EventScript_HintRaikou::
+	msgbox RuinsOfAlph_Lab_Text_HintRaikou, MSGBOX_DEFAULT
+	release
+	end
+
+RuinsOfAlph_Lab_Text_HintRaikou:
+	.string "Storms gather on ROUTE 10.\p"
+	.string "RAIKOU waits on the old podium\n"
+	.string "inside the POWER PLANT.$"
+
+RuinsOfAlph_Lab_EventScript_HintEntei::
+	msgbox RuinsOfAlph_Lab_Text_HintEntei, MSGBOX_DEFAULT
+	release
+	end
+
+RuinsOfAlph_Lab_Text_HintEntei:
+	.string "ENTEI is deep inside MT. MORTAR.\p"
+	.string "Travel to the farthest cavern.$"
+
+RuinsOfAlph_Lab_EventScript_HintLugia::
+	msgbox RuinsOfAlph_Lab_Text_HintLugia, MSGBOX_DEFAULT
+	release
+	end
+
+RuinsOfAlph_Lab_Text_HintLugia:
+	.string "LUGIA waits in WHIRL ISLANDS.\p"
+	.string "Reach the deepest chamber.$"
+
+RuinsOfAlph_Lab_EventScript_HintUnownI::
+	msgbox RuinsOfAlph_Lab_Text_HintUnownI, MSGBOX_DEFAULT
+	release
+	end
+
+RuinsOfAlph_Lab_Text_HintUnownI:
+	.string "An ancient EYE watches you.\p"
+	.string "Search the RUINS OF ALPH below.$"
+
+RuinsOfAlph_Lab_EventScript_HintCelebi::
+	msgbox RuinsOfAlph_Lab_Text_HintCelebi, MSGBOX_DEFAULT
+	release
+	end
+
+RuinsOfAlph_Lab_Text_HintCelebi:
+	.string "CELEBI is waiting in ILEX FOREST.\p"
+	.string "Examine the old forest shrine.$"
+
+RuinsOfAlph_Lab_EventScript_HintSuicune::
+	msgbox RuinsOfAlph_Lab_Text_HintSuicune, MSGBOX_DEFAULT
+	release
+	end
+
+RuinsOfAlph_Lab_Text_HintSuicune:
+	.string "SUICUNE calls from CERULEAN CAPE.\p"
+	.string "Travel to the far end of ROUTE 25.$"
+
+RuinsOfAlph_Lab_EventScript_HintAlphoracle::
+	msgbox RuinsOfAlph_Lab_Text_HintAlphoracle, MSGBOX_DEFAULT
+	release
+	end
+
+RuinsOfAlph_Lab_Text_HintAlphoracle:
+	.string "All six RELICS have awakened!\p"
+	.string "Find the ladder in ALPH RUINS.\n"
+	.string "Touch the SIX-RUNE MONOLITH.$"
 
 RuinsOfAlph_Lab_EventScript_Scientist1Standard::
 	msgbox RuinsOfAlph_Lab_Text_Scientist1, MSGBOX_DEFAULT
@@ -224,9 +311,9 @@ RuinsOfAlph_Lab_Text_RelicAlphoracle:
 	.string "Face ALPHORACLE now?$"
 
 RuinsOfAlph_Lab_Text_RelicRecorded:
-	.string "The capture is recorded.\p"
-	.string "Another RELIC signal has begun\n"
-	.string "to resonate here.$"
+	.string "The RELIC has been recorded.\p"
+	.string "Return to the scientist at\n"
+	.string "the RUINS OF ALPH lab.$"
 
 RuinsOfAlph_Lab_Text_RelicRetry:
 	.string "The resonance remains.\p"
@@ -271,11 +358,16 @@ RuinsOfAlph_Lab_Text_Scientist1:
 	.string "We named that energy RESONANCE.$"
 
 RuinsOfAlph_Lab_Text_Scientist2:
-	.string "The wall patterns are more than\n"
-	.string "decoration.\p"
-	.string "Some repeat whenever unusual\n"
-	.string "POKéMON react to RESONANCE.\p"
-	.string "They may be a record, not a code.$"
+	.string "The wall inscriptions spell\n"
+	.string "one word: R-E-L-I-C-S.\p"
+	.string "Our instruments have found\n"
+	.string "a power called RESONANCE.\p"
+	.string "Six POKeMON carry its marks.\n"
+	.string "Together, they may awaken\p"
+	.string "the FIRST VOICE sleeping\n"
+	.string "beneath these ancient ruins.\p"
+	.string "Our colleague by the wall\n"
+	.string "can decode the next clue.$"
 
 RuinsOfAlph_Lab_Text_Fossils:
 	.string "Fossils found within the RUINS.\p"

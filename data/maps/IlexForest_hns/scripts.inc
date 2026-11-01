@@ -770,3 +770,30 @@ IlexForest_Text_Kimono_Girl4:
 
 IlexForest_Text_Kimono_Girl5:
 	.string "See you.$"
+
+@ PRU RELICS: the lab guide supplies clues; encounters are on this map.
+IlexForest_hns_RelicCelebi::
+	lock
+	faceplayer
+	goto_if_unset FLAG_IS_CHAMPION, IlexForest_hns_RelicCelebi_Unavailable
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, IlexForest_hns_RelicCelebi_Unavailable
+	goto_if_set FLAG_PJR_RELIC_CELEBI, IlexForest_hns_RelicCelebi_Complete
+	goto RuinsOfAlph_Lab_EventScript_RelicCelebi
+
+IlexForest_hns_RelicCelebi_Unavailable::
+	msgbox IlexForest_hns_RelicCelebi_TextUnavailable, MSGBOX_DEFAULT
+	release
+	end
+
+IlexForest_hns_RelicCelebi_Complete::
+	msgbox IlexForest_hns_RelicCelebi_TextComplete, MSGBOX_DEFAULT
+	release
+	end
+
+IlexForest_hns_RelicCelebi_TextUnavailable:
+	.string "The ancient RELIC is still sealed.\n"
+	.string "Ask the ALPH RUINS scientist.$"
+IlexForest_hns_RelicCelebi_TextComplete:
+	.string "This RELIC has already answered.\n"
+	.string "Return to the ALPH scientist.$"
+

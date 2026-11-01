@@ -603,3 +603,30 @@ WhirlIslands_LugiaChamber_Text_Kimono_Closing1::
 WhirlIslands_LugiaChamber_Text_Kimono_After::
 	.string "KIMONO GIRL: You've proven yourself\n"
 	.string "today, {PLAYER}.$"
+
+@ PRU RELICS: the lab guide supplies clues; encounters are on this map.
+WhirlIslands_LugiaChamber_hns_RelicLugia::
+	lock
+	faceplayer
+	goto_if_unset FLAG_IS_CHAMPION, WhirlIslands_LugiaChamber_hns_RelicLugia_Unavailable
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, WhirlIslands_LugiaChamber_hns_RelicLugia_Unavailable
+	goto_if_set FLAG_PJR_RELIC_LUGIA, WhirlIslands_LugiaChamber_hns_RelicLugia_Complete
+	goto RuinsOfAlph_Lab_EventScript_RelicLugia
+
+WhirlIslands_LugiaChamber_hns_RelicLugia_Unavailable::
+	msgbox WhirlIslands_LugiaChamber_hns_RelicLugia_TextUnavailable, MSGBOX_DEFAULT
+	release
+	end
+
+WhirlIslands_LugiaChamber_hns_RelicLugia_Complete::
+	msgbox WhirlIslands_LugiaChamber_hns_RelicLugia_TextComplete, MSGBOX_DEFAULT
+	release
+	end
+
+WhirlIslands_LugiaChamber_hns_RelicLugia_TextUnavailable:
+	.string "The ancient RELIC is still sealed.\n"
+	.string "Ask the ALPH RUINS scientist.$"
+WhirlIslands_LugiaChamber_hns_RelicLugia_TextComplete:
+	.string "This RELIC has already answered.\n"
+	.string "Return to the ALPH scientist.$"
+
