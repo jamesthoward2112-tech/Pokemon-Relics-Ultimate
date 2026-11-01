@@ -156,6 +156,8 @@ RuinsOfAlph_Lab_EventScript_RelicEntei::
 
 RuinsOfAlph_Lab_EventScript_RelicEnteiCaught::
 	setflag FLAG_PJR_RELIC_ENTEI
+	@ Flag persists across saves; remove the visible event on capture as well.
+	removeobject LOCALID_MT_MORTAR_RELIC_ENTEI
 	goto RuinsOfAlph_Lab_EventScript_RelicRecorded
 
 RuinsOfAlph_Lab_EventScript_RelicLugia::

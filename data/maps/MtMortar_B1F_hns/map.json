@@ -168,7 +168,8 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MtMortar_B1F_hns_RelicEntei",
-      "flag": "FLAG_PJR_RELIC_ENTEI"
+      "flag": "FLAG_PJR_RELIC_ENTEI",
+      "local_id": "LOCALID_MT_MORTAR_RELIC_ENTEI"
     }
   ],
   "warp_events": [
