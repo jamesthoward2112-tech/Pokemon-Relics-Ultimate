@@ -170,3 +170,9 @@ Suggested progression for individual overworld pickup locations, adjusting to ac
 **Indigo tutors:** the active `data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc` already has `IndigoPlateau_Text_TutorMove_EerieFog` and `IndigoPlateau_Text_TutorMove_ScaryFace`, selection cases, and their `TutorTeach` scripts in the existing hazard tutor; do not duplicate NPCs or scripts. Source stage commit `80fcf44418ab739aeaaabf1a9d6a672a7f915cab` adds a 100% `MOVE_EFFECT_FEAR` additional effect to `MOVE_SCARY_FACE` while retaining `EFFECT_SPEED_DOWN_2`. **Runtime validation needed:** confirm secondary status effects are executed on successful pure status moves in this engine; check Fear immunity/accuracy, whether dropping Speed can fail independently, and coverage/learnability in both menu and teaching party. Do not claim battle testing passed.
 
 **No GBA ROM build or release authorised for preparation branch.**
+
+### Concrete pickup replacements staged
+
+- `data/maps/MtMortar_1F_North_hns/scripts.inc`: original `MtMortar_1F_North_EventScript_Item_EscapeRope` now rewards `ITEM_TM_BRICK_BREAK` (middle Johto), preserving existing script ID and flag; commit `fc91057bbd758108f6a7892d746e4d4ac4c03422`.
+- `data/maps/WhirlIslands_B1F_hns/scripts.inc`: original `WhirlIslands_B1F_EventScript_Item_Escape_Rope` now rewards `ITEM_TM_SWORDS_DANCE` (late Johto), preserving original script ID and flag; commit `ea5f9da08e1cdbd3187ac475b95a35f19dbd5cdb`.
+- Added `test/test_pru_escape_rope_and_tutors.py`, which scans **every** `*_hns/scripts.inc` and `*_hns/map.json` for remaining collectible Escape Rope instances and checks both tutor selection cases and Scary Face source effect. Do not assert a full replacement is complete until this regression is run and passes in a full checkout.
