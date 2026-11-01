@@ -1,6 +1,13 @@
 # PRU_HANDOFF.md — authoritative session handover
 Last audited: 2026-11-01. All statuses below are scoped to evidence; no newer gameplay is implied.
 
+## 2026-11-01 B1F ladder exit and I-Unown Eye pedestal (compiled and released)
+Branch: `feat/pru-relic-hunt-20261101`; source commit: `bcbde6cf9b03aa7e8cea3d14dc1c6a4683150c99`.
+Added an exit warp on the visible B1F ladder at (12,10), leading to the established outside entrance; the original south exit remains. Rebuilt the Eye statue from its approved source artwork so its 16x12 inscribed base matches the Alphoracle stand while keeping the existing 32x32 object frame and independent cool-grey palette. Alphoracle artwork, encounter gating, Magic Bounce and the rest of the approved PRU state are unchanged.
+Actions run [41331042623](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41331042623) passed source regression checks, full clean compilation, 32 MiB ROM verification, artifact upload and release publication. ROM SHA256: `c9bf30a313f9d20e4999cefd701388da5ecea9cd0c0b99b9a5ee1c8c4de8d2b9`.
+Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-bcbde6cf9b/Pokemon-Relics-Ultimate-bcbde6cf9b.gba
+Gameplay was not emulator-tested; player testing remains outstanding.
+
 ## 2026-11-01 Alphoracle pedestal scale correction (compiled and released)
 Branch: `feat/pru-relic-hunt-20261101`; source commit: `8ceb68cb4cfe3120cc85b5adb09875db3921688f`.
 Enlarged the Alphoracle shrine figure while keeping its lower pedestal at 16x12 sprite pixels, matching the neighboring statue stands. The approved source artwork and its independent overworld palette remain in use; the I-Unown Eye statue is unchanged. Alphoracle's map interaction, unlock conditions and persistent visibility are unchanged.
