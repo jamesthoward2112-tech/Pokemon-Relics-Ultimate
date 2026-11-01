@@ -98,8 +98,15 @@ RuinsOfAlph_B1F_hns_RelicUnownI_TextComplete:
 	.string "Return to the ALPH scientist.$"
 
 @ The Alphoracle encounter now belongs to the final existing statue interaction.
+@ The last ancient statue is the FINAL RELIC shrine. No ladder or warp.
 RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue::
 	goto_if_unset FLAG_IS_CHAMPION, RuinsOfAlph_PuzzleAndRewardChambers_MapScript_StatueDescription
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_PuzzleAndRewardChambers_MapScript_StatueDescription
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, RuinsOfAlph_PuzzleAndRewardChambers_MapScript_StatueDescription
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, RuinsOfAlph_PuzzleAndRewardChambers_MapScript_StatueDescription
+	goto_if_unset FLAG_PJR_RELIC_LUGIA, RuinsOfAlph_PuzzleAndRewardChambers_MapScript_StatueDescription
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, RuinsOfAlph_PuzzleAndRewardChambers_MapScript_StatueDescription
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, RuinsOfAlph_PuzzleAndRewardChambers_MapScript_StatueDescription
 	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_PuzzleAndRewardChambers_MapScript_StatueDescription
 	goto RuinsOfAlph_B1F_hns_RelicAlphoracle
 
@@ -109,6 +116,8 @@ RuinsOfAlph_B1F_hns_RelicAlphoracle::
 	goto_if_unset FLAG_IS_CHAMPION, RuinsOfAlph_B1F_hns_RelicAlphoracle_Unavailable
 	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_B1F_hns_RelicAlphoracle_Unavailable
 	goto_if_set FLAG_PJR_RELIC_ALPHORACLE, RuinsOfAlph_B1F_hns_RelicAlphoracle_Complete
+	playse SE_M_PETAL_DANCE
+	msgbox RuinsOfAlph_B1F_hns_Text_AlphoracleAwakens, MSGBOX_DEFAULT
 	goto RuinsOfAlph_Lab_EventScript_RelicAlphoracle
 
 RuinsOfAlph_B1F_hns_RelicAlphoracle_Unavailable::
@@ -120,6 +129,11 @@ RuinsOfAlph_B1F_hns_RelicAlphoracle_Complete::
 	msgbox RuinsOfAlph_B1F_hns_RelicAlphoracle_TextComplete, MSGBOX_DEFAULT
 	release
 	end
+
+RuinsOfAlph_B1F_hns_Text_AlphoracleAwakens:
+	.string "The six RELIC marks ignite!\\p"
+	.string "The ancient statue begins to hum.\\p"
+	.string "The FIRST VOICE has awakened!$"
 
 RuinsOfAlph_B1F_hns_RelicAlphoracle_TextUnavailable:
 	.string "The ancient RELIC is still sealed.\n"

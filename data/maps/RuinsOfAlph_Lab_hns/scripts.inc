@@ -118,8 +118,9 @@ RuinsOfAlph_Lab_EventScript_HintAlphoracle::
 
 RuinsOfAlph_Lab_Text_HintAlphoracle:
 	.string "All six RELICS have awakened!\p"
-	.string "Find the ladder in ALPH RUINS.\n"
-	.string "Touch the SIX-RUNE MONOLITH.$"
+	.string "Explore the lower ALPH RUINS.\p"
+	.string "Touch the FINAL STONE STATUE\n"
+	.string "at the far-right end.$"
 
 RuinsOfAlph_Lab_EventScript_Scientist1Standard::
 	msgbox RuinsOfAlph_Lab_Text_Scientist1, MSGBOX_DEFAULT

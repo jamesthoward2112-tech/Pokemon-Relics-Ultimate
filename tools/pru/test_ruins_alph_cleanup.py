@@ -60,25 +60,40 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
             self.assertEqual(copied[4:], (0, 0, 0, 0))
             self.assertEqual(attributes[clone * 2:clone * 2 + 2], attributes[original * 2:original * 2 + 2])
 
-    def test_relic_ladder_is_inside_at_bottom_right_and_keeps_original_route(self):
+    def test_final_statue_opens_alphoracle_directly_without_ladder_or_warp(self):
         interior = read_map("RuinsOfAlph_B1F_hns")
         outside = read_map("RuinsOfAlph_Outside_hns")
-        outside_ladders = [o for o in outside["object_events"] if o["graphics_id"] == "OBJ_EVENT_GFX_RELIC_LADDER_HNS"]
-        inside_ladders = [o for o in interior["object_events"] if o["graphics_id"] == "OBJ_EVENT_GFX_RELIC_LADDER_HNS"]
-        self.assertEqual(outside_ladders, [])
-        self.assertEqual(len(inside_ladders), 1)
-        self.assertEqual((inside_ladders[0]["x"], inside_ladders[0]["y"]), (26, 28))
-        self.assertEqual(inside_ladders[0]["script"], "RuinsOfAlph_Outside_RelicLadder")
+        for game_map in (interior, outside):
+            self.assertFalse(any(
+                o["graphics_id"] == "OBJ_EVENT_GFX_RELIC_LADDER_HNS"
+                for o in game_map["object_events"]
+            ))
 
-        # Preserve the ordinary building entrance and both directions of its warp.
-        main_exit = next(w for w in interior["warp_events"] if w["dest_map"] == "MAP_RUINS_OF_ALPH_OUTSIDE_HNS")
-        main_entry = next(w for w in outside["warp_events"] if w["dest_map"] == "MAP_RUINS_OF_ALPH_B1F_HNS" and w["dest_warp_id"] == "0")
-        self.assertEqual((main_exit["x"], main_exit["y"], main_exit["dest_warp_id"]), (15, 16, "5"))
-        self.assertEqual((main_entry["x"], main_entry["y"]), (21, 21))
+        # Keep the ordinary B1F exit and entrance exactly as they were.
+        exit_warp = next(w for w in interior["warp_events"] if w["dest_map"] == "MAP_RUINS_OF_ALPH_OUTSIDE_HNS")
+        entry_warp = next(w for w in outside["warp_events"] if w["dest_map"] == "MAP_RUINS_OF_ALPH_B1F_HNS" and w["dest_warp_id"] == "0")
+        self.assertEqual((exit_warp["x"], exit_warp["y"], exit_warp["dest_warp_id"]), (15, 16, "5"))
+        self.assertEqual((entry_warp["x"], entry_warp["y"]), (21, 21))
 
-        scripts = (MAPS / "RuinsOfAlph_B1F_hns/scripts.inc").read_text()
-        self.assertIn("warp MAP_RUINS_OF_ALPH_B1F_HNS, 12, 18", (MAPS / "RuinsOfAlph_Outside_hns/scripts.inc").read_text())
-        self.assertRegex(scripts, r"RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue::[\s\S]*?FLAG_IS_CHAMPION[\s\S]*?FLAG_PJR_RELIC_SUICUNE[\s\S]*?goto RuinsOfAlph_B1F_hns_RelicAlphoracle")
+        statue = [e for e in interior["bg_events"] if (e["x"], e["y"]) == (25, 28)]
+        self.assertEqual(len(statue), 1)
+        self.assertEqual(statue[0]["script"], "RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue")
+
+        shrine = (MAPS / "RuinsOfAlph_B1F_hns/scripts.inc").read_text()
+        activation = shrine.split("RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue::", 1)[1].split("RuinsOfAlph_B1F_hns_RelicAlphoracle::", 1)[0]
+        for flag in ("FLAG_IS_CHAMPION", "FLAG_PRU_ELITE18_CLEARED",
+                     "FLAG_PJR_RELIC_RAIKOU", "FLAG_PJR_RELIC_ENTEI",
+                     "FLAG_PJR_RELIC_LUGIA", "FLAG_PJR_RELIC_UNOWN_I",
+                     "FLAG_PJR_RELIC_CELEBI", "FLAG_PJR_RELIC_SUICUNE"):
+            self.assertIn(flag, activation)
+        self.assertIn("goto RuinsOfAlph_B1F_hns_RelicAlphoracle", activation)
+        self.assertIn("goto RuinsOfAlph_Lab_EventScript_RelicAlphoracle", shrine)
+        self.assertNotIn("RuinsOfAlph_Outside_RelicLadder::",
+                         (MAPS / "RuinsOfAlph_Outside_hns/scripts.inc").read_text())
+        self.assertNotIn("warp MAP_RUINS_OF_ALPH_B1F_HNS, 12, 18",
+                         (MAPS / "RuinsOfAlph_Outside_hns/scripts.inc").read_text())
+        hint = (MAPS / "RuinsOfAlph_Lab_hns/scripts.inc").read_text()
+        self.assertIn('Touch the FINAL STONE STATUE', hint)
 
     def test_i_unown_icon_uses_mewduo_palette_without_changing_front_or_back_assets(self):
         icon = Image.open(ROOT / "graphics/pokemon/unown_eye/icon.png")
