@@ -2,6 +2,16 @@
 Every new release requires full source SHA, parent lineage, PRs included,
 ROM SHA256 and size, confirmed checks, untested gameplay and verified URL.
 
+## 2026-11-01 Correct B1F ladder exit trigger
+
+- Branch: `feat/pru-relic-hunt-20261101`; source commit: `6e28dde2a5ba48420db1091c3fcc03c704e6ccd9`; parent: `8459d665559c9fc3acad96f5ae6a1d1b691f9162`.
+- Corrected the prior ladder warp's location after player video showed the avatar arriving directly below the visible B1F ladder. The ladder tile is now at (15,15), with an A-button sign interaction that warps to the existing outside entrance (21,21); the original entry/exit warp at (15,16) remains.
+- Actions run [41341671168](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41341671168) passed regression checks, full compilation, 32 MiB ROM verification, artifact upload and release publication.
+- ROM size: 33,554,432 bytes. SHA256: `c3c63384493e60b896c8ad60c5e4e0d9307257d0590fc14ef950548bfa96b26c`.
+- Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-6e28dde2a5/Pokemon-Relics-Ultimate-6e28dde2a5.gba
+- Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-6e28dde2a5
+- Gameplay was not emulator-tested; player confirmation remains outstanding.
+
 ## 2026-11-01 B1F ladder exit and I-Unown Eye pedestal
 
 - Branch: `feat/pru-relic-hunt-20261101`; source commit: `bcbde6cf9b03aa7e8cea3d14dc1c6a4683150c99`; parent: `aa3cb1b6e73dfb26d53203004f718f35124af5f5`.
