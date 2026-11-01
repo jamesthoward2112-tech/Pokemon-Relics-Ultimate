@@ -26,6 +26,7 @@ map_data = json.loads(source("data/maps/Route34_DayCare_hns/map.json"))
 registry = source("data/specials.inc")
 dex = source("src/data/pokemon/pru_dex_order.h")
 species_info = source("src/data/pokemon/species_info/pjr_families.h")
+relic_species_info = source("src/data/pokemon/species_info/pru_custom.h")
 layout = json.loads(source("data/layouts/layouts.json"))
 
 require('#include "money.h"' in daycare, "Money API header must be included")
@@ -66,21 +67,23 @@ require(positions == sorted(positions),
 pool_src = daycare.split("static const u16 sPruMysteryEggSpecies[] =", 1)[1].split("};", 1)[0]
 pool = re.findall(r"\bSPECIES_[A-Z0-9_]+\b", pool_src)
 expected = [
-    "SPECIES_PICHU", "SPECIES_CLEFFA", "SPECIES_IGGLYBUFF",
-    "SPECIES_TYROGUE", "SPECIES_SMOOCHUM", "SPECIES_ELEKID",
-    "SPECIES_MAGBY", "SPECIES_TOGEPI", "SPECIES_AZURILL",
+    "SPECIES_BULBASAUR", "SPECIES_CHARMANDER", "SPECIES_SQUIRTLE",
+    "SPECIES_CHIKORITA", "SPECIES_CYNDAQUIL", "SPECIES_TOTODILE",
+    "SPECIES_TREECKO", "SPECIES_TORCHIC", "SPECIES_MUDKIP",
     "SPECIES_SCARABUB", "SPECIES_SKARMET", "SPECIES_MOOTINY",
+    "SPECIES_GEMLIN",
 ]
-require(pool == expected, "Missing, duplicate or unauthorized Mystery Egg baby")
+require(pool == expected, "Missing, duplicate or unauthorized Mystery Egg species")
 dex_entries = set(re.findall(r"\bSPECIES_[A-Z0-9_]+\b", dex.split("sPruDexSpecies", 1)[1]))
-require(set(pool).issubset(dex_entries), "Every baby must belong to canonical PRU 450")
+require(set(pool).issubset(dex_entries), "Every Mystery Egg species must belong to canonical PRU 450")
 
-for species in ("SCARABUB", "SKARMET", "MOOTINY"):
-    record = species_info.split("[SPECIES_" + species + "] =", 1)[1].split("\n},", 1)[0]
+for species in ("SCARABUB", "SKARMET", "MOOTINY", "GEMLIN"):
+    active_info = relic_species_info if species == "GEMLIN" else species_info
+    record = active_info.split("[SPECIES_" + species + "] =", 1)[1].split("\n},", 1)[0]
     require(re.search(r"\.eggCycles\s*=\s*[1-9]\d*", record) is not None,
-            "Custom baby must have nonzero hatch cycles: " + species)
+            "Relic baby must have nonzero hatch cycles: " + species)
     for asset in (".frontPic =", ".backPic =", ".iconSprite ="):
-        require(asset in record, "Custom baby lacks image mapping: " + species)
+        require(asset in record, "Relic baby lacks image mapping: " + species)
 
 require("Route34_DayCare_EventScript_MysteryEggSeller::" in script,
         "Separate repeatable vendor script is missing")
@@ -137,7 +140,7 @@ require(vendor_npc["flag"] == "0", "Vendor should be permanently repeatable")
 require("OBJ_EVENT_GFX_LASS_HNS" == vendor_npc["graphics_id"],
         "Vendor graphics must be a valid existing map asset")
 
-print("PASS: 12 approved canonical babies including Scarabub, Skarmet and Mootiny")
+print("PASS: 13 species: Kanto/Johto/Hoenn starters plus Scarabub, Skarmet, Mootiny and Gemlin")
 print("PASS: save-compatible, single-charge Egg creation after capacity/funds checks")
 print("PASS: dedicated seller, original Odd Egg event and Move Expert retained")
 print("PASS: NPC inside layout bounds and not on another object event")
