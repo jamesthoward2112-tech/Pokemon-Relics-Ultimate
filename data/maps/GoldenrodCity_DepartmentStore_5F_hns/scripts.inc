@@ -106,6 +106,7 @@ GoldenrodDeptStore5_EventScript_Clerk::
 
 	.align 2
 GoldenrodDeptStore5_Pokemart:
+	.2byte ITEM_TM_FALSE_SWIPE
 	.2byte ITEM_TM_LIGHT_SCREEN
 	.2byte ITEM_TM_PROTECT
 	.2byte ITEM_TM_REFLECT
