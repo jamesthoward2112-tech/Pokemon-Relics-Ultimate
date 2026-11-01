@@ -24360,6 +24360,20 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .category = DAMAGE_CATEGORY_PHYSICAL,
         .battleAnimScript = gBattleAnimMove_MetalClaw,
     },
+    [MOVE_RELIC_GAZE] =
+    {
+        .name = COMPOUND_STRING("RELIC GAZE"),
+        .description = COMPOUND_STRING("An ancient all-seeing ray.\nMay lower Sp. Def."),
+        .effect = EFFECT_HIT,
+        .power = 105,
+        .type = TYPE_PSYCHIC,
+        .accuracy = 95,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({ .moveEffect = MOVE_EFFECT_SP_DEF_MINUS_1, .chance = 20, }),
+        .battleAnimScript = gBattleAnimMove_Psystrike,
+    },
     [MOVE_MINDWAVE] =
     {
         .name = COMPOUND_STRING("MINDWAVE"),

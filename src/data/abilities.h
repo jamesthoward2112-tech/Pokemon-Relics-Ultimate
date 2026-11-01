@@ -2548,5 +2548,15 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .cantBeSwapped = TRUE,
         .cantBeTraced = TRUE,
     },
+    [ABILITY_RELIC_EYE] =
+    {
+        .name = _("RELIC EYE"),
+        .description = COMPOUND_STRING("Only super-effective hits;\nboosts move accuracy."),
+        .aiRating = 10,
+        .cantBeCopied = TRUE,
+        .cantBeSwapped = TRUE,
+        .cantBeTraced = TRUE,
+        .breakable = TRUE,
+    },
 
 };

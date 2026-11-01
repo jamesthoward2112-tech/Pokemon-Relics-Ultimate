@@ -2368,6 +2368,7 @@ bool32 CanLowerStat(enum BattlerId battlerAtk, enum BattlerId battlerDef, struct
             break;
         case ABILITY_KEEN_EYE:
         case ABILITY_MINDS_EYE:
+        case ABILITY_RELIC_EYE:
             if (stat == STAT_ACC)
                 return FALSE;
             break;

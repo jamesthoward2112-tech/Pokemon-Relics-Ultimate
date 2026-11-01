@@ -354,6 +354,8 @@ enum __attribute__((packed)) Ability
     ABILITIES_COUNT_PJR,
     // PRU append-only signature; original ability IDs remain save-compatible.
     ABILITY_DUEL_SOUL = ABILITIES_COUNT_PJR,
+    // Append-only PRU signature for the E20 RELICS I-Unown (never renumber legacy abilities).
+    ABILITY_RELIC_EYE,
     ABILITIES_COUNT,
 };
 
