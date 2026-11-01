@@ -63,51 +63,39 @@ def main():
         NEWGAME.write_text(original_newgame)
         shutil.copy2(CANONICAL, ROM)
 
-    env = os.environ.copy()
-    env.update({"LIBGL_ALWAYS_SOFTWARE": "1", "QT_OPENGL": "software",
-                "SDL_VIDEODRIVER": "x11", "SDL_RENDER_DRIVER": "software"})
+    # Use mGBA's C core directly. Xvfb window captures on GitHub-hosted
+    # runners were uniformly black in BOTH Qt and SDL frontends; core PNG
+    # screenshots avoid the broken compositor and prove real GBA pixels.
+    source = Path("/tmp/pru-gba-rom-debugger")
+    subprocess.run(["git", "clone", "-q", "--depth=1",
+                    "https://github.com/JohnnySun/gba-rom-debugger.git",
+                    str(source)], check=True, timeout=60)
     with LOG.open("w") as log:
-        proc = subprocess.Popen(["mgba", str(TEST_ROM)], cwd=ROOT,
-                                env=env, stdout=log, stderr=subprocess.STDOUT)
-        try:
-            window = None
-            for _ in range(20):
-                if proc.poll() is not None:
-                    raise RuntimeError("mGBA exited before the ladder playtest")
-                found = subprocess.run(
-                    ["xdotool", "search", "--pid", str(proc.pid)],
-                    stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
-                    text=True).stdout.split()
-                if found:
-                    window = found[-1]
-                    break
-                time.sleep(0.5)
-            assert window, "Could not locate the live mGBA test window"
-            time.sleep(12)
-            before = screenshot(window, "pru-alph-before.png")
-            cmd("xdotool", "windowfocus", window)
-            cmd("xdotool", "keydown", "Up")
-            time.sleep(4)
-            cmd("xdotool", "keyup", "Up")
-            time.sleep(4)
-            after = screenshot(window, "pru-alph-after.png")
-            baseline = green_share(before)
-            destination = green_share(after)
-            print("mGBA Alph B1F green fraction before:", round(baseline, 4))
-            print("mGBA Ruins Outside green fraction after:", round(destination, 4))
-            print("mGBA rendered frame std devs:",
-                  [round(x, 1) for x in ImageStat.Stat(after).stddev])
-            assert max(ImageStat.Stat(after).stddev) > 5, "Blank mGBA framebuffer"
-            assert destination > baseline + 0.025 and destination > 0.04, (
-                "mGBA did not visibly arrive on the green exterior map; see screenshots")
-            print("PASS: mGBA test avatar walked UP from Alph B1F ladder into Ruins Outside")
-        finally:
-            proc.terminate()
-            try:
-                proc.wait(timeout=4)
-            except subprocess.TimeoutExpired:
-                proc.kill()
-                proc.wait()
+        subprocess.run(["make", "bin/gba-walk", "MGBA_PREFIX=/usr",
+                        "LIBPNG_PREFIX=/usr"], cwd=source, check=True,
+                       stdout=log, stderr=subprocess.STDOUT, timeout=60)
+        subprocess.run([str(source / "bin/gba-walk"), str(TEST_ROM),
+                        str(ROOT), "run:720", "snap:pru-alph-before",
+                        "press:UP:36", "run:180", "snap:pru-alph-after"],
+                       check=True, cwd=ROOT, stdout=log,
+                       stderr=subprocess.STDOUT, timeout=90)
+    before = Image.open(ROOT / "pru-alph-before.png").convert("RGB")
+    after = Image.open(ROOT / "pru-alph-after.png").convert("RGB")
+    assert before.size == (240, 160) and after.size == (240, 160), (
+        before.size, after.size)
+    before_variation = max(ImageStat.Stat(before).stddev)
+    after_variation = max(ImageStat.Stat(after).stddev)
+    baseline = green_share(before)
+    destination = green_share(after)
+    print("mGBA core Alph B1F green fraction before:", round(baseline, 4))
+    print("mGBA core Ruins Outside green fraction after:", round(destination, 4))
+    print("mGBA core framebuffer variation:", before_variation, after_variation)
+    assert before_variation > 5 and after_variation > 5, (
+        "Black mGBA core pixels; inspect captured frames before claiming gameplay")
+    assert destination > baseline + 0.025 and destination > 0.04, (
+        "Exit was not visibly traversed; inspect core PNG before releasing")
+    print("PASS: actual mGBA core moved UP through Ruins B1F exit to outside")
+
     assert ROM.read_bytes() == CANONICAL.read_bytes(), "Canonical ROM changed!"
     CANONICAL.unlink(missing_ok=True)
     TEST_ROM.unlink(missing_ok=True)
