@@ -45,6 +45,9 @@ extern const u8 BattleScript_PJRQuickRun[];
 extern const u8 BattleScript_GotAwaySafely[];
 extern const u8 BattleScript_WildMonFled[];
 extern const u8 BattleScript_PrintCantRunFromTrainer[];
+#if IS_HNS
+extern const u8 BattleScript_PRU_CantQuitTrainer[];
+#endif
 extern const u8 BattleScript_PrintFailedToRunString[];
 extern const u8 BattleScript_PrintCantEscapeFromBattle[];
 extern const u8 BattleScript_PrintFullBox[];
