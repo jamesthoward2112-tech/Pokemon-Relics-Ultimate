@@ -49,7 +49,7 @@ Read `AGENTS.md`, `PRU_HANDOFF.md`, `docs/PRU_RELEASE_LEDGER.md`; preserve all w
 ## 6. RELICS legendary encounter levels
 
 - Audit **all player-catchable scripted RELICS legendary encounters** across Johto/Kanto/quest areas and their repeat/respawn paths.
-- Standardize level **80** except **Alphoracle at level 90**. Include I-Unown's Relic encounter, legendary beasts, Lugia, Celebi and other quest legendary encounters if present. Do not change trainer-owned Pokémon, ordinary wild encounter tables, scripted noncatchable showcases or NPC sprites.
+- Standardize **catchable scripted encounters** to level **80**, except **Alphoracle at 90** and **the single final Ho-Oh (Relic Ho-Oh) at 100**. Do not change trainer-owned Pokémon, roaming tables, or noncatchable appearances. Only one Ho-Oh battle can exist in new playthroughs, unlocked after catching all other seven RELICS and obtaining the Ancient Rainbow Crest.
 - Preserve catches, defeat/respawn, flags, conditions, positions, sprites, pedestal objects and story dialogue. Targeted tests should list location, script label, intended level and re-encounter handling.
 
 ## 7. All ending credits replaced with PRU-specific credits
@@ -242,3 +242,25 @@ The seller's dialogue now advertises a Starter or Relic baby, rather than only b
 **Release gate:** still needs full checkout source-test execution, clean compilation (only when authorised), and mGBA tests for NPC walkability, declining, purchasing twice, party full, challenge-limited party, exactly ¥4,999 and ¥5,000, hatch of all 13 (nine traditional starters and four Relic babies, including Gemlin), saving/reloading with an Egg, plus verifying the old free Odd Egg and Move Expert still work. Do not declare gameplay verified based only on static source checks.
 
 **Next queued item after Mystery Eggs:** audit RELICS legendary encounter levels (80 except Alphoracle 90). Preserve existing hunt flags, encounter positions and caught/respawn rules.
+
+
+## Single final Ho-Oh, legends 80/90/100 — staged source checkpoint (1 November 2026)
+
+**Approved final design:** The previous ordinary Ho-Oh battle, its retry, and Professor Oak's separate Relic Ho-Oh summon are **retired**. There is exactly **one catchable Ho-Oh**, a **level-100 Relic Ho-Oh at Tin Tower roof**. Do not allow any earlier sighting/summon. NPCs may mention only uncertain rumours of a golden flying Pokémon until the post-RELIC finale. Preserve Oak's existing trainer fight, the Crest reward, and all unrelated story progression.
+
+**The seven required catches before Ho-Oh:** Raikou, Entei, Lugia, I-Unown (`SPECIES_UNOWN_I`), Celebi, Suicune, and Alphoracle. All seven associated `FLAG_PJR_RELIC_*` flags must be set, along with `FLAG_PJR_GOT_RAINBOW_CREST` and physical possession of `ITEM_ANCIENT_RAINBOW_CREST`. They are checked on roof entry **and again immediately before starting the battle**, preventing old state variables or direct NPC scripts from bypassing progression.
+
+**Implementation prepared:**
+- `TinTower_RoofDay_hns/scripts.inc`: only one `seteventmon SPECIES_RELIC_HO_OH, 100` remains. Roof transition hides the old Ho-Oh/Kimono dance by default; only revealing the sole legendary after all seven RELICS and the Crest. Catching sets both new and legacy catch flags and hides the overworld sprite. Faint/escape leaves it available for a later attempt. Old saves with `FLAG_CAUGHT_HO_OH` are marked final-caught on visiting the roof, to avoid a **second** Ho-Oh. No new save flags or IDs were allocated.
+- `TinTower_RoofDay_hns/map.json`: removed the original early Kimono dance coordinate trigger and extraneous offscreen Ho-Oh event object; the single real roof Ho-Oh object remains conditional on its hidden flag.
+- `MtSilver_SummitDay_hns/scripts.inc`: removed Oak's separate Ho-Oh battle entirely; Oak's trainer battle still occurs. After winning, he directs the player toward the Tin Tower rumour. The old Crest reward and Alphoracle dialogue no longer forcibly reveal Ho-Oh early.
+- `EcruteakCity_Theater_hns/scripts.inc`: completing the Kimono gauntlet no longer sets Ho-Oh's early story-spawn state or enables the old roof Kimono choreography. Story flags and access to Tin Tower remain preserved; the girl/Zuki discuss a **rumour** instead of a guaranteed sighting or invitation to meet Ho-Oh.
+- `TinTower_1F_hns/scripts.inc`: removed the sage/Eusine claims that Ho-Oh already descended; now only unverified folklore. `TinTower_RoofDay_hns/scripts.inc` also replaces the unused early ceremony dialogue with rumours.
+- `RuinsOfAlph_Lab_hns/scripts.inc`: Alphoracle capture no longer spawns Ho-Oh by directly setting the old roof variable or clearing the hide flag; it can only lead the player to the final location.
+- `test/test_pru_legendary_encounter_levels.py` and `test/test_pru_single_final_hooh.py`: audit battle levels, double gate, legacy catch handling, no early roof map trigger and no Oak summon.
+
+**Encounter levels also staged:** `RuinsOfAlph_Lab_hns` hunt: Raikou/Entei/Lugia/I-Unown/Celebi/Suicune 80, Alphoracle 90. All scripted normal Lugia, Celebi, Rayquaza, Kyogre, Groudon, Articuno, Suicune, Deoxys and Mewduo instances inspected in the listed map sources have been brought to 80; Mewtwo's existing 80 remains. Both legacy and alternate Groudon maps now use 80. `Ho-Oh=100` is enforced **only at the final Tin Tower encounter**, including replay following fainting. Roaming tables, non-HNS builds and trainer-owned species remain out of scope.
+
+**Still untested in ROM:** No compilation, GitHub Actions or mGBA run was initiated. Before release run all source regression tests, compile and mGBA-test first-time and existing saves (including legacy Ho-Oh caught and state=2/3/4), with zero through six captures, all seven captures without Crest, flag-only Crest without actual item, normal final catch, a faint/escape/retry, save/reload, Oak battle/epilogue, Kimono story progression and real NPC navigation. The new Ho-Oh sprite and forms must display properly.
+
+**Important:** Older existing saves where the ordinary Ho-Oh was already caught will retain that Ho-Oh and have the final RELIC flag marked completed to avoid dupes. A truly clean one-Ho-Oh run requires a new game after this patch. No ROM build or release until explicitly approved.
