@@ -32,6 +32,7 @@ WhirlIslands_B1F_EventScript_Item_Calcium::
 	finditem ITEM_CALCIUM
 	end
 
+@ Late-Johto TM reward; keep flag and script label for existing saves.
 WhirlIslands_B1F_EventScript_Item_Escape_Rope::
-	finditem ITEM_ESCAPE_ROPE
+	finditem ITEM_TM_SWORDS_DANCE
 	end
