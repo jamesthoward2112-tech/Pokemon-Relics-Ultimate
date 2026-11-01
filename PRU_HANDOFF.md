@@ -1,5 +1,11 @@
 # PRU_HANDOFF.md — authoritative session handover
-Last audited: 2026-10-30. All statuses below are scoped to evidence; no newer gameplay is implied.
+Last audited: 2026-11-01. All statuses below are scoped to evidence; no newer gameplay is implied.
+
+## 2026-11-01 Ruins of Alph statue restoration (compiled and released)
+Branch: `feat/pru-relic-hunt-20261101`; source commit: `f76b6880f620735eae98d232843bfa23b10aec96`; parent: `203f05a0cbb90d9219f3aefce8585b31d24233c9`.
+Restored the I-Unown eye monolith's cool-grey palette from its own object palette, installed the supplied Alphoracle statue as a separate tall indexed object graphic/palette, and cleared the original foreground statue tiles beneath both encounters using local metatile copies. Both encounter objects, map coordinates, interaction scripts and existing unlock gates remain in place. The two custom objects keep independent palette tags.
+Focused Ruins of Alph checks and the full PRU source regression suite passed. GitHub Actions run [41325268343](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41325268343) passed compilation, Team Rocket sprite checks, 32 MiB ROM verification, artifact upload and release publication. ROM: [Pokemon-Relics-Ultimate-f76b6880f6.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-f76b6880f6/Pokemon-Relics-Ultimate-f76b6880f6.gba), 33,554,432 bytes, SHA256 `f545fadd6b73812c0e46bf97ff8bc24358b460cf10958bb2ec2593aa31a1c83b`.
+No emulator screenshot or gameplay test was run; the player will test independently.
 
 ## 2026-11-01 I-Unown statue foreground fix (complete)
 Branch: `feat/pru-relic-hunt-20261101`; source fix commit: `bc28e144f1e81cfe0a7925fcfd806f8a8836d7f0`; parent: `e555670b40a6022d2f4c88c0cc424d2d19eac910`.

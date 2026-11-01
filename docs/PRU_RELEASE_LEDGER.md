@@ -43,3 +43,13 @@ only for features the player actually tested. Never call 401214913d player-confi
 - Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-bc28e144f1/Pokemon-Relics-Ultimate-bc28e144f1.gba
 - Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-bc28e144f1
 - Gameplay was not emulator-tested.
+
+## 2026-11-01 Ruins of Alph statue restoration
+
+- Branch: `feat/pru-relic-hunt-20261101`; source commit: `f76b6880f620735eae98d232843bfa23b10aec96`; parent: `203f05a0cbb90d9219f3aefce8585b31d24233c9`.
+- Scope: restore the Eye statue's cool-grey stone palette, install the supplied Alphoracle statue as a separate indexed overworld object/palette, and remove only the old statue foreground tiles beneath the two encounters.
+- GitHub Actions run [41325268343](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41325268343) passed focused statue checks, full source regression, compilation, 32 MiB binary verification, artifact upload and release publication.
+- ROM size: 33,554,432 bytes. SHA256: `f545fadd6b73812c0e46bf97ff8bc24358b460cf10958bb2ec2593aa31a1c83b`.
+- Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-f76b6880f6/Pokemon-Relics-Ultimate-f76b6880f6.gba
+- Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-f76b6880f6
+- No emulator screenshot/gameplay testing; player testing remains outstanding.
