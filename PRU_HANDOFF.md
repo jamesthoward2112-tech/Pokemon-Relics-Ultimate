@@ -1,6 +1,10 @@
 # PRU_HANDOFF.md — authoritative session handover
 Last audited: 2026-10-30. All statuses below are scoped to evidence; no newer gameplay is implied.
 
+## 2026-11-01 I-Unown statue foreground fix (in progress)
+Branch: `feat/pru-relic-hunt-20261101`; parent: `e555670b40a6022d2f4c88c0cc424d2d19eac910`.
+Root cause: the original grey statue is drawn in the B1F map foreground layer at (16,9) and (16,10), above the eye object sprite. Two local secondary metatile copies (200, 201) retain the original floor/collision data and clear only those foreground tiles; only the eye statue cells point to them. Four focused map/icon regression checks pass. Full clean ROM build and release are pending.
+
 ## 2026-11-01 Ruins of Alph / I-Unown patch checkpoint
 Branch: `feat/pru-relic-hunt-20261101`; source patch commit: `80ddf582abb63dbbc0f172befdbc68b38e13b3af` (parent `66c046d64231022ad46aae48398a4ae3c561ffe6`; original confirmed base `924f5de512037d6052f94b29025d92cc263df20a`).
 Completed: removed the oversized Alphoracle object; preserved the eye statue at B1F (16,10); moved the gated ladder to B1F (26,28); routed the rightmost final statue to the Alphoracle encounter with its original Champion/Suicune unlock gates; remapped only I-Unown's party/PC icon pixels onto palette slot 15.

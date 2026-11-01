@@ -3,6 +3,7 @@
 
 import json
 import re
+import struct
 import unittest
 from pathlib import Path
 
@@ -32,6 +33,32 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         last_statue = [e for e in interior["bg_events"] if e["x"] == 25 and e["y"] == 28]
         self.assertEqual(len(last_statue), 1)
         self.assertEqual(last_statue[0]["script"], "RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue")
+
+    def test_only_the_eye_statues_foreground_tiles_are_cleared(self):
+        layout = ROOT / "data/layouts/RuinsOfAlph_B1F_hns/map.bin"
+        raw = layout.read_bytes()
+        width = 29
+        values = struct.unpack("<%dH" % (len(raw) // 2), raw)
+        upper = values[9 * width + 16]
+        lower = values[10 * width + 16]
+
+        # These two cells are local copies of the statue tiles with their
+        # BG1 foreground layer cleared; map flags/collision bits stay intact.
+        self.assertEqual(upper & 0x3FF, 640 + 200)
+        self.assertEqual(lower & 0x3FF, 640 + 201)
+        self.assertEqual(upper & 0xFC00, 0x3000)
+        self.assertEqual(lower & 0xFC00, 0x0400)
+
+        tileset = ROOT / "data/tilesets/secondary/ruins_of_alph_b1_f_hns"
+        metatiles = tileset / "metatiles.bin"
+        entries = struct.unpack("<%dH" % (len(metatiles.read_bytes()) // 2), metatiles.read_bytes())
+        attributes = (tileset / "metatile_attributes.bin").read_bytes()
+        for original, clone in ((99, 200), (10, 201)):
+            source = entries[original * 8:(original + 1) * 8]
+            copied = entries[clone * 8:(clone + 1) * 8]
+            self.assertEqual(copied[:4], source[:4])
+            self.assertEqual(copied[4:], (0, 0, 0, 0))
+            self.assertEqual(attributes[clone * 2:clone * 2 + 2], attributes[original * 2:original * 2 + 2])
 
     def test_relic_ladder_is_inside_at_bottom_right_and_keeps_original_route(self):
         interior = read_map("RuinsOfAlph_B1F_hns")
