@@ -66,4 +66,9 @@ void GetItemBallIdAndAmountFromTemplate(void)
     u32 itemBallId = (gSpecialVar_LastTalked - 1);
     gSpecialVar_Result = GetItemBallIdFromTemplate(itemBallId);
     gSpecialVar_0x8009 = GetItemBallAmountFromTemplate(itemBallId);
+#if IS_HNS
+    // A formerly stacked Rope pickup must never grant multiple copies of a TM.
+    if (gMapHeader.events->objectEvents[itemBallId].trainerRange_berryTreeId == ITEM_ESCAPE_ROPE)
+        gSpecialVar_0x8009 = 1;
+#endif
 }
