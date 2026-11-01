@@ -104,6 +104,12 @@ theater_old = section(theater, "EcruteakCity_Theater_EventScript_Hooh::",
 require("setvar VAR_COMPLETED_HO_OH, 2" not in theater_old
         and "clearflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS" not in theater_old,
         "Kimono gauntlet must not schedule a pre-quest Ho-Oh visit")
+require("setvar VAR_ECRUTEAK_CITY_THEATER, 8" in theater_old
+        and "clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_ZUKI" in theater_old
+        and "clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_KIMONOS" in theater_old
+        and "clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_NPCS" in theater_old,
+        "Kimono gauntlet must complete normally without an early Ho-Oh battle")
+
 require("rumour" in theater and "rumour" in tower,
         "Early NPCs should give rumours, not guaranteed Ho-Oh sightings")
 require('("TinTower_RoofDay_hns", "RELIC_HO_OH"): 1' in policy,
@@ -111,5 +117,6 @@ require('("TinTower_RoofDay_hns", "RELIC_HO_OH"): 1' in policy,
 print("PASS: one catchable level-100 Relic Ho-Oh at Tin Tower")
 print("PASS: all seven RELICS and the Ancient Rainbow Crest gated twice")
 print("PASS: early roof trigger, Oak summon, Red/Alph bypasses retired")
+print("PASS: Kimono Theater story completes without a Ho-Oh appearance")
 print("PASS: legendary catch and legacy-save flags block additional Ho-Oh")
 print("NOTE: source only. Compile and exercise new/existing saves in mGBA before release.")
