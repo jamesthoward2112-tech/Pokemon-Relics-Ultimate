@@ -5068,6 +5068,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_TOUGH,
         .contestComboStarterId = COMBO_STARTER_SCARY_FACE,
         .contestComboMoves = {COMBO_STARTER_LEER, COMBO_STARTER_RAGE},
+        .additionalEffects = ADDITIONAL_EFFECTS({ .moveEffect = MOVE_EFFECT_FEAR, .chance = 100, }),
         .battleAnimScript = gBattleAnimMove_ScaryFace,
         .validApprenticeMove = TRUE,
     },
