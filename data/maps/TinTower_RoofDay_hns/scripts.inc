@@ -6,34 +6,45 @@ TinTower_RoofDay_OnTransition:
 	call_if_set FLAG_DAY_POKEMON, TinTower_RoofDay_EventScript_SetNight
 	call_if_unset FLAG_DAY_POKEMON, TinTower_RoofDay_EventScript_SetDay
 	call TinTower_RoofDay_EventScript_SyncRelicHoOhState
-	goto_if_eq VAR_COMPLETED_HO_OH, 2, TinTower_RoofDay_MapScript_HoohStory
-	goto_if_eq VAR_COMPLETED_HO_OH, 3, TinTower_RoofDay_MapScript_HoohPostStoryGone
-	goto_if_eq VAR_COMPLETED_HO_OH, 4, TinTower_RoofDay_MapScript_HoohPostStoryEncounter
 	end
 
-@ Save-compatible self-heal for the final RELIC encounter.  Older saves could
-@ own the Crest and Alphoracle but still have VAR_COMPLETED_HO_OH stuck at 3,
-@ leaving an empty roof.  Derive the unlock from the real quest flags on entry.
+@ One-time final RELIC encounter only. Never show the old story Ho-Oh.
+@ Both old state=2 saves and earlier ordinary Ho-Oh catches are respected.
 TinTower_RoofDay_EventScript_SyncRelicHoOhState::
+	setflag FLAG_HIDE_HO_OH
+	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
 	goto_if_set FLAG_PJR_RELIC_HO_OH, TinTower_RoofDay_EventScript_SyncRelicHoOhCaught
-	goto_if_unset FLAG_PJR_RELIC_RAIKOU, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_ENTEI, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_LUGIA, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_CELEBI, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_SUICUNE, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
+	goto_if_set FLAG_CAUGHT_HO_OH, TinTower_RoofDay_EventScript_SyncLegacyHoOhCaught
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, TinTower_RoofDay_EventScript_SyncRelicHoOhLocked
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, TinTower_RoofDay_EventScript_SyncRelicHoOhLocked
+	goto_if_unset FLAG_PJR_RELIC_LUGIA, TinTower_RoofDay_EventScript_SyncRelicHoOhLocked
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, TinTower_RoofDay_EventScript_SyncRelicHoOhLocked
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, TinTower_RoofDay_EventScript_SyncRelicHoOhLocked
+	goto_if_unset FLAG_PJR_RELIC_SUICUNE, TinTower_RoofDay_EventScript_SyncRelicHoOhLocked
+	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, TinTower_RoofDay_EventScript_SyncRelicHoOhLocked
+	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, TinTower_RoofDay_EventScript_SyncRelicHoOhLocked
+	checkitem ITEM_ANCIENT_RAINBOW_CREST
+	goto_if_eq VAR_RESULT, FALSE, TinTower_RoofDay_EventScript_SyncRelicHoOhLocked
 	setvar VAR_COMPLETED_HO_OH, 4
+	setobjectxyperm LOCALID_HO_OH, 10, 6
 	clearflag FLAG_HIDE_HO_OH
 	return
+
+TinTower_RoofDay_EventScript_SyncLegacyHoOhCaught::
+	@ Earlier saves may have caught the retired Lv50 Ho-Oh. Avoid offering a
+	@ second Ho-Oh, even when the later quest unlocks.
+	setflag FLAG_PJR_RELIC_HO_OH
+	goto TinTower_RoofDay_EventScript_SyncRelicHoOhCaught
 
 TinTower_RoofDay_EventScript_SyncRelicHoOhCaught::
 	setvar VAR_COMPLETED_HO_OH, 3
 	setflag FLAG_HIDE_HO_OH
 	return
 
-TinTower_RoofDay_EventScript_SyncRelicHoOhDone::
+TinTower_RoofDay_EventScript_SyncRelicHoOhLocked::
+	@ Even an old VAR_COMPLETED_HO_OH=2 or =4 cannot bypass the quest.
+	setvar VAR_COMPLETED_HO_OH, 3
+	setflag FLAG_HIDE_HO_OH
 	return
 
 TinTower_RoofDay_EventScript_SetNight::
@@ -44,31 +55,12 @@ TinTower_RoofDay_EventScript_SetDay::
 	setmaplayoutindex LAYOUT_TIN_TOWER_ROOF_DAY_HNS
 	return
 
+@ The early Kimono roof-spawn states are deliberately retired.
+@ A single Lv100 Relic Ho-Oh becomes visible only through SyncRelicHoOhState.
 TinTower_RoofDay_MapScript_HoohStory::
-	clearflag FLAG_HIDE_HO_OH
-	end
-
 TinTower_RoofDay_MapScript_HoohPostStoryGone::
-	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
-	goto_if_set FLAG_CAUGHT_HO_OH, TinTower_RoofDay_MapScript_HoohCaught
-	@ If normal Ho-Oh was defeated, let it return on the next visit.
-	@ The later Relic Ho-Oh unlock (state 4) remains a separate encounter.
-	clearflag FLAG_HIDE_HO_OH
-	setobjectxyperm LOCALID_HO_OH, 10, 6
-	end
-
 TinTower_RoofDay_MapScript_HoohCaught::
-	setflag FLAG_HIDE_HO_OH
-	end
-
 TinTower_RoofDay_MapScript_HoohPostStoryEncounter::
-	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
-	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, TinTower_RoofDay_MapScript_RelicHoOhLocked
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, TinTower_RoofDay_MapScript_RelicHoOhLocked
-	clearflag FLAG_HIDE_HO_OH
-	setobjectxyperm LOCALID_HO_OH, 10, 6
-	end
-
 TinTower_RoofDay_MapScript_RelicHoOhLocked::
 	setflag FLAG_HIDE_HO_OH
 	end
@@ -208,61 +200,31 @@ TinTower_RoofDay_EventScript_TalkToKimono::
 
 TinTower_RoofDay_EventScript_HoOh::
 	lockall
-	goto_if_eq VAR_COMPLETED_HO_OH, 4, TinTower_RoofDay_EventScript_HoOhPostgame
-	goto_if_eq VAR_COMPLETED_HO_OH, 3, TinTower_RoofDay_EventScript_HoOhRetry
-	waitse
-	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
-	delay 30
-	waitmoncry
-	playbgm MUS_HG_VS_HO_OH, 0
-	seteventmon SPECIES_HO_OH, 100
-	setflag FLAG_SYS_CTRL_OBJ_DELETE
-	special BattleSetup_StartLegendaryBattle
-	waitstate
-	clearflag FLAG_SYS_CTRL_OBJ_DELETE
-	setvar VAR_LAST_TALKED, LOCALID_HO_OH
-	specialvar VAR_RESULT, GetBattleOutcome
-	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, TinTower_RoofDay_EventScript_RanFromHoOh
-	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, TinTower_RoofDay_EventScript_RanFromHoOh
-	call_if_eq VAR_RESULT, B_OUTCOME_WON, TinTower_RoofDay_EventScript_HoohFlewAway
-	call_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, TinTower_RoofDay_EventScript_CaughtHooh
-	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
-	applymovement LOCALID_KIMONO_MID, TinTower_RoofDay_Movement_Kimono_Dance_Shift_Right2
-	waitmovement 0
-	clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_KIMONOS
-	clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_ZUKI
-	clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_NPCS
-	setvar VAR_ECRUTEAK_CITY_THEATER, 8
-	setvar VAR_COMPLETED_HO_OH, 3
-	releaseall
-	end
+	goto_if_set FLAG_PJR_RELIC_HO_OH, TinTower_RoofDay_EventScript_HoOhAlreadyCaught
+	goto_if_set FLAG_CAUGHT_HO_OH, TinTower_RoofDay_EventScript_HoOhAlreadyCaught
+	goto TinTower_RoofDay_EventScript_HoOhPostgame
 
-@ Simple Lv100 retry after a knockout: never replay the Kimono choreography.
+@ Legacy retry label kept for script/save compatibility, without a second
+@ Ho-Oh battle. Rechecks all quest conditions before allowing capture.
 TinTower_RoofDay_EventScript_HoOhRetry::
-	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
-	waitmoncry
-	playbgm MUS_HG_VS_HO_OH, 0
-	seteventmon SPECIES_HO_OH, 100
-	special BattleSetup_StartLegendaryBattle
-	waitstate
-	specialvar VAR_RESULT, GetBattleOutcome
-	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, TinTower_RoofDay_EventScript_RanFromHoOh
-	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, TinTower_RoofDay_EventScript_RanFromHoOh
-	call_if_eq VAR_RESULT, B_OUTCOME_WON, TinTower_RoofDay_EventScript_HoohFlewAway
-	call_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, TinTower_RoofDay_EventScript_CaughtHooh
-	releaseall
-	end
+	goto TinTower_RoofDay_EventScript_HoOh
 
 TinTower_RoofDay_EventScript_HoOhPostgame::
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, TinTower_RoofDay_EventScript_HoOhLocked
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, TinTower_RoofDay_EventScript_HoOhLocked
+	goto_if_unset FLAG_PJR_RELIC_LUGIA, TinTower_RoofDay_EventScript_HoOhLocked
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, TinTower_RoofDay_EventScript_HoOhLocked
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, TinTower_RoofDay_EventScript_HoOhLocked
+	goto_if_unset FLAG_PJR_RELIC_SUICUNE, TinTower_RoofDay_EventScript_HoOhLocked
 	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, TinTower_RoofDay_EventScript_RelicHoOhNeedsAlphoracle
 	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, TinTower_RoofDay_EventScript_RelicHoOhNeedsCrest
 	checkitem ITEM_ANCIENT_RAINBOW_CREST
 	goto_if_eq VAR_RESULT, FALSE, TinTower_RoofDay_EventScript_RelicHoOhNeedsCrest
-	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_RELIC_HO_OH, CRY_MODE_ENCOUNTER
 	delay 30
 	waitmoncry
 	playbgm MUS_HG_VS_HO_OH, 0
-	seteventmon SPECIES_HO_OH, 100
+	seteventmon SPECIES_RELIC_HO_OH, 100
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
 	waitstate
@@ -273,6 +235,17 @@ TinTower_RoofDay_EventScript_HoOhPostgame::
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, TinTower_RoofDay_EventScript_RanFromHoOh
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, TinTower_RoofDay_EventScript_RanFromHoOh
 	msgbox TinTower_RoofDay_Text_RelicHoOhRetry, MSGBOX_DEFAULT
+	releaseall
+	end
+
+TinTower_RoofDay_EventScript_HoOhLocked::
+	msgbox TinTower_RoofDay_Text_RelicHoOhLocked, MSGBOX_DEFAULT
+	releaseall
+	end
+
+TinTower_RoofDay_EventScript_HoOhAlreadyCaught::
+	setflag FLAG_HIDE_HO_OH
+	msgbox TinTower_RoofDay_Text_RelicHoOhAlreadyCaught, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -288,6 +261,7 @@ TinTower_RoofDay_EventScript_RelicHoOhNeedsCrest::
 
 TinTower_RoofDay_EventScript_CaughtRelicHoOh::
 	setflag FLAG_PJR_RELIC_HO_OH
+	setflag FLAG_CAUGHT_HO_OH
 	fadescreenswapbuffers FADE_TO_BLACK
 	removeobject LOCALID_HO_OH
 	setweather WEATHER_NONE
@@ -310,14 +284,8 @@ TinTower_RoofDay_EventScript_HoohFlewAway::
 	return
 
 TinTower_RoofDay_EventScript_CaughtHooh::
-	setflag FLAG_CAUGHT_HO_OH
-	fadescreenswapbuffers FADE_TO_BLACK
-	removeobject LOCALID_HO_OH
-	setweather WEATHER_NONE
-	doweather
-	setflag FLAG_HIDE_HO_OH
-	fadescreenswapbuffers FADE_FROM_BLACK
-	return
+	@ Retired ordinary Ho-Oh result: apply the same one-catch flags.
+	goto TinTower_RoofDay_EventScript_CaughtRelicHoOh
 
 TinTower_RoofDay_EventScript_RanFromHoOh::
 	releaseall
@@ -366,6 +334,14 @@ TinTower_RoofDay_EventScript_Kuni::
 TinTower_RoofDay_EventScript_KuniAfter::
 	msgbox TinTower_RoofDay_Text_Kimono_After, MSGBOX_NPC
 	end
+
+TinTower_RoofDay_Text_RelicHoOhLocked:
+	.string "Only whispers of golden wings\n"
+	.string "linger above the empty tower.$"
+
+TinTower_RoofDay_Text_RelicHoOhAlreadyCaught:
+	.string "The golden RELIC has already\n"
+	.string "answered your call.$"
 
 TinTower_RoofDay_Text_RelicHoOhNeedsAlphoracle:
 	.string "The rainbow resonance is incomplete.\p"
