@@ -195,3 +195,21 @@ assumptions in this document; it is NOT evidence of a playable or tested ROM.
 - Source checks in `test/test_pru_escape_rope_and_indigo_tutors.py` and `test/test_pru_escape_rope_and_tutors.py` now recognize intentional Key Item grants and centrally converted map-JSON item awards; they reject extra direct HNS Rope loot.
 
 **Still required before release:** execute the tests on a complete checkout, confirm no further scripted HNS Rope rewards remain, compile the full GBA, and test early and late visible/hidden pickups, old-save Elm recovery, real TM teaching, all Indigo menus, Fear against misses/Protect/Substitute/stat-limit/abilities, fog expiration, save/reload, and mGBA. Do **not** build or publish as part of this preparation checkpoint.
+
+
+## Trainer-battle Quit/Forfeit freeze — source fix staged (1 November 2026)
+
+**Status:** source implemented and committed on `prep/pru-rockshop-no-build-20261101`; no ROM compilation, workflow run or mGBA gameplay test.
+
+**Root-cause candidate:** the normal trainer action menu could submit `B_ACTION_RUN`; `src/battle_main.c` routed that to `BattleScript_QuestionForfeitBattle` (or Frontier/Trainer Hill forfeit), with `B_OUTCOME_FORFEITED` thereafter entering the script-specific return-to-field/whiteout path. A player reported this freezes. This is a code-path diagnosis, **not yet a proven exact freeze cause**.
+
+**Staged safeguards, HNS only:**
+- `src/battle_controller_player.c::HandleInputChooseAction`: pressing A on the bottom-right RUN tile in a local trainer battle plays `SE_BOO` and **returns without emitting a Run command, completing the controller, changing the action cursor, or ending battle**. The normal wild quick-run R shortcut remains intact; link and recorded battles retain their distinct behavior.
+- `data/battle_scripts_1.s` and `include/battle_scripts.h`: create and declare `BattleScript_PRU_CantQuitTrainer`, a proper **selection script** that prints the existing no-running-from-trainers message and calls `endselectionscript`. It must not call `end2` and accidentally finish an active battle.
+- `src/battle_main.c`: defensive intercept of any stale/unexpected `B_ACTION_RUN` from a local HNS trainer battle, ahead of both the Frontier and normal trainer forfeiting branches. Set `STATE_SELECTION_SCRIPT`, then `STATE_BEFORE_ACTION_CHOSEN` as the safe return destination. Link and recorded battles are exempt.
+- `CanPlayerForfeitNormalTrainerBattle` returns FALSE in HNS, blocking other accidental entry into the normal forfeit endpoint. The original non-HNS logic is left unchanged.
+- `test/test_pru_trainer_battle_no_quit.py`: new *source-only* audit for the above invariants, including preserved wild/Link behavior.
+
+**Before any ROM release:** run the complete source tests and a fresh compile, then use mGBA to attempt Run/forfeit from ordinary singles, trainer doubles, boss/Elite Four, scripted trainer battles and challenge modes. Confirm repeated A-presses cannot leave the fight or freeze, fight/bag/switch still work, defeat/victory and rematch flags still advance, wild run/R quick-run succeeds normally, and Link/Safari/recorded behavior has not regressed.
+
+**Do not build, publish, merge, or trigger Actions until explicitly approved.** The next separate queued item is the repeatable ¥5,000 Day-Care Mystery Egg seller.
