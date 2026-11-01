@@ -1,6 +1,13 @@
 # PRU_HANDOFF.md — authoritative session handover
 Last audited: 2026-11-01. All statuses below are scoped to evidence; no newer gameplay is implied.
 
+## 2026-11-01 Correct B1F ladder exit trigger (compiled and released)
+Branch: `feat/pru-relic-hunt-20261101`; source commit: `6e28dde2a5ba48420db1091c3fcc03c704e6ccd9`.
+Player video showed the avatar at the visible ladder while the earlier extra warp was several tiles away. Moved the additional exit to the ladder tile (15,15) and added an A-button facing interaction that warps to the established Ruins of Alph Outside entrance (21,21). The standard B1F entrance/exit at (15,16) remains. Eye statue and pedestal are unchanged.
+Actions run [41341671168](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41341671168) passed regression checks, full clean build and 32 MiB ROM verification. SHA256: `c3c63384493e60b896c8ad60c5e4e0d9307257d0590fc14ef950548bfa96b26c`.
+Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-6e28dde2a5/Pokemon-Relics-Ultimate-6e28dde2a5.gba
+Gameplay was not emulator-tested; player confirmation remains outstanding.
+
 ## 2026-11-01 B1F ladder exit and I-Unown Eye pedestal (compiled and released)
 Branch: `feat/pru-relic-hunt-20261101`; source commit: `bcbde6cf9b03aa7e8cea3d14dc1c6a4683150c99`.
 Added an exit warp on the visible B1F ladder at (12,10), leading to the established outside entrance; the original south exit remains. Rebuilt the Eye statue from its approved source artwork so its 16x12 inscribed base matches the Alphoracle stand while keeping the existing 32x32 object frame and independent cool-grey palette. Alphoracle artwork, encounter gating, Magic Bounce and the rest of the approved PRU state are unchanged.
