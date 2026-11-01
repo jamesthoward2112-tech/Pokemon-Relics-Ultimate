@@ -263,6 +263,21 @@ jobs:
           name: PRU-mGBA-BOOT-EVIDENCE
           path: /tmp/pru-mgba-boot.png
           if-no-files-found: error
+      - name: Verify Alph B1F exit by walking through it in mGBA
+        shell: bash
+        timeout-minutes: 18
+        run: xvfb-run -a -s '-screen 0 1024x768x24' python3 tools/pru/playtest_alph_ladder_ci.py
+      - name: Upload Alph ladder emulator traversal screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: PRU-ALPH-LADDER-mGBA-TRAVERSAL
+          path: |
+            pru-alph-before.png
+            pru-alph-after.png
+            pru-mgba-ladder.log
+            pru-mgba-test-build.log
+          if-no-files-found: warn
       - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4
         with:
