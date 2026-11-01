@@ -45,6 +45,79 @@ Route34_DayCare_Text_Bookshelf4:
 	.string "A BABY POKéMON encyclopedia!\p"
 	.string "VOLUME 4: ADORABLE ACTIONS$"
 
+@ PRU Mystery Egg seller. Separate from the existing one-time Odd Egg
+@ and free Move Expert; no flags are set, and eggs can be bought repeatedly.
+Route34_DayCare_EventScript_MysteryEggSeller::
+	lock
+	faceplayer
+	msgbox Route34_DayCare_Text_MysteryEggOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route34_DayCare_EventScript_MysteryEggDecline
+	@ The special validates party cap, funds and hatchable species, gives the
+	@ egg, then charges exactly 5000; no payment on failure or cancellation.
+	specialvar VAR_RESULT, PruBuyDaycareMysteryEgg
+	switch VAR_RESULT
+	case 0, Route34_DayCare_EventScript_MysteryEggSuccess
+	case 1, Route34_DayCare_EventScript_MysteryEggPartyFull
+	case 2, Route34_DayCare_EventScript_MysteryEggNoMoney
+	goto Route34_DayCare_EventScript_MysteryEggUnavailable
+
+Route34_DayCare_EventScript_MysteryEggSuccess::
+	playfanfare MUS_HG_OBTAIN_EGG
+	message Route34_DayCare_Text_MysteryEggReceived
+	waitfanfare
+	waitmessage
+	closemessage
+	release
+	end
+
+Route34_DayCare_EventScript_MysteryEggPartyFull::
+	msgbox Route34_DayCare_Text_MysteryEggPartyFull, MSGBOX_DEFAULT
+	release
+	end
+
+Route34_DayCare_EventScript_MysteryEggNoMoney::
+	msgbox Route34_DayCare_Text_MysteryEggNoMoney, MSGBOX_DEFAULT
+	release
+	end
+
+Route34_DayCare_EventScript_MysteryEggUnavailable::
+	msgbox Route34_DayCare_Text_MysteryEggUnavailable, MSGBOX_DEFAULT
+	release
+	end
+
+Route34_DayCare_EventScript_MysteryEggDecline::
+	msgbox Route34_DayCare_Text_MysteryEggDecline, MSGBOX_DEFAULT
+	release
+	end
+
+Route34_DayCare_Text_MysteryEggOffer:
+	.string "I sell MYSTERY EGGS!\\p"
+	.string "Each costs ¥5,000 and may hatch\\n"
+	.string "into a special baby POKéMON.\\p"
+	.string "Would you like one?$"
+
+Route34_DayCare_Text_MysteryEggReceived:
+	.string "You received a MYSTERY EGG!\\n"
+	.string "Take good care of it!$"
+
+Route34_DayCare_Text_MysteryEggPartyFull:
+	.string "Your party has no room,\\n"
+	.string "even with your challenge limit.\\p"
+	.string "Make space and come back!$"
+
+Route34_DayCare_Text_MysteryEggNoMoney:
+	.string "You need ¥5,000 for one EGG.\\n"
+	.string "Come back when you have it!$"
+
+Route34_DayCare_Text_MysteryEggUnavailable:
+	.string "Sorry, that EGG isn't ready.\\n"
+	.string "You haven't been charged.$"
+
+Route34_DayCare_Text_MysteryEggDecline:
+	.string "No problem! My EGG stock\\n"
+	.string "is always changing. Come back!$"
+
+
 Route34_DayCare_EventScript_Clerk::
 	lock
 	faceplayer
