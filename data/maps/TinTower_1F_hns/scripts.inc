@@ -76,8 +76,9 @@ TinTower_1F_Sage3_Text:
 	.string "of a much older network.$"
 
 TinTower_1F_Sage4_Text1:
-	.string "HO-OH appears to have descended\n"
-	.string "upon this, the TIN TOWER!$"
+	.string "Some speak of golden wings\n"
+	.string "above the old TIN TOWER.\p"
+	.string "It may be only a rumour.$"
 
 TinTower_1F_Sage4_Text2:
 	.string "The legendary beasts embody\n"
@@ -94,13 +95,10 @@ TinTower_1F_Sage6_Text2:
 	.string "The connection predates ECRUTEAK.$"
 
 TinTower_1F_EusineHoOh_Text:
-	.string "I knew it.\p"
-	.string "I knew you'd get to see the POKéMON\n"
-	.string "of rainbow colors, <PLAYER>.\p"
-	.string "It happened just as I envisioned.\n"
-	.string "My research isn't bad, I might say.\p"
-	.string "I'm going to keep studying POKéMON\n"
-	.string "to become a famous POKéMANIAC!$"
+	.string "EUSINE: They say a golden bird\n"
+	.string "once crossed these skies.\p"
+	.string "I haven't seen proof yet!\n"
+	.string "I'll keep researching it.$"
 
 TinTower_1F_EusineSuicune_Text:
 	.string "EUSINE: Awesome! Too awesome, even!\n"
