@@ -100,6 +100,17 @@ for key, count in REQUIRED.items():
     if len(found) != count:
         mismatches.append(f"{key[0]} {key[1]}: {len(found)} level setters, expected {count}")
 
+# There must be exactly one catchable Ho-Oh setter across ALL HNS maps,
+# not merely one per listed map. Prevent future duplicate spawns.
+hooh_encounters = {
+    key: entries for key, entries in encounters.items()
+    if key[1] in ("HO_OH", "RELIC_HO_OH")
+}
+if set(hooh_encounters) != {("TinTower_RoofDay_hns", "RELIC_HO_OH")}:
+    mismatches.append(f"Catchable Ho-Oh must exist only at Tin Tower: {hooh_encounters!r}")
+elif len(hooh_encounters[("TinTower_RoofDay_hns", "RELIC_HO_OH")]) != 1:
+    mismatches.append("Exactly one Ho-Oh battle setter is allowed")
+
 assert not mismatches, "Legendary level mismatches:\n" + "\n".join(mismatches)
 
 # Extra invariants: the seven hunt steps remain scripted in the original lab,
