@@ -2,16 +2,10 @@
 Last audited: 2026-10-30. All statuses below are scoped to evidence; no newer gameplay is implied.
 
 ## 2026-11-01 Ruins of Alph / I-Unown patch checkpoint
-Branch: `feat/pru-relic-hunt-20261101`; baseline: `924f5de512037d6052f94b29025d92cc263df20a`.
-Current work removes the Alphoracle monolith object, moves the existing gated relic ladder
-to B1F (26,28), routes the final existing statue to the preserved Alphoracle event after
-its original hunt/champion gates, and recolors only the I-Unown icon with its own palette
-index remap. The I-Unown statue at (16,10), battle sprites, and ordinary entrance warps
-remain intact. Focused checks pass. Local `make hns -j2 -O` is blocked because this
-workspace lacks `arm-none-eabi-gcc` and libpng headers; the GitHub clean-build workflow
-will compile and publish the full 32 MiB ROM after this patch is pushed.
-Pending source commit, Actions run, release URL, and ROM SHA256 are recorded in the ledger
-after CI finishes.
+Branch: `feat/pru-relic-hunt-20261101`; source patch commit: `80ddf582abb63dbbc0f172befdbc68b38e13b3af` (parent `66c046d64231022ad46aae48398a4ae3c561ffe6`; original confirmed base `924f5de512037d6052f94b29025d92cc263df20a`).
+Completed: removed the oversized Alphoracle object; preserved the eye statue at B1F (16,10); moved the gated ladder to B1F (26,28); routed the rightmost final statue to the Alphoracle encounter with its original Champion/Suicune unlock gates; remapped only I-Unown's party/PC icon pixels onto palette slot 15.
+Checks: focused map/icon regression checks passed; GitHub Actions run [41314187422](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41314187422) passed clean build, full binary verification and release upload. ROM: [Pokemon-Relics-Ultimate-80ddf582ab.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-80ddf582ab/Pokemon-Relics-Ultimate-80ddf582ab.gba), 33,554,432 bytes, SHA256 `8ee47fdc15ef6388991c81c17217371329649af1a8d892d0484a7a610ecc3ceb`.
+The immediately preceding commit `66c046d64231022ad46aae48398a4ae3c561ffe6` is superseded; use the `80ddf582ab` release. Gameplay was not emulator-tested; the player will test.
 
 ## Where development is
 Repo: jamesthoward2112-tech/Pokemon-Relics-Ultimate

@@ -27,9 +27,9 @@ only for features the player actually tested. Never call 401214913d player-confi
 ## 2026-11-01 Ruins of Alph / I-Unown patch
 
 - Branch: `feat/pru-relic-hunt-20261101`; source parent: `924f5de512037d6052f94b29025d92cc263df20a`.
-- Scope: remove oversized Alphoracle object, move its encounter to the existing final statue,
-  relocate gated ladder to B1F bottom-right, and recolor the existing I-Unown icon only.
-- Focused data/icon checks pass. Local build was attempted but host toolchain is missing;
-  canonical GitHub Actions build and release are pending.
-- Recovery: continue from the latest commit on the branch; inspect this section for run ID,
-  direct ROM URL, checksum, and build status when CI completes.
+- Source patch commit: `80ddf582abb63dbbc0f172befdbc68b38e13b3af` (intermediate `66c046d64231022ad46aae48398a4ae3c561ffe6` was superseded to preserve the exact Champion/Suicune encounter gates).
+- Scope: remove oversized Alphoracle object while preserving the eye statue and encounter; move the gated ladder to B1F (26,28); correct I-Unown icon palette without changing front/back sprites.
+- GitHub Actions run [41314187422](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41314187422): clean build, binary verification, artifact upload and release publication all passed. No emulator screenshot/gameplay testing.
+- ROM size: 33,554,432 bytes. SHA256: `8ee47fdc15ef6388991c81c17217371329649af1a8d892d0484a7a610ecc3ceb`.
+- Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-80ddf582ab/Pokemon-Relics-Ultimate-80ddf582ab.gba
+- Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-80ddf582ab
