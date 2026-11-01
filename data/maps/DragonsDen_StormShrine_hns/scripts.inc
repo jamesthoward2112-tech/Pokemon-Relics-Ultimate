@@ -21,7 +21,7 @@ DragonsDen_StormShrine_EventScript_Rayquaza::
 	fadescreenswapbuffers FADE_FROM_BLACK
 	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
 	waitmoncry
-	setwildbattleshiny SPECIES_RAYQUAZA, 85
+	setwildbattleshiny SPECIES_RAYQUAZA, 80
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
