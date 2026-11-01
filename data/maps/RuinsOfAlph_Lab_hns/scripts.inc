@@ -225,6 +225,9 @@ RuinsOfAlph_Lab_EventScript_RelicSuicune::
 
 RuinsOfAlph_Lab_EventScript_RelicSuicuneCaught::
 	setflag FLAG_PJR_RELIC_SUICUNE
+	@ Clear the caught RELIC's overworld sprite immediately. Faint/escape
+	@ outcomes never reach here, so they remain available on revisits.
+	removeobject VAR_LAST_TALKED
 	goto RuinsOfAlph_Lab_EventScript_RelicRecorded
 
 RuinsOfAlph_Lab_EventScript_RelicAlphoracle::
