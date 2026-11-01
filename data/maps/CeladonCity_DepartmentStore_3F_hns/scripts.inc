@@ -26,6 +26,7 @@ CeladonDept3_EventScript_Clerk::
 
 	.align 2
 CeladonDept3_Pokemart:
+	.2byte ITEM_TM_FALSE_SWIPE
 	.2byte ITEM_ANCIENT_SHELL
 	.2byte ITEM_FOSSIL_BARK
 	.2byte ITEM_ANCIENT_TUSK
