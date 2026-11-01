@@ -2491,6 +2491,9 @@ BattleScript_StatDownEnd::
 
 #if IS_HNS
 BattleScript_PRU_ScaryFaceFear::
+	@ The stat-down script also reaches its shared end on blocked/failing
+	@ effects; never turn those misses into an unavoidable Fear infliction.
+	jumpifword CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_NO_EFFECT, BattleScript_MoveEnd
 	seteffectprimary BS_ATTACKER, BS_TARGET, MOVE_EFFECT_FEAR
 	goto BattleScript_MoveEnd
 #endif
