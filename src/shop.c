@@ -137,6 +137,12 @@ static const struct KurtBallMapping sKurtBallMappings[] =
     {ITEM_PERSIM_BERRY, ITEM_LEVEL_BALL},
 };
 
+#if IS_HNS
+// Cherrygrove retains its normal badge-dependent inventory and also stocks
+// TM54 FALSE SWIPE. This local copy avoids adding the TM to every Poké Mart.
+static EWRAM_DATA u16 sPruCherrygroveTMStock[64] = {0};
+#endif
+
 static EWRAM_DATA struct MartInfo sMartInfo = {0};
 static EWRAM_DATA struct ShopData *sShopData = NULL;
 static EWRAM_DATA struct ListMenuItem *sListMenuItems = NULL;
@@ -1005,6 +1011,28 @@ static void SetShopItemsForSale(const u16 *items)
     {
         sMartInfo.itemList = items;
     }
+
+#if IS_HNS
+    if (items == NULL
+        && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_CHERRYGROVE_CITY_MART_HNS)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_CHERRYGROVE_CITY_MART_HNS))
+    {
+        // The regular clerk still uses the evolving badge stock from pokemart 0.
+        // Add one real purchasable TM only in Cherrygrove, not other towns.
+        while (i < ARRAY_COUNT(sPruCherrygroveTMStock) - 2 && sMartInfo.itemList[i] != ITEM_NONE)
+        {
+            sPruCherrygroveTMStock[i] = sMartInfo.itemList[i];
+            i++;
+        }
+        if (sMartInfo.itemList[i] == ITEM_NONE)
+        {
+            sPruCherrygroveTMStock[i++] = ITEM_TM_FALSE_SWIPE;
+            sPruCherrygroveTMStock[i] = ITEM_NONE;
+            sMartInfo.itemList = sPruCherrygroveTMStock;
+        }
+        i = 0;
+    }
+#endif
 
     sMartInfo.itemCount = 0;
 
