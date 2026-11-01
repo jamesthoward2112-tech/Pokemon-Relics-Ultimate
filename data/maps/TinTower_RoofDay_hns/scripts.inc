@@ -349,9 +349,9 @@ TinTower_RoofDay_Text_RelicHoOhNeedsAlphoracle:
 	.string "RUINS OF ALPH first.$"
 
 TinTower_RoofDay_Text_RelicHoOhNeedsCrest:
-	.string "HO-OH watches in silence.\p"
-	.string "Only the ANCIENT RAINBOW CREST\n"
-	.string "can complete this resonance.$"
+	.string "The golden wind is still.\p"
+	.string "The ANCIENT RAINBOW CREST\n"
+	.string "has not answered yet.$"
 
 TinTower_RoofDay_Text_RelicHoOhRetry:
 	.string "The ancient HO-OH rises again.\p"
@@ -359,20 +359,12 @@ TinTower_RoofDay_Text_RelicHoOhRetry:
 	.string "until you form a true bond.$"
 
 TinTower_RoofDay_Text_Kimono_AfterNotCaught:
-	.string "You have not only made HO-OH\n"
-	.string "appear, but you have also defeated\l"
-	.string "it...\p"
-	.string "There is nothing more for us to\n"
-	.string "say. Take care of yourself in your\l"
-	.string "journey...$"
+	.string "We hope your journey gives\n"
+	.string "life to the ancient legends.$"
 
 TinTower_RoofDay_Text_Kimono_AfterCaught:
-	.string "You have not only made HO-OH\n"
-	.string "appear, but you have also caught\l"
-	.string "it...\p"
-	.string "There is nothing more for us to\n"
-	.string "say. Take care of yourself in your\l"
-	.string "journey...$"
+	.string "The old tales still have so\n"
+	.string "many secrets to reveal.$"
 
 TinTower_RoofDay_Movement_CameraPanUp:
 	walk_up
@@ -626,39 +618,31 @@ TinTower_RoofDay_Movement_Kimono_Dance_Shift_Right2:
 	face_left
 	step_end
 
+@ The former early HO-OH ceremony is unavailable. Keep safe legacy
+@ text labels for old script references, but describe rumours only.
 TinTower_RoofDay_Text_Zuki_Before::
-	.string "ZUKI: Go, face HO-OH. $"
+	.string "ZUKI: Some speak of gold wings\n"
+	.string "beyond the clouds.$"
 TinTower_RoofDay_Text_Naoko_Before::
-	.string "NAOKO: Go, face HO-OH. $"
+	.string "NAOKO: An old tower holds\n"
+	.string "many secrets.$"
 TinTower_RoofDay_Text_Miki_Before::
-	.string "MIKI: Go, face HO-OH. $"
+	.string "MIKI: A golden shadow?\n"
+	.string "Perhaps it was sunlight.$"
 TinTower_RoofDay_Text_Sayo_Before::
-	.string "SAYO: Go, face HO-OH. $"
+	.string "SAYO: Legends can take years\n"
+	.string "to uncover.$"
 TinTower_RoofDay_Text_Kuni_Before::
-	.string "KUNI: Go, face HO-OH. $"
+	.string "KUNI: No one has proved the\n"
+	.string "story of the golden bird.$"
 
 TinTower_RoofDay_Text_Kimono_Opening::
-	.string "KIMONO GIRL: That's right.\n"
-	.string "This is where we welcome HO-OH.\p"
-	.string "When the dance we practiced many\n"
-	.string "days becomes one with the sound of the\p"
-	.string "CLEAR BELL we entrusted to you, then\n"
-	.string "HO-OH shall come down from the great\l"
-	.string "arch of the sky once again. $"
+	.string "An old song tells of golden\n"
+	.string "wings above JOHTO's sky.$"
 
 TinTower_RoofDay_Text_Kimono_Closing1::
-	.string "That is indeed HO-OH...\n"
-	.string "The guardian of the sky from\p"
-	.string "ancient times... \p"
-	.string "So many have tried again and again,\n"
-	.string "only to fail...\p"
-	.string "{PLAYER}, your heart in complete\n"
-	.string "harmony with the CLEAR BELL has finally\p"
-	.string "allowed it to appear...\n"
-	.string "{PLAYER}, don't you see?\p"
-	.string "HO-OH... It must have been waiting for\n"
-	.string "someone like you all this time.\p"
-	.string "Wouldn't you agree? $"
+	.string "The song ends, leaving only\n"
+	.string "the sound of the wind.$"
 
 TinTower_RoofDay_Text_Kimono_After::
 	.string "You have done a great job.\n"
