@@ -82,6 +82,70 @@ def _install_sprite(source_name, output_name, palette_name, max_width):
     (PALS / palette_name).write_text("\n".join(lines) + "\n")
 
 
+def _install_alphoracle_sprite():
+    """Enlarge the shrine figure while keeping its pedestal at statue scale."""
+    source = Image.open(ART / "alphoracle_monolith_reference.jpg").convert("RGB")
+    mask = _foreground_mask(source)
+    bounds = mask.getbbox()
+    if bounds is None:
+        raise ValueError("No statue artwork found in alphoracle_monolith_reference.jpg")
+
+    crop = source.crop(bounds)
+    alpha = mask.crop(bounds)
+    # The supplied art changes from the broad sculpted figure to its narrow
+    # rectangular stand here. Scale these independently so the figure can be
+    # prominent while its inscribed lower stand matches the nearby statues.
+    split = 560
+    body = crop.crop((0, 0, crop.width, split))
+    body_alpha = alpha.crop((0, 0, crop.width, split))
+    stand_alpha = alpha.crop((0, split, crop.width, crop.height))
+    stand_bounds = stand_alpha.getbbox()
+    stand = crop.crop((stand_bounds[0], split + stand_bounds[1],
+                       stand_bounds[2], split + stand_bounds[3]))
+    stand_alpha = stand_alpha.crop(stand_bounds)
+
+    body_size = (32, max(1, round(body.height * 32 / body.width)))
+    body = body.resize(body_size, Image.Resampling.LANCZOS)
+    body_alpha = body_alpha.resize(body_size, Image.Resampling.LANCZOS)
+    stand = stand.resize((16, 12), Image.Resampling.LANCZOS)
+    stand_alpha = stand_alpha.resize((16, 12), Image.Resampling.LANCZOS)
+
+    rgb_canvas = Image.new("RGB", (64, 64), (0, 0, 0))
+    alpha_canvas = Image.new("L", (64, 64), 0)
+    body_x = (64 - body_size[0]) // 2
+    body_y = 64 - body_size[1] - 12
+    rgb_canvas.paste(body, (body_x, body_y))
+    alpha_canvas.paste(body_alpha, (body_x, body_y))
+    stand_x = (64 - 16) // 2
+    rgb_canvas.paste(stand, (stand_x, 52))
+    alpha_canvas.paste(stand_alpha, (stand_x, 52))
+
+    # Quantize only visible pixels; palette index zero remains transparent.
+    visible = alpha_canvas.getbbox()
+    grayscale = ImageOps.grayscale(rgb_canvas.crop(visible))
+    quantized = grayscale.quantize(colors=15, method=Image.Quantize.MEDIANCUT,
+                                   dither=Image.Dither.NONE)
+    used_palette = quantized.getpalette()[:45]
+    indices = quantized.point(lambda index: index + 1)
+    canvas = Image.new("P", (64, 64), 0)
+    canvas.paste(indices, visible[:2], alpha_canvas.crop(visible))
+
+    palette = [0, 0, 0]
+    colors = []
+    for index in range(15):
+        value = used_palette[index * 3]
+        palette.extend((value, value, value))
+        colors.append((value, value, value))
+    palette.extend([0] * (768 - len(palette)))
+    canvas.putpalette(palette)
+    canvas.info["transparency"] = 0
+    canvas.save(PICS / "alphoracle_monolith.png", optimize=False)
+
+    lines = ["JASC-PAL", "0100", "16", "0 0 0"]
+    lines.extend(f"{r} {g} {b}" for r, g, b in colors)
+    (PALS / "alphoracle_monolith.pal").write_text("\n".join(lines) + "\n")
+
+
 def _clear_original_statue_tiles():
     layout_path = ROOT / "data/layouts/RuinsOfAlph_B1F_hns/map.bin"
     width = 29
@@ -121,8 +185,7 @@ def _clear_original_statue_tiles():
 
 def main():
     _install_sprite("eye_of_alph_reference.jpg", "eye_of_alph.png", "eye_of_alph.pal", 16)
-    _install_sprite("alphoracle_monolith_reference.jpg", "alphoracle_monolith.png",
-                    "alphoracle_monolith.pal", 16)
+    _install_alphoracle_sprite()
     _clear_original_statue_tiles()
 
 

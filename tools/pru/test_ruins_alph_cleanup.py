@@ -54,14 +54,16 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         with Image.open(ROOT / "graphics/object_events/pics/misc/eye_of_alph.png") as eye:
             self.assertEqual(eye.size, (32, 32))
         with Image.open(ROOT / "graphics/object_events/pics/misc/alphoracle_monolith.png") as oracle:
-            self.assertEqual(oracle.size, (32, 32))
+            self.assertEqual(oracle.size, (64, 64))
             self.assertEqual(oracle.mode, "P")
+            self.assertEqual(oracle.getbbox(), (16, 17, 48, 64))
+            self.assertEqual(oracle.crop((0, 52, 64, 64)).getbbox(), (24, 0, 40, 12))
         self.assertTrue((ROOT / "assets/pru/alphoracle_monolith_reference.jpg").is_file())
 
         graphics_info = (ROOT / "src/data/object_events/object_event_graphics_info.h").read_text()
         oracle_info = graphics_info.split("gObjectEventGraphicsInfo_AlphoracleMonolith_hns =", 1)[1].split(";", 1)[0]
-        self.assertIn("512, 32, 32", oracle_info)
-        self.assertIn("gObjectEventBaseOam_32x32", oracle_info)
+        self.assertIn("2048, 64, 64", oracle_info)
+        self.assertIn("gObjectEventBaseOam_64x64", oracle_info)
         eye_info = graphics_info.split("gObjectEventGraphicsInfo_EyeOfAlph_hns =", 1)[1].split(";", 1)[0]
         self.assertIn("512, 32, 32", eye_info)
         self.assertIn("gObjectEventBaseOam_32x32", eye_info)
