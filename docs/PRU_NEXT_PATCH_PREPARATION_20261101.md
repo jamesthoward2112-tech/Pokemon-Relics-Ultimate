@@ -21,7 +21,7 @@ Read `AGENTS.md`, `PRU_HANDOFF.md`, `docs/PRU_RELEASE_LEDGER.md`; preserve all w
 
 - **Early location:** Cherrygrove Mart (or the earliest guaranteed accessible Johto mart after obtaining Poké Balls); distinguish its pre-Poké-Balls scripted stock from its post-progression dynamic stock.
 - **Both big marts:** Goldenrod Dept. Store 5F TM corner and Celadon Dept. Store 3F TM shop, currently `data/maps/GoldenrodCity_DepartmentStore_5F_hns/scripts.inc` and `data/maps/CeladonCity_DepartmentStore_3F_hns/scripts.inc`.
-- Existing source contains `MOVE_FALSE_SWIPE` if available; verify a genuine purchasable TM item and teachability. At inspection `ITEM_TM_FALSE_SWIPE` was not present in `include/constants/items.h`: **do not append shop stock referencing an undefined item**. If required, implement a new TM through the machine/item/learnset layers using stable append-only item numbering and complete icon, description, usage and compatibility. Do not repurpose save-relevant item IDs or replace any existing TM.
+- **Confirmed existing TM54:** `FOREACH_TM` in `include/constants/tms_hms.h` maps False Swipe to the 54th TM; the macro in `include/constants/items.h` generates `ITEM_TM_FALSE_SWIPE = ITEM_TM54 = 635`. `[ITEM_TM54]` in `src/data/items.h` is a real ¥3,000 teaching item; `MOVE_FALSE_SWIPE` has its original non-KO effect. Reuse this exact TM and retain its stable item ID; do not add a replacement or duplicate.
 - The item should be purchasable repeatedly and actually teach False Swipe. Verify against existing saves and trainer battles.
 
 ## 3. Indigo Plateau tutors: Eerie Fog + Scary Face; Scary Face inflicts Fear
