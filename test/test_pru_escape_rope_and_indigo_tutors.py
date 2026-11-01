@@ -42,6 +42,17 @@ for marker in (
 ):
     require(marker in ball, f"Missing item-ball conversion: {marker}")
 
+lab = source("data/maps/NewBarkTown_Lab_hns/scripts.inc")
+require("goto_if_unset FLAG_RECEIVED_FIRST_BALLS, PRU_Elm_RopeCheckDone" in lab,
+        "Don't give key item before the early story gift")
+require("checkitem ITEM_ESCAPE_ROPE, 1" in lab
+        and "goto_if_eq VAR_RESULT, TRUE, PRU_Elm_RopeCheckDone" in lab,
+        "Elm must recover the key item for old saves only when missing")
+require(lab.count("giveitem ITEM_ESCAPE_ROPE") == 2,
+        "Aide's first copy and Elm's missing-key fallback must both exist")
+require("PRU_Elm_Text_MissingEscapeRope" in lab,
+        "Missing reusable Rope gift explanation")
+
 shops = source("src/shop.c")
 require("ITEM_ESCAPE_ROPE" not in shops, "An obsolete Rope remains for sale in badge-based marts")
 tiers = {
@@ -115,6 +126,7 @@ for path in (ROOT / "data/maps").glob("*/scripts.inc"):
         if "ITEM_ESCAPE_ROPE" in line and not line.lstrip().startswith(("@", "//")):
             direct.append(f"{path.relative_to(ROOT)}:{i} {line.strip()}")
 print("PASS: old Escape Rope ground-item rewards convert to staged real TMs")
+print("PASS: reusable Rope key item granted early, with old-save fallback")
 print("PASS: 18 badge stock entries use progression TMs (normal and PC modes)")
 print("PASS: Eerie Fog and Scary Face are in Indigo tutor menu and eligibility filters")
 print("PASS: existing Scary Face Fear and eight-turn Eerie Fog mechanics retained")
