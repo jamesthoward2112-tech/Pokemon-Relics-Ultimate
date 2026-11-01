@@ -42,6 +42,17 @@ for marker in (
 ):
     require(marker in ball, f"Missing item-ball conversion: {marker}")
 
+# Visible item balls and hidden/background item events are separate paths:
+# both must share the same badge-tier resolution and give precisely one TM.
+hidden = source("src/field_control_avatar.c")
+header = source("include/item_ball.h")
+require("enum Item GetPruEscapeRopePickupTm(void);" in header,
+        "Badge-tier conversion must be shared with hidden pickups")
+require('if (gSpecialVar_0x8005 == ITEM_ESCAPE_ROPE)' in hidden
+        and "gSpecialVar_0x8005 = GetPruEscapeRopePickupTm();" in hidden
+        and "gSpecialVar_0x8009 = 1;" in hidden,
+        "Hidden/background Escape Rope finds must convert to one TM")
+
 lab = source("data/maps/NewBarkTown_Lab_hns/scripts.inc")
 require("goto_if_unset FLAG_RECEIVED_FIRST_BALLS, PRU_Elm_RopeCheckDone" in lab,
         "Don't give key item before the early story gift")
@@ -117,10 +128,11 @@ runtime = source("src/battle_script_commands.c")
 require("case MOVE_EFFECT_FEAR:" in runtime and "volatiles.fearTimer = 2;" in runtime,
         "Original PRU Fear effect was removed")
 
-# Item-ball objects are centrally converted. Direct giveitem/f an event
-# scripts are NOT intercepted: report them for deliberate item-by-item review.
+# Visible and hidden loot are centrally converted. Direct map-script
+# gifts/shops are not: every remaining HNS Rope reference must be a deliberate
+# first-time/recovery Key Item gift, otherwise the audit must FAIL.
 direct = []
-for path in (ROOT / "data/maps").glob("*/scripts.inc"):
+for path in (ROOT / "data/maps").glob("*_hns/scripts.inc"):
     content = path.read_text(encoding="utf-8")
     for i, line in enumerate(content.splitlines(), 1):
         if "ITEM_ESCAPE_ROPE" in line and not line.lstrip().startswith(("@", "//")):
@@ -128,14 +140,11 @@ for path in (ROOT / "data/maps").glob("*/scripts.inc"):
             if path.parent.name == "NewBarkTown_Lab_hns" and line.strip() == "giveitem ITEM_ESCAPE_ROPE":
                 continue
             direct.append(f"{path.relative_to(ROOT)}:{i} {line.strip()}")
-print("PASS: old Escape Rope ground-item rewards convert to staged real TMs")
+print("PASS: former Escape Rope visible and hidden pickups convert to real TMs")
 print("PASS: reusable Rope key item granted early, with old-save fallback")
 print("PASS: 18 badge stock entries use progression TMs (normal and PC modes)")
 print("PASS: Eerie Fog and Scary Face are in Indigo tutor menu and eligibility filters")
 print("PASS: existing Scary Face Fear and eight-turn Eerie Fog mechanics retained")
-if direct:
-    print("AUDIT: review direct scripted Rope references not handled by item-ball conversion:")
-    print("\n".join(direct))
-else:
-    print("AUDIT: no direct scripted Rope rewards found in tracked map scripts")
+require(not direct, "Obsolete direct HNS Rope loot/stock remains:\\n" + "\\n".join(direct))
+print("PASS: all HNS scripted Rope references are intentional Key Item handouts")
 print("NOTE: source-only checks, not a compile/emulator/battle-verification result.")
