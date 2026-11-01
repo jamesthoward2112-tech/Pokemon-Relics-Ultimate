@@ -215,7 +215,7 @@ TinTower_RoofDay_EventScript_HoOh::
 	delay 30
 	waitmoncry
 	playbgm MUS_HG_VS_HO_OH, 0
-	seteventmon SPECIES_HO_OH, 50
+	seteventmon SPECIES_HO_OH, 100
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
 	waitstate
@@ -237,12 +237,12 @@ TinTower_RoofDay_EventScript_HoOh::
 	releaseall
 	end
 
-@ Simple Lv50 retry after a knockout: never replay the Kimono choreography.
+@ Simple Lv100 retry after a knockout: never replay the Kimono choreography.
 TinTower_RoofDay_EventScript_HoOhRetry::
 	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
 	waitmoncry
 	playbgm MUS_HG_VS_HO_OH, 0
-	seteventmon SPECIES_HO_OH, 50
+	seteventmon SPECIES_HO_OH, 100
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
@@ -262,7 +262,7 @@ TinTower_RoofDay_EventScript_HoOhPostgame::
 	delay 30
 	waitmoncry
 	playbgm MUS_HG_VS_HO_OH, 0
-	seteventmon SPECIES_HO_OH, 85
+	seteventmon SPECIES_HO_OH, 100
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
 	waitstate
