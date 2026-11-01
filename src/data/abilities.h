@@ -2551,7 +2551,7 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_GOLDEN_SOVEREIGN] =
     {
         .name = _("GOLDEN SOVEREIGN"),
-        .description = COMPOUND_STRING("Blocks status moves.\\nBoosts Fire/Steel power."),
+        .description = COMPOUND_STRING("Blocks status moves.\nBoosts Fire/Steel power."),
         .aiRating = 10,
         .cantBeCopied = TRUE,
         .cantBeSwapped = TRUE,
