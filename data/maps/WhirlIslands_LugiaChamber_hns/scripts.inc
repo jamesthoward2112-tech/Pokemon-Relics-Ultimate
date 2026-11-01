@@ -3,9 +3,26 @@ WhirlIslands_LugiaChamber_hns_MapScripts::
 	.byte 0
 
 WhirlIslands_LugiaChamber_OnTransition:
+	@ PRU RELICS: reuse the original water Lugia (no duplicate overworld actor).
+	@ Existing saves that already caught the story Lugia can still do the hunt.
+	goto_if_set FLAG_PJR_RELIC_ENTEI, WhirlIslands_LugiaChamber_MapScript_RelicLugia
 	goto_if_eq VAR_COMPLETED_LUGIA, 2, WhirlIslands_LugiaChamber_MapScript_LugiaStory
 	goto_if_eq VAR_COMPLETED_LUGIA, 3, WhirlIslands_LugiaChamber_MapScript_LugiaPostStoryGone
 	goto_if_eq VAR_COMPLETED_LUGIA, 4, WhirlIslands_LugiaChamber_MapScript_LugiaPostStoryEncounter
+	end
+
+WhirlIslands_LugiaChamber_MapScript_RelicLugia::
+	setflag FLAG_HIDE_WHIRL_ISLANDS_KIMONO_GIRLS
+	goto_if_set FLAG_PJR_RELIC_LUGIA, WhirlIslands_LugiaChamber_MapScript_RelicLugiaGone
+	clearflag FLAG_HIDE_LUGIA
+	addobject LOCALID_LUGIA
+	@ The existing story approach tile is beside the bank, not a new land actor.
+	setobjectxyperm LOCALID_LUGIA, 29, 12
+	end
+
+WhirlIslands_LugiaChamber_MapScript_RelicLugiaGone::
+	setflag FLAG_HIDE_LUGIA
+	removeobject LOCALID_LUGIA
 	end
 
 WhirlIslands_LugiaChamber_MapScript_LugiaStory::
@@ -177,6 +194,8 @@ WhirlIslands_LugiaChamber_EventScript_TalkToKimono::
 	end
 
 WhirlIslands_LugiaChamber_EventScript_Lugia::
+	@ The existing Lugia becomes the RELICS encounter after Entei is caught.
+	goto_if_set FLAG_PJR_RELIC_ENTEI, WhirlIslands_LugiaChamber_hns_RelicLugia
 	lockall
 	goto_if_eq VAR_COMPLETED_LUGIA, 4, WhirlIslands_LugiaChamber_EventScript_LugiaPostgame
 	waitse

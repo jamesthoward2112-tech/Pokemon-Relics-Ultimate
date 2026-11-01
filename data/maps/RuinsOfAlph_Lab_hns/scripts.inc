@@ -174,6 +174,9 @@ RuinsOfAlph_Lab_EventScript_RelicLugia::
 
 RuinsOfAlph_Lab_EventScript_RelicLugiaCaught::
 	setflag FLAG_PJR_RELIC_LUGIA
+	@ Despawn the ORIGINAL water Lugia, not a second object.
+	setflag FLAG_HIDE_LUGIA
+	removeobject LOCALID_LUGIA
 	goto RuinsOfAlph_Lab_EventScript_RelicRecorded
 
 RuinsOfAlph_Lab_EventScript_RelicUnownI::
