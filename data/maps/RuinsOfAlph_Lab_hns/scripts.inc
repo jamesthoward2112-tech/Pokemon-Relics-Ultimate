@@ -130,7 +130,7 @@ RuinsOfAlph_Lab_EventScript_Scientist1Standard::
 RuinsOfAlph_Lab_EventScript_RelicRaikou::
 	msgbox RuinsOfAlph_Lab_Text_RelicRaikou, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RuinsOfAlph_Lab_EventScript_RelicDecline
-	seteventmon SPECIES_RAIKOU, 65
+	seteventmon SPECIES_RAIKOU, 80
 	playmoncry SPECIES_RAIKOU, CRY_MODE_ENCOUNTER
 	waitmoncry
 	special BattleSetup_StartLegendaryBattle
@@ -146,7 +146,7 @@ RuinsOfAlph_Lab_EventScript_RelicRaikouCaught::
 RuinsOfAlph_Lab_EventScript_RelicEntei::
 	msgbox RuinsOfAlph_Lab_Text_RelicEntei, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RuinsOfAlph_Lab_EventScript_RelicDecline
-	seteventmon SPECIES_ENTEI, 66
+	seteventmon SPECIES_ENTEI, 80
 	playmoncry SPECIES_ENTEI, CRY_MODE_ENCOUNTER
 	waitmoncry
 	special BattleSetup_StartLegendaryBattle
@@ -164,7 +164,7 @@ RuinsOfAlph_Lab_EventScript_RelicEnteiCaught::
 RuinsOfAlph_Lab_EventScript_RelicLugia::
 	msgbox RuinsOfAlph_Lab_Text_RelicLugia, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RuinsOfAlph_Lab_EventScript_RelicDecline
-	seteventmon SPECIES_LUGIA, 68
+	seteventmon SPECIES_LUGIA, 80
 	playmoncry SPECIES_LUGIA, CRY_MODE_ENCOUNTER
 	waitmoncry
 	special BattleSetup_StartLegendaryBattle
@@ -183,7 +183,7 @@ RuinsOfAlph_Lab_EventScript_RelicLugiaCaught::
 RuinsOfAlph_Lab_EventScript_RelicUnownI::
 	msgbox RuinsOfAlph_Lab_Text_RelicUnownI, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RuinsOfAlph_Lab_EventScript_RelicDecline
-	seteventmon SPECIES_UNOWN_I, 65
+	seteventmon SPECIES_UNOWN_I, 80
 	playmoncry SPECIES_UNOWN_I, CRY_MODE_ENCOUNTER
 	waitmoncry
 	special BattleSetup_StartLegendaryBattle
@@ -199,7 +199,7 @@ RuinsOfAlph_Lab_EventScript_RelicUnownICaught::
 RuinsOfAlph_Lab_EventScript_RelicCelebi::
 	msgbox RuinsOfAlph_Lab_Text_RelicCelebi, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RuinsOfAlph_Lab_EventScript_RelicDecline
-	seteventmon SPECIES_CELEBI, 67
+	seteventmon SPECIES_CELEBI, 80
 	playmoncry SPECIES_CELEBI, CRY_MODE_ENCOUNTER
 	waitmoncry
 	special BattleSetup_StartLegendaryBattle
@@ -215,7 +215,7 @@ RuinsOfAlph_Lab_EventScript_RelicCelebiCaught::
 RuinsOfAlph_Lab_EventScript_RelicSuicune::
 	msgbox RuinsOfAlph_Lab_Text_RelicSuicune, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RuinsOfAlph_Lab_EventScript_RelicDecline
-	seteventmon SPECIES_SUICUNE, 69
+	seteventmon SPECIES_SUICUNE, 80
 	playmoncry SPECIES_SUICUNE, CRY_MODE_ENCOUNTER
 	waitmoncry
 	special BattleSetup_StartLegendaryBattle
@@ -234,7 +234,7 @@ RuinsOfAlph_Lab_EventScript_RelicSuicuneCaught::
 RuinsOfAlph_Lab_EventScript_RelicAlphoracle::
 	msgbox RuinsOfAlph_Lab_Text_RelicAlphoracle, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RuinsOfAlph_Lab_EventScript_RelicDecline
-	seteventmon SPECIES_ALPHORACLE, 75
+	seteventmon SPECIES_ALPHORACLE, 90
 	playmoncry SPECIES_ALPHORACLE, CRY_MODE_ENCOUNTER
 	waitmoncry
 	special BattleSetup_StartLegendaryBattle
