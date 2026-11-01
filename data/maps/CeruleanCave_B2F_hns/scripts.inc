@@ -46,7 +46,7 @@ CeruleanCave3_EventScript_Mewsion::
 	faceplayer
 	playmoncry SPECIES_MEWSION, CRY_MODE_ENCOUNTER
 	waitmoncry
-	seteventmon SPECIES_MEWSION, 90
+	seteventmon SPECIES_MEWSION, 80
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
