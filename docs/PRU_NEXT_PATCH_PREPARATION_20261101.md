@@ -176,3 +176,22 @@ Suggested progression for individual overworld pickup locations, adjusting to ac
 - `data/maps/MtMortar_1F_North_hns/scripts.inc`: original `MtMortar_1F_North_EventScript_Item_EscapeRope` now rewards `ITEM_TM_BRICK_BREAK` (middle Johto), preserving existing script ID and flag; commit `fc91057bbd758108f6a7892d746e4d4ac4c03422`.
 - `data/maps/WhirlIslands_B1F_hns/scripts.inc`: original `WhirlIslands_B1F_EventScript_Item_Escape_Rope` now rewards `ITEM_TM_SWORDS_DANCE` (late Johto), preserving original script ID and flag; commit `ea5f9da08e1cdbd3187ac475b95a35f19dbd5cdb`.
 - Added `test/test_pru_escape_rope_and_tutors.py`, which scans **every** `*_hns/scripts.inc` and `*_hns/map.json` for remaining collectible Escape Rope instances and checks both tutor selection cases and Scary Face source effect. Do not assert a full replacement is complete until this regression is run and passes in a full checkout.
+
+
+## Reconciled implementation checkpoint — 1 November 2026 (authoritative for current staged branch)
+
+This checkpoint supersedes earlier *suggested* replacement lists and temporary audit
+assumptions in this document; it is NOT evidence of a playable or tested ROM.
+
+**Implemented in source on `prep/pru-rockshop-no-build-20261101`:**
+
+- `ITEM_ESCAPE_ROPE` keeps its original ID, permanent Key Item pocket, and non-consumable escape action.
+- Elm's lab intentionally uses two `giveitem ITEM_ESCAPE_ROPE` lines (early gift and old-save missing-item recovery) plus a `checkitem` condition. **These are not obsolete Rope loot.**
+- Ordinary visible item balls (`src/item_ball.c`) and hidden/background pickups (`src/field_control_avatar.c`) use the **same shared badge-tier TM resolver**, before any receipt/item-space handling. Existing map JSON item names may still say `ITEM_ESCAPE_ROPE`; the award result is a TM, and the same original object/hidden flag is retained.
+- Former explicitly scripted Rope pickups in Mt Mortar 1F North and Whirl Islands B1F now give **Brick Break** and **Swords Dance**, respectively.
+- The shared badge-tiered Poké Mart inventories offer TMs instead of stockpiling unusable extra Key Item Ropes. The Ecruteak half-price shop and Cherrygrove False Swipe TM remain staged.
+- The existing Indigo control tutor now offers Eerie Fog and Scary Face. Move compatibility checks extend to the new moves without removing existing tutors or services.
+- Scary Face retains `EFFECT_SPEED_DOWN_2`. Fear uses **one** guarded native battle-script effect (`BattleScript_PRU_ScaryFaceFear`), not both a battle-script effect and a second automatic `additionalEffects` roll. Missed/failed/no-effect moves do not cause Fear.
+- Source checks in `test/test_pru_escape_rope_and_indigo_tutors.py` and `test/test_pru_escape_rope_and_tutors.py` now recognize intentional Key Item grants and centrally converted map-JSON item awards; they reject extra direct HNS Rope loot.
+
+**Still required before release:** execute the tests on a complete checkout, confirm no further scripted HNS Rope rewards remain, compile the full GBA, and test early and late visible/hidden pickups, old-save Elm recovery, real TM teaching, all Indigo menus, Fear against misses/Protect/Substitute/stat-limit/abilities, fog expiration, save/reload, and mGBA. Do **not** build or publish as part of this preparation checkpoint.
