@@ -125,7 +125,7 @@ Route10_hns_RelicRaikou::
 	goto_if_set FLAG_PJR_RELIC_RAIKOU, Route10_hns_RelicRaikou_Complete
 	msgbox RuinsOfAlph_Lab_Text_RelicRaikou, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, Route10_hns_RelicRaikou_Decline
-	seteventmon SPECIES_RAIKOU, 65
+	seteventmon SPECIES_RAIKOU, 80
 	playmoncry SPECIES_RAIKOU, CRY_MODE_ENCOUNTER
 	waitmoncry
 	special BattleSetup_StartLegendaryBattle
