@@ -75,8 +75,8 @@ def main():
                         "LIBPNG_PREFIX=/usr"], cwd=source, check=True,
                        stdout=log, stderr=subprocess.STDOUT, timeout=60)
         subprocess.run([str(source / "bin/gba-walk"), str(TEST_ROM),
-                        str(ROOT), "run:1600", "snap:pru-alph-before",
-                        "press:UP:36", "run:180", "snap:pru-alph-after"],
+                        str(ROOT), "run:2200", "snap:pru-alph-before",
+                        "press:UP:60", "run:240", "snap:pru-alph-after"],
                        check=True, cwd=ROOT, stdout=log,
                        stderr=subprocess.STDOUT, timeout=90)
     before = Image.open(ROOT / "pru-alph-before.png").convert("RGB")
