@@ -37,7 +37,7 @@ jobs:
           # Use Ubuntu's standard archive directly so apt can complete before the step timeout.
           printf '%s\n' 'http://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt
           sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update
-          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil mgba-qt mgba-sdl xvfb xdotool imagemagick
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev libmgba-dev python3 python3-pil mgba-qt mgba-sdl xvfb xdotool imagemagick
       - name: Install original working PJR Jessie James and Steevee Neevee production transition art
         run: |
           set -euo pipefail
@@ -231,7 +231,7 @@ jobs:
       - name: Verify Alph B1F exit by walking through it in mGBA
         shell: bash
         timeout-minutes: 18
-        run: xvfb-run -a -s '-screen 0 1024x768x24' python3 tools/pru/playtest_alph_ladder_ci.py
+        run: python3 tools/pru/playtest_alph_ladder_ci.py
       - name: Upload Alph ladder emulator traversal screenshots
         if: always()
         uses: actions/upload-artifact@v4
