@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031]
+    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -234,7 +234,7 @@ jobs:
             pru-rom.sha256
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
+        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -260,7 +260,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Direct 32 MiB GBA from PRU commit $GITHUB_SHA including black G-Max Charaxis graphics. Source checks, compilation and 32 MiB ROM verification passed. No emulator testing is performed in this workflow. Player will test independently in Pizza Boy; gameplay and entrances are not yet verified." \
+              --notes "Direct 32 MiB GBA from PRU commit $GITHUB_SHA, including Charaxis art and E20-gated RELICS hunt: Raikou Power Plant, Entei Mt Mortar upper B1F alcove, Lugia deepest Whirl Islands, Unown I Eye Ruins of Alph, Celebi Ilex, Suicune Cape, Alphoracle monolith + ladder; Oak/scientist hints. Source checks, compilation and 32 MiB ROM verification passed. No emulator testing is performed in this workflow. Player will test independently in Pizza Boy; gameplay and entrances are not yet verified." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
