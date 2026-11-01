@@ -232,7 +232,7 @@ Route25_EventScript_Suicune::
 	playmoncry SPECIES_SUICUNE, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
-	seteventmon SPECIES_SUICUNE, 50
+	seteventmon SPECIES_SUICUNE, 80
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
