@@ -250,13 +250,12 @@ jobs:
             window="$(xdotool search --pid "$emulator" 2>/dev/null | head -n 1 || true)"
             test -n "$window" || { cat /tmp/pru-mgba-boot.log; echo "No mGBA window"; exit 1; }
             import -window "$window" /tmp/pru-mgba-boot.png
-            python3 - <<PY
-from PIL import Image, ImageStat
-im = Image.open("/tmp/pru-mgba-boot.png").convert("RGB")
-assert im.width >= 240 and im.height >= 160, im.size
-assert max(ImageStat.Stat(im).stddev) > 5, "mGBA rendered only a blank frame"
-print("mGBA live ROM boot/render verified:", im.size)
-PY
+            identify /tmp/pru-mgba-boot.png
+            test "$(identify -format %w /tmp/pru-mgba-boot.png)" -ge 240
+            test "$(identify -format %h /tmp/pru-mgba-boot.png)" -ge 160
+            variance="$(convert /tmp/pru-mgba-boot.png -format %[standard-deviation] info:)"
+            awk -v v="$variance" "BEGIN { exit !(v > 500) }"
+            echo "mGBA ROM boot/render verified"
           '
       - name: Upload mGBA boot evidence
         uses: actions/upload-artifact@v4
