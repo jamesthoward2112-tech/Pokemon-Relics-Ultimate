@@ -185,7 +185,7 @@ MtSilver_SummitDay_EventScript_OakSummon::
 	playmoncry SPECIES_RELIC_HO_OH, CRY_MODE_ENCOUNTER
 	waitmoncry
 	playbgm MUS_HG_VS_HO_OH, 0
-	seteventmon SPECIES_RELIC_HO_OH, 85
+	seteventmon SPECIES_RELIC_HO_OH, 100
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
