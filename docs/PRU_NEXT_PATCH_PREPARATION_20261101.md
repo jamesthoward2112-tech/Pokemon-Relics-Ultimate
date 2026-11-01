@@ -42,7 +42,7 @@ Read `AGENTS.md`, `PRU_HANDOFF.md`, `docs/PRU_RELEASE_LEDGER.md`; preserve all w
 
 - Existing indoor map: `data/maps/Route34_DayCare_hns/map.json`; events in `scripts.inc`. Existing NPC offers a **one-time free Odd Egg** with `FLAG_RECEIVED_ODD_EGG`; do not overwrite it.
 - Add a **separate vendor NPC** at a clear walkable indoor tile, with buy/decline/insufficient-funds/party-full messages; purchase is **¥5,000 per Egg** and repeatable. Ensure no deduction until purchase is confirmed and an Egg is actually awarded.
-- Select **uniformly/randomly from an explicit vetted baby-species pool** restricted to species in PRU's approved 450. Include custom babies `SPECIES_SKARMET`, `SPECIES_MOOTINY`, and `SPECIES_SCARABUB` (canonical source name; referred to as 'Herabub' in the request), plus legitimate vanilla baby species in the 450. Validate each species has egg-compatible data, real front/back/icon assets and a valid hatch species; no egg with a bad-mon/invalid-ID result.
+- Select uniformly from an explicit **13-species pool:** the nine Kanto/Johto/Hoenn traditional first-stage starters and **four** custom Relic babies: `SPECIES_SKARMET`, `SPECIES_MOOTINY`, `SPECIES_SCARABUB` (Herabub) and `SPECIES_GEMLIN`. All must belong to PRU's approved 450. Verify egg cycles and real front/back/icon/hatch assets; never deliver an invalid Egg.
 - Use normal hatch steps, daycare egg and party mechanics; no unintentional flag consumption, duplicate charge, or save-ID changes. Respect challenge-party limits if applicable. Ensure users can buy more than one.
 - Keep Day-Care Move Expert and its tutor access intact.
 
@@ -226,11 +226,19 @@ assumptions in this document; it is NOT evidence of a playable or tested ROM.
 - `data/maps/Route34_DayCare_hns/map.json`: one permanently available Lass NPC at **(9,7)**, not overlapping another NPC and inside the 14×11 map bounds. **Collision tile and walk-up accessibility have not been verified in the emulator.**
 - `test/test_pru_mystery_egg_seller.py`: focused static regression for pool, correct order of capacity/money/delivery/charge, script, NPC and original services.
 
-**Pool: all 12 approved hatchable baby species in the canonical 450**
-`PICHU`, `CLEFFA`, `IGGLYBUFF`, `TYROGUE`, `SMOOCHUM`, `ELEKID`, `MAGBY`, `TOGEPI`, `AZURILL`, `SCARABUB` (**Herabub** is the user-facing shorthand), `SKARMET`, `MOOTINY`.
+**Final approved Mystery Egg pool: 13 species, all drawn uniformly from PRU's canonical 450.**
 
-The three custom baby source records live in `src/data/pokemon/species_info/pjr_families.h` and have nonzero hatch cycles and front/back/icon mappings. The existing `CreateEgg` helper owns the egg nickname, hatch-step count and other standard egg data.
+| Group | Species |
+|---|---|
+| Kanto starters | Bulbasaur, Charmander, Squirtle |
+| Johto starters | Chikorita, Cyndaquil, Totodile |
+| Hoenn starters | Treecko, Torchic, Mudkip |
+| Custom Relic babies | Scarabub (also called Herabub), Skarmet, Mootiny, Gemlin |
 
-**Release gate:** still needs full checkout source-test execution, clean compilation (only when authorised), and mGBA tests for NPC walkability, declining, purchasing twice, party full, challenge-limited party, exactly ¥4,999 and ¥5,000, hatch of all 12 (including all custom baby sprites), saving/reloading with an Egg, plus verifying the old free Odd Egg and Move Expert still work. Do not declare gameplay verified based only on static source checks.
+The original 12-species pool of ordinary baby Pokémon was **superseded by user instruction**. `src/daycare.c::sPruMysteryEggSpecies` and `test/test_pru_mystery_egg_seller.py` now require exactly these 13, with each species represented once. At the source level, Gemlin is defined in `src/data/pokemon/species_info/pru_custom.h` with nonzero `eggCycles`, while the three other Relic babies live in `pjr_families.h`.
+
+The seller's dialogue now advertises a Starter or Relic baby, rather than only babies. The ¥5,000 transaction logic, unchanged Odd Egg event, repeatable purchases and no-charge safeguards stay intact. New game data are **staged only**, with no compiled/tested GBA.
+
+**Release gate:** still needs full checkout source-test execution, clean compilation (only when authorised), and mGBA tests for NPC walkability, declining, purchasing twice, party full, challenge-limited party, exactly ¥4,999 and ¥5,000, hatch of all 13 (nine traditional starters and four Relic babies, including Gemlin), saving/reloading with an Egg, plus verifying the old free Odd Egg and Move Expert still work. Do not declare gameplay verified based only on static source checks.
 
 **Next queued item after Mystery Eggs:** audit RELICS legendary encounter levels (80 except Alphoracle 90). Preserve existing hunt flags, encounter positions and caught/respawn rules.
