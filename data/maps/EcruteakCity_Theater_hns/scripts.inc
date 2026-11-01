@@ -865,9 +865,10 @@ EcruteakCity_Theater_EventScript_Hooh::
 	delay 120
 	fadescreenswapbuffers FADE_FROM_BLACK
 
+	@ The CLEAR BELL is folklore only; no early HO-OH roof event.
 	clearflag FLAG_HIDE_TINTOWER_GUARD
-	clearflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
-	setvar VAR_COMPLETED_HO_OH, 2
+	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
+	setvar VAR_COMPLETED_HO_OH, 3
 	setvar VAR_COMPLETED_LUGIA, 3
 	setflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_ZUKI
 	setflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_KIMONOS
@@ -1044,10 +1045,9 @@ EcruteakCity_Theater_Text_ZukiDone:
 	.string "Please take it.$"
 
 EcruteakCity_Theater_Text_GirlHooh:
-	.string "Big sisters! I just saw the\n"
-	.string "big shadow of a POKéMON over\l"
-	.string "the TIN TOWER!\p"
-	.string "It could be...$"
+	.string "I heard a strange rumour...\p"
+	.string "A golden bird may sometimes\n"
+	.string "cross the ECRUTEAK sky!$"
 
 EcruteakCity_Theater_Text_GirlLugia:
 	.string "Big sisters! I just saw the\n"
@@ -1056,9 +1056,9 @@ EcruteakCity_Theater_Text_GirlLugia:
 	.string "It could be...$"
 
 EcruteakCity_Theater_Text_ZukiHooh:
-	.string "ZUKI: {PLAYER}!\n"
-	.string "We'll be at the TIN TOWER.\n"
-	.string "See you there!$"
+	.string "ZUKI: Old tales can wait.\p"
+	.string "A golden bird is just a rumour.\n"
+	.string "Your journey comes first!$"
 
 EcruteakCity_Theater_Text_ZukiLugia:
 	.string "ZUKI: {PLAYER}!\n"
