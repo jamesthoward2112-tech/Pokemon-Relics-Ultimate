@@ -86,3 +86,39 @@ Read `AGENTS.md`, `PRU_HANDOFF.md`, `docs/PRU_RELEASE_LEDGER.md`; preserve all w
 - This checklist is intentionally staged without touching gameplay files. On later authorization, re-read the latest HEAD/release ledger and incorporate only after checking any parallel branch edits.
 - Apply one owner/source integration approach and focused scripted regression checks for each section; verify **all 450 entries**, stable constants/saves, complete Indigo tutors, quest flags, no battle freeze, new credits pages and sprite manifest; only then run the full 32 MiB `make hns -j2 -O` clean build.
 - **Hold now:** no code commit, no Action workflow trigger, no ROM compile, no GitHub release/asset upload and no user-visible GBA link until explicitly requested. Track statuses distinctly: *queued* → *coded* → *tested* → *compiled* → *released* → *player-tested*.
+
+
+## Addendum: actual Pokédex gameplay evidence, 2026-11-01 (user video `1000043619.mp4`)
+
+The player supplied a ~49-second in-game Pizza Boy A recording, scrolling from the first entry to the end of the presently shown National Pokédex. This was inspected directly. These are **observed in gameplay** (unlike source-only assumptions):
+
+| Evidence | Currently visible | Required PRU canonical order |
+|---|---|---|
+| Opening | #001 Bulbasaur; #002 Ivysaur; #003 Venusaur; **#004 Charmander**, #005 Charmeleon, **#006 Charizard** | #001–003 unchanged; **#004 Edensaur**, #005 Charmander, #006 Charmeleon, **#007 Charizard**, **#008 Charaxis** |
+| Kanto starter family transition | #007 hidden/dashes; **#008 Wartortle**, #009 Blastoise | #009 Squirtle, #010 Wartortle, #011 Blastoise, **#012 Fortotoise** |
+| Middle of list | #147 Elekid, #148 Electabuzz, #149 Electivire; #279 Tyranitar; **#280 Lugia** | Use the entire authoritative `sPruDexSpecies[450]` family-grouped sequence; **#435 Lugia** in that sequence |
+| End of presently browsable list | **#419 Deoxys** is displayed at the end, with no further entries visible | **#450 Deoxys**; full 450-species PRU Pokédex |
+| Side counters throughout | JOHTO Seen 245 / Own 41; NATIONAL Seen 303 / Own 69 | Counts must be recalculated from the correct tracked species pool. Preserve existing sightings/catches on old saves and avoid false independent custom-species counts. |
+
+**Important distinction:** Rows with `----------` and question-mark art may be correctly hidden **unseen** entries; do not mark every hidden row as a missing species. The **wrong displayed identities and numeric positions** are proven. The existing #419 end could also involve last-seen truncation, so test full-roster availability separately from list scroll limits rather than assuming exactly 31 missing underlying species records.
+
+### Confirmed source mechanism for this observed failure
+
+- `src/data/pokemon/pru_dex_order.h` already defines the **approved 450-species order**, including #004 Edensaur, #008 Charaxis, #012 Fortotoise, #435 Lugia, #437 Alphoracle and #450 Deoxys. **Do not reorder this canonical source or rewrite its IDs.**
+- `src/pokedex_plus_hgss.c::CreatePokedexList` constructs the visible list from inherited `REGIONAL_DEX_COUNT` / `OBTAINABLE_DEX_COUNT`, `RegionalToNationalOrder` / `ObtainableToNationalOrder`, and National Dex `GetSetPokedexFlag`, not the canonical species array.
+- That function sets `pokemonListCount` to the last **seen** numeric entry rather than always providing a 450-slot view; consequently unseen tail slots may be inaccessible. Audit intended browse behavior and ensure all 450 can be reached with appropriate hidden/seen presentation.
+- Alphabetical / Weight / Height sorts still traverse inherited `NATIONAL_DEX_COUNT` and legacy order arrays, so they also need a **PRU-specific** species-keyed implementation.
+- `GetPokemonSpriteToDisplay` still guards entries using `species >= NATIONAL_DEX_COUNT`; avoid rejecting valid PRU custom species/indices during rendering.
+- Existing documentation `docs/PRU_444_SPECIES_SOURCE_AUDIT_20261018.md` had already identified the core seen/caught collision: multiple custom Relics share a base National Dex ID. Implement **independent tracked records with compatible migration**, not merely swapping the displayed number strings.
+
+### Acceptance tests that must be demonstrated before the next ROM release
+
+1. Fresh save and existing save both display the **identical full approved 450 order**, with #004 Edensaur, #007 Charizard, #008 Charaxis, #012 Fortotoise and #450 Deoxys; every intermediate index maps exactly to `sPruDexSpecies`.
+2. A caught/seen Charaxis creates its **own** Dex status, distinct from Charizard. Same independent test for Edensaur/Venusaur and other canonical Relics. Unseen entries remain hidden by normal Pokédex design rather than being silently omitted or shifted.
+3. Scroll reaches the end and back safely; entries after the previous last-seen slot are available according to the new 450-entry design. No blank beyond-bounds sprite/icon, corruption or crashes.
+4. Numbers, details, cry, shiny/normal sprite selection, species name, evolution guides, family order, multiple search modes and completion counters reflect the same approved species ID at every step.
+5. Save compatibility: previous 303 seen / 69 owned *as observed* must not be discarded or blindly copied to a new count. Migrate vanilla seen/caught bits accurately for unambiguous base species; use robust conservative behavior for previously shared custom IDs, preserving legitimate catches without falsely claiming individual custom species.
+6. Preserve Johto mode as a separate intentionally defined subset **only if desired**; both the main PRU and National browse modes must not accidentally fall back to old Heart & Soul or inherited 419-number ordering.
+7. Regression must catch the failure with source assertions for `CreatePokedexList` and practical emulator tests (player can independently verify; no unrelated screenshot/boot test gates before source implementation is ready).
+
+**Status of addendum:** video reviewed, issue diagnosed at source level, **not yet patched, compiled or player-tested**. Preserve the instruction to **not build or release** until the user explicitly authorizes implementation.
