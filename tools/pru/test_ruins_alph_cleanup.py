@@ -38,6 +38,50 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         self.assertEqual(len(last_statue), 1)
         self.assertEqual(last_statue[0]["script"], "RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue")
 
+    def test_custom_statues_use_independent_cool_palettes_and_alphoracle_reference_art(self):
+        eye_palette = (ROOT / "graphics/object_events/palettes/eye_of_alph.pal").read_text()
+        oracle_palette = (ROOT / "graphics/object_events/palettes/alphoracle_monolith.pal").read_text()
+        self.assertNotEqual(eye_palette, oracle_palette)
+        for palette_text in (eye_palette, oracle_palette):
+            colors = [tuple(map(int, line.split())) for line in palette_text.splitlines()
+                      if re.fullmatch(r"\d+ \d+ \d+", line)]
+            self.assertGreaterEqual(len(colors), 16)
+            for red, green, blue in colors[1:]:
+                self.assertLessEqual(abs(red - green), 3)
+                self.assertLessEqual(abs(green - blue), 3)
+
+        with Image.open(ROOT / "graphics/object_events/pics/misc/eye_of_alph.png") as eye:
+            self.assertEqual(eye.size, (64, 64))
+        with Image.open(ROOT / "graphics/object_events/pics/misc/alphoracle_monolith.png") as oracle:
+            self.assertEqual(oracle.size, (64, 64))
+            self.assertEqual(oracle.mode, "P")
+        self.assertTrue((ROOT / "assets/pru/alphoracle_monolith_reference.jpg").is_file())
+
+        graphics_info = (ROOT / "src/data/object_events/object_event_graphics_info.h").read_text()
+        oracle_info = graphics_info.split("gObjectEventGraphicsInfo_AlphoracleMonolith_hns =", 1)[1].split(";", 1)[0]
+        self.assertIn("2048, 64, 64", oracle_info)
+        eye_info = graphics_info.split("gObjectEventGraphicsInfo_EyeOfAlph_hns =", 1)[1].split(";", 1)[0]
+        self.assertIn("2048, 64, 64", eye_info)
+
+    def test_original_statue_foreground_is_cleared_beneath_both_custom_objects(self):
+        layout = ROOT / "data/layouts/RuinsOfAlph_B1F_hns/map.bin"
+        values = struct.unpack("<%dH" % (len(layout.read_bytes()) // 2), layout.read_bytes())
+        width = 29
+        tileset = ROOT / "data/tilesets/secondary/ruins_of_alph_b1_f_hns"
+        metatiles = struct.unpack("<%dH" % (len((tileset / "metatiles.bin").read_bytes()) // 2),
+                                  (tileset / "metatiles.bin").read_bytes())
+        attributes = (tileset / "metatile_attributes.bin").read_bytes()
+
+        for row, col, original, clone in ((9, 16, 99, 200), (10, 16, 10, 201),
+                                          (27, 25, 99, 202), (28, 25, 10, 203)):
+            cell = values[row * width + col]
+            self.assertEqual(cell & 0x3FF, 640 + clone)
+            source = metatiles[original * 8:(original + 1) * 8]
+            copied = metatiles[clone * 8:(clone + 1) * 8]
+            self.assertEqual(copied[:4], source[:4])
+            self.assertEqual(copied[4:], (0, 0, 0, 0))
+            self.assertEqual(attributes[clone * 2:clone * 2 + 2], attributes[original * 2:original * 2 + 2])
+
     def test_only_the_eye_statues_foreground_tiles_are_cleared(self):
         layout = ROOT / "data/layouts/RuinsOfAlph_B1F_hns/map.bin"
         raw = layout.read_bytes()

@@ -118,6 +118,8 @@ jobs:
         run: python3 tools/pru/build_noxichu_intro_trial.py
       - name: Restore proven PJR early Route 30 encounter overlay
         run: python3 tools/pru/add_route30_poochyena.py
+      - name: Restore approved Ruins of Alph statue artwork and clear old statue layers
+        run: python3 tools/pru/install_ruins_alph_statues.py
       - name: Run source regression tests
         if: "${{ github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
         run: |

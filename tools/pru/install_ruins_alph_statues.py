@@ -1,0 +1,127 @@
+#!/usr/bin/env python3
+"""Install the approved Ruins of Alph statue art and clear only their old tiles."""
+
+from pathlib import Path
+import struct
+
+from PIL import Image, ImageDraw, ImageOps
+
+
+ROOT = Path(__file__).resolve().parents[2]
+ART = ROOT / "assets/pru"
+PICS = ROOT / "graphics/object_events/pics/misc"
+PALS = ROOT / "graphics/object_events/palettes"
+
+
+def _foreground_mask(image):
+    """Mark near-white background connected to the image border as transparent."""
+    rgb = image.convert("RGB")
+    pixels = rgb.load()
+    width, height = rgb.size
+    near_white = Image.new("L", rgb.size)
+    out = near_white.load()
+    for y in range(height):
+        for x in range(width):
+            r, g, b = pixels[x, y]
+            out[x, y] = 255 if min(r, g, b) >= 238 and max(r, g, b) - min(r, g, b) <= 12 else 0
+
+    # Flood-fill only border-connected white pixels. Pale carved highlights remain.
+    for x in range(width):
+        for y in (0, height - 1):
+            if near_white.getpixel((x, y)) == 255:
+                ImageDraw.floodfill(near_white, (x, y), 128, thresh=0)
+    for y in range(height):
+        for x in (0, width - 1):
+            if near_white.getpixel((x, y)) == 255:
+                ImageDraw.floodfill(near_white, (x, y), 128, thresh=0)
+    return near_white.point(lambda p: 0 if p == 128 else 255)
+
+
+def _install_sprite(source_name, output_name, palette_name, max_width):
+    source = Image.open(ART / source_name).convert("RGB")
+    mask = _foreground_mask(source)
+    bounds = mask.getbbox()
+    if bounds is None:
+        raise ValueError(f"No statue artwork found in {source_name}")
+
+    crop = source.crop(bounds)
+    alpha = mask.crop(bounds)
+    scale = min(max_width / crop.width, 64 / crop.height)
+    size = (max(1, round(crop.width * scale)), max(1, round(crop.height * scale)))
+    crop = crop.resize(size, Image.Resampling.LANCZOS)
+    alpha = alpha.resize(size, Image.Resampling.LANCZOS)
+
+    # Both approved artworks are monochrome stone. Keep separate indexed palettes
+    # so their colors can never be changed by sharing an object-event palette tag.
+    grayscale = ImageOps.grayscale(crop)
+    quantized = grayscale.quantize(colors=15, method=Image.Quantize.MEDIANCUT,
+                                   dither=Image.Dither.NONE)
+    used_palette = quantized.getpalette()[:45]
+    indices = quantized.point(lambda index: index + 1)
+    canvas = Image.new("P", (64, 64), 0)
+    left = (64 - size[0]) // 2
+    top = 64 - size[1]
+    canvas.paste(indices, (left, top), alpha)
+
+    palette = [0, 0, 0]
+    colors = []
+    for index in range(15):
+        value = used_palette[index * 3]
+        palette.extend((value, value, value))
+        colors.append((value, value, value))
+    palette.extend([0] * (768 - len(palette)))
+    canvas.putpalette(palette)
+    canvas.info["transparency"] = 0
+    canvas.save(PICS / output_name, optimize=False)
+
+    lines = ["JASC-PAL", "0100", "16", "0 0 0"]
+    lines.extend(f"{r} {g} {b}" for r, g, b in colors)
+    (PALS / palette_name).write_text("\n".join(lines) + "\n")
+
+
+def _clear_original_statue_tiles():
+    layout_path = ROOT / "data/layouts/RuinsOfAlph_B1F_hns/map.bin"
+    width = 29
+    layout = bytearray(layout_path.read_bytes())
+    if len(layout) % (width * 2):
+        raise ValueError("Unexpected Ruins of Alph B1F layout dimensions")
+    values = list(struct.unpack(f"<{len(layout) // 2}H", layout))
+
+    # Clone the source statue metatiles and clear only their foreground/BG1 half.
+    tileset = ROOT / "data/tilesets/secondary/ruins_of_alph_b1_f_hns"
+    meta_path = tileset / "metatiles.bin"
+    attr_path = tileset / "metatile_attributes.bin"
+    entries = list(struct.unpack(f"<{len(meta_path.read_bytes()) // 2}H", meta_path.read_bytes()))
+    attributes = bytearray(attr_path.read_bytes())
+    for original, clone in ((99, 200), (10, 201), (99, 202), (10, 203)):
+        start = original * 8
+        cloned = entries[start:start + 4] + [0, 0, 0, 0]
+        target = clone * 8
+        if len(entries) < target + 8:
+            entries.extend([0] * (target + 8 - len(entries)))
+        entries[target:target + 8] = cloned
+        needed = (clone + 1) * 2
+        if len(attributes) < needed:
+            attributes.extend(b"\0" * (needed - len(attributes)))
+        attributes[clone * 2:clone * 2 + 2] = attributes[original * 2:original * 2 + 2]
+
+    # Upper/lower map cells for the Eye statue and final Alphoracle statue.
+    for row, col, clone in ((9, 16, 200), (10, 16, 201),
+                            (27, 25, 202), (28, 25, 203)):
+        offset = row * width + col
+        values[offset] = (values[offset] & 0xFC00) | (640 + clone)
+
+    layout_path.write_bytes(struct.pack(f"<{len(values)}H", *values))
+    meta_path.write_bytes(struct.pack(f"<{len(entries)}H", *entries))
+    attr_path.write_bytes(attributes)
+
+
+def main():
+    _install_sprite("eye_of_alph_reference.jpg", "eye_of_alph.png", "eye_of_alph.pal", 34)
+    _install_sprite("alphoracle_monolith_reference.jpg", "alphoracle_monolith.png",
+                    "alphoracle_monolith.pal", 38)
+    _clear_original_statue_tiles()
+
+
+if __name__ == "__main__":
+    main()
