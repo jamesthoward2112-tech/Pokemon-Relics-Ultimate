@@ -1269,6 +1269,13 @@ u16 PruBuyDaycareMysteryEgg(void)
     RemoveMoney(&gSaveBlock1Ptr->money, PRU_MYSTERY_EGG_PRICE);
     return 0;
 }
+#else
+// Specials are registered in shared data/specials.inc for every game mode;
+// non-PRU variants do not have this seller, but must still link cleanly.
+u16 PruBuyDaycareMysteryEgg(void)
+{
+    return 3;
+}
 #endif
 
 static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
