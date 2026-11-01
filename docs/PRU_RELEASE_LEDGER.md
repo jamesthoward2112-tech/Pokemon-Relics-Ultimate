@@ -2,6 +2,16 @@
 Every new release requires full source SHA, parent lineage, PRs included,
 ROM SHA256 and size, confirmed checks, untested gameplay and verified URL.
 
+## 2026-11-01 statue scale and icon palette correction
+
+- Branch: `feat/pru-relic-hunt-20261101`; source commit: `a3f50c389e8cbff4b114be41025d0adb297f49fd`.
+- Scope: resize both custom Ruins of Alph statues to standard statue scale; keep the Alphoracle shrine visible after capture; restore Khang's normal species icon palette and retain Alphoracle's dedicated PC/party palette.
+- GitHub Actions run [41327318504](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41327318504) passed source regressions, clean build, ROM/header/checksum verification, artifact upload and GitHub release publication.
+- ROM size: 33,554,432 bytes. SHA256: `4b103ca090aa57f7626de230ee2b53de6e37a54ad192edd7b2975c38a31c5258`.
+- Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-a3f50c389e/Pokemon-Relics-Ultimate-a3f50c389e.gba
+- Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-a3f50c389e
+- No emulator or gameplay test; awaiting player validation.
+
 | Source commit | Status | Evidence |
 | --- | --- | --- |
 | a4d393129ec3683f0443a80272df71653a3874af | Player-confirmed tutor-stable reference | GitHub release tag pru-build-a4d393129e |

@@ -1,6 +1,12 @@
 # PRU_HANDOFF.md — authoritative session handover
 Last audited: 2026-11-01. All statuses below are scoped to evidence; no newer gameplay is implied.
 
+## 2026-11-01 statue scale and icon palette correction (compiled and released)
+Branch: `feat/pru-relic-hunt-20261101`; source commit: `a3f50c389e8cbff4b114be41025d0adb297f49fd`.
+Corrected the custom Eye and Alphoracle objects to 32x32 sprite frames, matching the ordinary statue's visible 16x32 artwork bounds. The Alphoracle object no longer uses its caught flag as an object-hide flag, so the shrine remains visible after capture and the existing script can report completion. Removed Khang's erroneous forced Articuno-P icon palette; Khang now uses its normal species palette, while Alphoracle retains its dedicated palette 14 and approved icon art.
+The original encounter scripts, unlock conditions, collision, and cleared original statue foregrounds remain intact. Focused statue tests and the Khang/Alphoracle palette check passed. GitHub Actions run [41327318504](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41327318504) passed the full source regression suite, clean compilation, 32 MiB ROM/header/checksum verification, artifact upload and release publication. ROM: [Pokemon-Relics-Ultimate-a3f50c389e.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-a3f50c389e/Pokemon-Relics-Ultimate-a3f50c389e.gba), 33,554,432 bytes, SHA256 `4b103ca090aa57f7626de230ee2b53de6e37a54ad192edd7b2975c38a31c5258`.
+No emulator screenshot or gameplay test was run; the player will test independently. Commit `5c98d131` is an incomplete upload and is superseded by the restored full-source commit above.
+
 ## 2026-11-01 Ruins of Alph statue restoration (compiled and released)
 Branch: `feat/pru-relic-hunt-20261101`; source commit: `f76b6880f620735eae98d232843bfa23b10aec96`; parent: `203f05a0cbb90d9219f3aefce8585b31d24233c9`.
 Restored the I-Unown eye monolith's cool-grey palette from its own object palette, installed the supplied Alphoracle statue as a separate tall indexed object graphic/palette, and cleared the original foreground statue tiles beneath both encounters using local metatile copies. Both encounter objects, map coordinates, interaction scripts and existing unlock gates remain in place. The two custom objects keep independent palette tags.
