@@ -158,3 +158,14 @@ The player supplied a ~49-second in-game Pizza Boy A recording, scrolling from t
 - `src/script_menu.c` uses a dynamic scroll-list with `argc` as `u8`; both added menu rows are below that limit. The control tutor now has 25 options (24 moves + cancel), and the original six-visible-rows scrolling remains.
 
 **Source-only guard:** `test/test_pru_escape_rope_and_indigo_tutors.py` added. It is committed but has **not** been executed in a checkout or compiled into a ROM. **Status: staged, unbuilt, untested in-game.**
+
+
+## Escape Rope replacement and Indigo tutor checkpoint (2026-11-01)
+
+**New user direction:** Escape Rope is now a Key Item in the active configuration (`I_KEY_ESCAPE_ROPE = GEN_8`). Replace placed, collectible Escape Rope rewards throughout **PRU Johto/Kanto** with real TM items, scaling by story progress rather than awarding a late-game powerhouse at the beginning. Protect overworld puzzles and save compatibility. Do not delete or repurpose `ITEM_ESCAPE_ROPE` or edit non-PRU game modes. Do not replace shop stock by a TM; separate any obsolete Escape Rope merchandise audit from placed pickup replacements.
+
+Suggested progression for individual overworld pickup locations, adjusting to actual level/availability after locating them: early Johto `ITEM_TM_FALSE_SWIPE`, early-middle Johto `ITEM_TM_AERIAL_ACE`, middle Johto `ITEM_TM_BRICK_BREAK`, late Johto `ITEM_TM_SWORDS_DANCE`, Kanto `ITEM_TM_SHADOW_BALL`, late Kanto/postgame `ITEM_TM_EARTHQUAKE`. These are existing TM constants; verify each item is present and map progress first. Preserve event-item graphics, story flags, existing saves, and obtainability; avoid excessive repeat reward TMs where possible. **Location-wide inventory and all pickup source edits are not complete**: project has 561 HNS map script files and 570 map.json files, and the repository search endpoint did not return individual Escape Rope placements. Do not claim every pickup is replaced until a complete map/script sweep and a source regression show zero collectible Escape Ropes.
+
+**Indigo tutors:** the active `data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc` already has `IndigoPlateau_Text_TutorMove_EerieFog` and `IndigoPlateau_Text_TutorMove_ScaryFace`, selection cases, and their `TutorTeach` scripts in the existing hazard tutor; do not duplicate NPCs or scripts. Source stage commit `80fcf44418ab739aeaaabf1a9d6a672a7f915cab` adds a 100% `MOVE_EFFECT_FEAR` additional effect to `MOVE_SCARY_FACE` while retaining `EFFECT_SPEED_DOWN_2`. **Runtime validation needed:** confirm secondary status effects are executed on successful pure status moves in this engine; check Fear immunity/accuracy, whether dropping Speed can fail independently, and coverage/learnability in both menu and teaching party. Do not claim battle testing passed.
+
+**No GBA ROM build or release authorised for preparation branch.**
