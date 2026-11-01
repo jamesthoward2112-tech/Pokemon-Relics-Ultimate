@@ -26,7 +26,8 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         self.assertEqual(len(altars), 1)
         self.assertEqual((altars[0]["x"], altars[0]["y"]), (25, 28))
         self.assertEqual(altars[0]["script"], "RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue")
-        self.assertEqual(altars[0]["flag"], "FLAG_PJR_RELIC_ALPHORACLE")
+        # Keep the shrine visible after capture; the script itself reports completion.
+        self.assertEqual(altars[0]["flag"], "0")
 
         # Keep the I-Unown statue and its exact encounter interaction in place.
         eye = [o for o in objects if o["graphics_id"] == "OBJ_EVENT_GFX_EYE_OF_ALPH_HNS"]
@@ -51,17 +52,19 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
                 self.assertLessEqual(abs(green - blue), 3)
 
         with Image.open(ROOT / "graphics/object_events/pics/misc/eye_of_alph.png") as eye:
-            self.assertEqual(eye.size, (64, 64))
+            self.assertEqual(eye.size, (32, 32))
         with Image.open(ROOT / "graphics/object_events/pics/misc/alphoracle_monolith.png") as oracle:
-            self.assertEqual(oracle.size, (64, 64))
+            self.assertEqual(oracle.size, (32, 32))
             self.assertEqual(oracle.mode, "P")
         self.assertTrue((ROOT / "assets/pru/alphoracle_monolith_reference.jpg").is_file())
 
         graphics_info = (ROOT / "src/data/object_events/object_event_graphics_info.h").read_text()
         oracle_info = graphics_info.split("gObjectEventGraphicsInfo_AlphoracleMonolith_hns =", 1)[1].split(";", 1)[0]
-        self.assertIn("2048, 64, 64", oracle_info)
+        self.assertIn("512, 32, 32", oracle_info)
+        self.assertIn("gObjectEventBaseOam_32x32", oracle_info)
         eye_info = graphics_info.split("gObjectEventGraphicsInfo_EyeOfAlph_hns =", 1)[1].split(";", 1)[0]
-        self.assertIn("2048, 64, 64", eye_info)
+        self.assertIn("512, 32, 32", eye_info)
+        self.assertIn("gObjectEventBaseOam_32x32", eye_info)
 
     def test_original_statue_foreground_is_cleared_beneath_both_custom_objects(self):
         layout = ROOT / "data/layouts/RuinsOfAlph_B1F_hns/map.bin"

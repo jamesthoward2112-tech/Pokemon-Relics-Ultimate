@@ -102,8 +102,7 @@ static const u16 sPRUMoltresPIconPalette[16] =
 };
 
 // Approved PRL Alphoracle palette (original 32x64 indexed sprite).
-// Khang and Articuno-P share exact colour indices so Khang uses palette 11,
-// freeing palette 14 for Alphoracle without additional PC sprite slots.
+// Keep it separate from every other custom icon palette for PC and party use.
 static const u16 sPRUAlphoracleIconPalette[16] =
 {
     RGB(0, 0, 0), RGB(31, 31, 31), RGB(29, 30, 31), RGB(26, 26, 31),
@@ -264,8 +263,6 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 12;
     if (species == SPECIES_MOLTRES)
         return 13;
-    if (species == SPECIES_KHANG)
-        return 11; // Same indexed colours as Articuno-P; saves one PC palette slot.
     if (species == SPECIES_ALPHORACLE)
         return 14; // Authentic purple-and-blue PRL indexed artwork.
     return original;

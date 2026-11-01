@@ -25,7 +25,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue",
-      "flag": "FLAG_PJR_RELIC_ALPHORACLE"
+      "flag": "0"
     },
 
     {

@@ -46,7 +46,10 @@ def _install_sprite(source_name, output_name, palette_name, max_width):
 
     crop = source.crop(bounds)
     alpha = mask.crop(bounds)
-    scale = min(max_width / crop.width, 64 / crop.height)
+    # Keep the approved portrait artwork, but fit it to the same 32x32
+    # object frame as the nearby standard statues. Their visible stonework
+    # is 16x32 px within the frame, so these portraits use matching bounds.
+    scale = min(max_width / crop.width, 32 / crop.height)
     size = (max(1, round(crop.width * scale)), max(1, round(crop.height * scale)))
     crop = crop.resize(size, Image.Resampling.LANCZOS)
     alpha = alpha.resize(size, Image.Resampling.LANCZOS)
@@ -58,9 +61,9 @@ def _install_sprite(source_name, output_name, palette_name, max_width):
                                    dither=Image.Dither.NONE)
     used_palette = quantized.getpalette()[:45]
     indices = quantized.point(lambda index: index + 1)
-    canvas = Image.new("P", (64, 64), 0)
-    left = (64 - size[0]) // 2
-    top = 64 - size[1]
+    canvas = Image.new("P", (32, 32), 0)
+    left = (32 - size[0]) // 2
+    top = 32 - size[1]
     canvas.paste(indices, (left, top), alpha)
 
     palette = [0, 0, 0]
@@ -117,9 +120,9 @@ def _clear_original_statue_tiles():
 
 
 def main():
-    _install_sprite("eye_of_alph_reference.jpg", "eye_of_alph.png", "eye_of_alph.pal", 34)
+    _install_sprite("eye_of_alph_reference.jpg", "eye_of_alph.png", "eye_of_alph.pal", 16)
     _install_sprite("alphoracle_monolith_reference.jpg", "alphoracle_monolith.png",
-                    "alphoracle_monolith.pal", 38)
+                    "alphoracle_monolith.pal", 16)
     _clear_original_statue_tiles()
 
 

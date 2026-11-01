@@ -20,13 +20,12 @@ def donor_palette(name):
         src = im.getpalette()[:48]
     return [tuple(round(v * 31 / 255) for v in src[i:i + 3]) for i in range(0, 48, 3)]
 
-# Khang shares the reserved runtime slot with Articuno-P. The clean-build
-# P-form installer refreshes Articuno-P's palette from its pinned donor, so
-# verify the species-to-slot routing here; its donor palette is not a runtime
-# palette source for the shared slot.
+# Khang's indexed icon uses the standard PRU icon palette selected by its
+# SpeciesInfo; it must not borrow the unrelated Articuno-P custom palette.
 assert "{ sPRUArticunoPIconPalette, POKE_ICON_BASE_PAL_TAG + 11 }" in code
-assert re.search(r"if \(species == SPECIES_KHANG\)\s*return 11;", code)
+assert not re.search(r"if \(species == SPECIES_KHANG\)", code)
 assert "gMonIcon_Khang" in species
+assert re.search(r"gMonIcon_Khang,[\s\S]*?P_GBA_STYLE_SPECIES_ICONS \? 1 : 2\)", species)
 
 # Alphoracle uses its genuine PRL sprite and its own colours; not shared palette zero.
 with Image.open(ROOT / "graphics/pokemon/alphoracle/icon.png") as icon, Image.open(ROOT / "graphics/pokemon/prl_authoritative/alphoracle/icon.png") as donor:
