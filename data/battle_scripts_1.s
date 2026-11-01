@@ -4366,6 +4366,15 @@ BattleScript_PrintCantRunFromTrainer::
 	printstring STRINGID_NORUNNINGFROMTRAINERS
 	end2
 
+#if IS_HNS
+@ Fallback for any controller or script that submits RUN despite PRU's
+@ trainer-battle menu guard. A selection script returns safely to the
+@ action prompt instead of entering the forfeit/end-battle sequence.
+BattleScript_PRU_CantQuitTrainer::
+	printselectionstring STRINGID_NORUNNINGFROMTRAINERS
+	endselectionscript
+#endif
+
 BattleScript_PrintFailedToRunString::
 	printfromtable gNoEscapeStringIds
 	waitmessage B_WAIT_TIME_LONG
