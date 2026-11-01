@@ -34,9 +34,12 @@ only for features the player actually tested. Never call 401214913d player-confi
 - Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-80ddf582ab/Pokemon-Relics-Ultimate-80ddf582ab.gba
 - Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-80ddf582ab
 
-## 2026-11-01 I-Unown statue foreground fix (in progress)
+## 2026-11-01 I-Unown statue foreground fix
 
-- Branch: `feat/pru-relic-hunt-20261101`; parent: `e555670b40a6022d2f4c88c0cc424d2d19eac910`.
-- Root cause: two BG1 foreground tiles at B1F (16,9) and (16,10) render the original statue over the eye object sprite.
-- Fix: local metatile copies 200/201 clear only those foreground tiles; source tiles and collision attributes are retained for all other statues.
-- Focused regression checks pass. Full clean build and release are pending. Update this entry with the new run, ROM SHA256 and direct URL when CI finishes.
+- Branch: `feat/pru-relic-hunt-20261101`; fix commit: `bc28e144f1e81cfe0a7925fcfd806f8a8836d7f0`; parent: `e555670b40a6022d2f4c88c0cc424d2d19eac910`.
+- Root cause: B1F foreground tiles at (16,9) and (16,10) drew the original grey statue over the eye object. Local metatile copies 200/201 clear only these tiles and preserve collision attributes. Surrounding statues and the encounter script remain unchanged.
+- Actions run [41316844492](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41316844492): full build, ROM verification, artifact upload and publication all passed.
+- ROM size: 33,554,432 bytes. SHA256: `a0bf30b49fbcc39f95cb89b8296a968c74c6567454131ba58315c7197233e1f7`.
+- Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-bc28e144f1/Pokemon-Relics-Ultimate-bc28e144f1.gba
+- Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-bc28e144f1
+- Gameplay was not emulator-tested.

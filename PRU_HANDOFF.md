@@ -1,9 +1,11 @@
 # PRU_HANDOFF.md — authoritative session handover
 Last audited: 2026-10-30. All statuses below are scoped to evidence; no newer gameplay is implied.
 
-## 2026-11-01 I-Unown statue foreground fix (in progress)
-Branch: `feat/pru-relic-hunt-20261101`; parent: `e555670b40a6022d2f4c88c0cc424d2d19eac910`.
-Root cause: the original grey statue is drawn in the B1F map foreground layer at (16,9) and (16,10), above the eye object sprite. Two local secondary metatile copies (200, 201) retain the original floor/collision data and clear only those foreground tiles; only the eye statue cells point to them. Four focused map/icon regression checks pass. Full clean ROM build and release are pending.
+## 2026-11-01 I-Unown statue foreground fix (complete)
+Branch: `feat/pru-relic-hunt-20261101`; source fix commit: `bc28e144f1e81cfe0a7925fcfd806f8a8836d7f0`; parent: `e555670b40a6022d2f4c88c0cc424d2d19eac910`.
+Root cause was the B1F foreground layer at (16,9) and (16,10), which drew the original grey statue over the eye object. Two local metatile copies clear only those foreground tiles while retaining floor and collision data; adjacent statues are unchanged. The I-Unown encounter object/script remains unchanged.
+Focused regression checks pass. GitHub Actions run [41316844492](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41316844492) passed full compilation, 32 MiB binary verification, artifact upload, and release publication. ROM: [Pokemon-Relics-Ultimate-bc28e144f1.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-bc28e144f1/Pokemon-Relics-Ultimate-bc28e144f1.gba), 33,554,432 bytes, SHA256 `a0bf30b49fbcc39f95cb89b8296a968c74c6567454131ba58315c7197233e1f7`.
+No emulator screenshot test was run; player will test.
 
 ## 2026-11-01 Ruins of Alph / I-Unown patch checkpoint
 Branch: `feat/pru-relic-hunt-20261101`; source patch commit: `80ddf582abb63dbbc0f172befdbc68b38e13b3af` (parent `66c046d64231022ad46aae48398a4ae3c561ffe6`; original confirmed base `924f5de512037d6052f94b29025d92cc263df20a`).
