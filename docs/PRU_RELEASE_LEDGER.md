@@ -2,6 +2,16 @@
 Every new release requires full source SHA, parent lineage, PRs included,
 ROM SHA256 and size, confirmed checks, untested gameplay and verified URL.
 
+## 2026-11-01 B1F ladder exit and I-Unown Eye pedestal
+
+- Branch: `feat/pru-relic-hunt-20261101`; source commit: `bcbde6cf9b03aa7e8cea3d14dc1c6a4683150c99`; parent: `aa3cb1b6e73dfb26d53203004f718f35124af5f5`.
+- Scope: make the visible B1F ladder at (12,10) return to the existing outside entrance, retain the original south exit, and resize the Eye statue's lower inscribed pedestal to 16x12 within its existing 32x32 frame.
+- GitHub Actions run [41331042623](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41331042623) passed source regression checks, full compilation, 32 MiB binary verification, artifact upload and release publication.
+- ROM size: 33,554,432 bytes. SHA256: `c9bf30a313f9d20e4999cefd701388da5ecea9cd0c0b99b9a5ee1c8c4de8d2b9`.
+- Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-bcbde6cf9b/Pokemon-Relics-Ultimate-bcbde6cf9b.gba
+- Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-bcbde6cf9b
+- Gameplay was not emulator-tested; player testing remains outstanding.
+
 ## 2026-11-01 Alphoracle pedestal scale correction
 
 - Branch: `feat/pru-relic-hunt-20261101`; source commit: `8ceb68cb4cfe3120cc85b5adb09875db3921688f`.
