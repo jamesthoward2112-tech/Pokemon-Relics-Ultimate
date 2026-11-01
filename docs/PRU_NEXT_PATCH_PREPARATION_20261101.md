@@ -213,3 +213,24 @@ assumptions in this document; it is NOT evidence of a playable or tested ROM.
 **Before any ROM release:** run the complete source tests and a fresh compile, then use mGBA to attempt Run/forfeit from ordinary singles, trainer doubles, boss/Elite Four, scripted trainer battles and challenge modes. Confirm repeated A-presses cannot leave the fight or freeze, fight/bag/switch still work, defeat/victory and rematch flags still advance, wild run/R quick-run succeeds normally, and Link/Safari/recorded behavior has not regressed.
 
 **Do not build, publish, merge, or trigger Actions until explicitly approved.** The next separate queued item is the repeatable ¥5,000 Day-Care Mystery Egg seller.
+
+
+## Day-Care repeatable Mystery Egg seller — source checkpoint (1 November 2026)
+
+**Scope:** Stage on `prep/pru-rockshop-no-build-20261101`; no ROM build, release, main-branch merge, or automatic Actions run.
+
+**Changed:**
+- `src/daycare.c`: new `PruBuyDaycareMysteryEgg` script special using the existing `CreateEgg` function. It checks real party count vs `GetMaxPartySize()` (including challenge cap), then money, chooses a canonical baby uniformly, checks species and egg cycles, creates and validates an actual Egg, inserts into the party, then deducts **exactly ¥5,000**. Returns separate codes for success, full party, insufficient money or invalid egg data. No charge on refusal, insufficient funds or invalid Egg. Shared special gets a non-HNS linkage stub; no save IDs or flags added.
+- `data/specials.inc`: registered `PruBuyDaycareMysteryEgg`.
+- `data/maps/Route34_DayCare_hns/scripts.inc`: dedicated NPC script with offer/decline, full-party, insufficient-funds, unavailable and success responses. The original one-off `giveoddegg` clerk and the free breeding Move Expert are unchanged.
+- `data/maps/Route34_DayCare_hns/map.json`: one permanently available Lass NPC at **(9,7)**, not overlapping another NPC and inside the 14×11 map bounds. **Collision tile and walk-up accessibility have not been verified in the emulator.**
+- `test/test_pru_mystery_egg_seller.py`: focused static regression for pool, correct order of capacity/money/delivery/charge, script, NPC and original services.
+
+**Pool: all 12 approved hatchable baby species in the canonical 450**
+`PICHU`, `CLEFFA`, `IGGLYBUFF`, `TYROGUE`, `SMOOCHUM`, `ELEKID`, `MAGBY`, `TOGEPI`, `AZURILL`, `SCARABUB` (**Herabub** is the user-facing shorthand), `SKARMET`, `MOOTINY`.
+
+The three custom baby source records live in `src/data/pokemon/species_info/pjr_families.h` and have nonzero hatch cycles and front/back/icon mappings. The existing `CreateEgg` helper owns the egg nickname, hatch-step count and other standard egg data.
+
+**Release gate:** still needs full checkout source-test execution, clean compilation (only when authorised), and mGBA tests for NPC walkability, declining, purchasing twice, party full, challenge-limited party, exactly ¥4,999 and ¥5,000, hatch of all 12 (including all custom baby sprites), saving/reloading with an Egg, plus verifying the old free Odd Egg and Move Expert still work. Do not declare gameplay verified based only on static source checks.
+
+**Next queued item after Mystery Eggs:** audit RELICS legendary encounter levels (80 except Alphoracle 90). Preserve existing hunt flags, encounter positions and caught/respawn rules.
