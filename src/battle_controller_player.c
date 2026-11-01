@@ -314,6 +314,19 @@ static void HandleInputChooseAction(enum BattlerId battler)
     }
     else if (JOY_NEW(A_BUTTON))
     {
+#if IS_HNS
+        // PRU: forfeit/quit from a local trainer fight can leave story scripts
+        // stuck. Refuse the RUN entry without completing the controller action.
+        // The player keeps control of Fight, Bag and Pokémon, and wild Run
+        // (including the R shortcut above) is unaffected.
+        if (gActionSelectionCursor[battler] == 3
+            && (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+            && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_RECORDED)))
+        {
+            PlaySE(SE_BOO);
+            return;
+        }
+#endif
         PlaySE(SE_SELECT);
         TryHideLastUsedBall();
 
