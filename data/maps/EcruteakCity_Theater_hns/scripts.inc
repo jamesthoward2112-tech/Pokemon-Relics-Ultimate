@@ -971,18 +971,13 @@ EcruteakCity_Theater_Text_KimonoGirlBeaten:
 
 EcruteakCity_Theater_Text_ZukiSeen:
 	.string "Welcome. My name is ZUKI.\n"
-	.string "I met you previously in VIOLET\l"
-	.string "CITY.\p"
-	.string "To bring back {STR_VAR_1}, we\n"
-	.string "needed someone with the right bond\l"
-	.string "with POKéMON.\p"
-	.string "We asked MR. POKéMON to give this\n"
-	.string "MYSTERY EGG to\l"
-	.string "whoever showed potential.\p"
-	.string "The EGG went from MR. POKéMON\n"
-	.string "to PROF.ELM, then to you.\p"
-	.string "But being pure alone is not enough\n"
-	.string "to face the power of this POKéMON.$"
+	.string "We met before in VIOLET CITY.\p"
+	.string "The MYSTERY EGG was entrusted\n"
+	.string "to you for a reason.\p"
+	.string "The legends of JOHTO are old,\n"
+	.string "and many remain unproven.\p"
+	.string "Show us the strength of your\n"
+	.string "bond with POKéMON!$"
 
 EcruteakCity_Theater_Text_ZukiSeenAgain:
 	.string "I will test you to see if you are\n"
