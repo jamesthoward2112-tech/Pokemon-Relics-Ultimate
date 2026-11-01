@@ -137,7 +137,9 @@ for path in (ROOT / "data/maps").glob("*_hns/scripts.inc"):
     for i, line in enumerate(content.splitlines(), 1):
         if "ITEM_ESCAPE_ROPE" in line and not line.lstrip().startswith(("@", "//")):
             # Only the intentional one-time and recovery Key Item gifts remain.
-            if path.parent.name == "NewBarkTown_Lab_hns" and line.strip() == "giveitem ITEM_ESCAPE_ROPE":
+            if (path.parent.name == "NewBarkTown_Lab_hns"
+                    and line.strip() in ("giveitem ITEM_ESCAPE_ROPE",
+                                         "checkitem ITEM_ESCAPE_ROPE, 1")):
                 continue
             direct.append(f"{path.relative_to(ROOT)}:{i} {line.strip()}")
 print("PASS: former Escape Rope visible and hidden pickups convert to real TMs")
