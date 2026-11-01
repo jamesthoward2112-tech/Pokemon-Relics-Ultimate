@@ -43,6 +43,7 @@
 #include "data/battle_frontier/battle_frontier_exchange_corner.h"
 #if IS_HNS
 #include "constants/flags.h"
+#include "constants/maps.h"
 #include "event_data.h"
 #endif
 
@@ -1264,6 +1265,26 @@ static void BuyMenuPrintItemDescriptionAndShowItemIcon(s32 item, bool8 onInit, s
     BuyMenuPrint(WIN_ITEM_DESCRIPTION, description, 3, 1, 0, COLORID_NORMAL);
 }
 
+// Use an isolated buy-price rule so the Ecruteak Rock Shop's 50% discount
+// never changes items' normal values, sell-back values, or other marts.
+static u32 GetShopPurchasePrice(u32 itemId)
+{
+    u32 price = GetItemPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT);
+
+#if IS_HNS
+    if (sMartInfo.martType == MART_TYPE_NORMAL
+        && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ECRUTEAK_CITY_ROCK_SHOP_HNS)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ECRUTEAK_CITY_ROCK_SHOP_HNS)
+        && price > 1)
+    {
+        // Round half prices upward so a low-priced item never becomes free.
+        price = (price + 1) / 2;
+    }
+#endif
+
+    return price;
+}
+
 static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
 {
     u8 x;
@@ -1299,7 +1320,7 @@ static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
         {
             ConvertIntToDecimalStringN(
                 gStringVar1,
-                GetItemPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT),
+                GetShopPurchasePrice(itemId),
                 STR_CONV_MODE_LEFT_ALIGN,
                 6);
         }
@@ -1704,7 +1725,7 @@ static void Task_BuyMenu(u8 taskId)
             BuyMenuPrintCursor(tListTaskId, COLORID_GRAY_CURSOR);
 
             if (sMartInfo.martType == MART_TYPE_NORMAL)
-                sShopData->totalCost = (GetItemPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT));
+                sShopData->totalCost = (GetShopPurchasePrice(itemId));
             else if (sMartInfo.martType == MART_TYPE_KURT)
                 sShopData->totalCost = 1;
             else if (sMartInfo.martType == MART_TYPE_BP
@@ -1788,7 +1809,7 @@ static void Task_BuyMenu(u8 taskId)
                         ConvertIntToDecimalStringN(gStringVar2, sShopData->totalCost, STR_CONV_MODE_LEFT_ALIGN, 6);
                         StringExpandPlaceholders(gStringVar4, gText_YouWantedVar1ThatllBeVar2);
                         tItemCount = 1;
-                        sShopData->totalCost = (GetItemPrice(tItemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT)) * tItemCount;
+                        sShopData->totalCost = (GetShopPurchasePrice(tItemId)) * tItemCount;
                         BuyMenuDisplayMessage(taskId, gStringVar4, BuyMenuConfirmPurchase);
                     }
                     else if (GetItemPocket(itemId) == POCKET_TM_HM)
@@ -1868,7 +1889,7 @@ static void Task_BuyHowManyDialogueHandleInput(u8 taskId)
         else if (sMartInfo.martType == MART_TYPE_BP)
             sShopData->totalCost = GetBPCostForItem(tItemId) * tItemCount;
         else
-            sShopData->totalCost = (GetItemPrice(tItemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT)) * tItemCount;
+            sShopData->totalCost = (GetShopPurchasePrice(tItemId)) * tItemCount;
         BuyMenuPrintItemQuantityAndPrice(taskId);
     }
     else
