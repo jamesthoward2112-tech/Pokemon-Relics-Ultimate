@@ -10,7 +10,7 @@
 // In PRU the Escape Rope is a reusable Key Item, not normal field loot.
 // Retain the original map object, its local ID and hide flag, but give a
 // genuine TM instead. Tier is based on story progression when picked up.
-static enum Item GetPruEscapeRopePickupTm(void)
+enum Item GetPruEscapeRopePickupTm(void)
 {
     u16 badgeFlag;
     u8 badges = 0;
