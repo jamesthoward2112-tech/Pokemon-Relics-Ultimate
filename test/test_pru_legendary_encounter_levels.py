@@ -52,8 +52,7 @@ REQUIRED = {
     ("RuinsOfAlph_Lab_hns", "CELEBI"): 1,
     ("RuinsOfAlph_Lab_hns", "SUICUNE"): 1,
     ("RuinsOfAlph_Lab_hns", "ALPHORACLE"): 1,
-    ("TinTower_RoofDay_hns", "HO_OH"): 3,
-    ("MtSilver_SummitDay_hns", "RELIC_HO_OH"): 1,
+    ("TinTower_RoofDay_hns", "RELIC_HO_OH"): 1,
     ("Route10_hns", "RAIKOU"): 1,
     ("WhirlIslands_LugiaChamber_hns", "LUGIA"): 2,
     ("IlexForest_hns", "CELEBI"): 2,
@@ -104,7 +103,7 @@ for key, count in REQUIRED.items():
 assert not mismatches, "Legendary level mismatches:\n" + "\n".join(mismatches)
 
 # Extra invariants: the seven hunt steps remain scripted in the original lab,
-# and both source Ho-Oh event IDs stay distinct from trainer/roaming code.
+# and only a single Lv100 Ho-Oh battle is reachable from Tin Tower.
 lab = (MAPS / "RuinsOfAlph_Lab_hns/scripts.inc").read_text(encoding="utf-8")
 for species in ("RAIKOU", "ENTEI", "LUGIA", "UNOWN_I", "CELEBI", "SUICUNE", "ALPHORACLE"):
     assert f"seteventmon SPECIES_{species}, {LEVELS[species]}" in lab
@@ -112,11 +111,12 @@ for species in ("RAIKOU", "ENTEI", "LUGIA", "UNOWN_I", "CELEBI", "SUICUNE", "ALP
 
 tin = (MAPS / "TinTower_RoofDay_hns/scripts.inc").read_text(encoding="utf-8")
 silver = (MAPS / "MtSilver_SummitDay_hns/scripts.inc").read_text(encoding="utf-8")
-assert tin.count("seteventmon SPECIES_HO_OH, 100") == 3
-assert "seteventmon SPECIES_RELIC_HO_OH, 100" in silver
-assert "FLAG_PJR_RELIC_HO_OH" in silver
+assert tin.count("seteventmon SPECIES_RELIC_HO_OH, 100") == 1
+assert "seteventmon SPECIES_HO_OH," not in tin
+assert "seteventmon SPECIES_RELIC_HO_OH," not in silver
+assert "FLAG_PJR_RELIC_HO_OH" in tin
 
 print(f"PASS: {sum(map(len, encounters.values()))} scripted catchable legendary level setters")
 print("PASS: level 80 standard, Alphoracle 90, Ho-Oh (both forms) 100")
-print("PASS: original seven-step RELICS hunt, Tin Tower and Oak's Relic Ho-Oh retained")
+print("PASS: original seven-step RELICS hunt and exactly one Lv100 Relic Ho-Oh at Tin Tower")
 print("NOTE: does not test actual encounters, roaming mechanics or save compatibility")
