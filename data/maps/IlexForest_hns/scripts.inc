@@ -219,11 +219,20 @@ IlexForest_EventScript_BugcatcherWayne::
 
 IlexForest_EventScript_Shrine::
 	lock
+	@ The RELICS hunt uses this actual shrine. Keep the original GS BALL
+	@ event available before the Elite 20 hunt unlocks.
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, IlexForest_EventScript_Shrine_RelicCheck
 	goto_if_eq VAR_AZALEA_TOWN_STATE, 9, IlexForest_EventScript_Celebi_Event
 	msgbox IlexForest_Text_Shrine, MSGBOX_DEFAULT
 	closemessage
 	release
 	end
+
+IlexForest_EventScript_Shrine_RelicCheck::
+	goto_if_unset FLAG_IS_CHAMPION, IlexForest_hns_RelicCelebi_Unavailable
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, IlexForest_hns_RelicCelebi_Unavailable
+	goto_if_set FLAG_PJR_RELIC_CELEBI, IlexForest_hns_RelicCelebi_Complete
+	goto RuinsOfAlph_Lab_EventScript_RelicCelebi
 
 IlexForest_EventScript_Celebi_Event::
 	msgbox IlexForest_Text_ShrineCelebiEvent, MSGBOX_YESNO
