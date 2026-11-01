@@ -96,7 +96,7 @@ NewBarkTown_Lab_EventScript_Elm_AfterEggCheck:
 	end
 
 PRU_Elm_Text_MissingEscapeRope:
-	.string "Take this reusable ESCAPE ROPE.\\p"
+	.string "Take this reusable ESCAPE ROPE.\p"
 	.string "It helps you leave caves safely!$"
 
 NewBarkTown_Lab_EventScript_ElmAideIsWaiting::
