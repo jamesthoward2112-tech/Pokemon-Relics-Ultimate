@@ -131,8 +131,8 @@ RuinsOfAlph_B1F_hns_RelicAlphoracle_Complete::
 	end
 
 RuinsOfAlph_B1F_hns_Text_AlphoracleAwakens:
-	.string "The six RELIC marks ignite!\\p"
-	.string "The ancient statue begins to hum.\\p"
+	.string "The six RELIC marks ignite!\p"
+	.string "The ancient statue begins to hum.\p"
 	.string "The FIRST VOICE has awakened!$"
 
 RuinsOfAlph_B1F_hns_RelicAlphoracle_TextUnavailable:
