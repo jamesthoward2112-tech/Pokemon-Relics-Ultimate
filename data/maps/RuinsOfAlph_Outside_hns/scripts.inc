@@ -165,7 +165,8 @@ RuinsOfAlph_Outside_RelicLadder::
 	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_Outside_RelicLadderSealed
 	msgbox RuinsOfAlph_Outside_RelicLadderTextOpen, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RuinsOfAlph_Outside_RelicLadderLeave
-	warp MAP_RUINS_OF_ALPH_B1F_HNS, 14, 22
+	@ Arrive beside the relocated monolith, with a clear approach tile.
+	warp MAP_RUINS_OF_ALPH_B1F_HNS, 12, 18
 	end
 RuinsOfAlph_Outside_RelicLadderSealed::
 	msgbox RuinsOfAlph_Outside_RelicLadderTextSealed, MSGBOX_DEFAULT
