@@ -870,10 +870,13 @@ EcruteakCity_Theater_EventScript_Hooh::
 	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
 	setvar VAR_COMPLETED_HO_OH, 3
 	setvar VAR_COMPLETED_LUGIA, 3
-	setflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_ZUKI
-	setflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_KIMONOS
+	@ Finish the Kimono gauntlet story now; no longer wait for an early
+	@ Tin Tower encounter to restore the theatre dancers and townsfolk.
+	clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_ZUKI
+	clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_KIMONOS
+	clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_NPCS
 	setvar VAR_NEWBARKTOWN_LABSTATE, 9
-	setvar VAR_ECRUTEAK_CITY_THEATER, 7
+	setvar VAR_ECRUTEAK_CITY_THEATER, 8
 	release
 	end
 
