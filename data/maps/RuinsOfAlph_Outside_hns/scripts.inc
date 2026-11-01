@@ -165,7 +165,7 @@ RuinsOfAlph_Outside_RelicLadder::
 	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_Outside_RelicLadderSealed
 	msgbox RuinsOfAlph_Outside_RelicLadderTextOpen, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RuinsOfAlph_Outside_RelicLadderLeave
-	@ Arrive beside the relocated monolith, with a clear approach tile.
+	@ Arrive in the established B1F Alphoracle area.
 	warp MAP_RUINS_OF_ALPH_B1F_HNS, 12, 18
 	end
 RuinsOfAlph_Outside_RelicLadderSealed::

@@ -1,6 +1,18 @@
 # PRU_HANDOFF.md — authoritative session handover
 Last audited: 2026-10-30. All statuses below are scoped to evidence; no newer gameplay is implied.
 
+## 2026-11-01 Ruins of Alph / I-Unown patch checkpoint
+Branch: `feat/pru-relic-hunt-20261101`; baseline: `924f5de512037d6052f94b29025d92cc263df20a`.
+Current work removes the Alphoracle monolith object, moves the existing gated relic ladder
+to B1F (26,28), routes the final existing statue to the preserved Alphoracle event after
+its original hunt/champion gates, and recolors only the I-Unown icon with its own palette
+index remap. The I-Unown statue at (16,10), battle sprites, and ordinary entrance warps
+remain intact. Focused checks pass. Local `make hns -j2 -O` is blocked because this
+workspace lacks `arm-none-eabi-gcc` and libpng headers; the GitHub clean-build workflow
+will compile and publish the full 32 MiB ROM after this patch is pushed.
+Pending source commit, Actions run, release URL, and ROM SHA256 are recorded in the ledger
+after CI finishes.
+
 ## Where development is
 Repo: jamesthoward2112-tech/Pokemon-Relics-Ultimate
 PR #66 head before this patch: d68ac49fa10eb07ee60be54684cd0c78dda6bde2

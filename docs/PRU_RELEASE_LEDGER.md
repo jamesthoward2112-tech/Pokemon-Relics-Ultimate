@@ -23,3 +23,13 @@ cannot be corrected by merely repeating that already-present YAML permission.
 
 Fallback preference: a4d393129e for specifically confirmed tutors; use d46842dd24
 only for features the player actually tested. Never call 401214913d player-confirmed.
+
+## 2026-11-01 Ruins of Alph / I-Unown patch
+
+- Branch: `feat/pru-relic-hunt-20261101`; source parent: `924f5de512037d6052f94b29025d92cc263df20a`.
+- Scope: remove oversized Alphoracle object, move its encounter to the existing final statue,
+  relocate gated ladder to B1F bottom-right, and recolor the existing I-Unown icon only.
+- Focused data/icon checks pass. Local build was attempted but host toolchain is missing;
+  canonical GitHub Actions build and release are pending.
+- Recovery: continue from the latest commit on the branch; inspect this section for run ID,
+  direct ROM URL, checksum, and build status when CI completes.

@@ -254,6 +254,8 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 9;
     if (species == SPECIES_ASTRACHI)
         return 10;
+    if (species == SPECIES_UNOWN_I)
+        return 15;
     if (species == SPECIES_MEWSION)
         return 15;
     if (species == SPECIES_ARTICUNO)
