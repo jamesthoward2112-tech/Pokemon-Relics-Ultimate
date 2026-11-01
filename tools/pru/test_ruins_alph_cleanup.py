@@ -51,7 +51,7 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
 
         scripts = (MAPS / "RuinsOfAlph_B1F_hns/scripts.inc").read_text()
         self.assertIn("warp MAP_RUINS_OF_ALPH_B1F_HNS, 12, 18", (MAPS / "RuinsOfAlph_Outside_hns/scripts.inc").read_text())
-        self.assertRegex(scripts, r"RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue::[\s\S]*?FLAG_PJR_RELIC_RAIKOU[\s\S]*?FLAG_PJR_RELIC_SUICUNE[\s\S]*?goto RuinsOfAlph_B1F_hns_RelicAlphoracle")
+        self.assertRegex(scripts, r"RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue::[\s\S]*?FLAG_IS_CHAMPION[\s\S]*?FLAG_PJR_RELIC_SUICUNE[\s\S]*?goto RuinsOfAlph_B1F_hns_RelicAlphoracle")
 
     def test_i_unown_icon_uses_mewduo_palette_without_changing_front_or_back_assets(self):
         icon = Image.open(ROOT / "graphics/pokemon/unown_eye/icon.png")
