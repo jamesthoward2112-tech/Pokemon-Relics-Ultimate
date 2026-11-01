@@ -117,7 +117,7 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
             self.assertEqual(copied[4:], (0, 0, 0, 0))
             self.assertEqual(attributes[clone * 2:clone * 2 + 2], attributes[original * 2:original * 2 + 2])
 
-    def test_final_statue_opens_alphoracle_directly_without_ladder_or_warp(self):
+    def test_b1f_ladder_has_a_working_exit_and_final_statue_is_direct(self):
         interior = read_map("RuinsOfAlph_B1F_hns")
         outside = read_map("RuinsOfAlph_Outside_hns")
         for game_map in (interior, outside):
@@ -132,10 +132,15 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         self.assertEqual((exit_warp["x"], exit_warp["y"], exit_warp["dest_warp_id"]), (15, 16, "5"))
         self.assertEqual((entry_warp["x"], entry_warp["y"]), (21, 21))
         ladder_exit = [w for w in interior["warp_events"]
-                       if (w["x"], w["y"]) == (12, 10)]
+                       if (w["x"], w["y"]) == (15, 15)]
         self.assertEqual(len(ladder_exit), 1)
         self.assertEqual((ladder_exit[0]["dest_map"], ladder_exit[0]["dest_warp_id"]),
                          ("MAP_RUINS_OF_ALPH_OUTSIDE_HNS", "5"))
+        ladder_interaction = [e for e in interior["bg_events"]
+                              if (e["x"], e["y"]) == (15, 15)]
+        self.assertEqual(len(ladder_interaction), 1)
+        self.assertEqual(ladder_interaction[0]["script"],
+                         "RuinsOfAlph_B1F_EventScript_ExitLadder")
 
         statue = [e for e in interior["bg_events"] if (e["x"], e["y"]) == (25, 28)]
         self.assertEqual(len(statue), 1)
@@ -150,6 +155,8 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
             self.assertIn(flag, activation)
         self.assertIn("goto RuinsOfAlph_B1F_hns_RelicAlphoracle", activation)
         self.assertIn("goto RuinsOfAlph_Lab_EventScript_RelicAlphoracle", shrine)
+        self.assertIn("RuinsOfAlph_B1F_EventScript_ExitLadder::", shrine)
+        self.assertIn("warp MAP_RUINS_OF_ALPH_OUTSIDE_HNS, 21, 21", shrine)
         self.assertNotIn("RuinsOfAlph_Outside_RelicLadder::",
                          (MAPS / "RuinsOfAlph_Outside_hns/scripts.inc").read_text())
         self.assertNotIn("warp MAP_RUINS_OF_ALPH_B1F_HNS, 12, 18",

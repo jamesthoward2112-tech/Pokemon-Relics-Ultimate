@@ -2,6 +2,13 @@ RuinsOfAlph_B1F_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, RuinsOfAlph_B1F_OnFrame
 	.byte 0
 
+@ The B1F ladder is directly above the arrival tile. Allow either stepping onto
+@ it or pressing A while facing it to return to the established outside entrance.
+RuinsOfAlph_B1F_EventScript_ExitLadder::
+	lock
+	warp MAP_RUINS_OF_ALPH_OUTSIDE_HNS, 21, 21
+	end
+
 RuinsOfAlph_B1F_OnFrame::
 	map_script_2 VAR_RUINSOFALPH_STATE, 1, RuinsOfAlph_B1F_EventScript_Presence
 	.2byte 0
