@@ -124,8 +124,8 @@ MtSilver_SummitDay_Text_Red:
 	.string ".........................$"
 
 MtSilver_SummitDay_EventScript_UnlockRelicHoOh::
-	setvar VAR_COMPLETED_HO_OH, 4
-	clearflag FLAG_HIDE_HO_OH
+	@ Crest alone cannot reveal HO-OH. The Tin Tower roof checks every
+	@ preceding RELIC's caught flag and the physical Crest on map entry.
 	return
 
 MtSilver_SummitDay_Text_RedBeaten:
@@ -134,10 +134,9 @@ MtSilver_SummitDay_Text_RedBeaten:
 MtSilver_SummitDay_Text_Crest:
 	.string "RED leaves behind the ANCIENT\n"
 	.string "RAINBOW CREST.\p"
-	.string "Its light points toward TIN TOWER.\p"
-	.string "RED: The ULTIMATE RELIC has been\n"
-	.string "spotted at the top of TIN TOWER.\p"
-	.string "The CREST is reacting. Go.$"
+	.string "Some say golden wings fly above\n"
+	.string "JOHTO's oldest towers.\p"
+	.string "For now, it is only a rumour.$"
 
 
 
@@ -168,8 +167,9 @@ MtSilver_SummitDay_EventScript_SyncOakDone::
 MtSilver_SummitDay_EventScript_RelicOak::
 	lock
 	faceplayer
-	goto_if_set FLAG_PJR_RELIC_HO_OH, MtSilver_SummitDay_EventScript_OakEpilogue
-	goto_if_set FLAG_PRU_RELIC_OAK_BATTLE_WON, MtSilver_SummitDay_EventScript_OakSummon
+	@ Keep Oak's final trainer battle even if HO-OH was caught before
+	@ visiting him. No separate Mt Silver HO-OH encounter exists.
+	goto_if_set FLAG_PRU_RELIC_OAK_BATTLE_WON, MtSilver_SummitDay_EventScript_OakAfterBattle
 	msgbox MtSilver_SummitDay_Text_OakChallenge, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_PRU_E18_18_A_MASTER_HNS, MtSilver_SummitDay_Text_OakBeaten
 	setflag FLAG_PRU_RELIC_OAK_BATTLE_WON
@@ -177,28 +177,20 @@ MtSilver_SummitDay_EventScript_RelicOak::
 	release
 	end
 
+MtSilver_SummitDay_EventScript_OakAfterBattle::
+	goto_if_set FLAG_PJR_RELIC_HO_OH, MtSilver_SummitDay_EventScript_OakEpilogue
+	goto MtSilver_SummitDay_EventScript_OakSummon
+
 MtSilver_SummitDay_EventScript_OakSummon::
-	checkitem ITEM_ANCIENT_RAINBOW_CREST
-	goto_if_eq VAR_RESULT, FALSE, MtSilver_SummitDay_EventScript_OakNeedCrest
-	msgbox MtSilver_SummitDay_Text_OakSummon, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, MtSilver_SummitDay_EventScript_OakDecline
-	playmoncry SPECIES_RELIC_HO_OH, CRY_MODE_ENCOUNTER
-	waitmoncry
-	playbgm MUS_HG_VS_HO_OH, 0
-	seteventmon SPECIES_RELIC_HO_OH, 100
-	special BattleSetup_StartLegendaryBattle
-	waitstate
-	specialvar VAR_RESULT, GetBattleOutcome
-	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, MtSilver_SummitDay_EventScript_OakRelicCaught
-	msgbox MtSilver_SummitDay_Text_OakRetry, MSGBOX_DEFAULT
+	@ Legacy label: retain for old scripts, but Oak can no longer summon
+	@ a second HO-OH. Tin Tower is the only catchable encounter.
+	msgbox MtSilver_SummitDay_Text_OakSummon, MSGBOX_DEFAULT
 	release
 	end
 
 MtSilver_SummitDay_EventScript_OakRelicCaught::
-	setflag FLAG_PJR_RELIC_HO_OH
-	setvar VAR_COMPLETED_HO_OH, 3
-	setflag FLAG_HIDE_HO_OH
-	goto MtSilver_SummitDay_EventScript_OakEpilogue
+	@ Old label kept without a second capture or setting catch flags.
+	goto MtSilver_SummitDay_EventScript_OakSummon
 
 MtSilver_SummitDay_EventScript_OakEpilogue::
 	msgbox MtSilver_SummitDay_Text_OakEpilogue, MSGBOX_DEFAULT
@@ -228,14 +220,14 @@ MtSilver_SummitDay_Text_OakBeaten:
 	.string "OAK: Magnificent!$"
 
 MtSilver_SummitDay_Text_OakReady:
-	.string "OAK: The GOLDEN RELIC HO-OH\n"
-	.string "has heard your victory.\p"
-	.string "Heal your team if you need to.\n"
-	.string "Return when you're ready.$"
+	.string "OAK: Our research hints at a\n"
+	.string "golden bird above TIN TOWER.\p"
+	.string "That may be the last RELIC!\n"
+	.string "Go and see for yourself.$"
 
 MtSilver_SummitDay_Text_OakSummon:
-	.string "OAK: Shall we summon the\n"
-	.string "GOLDEN RELIC HO-OH now?$"
+	.string "OAK: Search TIN TOWER's roof.\n"
+	.string "No other summit can summon it.$"
 
 MtSilver_SummitDay_Text_OakNeedCrest:
 	.string "OAK: Bring the ANCIENT RAINBOW\n"
