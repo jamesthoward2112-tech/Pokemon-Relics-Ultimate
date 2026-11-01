@@ -50,6 +50,9 @@ TinTower_RoofDay_MapScript_HoohStory::
 
 TinTower_RoofDay_MapScript_HoohPostStoryGone::
 	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
+	@ The final Golden RELIC uses its own flag. Never let the Lv50 retry
+	@ logic unhide this object after a successful postgame capture.
+	goto_if_set FLAG_PJR_RELIC_HO_OH, TinTower_RoofDay_MapScript_HoohCaught
 	goto_if_set FLAG_CAUGHT_HO_OH, TinTower_RoofDay_MapScript_HoohCaught
 	@ If normal Ho-Oh was defeated, let it return on the next visit.
 	@ The later Relic Ho-Oh unlock (state 4) remains a separate encounter.
@@ -63,6 +66,7 @@ TinTower_RoofDay_MapScript_HoohCaught::
 
 TinTower_RoofDay_MapScript_HoohPostStoryEncounter::
 	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
+	goto_if_set FLAG_PJR_RELIC_HO_OH, TinTower_RoofDay_MapScript_HoohCaught
 	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, TinTower_RoofDay_MapScript_RelicHoOhLocked
 	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, TinTower_RoofDay_MapScript_RelicHoOhLocked
 	clearflag FLAG_HIDE_HO_OH
@@ -208,6 +212,7 @@ TinTower_RoofDay_EventScript_TalkToKimono::
 
 TinTower_RoofDay_EventScript_HoOh::
 	lockall
+	goto_if_set FLAG_PJR_RELIC_HO_OH, TinTower_RoofDay_EventScript_AlreadyCaughtRelic
 	goto_if_eq VAR_COMPLETED_HO_OH, 4, TinTower_RoofDay_EventScript_HoOhPostgame
 	goto_if_eq VAR_COMPLETED_HO_OH, 3, TinTower_RoofDay_EventScript_HoOhRetry
 	waitse
@@ -273,6 +278,12 @@ TinTower_RoofDay_EventScript_HoOhPostgame::
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, TinTower_RoofDay_EventScript_RanFromHoOh
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, TinTower_RoofDay_EventScript_RanFromHoOh
 	msgbox TinTower_RoofDay_Text_RelicHoOhRetry, MSGBOX_DEFAULT
+	releaseall
+	end
+
+TinTower_RoofDay_EventScript_AlreadyCaughtRelic::
+	setflag FLAG_HIDE_HO_OH
+	removeobject LOCALID_HO_OH
 	releaseall
 	end
 

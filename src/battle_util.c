@@ -2505,6 +2505,7 @@ bool32 CanAbilityAbsorbMove(struct BattleContext *ctx)
             battleScript = BattleScript_SoundproofProtected;
         break;
     case ABILITY_GOOD_AS_GOLD:
+    case ABILITY_GOLDEN_SOVEREIGN:
         if (IsBattleMoveStatus(ctx->move))
         {
             enum MoveTarget target = GetBattlerMoveTargetType(ctx->battlerAtk, ctx->move);
@@ -6956,6 +6957,10 @@ static inline u32 CalcMoveBasePowerAfterModifiers(struct BattleContext *ctx)
     case ABILITY_STEELWORKER:
         if (moveType == TYPE_STEEL)
            modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));
+        break;
+    case ABILITY_GOLDEN_SOVEREIGN:
+        if (moveType == TYPE_FIRE || moveType == TYPE_STEEL)
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1.3));
         break;
     case ABILITY_PIXILATE:
         if (moveType == TYPE_FAIRY && gBattleStruct->battlerState[battlerAtk].ateBoost)

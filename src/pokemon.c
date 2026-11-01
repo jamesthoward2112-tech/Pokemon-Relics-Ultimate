@@ -3701,6 +3701,19 @@ void CreateEnemyEventMon(void)
     CreateEventMon(&gEnemyParty[0], species, level, personality, OTID_STRUCT_PLAYER_ID);
     SetBoxMonIVs(&gEnemyParty[0].box, USE_RANDOM_IVS);
     GiveMonInitialMoveset(&gEnemyParty[0]);
+    // The final Golden Ho-Oh is the unique Lv85 Tin Tower event, not the
+    // earlier Lv50 story bird. Hidden-ability slot persists when caught.
+    if (species == SPECIES_HO_OH && level == 85
+     && FlagGet(FLAG_PJR_RELIC_ALPHORACLE) && FlagGet(FLAG_PJR_GOT_RAINBOW_CREST))
+    {
+        u8 goldenAbilitySlot = 2;
+        SetMonData(&gEnemyParty[0], MON_DATA_ABILITY_NUM, &goldenAbilitySlot);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_SACRED_FIRE, 0);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_MAKE_IT_RAIN, 1);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_AEROBLAST, 2);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_RECOVER, 3);
+        CalculateMonStats(&gEnemyParty[0]);
+    }
     if (itemId)
     {
         u8 heldItem[2];
@@ -3779,6 +3792,25 @@ void CalculateMonStats(struct Pokemon *mon)
     };
     bool32 isPruChargedElectrode = IsPruChargedElectrode(mon);
 
+    // Golden Ho-Oh: 800 BST, exclusive to the final Lv85 caught RELIC.
+    // Preserve the existing Lv50 Ho-Oh stats and ordinary wild/other Ho-Oh.
+    static const u16 sPruGoldenHoOhBaseStats[NUM_STATS] = {
+        [STAT_HP] = 125, [STAT_ATK] = 130, [STAT_DEF] = 115,
+        [STAT_SPATK] = 170, [STAT_SPDEF] = 155, [STAT_SPEED] = 105,
+    };
+    // Existing saves with the final RELIC caught before this patch retain
+    // met level 85 and the event-mon fateful marker. Upgrade on recalculation.
+    bool32 isLegacyGoldenHoOh = (species == SPECIES_HO_OH
+        && GetMonData(mon, MON_DATA_MET_LEVEL) == 85
+        && GetMonData(mon, MON_DATA_MODERN_FATEFUL_ENCOUNTER));
+    if (isLegacyGoldenHoOh && GetMonData(mon, MON_DATA_ABILITY_NUM) != 2)
+    {
+        u8 slot = 2;
+        SetMonData(mon, MON_DATA_ABILITY_NUM, &slot);
+    }
+    bool32 isPruGoldenHoOh = (species == SPECIES_HO_OH
+        && GetMonData(mon, MON_DATA_ABILITY_NUM) == 2);
+
     // Save compatibility: previously caught Power Plant Electrode keep their
     // original first three moves but receive Kaboom in the original fourth slot.
     // Do not overwrite a player-customised fourth move.
@@ -3816,7 +3848,7 @@ void CalculateMonStats(struct Pokemon *mon)
         if (i == STAT_HP)
             continue;
 
-        u32 baseStat = equalizedBst ? equalizedBst : (isPruChargedElectrode ? sPruChargedElectrodeBaseStats[i] : GetSpeciesBaseStat(species, i));
+        u32 baseStat = equalizedBst ? equalizedBst : (isPruGoldenHoOh ? sPruGoldenHoOhBaseStats[i] : (isPruChargedElectrode ? sPruChargedElectrodeBaseStats[i] : GetSpeciesBaseStat(species, i)));
         s32 n = (((2 * baseStat + iv[i] + ev[i] / 4) * level) / 100) + 5;
         n = ModifyStatByNature(nature, n, i);
         if (B_FRIENDSHIP_BOOST == TRUE)
@@ -3835,7 +3867,7 @@ void CalculateMonStats(struct Pokemon *mon)
     }
     else
     {
-        s32 n = 2 * (equalizedBst ? equalizedBst : (isPruChargedElectrode ? sPruChargedElectrodeBaseStats[STAT_HP] : GetSpeciesBaseHP(species))) + iv[STAT_HP];
+        s32 n = 2 * (equalizedBst ? equalizedBst : (isPruGoldenHoOh ? sPruGoldenHoOhBaseStats[STAT_HP] : (isPruChargedElectrode ? sPruChargedElectrodeBaseStats[STAT_HP] : GetSpeciesBaseHP(species)))) + iv[STAT_HP];
         newMaxHP = (((n + ev[STAT_HP] / 4) * level) / 100) + level + 10;
     }
 

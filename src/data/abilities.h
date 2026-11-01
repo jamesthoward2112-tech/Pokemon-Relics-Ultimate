@@ -2548,6 +2548,16 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .cantBeSwapped = TRUE,
         .cantBeTraced = TRUE,
     },
+    [ABILITY_GOLDEN_SOVEREIGN] =
+    {
+        .name = _("GOLDEN SOVEREIGN"),
+        .description = COMPOUND_STRING("Blocks status moves.\\nBoosts Fire/Steel power."),
+        .aiRating = 10,
+        .cantBeCopied = TRUE,
+        .cantBeSwapped = TRUE,
+        .cantBeTraced = TRUE,
+        .breakable = TRUE,
+    },
     [ABILITY_RELIC_EYE] =
     {
         .name = _("RELIC EYE"),

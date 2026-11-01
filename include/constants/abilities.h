@@ -356,6 +356,8 @@ enum __attribute__((packed)) Ability
     ABILITY_DUEL_SOUL = ABILITIES_COUNT_PJR,
     // Append-only PRU signature for the E20 RELICS I-Unown (never renumber legacy abilities).
     ABILITY_RELIC_EYE,
+    // Append only; Golden Ho-Oh's exclusive final RELIC ability.
+    ABILITY_GOLDEN_SOVEREIGN,
     ABILITIES_COUNT,
 };
 
