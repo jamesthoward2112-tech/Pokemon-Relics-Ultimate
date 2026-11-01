@@ -122,3 +122,14 @@ The player supplied a ~49-second in-game Pizza Boy A recording, scrolling from t
 7. Regression must catch the failure with source assertions for `CreatePokedexList` and practical emulator tests (player can independently verify; no unrelated screenshot/boot test gates before source implementation is ready).
 
 **Status of addendum:** video reviewed, issue diagnosed at source level, **not yet patched, compiled or player-tested**. Preserve the instruction to **not build or release** until the user explicitly authorizes implementation.
+
+
+## False Swipe TM54 source-stage checkpoint (2026-11-01)
+
+- Work branch: `prep/pru-rockshop-no-build-20261101`, staged **without compilation or publication**.
+- `data/maps/CherrygroveCity_Mart_hns/scripts.inc`: adds the real `ITEM_TM_FALSE_SWIPE` to the initial pre-Poké-Ball stock.
+- `src/shop.c`: extends the existing `pokemart 0` dynamic badge-based stock **only when standing inside Cherrygrove Mart**, preserving Potion/Ball availability and all other towns' inventories; continues to share the shop's normal purchase path.
+- `data/maps/GoldenrodCity_DepartmentStore_5F_hns/scripts.inc` and `data/maps/CeladonCity_DepartmentStore_3F_hns/scripts.inc`: add TM54 to the pre-existing TM inventory; don't replace any items.
+- `test/test_pru_false_swipe_marts.py`: source-only guard for TM54 identity and mapping, proper item use/effect, and all three inventories.
+- **Remaining before a player-ready ROM:** run source regression and compile on later user approval; independently confirm at least a few eligible Pokémon can learn the TM, and both fresh/existing saves retain the item and shop stock. TM item is **consumable under current `I_REUSABLE_TMS = FALSE` configuration**; repeated purchases are supported.
+- **Hold remains:** do not run GitHub Actions, build or publish a GBA until the user requests it.
