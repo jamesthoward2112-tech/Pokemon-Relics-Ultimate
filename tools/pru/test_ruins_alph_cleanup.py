@@ -134,6 +134,20 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         ladder_exit = [w for w in interior["warp_events"]
                        if (w["x"], w["y"]) == (15, 15)]
         self.assertEqual(len(ladder_exit), 1)
+        # A matching warp event is insufficient: the engine also requires a
+        # warp-capable metatile behavior on the player's destination tile.
+        # Regression: the decorative ladder's two metatiles were MB_NORMAL,
+        # which caused the original and subsequent coordinate-only fixes to fail.
+        attrs = (ROOT / "data/tilesets/secondary/ruins_of_alph_b1_f_hns"
+                 / "metatile_attributes.bin").read_bytes()
+        for metatile in (100, 101):
+            self.assertEqual(struct.unpack_from("<H", attrs, metatile * 2)[0] & 0xFF,
+                             0x61, f"Ladder metatile {metatile} must be MB_LADDER")
+        header = (ROOT / "include/constants/metatile_behaviors.h").read_text()
+        enum = header.split("enum {", 1)[1].split("};", 1)[0]
+        behaviors = [part.split("//", 1)[0].strip() for part in enum.split(",")]
+        self.assertEqual(behaviors.index("MB_LADDER"), 0x61)
+
         self.assertEqual((ladder_exit[0]["dest_map"], ladder_exit[0]["dest_warp_id"]),
                          ("MAP_RUINS_OF_ALPH_OUTSIDE_HNS", "5"))
         ladder_interaction = [e for e in interior["bg_events"]
