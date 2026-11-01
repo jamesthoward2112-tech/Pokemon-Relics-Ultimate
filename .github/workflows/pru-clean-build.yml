@@ -37,7 +37,7 @@ jobs:
           # Use Ubuntu's standard archive directly so apt can complete before the step timeout.
           printf '%s\n' 'http://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt
           sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update
-          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil mgba-qt xvfb xdotool imagemagick
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 python3-pil mgba-qt mgba-sdl xvfb xdotool imagemagick
       - name: Install original working PJR Jessie James and Steevee Neevee production transition art
         run: |
           set -euo pipefail
@@ -237,8 +237,8 @@ jobs:
           # Do not describe it as a verified in-game entrance/exit test.
           xvfb-run -a -s '-screen 0 1024x768x24' bash -c '
             set -euo pipefail
-            export LIBGL_ALWAYS_SOFTWARE=1 QT_OPENGL=software
-            mgba-qt pokehns.gba >/tmp/pru-mgba-boot.log 2>&1 &
+            export LIBGL_ALWAYS_SOFTWARE=1 QT_OPENGL=software SDL_VIDEODRIVER=x11 SDL_RENDER_DRIVER=software
+            mgba pokehns.gba >/tmp/pru-mgba-boot.log 2>&1 &
             emulator=$!
             trap "kill $emulator 2>/dev/null || true" EXIT
             sleep 14
