@@ -19,10 +19,14 @@ def read_map(name):
 
 
 class RuinsOfAlphCleanupTests(unittest.TestCase):
-    def test_monolith_is_removed_and_relic_encounter_moves_to_final_statue(self):
+    def test_visible_monolith_marks_final_statue_without_changing_i_unown(self):
         interior = read_map("RuinsOfAlph_B1F_hns")
         objects = interior["object_events"]
-        self.assertFalse(any(o["graphics_id"] == "OBJ_EVENT_GFX_ALPHORACLE_MONOLITH_HNS" for o in objects))
+        altars = [o for o in objects if o["graphics_id"] == "OBJ_EVENT_GFX_ALPHORACLE_MONOLITH_HNS"]
+        self.assertEqual(len(altars), 1)
+        self.assertEqual((altars[0]["x"], altars[0]["y"]), (25, 28))
+        self.assertEqual(altars[0]["script"], "RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue")
+        self.assertEqual(altars[0]["flag"], "FLAG_PJR_RELIC_ALPHORACLE")
 
         # Keep the I-Unown statue and its exact encounter interaction in place.
         eye = [o for o in objects if o["graphics_id"] == "OBJ_EVENT_GFX_EYE_OF_ALPH_HNS"]

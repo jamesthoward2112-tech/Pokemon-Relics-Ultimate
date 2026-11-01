@@ -101,15 +101,15 @@ static const u16 sPRUMoltresPIconPalette[16] =
     RGB(20, 24, 31), RGB(13, 21, 19), RGB(12, 12, 11), RGB(8, 8, 8)
 };
 
-// Khang's approved PRL icon has an independent 16-colour index ordering.
-// Keep it separate: the bird-art installer regenerates palette #11 at build
-// time and cannot safely share its colour indices with Khang.
-static const u16 sPRUKhangIconPalette[16] =
+// Approved PRL Alphoracle palette (original 32x64 indexed sprite).
+// Khang and Articuno-P share exact colour indices so Khang uses palette 11,
+// freeing palette 14 for Alphoracle without additional PC sprite slots.
+static const u16 sPRUAlphoracleIconPalette[16] =
 {
-    RGB(12, 19, 16), RGB(15, 15, 15), RGB(23, 23, 22), RGB(31, 31, 31),
-    RGB(14, 14, 25), RGB(20, 21, 30), RGB(22, 16, 11), RGB(29, 24, 17),
-    RGB(24, 21, 5), RGB(30, 30, 5), RGB(30, 12, 10), RGB(18, 15, 25),
-    RGB(24, 20, 25), RGB(23, 5, 19), RGB(12, 12, 11), RGB(8, 8, 8)
+    RGB(0, 0, 0), RGB(31, 31, 31), RGB(29, 30, 31), RGB(26, 26, 31),
+    RGB(7, 17, 31), RGB(10, 14, 25), RGB(28, 12, 31), RGB(12, 12, 12),
+    RGB(11, 11, 11), RGB(25, 8, 28), RGB(20, 7, 23), RGB(8, 8, 8),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)
 };
 
 // The approved Mewduo icon needs a red/white palette, distinct from Khang.
@@ -137,7 +137,7 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUArticunoPIconPalette, POKE_ICON_BASE_PAL_TAG + 11 },
     { sPRUZapdosPIconPalette, POKE_ICON_BASE_PAL_TAG + 12 },
     { sPRUMoltresPIconPalette, POKE_ICON_BASE_PAL_TAG + 13 },
-    { sPRUKhangIconPalette, POKE_ICON_BASE_PAL_TAG + 14 },
+    { sPRUAlphoracleIconPalette, POKE_ICON_BASE_PAL_TAG + 14 },
     { sPRUMewduoIconPalette, POKE_ICON_BASE_PAL_TAG + 15 },
 };
 
@@ -265,7 +265,9 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
     if (species == SPECIES_MOLTRES)
         return 13;
     if (species == SPECIES_KHANG)
-        return 14;
+        return 11; // Same indexed colours as Articuno-P; saves one PC palette slot.
+    if (species == SPECIES_ALPHORACLE)
+        return 14; // Authentic purple-and-blue PRL indexed artwork.
     return original;
 }
 

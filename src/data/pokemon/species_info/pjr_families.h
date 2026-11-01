@@ -554,7 +554,7 @@
     .eggCycles = 120, .friendship = 0,
     .growthRate = GROWTH_SLOW,
     .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
-    .abilities = { ABILITY_FULL_METAL_BODY, ABILITY_NONE, ABILITY_NONE }, .bodyColor = BODY_COLOR_PURPLE,
+    .abilities = { ABILITY_MAGIC_BOUNCE, ABILITY_NONE, ABILITY_NONE }, .bodyColor = BODY_COLOR_PURPLE,
     .speciesName = _("Alphoracle"), .cryId = CRY_UNOWN, .natDexNum = NATIONAL_DEX_UNOWN,
     .categoryName = _("First Voice"), .height = 25, .weight = 999,
     .description = COMPOUND_STRING("An ancient guardian that watches over\n" "the language of the RUINS. Its presence\n" "causes RELIC resonance to stir."),
