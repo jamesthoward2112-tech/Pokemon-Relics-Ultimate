@@ -64,7 +64,8 @@ def main():
         shutil.copy2(CANONICAL, ROM)
 
     env = os.environ.copy()
-    env.update({"LIBGL_ALWAYS_SOFTWARE": "1", "QT_OPENGL": "software",\n                "SDL_VIDEODRIVER": "x11", "SDL_RENDER_DRIVER": "software"})
+    env.update({"LIBGL_ALWAYS_SOFTWARE": "1", "QT_OPENGL": "software",
+                "SDL_VIDEODRIVER": "x11", "SDL_RENDER_DRIVER": "software"})
     with LOG.open("w") as log:
         proc = subprocess.Popen(["mgba", str(TEST_ROM)], cwd=ROOT,
                                 env=env, stdout=log, stderr=subprocess.STDOUT)
