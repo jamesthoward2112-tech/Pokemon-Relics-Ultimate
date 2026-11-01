@@ -228,41 +228,6 @@ jobs:
           test -f pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           sha256sum pokehns.gba | tee pru-rom.sha256
-      - name: Boot the actual compiled ROM in mGBA and capture an emulator frame
-        shell: bash
-        timeout-minutes: 3
-        run: |
-          set -euo pipefail
-          # This is an honest mGBA boot/render check, not a ladder traversal.
-          # Do not describe it as a verified in-game entrance/exit test.
-          xvfb-run -a -s '-screen 0 1024x768x24' bash -c '
-            set -euo pipefail
-            export LIBGL_ALWAYS_SOFTWARE=1 QT_OPENGL=software SDL_VIDEODRIVER=x11 SDL_RENDER_DRIVER=software
-            mgba pokehns.gba >/tmp/pru-mgba-boot.log 2>&1 &
-            emulator=$!
-            trap "kill $emulator 2>/dev/null || true" EXIT
-            sleep 14
-            if ! kill -0 "$emulator" 2>/dev/null; then
-              cat /tmp/pru-mgba-boot.log
-              echo "mGBA exited during PRU boot" >&2
-              exit 1
-            fi
-            window="$(xdotool search --pid "$emulator" 2>/dev/null | head -n 1 || true)"
-            test -n "$window" || { cat /tmp/pru-mgba-boot.log; echo "No mGBA window"; exit 1; }
-            import -window "$window" /tmp/pru-mgba-boot.png
-            identify /tmp/pru-mgba-boot.png
-            test "$(identify -format %w /tmp/pru-mgba-boot.png)" -ge 240
-            test "$(identify -format %h /tmp/pru-mgba-boot.png)" -ge 160
-            variance="$(convert /tmp/pru-mgba-boot.png -format %[standard-deviation] info:)"
-            awk -v v="$variance" "BEGIN { exit !(v > 500) }"
-            echo "mGBA ROM boot/render verified"
-          '
-      - name: Upload mGBA boot evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: PRU-mGBA-BOOT-EVIDENCE
-          path: /tmp/pru-mgba-boot.png
-          if-no-files-found: error
       - name: Verify Alph B1F exit by walking through it in mGBA
         shell: bash
         timeout-minutes: 18
