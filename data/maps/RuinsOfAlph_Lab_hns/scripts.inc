@@ -251,8 +251,8 @@ RuinsOfAlph_Lab_EventScript_RelicAlphoracleCaught::
 	end
 
 RuinsOfAlph_Lab_EventScript_UnlockRelicHoOh::
-	setvar VAR_COMPLETED_HO_OH, 4
-	clearflag FLAG_HIDE_HO_OH
+	@ No map can directly summon the golden RELIC. Tin Tower evaluates all
+	@ seven captured RELICS and the Crest when the player reaches its roof.
 	msgbox RuinsOfAlph_Lab_Text_AlphoracleCaught, MSGBOX_DEFAULT
 	release
 	end
