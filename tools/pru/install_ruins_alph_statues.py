@@ -82,6 +82,67 @@ def _install_sprite(source_name, output_name, palette_name, max_width):
     (PALS / palette_name).write_text("\n".join(lines) + "\n")
 
 
+def _install_eye_sprite():
+    """Keep the Eye's 32px silhouette and size its inscribed stand consistently."""
+    source = Image.open(ART / "eye_of_alph_reference.jpg").convert("RGB")
+    mask = _foreground_mask(source)
+    bounds = mask.getbbox()
+    if bounds is None:
+        raise ValueError("No statue artwork found in eye_of_alph_reference.jpg")
+
+    crop = source.crop(bounds)
+    alpha = mask.crop(bounds)
+    # The source changes from the rounded eye monolith to the rectangular
+    # inscribed pedestal at this point. Fit those sections independently:
+    # the portrait stays 16x20px and the matching stone base is 16x12px.
+    split = 410
+    body = crop.crop((0, 0, crop.width, split))
+    body_alpha = alpha.crop((0, 0, alpha.width, split))
+    stand_alpha = alpha.crop((0, split, alpha.width, alpha.height))
+    stand_bounds = stand_alpha.getbbox()
+    if stand_bounds is None:
+        raise ValueError("No pedestal found in eye_of_alph_reference.jpg")
+    stand = crop.crop((stand_bounds[0], split + stand_bounds[1],
+                       stand_bounds[2], split + stand_bounds[3]))
+    stand_alpha = stand_alpha.crop(stand_bounds)
+
+    body = body.resize((16, 20), Image.Resampling.LANCZOS)
+    body_alpha = body_alpha.resize((16, 20), Image.Resampling.LANCZOS)
+    stand = stand.resize((16, 12), Image.Resampling.LANCZOS)
+    stand_alpha = stand_alpha.resize((16, 12), Image.Resampling.LANCZOS)
+
+    rgb = Image.new("RGB", (32, 32), (0, 0, 0))
+    alpha_canvas = Image.new("L", (32, 32), 0)
+    rgb.paste(body, (8, 0))
+    alpha_canvas.paste(body_alpha, (8, 0))
+    rgb.paste(stand, (8, 20))
+    alpha_canvas.paste(stand_alpha, (8, 20))
+
+    visible = alpha_canvas.getbbox()
+    grayscale = ImageOps.grayscale(rgb.crop(visible))
+    quantized = grayscale.quantize(colors=15, method=Image.Quantize.MEDIANCUT,
+                                   dither=Image.Dither.NONE)
+    used_palette = quantized.getpalette()[:45]
+    indices = quantized.point(lambda index: index + 1)
+    canvas = Image.new("P", (32, 32), 0)
+    canvas.paste(indices, visible[:2], alpha_canvas.crop(visible))
+
+    palette = [0, 0, 0]
+    colors = []
+    for index in range(15):
+        value = used_palette[index * 3]
+        palette.extend((value, value, value))
+        colors.append((value, value, value))
+    palette.extend([0] * (768 - len(palette)))
+    canvas.putpalette(palette)
+    canvas.info["transparency"] = 0
+    canvas.save(PICS / "eye_of_alph.png", optimize=False)
+
+    lines = ["JASC-PAL", "0100", "16", "0 0 0"]
+    lines.extend(f"{r} {g} {b}" for r, g, b in colors)
+    (PALS / "eye_of_alph.pal").write_text("\n".join(lines) + "\n")
+
+
 def _install_alphoracle_sprite():
     """Enlarge the shrine figure while keeping its pedestal at statue scale."""
     source = Image.open(ART / "alphoracle_monolith_reference.jpg").convert("RGB")
@@ -184,7 +245,7 @@ def _clear_original_statue_tiles():
 
 
 def main():
-    _install_sprite("eye_of_alph_reference.jpg", "eye_of_alph.png", "eye_of_alph.pal", 16)
+    _install_eye_sprite()
     _install_alphoracle_sprite()
     _clear_original_statue_tiles()
 

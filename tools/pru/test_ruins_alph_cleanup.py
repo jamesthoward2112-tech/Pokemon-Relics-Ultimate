@@ -53,6 +53,10 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
 
         with Image.open(ROOT / "graphics/object_events/pics/misc/eye_of_alph.png") as eye:
             self.assertEqual(eye.size, (32, 32))
+            self.assertEqual(eye.mode, "P")
+            # Keep the existing silhouette/frame scale while giving the lower
+            # inscribed pedestal the same 16x12 footprint as Alphoracle's.
+            self.assertEqual(eye.crop((8, 20, 24, 32)).getbbox(), (0, 0, 16, 12))
         with Image.open(ROOT / "graphics/object_events/pics/misc/alphoracle_monolith.png") as oracle:
             self.assertEqual(oracle.size, (64, 64))
             self.assertEqual(oracle.mode, "P")
@@ -127,6 +131,11 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         entry_warp = next(w for w in outside["warp_events"] if w["dest_map"] == "MAP_RUINS_OF_ALPH_B1F_HNS" and w["dest_warp_id"] == "0")
         self.assertEqual((exit_warp["x"], exit_warp["y"], exit_warp["dest_warp_id"]), (15, 16, "5"))
         self.assertEqual((entry_warp["x"], entry_warp["y"]), (21, 21))
+        ladder_exit = [w for w in interior["warp_events"]
+                       if (w["x"], w["y"]) == (12, 10)]
+        self.assertEqual(len(ladder_exit), 1)
+        self.assertEqual((ladder_exit[0]["dest_map"], ladder_exit[0]["dest_warp_id"]),
+                         ("MAP_RUINS_OF_ALPH_OUTSIDE_HNS", "5"))
 
         statue = [e for e in interior["bg_events"] if (e["x"], e["y"]) == (25, 28)]
         self.assertEqual(len(statue), 1)

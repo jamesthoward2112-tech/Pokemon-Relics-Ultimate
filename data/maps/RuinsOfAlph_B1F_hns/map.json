@@ -27,7 +27,6 @@
       "script": "RuinsOfAlph_B1F_hns_RelicAlphoracleOrStatue",
       "flag": "0"
     },
-
     {
       "graphics_id": "OBJ_EVENT_GFX_HIKER_HNS",
       "x": 18,
@@ -241,6 +240,13 @@
     {
       "x": 15,
       "y": 16,
+      "elevation": 0,
+      "dest_map": "MAP_RUINS_OF_ALPH_OUTSIDE_HNS",
+      "dest_warp_id": "5"
+    },
+    {
+      "x": 12,
+      "y": 10,
       "elevation": 0,
       "dest_map": "MAP_RUINS_OF_ALPH_OUTSIDE_HNS",
       "dest_warp_id": "5"
