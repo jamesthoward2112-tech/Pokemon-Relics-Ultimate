@@ -4640,6 +4640,21 @@ static void HandleTurnActionSelectionState(void)
                     break;
                 }
 
+#if IS_HNS
+                // PRU: reject an unexpected trainer RUN action before either
+                // Frontier forfeit or the normal trainer-forfeit code can run.
+                // Run this as a selection script so the action prompt recovers.
+                if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+                    && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_RECORDED))
+                    && gBattleResources->bufferB[battler][1] == B_ACTION_RUN)
+                {
+                    gSelectionBattleScripts[battler] = BattleScript_PRU_CantQuitTrainer;
+                    gBattleCommunication[battler] = STATE_SELECTION_SCRIPT;
+                    gBattleStruct->battlerState[battler].selectionScriptFinished = FALSE;
+                    gBattleStruct->stateIdAfterSelScript[battler] = STATE_BEFORE_ACTION_CHOSEN;
+                    return;
+                }
+#endif
                 if (gBattleTypeFlags & BATTLE_TYPE_TRAINER
                     && gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_TRAINER_HILL)
                     && gBattleResources->bufferB[battler][1] == B_ACTION_RUN)
@@ -6554,6 +6569,11 @@ s32 Factorial(s32 n)
 
 bool32 CanPlayerForfeitNormalTrainerBattle(void)
 {
+#if IS_HNS
+    // Story-scripted PRU trainer battles cannot be abandoned through Run.
+    // Wild battles, Safari and Link battles retain their own escape logic.
+    return FALSE;
+#else
     if (!B_RUN_TRAINER_BATTLE)
         return FALSE;
 
@@ -6564,6 +6584,7 @@ bool32 CanPlayerForfeitNormalTrainerBattle(void)
         return FALSE;
 
     return (gBattleTypeFlags & BATTLE_TYPE_TRAINER);
+#endif
 }
 
 bool32 DidPlayerForfeitNormalTrainerBattle(void)
