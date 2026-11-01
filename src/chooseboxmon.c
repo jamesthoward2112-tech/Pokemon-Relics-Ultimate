@@ -138,6 +138,8 @@ static bool32 IsPjrControlTutorMove(u16 move)
     case MOVE_PERMAFROST:
     case MOVE_WILDFIRE:
     case MOVE_DARK_MATTER:
+    case MOVE_EERIE_FOG:
+    case MOVE_SCARY_FACE:
     case MOVE_RAPID_SPIN:
     case MOVE_DEFOG:
     case MOVE_MORTAL_SPIN:
@@ -200,6 +202,20 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
         return IsSpeciesOfType(species, TYPE_FIRE);
     case MOVE_DARK_MATTER:
         return IsSpeciesOfType(species, TYPE_DARK);
+    case MOVE_EERIE_FOG:
+        // Mystical and spectral Pokémon can summon the eight-turn Ghost fog.
+        return IsSpeciesOfType(species, TYPE_GHOST)
+            || IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_PSYCHIC)
+            || IsSpeciesOfType(species, TYPE_POISON);
+    case MOVE_SCARY_FACE:
+        // Broad intimidation role, but not every species gets the Fear tutor.
+        return IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_GHOST)
+            || IsSpeciesOfType(species, TYPE_DRAGON)
+            || IsSpeciesOfType(species, TYPE_NORMAL)
+            || IsSpeciesOfType(species, TYPE_FIGHTING)
+            || IsSpeciesOfType(species, TYPE_PSYCHIC);
     case MOVE_SWORDS_DANCE:
         return IsSpeciesOfType(species, TYPE_NORMAL)
             || IsSpeciesOfType(species, TYPE_FIGHTING);
