@@ -24,12 +24,42 @@ class InsurgenceExtraMoveTests(unittest.TestCase):
     def test_new_ids_append_after_dark_nova_without_shifting_existing_ids(self):
         source = read("include/constants/moves.h")
         tail = source.split("MOVE_KABOOM,", 1)[1].split("MOVES_COUNT,", 1)[0]
+        all_ids = re.findall(r"\bMOVE_[A-Z_]+\b(?=,)", tail)
+        # Preserve all established Insurgence/PRU move IDs; additional
+        # signatures may only be appended after DARK_MATTER.
         self.assertEqual(
-            re.findall(r"\bMOVE_[A-Z_]+\b(?=,)", tail),
+            all_ids[:10],
             ["MOVE_SHOCKWAVE_FIST", "MOVE_FAULTLINE", "MOVE_WRAITH_CRY",
              "MOVE_METAL_BARRAGE", "MOVE_MINDWAVE", "MOVE_DARK_NOVA",
              "MOVE_ACHILLES_HEEL", "MOVE_PERMAFROST",
              "MOVE_WILDFIRE", "MOVE_DARK_MATTER"])
+        self.assertEqual(all_ids[10:], ["MOVE_RELIC_GAZE"])
+
+    def test_relic_eye_is_battle_ready_and_uses_original_statue(self):
+        import json
+        species = read("src/data/pokemon/species_info/gen_2_families.h")
+        eye = species.split("[SPECIES_UNOWN_I] =", 1)[1].split("[SPECIES_UNOWN_J]", 1)[0]
+        for field in (".baseHP        = 120", ".baseAttack    = 30",
+                      ".baseDefense   = 10", ".baseSpeed     = 210",
+                      ".baseSpAttack  = 220", ".baseSpDefense = 10",
+                      "ABILITY_RELIC_EYE", "gMonFrontPic_UnownEye",
+                      "gMonIcon_UnownEye"):
+            self.assertIn(field, eye)
+        self.assertIn("MOVE_RELIC_GAZE", read("src/data/pokemon/level_up_learnsets/pjr.h"))
+        self.assertIn(".power = 105", move_block("RELIC_GAZE"))
+        battle = read("src/battle_util.c")
+        self.assertIn("ctx->abilityDef == ABILITY_RELIC_EYE", battle)
+        self.assertIn("calc = (calc * 120) / 100", battle)
+        layout = json.loads(read("data/maps/RuinsOfAlph_B1F_hns/map.json"))
+        rune = [e for e in layout["object_events"]
+                if e["graphics_id"] == "OBJ_EVENT_GFX_EYE_OF_ALPH_HNS"]
+        self.assertEqual(len(rune), 1)
+        self.assertEqual((rune[0]["x"], rune[0]["y"]), (16, 10))
+        # Overlay an existing statue tile: no second freestanding statue.
+        original_statue = [e for e in layout["bg_events"]
+                           if (e["x"], e["y"]) == (16, 10)]
+        self.assertEqual(len(original_statue), 1)
+        self.assertEqual(original_statue[0]["script"], "RuinsOfAlph_B1F_hns_RelicUnownI")
 
     def test_dark_matter_matches_insurgence_and_recharges(self):
         block = move_block("DARK_MATTER")
