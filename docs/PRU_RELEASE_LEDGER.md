@@ -2,6 +2,16 @@
 Every new release requires full source SHA, parent lineage, PRs included,
 ROM SHA256 and size, confirmed checks, untested gameplay and verified URL.
 
+## 2026-11-01 Alphoracle pedestal scale correction
+
+- Branch: `feat/pru-relic-hunt-20261101`; source commit: `8ceb68cb4cfe3120cc85b5adb09875db3921688f`.
+- Scope: enlarge the Alphoracle figure and retain a 16x12 lower pedestal at the same scale as nearby statues. Eye statue and icon palettes remain unchanged.
+- GitHub Actions run [41328773459](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41328773459) passed regression checks, clean build, ROM/header/checksum verification, artifact upload and GitHub release publication.
+- ROM size: 33,554,432 bytes. SHA256: `3e30c2ed5dde1fc775b3832039f029ffc5ace274dbf3625fd533ce2116a344d3`.
+- Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-8ceb68cb4c/Pokemon-Relics-Ultimate-8ceb68cb4c.gba
+- Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-8ceb68cb4c
+- No emulator or gameplay test; awaiting player validation.
+
 ## 2026-11-01 statue scale and icon palette correction
 
 - Branch: `feat/pru-relic-hunt-20261101`; source commit: `a3f50c389e8cbff4b114be41025d0adb297f49fd`.

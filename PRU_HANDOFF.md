@@ -1,6 +1,12 @@
 # PRU_HANDOFF.md — authoritative session handover
 Last audited: 2026-11-01. All statuses below are scoped to evidence; no newer gameplay is implied.
 
+## 2026-11-01 Alphoracle pedestal scale correction (compiled and released)
+Branch: `feat/pru-relic-hunt-20261101`; source commit: `8ceb68cb4cfe3120cc85b5adb09875db3921688f`.
+Enlarged the Alphoracle shrine figure while keeping its lower pedestal at 16x12 sprite pixels, matching the neighboring statue stands. The approved source artwork and its independent overworld palette remain in use; the I-Unown Eye statue is unchanged. Alphoracle's map interaction, unlock conditions and persistent visibility are unchanged.
+Focused statue regression tests, the Khang/Alphoracle icon palette check, clean compilation, full ROM/header/checksum verification and GitHub prerelease publication passed in Actions run [41328773459](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41328773459). ROM: [Pokemon-Relics-Ultimate-8ceb68cb4c.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-8ceb68cb4c/Pokemon-Relics-Ultimate-8ceb68cb4c.gba), 33,554,432 bytes, SHA256 `3e30c2ed5dde1fc775b3832039f029ffc5ace274dbf3625fd533ce2116a344d3`.
+No emulator screenshot or gameplay test was run; the player will test independently.
+
 ## 2026-11-01 statue scale and icon palette correction (compiled and released)
 Branch: `feat/pru-relic-hunt-20261101`; source commit: `a3f50c389e8cbff4b114be41025d0adb297f49fd`.
 Corrected the custom Eye and Alphoracle objects to 32x32 sprite frames, matching the ordinary statue's visible 16x32 artwork bounds. The Alphoracle object no longer uses its caught flag as an object-hide flag, so the shrine remains visible after capture and the existing script can report completion. Removed Khang's erroneous forced Articuno-P icon palette; Khang now uses its normal species palette, while Alphoracle retains its dedicated palette 14 and approved icon art.
