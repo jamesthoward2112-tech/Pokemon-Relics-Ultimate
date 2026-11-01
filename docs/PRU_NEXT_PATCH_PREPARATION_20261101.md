@@ -133,3 +133,27 @@ The player supplied a ~49-second in-game Pizza Boy A recording, scrolling from t
 - `test/test_pru_false_swipe_marts.py`: source-only guard for TM54 identity and mapping, proper item use/effect, and all three inventories.
 - **Remaining before a player-ready ROM:** run source regression and compile on later user approval; independently confirm at least a few eligible Pokémon can learn the TM, and both fresh/existing saves retain the item and shop stock. TM item is **consumable under current `I_REUSABLE_TMS = FALSE` configuration**; repeated purchases are supported.
 - **Hold remains:** do not run GitHub Actions, build or publish a GBA until the user requests it.
+
+
+## Escape Rope → progression TMs and Indigo tutors checkpoint (1 Nov 2026)
+
+**Scope:** staged source only on `prep/pru-rockshop-no-build-20261101`. Do **not** merge, launch Actions, compile or publish a ROM until separately requested.
+
+### Escape Rope replacement
+
+- Keep `ITEM_ESCAPE_ROPE = 120` intact as a **reusable Key Item**: `include/config/item.h` currently has `I_KEY_ESCAPE_ROPE = GEN_8`, and `src/data/items.h` places it in the Key Item pocket, importance 1, with its normal escape field-use callback. Do not change this item ID or ability.
+- `src/item_ball.c::GetItemBallIdFromTemplate`: when an HNS map object still contains `ITEM_ESCAPE_ROPE`, substitute a valid existing TM at award time. Keep the map object, flags and one-time pickup behaviour intact. Force quantity one on converted pickups, even if older map loot had multiple ropes.
+- **Pickup tiers by total badges at time of collection:** 0–1 Bullet Seed; 2–3 Rock Tomb; 4–5 Brick Break; 6–7 Shadow Ball; 8–11 Roost; 12–14 Rock Slide; 15+ Earthquake. Progression depends on **story progress when obtained**, not original cave's placement; backtracking can award a higher-tier TM.
+- `src/shop.c`: remove obsolete purchasable Rope from all 18 global HNS badge-based/PC-stock tables; replace the slot with one of nine escalating TMs at badge tiers 0 through 8+: Bullet Seed, Rock Tomb, Aerial Ace, Brick Break, Facade, Shadow Ball, Roost, Rock Slide, Earthquake.
+- This covers **map object item balls** and global dynamic Poké Marts. A direct scripted `giveitem ITEM_ESCAPE_ROPE` is not covered by the object interceptor: `test/test_pru_escape_rope_and_indigo_tutors.py` scans every map's `scripts.inc` for those and reports them for targeted resolution before a real release. Also review any explicit non-global specialty marts and scripted/trainer rewards. Do **not** blindly replace intentional one-time Rope Key Item grants: if none exists, ensure a sensible early-game acquisition path before declaring all loot replaced.
+- All reward TMs exist in the current `FOREACH_TM` table, retaining existing TM item IDs. New asset, species and item slots are unnecessary.
+
+### Indigo Plateau tutors and Fear
+
+- `data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc`: append two menu options **EERIE FOG** and **SCARY FACE** to the current Hazard/Control Tutor, with new text and `MOVE_EERIE_FOG` / `MOVE_SCARY_FACE` routes to the original free `SELECT_PC_MON_PJR_CONTROL_TUTOR` service. Cancel now maps to option 24. Existing 22 control moves, Cleanup Tutor, all other Indigo specialists, Relearner and Egg Tutor remain unchanged.
+- `src/chooseboxmon.c`: register both with `IsPjrControlTutorMove` (which also governs party/PC eligibility). Eerie Fog: Ghost, Dark, Psychic or Poison types, plus existing special learnability. Scary Face: Dark, Ghost, Dragon, Normal, Fighting or Psychic types, plus existing learnability. Keep actual move-specific legality; neither becomes universal.
+- Existing Fear wiring was already found in `data/battle_scripts_1.s`: `BattleScript_EffectStatDown` branches on `MOVE_SCARY_FACE` into `BattleScript_PRU_ScaryFaceFear`, which uses native `seteffectprimary BS_ATTACKER, BS_TARGET, MOVE_EFFECT_FEAR`. `src/battle_script_commands.c` sets `fearTimer = 2` if not already feared. Preserve `MOVE_SCARY_FACE`'s -2 Speed, successful-hit and protection checks. Eerie Fog keeps its 8-turn weather effect.
+- **Gameplay QA still required:** Scary Face target at minimum Speed, unprotected/protected/substitute targets, already-feared target, and Mirror Bounce; Eerie Fog field weather and expiration; compatibility on party and PC Pokémon, including custom Relics; free/repeatable tutors with clean cancel.
+- `src/script_menu.c` uses a dynamic scroll-list with `argc` as `u8`; both added menu rows are below that limit. The control tutor now has 25 options (24 moves + cancel), and the original six-visible-rows scrolling remains.
+
+**Source-only guard:** `test/test_pru_escape_rope_and_indigo_tutors.py` added. It is committed but has **not** been executed in a checkout or compiled into a ROM. **Status: staged, unbuilt, untested in-game.**
