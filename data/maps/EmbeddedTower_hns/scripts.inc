@@ -8,7 +8,7 @@ EmbeddedTower_EventScript_Rayquaza::
 	faceplayer
 	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
 	waitmoncry
-	seteventmon SPECIES_RAYQUAZA, 70
+	seteventmon SPECIES_RAYQUAZA, 80
 	special BattleSetup_StartLegendaryBattle
 waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
