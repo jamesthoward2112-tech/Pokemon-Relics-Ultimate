@@ -75,7 +75,7 @@ def main():
                         "LIBPNG_PREFIX=/usr"], cwd=source, check=True,
                        stdout=log, stderr=subprocess.STDOUT, timeout=60)
         subprocess.run([str(source / "bin/gba-walk"), str(TEST_ROM),
-                        str(ROOT), "run:720", "snap:pru-alph-before",
+                        str(ROOT), "run:1600", "snap:pru-alph-before",
                         "press:UP:36", "run:180", "snap:pru-alph-after"],
                        check=True, cwd=ROOT, stdout=log,
                        stderr=subprocess.STDOUT, timeout=90)
@@ -87,14 +87,23 @@ def main():
     after_variation = max(ImageStat.Stat(after).stddev)
     baseline = green_share(before)
     destination = green_share(after)
-    print("mGBA core Alph B1F green fraction before:", round(baseline, 4))
-    print("mGBA core Ruins Outside green fraction after:", round(destination, 4))
+    interior_brightness = ImageStat.Stat(before.convert("L")).mean[0]
+    print("mGBA B1F interior luminance:", round(interior_brightness, 2))
+    print("mGBA B1F green fraction BEFORE UP:", round(baseline, 4))
+    print("mGBA outside green fraction AFTER UP:", round(destination, 4))
     print("mGBA core framebuffer variation:", before_variation, after_variation)
     assert before_variation > 5 and after_variation > 5, (
-        "Black mGBA core pixels; inspect captured frames before claiming gameplay")
-    assert destination > baseline + 0.025 and destination > 0.04, (
-        "Exit was not visibly traversed; inspect core PNG before releasing")
-    print("PASS: actual mGBA core moved UP through Ruins B1F exit to outside")
+        "Black mGBA core pixels; inspect captured frames")
+    # Do not misclassify the blue intro scene as the Alph basement!
+    # The actual confirmed interior frame is pale stone (~169 luminance)
+    # with only ~6% green; the previous false-positive began at 66.
+    assert interior_brightness > 140 and 0.015 < baseline < 0.13, (
+        "Not yet inside Alph B1F; test never reached the starting map")
+    # Only a predominantly grassy exterior frame can prove the exit;
+    # the prior false-positive ended INSIDE Alph at just 5.88% green.
+    assert destination > 0.20 and destination - baseline > 0.12, (
+        "Warp to the exterior NOT proven; examine both screenshots")
+    print("PASS: verified mGBA B1F interior BEFORE and green exterior AFTER Up")
 
     assert ROM.read_bytes() == CANONICAL.read_bytes(), "Canonical ROM changed!"
     CANONICAL.unlink(missing_ok=True)
