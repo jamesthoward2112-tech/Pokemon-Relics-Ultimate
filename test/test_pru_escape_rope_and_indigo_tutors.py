@@ -124,6 +124,9 @@ for path in (ROOT / "data/maps").glob("*/scripts.inc"):
     content = path.read_text(encoding="utf-8")
     for i, line in enumerate(content.splitlines(), 1):
         if "ITEM_ESCAPE_ROPE" in line and not line.lstrip().startswith(("@", "//")):
+            # Only the intentional one-time and recovery Key Item gifts remain.
+            if path.parent.name == "NewBarkTown_Lab_hns" and line.strip() == "giveitem ITEM_ESCAPE_ROPE":
+                continue
             direct.append(f"{path.relative_to(ROOT)}:{i} {line.strip()}")
 print("PASS: old Escape Rope ground-item rewards convert to staged real TMs")
 print("PASS: reusable Rope key item granted early, with old-save fallback")
