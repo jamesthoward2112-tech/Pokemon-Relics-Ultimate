@@ -32,6 +32,8 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "config/pokedex_plus_hgss.h"
+#include "data/pokemon/pru_dex_order.h"
+#include "pokemon_storage_system.h"
 
 enum
 {
@@ -4508,6 +4510,179 @@ static u8* ConvertMeasurementToMetricString(u32 num, u32* index)
     string[(*index)++] = CHAR_SPACE;
 
     return string;
+}
+
+
+// PRU stores two independent 450-bit seen/caught records in SaveBlock1's
+// pre-existing dexPadding1/dexPadding2. This changes no offsets, save IDs,
+// species constants or existing National Dex flags, and the padding has room
+// for a four-byte migration marker on the enabled Gen 9 build.
+#define PRU_DEX_FLAG_BYTES ((PRU_DEX_COUNT + 7) / 8)
+#define PRU_DEX_FLAG_MAGIC_OFFSET PRU_DEX_FLAG_BYTES
+#if IS_HNS
+STATIC_ASSERT(sizeof(((struct SaveBlock1 *)0)->dexPadding1) >= PRU_DEX_FLAG_BYTES + 4, PruDexSeenStorageFits);
+STATIC_ASSERT(sizeof(((struct SaveBlock1 *)0)->dexPadding2) >= PRU_DEX_FLAG_BYTES + 4, PruDexCaughtStorageFits);
+#endif
+
+u16 PruDexNumToSpecies(u16 pruDexNum)
+{
+    if (pruDexNum == 0 || pruDexNum > PRU_DEX_COUNT)
+        return SPECIES_NONE;
+    return sPruDexSpecies[pruDexNum - 1];
+}
+
+u16 PruSpeciesToDexNum(u16 species)
+{
+    u16 i;
+    u16 base;
+
+    for (i = 0; i < PRU_DEX_COUNT; i++)
+        if (sPruDexSpecies[i] == species)
+            return i + 1;
+
+    // Battle-only forms reuse their canonical base species' row and do not
+    // append entries. Real PRU Relics appear above and remain distinct.
+    species = SanitizeSpeciesId(species);
+    if (species == SPECIES_NONE)
+        return 0;
+    for (i = 0; i < PRU_DEX_COUNT; i++)
+        if (sPruDexSpecies[i] == species)
+            return i + 1;
+
+    base = NationalPokedexNumToSpecies(SpeciesToNationalPokedexNum(species));
+    for (i = 0; i < PRU_DEX_COUNT; i++)
+        if (sPruDexSpecies[i] == base)
+            return i + 1;
+    return 0;
+}
+
+static void PruDexSetBit(u8 *flags, u16 dexNum)
+{
+    u16 bit = dexNum - 1;
+    flags[bit / 8] |= 1 << (bit % 8);
+}
+
+static bool8 PruDexGetBit(const u8 *flags, u16 dexNum)
+{
+    u16 bit = dexNum - 1;
+    return (flags[bit / 8] & (1 << (bit % 8))) != 0;
+}
+
+static void PruEnsureDexFlagsInitialized(void)
+{
+#if IS_HNS
+    u16 i, j;
+    u8 *seen = gSaveBlock1Ptr->dexPadding1;
+    u8 *caught = gSaveBlock1Ptr->dexPadding2;
+    static const u8 signature[] = {'P', 'R', 'D', '1'};
+
+    if (memcmp(&seen[PRU_DEX_FLAG_MAGIC_OFFSET], signature, sizeof(signature)) == 0
+     && memcmp(&caught[PRU_DEX_FLAG_MAGIC_OFFSET], signature, sizeof(signature)) == 0)
+        return;
+
+    // Legacy flags indexed National Dex IDs, and several distinct PRU
+    // evolutions shared that ID. Only migrate a matching ORIGINAL species;
+    // never mark Charaxis caught merely because Charizard was caught.
+    // Also recover actual owned custom species from party and PC.
+    memset(seen, 0, PRU_DEX_FLAG_BYTES);
+    memset(caught, 0, PRU_DEX_FLAG_BYTES);
+    for (i = 0; i < PRU_DEX_COUNT; i++)
+    {
+        u16 species = sPruDexSpecies[i];
+        u16 nativeNum = SpeciesToNationalPokedexNum(species);
+        if (nativeNum != NATIONAL_DEX_NONE
+         && NationalPokedexNumToSpecies(nativeNum) == species)
+        {
+            if (GetSetPokedexFlag(nativeNum, FLAG_GET_SEEN))
+                PruDexSetBit(seen, i + 1);
+            if (GetSetPokedexFlag(nativeNum, FLAG_GET_CAUGHT))
+            {
+                PruDexSetBit(seen, i + 1);
+                PruDexSetBit(caught, i + 1);
+            }
+        }
+    }
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        u16 species;
+        u16 dexNum;
+        if (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
+            continue;
+        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES);
+        dexNum = PruSpeciesToDexNum(species);
+        if (dexNum != 0)
+        {
+            PruDexSetBit(seen, dexNum);
+            PruDexSetBit(caught, dexNum);
+        }
+    }
+
+    if (gPokemonStoragePtr != NULL)
+    {
+        for (i = 0; i < TOTAL_BOXES_COUNT; i++)
+        {
+            for (j = 0; j < IN_BOX_COUNT; j++)
+            {
+                u16 dexNum;
+                u16 species;
+                if (GetBoxMonDataAt(i, j, MON_DATA_IS_EGG))
+                    continue;
+                species = GetBoxMonDataAt(i, j, MON_DATA_SPECIES);
+                if (species == SPECIES_NONE)
+                    continue;
+                dexNum = PruSpeciesToDexNum(species);
+                if (dexNum != 0)
+                {
+                    PruDexSetBit(seen, dexNum);
+                    PruDexSetBit(caught, dexNum);
+                }
+            }
+        }
+    }
+
+    // Never alter existing National Dex bitfields or gameplay flags.
+    memcpy(&seen[PRU_DEX_FLAG_MAGIC_OFFSET], signature, sizeof(signature));
+    memcpy(&caught[PRU_DEX_FLAG_MAGIC_OFFSET], signature, sizeof(signature));
+#endif
+}
+
+s8 GetSetPruDexFlag(u16 pruDexNum, u8 caseID)
+{
+    u8 *seen;
+    u8 *caught;
+
+    if (!IS_HNS || pruDexNum == 0 || pruDexNum > PRU_DEX_COUNT)
+        return 0;
+
+    PruEnsureDexFlagsInitialized();
+    seen = gSaveBlock1Ptr->dexPadding1;
+    caught = gSaveBlock1Ptr->dexPadding2;
+    switch (caseID)
+    {
+    case FLAG_GET_SEEN:
+        return PruDexGetBit(seen, pruDexNum);
+    case FLAG_GET_CAUGHT:
+        return PruDexGetBit(caught, pruDexNum);
+    case FLAG_SET_SEEN:
+        PruDexSetBit(seen, pruDexNum);
+        break;
+    case FLAG_SET_CAUGHT:
+        PruDexSetBit(seen, pruDexNum);
+        PruDexSetBit(caught, pruDexNum);
+        break;
+    }
+    return 0;
+}
+
+u16 GetPruDexCount(u8 caseID)
+{
+    u16 dexNum, count = 0;
+    if (!IS_HNS)
+        return 0;
+    for (dexNum = 1; dexNum <= PRU_DEX_COUNT; dexNum++)
+        if (GetSetPruDexFlag(dexNum, caseID))
+            count++;
+    return count;
 }
 
 s8 GetSetPokedexFlag(enum NationalDexOrder nationalDexNo, u8 caseID)
