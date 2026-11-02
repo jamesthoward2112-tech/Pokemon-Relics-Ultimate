@@ -2552,6 +2552,20 @@ static void CreatePokedexList(u8 dexMode, u8 order)
             sPokedexView->pokedexList[j].seen = seen;
             sPokedexView->pokedexList[j].owned = owned;
         }
+        if (sPokedexView->pokemonListCount == 0 && order != ORDER_NUMERICAL)
+        {
+            // Keep the main Dex navigable when sorted modes contain no
+            // visible matches, e.g. an old/new save with zero caught entries.
+            sPokedexView->dexOrder = ORDER_NUMERICAL;
+            for (i = 0; i < PRU_DEX_COUNT; i++)
+            {
+                sPokedexView->pokedexList[i].dexNum = i + 1;
+                sPokedexView->pokedexList[i].seen = HgssGetDexFlag(i + 1, FLAG_GET_SEEN);
+                sPokedexView->pokedexList[i].owned = HgssGetDexFlag(i + 1, FLAG_GET_CAUGHT);
+            }
+            sPokedexView->pokemonListCount = PRU_DEX_COUNT;
+            return;
+        }
         // Sort the approved species themselves, never their inherited
         // National Dex aliases, which collapse distinct Relic evolutions.
         if (order != ORDER_NUMERICAL)
@@ -5605,7 +5619,9 @@ static void PrintStatsScreen_NameGender(u8 taskId, u32 num, u32 value)
         PrintStatsScreenTextSmallNarrower(WIN_STATS_NAME_GENDER, name, base_x, base_y);
 
     //Number
-    if (value == 0)
+    if (IS_HNS)
+        value = num;
+    else if (value == 0)
         value = NationalToRegionalOrder(num);
     else
         value = NationalToObtainableOrder(num);
