@@ -15,6 +15,9 @@
 #include "constants/pokedex.h"
 #include "data/randomizer/ability_whitelist.h"
 #include "move.h"
+#if IS_HNS
+#include "data/pokemon/pru_dex_order.h" // The exact approved 450-species PRU pool.
+#endif
 
 const u16 gStarterAndGiftMonTable[STARTER_AND_GIFT_MON_COUNT] =
 {
@@ -257,6 +260,20 @@ static void BuildGenScopeMask(void)
 
     memset(sGenScopeMask, 0, sizeof(sGenScopeMask));
 
+#if IS_HNS
+    // PRU does not use the upstream generation ranges: only the immutable
+    // 450 displayed Pokédex species may ever be generated. Do not expand
+    // to other forms or cross-generation relatives.
+    for (i = 0; i < PRU_DEX_COUNT; i++)
+    {
+        const u16 species = sPruDexSpecies[i];
+        if (species > SPECIES_NONE && species < RANDOMIZER_SPECIES_COUNT && IsSpeciesEnabled(species))
+            sGenScopeMask[species / 32] |= 1u << (species & 31);
+    }
+    sGenScopeMaskInitialized = TRUE;
+    return;
+#endif
+
     for (i = 1; i < RANDOMIZER_SPECIES_COUNT; i++)
     {
         u32 natDexNum = gSpeciesInfo[i].natDexNum;
@@ -310,7 +327,9 @@ static void BuildGenScopeMask(void)
 
 static inline bool32 IsGenScopeRestricted(void)
 {
-    return gSaveBlock3Ptr->challengeSettings.tx_Random_GenScope;
+    // Ignore the historic GEN 1-9 / GEN 1-3 saved toggle in PRU.
+    // This also makes existing randomizer saves safe without changing save data.
+    return IS_HNS || gSaveBlock3Ptr->challengeSettings.tx_Random_GenScope;
 }
 
 bool32 IsSpeciesInGenScope(u16 species)
@@ -879,7 +898,7 @@ static u16 RandomizeMonTableLookup(struct Sfc32State* state, enum RandomizerSpec
     }
 
     if (maxIndex < minIndex)
-        return species;
+        goto fallback;
 
     for (attempts = 0; attempts < 8; attempts++)
     {
@@ -889,6 +908,22 @@ static u16 RandomizeMonTableLookup(struct Sfc32State* state, enum RandomizerSpec
             return result;
     }
 
+fallback:
+#if IS_HNS
+    // If a restricted group is empty or eight rolls fail, an off-roster
+    // original must never leak through into a randomized encounter.
+    if (!IsSpeciesInGenScope(species))
+    {
+        const u16 start = RandomizerNextRange(state, PRU_DEX_COUNT);
+        u16 i;
+        for (i = 0; i < PRU_DEX_COUNT; i++)
+        {
+            const u16 candidate = sPruDexSpecies[(start + i) % PRU_DEX_COUNT];
+            if (IsSpeciesPermitted(candidate))
+                return candidate;
+        }
+    }
+#endif
     return species;
 }
 
@@ -1021,9 +1056,16 @@ u16 RandomizeMon(enum RandomizerReason reason, enum RandomizerSpeciesMode mode, 
     switch (speciesMode)
     {
         case MON_RANDOMIZER_RANDOM_FORM:
-            return ChooseRandomForm(&state, resultSpecies);
+        {
+            const u16 form = ChooseRandomForm(&state, resultSpecies);
+            // Random form tables contain alternate forms outside the PRU Dex.
+            return (IS_HNS && !IsSpeciesPermitted(form)) ? resultSpecies : form;
+        }
         case MON_RANDOMIZER_SPECIAL_FORM:
-            return ChooseFormSpecial(&state, resultSpecies);
+        {
+            const u16 form = ChooseFormSpecial(&state, resultSpecies);
+            return (IS_HNS && !IsSpeciesPermitted(form)) ? resultSpecies : form;
+        }
         case MON_RANDOMIZER_NORMAL:
         default:
             return resultSpecies;
