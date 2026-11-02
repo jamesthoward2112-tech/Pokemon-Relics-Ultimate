@@ -22,6 +22,7 @@
 #include "list_menu.h"
 #include "overworld.h"
 #include "item.h"
+#include "money.h"
 #include "regions.h"
 #include "malloc.h"
 #include "constants/form_change_types.h"
@@ -1209,6 +1210,93 @@ void GiveEggFromDaycare(void)
 {
     _GiveEggFromDaycare(&gSaveBlock1Ptr->daycare);
 }
+
+#if IS_HNS
+// PRU Day-Care Mystery Egg pool: all nine Kanto/Johto/Hoenn starter
+// species plus the four approved Relic babies. One uniformly chosen
+// species per paid Egg. Preserve the existing Odd Egg and daycare breeding.
+#define PRU_MYSTERY_EGG_PRICE 5000
+
+static const u16 sPruMysteryEggSpecies[] =
+{
+    // Kanto starters
+    SPECIES_BULBASAUR,
+    SPECIES_CHARMANDER,
+    SPECIES_SQUIRTLE,
+    // Johto starters
+    SPECIES_CHIKORITA,
+    SPECIES_CYNDAQUIL,
+    SPECIES_TOTODILE,
+    // Hoenn starters
+    SPECIES_TREECKO,
+    SPECIES_TORCHIC,
+    SPECIES_MUDKIP,
+    // Relic babies
+    SPECIES_SCARABUB, // Also called Herabub by the user
+    SPECIES_SKARMET,
+    SPECIES_MOOTINY,
+    SPECIES_GEMLIN,
+};
+
+// Random() returns all 2^16 values. Reject the short tail so each of the
+// 13 approved species has exactly the same probability.
+static u16 GetUniformPruMysteryEggIndex(void)
+{
+    const u32 poolSize = ARRAY_COUNT(sPruMysteryEggSpecies);
+    const u32 randomRange = (u32)USHRT_MAX + 1;
+    const u32 limit = randomRange - (randomRange % poolSize);
+    u32 randomValue;
+
+    do
+        randomValue = Random();
+    while (randomValue >= limit);
+
+    return randomValue % poolSize;
+}
+
+// Return codes for the Day-Care seller's script:
+// 0: egg successfully received and paid for; 1: party/challenge party full;
+// 2: insufficient funds; 3: invalid egg data (do not take any money).
+u16 PruBuyDaycareMysteryEgg(void)
+{
+    struct Pokemon egg;
+    u16 species;
+    u8 count = CalculatePlayerPartyCount();
+
+    // Respect the currently configured challenge party cap, even when it
+    // is lower than the usual six slots. Never send a paid Egg into the PC.
+    if (count >= GetMaxPartySize())
+        return 1;
+    if (!IsEnoughMoney(&gSaveBlock1Ptr->money, PRU_MYSTERY_EGG_PRICE))
+        return 2;
+
+    species = sPruMysteryEggSpecies[GetUniformPruMysteryEggIndex()];
+    if (species == SPECIES_NONE || species >= NUM_SPECIES || gSpeciesInfo[species].eggCycles == 0)
+        return 3;
+
+    // Use the standard hatching system, nickname, met-level and hatch-step
+    // data; no custom egg species IDs or save flags are allocated.
+    CreateEgg(&egg, species, FALSE);
+    if (GetMonData(&egg, MON_DATA_SPECIES) != species
+        || !GetMonData(&egg, MON_DATA_IS_EGG))
+        return 3;
+
+    gPlayerParty[GetMaxPartySize() - 1] = egg;
+    CompactPartySlots();
+    CalculatePlayerPartyCount();
+
+    // Charge only AFTER a valid Egg has actually entered the party.
+    RemoveMoney(&gSaveBlock1Ptr->money, PRU_MYSTERY_EGG_PRICE);
+    return 0;
+}
+#else
+// Specials are registered in shared data/specials.inc for every game mode;
+// non-PRU variants do not have this seller, but must still link cleanly.
+u16 PruBuyDaycareMysteryEgg(void)
+{
+    return 3;
+}
+#endif
 
 static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
 {
