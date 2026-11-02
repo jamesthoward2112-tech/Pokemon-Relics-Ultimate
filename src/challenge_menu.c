@@ -197,8 +197,8 @@ static const u8 sMidGameLockPolicy[TAB_COUNT * MAX_ITEMS_PER_TAB] = {
     [TAB_RANDOMIZER * MAX_ITEMS_PER_TAB + ITEM_RANDOM_TYPE_EFFEC]  = LOCK_ONEWAY_DOWN,
     [TAB_RANDOMIZER * MAX_ITEMS_PER_TAB + ITEM_RANDOM_ITEMS]       = LOCK_ONEWAY_DOWN,
     [TAB_RANDOMIZER * MAX_ITEMS_PER_TAB + ITEM_RANDOM_CHAOS]       = LOCK_ONEWAY_DOWN,
-    // MAP_BASED, SIMILAR and GEN_SCOPE are LOCK_FREE (default 0) -- GEN_SCOPE is
-    // deliberately adjustable in both directions mid-run.
+    // MAP_BASED and SIMILAR are LOCK_FREE. The HNS GEN_SCOPE row is now
+    // a fixed PRU 450 informational label and cannot be changed mid-run.
     // TAB_NUZLOCKE
     [TAB_NUZLOCKE * MAX_ITEMS_PER_TAB + ITEM_NUZLOCKE_NUZLOCKE]      = LOCK_ONEWAY_DOWN,
     [TAB_NUZLOCKE * MAX_ITEMS_PER_TAB + ITEM_NUZLOCKE_SPECIES_CLAUSE] = LOCK_ONEWAY_DOWN,
@@ -516,8 +516,13 @@ static const u8 *const sChoices_OffRandom[] = {
 };
 
 static const u8 *const sChoices_GenScope[] = {
+#if IS_HNS
+    COMPOUND_STRING("PRU 450"),
+    COMPOUND_STRING("PRU 450"), // Preserve the existing 2-choice storage layout.
+#else
     COMPOUND_STRING("GEN 1-9"),
     COMPOUND_STRING("GEN 1-3"),
+#endif
 };
 
 static const u8 *const sChoices_OffChaos[] = {
@@ -733,8 +738,13 @@ static const u8 *const sDesc_RandomLegendaries[] = {
     COMPOUND_STRING("Include legendary {PKMN} in\nrandomization!"),
 };
 static const u8 *const sDesc_RandomGenScope[] = {
+#if IS_HNS
+    COMPOUND_STRING("Only the approved 450 PRU\n{PKMN} can be randomized."),
+    COMPOUND_STRING("Only the approved 450 PRU\n{PKMN} can be randomized."),
+#else
     COMPOUND_STRING("Randomize into {PKMN} from every\ngeneration."),
     COMPOUND_STRING("Only GEN 1-3 {PKMN} and their\ncross-gen evolutions."),
+#endif
 };
 static const u8 *const sDesc_RandomType[] = {
     COMPOUND_STRING("{PKMN} types stay the same as in\nthe base game."),
@@ -822,7 +832,7 @@ static const struct ChallengeMenuItem sTabItems_Randomizer[] = {
         .choiceNames  = sChoices_OffOn,
     },
     [ITEM_RANDOM_GEN_SCOPE] = {
-        .name         = COMPOUND_STRING("GEN SCOPE"),
+        .name         = IS_HNS ? COMPOUND_STRING("POKEMON POOL") : COMPOUND_STRING("GEN SCOPE"),
         .descriptions = sDesc_RandomGenScope,
         .numChoices   = 2,
         .choiceNames  = sChoices_GenScope,
@@ -1502,6 +1512,16 @@ static void ChallengeMenu_ItemPrintFunc(u8 windowId, u32 itemId, u8 y)
 
     u8 sel = *GetSelectionPtr(sMenu->currentTab, itemId);
 
+#if IS_HNS
+    // Informational fixed pool: do not show the inherited Gen 1-9 toggle.
+    if (sMenu->currentTab == TAB_RANDOMIZER && itemId == ITEM_RANDOM_GEN_SCOPE)
+    {
+        const u8 *text = sChoices_GenScope[0];
+        DrawRightSideChoiceText(text, GetStringRightAlignXOffset(FONT_NORMAL, text, 198), y + 1, FALSE, active);
+        return;
+    }
+#endif
+
     // ONE_TYPE draws type names dynamically instead of using choiceNames
     if (sMenu->currentTab == TAB_CHALLENGES && itemId == ITEM_CHALLENGES_ONE_TYPE)
     {
@@ -1779,6 +1799,11 @@ static void ProcessLeftRight(void)
         return;
     if (items[itemIndex].numChoices == 0)
         return;
+#if IS_HNS
+    // PRU's 450-species pool is fixed; arrows must never edit the saved toggle.
+    if (sMenu->currentTab == TAB_RANDOMIZER && itemIndex == ITEM_RANDOM_GEN_SCOPE)
+        return;
+#endif
     if (!CheckConditions(sMenu->currentTab, itemIndex))
         return;
 
@@ -2012,7 +2037,7 @@ static void Task_ConfirmSaveYes(u8 taskId)
         cs->tx_Random_Static           = *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_STATIC);
         cs->tx_Random_Similar          = !(*GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_SIMILAR));
         cs->tx_Random_IncludeLegendaries = *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_LEGENDARIES);
-        cs->tx_Random_GenScope         = *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_GEN_SCOPE);
+        cs->tx_Random_GenScope         = IS_HNS ? TRUE : *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_GEN_SCOPE);
         cs->tx_Random_Type             = *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_TYPE);
         cs->tx_Random_Moves            = *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_MOVES);
         cs->tx_Random_Abilities        = *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_ABILITIES);
@@ -2233,7 +2258,7 @@ void CB2_InitChallengeMenu(void)
             *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_STATIC)      = cs->tx_Random_Static;
             *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_SIMILAR)     = !cs->tx_Random_Similar;
             *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_LEGENDARIES) = cs->tx_Random_IncludeLegendaries;
-            *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_GEN_SCOPE)   = cs->tx_Random_GenScope;
+            *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_GEN_SCOPE)   = IS_HNS ? TRUE : cs->tx_Random_GenScope;
             *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_TYPE)        = cs->tx_Random_Type;
             *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_MOVES)       = cs->tx_Random_Moves;
             *GetSelectionPtr(TAB_RANDOMIZER, ITEM_RANDOM_ABILITIES)   = cs->tx_Random_Abilities;
