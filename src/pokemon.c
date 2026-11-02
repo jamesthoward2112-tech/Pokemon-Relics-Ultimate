@@ -8884,8 +8884,14 @@ void HandleSetPokedexFlag(enum NationalDexOrder nationalNum, u8 caseId, u32 pers
 void HandleSetPokedexFlagFromMon(struct Pokemon *mon, u32 caseId)
 {
     u32 personality = GetMonData(mon, MON_DATA_PERSONALITY);
-    enum NationalDexOrder nationalNum = SpeciesToNationalPokedexNum(GetMonData(mon, MON_DATA_SPECIES));
+    u16 species = GetMonData(mon, MON_DATA_SPECIES);
+    enum NationalDexOrder nationalNum = SpeciesToNationalPokedexNum(species);
 
+    // Record the exact canonical PRU species first so a Relic's native
+    // National Dex alias can never make its base form a newly caught entry.
+    if (IS_HNS)
+        GetSetPruDexFlag(PruSpeciesToDexNum(species), caseId);
+    // The native flags remain intact for legacy saves and engine consumers.
     HandleSetPokedexFlag(nationalNum, caseId, personality);
 }
 
