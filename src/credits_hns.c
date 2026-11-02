@@ -169,8 +169,8 @@ static const u8 sPRUE20Text_Title[] = _("POKEMON RELICS ULTIMATE");
 static const u8 sPRUE20Text_Champion[] = _("ELITE 20 CHAMPION");
 static const u8 sPRUE20Text_Kanto[] = _("KANTO AND JOHTO");
 static const u8 sPRUE20Text_Journey[] = _("YOUR JOURNEY CONTINUES");
-static const u8 sPRUE20Text_Relics[] = _("THE GOLDEN RELIC HO-OH");
-#include "data/credits_hns.h"
+static const u8 sPRUE20Text_Relics[] = _("A GOLDEN LEGEND STIRS");
+#include "data/credits_pru.h"
 static const struct CreditsEntry sE20Title = {0, TRUE, sPRUE20Text_Title};
 static const struct CreditsEntry sE20Champion = {0, TRUE, sPRUE20Text_Champion};
 static const struct CreditsEntry sE20Kanto = {0, TRUE, sPRUE20Text_Kanto};
