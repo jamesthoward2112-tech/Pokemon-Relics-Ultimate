@@ -1,7 +1,9 @@
 // PRU source of truth: /Pokémon Relics Ultimate/Canonical Data/PRU_National_Pokedex_2026-10-16.csv
 // Exactly 450 approved displayed entries, grouped by evolution family.
 // Save-compatible internal SPECIES_* values are unchanged. Battle forms add no entry.
-// This mapping is used for HNS Pokémon summary numbers only, not the engine's vanilla National Dex flags.
+// This immutable 450-entry sequence drives HNS summary numbers AND the HGSS-style
+// PRU Pokédex. Independent seen/caught records live in existing SaveBlock1
+// dex padding; original National Dex flags remain for legacy engine consumers.
 #ifndef GUARD_PRU_DEX_ORDER_H
 #define GUARD_PRU_DEX_ORDER_H
 
