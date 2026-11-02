@@ -310,7 +310,7 @@ static s8 HgssGetDexFlag(u16 dexNum, u8 caseID)
 #define PRU_EEVEE_EVOS_PER_PAGE 5
 #define PRU_EEVEE_EVO_PAGES 3
 
-// Only the approved 444 species are eligible for PRU's evolution guide.
+// Only the approved 450 species are eligible for PRU's evolution guide.
 // Use the same frozen roster as the engine's actual evolution guard.
 static bool32 IsPruEvoDexSpecies(u32 species)
 {
