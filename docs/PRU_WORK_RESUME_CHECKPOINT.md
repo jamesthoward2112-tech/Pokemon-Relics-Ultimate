@@ -3,6 +3,17 @@ Total output lines: 297
 
 # PRU Work Resume Checkpoint
 
+## 2 November 2026 — Job 2 Route 34 Mystery Egg seller (source tested; build pending)
+
+- **Current branch / source HEAD:** `feat/pru-relic-hunt-20261101`, commit `f43559e7682a6cfb9f9c316919e25c77aaf98632` (pushed). This integrates only the Mystery Egg changes from preparation branch `prep/pru-rockshop-no-build-20261101`; unrelated prepared work was not merged.
+- **Last successful ROM:** Job 1 release [Pokemon-Relics-Ultimate-aa850e57cf.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-aa850e57cf/Pokemon-Relics-Ultimate-aa850e57cf.gba), source `aa850e57cf1c808f9a40314f8f5e54ecdce16b8f`, 33,554,432 bytes, SHA-256 `3a01c7c611c2cc1cd30d95e0c87e3ced046236dd9a2c6b54120c36c6f13e8816`. It remains the latest playable ROM until this job's build succeeds.
+- **Coded:** Separate permanent Lass seller at Route 34 Day-Care coordinates (9,7); repeatable ¥5,000 real Eggs from exactly nine Kanto/Johto/Hoenn starters plus Scarabub, Skarmet, Mootiny and Gemlin. Preserves original free Odd Egg, Day-Care services and Move Expert; no save variables or Pokémon IDs added. Selection uses rejection sampling for equal probability across all 13.
+- **Source tests:** `python3 test/test_pru_mystery_egg_seller.py` PASS; `python3 tools/pru/check_dark_void_i_unown.py` PASS; `git diff --check` PASS. The focused test checks pool membership, transactional charge ordering, baby egg cycles/assets, existing Day-Care functions, NPC walkability and adjacent access. Status: **Coded; Source tested**.
+- **Build:** Actions run [41547688057](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41547688057) triggered by `f43559e` is in progress. No Job 2 ROM or emulator/player gameplay results yet. mGBA is not available in the current Work environment.
+- **Source files:** `src/daycare.c`, `data/specials.inc`, `data/maps/Route34_DayCare_hns/scripts.inc`, `data/maps/Route34_DayCare_hns/map.json`, `test/test_pru_mystery_egg_seller.py`, `.github/workflows/pru-clean-build.yml`.
+- **Exact next action:** inspect run `41547688057`; if green, verify the direct 32 MiB `.gba`, release URL and SHA, update the release ledger and checkpoint, then report source/build/gameplay status accurately. If red, fix only the first Mystery Egg-related failure and push a checkpoint. Actual purchases (decline, 4,999/5,000, full/challenge party, consecutive purchases), hatching and loading an existing save remain untested.
+- **Notion:** update the PRU Development Journal with source commit `f43559e`, passing source tests, run status and next action alongside this checkpoint.
+
 ## 2 November 2026 — Job 1 Radical Red move audit and I-Unown Dark Void
 
 - **Current branch:** `feat/pru-relic-hunt-20261101`; source commit `aa850e57cf1c808f9a40314f8f5e54ecdce16b8f` (pushed). No merge, rebase or force-push; unrelated Skill Link and preparation branches were left alone.
