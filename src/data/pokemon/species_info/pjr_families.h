@@ -65,7 +65,7 @@
     .catchRate = 45, .expYield = 220, .genderRatio = PERCENT_FEMALE(50),
     .eggCycles = 25, .friendship = STANDARD_FRIENDSHIP, .growthRate = GROWTH_SLOW,
     .eggGroups = MON_EGG_GROUPS(EGG_GROUP_BUG),
-    .abilities = { ABILITY_MOXIE, ABILITY_GUTS, ABILITY_SKILL_LINK }, .bodyColor = BODY_COLOR_BLUE,
+    .abilities = { ABILITY_MOXIE, ABILITY_SKILL_LINK, ABILITY_BATTLE_ARMOR }, .bodyColor = BODY_COLOR_BLUE,
     .speciesName = _("Heracurion"),
     .cryId = CRY_HERACROSS,
     .natDexNum = NATIONAL_DEX_HERACROSS,
