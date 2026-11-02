@@ -4075,7 +4075,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .priority = 0,
         .category = DAMAGE_CATEGORY_STATUS,
         .zMove = { .effect = Z_EFFECT_EVSN_UP_1 },
-        .magicCoatAffected = TRUE,
+        .magicCoatAffected = FALSE,
         .contestEffect = CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION,
         .contestCategory = CONTEST_CATEGORY_BEAUTY,
         .contestComboStarterId = 0,
@@ -21419,7 +21419,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
             "An electrified slam. If it\n"
             "misses, the user is hurt."),
         .effect = EFFECT_RECOIL_IF_MISS,
-        .power = 100,
+        .power = 120,
         .type = TYPE_ELECTRIC,
         .accuracy = 95,
         .pp = 15,

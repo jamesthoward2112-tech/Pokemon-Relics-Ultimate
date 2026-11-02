@@ -3602,6 +3602,7 @@ BattleScript_FlatterTryConfuse::
 BattleScript_EffectDarkVoid::
 .if B_DARK_VOID_FAIL >= GEN_7
 	jumpifspecies SPECIES_DARKRAI, BattleScript_EffectNonVolatileStatus
+	jumpifspecies SPECIES_UNOWN_I, BattleScript_EffectNonVolatileStatus
 	goto BattleScript_PokemonCantUseTheMove
 .endif
 BattleScript_EffectNonVolatileStatus::
