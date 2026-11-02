@@ -264,3 +264,16 @@ The seller's dialogue now advertises a Starter or Relic baby, rather than only b
 **Still untested in ROM:** No compilation, GitHub Actions or mGBA run was initiated. Before release run all source regression tests, compile and mGBA-test first-time and existing saves (including legacy Ho-Oh caught and state=2/3/4), with zero through six captures, all seven captures without Crest, flag-only Crest without actual item, normal final catch, a faint/escape/retry, save/reload, Oak battle/epilogue, Kimono story progression and real NPC navigation. The new Ho-Oh sprite and forms must display properly.
 
 **Important:** Older existing saves where the ordinary Ho-Oh was already caught will retain that Ho-Oh and have the final RELIC flag marked completed to avoid dupes. A truly clean one-Ho-Oh run requires a new game after this patch. No ROM build or release until explicitly approved.
+
+
+## PRU credits replacement — source checkpoint (2 November 2026)
+
+**Staged, not compiled or published.** `src/data/credits_pru.h` defines **29 original PRU credit pages**, each with five valid pointer slots, short credit lines and explicit project, engine, donor, visual-art and tool acknowledgments. `src/credits_hns.c` now includes it in place of the inherited display page table, so the existing shared HNS Hall of Fame and Elite 20 credit routine displays PRU pages rather than using Heart & Soul's full inherited pages. Full H&S contributor file `src/data/credits_hns.h` and upstream `CREDITS.md` are preserved in the repository.
+
+The E20 prologue still precedes the shared PRU pages; its text now reads **A GOLDEN LEGEND STIRS**, retaining the existing flying Golden Relic Ho-Oh sprite and curated RELICS Pokémon montage. The existing music, scrolling/scenery engine, ending screen and soft reset remain untouched. This cinematic reference does **not** create an extra catchable Ho-Oh or change the unique late-game encounter gate.
+
+`docs/PRU_CREDITS.md` provides a fuller human-readable donor ledger, distinguishing upstream original credits, community sprite sources and permission/authorship questions. `test/test_pru_credits.py` audits source links and layout. An additional readback source audit confirmed **29 contiguous pages, 29 five-pointer table rows, 87 lines of credit copy, each under 33 characters, all required filenames present and the Golden opening reference intact**.
+
+**Release QA outstanding:** run Python source tests in a checked-out repository; compile only with explicit permission; verify text rendering, transitions, opening graphics, credits termination, completion flags and Master Ball rewards across Johto E4, Kanto E4 and E20 in an emulator. Review remaining unresolved third-party sprite permissions before public release. **No ROM build/release and no GitHub Actions requested.**
+
+**Next substantive preparation item:** repair the 450-species Pokédex ordering and distinct seen/caught rows without renumbering species or disturbing save compatibility.
