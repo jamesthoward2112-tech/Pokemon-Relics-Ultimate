@@ -11390,12 +11390,18 @@ static void Cmd_trysetcaughtmondexflags(void)
     u32 species = GetMonData(caughtMon, MON_DATA_SPECIES);
     u32 personality = GetMonData(caughtMon, MON_DATA_PERSONALITY);
 
-    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT))
+    // The vanilla National Dex can alias a Relic and its ancestor.
+    // Evaluate the actual PRU species before recording either flag set.
+    if (IS_HNS
+        ? GetSetPruDexFlag(PruSpeciesToDexNum(species), FLAG_GET_CAUGHT)
+        : GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT))
     {
         gBattlescriptCurrInstr = cmd->failInstr;
     }
     else
     {
+        if (IS_HNS)
+            GetSetPruDexFlag(PruSpeciesToDexNum(species), FLAG_SET_CAUGHT);
         HandleSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_SET_CAUGHT, personality);
         gBattlescriptCurrInstr = cmd->nextInstr;
     }
