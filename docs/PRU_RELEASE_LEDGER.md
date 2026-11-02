@@ -95,10 +95,9 @@ only for features the player actually tested. Never call 401214913d player-confi
 - No emulator screenshot/gameplay testing; player testing remains outstanding.
 # 2026-11-02 Radical Red move audit and I-Unown Dark Void
 
-- Branch: `feat/pru-relic-hunt-20261101`; source commit: `aa850e57cf1c808f9a40314f8f5e54ecdce16b8f`; checkpoint commit: pending.
+- Branch: `feat/pru-relic-hunt-20261101`; source commit: `aa850e57cf1c808f9a40314f8f5e54ecdce16b8f`; checkpoint commit: `f8484c84c9f26d7b44d1a558f3d673e666892300`.
 - GitHub Actions run [41542334072](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41542334072) passed source regression, full compilation, 32 MiB binary verification, existing mGBA Alph ladder traversal, artifact upload and release publication.
 - ROM size: 33,554,432 bytes. SHA-256: `3a01c7c611c2cc1cd30d95e0c87e3ced046236dd9a2c6b54120c36c6f13e8816`.
 - Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-aa850e57cf/Pokemon-Relics-Ultimate-aa850e57cf.gba
 - Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-aa850e57cf
 - The workflow's mGBA test only validates the existing Alph ladder traversal. Dark Void singles/doubles, Omen Eye battle behavior and pre-existing save compatibility remain untested; player validation is outstanding.
-
