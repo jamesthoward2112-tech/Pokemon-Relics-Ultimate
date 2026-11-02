@@ -1521,6 +1521,15 @@ void ResetPokedex(void)
         gSaveBlock1Ptr->dexCaught[i] = 0;
         gSaveBlock1Ptr->dexSeen[i] = 0;
     }
+
+    // A genuinely reset/new PRU Dex must not inherit a prior save's 450-bit
+    // records or their migration marker from RAM. This does not move or
+    // resize either legacy National Dex bitfield.
+    if (IS_HNS)
+    {
+        memset(gSaveBlock1Ptr->dexPadding1, 0, sizeof(gSaveBlock1Ptr->dexPadding1));
+        memset(gSaveBlock1Ptr->dexPadding2, 0, sizeof(gSaveBlock1Ptr->dexPadding2));
+    }
 }
 
 void ResetPokedexScrollPositions(void)
