@@ -144,6 +144,7 @@ static const struct LevelUpMove sGuardeonLevelUpLearnset[] =
 static const struct LevelUpMove sObsideonLevelUpLearnset[] =
 {
     LEVEL_UP_MOVE(0, MOVE_PRESSURIZE),
+    LEVEL_UP_MOVE(0, MOVE_ROCK_BLAST),
     LEVEL_UP_MOVE(1, MOVE_HELPING_HAND),
     LEVEL_UP_MOVE(1, MOVE_TACKLE),
     LEVEL_UP_MOVE(1, MOVE_TAIL_WHIP),
@@ -455,6 +456,8 @@ static const struct LevelUpMove sRelicHoOhLevelUpLearnset[] =
 static const struct LevelUpMove sHeracurionLevelUpLearnset[] =
 {
     LEVEL_UP_MOVE(0, MOVE_STAG_STAB),
+    LEVEL_UP_MOVE(0, MOVE_PIN_MISSILE),
+    LEVEL_UP_MOVE(0, MOVE_ARM_THRUST),
     LEVEL_UP_MOVE(1, MOVE_TACKLE),
     LEVEL_UP_MOVE(1, MOVE_LEER),
     LEVEL_UP_MOVE(1, MOVE_HORN_ATTACK),
