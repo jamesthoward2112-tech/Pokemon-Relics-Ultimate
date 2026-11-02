@@ -2,6 +2,15 @@
 Every new release requires full source SHA, parent lineage, PRs included,
 ROM SHA256 and size, confirmed checks, untested gameplay and verified URL.
 
+## 2026-11-02 Route 34 Day-Care Mystery Egg seller
+
+- Branch: `feat/pru-relic-hunt-20261101`; source commit: `f43559e7682a6cfb9f9c316919e25c77aaf98632`; parent Job 1 source: `aa850e57cf1c808f9a40314f8f5e54ecdce16b8f`.
+- GitHub Actions run [41547688057](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41547688057) passed source regression, full compilation, 32 MiB ROM verification, existing mGBA Alph ladder traversal, artifact upload and release publication.
+- ROM size: 33,554,432 bytes. SHA-256: `e839ac84ca532c359286b4cf6dbf0806b3da43436d93b31e076a29b96d2ec250`.
+- Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-f43559e768/Pokemon-Relics-Ultimate-f43559e768.gba
+- Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-f43559e768
+- mGBA tested the existing Alph ladder only. Mystery Egg purchase interactions, hatching, challenge party cases and pre-existing save loading remain gameplay-unverified.
+
 ## 2026-11-01 Correct B1F ladder exit trigger
 
 - Branch: `feat/pru-relic-hunt-20261101`; source commit: `6e28dde2a5ba48420db1091c3fcc03c704e6ccd9`; parent: `8459d665559c9fc3acad96f5ae6a1d1b691f9162`.
