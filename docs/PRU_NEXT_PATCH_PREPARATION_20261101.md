@@ -330,3 +330,17 @@ The E20 prologue still precedes the shared PRU pages; its text now reads **A GOL
 
 **Hold:** documentation update only. No gameplay edit, automated GitHub workflow, merge, ROM compilation or release.
 
+## PRU-only 450-species randomizer pool — source checkpoint (2 November 2026)
+
+**Owner requirement:** Never choose between Pokémon Gen 1–9 or Gen 1–3 in PRU's randomizer. The entire generated species pool must be a subset of the **same exactly 450 Pokémon** defined in `src/data/pokemon/pru_dex_order.h`. Preserve choice of randomization features (wild/trainer/egg/gift/static species, move/type/abilities, evolution methods, legend-aware balancing). No extra species, alternate forms counted as new Pokémon or off-roster output. Preserve saved Pokémon and save format.
+
+**Source implemented on `prep/pru-rockshop-no-build-20261101`, not merged, compiled or released:**
+
+- `src/randomizer.c`: builds its HNS species membership bitmask directly from all 450 unique `sPruDexSpecies` constants instead of 1–9 or 1–3 generation-family walks. The bitmask is used by `IsSpeciesPermitted` across the dynamic species tables and random-evolution methods. `IsGenScopeRestricted` forces TRUE for PRU irrespective of any existing save's historical `tx_Random_GenScope` bit, without reallocating/clearing that bit; non-HNS modes preserve their original behaviour. On an off-roster source and a failed group lookup, the HNS fallback selects an eligible canonical entry. Post-selection alternate forms are explicitly rejected if not themselves in the approved 450; the canonical base result is used.
+- `src/challenge_menu.c`: the fixed informational **POKEMON POOL — PRU 450** row replaces the visible Gen 1–9 / Gen 1–3 options in PRU, ignores LEFT/RIGHT on that row and normalises saved value when editing settings. Other randomizer options remain operational. Non-HNS variants retain their original generation control.
+- `test/test_pru_randomizer_450.py`: source guard added for exactly 450 unique canonical species, membership masks, form safety, evolution restrictions, old-save forcing and fixed menu, without changing species IDs or saved challenge-settings layout.
+- Commits: randomizer `b7a492785f90`, menu `ef654c0d7056`, test `6712a60da22f`.
+
+**Validation:** 11/11 focused GitHub source-readback checks passed, including roster length and uniqueness. **No Python test suite, ROM compile, mGBA execution, save-migration test, or randomized playthrough has run.** Before release test both Gen-scope values on old saves, all randomizer toggle combinations, randomized wild/trainer/static/gift/egg and evolution paths, exception species/forms, legend-aware balancing, empty-group and form-selection fallbacks. Verify every generated output's internal species ID belongs to the immutable 450 roster, and the new menu label renders cleanly. Protect saved Dex flags and all 450 existing Pokédex entries.
+
+**Integration gate:** The no-build branch also contains other unmerged next-patch changes; the separate `feat/pru-skill-link-early-obsideon-20261102` branch needs reconciliation, as do newer approved Infinity Eeveelution art revisions. No automatic build, merge or release.
