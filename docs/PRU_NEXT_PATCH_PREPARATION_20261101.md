@@ -277,3 +277,39 @@ The E20 prologue still precedes the shared PRU pages; its text now reads **A GOL
 **Release QA outstanding:** run Python source tests in a checked-out repository; compile only with explicit permission; verify text rendering, transitions, opening graphics, credits termination, completion flags and Master Ball rewards across Johto E4, Kanto E4 and E20 in an emulator. Review remaining unresolved third-party sprite permissions before public release. **No ROM build/release and no GitHub Actions requested.**
 
 **Next substantive preparation item:** repair the 450-species Pokédex ordering and distinct seen/caught rows without renumbering species or disturbing save compatibility.
+
+
+## Canonical 450-Pokédex and save-compatible tracking — source checkpoint (2 November 2026)
+
+**Implemented and committed on the existing no-build preparation branch. No .gba, GitHub Actions workflow or emulator run was initiated.**
+
+### Immutable, approved 450-species sequence
+
+- `src/data/pokemon/pru_dex_order.h` remains the single ordered source. **All 450 entries are present, sequential and distinct**. Key checkpoints: #004 Edensaur, #007 Charizard, **#008 Charaxis**, #012 Fortotoise, #435 Lugia, #437 Alphoracle, #450 Deoxys.
+- **No `SPECIES_*` numeric IDs, evolved species, in-game events, existing quest flags or species-table entries were renumbered.**
+- The old HGSS implementation iterated regional/obtainable National Dex numbers and truncated at the last seen entry, explaining the player's scrolling video.
+
+### HGSS-style Pokédex UI
+
+- `src/pokedex_plus_hgss.c` uses `HGSS_LIST_CAPACITY = PRU_DEX_COUNT` in HNS/PRU, reserving **450 rows plus a sentinel**, rather than assuming the inherited 419-species visible sequence or the expansion's vanilla National Dex.
+- Numerical order now displays **all 450 slot numbers**. Unseen species keep their masked name and no captured-ball icon; seen and caught names/details use the canonical species (not their inherited National Dex alias). The numerical mode can scroll through the unseen tail; it does **not** force every Pokémon into Seen or Caught.
+- Info screens, stats numbering, cries, portraits, species details, alternate forms, evolution links, search parameters and in-Pokédex completion counters route through conditional HNS wrappers: canonical species lookup/number and independent flags. Non-HNS builds retain their native Nation/Regional lookup.
+- Alphabetical, weight and height sorts operate on canonical species data; when nothing qualifies, the UI returns to the complete numerical list rather than underflowing the sorted selection. Selection is clamped to current list capacity.
+- National visual mode is used for PRU even before the unrelated upstream National Dex unlock flag. The story save flag and non-HNS behavior remain unchanged.
+
+### Independent Seen/Caught data with old saves
+
+- `src/pokedex.c` adds `PruDexNumToSpecies`, `PruSpeciesToDexNum`, `GetSetPruDexFlag`, `GetPruDexCount`.
+- Stores **two 450-bit records** (57 bytes each) in the already allocated SaveBlock1 `dexPadding1`/`dexPadding2`, with per-array four-byte `PRD1` initialization markers. Compile-time `STATIC_ASSERT` checks verify capacity. SaveBlock1 struct size and relative offsets, legacy National bits, game flags and species constants are unchanged.
+- First migration copies legacy National seen/caught flags **only for species matching the original National Dex species**, not indiscriminately into every PRU variant with the same native number; scans existing party and non-Egg PC boxes to recover known owned Relic species. On future catches and wild sightings, both exact PRU bitfields and the engine's original National bits are updated. Catch-popup checks use the independent PRU caught flag, avoiding a Relic silently inheriting its ancestor's Seen/Caught status.
+- **Honest limitation:** an old save's shared National Dex bit cannot identify which of two aliased custom species was previously caught if the unique species no longer exists in the party or PC. The migration cannot reconstruct that history without inventing progress. Reencountering or obtaining it again records it independently.
+- `ResetPokedex` also clears the new padding bitfields when resetting the entire Pokédex.
+- **No new save flags, event variables or saved species IDs were allocated.**
+
+### Regression guard
+
+- `test/test_pru_450_pokedex.py` checks canonical all-450 identity and numbering, separate storage, no-save-layout expansion, migration strategy, encounter/capture hooks, UI lookup wrappers, independent seen/caught totals, sprite and evolution routing and safe list bounds.
+- A current-turn GitHub source readback passed **16/16 focused structural checks**. This is source validation, not compiling, save-compatibility certification or gameplay verification.
+- Before release: run the full repository tests, clean compile **only on explicit permission**, inspect all 450 list rows and multiple sort/search orders in mGBA, compare fresh/old saves, check Charizard versus Charaxis and Venusaur versus Edensaur separate flags, test seen wild species, evolved and gifted Pokémon, egg hatch, Pokémon Box migration, last row and underflow, and confirm all UI thumbnails and evolution pages render correctly. Preserve a backup of the previous working save before applying the new build.
+
+**Next preparation item:** stage the complete 450-species sprite-review assets and manifest, plus trainer-exclusive artwork in a separately labelled section. No automatic build, merge or release.
