@@ -126,6 +126,17 @@ Route29_EventScript_TuscanyCompleted::
 Route29_EventScript_Girl::
 	lock
 	faceplayer
+	goto_if_set FLAG_PRU_ROUTE29_HARD_STONE_GIFT, Route29_EventScript_Girl_AfterGift
+	msgbox Route29_Text_GirlHardStoneGift, MSGBOX_DEFAULT
+	giveitem ITEM_HARD_STONE
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_PRU_ROUTE29_HARD_STONE_GIFT
+	msgbox Route29_Text_GirlHardStoneHint, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+Route29_EventScript_Girl_AfterGift::
 	msgbox Route29_Text_Girl, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -198,6 +209,14 @@ Route29_Text_Lass:
 	.string "It's scary to jump off them.\p"
 	.string "But you can go to NEW BARK\n"
 	.string "without walking through the grass.$"
+
+Route29_Text_GirlHardStoneGift:
+	.string "I found a HARD STONE by the\n"
+	.string "rocks. You can have it!$"
+
+Route29_Text_GirlHardStoneHint:
+	.string "Use the HARD STONE on EEVEE\n"
+	.string "to evolve it into OBSIDEON!$"
 
 Route29_Text_Girl:
 	.string "I wanted to take a break,\n"
