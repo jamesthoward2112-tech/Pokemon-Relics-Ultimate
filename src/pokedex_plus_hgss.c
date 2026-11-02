@@ -2564,6 +2564,8 @@ static void CreatePokedexList(u8 dexMode, u8 order)
                 sPokedexView->pokedexList[i].owned = HgssGetDexFlag(i + 1, FLAG_GET_CAUGHT);
             }
             sPokedexView->pokemonListCount = PRU_DEX_COUNT;
+            if (sPokedexView->selectedPokemon >= sPokedexView->pokemonListCount)
+                sPokedexView->selectedPokemon = 0;
             return;
         }
         // Sort the approved species themselves, never their inherited
@@ -2603,6 +2605,8 @@ static void CreatePokedexList(u8 dexMode, u8 order)
             sPokedexView->pokedexList[i].seen = FALSE;
             sPokedexView->pokedexList[i].owned = FALSE;
         }
+        if (sPokedexView->selectedPokemon >= sPokedexView->pokemonListCount)
+            sPokedexView->selectedPokemon = 0;
         return;
     }
 
