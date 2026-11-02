@@ -1,5 +1,18 @@
 # PRU Work Resume Checkpoint
 
+## 2 November 2026 — Job 1 Radical Red move audit and I-Unown Dark Void
+
+- **Current branch:** `feat/pru-relic-hunt-20261101`; source commit `aa850e57cf1c808f9a40314f8f5e54ecdce16b8f` (pushed). No merge, rebase or force-push; unrelated Skill Link and preparation branches were left alone.
+- **Baseline / last successful ROM:** [PRU build e5f49276a7](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-e5f49276a7), source `e5f49276a7a1f1b8621ec31e9f4c8daa18ebd331`, 33,554,432 bytes, SHA-256 `de6dc3c451e3d4b8733ade14e63d8ebb92c1783d9aba45701314af28a9df3755`. Earlier successful release sources f26/f76/f8 are ancestors of this branch head; no later build with a distinct player-validated source was found. Release evidence is compilation/package, not emulator gameplay.
+- **Coded:** I-Unown gets Dark Void at Lv1. Dark Void keeps 10 PP, Dark typing, 50 modern accuracy, both-foe target, Sleep effect and existing animation. The Gen 7+ Darkrai restriction now also permits I-Unown in the battle script and AI; other species remain restricted. Omen Eye's 95 BP Ghost / 100 accuracy / 10 PP / single-target Fear (20%) and Mean Look animation are unchanged. Supercell Slam is raised from 100 to Radical Red v4.1's 120 BP; Flash is no longer Magic Coat-affected.
+- **Audited:** documented Radical Red v4.1 move additions are registered once in PRU; Tidy Up hazard clearing, Loaded Dice multi-hit behavior and Dragon Tail's 10 PP were already present. Scope and the Dex move-table limitation are recorded in `docs/PRU_RADICAL_RED_MOVE_AUDIT_20261102.md`.
+- **Source tests:** `python3 tools/pru/check_dark_void_i_unown.py` PASS; `git diff --check` PASS. Test-first regressions failed on the missing I-Unown learnset, Supercell Slam power and Flash reflect flag before fixes. Status: **Coded; Source tested**.
+- **ROM status:** not yet built on this source. Local `arm-none-eabi-gcc` and mGBA are unavailable. The source push should trigger `.github/workflows/pru-clean-build.yml`; check Actions for commit `aa850e57cf1c808f9a40314f8f5e54ecdce16b8f`, then confirm the direct 32 MiB ROM asset and SHA. No battle or save-compatibility gameplay test has been completed.
+- **Exact next action:** inspect the clean-build Actions result for `aa850e57`; resolve any first compiler/source-check failure on this same branch. If successful, record the ROM asset/hash in `docs/PRU_RELEASE_LEDGER.md`, then test I-Unown Dark Void in singles/doubles and verify Omen Eye in mGBA where available. Finally update this checkpoint and the Notion journal with actual test status.
+- **Notion:** checkpoint entry for commit `aa850e57` is still to be added; do this before treating the milestone as fully synced.
+
+---
+
 ## 18 October 2026 — Steevee/Neevee completed source build and direct test ROM
 
 - **Verified game source:** `2f7122d692f676ac14665e43f7d0f5477d7ad59e` on `pru/steevee-neevee-encounters-20261018`, draft [PR #20](https://github.com/jamesthoward2112-tech/Pokemon-Johto-Relics/pull/20), preserving full Johto rebalance PR #19.
