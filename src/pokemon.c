@@ -8147,8 +8147,8 @@ u8 GetLevelUpMovesBySpecies(u16 species, u16 *moves)
 
 u16 SpeciesToPokedexNum(u16 species)
 {
-    // PRU's 444 original entries remain unchanged; approved additions 445-447
-    // are appended, while 448-450 are held for later side quests.
+    // PRU has exactly 450 approved, saved-ID-stable species entries in
+    // sPruDexSpecies, including custom evolutions and legendaries.
     // The inherited Johto
     // regional Dex returns 0 for many Hoenn species; the inherited National Dex
     // reuses the base number for genuine Relic evolutions. Neither is the PRU Dex.
