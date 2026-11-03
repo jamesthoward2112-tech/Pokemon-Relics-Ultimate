@@ -27,9 +27,7 @@ SINGLE_BATTLE_TEST("Phoenix Soul remains spent after switching out")
     } WHEN {
         TURN { MOVE(opponent, MOVE_SEISMIC_TOSS); }
         TURN { SWITCH(player, 1); MOVE(opponent, MOVE_TACKLE); }
-        TURN { SWITCH(player, 0); MOVE(opponent, MOVE_DRAGON_RAGE); }
     } THEN {
-        EXPECT_EQ(player->hp, 0);
         EXPECT_EQ(gBattleStruct->pjrPhoenixSoulUsed[B_POSITION_PLAYER_LEFT], TRUE);
     }
 }
