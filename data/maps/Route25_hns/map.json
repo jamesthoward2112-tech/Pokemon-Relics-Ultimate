@@ -233,7 +233,7 @@
       "flag": "FLAG_HIDE_ROUTE25_SUICUNE"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MON_BASE+SPECIES_LUVDISC",
+      "graphics_id": "OBJ_EVENT_GFX_MON_BASE+SPECIES_STARYU",
       "x": 107,
       "y": 27,
       "elevation": 0,
@@ -246,7 +246,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MON_BASE+SPECIES_LUVDISC",
+      "graphics_id": "OBJ_EVENT_GFX_MON_BASE+SPECIES_STARYU",
       "x": 108,
       "y": 28,
       "elevation": 0,

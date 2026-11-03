@@ -133,6 +133,8 @@ jobs:
           python3 tools/pru/check_pru_e4_rhythm_backgrounds.py
           python3 tools/pru/check_static_battle_backgrounds.py
           python3 tools/pru/check_444_species_dex.py
+          python3 tools/pru/check_canonical_eeveelutions.py
+          python3 tools/pru/check_evo_dex_discovery.py
           python3 tools/pru/check_lavender_cubone_staging.py
           python3 tools/pru/check_lavender_tower_restoration.py
           python3 tools/pru/check_lavender_graphics_polish.py
@@ -156,6 +158,7 @@ jobs:
           python3 test/test_pru_mystery_egg_seller.py
           python3 test/test_pru_ecruteak_rock_shop.py
           python3 test/test_pru_eeveelution_expert.py
+          python3 test/test_pru_sylveon_dex.py
           python3 tools/pru/check_bld_status_icon.py
           python3 tools/pru/check_valkiri_sound.py
           python3 tools/pru/check_skarmet_tourmaline.py

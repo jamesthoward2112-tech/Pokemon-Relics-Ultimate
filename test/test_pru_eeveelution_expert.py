@@ -59,19 +59,23 @@ expected = {
     "SPECIES_SPHYNXEON": "ITEM_SOFT_SAND", "SPECIES_GUARDEON": "ITEM_METAL_COAT",
     "SPECIES_OBSIDEON": "ITEM_HARD_STONE", "SPECIES_TOXEON": "ITEM_POISON_BARB",
     "SPECIES_DRAKEON": "ITEM_DRAGON_FANG",
+    "SPECIES_SYLVEON": "ITEM_DAWN_STONE",
 }
 hns = evolutions.split("#if IS_HNS", 1)[1].split("#else", 1)[0]
 actual = dict(re.findall(r"\{EVO_ITEM,\s*(ITEM_[A-Z0-9_]+),\s*(SPECIES_[A-Z0-9_]+)\}", hns))
 actual = {species:item for item,species in actual.items()}
-require(actual == expected, "HNS direct-use evolution items must match all 17 approved methods")
+require(actual == expected, "HNS direct-use evolution items must match all 18 approved methods")
 for species in expected:
     require(species in dex, f"{species} must be in the approved PRU Dex")
 
-guide = scripts.split("EcruteakCity_RockShop_Text_ExpertClassic:", 1)[1].split("EcruteakCity_RockShop_Text_Collector:",1)[0]
+guide = scripts.split("EcruteakCity_RockShop_Text_ExpertGreeting:", 1)[1].split("EcruteakCity_RockShop_Text_Collector:",1)[0]
 for species, item in expected.items():
     require(species.removeprefix("SPECIES_") in guide, f"Guide is missing {species}")
     require(item.removeprefix("ITEM_").replace("_", " ") in guide, f"Guide is missing {item}")
-require("SYLVEON" not in guide and "SPECIES_SYLVEON" not in guide, "Do not include unapproved Sylveon")
+require("SYLVEON" in guide and "DAWN STONE" in guide, "Guide must describe Sylveon's Dawn Stone evolution")
+require("DAWN STONE is sold here after the\\n" in guide and "FOG BADGE" in guide,
+        "Guide must state Dawn Stone unlock timing")
+require("all 18 of" in guide and "17" not in guide, "Guide greeting must report 18 approved Eeveelutions")
 for symbol in ("Classic", "Relic", "Unusual", "Goodbye"):
     require(f"EcruteakCity_RockShop_Text_ExpertOption{symbol}" in scripts, f"Missing {symbol} menu choice")
 menu = scripts.split("EcruteakCity_RockShop_EventScript_EeveelutionExpertMenu::",1)[1].split("EcruteakCity_RockShop_EventScript_ExpertClassic::",1)[0]

@@ -111,9 +111,9 @@ EcruteakCity_RockShop_Advanced:
 	pokemartlistend
 
 EcruteakCity_RockShop_Text_ExpertGreeting:
-	.string "Ah, another EEVEE enthusiast! My little\n"
-	.string "friend and I have studied all 17 of\n"
-	.string "PRU's approved EEVEELUTIONS!$"
+	.string "Ah, an EEVEE enthusiast! My friend\n"
+	.string "and I have studied all 18 of PRU's\n"
+	.string "approved EEVEELUTIONS!$"
 
 EcruteakCity_RockShop_Text_ExpertPrompt:
 	.string "Which evolution group would you like\n"
@@ -135,7 +135,10 @@ EcruteakCity_RockShop_Text_ExpertClassic:
 	.string "SUN STONE: ESPEON\p"
 	.string "MOON STONE: UMBREON\n"
 	.string "LEAF STONE: LEAFEON\n"
-	.string "ICE STONE: GLACEON$"
+	.string "ICE STONE: GLACEON\n"
+	.string "DAWN STONE: SYLVEON\p"
+	.string "DAWN STONE is sold here after the\n"
+	.string "FOG BADGE.$"
 
 EcruteakCity_RockShop_Text_ExpertRelic:
 	.string "ANCIENT STONE: EEVEEON\n"

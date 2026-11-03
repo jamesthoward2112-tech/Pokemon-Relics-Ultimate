@@ -126,4 +126,4 @@ print(f"PASS: {trainer_count} HNS trainers / {pokemon_count} legal Pokémon (inc
 print(f"PASS: {len(wild_maps)} HNS wild maps / {wild_slots} legal wild slots")
 print(f"PASS: {event_scripts} HNS map scripts with no unapproved out-of-dex species constants")
 print("PASS: evolution targets remain confined to the approved 450")
-print("PASS: Ursaluna / Ursalina explicitly excluded from approved 444")
+print("PASS: Ursaluna / Ursalina explicitly excluded from approved 450")

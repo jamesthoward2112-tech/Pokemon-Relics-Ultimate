@@ -2,7 +2,7 @@
 """PRU/HNS whitelist evolution and easy-to-use Eeveelution source checks.
 
 The underlying multi-generation engine keeps species declarations for donors and
-approved special cases. Only canonical 444 targets may evolve in PRU/HNS.
+approved special cases. Only canonical 450 targets may evolve in PRU/HNS.
 No other game variant may gain these PRU-only Eevee/item behavior changes.
 """
 from pathlib import Path
@@ -12,11 +12,12 @@ import re
 root = Path(__file__).resolve().parents[2]
 read = lambda p: (root / p).read_text(encoding="utf-8")
 rows = list(csv.DictReader(open(root / "data/pru/PRU_National_Pokedex_2026-10-16.csv", encoding="utf-8-sig", newline="")))
-assert len(rows) == 444
+assert len(rows) == 450
 canonical = {row["Species_Constant"] for row in rows}
 dex = read("src/data/pokemon/pru_dex_order.h")
-assert "#define PRU_DEX_COUNT 444" in dex
-assert len(re.findall(r"^\s*SPECIES_[A-Z0-9_]+,\s*//\s*\d{3}\s", dex, re.M)) == 444
+assert "#define PRU_DEX_COUNT 450" in dex
+assert len(re.findall(r"^\s*SPECIES_[A-Z0-9_]+,\s*//\s*\d{3}\s", dex, re.M)) == 450
+assert "SPECIES_LUVDISC" not in canonical and "SPECIES_SYLVEON" in canonical
 
 pokemon = read("src/pokemon.c")
 assert '#include "data/pokemon/pru_dex_order.h"' in pokemon
@@ -44,6 +45,9 @@ expected = [
     ("ITEM_MOON_STONE", "SPECIES_UMBREON"),
     ("ITEM_ANCIENT_STONE", "SPECIES_EEVEEON"),
     ("ITEM_SHINY_STONE", "SPECIES_NIMBEON"),
+    ("ITEM_LEAF_STONE", "SPECIES_LEAFEON"),
+    ("ITEM_ICE_STONE", "SPECIES_GLACEON"),
+    ("ITEM_DAWN_STONE", "SPECIES_SYLVEON"),
     ("ITEM_DUSK_STONE", "SPECIES_OMEON"),
     ("ITEM_EXPERT_BELT", "SPECIES_CHAMPEON"),
     ("ITEM_SILVER_POWDER", "SPECIES_LEPIDEON"),
@@ -60,11 +64,16 @@ assert all(species in canonical for _, species in routes)
 items = read("src/data/items.h")
 shop = read("data/maps/GoldenrodCity_DepartmentStore_2F_hns/scripts.inc")
 for item, species in routes:
-    assert f".2byte {item}" in shop, f"{item} unavailable at Goldenrod"
+    if item == "ITEM_DAWN_STONE":
+        ecruteak = read("data/maps/EcruteakCity_RockShop_hns/scripts.inc")
+        advanced = ecruteak.split("EcruteakCity_RockShop_Advanced:", 1)[1].split("pokemartlistend", 1)[0]
+        assert f".2byte {item}" in advanced, f"{item} unavailable after Fog Badge"
+    else:
+        assert f".2byte {item}" in shop, f"{item} unavailable at Goldenrod"
     row = items.split(f"[{item}] =",1)[1].split("\n    },",1)[0]
     assert "ItemUseOutOfBattle_EvolutionStone" in row, (item, "not directly usable")
     assert ".effect = gItemEffect_EvoItem" in row, (item, "missing use effect")
-for item, _ in routes[8:]:
+for item, _ in routes[11:]:
     row = items.split(f"[{item}] =",1)[1].split("\n    },",1)[0]
     assert "#if IS_HNS" in row, f"{item} must remain unchanged in non-PRU games"
     assert ".holdEffect =" in row, f"{item} lost its original held-item effect"
@@ -74,7 +83,7 @@ assert "{EVO_ITEM, ITEM_MOON_STONE, SPECIES_NOXICHU}" in source
 assert "{EVO_ITEM, ITEM_THUNDER_STONE, SPECIES_RAICHU" in source
 assert "{EVO_ITEM, ITEM_ANCIENT_STONE, SPECIES_CHARAXIS" in source
 
-print("PASS: all 444 canonical evolution targets are whitelisted in 6 active evolution modes")
-print("PASS: all 15 approved Eeveelutions use exactly one direct-use item, all stocked in Goldenrod")
+print("PASS: all 450 canonical evolution targets are whitelisted in 6 active evolution modes")
+print("PASS: all 18 approved Eeveelutions use exactly one direct-use item")
 print("PASS: all seven alternate-item catalysts retain their original held effects and non-PRU behavior")
 print("PASS: Pikachu Moon/Thunder and Charaxis/Ancient Stone evolutions preserved")

@@ -289,9 +289,9 @@ static const u32 sPokedexPlusHGSS_ScreenSearchNational_Tilemap[] = INCBIN_U32("g
 // for evolution method listings
 #define MAX_EVO_METHOD_LINES 10
 #define PRU_EEVEE_EVOS_PER_PAGE 5
-#define PRU_EEVEE_EVO_PAGES 3
+#define PRU_EEVEE_EVO_PAGES 4
 
-// Only the approved 444 species are eligible for PRU's evolution guide.
+// Only the approved 450 species are eligible for PRU's evolution guide.
 // Use the same frozen roster as the engine's actual evolution guard.
 static bool32 IsPruEvoDexSpecies(u32 species)
 {
@@ -401,7 +401,7 @@ struct EvoScreenData
     bool8 seen[10];
     u8 menuPos;
     u8 arrowSpriteId;
-    u8 eeveePage; // PRU's 15 Eeveelutions are displayed five at a time.
+    u8 eeveePage; // PRU's 18 Eeveelutions are displayed five at a time.
     bool8 isMega;
     u32 arrowSpriteDist[10];
 };

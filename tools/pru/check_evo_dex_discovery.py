@@ -39,7 +39,7 @@ for token in (
 ):
     assert token in evo, f"missing EVO component: {token}"
 
-# Confirm representative displayed evolutions from the approved 444 roster.
+# Confirm representative displayed evolutions from the approved 450 roster.
 def mon_block(path, species):
     source = read(path)
     start = re.search(r"^\s*\[SPECIES_" + species + r"\]\s*=", source, re.M)
@@ -61,22 +61,23 @@ assert re.search(r"EVO_ITEM,\s*ITEM_MOON_STONE,\s*SPECIES_NOXICHU", pikachu)
 # PRU must not expose alternate-generation or out-of-roster branches.
 roster = read("src/data/pokemon/pru_dex_order.h")
 approved = set(re.findall(r"^\s*(SPECIES_[A-Z0-9_]+),\s*//\s*\d+", roster, re.M))
-assert len(approved) == 444, len(approved)
+assert len(approved) == 450, len(approved)
 assert "SPECIES_RAICHU_ALOLA" not in approved
-assert "SPECIES_SYLVEON" not in approved
+assert "SPECIES_SYLVEON" in approved and "SPECIES_LUVDISC" not in approved
 assert "IsPruEvoDexSpecies(i)" in dex, "pre-evolutions should use canonical roster"
-assert 'sPruDexSpecies[i] == species' in dex, "EVO filter must use canonical 444 array"
+assert 'sPruDexSpecies[i] == species' in dex, "EVO filter must use canonical 450 array"
 
 # The Eevee page limit must be 5, not the old truncated 10/8 display.
 assert "#define PRU_EEVEE_EVOS_PER_PAGE 5" in dex
-assert "#define PRU_EEVEE_EVO_PAGES 3" in dex
+assert "#define PRU_EEVEE_EVO_PAGES 4" in dex
 assert "eeveePage" in dex
 assert "Task_LoadEvolutionScreen;" in dex
 assert "i < sPokedexView->sEvoScreenData.eeveePage * PRU_EEVEE_EVOS_PER_PAGE" in dex
 start = mon_block(gen1, "EEVEE")
 pru = start.split("#if IS_HNS", 1)[1].split("#else", 1)[0]
 routes = re.findall(r"\{EVO_ITEM,\s*ITEM_[A-Z0-9_]+,\s*(SPECIES_[A-Z0-9_]+)\}", pru)
-assert len(routes) == len(set(routes)) == 15, (len(routes), routes)
+assert len(routes) == len(set(routes)) == 18, (len(routes), routes)
 assert all(p in approved for p in routes), routes
+assert "{EVO_ITEM, ITEM_DAWN_STONE, SPECIES_SYLVEON}" in pru
 
-print("PRU_EVO_DEX_DISCOVERY_PASS: 444-only species, 15 Eevee branches in 3 pages, relic EVO access")
+print("PRU_EVO_DEX_DISCOVERY_PASS: 450-only species, 18 Eevee branches in 4 pages, relic EVO access")

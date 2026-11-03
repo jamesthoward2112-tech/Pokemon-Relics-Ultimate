@@ -13572,7 +13572,7 @@ Level: 63
 Lapras
 Level: 66
 
-Luvdisc
+Corsola
 Level: 66
 
 === TRAINER_NICOLE_3_HNS ===
@@ -13590,7 +13590,7 @@ Level: 65
 Lapras
 Level: 68
 
-Luvdisc
+Corsola
 Level: 69
 
 === TRAINER_BILLY_2_HNS ===
@@ -13906,7 +13906,7 @@ IVs: 0 Atk
 - Signal Beam  
 - Aqua Ring  
 
-Luvdisc (F) @ Big Root  
+Corsola (F) @ Big Root
 Ability: Swift Swim  
 Level: 64  
 EVs: 248 Spe  
@@ -14083,7 +14083,7 @@ Timid Nature
 - Bind  
 - Confuse Ray  
 
-Luvdisc  
+Corsola
 Ability: Swift Swim  
 Level: 63
 EVs: 252 Spe  

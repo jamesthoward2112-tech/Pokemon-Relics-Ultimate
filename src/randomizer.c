@@ -344,7 +344,13 @@ static bool32 IsSpeciesValidForRandomizer(u16 species)
 // randomizer can roll has to pass this, so the gen scope applies here.
 static bool32 IsSpeciesPermitted(u16 species)
 {
-    return IsSpeciesValidForRandomizer(species) && IsSpeciesInGenScope(species);
+    if (!IsSpeciesValidForRandomizer(species) || !IsSpeciesInGenScope(species))
+        return FALSE;
+    // Keep HNS randomizer outputs inside PRU's approved canonical roster. The
+    // display lookup maps approved battle forms to their base species number.
+    if (IS_HNS && SpeciesToPokedexNum(species) == 0xFFFF)
+        return FALSE;
+    return TRUE;
 };
 
 u32 GenerateSeedForRandomizer(void)

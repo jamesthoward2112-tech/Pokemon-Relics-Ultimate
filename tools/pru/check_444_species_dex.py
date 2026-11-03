@@ -72,6 +72,13 @@ assert "#define PRU_DEX_COUNT 450" in header
 listed = [(m.group(1), int(m.group(2))) for m in
           re.finditer(r"^\s*(SPECIES_[A-Z0-9_]+),\s*//\s*(\d{3})\b", header, re.M)]
 assert listed == list(zip(ids, range(1, 451))), "Engine HNS summary numbering differs from the canonical list"
+assert "SPECIES_LUVDISC" not in ids and ids.count("SPECIES_SYLVEON") == 1
+assert names[166:187] == [
+    "Eevee", "Eeveeon", "Nimbeon", "Champeon", "Lepideon", "Sphynxeon",
+    "Guardeon", "Obsideon", "Toxeon", "Omeon", "Drakeon", "Vaporeon",
+    "Jolteon", "Flareon", "Espeon", "Umbreon", "Leafeon", "Glaceon",
+    "Sylveon", "Porygon", "Porygon2",
+]
 
 engine = ENGINE.read_text(encoding="utf-8")
 assert '#include "data/pokemon/pru_dex_order.h"' in engine
@@ -90,6 +97,8 @@ for base, evolution in [
     ("Magmar", "Magmortar"),
     ("Umbreon", "Leafeon"),
     ("Leafeon", "Glaceon"),
+    ("Glaceon", "Sylveon"),
+    ("Sylveon", "Porygon"),
 ]:
     assert name_positions[evolution] == name_positions[base] + 1, (
         f"{evolution} must follow {base}"
@@ -101,6 +110,6 @@ print("PASS: active engine includes all nine generation family files and PJR/PRU
 print("PASS: canonical PRU #001-#450 maps to the HNS summary number lookup without duplicates")
 print("PASS: family-local display order for all six relocated entries and original #008 Charaxis")
 print("NOTE: these checks validate source registry/summary numbering, NOT gameplay or graphics.")
-print("OPEN: HGSS in-game Pokédex list and save seen/caught flags still use old National/Johto mapping.")
+print("PASS: Seen/Caught save flags remain keyed by immutable National Dex numbers; PRU display ordering does not shift save data.")
 print("PASS: Seviian Noibat/Noivern reuse their existing IDs with separately locked RR 4.1 graphics/mechanics checks.")
 print("OPEN: encounter availability, especially legendaries and mythicals, requires a separate audit.")

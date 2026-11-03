@@ -57125,32 +57125,32 @@
               {
                 "min_level": 42,
                 "max_level": 44,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               },
               {
                 "min_level": 42,
                 "max_level": 44,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               },
               {
                 "min_level": 40,
                 "max_level": 40,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               },
               {
                 "min_level": 40,
                 "max_level": 40,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               },
               {
                 "min_level": 40,
                 "max_level": 40,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               },
               {
                 "min_level": 40,
                 "max_level": 40,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               }
             ]
           }
@@ -57304,32 +57304,32 @@
               {
                 "min_level": 42,
                 "max_level": 44,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               },
               {
                 "min_level": 42,
                 "max_level": 44,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               },
               {
                 "min_level": 40,
                 "max_level": 40,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               },
               {
                 "min_level": 40,
                 "max_level": 40,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               },
               {
                 "min_level": 40,
                 "max_level": 40,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               },
               {
                 "min_level": 40,
                 "max_level": 40,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_POLIWAG"
               }
             ]
           }
@@ -70879,7 +70879,7 @@
               {
                 "min_level": 43,
                 "max_level": 45,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_STARYU"
               },
               {
                 "min_level": 43,
@@ -71276,7 +71276,7 @@
               {
                 "min_level": 43,
                 "max_level": 45,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_STARYU"
               },
               {
                 "min_level": 43,
@@ -71564,7 +71564,7 @@
               {
                 "min_level": 43,
                 "max_level": 45,
-                "species": "SPECIES_LUVDISC"
+                "species": "SPECIES_GOLDEEN"
               },
               {
                 "min_level": 43,

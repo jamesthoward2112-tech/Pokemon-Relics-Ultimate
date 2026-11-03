@@ -1352,7 +1352,6 @@ static const enum NationalDexOrder sObtainableToNationalOrder[OBTAINABLE_DEX_COU
     OBTAINABLE_TO_NATIONAL(HUNTAIL),
     OBTAINABLE_TO_NATIONAL(GOREBYSS),
     OBTAINABLE_TO_NATIONAL(RELICANTH),
-    OBTAINABLE_TO_NATIONAL(LUVDISC),
     OBTAINABLE_TO_NATIONAL(BAGON),
     OBTAINABLE_TO_NATIONAL(SHELGON),
     OBTAINABLE_TO_NATIONAL(SALAMENCE),
@@ -7217,7 +7216,7 @@ static bool32 IsSpeciesAlreadyEvolved(u32 species)
     return FALSE;
 }
 
-// PRU has an explicitly approved 444-species roster. Generation 4+ source
+// PRU has an explicitly approved 450-species roster. Generation 4+ source
 // definitions remain available for donor/PRU exceptions, but may not create
 // accidental evolutions into species outside the approved game.
 #include "data/pokemon/pru_dex_order.h"
@@ -8179,11 +8178,9 @@ u8 GetLevelUpMovesBySpecies(u16 species, u16 *moves)
 
 u16 SpeciesToPokedexNum(u16 species)
 {
-    // PRU's 444 original entries remain unchanged; approved additions 445-447
-    // are appended, while 448-450 are held for later side quests.
-    // The inherited Johto
-    // regional Dex returns 0 for many Hoenn species; the inherited National Dex
-    // reuses the base number for genuine Relic evolutions. Neither is the PRU Dex.
+    // The inherited Johto regional Dex returns 0 for many Hoenn species; the
+    // inherited National Dex reuses base numbers for Relic evolutions. Neither
+    // mapping is the PRU Dex.
     if (IS_HNS)
     {
         u16 i;

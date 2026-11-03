@@ -1461,6 +1461,10 @@ u8 GetDaycareCompatibilityScore(struct DayCare *daycare)
         u32 personality;
 
         species[i] = GetBoxMonData(&daycare->mons[i].mon, MON_DATA_SPECIES);
+        // Old saves may still contain Luvdisc, but HNS breeding must not
+        // create new Eggs outside PRU's approved canonical roster.
+        if (IS_HNS && SpeciesToPokedexNum(species[i]) == 0xFFFF)
+            return PARENTS_INCOMPATIBLE;
         trainerIds[i] = GetBoxMonData(&daycare->mons[i].mon, MON_DATA_OT_ID);
         personality = GetBoxMonData(&daycare->mons[i].mon, MON_DATA_PERSONALITY);
         genders[i] = GetGenderFromSpeciesAndPersonality(species[i], personality);
