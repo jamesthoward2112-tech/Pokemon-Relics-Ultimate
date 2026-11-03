@@ -345,3 +345,36 @@ The E20 prologue still precedes the shared PRU pages; its text now reads **A GOL
 **Validation:** 11/11 focused GitHub source-readback checks passed, including roster length and uniqueness. **No Python test suite, ROM compile, mGBA execution, save-migration test, or randomized playthrough has run.** Before release test both Gen-scope values on old saves, all randomizer toggle combinations, randomized wild/trainer/static/gift/egg and evolution paths, exception species/forms, legend-aware balancing, empty-group and form-selection fallbacks. Verify every generated output's internal species ID belongs to the immutable 450 roster, and the new menu label renders cleanly. Protect saved Dex flags and all 450 existing Pokédex entries.
 
 **Integration gate:** The no-build branch also contains other unmerged next-patch changes; the separate `feat/pru-skill-link-early-obsideon-20261102` branch needs reconciliation, as do newer approved Infinity Eeveelution art revisions. No automatic build, merge or release.
+
+## Eeveelution Expert and Eevee in Ecruteak Rock Shop — added 3 November 2026
+
+**Status: user-requested game addition, requirements documented only.** Build it as a small isolated feature on the newest successful PRU ROM lineage, not by merging the entire preparation branch. As of 3 November the latest independently published Rock Shop build was [`pru-build-b4967a4948`](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-b4967a4948), source `b4967a4948fcef832dc7ef95686fc707275b0054`. Recheck for newer confirmed playable releases and the branch HEAD before changes.
+
+- **Location:** `data/maps/EcruteakCity_RockShop_hns/map.json` and `scripts.inc`. Add a *dedicated, permanent, friendly Eeveelution Expert* with a **visible Eevee standing on the neighbouring tile**, so the pair clearly belong together. The Eevee is a non-interfering decorative overworld Pokémon (optionally one short line/cry), **not** a giveaway, gift or encounter. Reuse existing suitable approved Eevee overworld sprites/object event systems; avoid an invented graphics constant. The shop currently has a clerk at (2,3), collector at (7,5) and a door at (4,7). Inspect actual layout/collision/NPC limits, choose two adjacent walkable, interactable tiles away from the shop counter and doorway, and preserve all existing NPC scripts. Avoid hidden/overlapping sprites, blocking movement or warp.
+- **Gameplay:** Talking to the expert opens a clear *repeatable optional guide* with concise category choices or paginated dialogue. Teach how to obtain **each of PRU's exact 17 Eeveelutions** through **direct item use**, not canonical friendship/time/location tricks or holding items through level-up. Item names and methods below come from the `#if IS_HNS` Eevee evolution table in `src/data/pokemon/species_info/gen_1_families.h` on the published PRU lineage:
+
+| Evolution | Direct-use item |
+| --- | --- |
+| Vaporeon | Water Stone |
+| Jolteon | Thunder Stone |
+| Flareon | Fire Stone |
+| Espeon | Sun Stone |
+| Umbreon | Moon Stone |
+| Leafeon | Leaf Stone |
+| Glaceon | Ice Stone |
+| Eeveeon | Ancient Stone |
+| Nimbeon | Shiny Stone |
+| Omeon | Dusk Stone |
+| Champeon | Expert Belt |
+| Lepideon | Silver Powder |
+| Sphynxeon | Soft Sand |
+| Guardeon | Metal Coat |
+| Obsideon | Hard Stone |
+| Toxeon | Poison Barb |
+| Drakeon | Dragon Fang |
+
+- **Do not mention Sylveon** or invent other Eevee evolutions: `sPruDexSpecies[450]` does not include it, and the HNS Evee evolution table has exactly 17 reachable entries. Do not add new Pokémon or change evolution conditions to fit the dialogue.
+- **Clarity:** Show players that in PRU, Expert Belt, Silver Powder, Soft Sand, Metal Coat, Hard Stone, Poison Barb and Dragon Fang are **used on Eevee from the Bag**, even when those items are normally held items elsewhere. Distinguish which stones are stocked now, which are stocked after Fog Badge, and which special items come from elsewhere. If stating where to find Eevee or a required item, verify the actual current map/shop source first; never fabricate a location or suggest an item is sold in the Rock Shop when it is not.
+- **Testing:** source regression asserting the expert and Eevee objects exist in this map, occupy distinct collision-free tiles with a walk-up route, original clerk/collector/warp still work, every one of 17 species + item mappings exactly matches `#if IS_HNS` `Eevee` data and no Sylveon is advertised. Run relevant existing Job 1–3 regressions; compile and publish a valid new 32 MiB ROM only for an explicitly authorised Work run. In mGBA where available, walk to both NPCs, cycle all pages/menu branches, and use representative items to evolve Eevee. Do not claim emulator QA without execution.
+- **Credit / durability:** minimise Work credits; preserve all earlier ROM fixes; commit and push each meaningful implementation/checkpoint; keep `docs/PRU_WORK_RESUME_CHECKPOINT.md` and the PRU Notion Development Journal up to date with exact SHA, actual tests and next action. If interrupted, prioritise pushed source + GitHub and Notion resume instructions. No unrelated sprite overhaul or job backlog changes.
+
