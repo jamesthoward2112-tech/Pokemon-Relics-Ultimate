@@ -138,6 +138,12 @@ static bool32 IsPjrControlTutorMove(u16 move)
     case MOVE_PERMAFROST:
     case MOVE_WILDFIRE:
     case MOVE_DARK_MATTER:
+    case MOVE_EERIE_FOG:
+    case MOVE_SCARY_FACE:
+    case MOVE_FOLLOW_ME:
+    case MOVE_REFLECT:
+    case MOVE_DOUBLE_HIT:
+    case MOVE_BATON_PASS:
     case MOVE_RAPID_SPIN:
     case MOVE_DEFOG:
     case MOVE_MORTAL_SPIN:
@@ -200,6 +206,34 @@ static bool32 CanSpeciesLearnPjrControlTutorMove(u16 species, u16 move)
         return IsSpeciesOfType(species, TYPE_FIRE);
     case MOVE_DARK_MATTER:
         return IsSpeciesOfType(species, TYPE_DARK);
+    case MOVE_EERIE_FOG:
+        // Mystical and spectral Pokémon can summon the eight-turn Ghost fog.
+        return IsSpeciesOfType(species, TYPE_GHOST)
+            || IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_PSYCHIC)
+            || IsSpeciesOfType(species, TYPE_POISON);
+    case MOVE_SCARY_FACE:
+        // Intimidating species with a plausible presence can learn this tutor move.
+        return IsSpeciesOfType(species, TYPE_DARK)
+            || IsSpeciesOfType(species, TYPE_GHOST)
+            || IsSpeciesOfType(species, TYPE_DRAGON)
+            || IsSpeciesOfType(species, TYPE_NORMAL)
+            || IsSpeciesOfType(species, TYPE_FIGHTING)
+            || IsSpeciesOfType(species, TYPE_PSYCHIC);
+    case MOVE_FOLLOW_ME:
+        return IsSpeciesOfType(species, TYPE_NORMAL)
+            || IsSpeciesOfType(species, TYPE_FAIRY)
+            || IsSpeciesOfType(species, TYPE_PSYCHIC);
+    case MOVE_REFLECT:
+        return IsSpeciesOfType(species, TYPE_PSYCHIC)
+            || IsSpeciesOfType(species, TYPE_FAIRY);
+    case MOVE_DOUBLE_HIT:
+        return IsSpeciesOfType(species, TYPE_NORMAL)
+            || IsSpeciesOfType(species, TYPE_FIGHTING);
+    case MOVE_BATON_PASS:
+        return IsSpeciesOfType(species, TYPE_NORMAL)
+            || IsSpeciesOfType(species, TYPE_PSYCHIC)
+            || IsSpeciesOfType(species, TYPE_FAIRY);
     case MOVE_SWORDS_DANCE:
         return IsSpeciesOfType(species, TYPE_NORMAL)
             || IsSpeciesOfType(species, TYPE_FIGHTING);
@@ -376,6 +410,7 @@ static bool32 IsPruDoubleTutorMove(u16 move)
     case MOVE_WRAITH_CRY:
     case MOVE_METAL_BARRAGE:
     case MOVE_MINDWAVE:
+    case MOVE_ELECTROWEB:
         return TRUE;
     default:
         return FALSE;
@@ -406,6 +441,9 @@ static bool32 CanSpeciesLearnPruDoubleTutorMove(u16 species, u16 move)
             || IsSpeciesOfType(species, TYPE_GROUND)
             || CanLearnTeachableMove(species, MOVE_IRON_TAIL);
     case MOVE_MINDWAVE: type = TYPE_PSYCHIC; break;
+    case MOVE_ELECTROWEB:
+        return IsSpeciesOfType(species, TYPE_ELECTRIC)
+            || IsSpeciesOfType(species, TYPE_BUG);
     default: return FALSE;
     }
     return IsSpeciesOfType(species, type);

@@ -256,7 +256,7 @@ IndigoPlateau_EventScript_HazardTutor::
 	goto_if_eq VAR_RESULT, NO, IndigoPlateau_EventScript_TutorDecline
 	message IndigoPlateau_Text_HazardTutorChoose
 	waitmessage
-	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, IndigoPlateau_Text_TutorMove_StealthRock, IndigoPlateau_Text_TutorMove_Spikes, IndigoPlateau_Text_TutorMove_ToxicSpikes, IndigoPlateau_Text_TutorMove_StickyWeb, IndigoPlateau_Text_TutorMove_StoneAxe, IndigoPlateau_Text_TutorMove_CeaselessEdge, IndigoPlateau_Text_TutorMove_SaltCure, IndigoPlateau_Text_TutorMove_LeechSeed, IndigoPlateau_Text_TutorMove_Toxic, IndigoPlateau_Text_TutorMove_WillOWisp, IndigoPlateau_Text_TutorMove_ThunderWave, IndigoPlateau_Text_TutorMove_Taunt, IndigoPlateau_Text_TutorMove_Encore, IndigoPlateau_Text_TutorMove_KnockOff, IndigoPlateau_Text_TutorMove_Roar, IndigoPlateau_Text_TutorMove_Whirlwind, IndigoPlateau_Text_TutorMove_DragonTail, IndigoPlateau_Text_TutorMove_Infestation, IndigoPlateau_Text_TutorMove_AchillesHeel, IndigoPlateau_Text_TutorMove_Permafrost, IndigoPlateau_Text_TutorMove_Wildfire, IndigoPlateau_Text_TutorMove_DarkMatter, IndigoPlateau_Text_TutorMove_Cancel
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, IndigoPlateau_Text_TutorMove_StealthRock, IndigoPlateau_Text_TutorMove_Spikes, IndigoPlateau_Text_TutorMove_ToxicSpikes, IndigoPlateau_Text_TutorMove_StickyWeb, IndigoPlateau_Text_TutorMove_StoneAxe, IndigoPlateau_Text_TutorMove_CeaselessEdge, IndigoPlateau_Text_TutorMove_SaltCure, IndigoPlateau_Text_TutorMove_LeechSeed, IndigoPlateau_Text_TutorMove_Toxic, IndigoPlateau_Text_TutorMove_WillOWisp, IndigoPlateau_Text_TutorMove_ThunderWave, IndigoPlateau_Text_TutorMove_Taunt, IndigoPlateau_Text_TutorMove_Encore, IndigoPlateau_Text_TutorMove_KnockOff, IndigoPlateau_Text_TutorMove_Roar, IndigoPlateau_Text_TutorMove_Whirlwind, IndigoPlateau_Text_TutorMove_DragonTail, IndigoPlateau_Text_TutorMove_Infestation, IndigoPlateau_Text_TutorMove_AchillesHeel, IndigoPlateau_Text_TutorMove_Permafrost, IndigoPlateau_Text_TutorMove_Wildfire, IndigoPlateau_Text_TutorMove_DarkMatter, IndigoPlateau_Text_TutorMove_EerieFog, IndigoPlateau_Text_TutorMove_ScaryFace, IndigoPlateau_Text_TutorMove_Cancel
 	switch VAR_RESULT
 	case 0, IndigoPlateau_EventScript_TutorTeach_StealthRock
 	case 1, IndigoPlateau_EventScript_TutorTeach_Spikes
@@ -280,7 +280,9 @@ IndigoPlateau_EventScript_HazardTutor::
 	case 19, IndigoPlateau_EventScript_TutorTeach_Permafrost
 	case 20, IndigoPlateau_EventScript_TutorTeach_Wildfire
 	case 21, IndigoPlateau_EventScript_TutorTeach_DarkMatter
-	case 22, IndigoPlateau_EventScript_TutorDecline
+	case 22, IndigoPlateau_EventScript_TutorTeach_EerieFog
+	case 23, IndigoPlateau_EventScript_TutorTeach_ScaryFace
+	case 24, IndigoPlateau_EventScript_TutorDecline
 	case MULTI_B_PRESSED, IndigoPlateau_EventScript_TutorDecline
 	end
 
@@ -497,6 +499,15 @@ IndigoPlateau_EventScript_TutorTeach_Nuzzle::
 	goto IndigoPlateau_EventScript_TutorTeachMove
 	end
 
+IndigoPlateau_EventScript_TutorTeach_EerieFog::
+	setvar VAR_0x8005, MOVE_EERIE_FOG
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+IndigoPlateau_EventScript_TutorTeach_ScaryFace::
+	setvar VAR_0x8005, MOVE_SCARY_FACE
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+
 IndigoPlateau_EventScript_TutorTeachMove::
 	buffermovename STR_VAR_1, VAR_0x8005
 	msgbox IndigoPlateau_Text_TutorConfirm, MSGBOX_YESNO
@@ -590,6 +601,10 @@ IndigoPlateau_Text_TutorMove_Wildfire:
 	.string "WILDFIRE$"
 IndigoPlateau_Text_TutorMove_DarkMatter:
 	.string "DARK MATTER$"
+IndigoPlateau_Text_TutorMove_EerieFog:
+	.string "EERIE FOG$"
+IndigoPlateau_Text_TutorMove_ScaryFace:
+	.string "SCARY FACE$"
 IndigoPlateau_Text_TutorMove_RapidSpin:
 	.string "RAPID SPIN$"
 IndigoPlateau_Text_TutorMove_Defog:
@@ -696,7 +711,7 @@ PRU_SetupTutor::
 	goto_if_eq VAR_RESULT, NO, IndigoPlateau_EventScript_TutorDecline
 	message PRU_SetupTutor_Text_Choose
 	waitmessage
-	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, PRU_SetupTutor_Text_SwordsDance, PRU_SetupTutor_Text_NastyPlot, PRU_SetupTutor_Text_DragonDance, PRU_SetupTutor_Text_CalmMind, PRU_SetupTutor_Text_BulkUp, PRU_SetupTutor_Text_Agility, PRU_SetupTutor_Text_Protect, IndigoPlateau_Text_TutorMove_Cancel
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, PRU_SetupTutor_Text_SwordsDance, PRU_SetupTutor_Text_NastyPlot, PRU_SetupTutor_Text_DragonDance, PRU_SetupTutor_Text_CalmMind, PRU_SetupTutor_Text_BulkUp, PRU_SetupTutor_Text_Agility, PRU_SetupTutor_Text_Protect, PRU_SetupTutor_Text_FollowMe, PRU_SetupTutor_Text_Reflect, PRU_SetupTutor_Text_DoubleHit, PRU_SetupTutor_Text_BatonPass, IndigoPlateau_Text_TutorMove_Cancel
 	switch VAR_RESULT
 	case 0, PRU_SetupTutor_SwordsDance
 	case 1, PRU_SetupTutor_NastyPlot
@@ -705,7 +720,11 @@ PRU_SetupTutor::
 	case 4, PRU_SetupTutor_BulkUp
 	case 5, PRU_SetupTutor_Agility
 	case 6, PRU_SetupTutor_Protect
-	case 7, IndigoPlateau_EventScript_TutorDecline
+	case 7, PRU_SetupTutor_FollowMe
+	case 8, PRU_SetupTutor_Reflect
+	case 9, PRU_SetupTutor_DoubleHit
+	case 10, PRU_SetupTutor_BatonPass
+	case 11, IndigoPlateau_EventScript_TutorDecline
 	case MULTI_B_PRESSED, IndigoPlateau_EventScript_TutorDecline
 	end
 PRU_SetupTutor_SwordsDance::
@@ -729,6 +748,23 @@ PRU_SetupTutor_Agility::
 PRU_SetupTutor_Protect::
 	setvar VAR_0x8005, MOVE_PROTECT
 	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+PRU_SetupTutor_FollowMe::
+	setvar VAR_0x8005, MOVE_FOLLOW_ME
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+PRU_SetupTutor_Reflect::
+	setvar VAR_0x8005, MOVE_REFLECT
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+PRU_SetupTutor_DoubleHit::
+	setvar VAR_0x8005, MOVE_DOUBLE_HIT
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
+PRU_SetupTutor_BatonPass::
+	setvar VAR_0x8005, MOVE_BATON_PASS
+	goto IndigoPlateau_EventScript_TutorTeachMove
+	end
 
 PRU_SetupTutor_Text_Intro:
 	.string "I teach free SETUP moves.\nWant me to train your team?$"
@@ -748,6 +784,14 @@ PRU_SetupTutor_Text_Agility:
 	.string "AGILITY$"
 PRU_SetupTutor_Text_Protect:
 	.string "PROTECT$"
+PRU_SetupTutor_Text_FollowMe:
+	.string "FOLLOW ME$"
+PRU_SetupTutor_Text_Reflect:
+	.string "REFLECT$"
+PRU_SetupTutor_Text_DoubleHit:
+	.string "DOUBLE HIT$"
+PRU_SetupTutor_Text_BatonPass:
+	.string "BATON PASS$"
 
 PRU_TrainingHub_MoveDeleter::
 	lockall
@@ -1527,14 +1571,15 @@ PRU_DoublesTutor::
 	goto_if_eq VAR_RESULT, NO, PRU_Elite18_Exit
 	message PRU_DoublesTutor_Text_Choose
 	waitmessage
-	dynmultichoice 0, 0, FALSE, 5, 0, DYN_MULTICHOICE_CB_NONE, PRU_DoublesTutor_Text_ShockwaveFist, PRU_DoublesTutor_Text_Faultline, PRU_DoublesTutor_Text_WraithCry, PRU_DoublesTutor_Text_MetalBarrage, PRU_DoublesTutor_Text_Mindwave, IndigoPlateau_Text_TutorMove_Cancel
+	dynmultichoice 0, 0, FALSE, 5, 0, DYN_MULTICHOICE_CB_NONE, PRU_DoublesTutor_Text_ShockwaveFist, PRU_DoublesTutor_Text_Faultline, PRU_DoublesTutor_Text_WraithCry, PRU_DoublesTutor_Text_MetalBarrage, PRU_DoublesTutor_Text_Mindwave, PRU_DoublesTutor_Text_Electroweb, IndigoPlateau_Text_TutorMove_Cancel
 	switch VAR_RESULT
 	case 0, PRU_DoublesTutor_ShockwaveFist
 	case 1, PRU_DoublesTutor_Faultline
 	case 2, PRU_DoublesTutor_WraithCry
 	case 3, PRU_DoublesTutor_MetalBarrage
 	case 4, PRU_DoublesTutor_Mindwave
-	case 5, PRU_Elite18_Exit
+	case 5, PRU_DoublesTutor_Electroweb
+	case 6, PRU_Elite18_Exit
 	case MULTI_B_PRESSED, PRU_Elite18_Exit
 	end
 
@@ -1553,6 +1598,9 @@ PRU_DoublesTutor_MetalBarrage::
 PRU_DoublesTutor_Mindwave::
 	setvar VAR_0x8005, MOVE_MINDWAVE
 	goto PRU_DoublesTutor_Teach
+PRU_DoublesTutor_Electroweb::
+	setvar VAR_0x8005, MOVE_ELECTROWEB
+	goto PRU_DoublesTutor_Teach
 
 PRU_DoublesTutor_Teach::
 	buffermovename STR_VAR_1, VAR_0x8005
@@ -1568,7 +1616,7 @@ PRU_DoublesTutor_Teach::
 	end
 
 PRU_DoublesTutor_Text_Intro:
-	.string "I teach five free moves that\n"
+    .string "I teach six free moves that\n"
 	.string "strike BOTH foes. Want my help?$"
 PRU_DoublesTutor_Text_Choose:
 	.string "Which spread move do you want?$"
@@ -1582,3 +1630,5 @@ PRU_DoublesTutor_Text_MetalBarrage:
 	.string "METAL BARRAGE$"
 PRU_DoublesTutor_Text_Mindwave:
 	.string "MINDWAVE$"
+PRU_DoublesTutor_Text_Electroweb:
+	.string "ELECTROWEB$"
