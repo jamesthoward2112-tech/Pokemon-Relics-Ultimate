@@ -32,7 +32,7 @@ def main():
         target = "#if IS_HNS\n    CB2_InitPruTitleScreen();\n    return;"
         assert title.count(include) == 1 and title.count(target) == 1
         TITLE.write_text(title.replace(include, include + '\n#include "overworld.h"', 1)
-                         .replace(target, "#if IS_HNS\n    CB2_NewGame();\n    return;", 1))
+                         .replace(target, "#if IS_HNS\n    gMain.state = 0;\n    CB2_NewGame();\n    return;", 1))
 
         newgame = original[NEWGAME]
         spawn = "SetWarpDestination(MAP_GROUP(MAP_NEW_BARK_TOWN_PLAYERS_HOUSE_2F_HNS), MAP_NUM(MAP_NEW_BARK_TOWN_PLAYERS_HOUSE_2F_HNS), 1, 0, 0);"
