@@ -37,7 +37,7 @@ def main():
         newgame = original[NEWGAME]
         spawn = "SetWarpDestination(MAP_GROUP(MAP_NEW_BARK_TOWN_PLAYERS_HOUSE_2F_HNS), MAP_NUM(MAP_NEW_BARK_TOWN_PLAYERS_HOUSE_2F_HNS), 1, 0, 0);"
         assert newgame.count(spawn) == 1
-        outside_spawn = "SetWarpDestination(MAP_GROUP(MAP_RUINS_OF_ALPH_OUTSIDE_HNS), MAP_NUM(MAP_RUINS_OF_ALPH_OUTSIDE_HNS), WARP_ID_NONE, 21, 20);"
+        outside_spawn = "SetWarpDestination(MAP_GROUP(MAP_RUINS_OF_ALPH_OUTSIDE_HNS), MAP_NUM(MAP_RUINS_OF_ALPH_OUTSIDE_HNS), WARP_ID_NONE, 21, 22);"
         NEWGAME.write_text(newgame.replace(spawn, outside_spawn, 1))
 
         overworld = original[OVERWORLD]
@@ -108,10 +108,10 @@ void WarpIntoMap(void)
                        stdout=log, stderr=subprocess.STDOUT, timeout=60)
         subprocess.run([str(debugger / "bin/gba-dump"), str(TEST_ROM), str(ROOT),
                         "run:2200", "dump:alph-outside-start",
-                        "press:DOWN:8", "run:50", "dump:alph-entered-b1f",
-                        "press:DOWN:8", "run:50", "press:UP:8", "run:50",
+                        "press:UP:1", "run:50", "dump:alph-entered-b1f",
+                        "press:DOWN:1", "run:50", "press:UP:1", "run:50",
                         "dump:alph-exited-outside",
-                        "press:UP:8", "run:50", "press:DOWN:8", "run:50",
+                        "press:DOWN:1", "run:50", "press:UP:1", "run:50",
                         "dump:alph-reentered-b1f"],
                        check=True, cwd=ROOT, stdout=log, stderr=log, timeout=120)
 
@@ -120,7 +120,7 @@ void WarpIntoMap(void)
         return struct.unpack_from("<4H", raw, probe_offset)
 
     expected = {
-        "alph-outside-start": (*outside, 21, 20),
+        "alph-outside-start": (*outside, 21, 22),
         "alph-entered-b1f": (*interior, 15, 16),
         "alph-exited-outside": (*outside, 21, 21),
         "alph-reentered-b1f": (*interior, 15, 16),
@@ -135,7 +135,3 @@ void WarpIntoMap(void)
         path.unlink(missing_ok=True)
     TEST_ROM.unlink(missing_ok=True)
     CANONICAL.unlink(missing_ok=True)
-
-
-if __name__ == "__main__":
-    main()
