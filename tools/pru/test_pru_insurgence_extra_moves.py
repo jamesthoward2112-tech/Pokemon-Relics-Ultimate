@@ -33,7 +33,8 @@ class InsurgenceExtraMoveTests(unittest.TestCase):
              "MOVE_METAL_BARRAGE", "MOVE_MINDWAVE", "MOVE_DARK_NOVA",
              "MOVE_ACHILLES_HEEL", "MOVE_PERMAFROST",
              "MOVE_WILDFIRE", "MOVE_DARK_MATTER"])
-        self.assertEqual(all_ids[10:], ["MOVE_OMEN_EYE"])
+        self.assertEqual(all_ids[10:11], ["MOVE_OMEN_EYE"])
+        self.assertEqual(all_ids[11:], ["MOVE_GOLDEN_REIGN"])
 
     def test_relic_eye_is_battle_ready_and_uses_original_statue(self):
         import json
