@@ -2,6 +2,15 @@
 Every new release requires full source SHA, parent lineage, PRs included,
 ROM SHA256 and size, confirmed checks, untested gameplay and verified URL.
 
+## 2026-11-03 Ecruteak Rock Shop
+
+- Branch: `feat/pru-relic-hunt-20261101`; source commit: `b4967a4948fcef832dc7ef95686fc707275b0054`, based on the Job 2 lineage `f43559e7682a6cfb9f9c316919e25c77aaf98632`.
+- Actions run [41600095191](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41600095191) passed source regressions, full HNS compilation, 32 MiB binary verification, artifact upload and release publication. Its existing Alph-ladder mGBA visual assertion failed (`brown fraction 0.1881`) and is non-blocking on this branch; this is not an Ecruteak gameplay test.
+- ROM size: 33,554,432 bytes. SHA-256: `bb28df95e916747a9617b0b530ce92c2bd0de7275f0dc3bbc328abbc79513661` (GitHub release asset digest).
+- Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-b4967a4948/Pokemon-Relics-Ultimate-b4967a4948.gba
+- Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-b4967a4948
+- Ecruteak purchases, Fog Badge tier behavior, save compatibility and player testing remain unverified.
+
 ## 2026-11-02 Route 34 Day-Care Mystery Egg seller
 
 - Branch: `feat/pru-relic-hunt-20261101`; source commit: `f43559e7682a6cfb9f9c316919e25c77aaf98632`; parent Job 1 source: `aa850e57cf1c808f9a40314f8f5e54ecdce16b8f`.
