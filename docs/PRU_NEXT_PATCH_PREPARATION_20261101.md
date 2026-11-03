@@ -1,5 +1,16 @@
 # PRU — queued next patch (prepared 2026-11-01; DO NOT BUILD OR RELEASE)
 
+## 3 November — OWNER OVERRIDE: Job 4 Escape Rope pickups give MAX REVIVES, NOT TMs
+
+**Latest approved instruction, superseding all earlier staged Rope→TM tiers in this document:** Every *formerly obtainable* Escape Rope from PRU/HNS **visible item balls, hidden/background loot, and explicit scripted field item pickups** should now award **ONE `ITEM_MAX_REVIVE`**, not any TM. Preserve its exact original pickup location, object/script identity, one-time item flag, quantity=1, bag-space behaviour, and existing-save compatibility. Don't grant a duplicate for already collected pickups. Do not make the reward depend on badge count or current TM collection.
+
+- Keep `ITEM_ESCAPE_ROPE` unchanged as a **reusable Key Item**, available via the approved early-game New Bark lab aide grant and Elm's missing-item recovery for old saves; don't convert the legitimate Key Item gift to Max Revive.
+- Remove redundant purchasable Escape Rope entries from normal HNS shop stock. **Do not replace those shop entries with TMs**; retain unrelated stock and shop progression, and do not introduce Max Revive into every shop by default.
+- False Swipe shop availability in Cherrygrove (both pre/post Poké Ball states), Goldenrod 5F, and Celadon 3F remains part of Job 4; use the existing TM54 unchanged. **No changes to TM consumption/reusability in this job**. User confirms TMs are reusable in their gameplay; code/config must be inspected separately if a source discrepancy is reported, not changed as a side effect of this item placement job.
+- The old `GetPruEscapeRopePickupTm()` badge selector, TM reward tables, and the staged `test_pru_escape_rope_and_*tutors.py` TM expectations are **not approved** for Job 4. Do not cherry-pick them. Instead implement narrow replacement logic to grant `ITEM_MAX_REVIVE` consistently for ordinary visible/hidden loot, and replace explicit scripted field gifts with the same item, while leaving normal Key Item grants intact. Validate a full sweep of HNS maps/scripts and no incidental changes to non-HNS variants.
+- Keep the blocking original H&S Alph ladder mGBA regression from Job 3C passing. Commit/push checkpoints and update the PRU Notion journal as usual. This is a **requirement update only**, not implementation or a ROM release.
+
+
 **Status: requirements and implementation checkpoints only.** No gameplay change in this file, no binary, no build request, no ROM release, no claim of testing.
 
 **Repository:** https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate  
