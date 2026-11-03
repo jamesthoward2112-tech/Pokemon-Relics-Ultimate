@@ -30,6 +30,55 @@ EcruteakCity_RockShop_EventScript_Collector::
 	release
 	end
 
+EcruteakCity_RockShop_EventScript_EeveelutionExpert::
+	lock
+	faceplayer
+	msgbox EcruteakCity_RockShop_Text_ExpertGreeting, MSGBOX_DEFAULT
+	goto EcruteakCity_RockShop_EventScript_EeveelutionExpertMenu
+	end
+
+EcruteakCity_RockShop_EventScript_EeveelutionExpertMenu::
+	msgbox EcruteakCity_RockShop_Text_ExpertPrompt, MSGBOX_DEFAULT
+	dynmultichoice 0, 0, FALSE, 4, 0, DYN_MULTICHOICE_CB_NONE, EcruteakCity_RockShop_Text_ExpertOptionClassic, EcruteakCity_RockShop_Text_ExpertOptionRelic, EcruteakCity_RockShop_Text_ExpertOptionUnusual, EcruteakCity_RockShop_Text_ExpertOptionGoodbye
+	switch VAR_RESULT
+	case 0, EcruteakCity_RockShop_EventScript_ExpertClassic
+	case 1, EcruteakCity_RockShop_EventScript_ExpertRelic
+	case 2, EcruteakCity_RockShop_EventScript_ExpertUnusual
+	case 3, EcruteakCity_RockShop_EventScript_ExpertGoodbye
+	case MULTI_B_PRESSED, EcruteakCity_RockShop_EventScript_ExpertGoodbye
+	goto EcruteakCity_RockShop_EventScript_EeveelutionExpertMenu
+	end
+
+EcruteakCity_RockShop_EventScript_ExpertClassic::
+	msgbox EcruteakCity_RockShop_Text_ExpertClassic, MSGBOX_DEFAULT
+	goto EcruteakCity_RockShop_EventScript_EeveelutionExpertMenu
+	end
+
+EcruteakCity_RockShop_EventScript_ExpertRelic::
+	msgbox EcruteakCity_RockShop_Text_ExpertRelic, MSGBOX_DEFAULT
+	goto EcruteakCity_RockShop_EventScript_EeveelutionExpertMenu
+	end
+
+EcruteakCity_RockShop_EventScript_ExpertUnusual::
+	msgbox EcruteakCity_RockShop_Text_ExpertUnusual, MSGBOX_DEFAULT
+	goto EcruteakCity_RockShop_EventScript_EeveelutionExpertMenu
+	end
+
+EcruteakCity_RockShop_EventScript_ExpertGoodbye::
+	msgbox EcruteakCity_RockShop_Text_ExpertGoodbye, MSGBOX_DEFAULT
+	release
+	end
+
+EcruteakCity_RockShop_EventScript_ExpertEevee::
+	lock
+	faceplayer
+	waitse
+	playmoncry SPECIES_EEVEE, CRY_MODE_NORMAL
+	msgbox EcruteakCity_RockShop_Text_ExpertEevee, MSGBOX_DEFAULT
+	waitmoncry
+	release
+	end
+
 	.align 2
 EcruteakCity_RockShop_Basic:
 	.2byte ITEM_FIRE_STONE
@@ -60,6 +109,61 @@ EcruteakCity_RockShop_Advanced:
 	.2byte ITEM_DUSK_STONE
 	.2byte ITEM_DAWN_STONE
 	pokemartlistend
+
+EcruteakCity_RockShop_Text_ExpertGreeting:
+	.string "Ah, another EEVEE enthusiast! My little\n"
+	.string "friend and I have studied all 17 of\n"
+	.string "PRU's approved EEVEELUTIONS!$"
+
+EcruteakCity_RockShop_Text_ExpertPrompt:
+	.string "Which evolution group would you like\n"
+	.string "to learn about?$"
+
+EcruteakCity_RockShop_Text_ExpertOptionClassic:
+	.string "Classic Eeveelutions$"
+EcruteakCity_RockShop_Text_ExpertOptionRelic:
+	.string "Relic Eeveelutions$"
+EcruteakCity_RockShop_Text_ExpertOptionUnusual:
+	.string "More unusual evolutions$"
+EcruteakCity_RockShop_Text_ExpertOptionGoodbye:
+	.string "Goodbye$"
+
+EcruteakCity_RockShop_Text_ExpertClassic:
+	.string "WATER STONE: VAPOREON\n"
+	.string "THUNDER STONE: JOLTEON\n"
+	.string "FIRE STONE: FLAREON\n"
+	.string "SUN STONE: ESPEON\p"
+	.string "MOON STONE: UMBREON\n"
+	.string "LEAF STONE: LEAFEON\n"
+	.string "ICE STONE: GLACEON$"
+
+EcruteakCity_RockShop_Text_ExpertRelic:
+	.string "ANCIENT STONE: EEVEEON\n"
+	.string "SHINY STONE: NIMBEON\n"
+	.string "DUSK STONE: OMEON\p"
+	.string "Our shop stocks the ANCIENT STONE.\n"
+	.string "SHINY and DUSK STONES are added\n"
+	.string "after the FOG BADGE.$"
+
+EcruteakCity_RockShop_Text_ExpertUnusual:
+	.string "EXPERT BELT: CHAMPEON\n"
+	.string "SILVER POWDER: LEPIDEON\n"
+	.string "SOFT SAND: SPHYNXEON\n"
+	.string "METAL COAT: GUARDEON\p"
+	.string "HARD STONE: OBSIDEON\n"
+	.string "POISON BARB: TOXEON\n"
+	.string "DRAGON FANG: DRAKEON\p"
+	.string "Use the matching item directly on\n"
+	.string "EEVEE. These seven items aren't\n"
+	.string "stocked in this Rock Shop.$"
+
+EcruteakCity_RockShop_Text_ExpertGoodbye:
+	.string "Happy evolving! EEVEE and I will be\n"
+	.string "here whenever you need advice.$"
+
+EcruteakCity_RockShop_Text_ExpertEevee:
+	.string "EEVEE tilts its head and chirps\n"
+	.string "happily!$"
 
 EcruteakCity_RockShop_Text_Collector:
 	.string "These stones have been gathered\n"
