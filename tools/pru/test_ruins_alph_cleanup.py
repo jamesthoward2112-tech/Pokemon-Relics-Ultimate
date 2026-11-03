@@ -160,7 +160,7 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         self.assertEqual(struct.unpack_from("<H", attrs, 101 * 2)[0], 0x1061)
         layout = (ROOT / "data/layouts/RuinsOfAlph_B1F_hns/map.bin").read_bytes()
         cells = struct.unpack(f"<{len(layout) // 2}H", layout)
-        self.assertEqual(cells[16 * 29 + 15], 0x02E5)
+        self.assertEqual(cells[16 * 29 + 15], 0x42E5)  # H&S original exit tile flags
 
         statue = [e for e in interior["bg_events"] if (e["x"], e["y"]) == (25, 28)]
         self.assertEqual(len(statue), 1)
@@ -203,7 +203,7 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
             installer.ROOT = root
             installer._clear_original_statue_tiles()
             after = struct.unpack(f"<{len(layout.read_bytes()) // 2}H", layout.read_bytes())
-            self.assertEqual(after[16 * 29 + 15], 0x02E5)
+            self.assertEqual(after[16 * 29 + 15], 0x42E5)
             statue_cells = {9 * 29 + 16, 10 * 29 + 16, 27 * 29 + 25, 28 * 29 + 25}
             for index, value in enumerate(before_cells):
                 if index not in statue_cells:

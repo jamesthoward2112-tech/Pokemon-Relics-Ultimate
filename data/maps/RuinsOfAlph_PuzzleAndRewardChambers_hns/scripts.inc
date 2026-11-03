@@ -67,10 +67,6 @@ RuinsOfAlph_PuzzleAndRewardChambers_MapScript_HoohDescription::
 	release
 	end
 RuinsOfAlph_PuzzleAndRewardChambers_MapScript_StatueDescription::
-	@ Some entrance-statue interactions resolve through this shared script
-	@ rather than their map's specific background-event hook. Recover them.
-	specialvar VAR_RESULT, IsPjrTinTowerEntranceStatue
-	goto_if_eq VAR_RESULT, TRUE, EcruteakBellchimeTrail_EventScript_RelicShortcut
 	lock
 	msgbox RuinsOfAlph_PuzzleAndRewardChambers_Text_Statue, MSGBOX_DEFAULT
 	release
@@ -137,7 +133,6 @@ RuinsOfAlph_PuzzleAndRewardChambers_MapScript_KabutoSuccess::
 	playse SE_FALL
 	delay 60
 	warphole MAP_RUINS_OF_ALPH_B1F_HNS
-	waitstate
 	release
 	end
 
@@ -183,7 +178,6 @@ RuinsOfAlph_PuzzleAndRewardChambers_MapScript_OmanyteSuccess::
 	playse SE_FALL
 	delay 60
 	warphole MAP_RUINS_OF_ALPH_B1F_HNS
-	waitstate
 	release
 	end
 
@@ -223,7 +217,6 @@ RuinsOfAlph_PuzzleAndRewardChambers_MapScript_AerodactylSuccess::
 	playse SE_FALL
 	delay 60
 	warphole MAP_RUINS_OF_ALPH_B1F_HNS
-	waitstate
 	release
 	end
 
@@ -263,14 +256,13 @@ RuinsOfAlph_PuzzleAndRewardChambers_MapScript_HoohSuccess::
 	playse SE_FALL
 	delay 60
 	warphole MAP_RUINS_OF_ALPH_B1F_HNS
-	waitstate
 	release
 	end
 
 RuinsOfAlph_PuzzleAndRewardChambers_EventScript_CheckHooh::
 	lock
 	goto_if_set FLAG_HOOH_BROUGHT, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_RewardGotten
-	checkspecies SPECIES_HO_OH
+	specialvar VAR_RESULT, CheckHooh
 	goto_if_eq VAR_RESULT, TRUE, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_RewardHooh
 	msgbox RuinsOfAlph_PuzzleAndRewardChambers_Text_Mon, MSGBOX_SIGN
 	closemessage
@@ -295,7 +287,7 @@ RuinsOfAlph_PuzzleAndRewardChambers_EventScript_RewardHooh::
 RuinsOfAlph_PuzzleAndRewardChambers_EventScript_CheckAerodactyl::
 	lock
 	goto_if_set FLAG_AERODACTYL_BROUGHT, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_RewardGotten
-	checkspecies SPECIES_AERODACTYL
+	specialvar VAR_RESULT, CheckAerodactyl
 	goto_if_eq VAR_RESULT, TRUE, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_RewardAerodactyl
 	msgbox RuinsOfAlph_PuzzleAndRewardChambers_Text_Mon, MSGBOX_SIGN
 	closemessage
@@ -320,7 +312,7 @@ RuinsOfAlph_PuzzleAndRewardChambers_EventScript_RewardAerodactyl::
 RuinsOfAlph_PuzzleAndRewardChambers_EventScript_CheckKabuto::
 	lock
 	goto_if_set FLAG_KABUTO_BROUGHT, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_RewardGotten
-	checkspecies SPECIES_KABUTO
+	specialvar VAR_RESULT, CheckKabuto
 	goto_if_eq VAR_RESULT, TRUE, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_RewardKabuto
 	msgbox RuinsOfAlph_PuzzleAndRewardChambers_Text_Mon, MSGBOX_SIGN
 	closemessage
@@ -345,7 +337,7 @@ RuinsOfAlph_PuzzleAndRewardChambers_EventScript_RewardKabuto::
 RuinsOfAlph_PuzzleAndRewardChambers_EventScript_CheckOmanyte::
 	lock
 	goto_if_set FLAG_OMANYTE_BROUGHT, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_RewardGotten
-	checkspecies SPECIES_OMANYTE
+	specialvar VAR_RESULT, CheckOmanyte
 	goto_if_eq VAR_RESULT, TRUE, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_RewardOmanyte
 	msgbox RuinsOfAlph_PuzzleAndRewardChambers_Text_Mon, MSGBOX_SIGN
 	closemessage
@@ -429,8 +421,8 @@ RuinsOfAlph_PuzzleAndRewardChambers_Text_Hooh:
 
 @==========================================================================================================================================================
 @ Hooh
-RuinsOfAlph_EventScript_Item_LifeOrb::
-	finditem ITEM_LIFE_ORB
+RuinsOfAlph_EventScript_Item_LumBerry1::
+	finditem ITEM_LUM_BERRY
 	end
 
 RuinsOfAlph_EventScript_Item_Charcoal::
