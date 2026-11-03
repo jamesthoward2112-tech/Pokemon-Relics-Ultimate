@@ -1,5 +1,16 @@
 # PRU Work Resume Checkpoint
 
+## 3 November 2026 — Job 3C original Alph B1F ladder restoration (source tested; CI pending)
+
+- **Branch / source HEAD:** `feat/pru-relic-hunt-20261101`, source commit `7cb61e567f6ff33dd767836b76eedaf1ae1d3f56`; parent was Job 3B checkpoint `9e50c6702a749f347f181f6c24a16e9fcc2ea95f`.
+- **Last successful ROM / fallback:** Job 3B [Pokemon-Relics-Ultimate-614a3e603b.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-614a3e603b/Pokemon-Relics-Ultimate-614a3e603b.gba), 33,554,432 bytes, SHA-256 `710c86f05d0b1675b3794f2fe6139b0552569fa47de7730e9899b3555e1a31c5`. Keep this as fallback until new build and mGBA transition test pass.
+- **Coded:** Restored exactly five original B1F warp events in H&S order; removed extra (15,15) warp and its A-button script; restored metatile attributes 100=`0x0008`, 101=`0x1061`; restored lower ladder map cell `0x42E5`. Statue installer no longer changes ladder elevation or attributes. Eye statue, Alphoracle monolith, puzzle map return events and other game content are retained.
+- **Source tests:** PASS: `tools/pru/test_ruins_alph_cleanup.py` (9 checks including original warp table, all four reciprocal puzzle returns, restoration surviving the statue build step, custom statue preservation and mGBA gate configuration); Job 1 Dark Void; Job 2 Mystery Egg; Job 3 Rock Shop; Job 3A Eeveelution Expert; Job 3B Sylveon/450 Dex; Python compile and `git diff --check`.
+- **mGBA test:** Replaced screenshot colour thresholds with temporary EWRAM probes for live map group/number and player coordinates. The throwaway test ROM must enter B1F from outside, walk off/back over the original ladder warp, exit to outside, and re-enter. The CI step is now blocking. **No local mGBA/build available; actual run pending.** The four puzzle-room reciprocal links are statically checked against original source; the new emulator script currently targets the ladder’s in/out transitions.
+- **Build / release:** No Job 3C ROM build or release yet. CI source tests, clean 32 MiB compilation and the required blocking mGBA run are pending.
+- **Exact next action:** inspect GitHub Actions for source commit `7cb61e5`. Fix the test or actual traversal if it fails; do not publish on failure. When source tests, clean build and actual mGBA entry/exit/re-entry pass, verify binary size/SHA and publish. Then replace this status with final ROM/test evidence and update the PRU Development Journal.
+- **Known content:** Job 3B Sylveon and all prior features remain in source. Job 3B playable ROM stays the rollback until the above gates pass.
+
 ## 3 November 2026 — Job 3B Sylveon / canonical 450 roster (ROM built; gameplay pending)
 
 - **Branch / source HEAD:** `feat/pru-relic-hunt-20261101`, source commit `614a3e603b67e19a315d8be3b4449936466b815a`; checkpoint before final build record `da7bc13eb3c57747916aefc8b772bdfa61a21f05`. Based on Job 3A release source `868400903a`; no unrelated branch merged.
