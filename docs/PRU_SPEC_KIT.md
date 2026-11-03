@@ -1,6 +1,6 @@
 # Spec Kit adoption for Pokémon Relics Ultimate (PRU)
 
-**Status:** Review-ready, additive Spec Kit-compatible documentation scaffold. This commit does not run the Spec Kit CLI or install agent commands. It is safe to review without altering the working ROM.
+**Status:** Adopted in the active PRU branch via PR #69. The constitution and templates are tracked, and AGENTS.md now requires a regression-first Spec Kit workflow for relevant changes. The official Spec Kit CLI and agent commands have not been installed; no game code is modified by this adoption.
 
 ## Why this exists
 
@@ -48,6 +48,6 @@ CLI and integrations: https://github.github.io/spec-kit/installation.html and ht
 - Keep working checkpoints in PRU_HANDOFF.md and docs/PRU_RELEASE_LEDGER.md.
 - Keep the last verified binary available as a fallback.
 
-## This setup PR
+## Adoption and future CLI setup
 
-This initial PR adds constitution, official source templates and one draft next-step specification. It deliberately does not modify ROM source, set up CI gates, rewrite AGENTS.md, install toolchains, trigger a production build or publish a release. After it is merged/rebased, a coding-agent checkout can complete native Spec Kit initialization using the official CLI.
+PR #69 merged the constitution, templates and initial release-safety specification onto the existing PRU work branch. A follow-up documentation commit wired them into AGENTS.md. Those changes do not modify gameplay, run an emulator or create a ROM release. For local native Spec Kit commands, use the official CLI installation instructions above in a safe checkout; review generated differences rather than overwriting existing PRU instructions.
