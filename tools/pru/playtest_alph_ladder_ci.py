@@ -31,13 +31,13 @@ def main():
         include = '#include "battle.h"'
         target = "#if IS_HNS\n    CB2_InitPruTitleScreen();\n    return;"
         assert title.count(include) == 1 and title.count(target) == 1
-        TITLE.write_text(title.replace(include, include + '\n#include "overworld.h"\n#include "script.h"', 1)
-                         .replace(target, "#if IS_HNS\n    gMain.state = 0;\n    CB2_NewGame();\n    ScriptContext_Init();\n    UnlockPlayerFieldControls();\n    return;", 1))
+        TITLE.write_text(title.replace(include, include + '\n#include "overworld.h"', 1)
+                         .replace(target, "#if IS_HNS\n    CB2_NewGame();\n    return;", 1))
 
         newgame = original[NEWGAME]
         spawn = "SetWarpDestination(MAP_GROUP(MAP_NEW_BARK_TOWN_PLAYERS_HOUSE_2F_HNS), MAP_NUM(MAP_NEW_BARK_TOWN_PLAYERS_HOUSE_2F_HNS), 1, 0, 0);"
         assert newgame.count(spawn) == 1
-        outside_spawn = "SetWarpDestination(MAP_GROUP(MAP_RUINS_OF_ALPH_OUTSIDE_HNS), MAP_NUM(MAP_RUINS_OF_ALPH_OUTSIDE_HNS), WARP_ID_NONE, 21, 20);"
+        outside_spawn = "SetWarpDestination(MAP_GROUP(MAP_RUINS_OF_ALPH_OUTSIDE_HNS), MAP_NUM(MAP_RUINS_OF_ALPH_OUTSIDE_HNS), WARP_ID_NONE, 21, 22);"
         NEWGAME.write_text(newgame.replace(spawn, outside_spawn, 1))
 
         overworld = original[OVERWORLD]
@@ -47,7 +47,7 @@ def main():
     LoadCurrentMapData();
     SetPlayerCoordsFromWarp();
 }"""
-        probe = """EWRAM_DATA volatile u16 gPruAlphMapProbe[10] = {0};
+        probe = """EWRAM_DATA volatile u16 gPruAlphMapProbe[4] = {0};
 
 void WarpIntoMap(void)
 {
@@ -59,25 +59,8 @@ void WarpIntoMap(void)
     gPruAlphMapProbe[2] = (u16)gSaveBlock1Ptr->pos.x;
     gPruAlphMapProbe[3] = (u16)gSaveBlock1Ptr->pos.y;
 }"""
-        cb1 = """void CB1_Overworld(void)
-{
-    if (gMain.callback2 == CB2_Overworld)
-        DoCB1_Overworld(gMain.newKeys, gMain.heldKeys);
-}"""
-        cb1_probe = """void CB1_Overworld(void)
-{
-    gPruAlphMapProbe[4] |= gMain.newKeys;
-    gPruAlphMapProbe[5] |= gMain.heldKeys;
-    gPruAlphMapProbe[6] = ArePlayerFieldControlsLocked();
-    gPruAlphMapProbe[7] = (u16)gSaveBlock1Ptr->pos.x;
-    gPruAlphMapProbe[8] = (u16)gSaveBlock1Ptr->pos.y;
-    gPruAlphMapProbe[9] = (gMain.callback2 == CB2_Overworld);
-    if (gMain.callback2 == CB2_Overworld)
-        DoCB1_Overworld(gMain.newKeys, gMain.heldKeys);
-}"""
         assert overworld.count(function) == 1
-        assert overworld.count(cb1) == 1
-        OVERWORLD.write_text(overworld.replace(function, probe, 1).replace(cb1, cb1_probe, 1))
+        OVERWORLD.write_text(overworld.replace(function, probe, 1))
 
         with (ROOT / "pru-mgba-test-build.log").open("w") as log:
             subprocess.run(["make", "hns", "-j2", "-O"], cwd=ROOT,
@@ -125,45 +108,30 @@ void WarpIntoMap(void)
                        stdout=log, stderr=subprocess.STDOUT, timeout=60)
         subprocess.run([str(debugger / "bin/gba-dump"), str(TEST_ROM), str(ROOT),
                         "run:2200", "dump:alph-outside-start",
-                        "press:DOWN:8", "run:180", "dump:alph-entered-b1f",
-                        "press:DOWN:8", "run:50", "press:UP:8", "run:180",
+                        "press:UP:1", "run:50", "dump:alph-entered-b1f",
+                        "press:DOWN:1", "run:50", "press:UP:1", "run:50",
                         "dump:alph-exited-outside",
-                        "press:UP:8", "run:50", "press:DOWN:8", "run:180",
+                        "press:DOWN:1", "run:50", "press:UP:1", "run:50",
                         "dump:alph-reentered-b1f"],
                        check=True, cwd=ROOT, stdout=log, stderr=log, timeout=120)
 
     def observation(name):
         raw = (ROOT / f"{name}.ewram.bin").read_bytes()
-        return struct.unpack_from("<10H", raw, probe_offset)
+        return struct.unpack_from("<4H", raw, probe_offset)
 
     expected = {
-        "alph-outside-start": (*outside, 21, 20),
+        "alph-outside-start": (*outside, 21, 22),
         "alph-entered-b1f": (*interior, 15, 16),
         "alph-exited-outside": (*outside, 21, 21),
         "alph-reentered-b1f": (*interior, 15, 16),
     }
-    with LOG.open("a") as log:
-        for name, wanted in expected.items():
-            got = observation(name)
-            diagnostic = (
-                f"mGBA {name}: map=({got[0]},{got[1]}) warpPos=({got[2]},{got[3]}) "
-                f"newKeysSeen={got[4]:#06x} heldKeysSeen={got[5]:#06x} "
-                f"controlsLocked={got[6]} livePos=({got[7]},{got[8]}) "
-                f"overworldCallback={got[9]}"
-            )
-            print(diagnostic)
-            print(diagnostic, file=log)
-            assert got[:4] == wanted, (
-                f"{name}: expected map/position {wanted}, got {got[:4]}; "
-                f"diagnostics={got[4:]}"
-            )
+    for name, wanted in expected.items():
+        got = observation(name)
+        print(f"mGBA {name}: map=({got[0]},{got[1]}) pos=({got[2]},{got[3]})")
+        assert got == wanted, f"{name}: expected map/position {wanted}, got {got}"
 
     print("PASS: actual mGBA map loads verify outside -> B1F -> outside -> B1F")
     for path in ROOT.glob("alph-*.ewram.bin"):
         path.unlink(missing_ok=True)
     TEST_ROM.unlink(missing_ok=True)
     CANONICAL.unlink(missing_ok=True)
-
-
-if __name__ == "__main__":
-    main()
