@@ -35,7 +35,7 @@ SproutTower_3F_EventScript_Potion::
 	end
 
 SproutTower_3F_EventScript_EscapeRope::
-	finditem ITEM_ESCAPE_ROPE
+	finditem ITEM_TM_BULLET_SEED
 	end
 
 SproutTower_3F_EventScript_TriggerSceneLeft::

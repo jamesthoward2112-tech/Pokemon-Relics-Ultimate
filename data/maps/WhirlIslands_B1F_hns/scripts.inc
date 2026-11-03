@@ -33,5 +33,5 @@ WhirlIslands_B1F_EventScript_Item_Calcium::
 	end
 
 WhirlIslands_B1F_EventScript_Item_Escape_Rope::
-	finditem ITEM_ESCAPE_ROPE
+	finditem ITEM_TM_SWORDS_DANCE
 	end

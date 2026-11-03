@@ -45,6 +45,7 @@ Cherrygrove_Pokemart_EventScript_Clerk2::
 Cherrygrove_Pokemart_Pokemart:
 	.2byte ITEM_POTION
 	.2byte ITEM_ANTIDOTE
+	.2byte ITEM_TM_FALSE_SWIPE
 	.2byte ITEM_NONE
 	release
 	end

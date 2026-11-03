@@ -11,7 +11,7 @@ TinTower_4F_EventScript_Item_UltraBall::
 	end
 
 TinTower_4F_EventScript_Item_EscapeRope::
-    finditem ITEM_ESCAPE_ROPE
+    finditem ITEM_TM_ROCK_SLIDE
     end
 
 TinTower_4F_EventScript_Item_MaxPotion::

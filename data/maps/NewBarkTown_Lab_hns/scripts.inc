@@ -67,6 +67,13 @@ NewBarkTown_EventScript_Aide2Testimony::
 NewBarkTown_Lab_EventScript_Elm::
 	lock
 	faceplayer
+	@ Recover the reusable key item for saves that already passed the first-ball event.
+	goto_if_unset FLAG_RECEIVED_FIRST_BALLS, PRU_Elm_RopeCheckDone
+	checkitem ITEM_ESCAPE_ROPE, 1
+	goto_if_eq VAR_RESULT, TRUE, PRU_Elm_RopeCheckDone
+	msgbox PRU_Elm_Text_MissingEscapeRope, MSGBOX_DEFAULT
+	giveitem ITEM_ESCAPE_ROPE
+PRU_Elm_RopeCheckDone:
 	goto_if_set FLAG_HIDE_NEWBARKTOWN_LAB_AIDE, NewBarkTown_Lab_EventScript_ElmAideIsWaiting
 	goto_if_eq VAR_NEWBARKTOWN_LABSTATE, 7, NewBarkTown_Lab_EventScript_ElmMasterBall
 	goto_if_eq VAR_NEWBARKTOWN_LABSTATE, 8, NewBarkTown_Lab_EventScript_ElmKimono
@@ -86,6 +93,10 @@ NewBarkTown_Lab_EventScript_Elm_AfterEggCheck:
 	goto_if_set FLAG_SYS_POKEMON_GET, NewBarkTown_Lab_EventScript_MrPokemon
 	goto_if_eq VAR_NEWBARKTOWN_LABSTATE, 1, NewBarkTown_Lab_EventScript_ElmChoosePokemon
 	end
+
+PRU_Elm_Text_MissingEscapeRope:
+	.string "Take this reusable ESCAPE ROPE.\p"
+	.string "It helps you leave caves safely!$"
 
 NewBarkTown_Lab_EventScript_ElmAideIsWaiting::
 	msgbox NewBarkTown_Lab_Text_ElmAideIsWaiting, MSGBOX_DEFAULT
@@ -464,6 +475,8 @@ NewBarkTown_Lab_EventScript_TriggerAideGiveBalls::
 	giveitem ITEM_POKEMON_BOX_LINK
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_FIRST_BALLS
+	@ Give the permanent Escape Rope with the initial Poké Ball progression.
+	giveitem ITEM_ESCAPE_ROPE
 	setvar VAR_NEWBARKTOWN_LABSTATE, 6
 	applymovement LOCALID_AIDE1, NewBarkTown_Lab_Movement_Aide1LeavePlayer
 	waitmovement 0

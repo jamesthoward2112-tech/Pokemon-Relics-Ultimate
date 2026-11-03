@@ -12,7 +12,7 @@ MtMortar_1F_North_EventScript_Item_MaxRepel::
     end
 
 MtMortar_1F_North_EventScript_Item_EscapeRope::
-    finditem ITEM_ESCAPE_ROPE
+    finditem ITEM_TM_BRICK_BREAK
     end
 
 MtMortar_1F_North_EventScript_Item_MaxPotion::

@@ -159,6 +159,7 @@ jobs:
           python3 test/test_pru_ecruteak_rock_shop.py
           python3 test/test_pru_eeveelution_expert.py
           python3 test/test_pru_sylveon_dex.py
+          python3 test/test_pru_false_swipe_escape_rope.py
           python3 tools/pru/check_bld_status_icon.py
           python3 tools/pru/check_valkiri_sound.py
           python3 tools/pru/check_skarmet_tourmaline.py

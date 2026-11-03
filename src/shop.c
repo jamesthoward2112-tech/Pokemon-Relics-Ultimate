@@ -137,6 +137,10 @@ static const struct KurtBallMapping sKurtBallMappings[] =
     {ITEM_PERSIM_BERRY, ITEM_LEVEL_BALL},
 };
 
+#if IS_HNS
+static EWRAM_DATA u16 sPruCherrygroveTMStock[64] = {0};
+#endif
+
 static EWRAM_DATA struct MartInfo sMartInfo = {0};
 static EWRAM_DATA struct ShopData *sShopData = NULL;
 static EWRAM_DATA struct ListMenuItem *sListMenuItems = NULL;
@@ -369,7 +373,7 @@ static const u16 sShopInventory_ZeroBadges[] = {
     ITEM_AWAKENING,
     ITEM_PARALYZE_HEAL,
     ITEM_REPEL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_BULLET_SEED,
     ITEM_NONE
 };
 
@@ -384,7 +388,7 @@ static const u16 sShopInventory_OneBadge[] = {
     ITEM_AWAKENING,
     ITEM_PARALYZE_HEAL,
     ITEM_REPEL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_ROCK_TOMB,
     ITEM_NONE
 };
 
@@ -400,7 +404,7 @@ static const u16 sShopInventory_TwoBadges[] = {
     ITEM_PARALYZE_HEAL,
     ITEM_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_AERIAL_ACE,
     ITEM_NONE
 };
 
@@ -417,7 +421,7 @@ static const u16 sShopInventory_ThreeBadges[] = {
     ITEM_REPEL,
     ITEM_SUPER_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_BRICK_BREAK,
     ITEM_NONE
 };
 
@@ -434,7 +438,7 @@ static const u16 sShopInventory_FourBadges[] = {
     ITEM_REPEL,
     ITEM_SUPER_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_FACADE,
     ITEM_NONE
 };
 
@@ -454,7 +458,7 @@ static const u16 sShopInventory_FiveBadges[] = {
     ITEM_REPEL,
     ITEM_SUPER_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_SHADOW_BALL,
     ITEM_NONE
 };
 
@@ -475,7 +479,7 @@ static const u16 sShopInventory_SixBadges[] = {
     ITEM_REPEL,
     ITEM_SUPER_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_ROOST,
     ITEM_NONE
 };
 
@@ -498,7 +502,7 @@ static const u16 sShopInventory_SevenBadges[] = {
     ITEM_SUPER_REPEL,
     ITEM_MAX_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_ROCK_SLIDE,
     ITEM_NONE
 };
 
@@ -522,7 +526,7 @@ static const u16 sShopInventory_EightBadges[] = {
     ITEM_SUPER_REPEL,
     ITEM_MAX_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_EARTHQUAKE,
     ITEM_NONE
 };
 
@@ -549,7 +553,7 @@ static const u16 sShopInventory_ZeroBadges_PC[] = {
     ITEM_AWAKENING,
     ITEM_PARALYZE_HEAL,
     ITEM_REPEL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_BULLET_SEED,
     ITEM_NONE
 };
 
@@ -565,7 +569,7 @@ static const u16 sShopInventory_OneBadge_PC[] = {
     ITEM_AWAKENING,
     ITEM_PARALYZE_HEAL,
     ITEM_REPEL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_ROCK_TOMB,
     ITEM_NONE
 };
 
@@ -583,7 +587,7 @@ static const u16 sShopInventory_TwoBadges_PC[] = {
     ITEM_PARALYZE_HEAL,
     ITEM_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_AERIAL_ACE,
     ITEM_NONE
 };
 
@@ -602,7 +606,7 @@ static const u16 sShopInventory_ThreeBadges_PC[] = {
     ITEM_REPEL,
     ITEM_SUPER_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_BRICK_BREAK,
     ITEM_NONE
 };
 
@@ -621,7 +625,7 @@ static const u16 sShopInventory_FourBadges_PC[] = {
     ITEM_REPEL,
     ITEM_SUPER_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_FACADE,
     ITEM_NONE
 };
 
@@ -644,7 +648,7 @@ static const u16 sShopInventory_FiveBadges_PC[] = {
     ITEM_REPEL,
     ITEM_SUPER_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_SHADOW_BALL,
     ITEM_NONE
 };
 
@@ -668,7 +672,7 @@ static const u16 sShopInventory_SixBadges_PC[] = {
     ITEM_REPEL,
     ITEM_SUPER_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_ROOST,
     ITEM_NONE
 };
 
@@ -694,7 +698,7 @@ static const u16 sShopInventory_SevenBadges_PC[] = {
     ITEM_SUPER_REPEL,
     ITEM_MAX_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_ROCK_SLIDE,
     ITEM_NONE
 };
 
@@ -722,7 +726,7 @@ static const u16 sShopInventory_EightBadges_PC[] = {
     ITEM_SUPER_REPEL,
     ITEM_MAX_REPEL,
     ITEM_FLUFFY_TAIL,
-    ITEM_ESCAPE_ROPE,
+    ITEM_TM_EARTHQUAKE,
     ITEM_NONE
 };
 
@@ -1005,6 +1009,27 @@ static void SetShopItemsForSale(const u16 *items)
     {
         sMartInfo.itemList = items;
     }
+
+#if IS_HNS
+    if (items == NULL
+        && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_CHERRYGROVE_CITY_MART_HNS)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_CHERRYGROVE_CITY_MART_HNS))
+    {
+        // The later Cherrygrove clerk uses badge stock; append TM54 only there.
+        while (i < ARRAY_COUNT(sPruCherrygroveTMStock) - 2 && sMartInfo.itemList[i] != ITEM_NONE)
+        {
+            sPruCherrygroveTMStock[i] = sMartInfo.itemList[i];
+            i++;
+        }
+        if (sMartInfo.itemList[i] == ITEM_NONE)
+        {
+            sPruCherrygroveTMStock[i++] = ITEM_TM_FALSE_SWIPE;
+            sPruCherrygroveTMStock[i] = ITEM_NONE;
+            sMartInfo.itemList = sPruCherrygroveTMStock;
+        }
+        i = 0;
+    }
+#endif
 
     sMartInfo.itemCount = 0;
 
