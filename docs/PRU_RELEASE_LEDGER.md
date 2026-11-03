@@ -1,16 +1,12 @@
-## 3 November 2026 — Job 4 False Swipe and Escape Rope (Coded; source-tested; build pending)
+## 3 November 2026 — Job 4 False Swipe and Escape Rope (ROM built; ladder mGBA-tested; feature gameplay pending)
 
-- **Branch / source HEAD:** `feat/pru-relic-hunt-20261101`; source commit `0d51e263260c4a28e6de77e8389bb5563a231b7d`. The implementation was selectively reconciled from `prep/pru-rockshop-no-build-20261101`; no unrelated staged features were merged.
-- **Last successful ROM:** Job 3C `pru-build-7cb61e567f`, source `7cb61e567f6ff33dd767836b76eedaf1ae1d3f56`, 33,554,432 bytes, SHA-256 `fc12476b1190a18d368358f13d1cb973e7d1e71ef83abdd8512d445f3de9182b`. This remains the fallback until Job 4 clean build succeeds.
-- **Coded:** TM54 False Swipe (existing item 635 / ¥3,000) added to both Cherrygrove stock phases and Goldenrod 5F/Celadon 3F. Escape Rope remains reusable Key Item 120; Elm grants it after the initial Poké Ball progression and recovers it for saves that passed the event without it. Visible and hidden former Rope pickups now award one badge-tier TM. Mt Mortar, Whirl Islands, Sprout Tower and Tin Tower static Rope rewards were replaced; Goldenrod 2F and all 18 badge/PC stock entries no longer sell Rope. Existing pickup coordinates, graphics and flags are retained.
-- **Source tests PASS:** focused Job 4 regression; Job 1 Dark Void; Job 2 Mystery Egg; Job 3 Rock Shop; Job 3A Expert; Job 3B Sylveon/450 Dex; Job 3C Ruins donor-parity; `git diff --check`. CI workflow now runs the focused regression and retains the blocking Alph ladder traversal test.
-- **Build / emulator:** no Job 4 ROM build yet. GitHub Actions was triggered by source commit `0d51e263`; check its clean compile, 32 MiB verification and blocking Alph ladder mGBA traversal. Feature-specific shopping, teaching, Rope use and converted pickup interactions are not emulator-tested. No player test.
-- **Exact next action:** check Actions for source commit `0d51e263260c4a28e6de77e8389bb5563a231b7d`; resolve any real failure; on success verify ROM asset/size/SHA, then update this checkpoint, release ledger, handoff and Notion with the release.
-- **Notion:** source milestone comment added to the PRU Development Journal (comment `40d4939d-4316-8177-bccd-001d4862be24`).
-
-# PRU release ledger — 2026-10-30 snapshot
-Every new release requires full source SHA, parent lineage, PRs included,
-ROM SHA256 and size, confirmed checks, untested gameplay and verified URL.
+- **Branch / source commit:** `feat/pru-relic-hunt-20261101`; `0d51e263260c4a28e6de77e8389bb5563a231b7d`. Final documentation checkpoint follows this source commit.
+- **ROM:** [Pokemon-Relics-Ultimate-0d51e26326.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-0d51e26326/Pokemon-Relics-Ultimate-0d51e26326.gba), 33,554,432 bytes (32 MiB), SHA-256 `389de16f35499cdcd4cbd73efba03e762981eb53f8340ebc3c4eb4dc6faeb7a7`. Release: [pru-build-0d51e26326](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-0d51e26326). Includes Jobs 1–3C; prior Job 3C release remains available.
+- **Coded:** TM54 False Swipe remains item 635 at ¥3,000 and is in both Cherrygrove stock phases, Goldenrod 5F and Celadon 3F. Escape Rope remains reusable Key Item 120; Elm grants it after the first Poké Ball progression and recovers it for eligible older saves. Visible and hidden former Rope pickups award exactly one badge-tier TM. Mt Mortar, Whirl Islands, Sprout Tower and Tin Tower static rewards were converted. Goldenrod 2F and all 18 HNS badge/PC stock tables no longer sell Escape Rope. Original pickup flags, locations and graphics are retained.
+- **Source tests:** PASS: focused Job 4 regression, Job 1 Dark Void, Job 2 Mystery Egg, Job 3 Rock Shop, Job 3A Expert, Job 3B Sylveon/450 Dex, Job 3C Ruins donor parity, and `git diff --check`. Actions run [41618331917](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41618331917) passed all source regressions and clean build.
+- **Binary / emulator:** PASS: exact 33,554,432-byte build and ROM verification. The blocking mGBA probe passed outside → B1F → outside → B1F ladder traversal on this build. Alph puzzle-room exits remain source-checked but not individually traversed. False Swipe purchases/teaching and Escape Rope grant/use/converted pickups were **not gameplay-tested** in mGBA or by the player.
+- **Exact next action:** player-test TM54 purchase/teaching, Elm grant and older-save recovery, cave escape/reuse, and a visible plus hidden converted pickup in Pizza Boy; report any issue against source commit `0d51e263`.
+- **Notion:** source and final build checkpoints recorded in the PRU Development Journal.
 
 ## 2026-11-03 Ruins of Alph original B1F ladder restoration
 
