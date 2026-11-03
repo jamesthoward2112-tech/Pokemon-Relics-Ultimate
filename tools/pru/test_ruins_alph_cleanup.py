@@ -2,8 +2,11 @@
 """Focused regression checks for the Ruins of Alph / I-Unown visual patch."""
 
 import json
+import importlib.util
 import re
+import shutil
 import struct
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -117,53 +120,47 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
             self.assertEqual(copied[4:], (0, 0, 0, 0))
             self.assertEqual(attributes[clone * 2:clone * 2 + 2], attributes[original * 2:original * 2 + 2])
 
-    def test_b1f_ladder_has_a_working_exit_and_final_statue_is_direct(self):
+    def test_b1f_uses_original_five_warps_and_reciprocal_puzzle_connections(self):
         interior = read_map("RuinsOfAlph_B1F_hns")
         outside = read_map("RuinsOfAlph_Outside_hns")
-        for game_map in (interior, outside):
-            self.assertFalse(any(
-                o["graphics_id"] == "OBJ_EVENT_GFX_RELIC_LADDER_HNS"
-                for o in game_map["object_events"]
-            ))
+        expected = [
+            (15, 16, "MAP_RUINS_OF_ALPH_OUTSIDE_HNS", "5"),
+            (5, 6, "MAP_RUINS_OF_ALPH_PUZZLE_AND_REWARD_CHAMBERS_HNS", "8"),
+            (21, 6, "MAP_RUINS_OF_ALPH_PUZZLE_AND_REWARD_CHAMBERS_HNS", "10"),
+            (5, 23, "MAP_RUINS_OF_ALPH_PUZZLE_AND_REWARD_CHAMBERS_HNS", "6"),
+            (21, 23, "MAP_RUINS_OF_ALPH_PUZZLE_AND_REWARD_CHAMBERS_HNS", "4"),
+        ]
+        self.assertEqual([(w["x"], w["y"], w["dest_map"], w["dest_warp_id"])
+                          for w in interior["warp_events"]], expected)
+        self.assertEqual(len(interior["warp_events"]), 5)
+        entry = [w for w in outside["warp_events"]
+                 if w["dest_map"] == "MAP_RUINS_OF_ALPH_B1F_HNS"]
+        self.assertEqual([(w["x"], w["y"], w["dest_warp_id"])
+                          for w in entry], [(21, 21, "0")])
 
-        # Keep the ordinary B1F exit and entrance exactly as they were.
-        exit_warp = next(w for w in interior["warp_events"] if w["dest_map"] == "MAP_RUINS_OF_ALPH_OUTSIDE_HNS")
-        entry_warp = next(w for w in outside["warp_events"] if w["dest_map"] == "MAP_RUINS_OF_ALPH_B1F_HNS" and w["dest_warp_id"] == "0")
-        self.assertEqual((exit_warp["x"], exit_warp["y"], exit_warp["dest_warp_id"]), (15, 16, "5"))
-        self.assertEqual((entry_warp["x"], entry_warp["y"]), (21, 21))
-        ladder_exit = [w for w in interior["warp_events"]
-                       if (w["x"], w["y"]) == (15, 15)]
-        self.assertEqual(len(ladder_exit), 1)
-        # A matching warp event is insufficient: the engine also requires a
-        # warp-capable metatile behavior on the player's destination tile.
-        # Regression: the decorative ladder's two metatiles were MB_NORMAL,
-        # which caused the original and subsequent coordinate-only fixes to fail.
+        puzzle = read_map("RuinsOfAlph_PuzzleAndRewardChambers_hns")
+        returns = [w for w in puzzle["warp_events"]
+                   if w["dest_map"] == "MAP_RUINS_OF_ALPH_B1F_HNS"]
+        self.assertEqual(sorted((w["x"], w["y"], w["dest_warp_id"])
+                                for w in returns), sorted([
+            (4, 5, "1"), (5, 5, "1"), (20, 5, "2"), (21, 5, "2"),
+            (4, 22, "3"), (5, 22, "3"), (20, 22, "4"), (21, 22, "4"),
+        ]))
+
+    def test_original_ladder_tiles_attributes_and_no_extra_interaction(self):
+        interior = read_map("RuinsOfAlph_B1F_hns")
+        self.assertFalse(any((w["x"], w["y"]) == (15, 15)
+                             for w in interior["warp_events"]))
+        self.assertFalse(any((e["x"], e["y"]) == (15, 15)
+                             and e["script"] == "RuinsOfAlph_B1F_EventScript_ExitLadder"
+                             for e in interior["bg_events"]))
         attrs = (ROOT / "data/tilesets/secondary/ruins_of_alph_b1_f_hns"
                  / "metatile_attributes.bin").read_bytes()
-        for metatile in (100, 101):
-            self.assertEqual(struct.unpack_from("<H", attrs, metatile * 2)[0] & 0xFF,
-                             0x61, f"Ladder metatile {metatile} must be MB_LADDER")
-        # The lower ladder needs transition elevation, not elevation 4.
-        # MB_LADDER by itself missed the elevation mismatch.
+        self.assertEqual(struct.unpack_from("<H", attrs, 100 * 2)[0], 0x0008)
+        self.assertEqual(struct.unpack_from("<H", attrs, 101 * 2)[0], 0x1061)
         layout = (ROOT / "data/layouts/RuinsOfAlph_B1F_hns/map.bin").read_bytes()
         cells = struct.unpack(f"<{len(layout) // 2}H", layout)
-        upper, lower = cells[15 * 29 + 15], cells[16 * 29 + 15]
-        self.assertEqual((upper & 0x3FF, lower & 0x3FF), (740, 741))
-        self.assertEqual(lower & 0xF000, 0, "Lower ladder must have transition elevation")
-        self.assertEqual(upper & 0xF000, 0, "Upper ladder must have transition elevation")
-        header = (ROOT / "include/constants/metatile_behaviors.h").read_text()
-        enum = header.split("enum {", 1)[1].split("};", 1)[0]
-        enum = re.sub(r"//[^\n]*", "", enum)
-        behaviors = [part.strip() for part in enum.split(",") if part.strip()]
-        self.assertEqual(behaviors.index("MB_LADDER"), 0x61)
-
-        self.assertEqual((ladder_exit[0]["dest_map"], ladder_exit[0]["dest_warp_id"]),
-                         ("MAP_RUINS_OF_ALPH_OUTSIDE_HNS", "5"))
-        ladder_interaction = [e for e in interior["bg_events"]
-                              if (e["x"], e["y"]) == (15, 15)]
-        self.assertEqual(len(ladder_interaction), 1)
-        self.assertEqual(ladder_interaction[0]["script"],
-                         "RuinsOfAlph_B1F_EventScript_ExitLadder")
+        self.assertEqual(cells[16 * 29 + 15], 0x42E5)
 
         statue = [e for e in interior["bg_events"] if (e["x"], e["y"]) == (25, 28)]
         self.assertEqual(len(statue), 1)
@@ -178,14 +175,57 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
             self.assertIn(flag, activation)
         self.assertIn("goto RuinsOfAlph_B1F_hns_RelicAlphoracle", activation)
         self.assertIn("goto RuinsOfAlph_Lab_EventScript_RelicAlphoracle", shrine)
-        self.assertIn("RuinsOfAlph_B1F_EventScript_ExitLadder::", shrine)
-        self.assertIn("warp MAP_RUINS_OF_ALPH_OUTSIDE_HNS, 21, 21", shrine)
+        self.assertNotIn("RuinsOfAlph_B1F_EventScript_ExitLadder", shrine)
         self.assertNotIn("RuinsOfAlph_Outside_RelicLadder::",
                          (MAPS / "RuinsOfAlph_Outside_hns/scripts.inc").read_text())
         self.assertNotIn("warp MAP_RUINS_OF_ALPH_B1F_HNS, 12, 18",
                          (MAPS / "RuinsOfAlph_Outside_hns/scripts.inc").read_text())
         hint = (MAPS / "RuinsOfAlph_Lab_hns/scripts.inc").read_text()
         self.assertIn('Touch the FINAL STONE STATUE', hint)
+
+    def test_statue_build_step_does_not_change_restored_ladder_values(self):
+        source = ROOT / "tools/pru/install_ruins_alph_statues.py"
+        spec = importlib.util.spec_from_file_location("install_ruins_alph_statues", source)
+        installer = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(installer)
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            layout = root / "data/layouts/RuinsOfAlph_B1F_hns/map.bin"
+            tileset = root / "data/tilesets/secondary/ruins_of_alph_b1_f_hns"
+            layout.parent.mkdir(parents=True)
+            tileset.mkdir(parents=True)
+            shutil.copy2(ROOT / "data/layouts/RuinsOfAlph_B1F_hns/map.bin", layout)
+            for name in ("metatiles.bin", "metatile_attributes.bin"):
+                shutil.copy2(ROOT / "data/tilesets/secondary/ruins_of_alph_b1_f_hns" / name,
+                             tileset / name)
+            before_attrs = (tileset / "metatile_attributes.bin").read_bytes()
+            before_cells = struct.unpack(f"<{len(layout.read_bytes()) // 2}H", layout.read_bytes())
+            installer.ROOT = root
+            installer._clear_original_statue_tiles()
+            after = struct.unpack(f"<{len(layout.read_bytes()) // 2}H", layout.read_bytes())
+            self.assertEqual(after[16 * 29 + 15], 0x42E5)
+            statue_cells = {9 * 29 + 16, 10 * 29 + 16, 27 * 29 + 25, 28 * 29 + 25}
+            for index, value in enumerate(before_cells):
+                if index not in statue_cells:
+                    self.assertEqual(after[index], value)
+            attrs = (tileset / "metatile_attributes.bin").read_bytes()
+            self.assertEqual(struct.unpack_from("<H", attrs, 200 * 2)[0],
+                             struct.unpack_from("<H", attrs, 99 * 2)[0])
+            self.assertEqual(struct.unpack_from("<H", attrs, 202 * 2)[0],
+                             struct.unpack_from("<H", attrs, 99 * 2)[0])
+            self.assertEqual(struct.unpack_from("<H", attrs, 100 * 2)[0], 0x0008)
+            self.assertEqual(struct.unpack_from("<H", attrs, 101 * 2)[0], 0x1061)
+            self.assertEqual(before_attrs, attrs)
+
+    def test_mgba_gate_checks_runtime_maps_and_is_blocking(self):
+        playtest = (ROOT / "tools/pru/playtest_alph_ladder_ci.py").read_text()
+        for marker in ("gba-dump", "gPruAlphMapProbe", "alph-entered-b1f",
+                       "alph-exited-outside", "alph-reentered-b1f"):
+            self.assertIn(marker, playtest)
+        self.assertNotIn("brown_fraction", playtest)
+        workflow = (ROOT / ".github/workflows/pru-clean-build.yml").read_text()
+        test_step = workflow.split("- name: Verify Alph B1F exit by walking through it in mGBA", 1)[1].split("- name:", 1)[0]
+        self.assertNotIn("continue-on-error", test_step)
 
     def test_i_unown_icon_uses_mewduo_palette_without_changing_front_or_back_assets(self):
         icon = Image.open(ROOT / "graphics/pokemon/unown_eye/icon.png")

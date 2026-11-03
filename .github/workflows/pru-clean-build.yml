@@ -239,20 +239,16 @@ jobs:
       - name: Verify Alph B1F exit by walking through it in mGBA
         shell: bash
         timeout-minutes: 18
-        # Keep this unrelated legacy ladder assertion visible without blocking
-        # the active feature branch from packaging its verified 32 MiB ROM.
-        continue-on-error: ${{ github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' }}
         run: python3 tools/pru/playtest_alph_ladder_ci.py
-      - name: Upload Alph ladder emulator traversal screenshots
+      - name: Upload Alph ladder emulator transition trace
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: PRU-ALPH-LADDER-mGBA-TRAVERSAL
           path: |
-            pru-alph-before.png
-            pru-alph-after.png
             pru-mgba-ladder.log
             pru-mgba-test-build.log
+            alph-*.ewram.bin
           if-no-files-found: warn
       - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4

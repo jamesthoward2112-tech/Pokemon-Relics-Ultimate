@@ -239,28 +239,8 @@ def _clear_original_statue_tiles():
         offset = row * width + col
         values[offset] = (values[offset] & 0xFC00) | (640 + clone)
 
-    # The lower exit ladder had erroneous elevation 4 (bit 0x4000),
-    # unlike its transition-elevation approach/upper half (elevation 0).
-    # Clear only this elevation bit; preserve graphics and collision values.
-    lower_exit_index = 16 * width + 15
-    assert values[lower_exit_index] & 0x3FF == 640 + 101, (
-        "Unexpected Alph ladder metatile; aborting unrelated layout edit")
-    values[lower_exit_index] &= ~0x4000
-
     layout_path.write_bytes(struct.pack(f"<{len(values)}H", *values))
     meta_path.write_bytes(struct.pack(f"<{len(entries)}H", *entries))
-    # Both halves of the existing visible entrance ladder use custom HNS metatiles.
-    # They were accidentally tagged MB_NORMAL (0). The GBA warp handler checks
-    # MetatileBehavior_IsLadder BEFORE it even looks at the warp event, so the
-    # existing (15, 16) and (15, 15) warp events could never fire.
-    # MB_LADDER = 97 (0x61) in include/constants/metatile_behaviors.h.
-    # Preserve all other attribute bits, all graphics, and every other tile.
-    for ladder_metatile in (100, 101):
-        attr_offset = ladder_metatile * 2
-        old = struct.unpack_from("<H", attributes, attr_offset)[0]
-        struct.pack_into("<H", attributes, attr_offset,
-                         (old & 0xFF00) | 0x61)
-
     attr_path.write_bytes(attributes)
 
 
