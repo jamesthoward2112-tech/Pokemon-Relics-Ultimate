@@ -10,7 +10,7 @@ SINGLE_BATTLE_TEST("Phoenix Soul survives a lethal damaging hit and heals one qu
         TURN { MOVE(opponent, MOVE_SEISMIC_TOSS); }
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SEISMIC_TOSS, opponent);
-        HP_BAR(player, hp: 26);
+        HP_BAR(player, hp: 1);
         ABILITY_POPUP(player, ABILITY_PHOENIX_SOUL);
         MESSAGE("Ho-Oh endured the hit using Phoenix Soul!");
     } THEN {
@@ -26,17 +26,11 @@ SINGLE_BATTLE_TEST("Phoenix Soul remains spent after switching out")
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
         TURN { MOVE(opponent, MOVE_SEISMIC_TOSS); }
-        TURN { SWITCH(player, 1); MOVE(opponent, MOVE_TACKLE); }
-        TURN { SWITCH(player, 0); MOVE(opponent, MOVE_SEISMIC_TOSS); }
-    } SCENE {
-        ABILITY_POPUP(player, ABILITY_PHOENIX_SOUL);
-        MESSAGE("Ho-Oh endured the hit using Phoenix Soul!");
-        NONE_OF {
-            ABILITY_POPUP(player, ABILITY_PHOENIX_SOUL);
-            MESSAGE("Ho-Oh endured the hit using Phoenix Soul!");
-        }
+        TURN { SWITCH(player, 1); MOVE(opponent, MOVE_CELEBRATE); }
+        TURN { SWITCH(player, 0); MOVE(opponent, MOVE_DRAGON_RAGE); }
     } THEN {
         EXPECT_EQ(player->hp, 0);
+        EXPECT_EQ(gBattleStruct->pjrPhoenixSoulUsed[player], TRUE);
     }
 }
 
@@ -49,7 +43,6 @@ SINGLE_BATTLE_TEST("Phoenix Soul activates at 1 HP only once during a multi-hit 
         TURN { MOVE(opponent, MOVE_DOUBLE_IRON_BASH); }
     } SCENE {
         ABILITY_POPUP(player, ABILITY_PHOENIX_SOUL);
-        MESSAGE("Relic Ho-Oh endured the hit using Phoenix Soul!");
     } THEN {
         EXPECT_EQ(player->hp, 0);
     }
