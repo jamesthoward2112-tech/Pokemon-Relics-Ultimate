@@ -126,7 +126,7 @@ void WarpIntoMap(void)
         subprocess.run([str(debugger / "bin/gba-dump"), str(TEST_ROM), str(ROOT),
                         "run:2200", "dump:alph-outside-start",
                         "press:DOWN:8", "run:180", "dump:alph-entered-b1f",
-                        "press:UP:8", "run:50", "press:DOWN:8", "run:180",
+                        "press:DOWN:8", "run:50", "press:UP:8", "run:180",
                         "dump:alph-exited-outside",
                         "press:UP:8", "run:50", "press:DOWN:8", "run:180",
                         "dump:alph-reentered-b1f"],

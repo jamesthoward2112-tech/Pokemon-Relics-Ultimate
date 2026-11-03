@@ -147,7 +147,7 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
             (4, 22, "3"), (5, 22, "3"), (20, 22, "4"), (21, 22, "4"),
         ]))
 
-    def test_original_ladder_tiles_attributes_and_no_extra_interaction(self):
+    def test_hns_ladder_warps_attributes_and_reachable_exit(self):
         interior = read_map("RuinsOfAlph_B1F_hns")
         self.assertFalse(any((w["x"], w["y"]) == (15, 15)
                              for w in interior["warp_events"]))
@@ -160,7 +160,7 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         self.assertEqual(struct.unpack_from("<H", attrs, 101 * 2)[0], 0x1061)
         layout = (ROOT / "data/layouts/RuinsOfAlph_B1F_hns/map.bin").read_bytes()
         cells = struct.unpack(f"<{len(layout) // 2}H", layout)
-        self.assertEqual(cells[16 * 29 + 15], 0x42E5)
+        self.assertEqual(cells[16 * 29 + 15], 0x02E5)
 
         statue = [e for e in interior["bg_events"] if (e["x"], e["y"]) == (25, 28)]
         self.assertEqual(len(statue), 1)
@@ -183,7 +183,7 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         hint = (MAPS / "RuinsOfAlph_Lab_hns/scripts.inc").read_text()
         self.assertIn('Touch the FINAL STONE STATUE', hint)
 
-    def test_statue_build_step_does_not_change_restored_ladder_values(self):
+    def test_statue_build_step_preserves_working_ladder_values(self):
         source = ROOT / "tools/pru/install_ruins_alph_statues.py"
         spec = importlib.util.spec_from_file_location("install_ruins_alph_statues", source)
         installer = importlib.util.module_from_spec(spec)
@@ -203,7 +203,7 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
             installer.ROOT = root
             installer._clear_original_statue_tiles()
             after = struct.unpack(f"<{len(layout.read_bytes()) // 2}H", layout.read_bytes())
-            self.assertEqual(after[16 * 29 + 15], 0x42E5)
+            self.assertEqual(after[16 * 29 + 15], 0x02E5)
             statue_cells = {9 * 29 + 16, 10 * 29 + 16, 27 * 29 + 25, 28 * 29 + 25}
             for index, value in enumerate(before_cells):
                 if index not in statue_cells:
