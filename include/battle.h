@@ -715,6 +715,8 @@ struct BattleStruct
     u8 magicBounceActive:1;
     u8 pjrSacredRebirthUsed[MAX_BATTLERS_COUNT];
     u8 pjrSacredRebirthPending[MAX_BATTLERS_COUNT];
+    u8 pjrPhoenixSoulUsed[MAX_BATTLERS_COUNT];
+    u8 pjrPhoenixSoulPending[MAX_BATTLERS_COUNT];
     u8 moveBouncer;
     u8 dancerSavedAttacker:3;
     u8 dancerSavedTarget:3;
@@ -1201,3 +1203,4 @@ static inline bool32 IsGhostBattleWithoutScope(void)
 }
 
 #endif // GUARD_BATTLE_H
+

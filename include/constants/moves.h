@@ -991,6 +991,9 @@ enum __attribute__((packed)) Move
     // Exclusive I-Unown signature; append only to preserve the existing PRU move IDs.
     MOVE_OMEN_EYE,
 
+    // Exclusive Golden Ho-Oh signature; append only to preserve all move IDs.
+    MOVE_GOLDEN_REIGN,
+
     MOVES_COUNT,
 
     // Z Moves
@@ -1099,3 +1102,4 @@ enum __attribute__((packed)) Move
 #define MOVE_UNAVAILABLE 0xFFFF // Used for checks for moves affected by Disable, Mimic, etc.
 
 #endif  // GUARD_CONSTANTS_MOVES_H
+

@@ -358,7 +358,10 @@ enum __attribute__((packed)) Ability
     ABILITY_RELIC_EYE,
     // Append only; Golden Ho-Oh's exclusive final RELIC ability.
     ABILITY_GOLDEN_SOVEREIGN,
+    // Final Golden Ho-Oh signature; append only to preserve every legacy ID.
+    ABILITY_PHOENIX_SOUL,
     ABILITIES_COUNT,
 };
 
 #endif  // GUARD_CONSTANTS_ABILITIES_H
+

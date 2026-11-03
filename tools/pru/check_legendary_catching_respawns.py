@@ -70,8 +70,19 @@ assert "goto_if_set FLAG_CAUGHT_LUGIA, WhirlIslands_LugiaChamber_MapScript_Lugia
 assert re.search(r"WhirlIslands_LugiaChamber_MapScript_LugiaPostStoryGone::[\s\S]*?setvar VAR_COMPLETED_LUGIA, 4", lugia)
 hooh = read("data/maps/TinTower_RoofDay_hns/scripts.inc")
 assert "goto_if_set FLAG_CAUGHT_HO_OH, TinTower_RoofDay_MapScript_HoohCaught" in hooh
-assert "goto_if_eq VAR_COMPLETED_HO_OH, 3, TinTower_RoofDay_EventScript_HoOhRetry" in hooh
-assert "seteventmon SPECIES_HO_OH, 50" in hooh
+assert "TinTower_RoofDay_EventScript_HoOhRetry::" not in hooh
+assert "TinTower_RoofDay_EventScript_HoOhPostgame::" not in hooh
+assert "BattleSetup_StartLegendaryBattle" not in hooh
+assert "seteventmon SPECIES_HO_OH" not in hooh
+assert "TinTower_RoofDay_EventScript_HoOhStoryFarewell::" in hooh
+assert "setvar VAR_COMPLETED_HO_OH, 3" in hooh
+for path in ("data/maps/NavelRock_Summit_Frlg/scripts.inc", "data/maps/NavelRock_Top/scripts.inc"):
+    navel = read(path)
+    assert "BattleSetup_StartLegendaryBattle" not in navel
+    assert "seteventmon SPECIES_HO_OH" not in navel
+oak = read("data/maps/MtSilver_SummitDay_hns/scripts.inc")
+assert "seteventmon SPECIES_RELIC_HO_OH, 100" in oak
+assert "setflag FLAG_PJR_RELIC_HO_OH" in oak
 ilex = read("data/maps/IlexForest_hns/scripts.inc")
 assert "call_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, IlexForest_EventScript_SecondCelebiCaught" in ilex
 
@@ -82,6 +93,7 @@ assert "SPECIES_JIRACHI, 50" in read("data/maps/MtMoon_Outside_hns/scripts.inc")
 print("PASS: legends use rate floor 20 only in HNS legendary/roamer encounters")
 print("PASS: 15 static legendary hide flags restore only for seen, uncaught species")
 print("PASS: Jirachi and Celebi story gates; Mew and Deoxys defeat markers reset")
-print("PASS: Lugia, Ho-Oh, Suicune and second Celebi retries preserve captured/story states")
+print("PASS: Tin Tower/Navel Rock are non-catchable story flybys; Oak is the sole Lv100 Relic Ho-Oh encounter")
 print("PASS: all PRU wild legendaries fight (including Latias/Latios), cannot flee/Teleport/Roar")
 print("PASS: Latias/Latios and Kanto bird roamers recover after KO, retire after capture")
+

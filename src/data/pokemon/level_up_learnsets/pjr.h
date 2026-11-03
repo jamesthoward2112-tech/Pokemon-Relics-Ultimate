@@ -449,6 +449,7 @@ static const struct LevelUpMove sRelicHoOhLevelUpLearnset[] =
     LEVEL_UP_MOVE(85, MOVE_PHOENIX_HYMN),
     LEVEL_UP_MOVE(88, MOVE_ANCIENT_POWER),
     LEVEL_UP_MOVE(99, MOVE_FUTURE_SIGHT),
+    LEVEL_UP_MOVE(100, MOVE_GOLDEN_REIGN),
     LEVEL_UP_END
 };
 
@@ -1779,3 +1780,4 @@ static const u16 sMaroghostTeachableLearnset[] =
     MOVE_SLEEP_TALK,
     MOVE_UNAVAILABLE,
 };
+

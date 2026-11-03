@@ -55,30 +55,11 @@ NavelRock_Summit_EventScript_HoOh::
 	applymovement LOCALID_NAVEL_ROCK_HO_OH, Movement_HoOhApproach
 	waitmovement 0
 	special RemoveCameraObject
-	seteventmon SPECIES_HO_OH, 70
-	setflag FLAG_SYS_CTRL_OBJ_DELETE
-	special BattleSetup_StartLegendaryBattle
-	waitstate
-	clearflag FLAG_SYS_CTRL_OBJ_DELETE
-	setvar VAR_LAST_TALKED, LOCALID_NAVEL_ROCK_HO_OH
-	specialvar VAR_RESULT, GetBattleOutcome
-	goto_if_eq VAR_RESULT, B_OUTCOME_WON, NavelRock_Summit_EventScript_DefeatedHoOh
-	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, NavelRock_Summit_EventScript_RanFromHoOh
-	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, NavelRock_Summit_EventScript_RanFromHoOh
 	setflag FLAG_FOUGHT_HO_OH
-	releaseall
-	end
-
-NavelRock_Summit_EventScript_DefeatedHoOh::
 	setflag FLAG_HO_OH_FLEW_AWAY
 	setvar VAR_0x8004, SPECIES_HO_OH
 	goto EventScript_MonFlewAway
-	end
 
-NavelRock_Summit_EventScript_RanFromHoOh::
-	setvar VAR_0x8004, SPECIES_HO_OH
-	goto EventScript_MonFlewAway
-	end
 
 Movement_CameraPanUp:
 	walk_up
@@ -113,3 +94,4 @@ Movement_HoOhAppear:
 	walk_in_place_down
 	walk_in_place_down
 	step_end
+

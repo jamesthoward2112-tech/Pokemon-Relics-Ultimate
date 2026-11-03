@@ -1837,6 +1837,13 @@ static void MoveDamageDataHpUpdate(enum BattlerId battler, u32 scriptBattler, co
             gBattleStruct->pjrSacredRebirthPending[battler] = FALSE;
         }
 
+        if (gBattleStruct->pjrPhoenixSoulPending[battler] && gBattleMons[battler].hp > 0)
+        {
+            u32 heal = max(1, gBattleMons[battler].maxHP / 4);
+            gBattleMons[battler].hp = min(gBattleMons[battler].maxHP, gBattleMons[battler].hp + heal);
+            gBattleStruct->pjrPhoenixSoulPending[battler] = FALSE;
+        }
+
         if (gCurrentMove == MOVE_PHOENIX_HYMN
          && gBattleStruct->moveDamage[battler] > 0
          && IsBattlerAlive(gBattlerAttacker)
@@ -15332,3 +15339,4 @@ void BS_TryGiveDroppedItems(void)
 
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
+

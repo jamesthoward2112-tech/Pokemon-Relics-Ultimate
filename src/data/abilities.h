@@ -2568,5 +2568,16 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .cantBeTraced = TRUE,
         .breakable = TRUE,
     },
+    [ABILITY_PHOENIX_SOUL] =
+    {
+        .name = _("PHOENIX SOUL"),
+        .description = COMPOUND_STRING("Survives a lethal hit once and\nrestores a quarter of its HP."),
+        .aiRating = 10,
+        .cantBeCopied = TRUE,
+        .cantBeSwapped = TRUE,
+        .cantBeTraced = TRUE,
+        .breakable = TRUE,
+    },
 
 };
+

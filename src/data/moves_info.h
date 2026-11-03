@@ -24391,4 +24391,33 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_Psychic,
     },
 
+    [MOVE_GOLDEN_REIGN] =
+    {
+        .name = COMPOUND_STRING("GOLDEN REIGN"),
+        .description = COMPOUND_STRING("Scorches both foes and brings\nfive turns of harsh sunlight."),
+        .effect = EFFECT_HIT,
+        .power = 110,
+        .type = TYPE_FIRE,
+        .accuracy = 100,
+        .pp = 5,
+        .target = TARGET_BOTH,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .instructBanned = TRUE,
+        .mimicBanned = TRUE,
+        .copycatBanned = TRUE,
+        .sketchBanned = TRUE,
+        .mirrorMoveBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 20,
+        }, {
+            .moveEffect = MOVE_EFFECT_SUN,
+            .chance = 100,
+        }),
+        .battleAnimScript = gBattleAnimMove_MakeItRain,
+    },
+
 };
+

@@ -8519,6 +8519,20 @@ s32 GetAdjustedDamage(struct BattleContext *ctx, s32 damage)
         gLastUsedAbility = ABILITY_SACRED_REBIRTH;
         gBattleStruct->moveResultFlags[ctx->battlerDef] |= MOVE_RESULT_FOE_ENDURED;
     }
+    else if (ctx->abilityDef == ABILITY_PHOENIX_SOUL
+          && !gBattleStruct->pjrPhoenixSoulUsed[ctx->battlerDef]
+          && gBattleMons[ctx->battlerDef].hp > 0
+          && GetMovePower(ctx->move) != 0)
+    {
+        // Reuse the engine's lethal-hit survival path, then heal in
+        // Cmd_healthbarUpdate. The per-battler latch survives switching.
+        enduredHit = TRUE;
+        gBattleStruct->pjrPhoenixSoulUsed[ctx->battlerDef] = TRUE;
+        gBattleStruct->pjrPhoenixSoulPending[ctx->battlerDef] = TRUE;
+        RecordAbilityBattle(ctx->battlerDef, ABILITY_PHOENIX_SOUL);
+        gLastUsedAbility = ABILITY_PHOENIX_SOUL;
+        gBattleStruct->moveResultFlags[ctx->battlerDef] |= MOVE_RESULT_STURDIED;
+    }
     else if (GetConfig(B_STURDY) >= GEN_5 && gSaveBlock3Ptr->challengeSettings.tx_Mode_Sturdy == 1 && ctx->abilityDef == ABILITY_STURDY && IsBattlerAtMaxHp(ctx->battlerDef))
     {
         enduredHit = TRUE;
@@ -11439,3 +11453,4 @@ enum BattlerId GetTargetBySlot(enum BattlerId battlerAtk, enum BattlerId battler
         return B_BATTLER_0;
     }
 }
+

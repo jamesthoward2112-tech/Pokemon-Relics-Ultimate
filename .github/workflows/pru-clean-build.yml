@@ -184,6 +184,11 @@ jobs:
           python3 tools/pru/check_kanto_gym_custom_rebalance.py
           python3 tools/pru/check_kanto_gym_rewards.py
           python3 tools/pru/check_fuchsia_safari_upgrade_and_kangaskhan.py
+      - name: Run Golden Reign and Phoenix Soul battle-engine tests
+        run: |
+          set -euo pipefail
+          make -j2 check BUILD=hns TESTS=test/battle/move_effects_combined/golden_reign.c
+          make -j2 check BUILD=hns TESTS=test/battle/ability/phoenix_soul.c
       - name: Restore pinned PJR multiboot binary build inputs
         shell: bash
         run: |
@@ -331,3 +336,4 @@ jobs:
             sleep 0.4
           done < "$RUNNER_TEMP/pru-stale-runs.txt"
           echo "PRU_RUNS_CLEANED=$cleaned failures=$failed"
+

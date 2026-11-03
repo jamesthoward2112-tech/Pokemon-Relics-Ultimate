@@ -178,6 +178,16 @@ MtSilver_SummitDay_EventScript_RelicOak::
 	end
 
 MtSilver_SummitDay_EventScript_OakSummon::
+	goto_if_unset FLAG_PRU_RELIC_OAK_BATTLE_WON, MtSilver_SummitDay_EventScript_OakNeedCrest
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, MtSilver_SummitDay_EventScript_OakNeedCrest
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, MtSilver_SummitDay_EventScript_OakNeedCrest
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, MtSilver_SummitDay_EventScript_OakNeedCrest
+	goto_if_unset FLAG_PJR_RELIC_LUGIA, MtSilver_SummitDay_EventScript_OakNeedCrest
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, MtSilver_SummitDay_EventScript_OakNeedCrest
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, MtSilver_SummitDay_EventScript_OakNeedCrest
+	goto_if_unset FLAG_PJR_RELIC_SUICUNE, MtSilver_SummitDay_EventScript_OakNeedCrest
+	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, MtSilver_SummitDay_EventScript_OakNeedCrest
+	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_OakNeedCrest
 	checkitem ITEM_ANCIENT_RAINBOW_CREST
 	goto_if_eq VAR_RESULT, FALSE, MtSilver_SummitDay_EventScript_OakNeedCrest
 	msgbox MtSilver_SummitDay_Text_OakSummon, MSGBOX_YESNO
@@ -185,7 +195,7 @@ MtSilver_SummitDay_EventScript_OakSummon::
 	playmoncry SPECIES_RELIC_HO_OH, CRY_MODE_ENCOUNTER
 	waitmoncry
 	playbgm MUS_HG_VS_HO_OH, 0
-	seteventmon SPECIES_RELIC_HO_OH, 85
+	seteventmon SPECIES_RELIC_HO_OH, 100
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome
@@ -254,4 +264,5 @@ MtSilver_SummitDay_Text_OakEpilogue:
 	.string "ELM and I could not be prouder.\p"
 	.string "Your legend will live on,\n"
 	.string "ELITE 20 CHAMPION!$"
+
 
