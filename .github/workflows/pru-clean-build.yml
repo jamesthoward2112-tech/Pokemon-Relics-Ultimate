@@ -154,6 +154,7 @@ jobs:
           python3 tools/pru/check_golden_hooh.py
           python3 tools/pru/check_dark_void_i_unown.py
           python3 test/test_pru_mystery_egg_seller.py
+          python3 test/test_pru_ecruteak_rock_shop.py
           python3 tools/pru/check_bld_status_icon.py
           python3 tools/pru/check_valkiri_sound.py
           python3 tools/pru/check_skarmet_tourmaline.py
