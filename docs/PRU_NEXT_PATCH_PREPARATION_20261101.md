@@ -1,5 +1,19 @@
 # PRU — queued next patch (prepared 2026-11-01; DO NOT BUILD OR RELEASE)
 
+## Job 4 release discrepancy — hotfix MUST precede Indigo tutors (3 November 2026)
+
+**CONFIRMED CODE/RELEASE DEFECT AGAINST APPROVED REQUIREMENTS:** Work published Job 4 release `pru-build-0d51e26326` (source `0d51e263260c4a28e6de77e8389bb5563a231b7d`, checkpoint `bb11c3123e7ac4f58d94e61b0f9b56da1d6b4862`) with **badge-tiered TM loot**, despite owner's explicit latest requirement that ordinary former Escape Rope field loot give **one Max Revive**. This mismatch is verified in `src/item_ball.c` and `test/test_pru_false_swipe_escape_rope.py` on the published source. Do not report Job 4 loot conversion as approved/completed, and do not begin Job 5 tutors before a small repair.
+
+**Minimal hotfix details:**
+1. In `src/item_ball.c`, remove the entire badge-tier `GetPruEscapeRopePickupTm` implementation; for HNS visible item ball templates with `ITEM_ESCAPE_ROPE`, return **`ITEM_MAX_REVIVE`**, quantity **1**, with no badge check. Remove now-unused badges header.
+2. In `src/field_control_avatar.c`, when HNS hidden pickup uses original `ITEM_ESCAPE_ROPE`, set `gSpecialVar_0x8005 = ITEM_MAX_REVIVE` and `gSpecialVar_0x8009 = 1`, preserving original hidden-item flags. Delete no-longer-needed helper declaration from `include/item_ball.h`.
+3. Replace exactly the four already-converted HNS field scripts, preserving script labels and flags: `data/maps/MtMortar_1F_North_hns/scripts.inc` (was Brick Break TM), `data/maps/WhirlIslands_B1F_hns/scripts.inc` (was Swords Dance TM), `data/maps/SproutTower_3F_hns/scripts.inc` (was Bullet Seed TM), `data/maps/TinTower_3F_hns/scripts.inc` (was Rock Slide TM), all to `finditem ITEM_MAX_REVIVE`. Do not change Sprout Tower's unrelated **rival Escape Rope dialogue** or its movement script.
+4. Update `test/test_pru_false_swipe_escape_rope.py` to assert **Max Revive** rather than badge-tier selection/TMs, retain all False Swipe, Key Item and flags assertions; source test must explicitly reject remaining `GetPruEscapeRopePickupTm` or TM replacement code in former Rope field pickup paths. Conduct full HNS map/source audit; do not replace legitimate Key Item `giveitem ITEM_ESCAPE_ROPE` in New Bark Lab or non-HNS scripts. No change to TM reusability mechanics.
+5. Preserve the proven original H&S Alph ladder blocking mGBA regression, Sylveon, 450 canonical Pokédex, all preceding changes. Update GitHub checkpoint/release ledger and Notion, push focused fix, compile/release another valid 32 MiB ROM with SHA-256. Report mGBA Max Revive pickup gameplay accurately as passed only if tested; do not conflate Alph ladder test with field-item test. Keep prior ROM as fallback.
+
+**Source verification:** Latest GitHub branch HEAD was checkpoint `bb11c3123e7ac4f58d94e61b0f9b56da1d6b4862` and published ROM was [0d51e26326](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-0d51e26326) when discrepancy discovered. **Research/documentation only**, no gameplay source changed in this entry.
+
+
 ## 3 November — OWNER OVERRIDE: Job 4 Escape Rope pickups give MAX REVIVES, NOT TMs
 
 **Latest approved instruction, superseding all earlier staged Rope→TM tiers in this document:** Every *formerly obtainable* Escape Rope from PRU/HNS **visible item balls, hidden/background loot, and explicit scripted field item pickups** should now award **ONE `ITEM_MAX_REVIVE`**, not any TM. Preserve its exact original pickup location, object/script identity, one-time item flag, quantity=1, bag-space behaviour, and existing-save compatibility. Don't grant a duplicate for already collected pickups. Do not make the reward depend on badge count or current TM collection.
