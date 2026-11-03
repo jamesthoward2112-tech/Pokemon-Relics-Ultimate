@@ -164,7 +164,7 @@ assert "jumpifsubstituteblocks BattleScript_ButItFailed" in stat_down
 assert "accuracycheck BattleScript_MoveMissedPause" in stat_down
 assert "jumpifhalfword CMP_EQUAL, gCurrentMove, MOVE_SCARY_FACE, BattleScript_PRU_ScaryFaceFear" in stat_down
 fear = stat_down.split("BattleScript_PRU_ScaryFaceFear::", 1)[1]
-assert "jumpifword CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_NO_EFFECT, BattleScript_MoveEnd" in fear
+assert "jumpifmoveresultflags MOVE_RESULT_NO_EFFECT, BattleScript_MoveEnd" in fear
 assert "seteffectprimary BS_ATTACKER, BS_TARGET, MOVE_EFFECT_FEAR" in fear
 
 handler = read("src/battle_script_commands.c").split("case MOVE_EFFECT_FEAR:", 1)[1].split("case MOVE_EFFECT_PRU_INFATUATION:", 1)[0]

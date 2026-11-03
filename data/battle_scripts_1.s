@@ -2492,7 +2492,7 @@ BattleScript_StatDownEnd::
 #if IS_HNS
 BattleScript_PRU_ScaryFaceFear::
 	@ A stat-loss immunity or other no-effect result also blocks the added Fear.
-	jumpifword CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_NO_EFFECT, BattleScript_MoveEnd
+	jumpifmoveresultflags MOVE_RESULT_NO_EFFECT, BattleScript_MoveEnd
 	seteffectprimary BS_ATTACKER, BS_TARGET, MOVE_EFFECT_FEAR
 	goto BattleScript_MoveEnd
 #endif
