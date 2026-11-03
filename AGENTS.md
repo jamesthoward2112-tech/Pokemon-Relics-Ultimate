@@ -1,9 +1,17 @@
 # AGENTS.md — Pokémon Relics Ultimate
-Updated 2026-10-30. Supersedes outdated Johto Relics / pjr-rebuild guidance.
+Updated 2026-11-03. Supersedes outdated Johto Relics / pjr-rebuild guidance.
 
 Repository: jamesthoward2112-tech/Pokemon-Relics-Ultimate.
 Read PRU_HANDOFF.md and docs/PRU_RELEASE_LEDGER.md at the beginning of every task.
 Current game is standalone PRU, not a PJR donor fork release.
+
+## Spec Kit workflow for PRU changes
+- Read `.specify/memory/constitution.md` and `docs/PRU_SPEC_KIT.md` alongside the handoff and release ledger before new work. These add to, not replace, existing PRU instructions.
+- For substantial features or risky fixes, record user-visible acceptance criteria, unaffected behaviours and save compatibility in `specs/<feature>/spec.md`; add `plan.md` and `tasks.md` only when scope warrants them. For tiny fixes, prefer a concise regression checklist.
+- Compare the current HEAD, known-good commit, failing logs and changed files before patching. Distinguish a broken game feature from a broken test harness. Prefer the smallest verified correction; never alter working game maps just to satisfy a mistaken test.
+- Keep actual source tests, compilation, mGBA interaction evidence, GitHub release and player testing as separate statuses. Never bypass a required real gameplay test or add unrelated screenshot gates.
+- Check CI and release evidence before declaring completion. Preserve the previous confirmed ROM; do not force push or overwrite concurrent work.
+- The tracked Spec Kit templates can be used without the official CLI. Only claim CLI commands or agent integrations were installed or run when they actually were.
 
 ## Player instructions
 - Deliver a real raw .gba quickly. The player handles gameplay testing in Pizza Boy.
