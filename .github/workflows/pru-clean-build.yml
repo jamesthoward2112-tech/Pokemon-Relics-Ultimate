@@ -292,7 +292,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Direct 32 MiB GBA from PRU commit $GITHUB_SHA, including Charaxis art and E20-gated RELICS hunt: Raikou Power Plant, Entei Mt Mortar upper B1F alcove, Lugia deepest Whirl Islands, Unown I Eye Ruins of Alph, Celebi Ilex, Suicune Cape, Alphoracle monolith + ladder; Oak/scientist hints. Source checks, compilation and 32 MiB ROM verification passed. No emulator testing is performed in this workflow. Player will test independently in Pizza Boy; gameplay and entrances are not yet verified." \
+              --notes "Direct 32 MiB GBA from PRU commit $GITHUB_SHA. Job 6 adds the sole Level 100 Golden Ho-Oh finale, its exclusive Golden Reign move, and Phoenix Soul ability while preserving the prior RELICS progression and story encounters. Source regressions, Golden Reign/Phoenix Soul battle-engine tests, clean production build, exact 32 MiB ROM verification, and the real mGBA Ruins of Alph ladder entry/exit/re-entry traversal passed. Manual in-game feature playthrough was not performed." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
