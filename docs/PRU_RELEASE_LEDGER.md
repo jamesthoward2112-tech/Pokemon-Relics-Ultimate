@@ -2,6 +2,16 @@
 Every new release requires full source SHA, parent lineage, PRs included,
 ROM SHA256 and size, confirmed checks, untested gameplay and verified URL.
 
+## 2026-11-03 Ruins of Alph original B1F ladder restoration
+
+- Branch: `feat/pru-relic-hunt-20261101`; source commit `7cb61e567f6ff33dd767836b76eedaf1ae1d3f56`.
+- Restored the original five B1F warp events/indices, ladder metatile attributes and (15,16) tile `0x42E5`; removed the (15,15) extra warp and interaction; build-time statue installer now preserves ladder data.
+- Focused source regressions and full clean build passed in Actions run [41612553467](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41612553467). Blocking mGBA test asserted actual entrance, ladder exit and re-entry map IDs/coordinates. All four puzzle-room return connections passed source checks but were not individually traversed in mGBA.
+- ROM size: 33,554,432 bytes. SHA-256: `fc12476b1190a18d368358f13d1cb973e7d1e71ef83abdd8512d445f3de9182b`.
+- Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-7cb61e567f/Pokemon-Relics-Ultimate-7cb61e567f.gba
+- Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-7cb61e567f
+- No player gameplay test was run. Next action if required: manually/emulator traverse each of the four puzzle-room return routes.
+
 ## 2026-11-03 Rock Shop Eeveelution Expert
 
 - Branch: `feat/pru-relic-hunt-20261101`; source commit `868400903a8a76ab81c3b573404807bbd80a12a6`, based on Job 3 source `b4967a4948fcef832dc7ef95686fc707275b0054`.

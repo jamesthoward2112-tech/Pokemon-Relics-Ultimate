@@ -1,3 +1,6 @@
+## 2026-11-03 Job 3C original H&S Alph B1F ladder (ROM built; ladder emulator tested)
+Source: `7cb61e567f6ff33dd767836b76eedaf1ae1d3f56`; branch `feat/pru-relic-hunt-20261101`. Restored the five original B1F warps and ladder tile/attributes; removed the extra warp/script and installer mutations. Focused regressions and full CI build passed in Actions run [41612553467](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41612553467). Blocking mGBA EWRAM probe verified real outside (21,22) → B1F (15,16) → outside (21,21) → B1F (15,16) key-driven transitions. ROM: [Pokemon-Relics-Ultimate-7cb61e567f.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-7cb61e567f/Pokemon-Relics-Ultimate-7cb61e567f.gba), 33,554,432 bytes, SHA256 `fc12476b1190a18d368358f13d1cb973e7d1e71ef83abdd8512d445f3de9182b`. Puzzle-room reciprocal warp source checks passed, but the four puzzle routes were not each walked in mGBA. Keep Job 3B ROM as older fallback; no player gameplay test claimed. Next action if needed: mGBA-play the four puzzle return routes.
+
 # PRU_HANDOFF.md — authoritative session handover
 Last audited: 2026-11-01. All statuses below are scoped to evidence; no newer gameplay is implied.
 
