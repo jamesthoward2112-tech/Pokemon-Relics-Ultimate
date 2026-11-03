@@ -1,7 +1,16 @@
-Warning: truncated output (original token count: 14273)
-Total output lines: 297
-
 # PRU Work Resume Checkpoint
+
+## 3 November 2026 — Job 3B Sylveon / canonical 450 roster (source tested; ROM pending)
+
+- **Branch / current remote source HEAD:** `feat/pru-relic-hunt-20261101`, source commit `614a3e603b67e19a315d8be3b4449936466b815a`; this is a fast-forward from Job 3A checkpoint `c52b6f5e78974b613859e80f40b5f2408857b795`. Source pushed; resume-checkpoint documentation commit follows.
+- **Last successful ROM:** [Pokemon-Relics-Ultimate-868400903a.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-868400903a/Pokemon-Relics-Ultimate-868400903a.gba), 33,554,432 bytes, SHA-256 `a31878022fd48141b0af3a2fcebbcd27257129401f067adee764427b5a564448`. It predates Job 3B and remains the latest playable build.
+- **Coded:** Sylveon replaces Luvdisc in the 450 canonical roster at #185 after Glaceon; display numbering was recalculated and the CSV plus `sPruDexSpecies` table agree. `SPECIES_LUVDISC = 370` and `SPECIES_SYLVEON = 700` remain unchanged. The obtainable-Dex enum/lookup no longer exposes Luvdisc. HNS fishing encounters, Route 25 decoration and four trainer slots now use already-approved species; non-HNS encounter records and Luvdisc's species/egg records remain. HNS randomizer outputs and daycare breeding are restricted to the canonical roster, so old-save Luvdisc is retained but cannot create new HNS eggs.
+- **Evolution / Dex / expert:** HNS Eevee now directly evolves to Sylveon with Dawn Stone; all 17 existing methods remain. Expert says 18 and explains the Fog Badge Dawn Stone stock. The RelicDex Eevee method view now has four pages of five, so all 18 show. Seen/Caught bits are keyed by fixed National Dex numbers (`gSpeciesInfo[].natDexNum`), not PRU display order; no save migration or save-layout change is needed.
+- **Source regressions:** `check_444_species_dex.py`, `check_canonical_eeveelutions.py`, `check_evo_dex_discovery.py`, `check_pru_444_gameplay.py`, new `test_pru_sylveon_dex.py`, updated Eeveelution Expert test, Job 1 Dark Void, Job 2 Mystery Egg and Job 3 Rock Shop checks all passed. `git diff --check` passed. HNS legality check reported 784 trainers / 2,305 team entries, 171 wild maps / 6,402 slots, and 559 map scripts; no HNS Luvdisc acquisition remains.
+- **Build / gameplay:** source tested only. No Job 3B ROM build, mGBA evolution/Pokédex/expert test, old-save load, or player gameplay test yet. The existing Job 3A mGBA failure `No textured exterior frame after warp` for the Alph ladder remains unresolved and is out of scope; do not mark it passing.
+- **Source files:** canonical CSV/header; `include/constants/pokedex.h`, `src/pokemon.c`, `src/daycare.c`, `src/randomizer.c`, Eevee evolution data and RelicDex page logic; Rock Shop Expert script; HNS encounters/trainers/Route 25 map; focused tests, CI workflow and roster/source verifiers.
+- **Exact next action:** push this checkpoint documentation; inspect the clean-build workflow triggered by source commit `614a3e6`; wait for the single clean HNS build and verify a 33,554,432-byte ROM/release asset. Then run available mGBA/gameplay/save tests and record untested items accurately. Keep the Alph-ladder failure separate.
+- **Notion:** source progress comment posted in the PRU Development Journal; append the checkpoint commit, CI/build result, final ROM URL/hash and exact next gameplay actions after each milestone.
 
 ## 3 November 2026 — Job 3A Rock Shop Eeveelution Expert (ROM built; gameplay pending)
 
