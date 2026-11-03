@@ -2,6 +2,15 @@
 Every new release requires full source SHA, parent lineage, PRs included,
 ROM SHA256 and size, confirmed checks, untested gameplay and verified URL.
 
+## 2026-11-03 Rock Shop Eeveelution Expert
+
+- Branch: `feat/pru-relic-hunt-20261101`; source commit `868400903a8a76ab81c3b573404807bbd80a12a6`, based on Job 3 source `b4967a4948fcef832dc7ef95686fc707275b0054`.
+- Actions run [41603367214](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41603367214) passed source regressions, clean HNS compilation, 32 MiB ROM verification, artifact upload and release publication.
+- ROM: 33,554,432 bytes; GitHub asset SHA-256 `a31878022fd48141b0af3a2fcebbcd27257129401f067adee764427b5a564448`.
+- Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-868400903a/Pokemon-Relics-Ultimate-868400903a.gba
+- Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-868400903a
+- Existing mGBA Alph-ladder assertion failed with `No textured exterior frame after warp`; the workflow retained the failure while allowing packaging on this branch. Prior Job 3 `brown fraction 0.1881` failure remains recorded. Neither tests this job's NPC. Expert/menu/evolution gameplay and old-save loading remain untested.
+
 ## 2026-11-03 Ecruteak Rock Shop
 
 - Branch: `feat/pru-relic-hunt-20261101`; source commit: `b4967a4948fcef832dc7ef95686fc707275b0054`, based on the Job 2 lineage `f43559e7682a6cfb9f9c316919e25c77aaf98632`.

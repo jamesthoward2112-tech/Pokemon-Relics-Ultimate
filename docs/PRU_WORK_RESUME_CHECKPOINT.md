@@ -3,17 +3,17 @@ Total output lines: 297
 
 # PRU Work Resume Checkpoint
 
-## 3 November 2026 — Job 3A Rock Shop Eeveelution Expert (source tested; build pending)
+## 3 November 2026 — Job 3A Rock Shop Eeveelution Expert (ROM built; gameplay pending)
 
-- **Branch / source HEAD:** `feat/pru-relic-hunt-20261101`, source commit `868400903a8a76ab81c3b573404807bbd80a12a6`; checkpoint commit follows. Based on the latest working Job 3 release `b4967a4948`; no other development branch was merged.
-- **Last successful ROM:** [Pokemon-Relics-Ultimate-b4967a4948.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-b4967a4948/Pokemon-Relics-Ultimate-b4967a4948.gba), 33,554,432 bytes, SHA-256 `bb28df95e916747a9617b0b530ce92c2bd0de7275f0dc3bbc328abbc79513661`. This is the current ROM until the new build succeeds; it includes Jobs 1–3.
+- **Branch / source HEAD:** `feat/pru-relic-hunt-20261101`, source commit `868400903a8a76ab81c3b573404807bbd80a12a6`; final checkpoint commit follows. Based on the latest working Job 3 release `b4967a4948`; no other development branch was merged.
+- **Latest successful ROM:** [Pokemon-Relics-Ultimate-868400903a.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-868400903a/Pokemon-Relics-Ultimate-868400903a.gba), 33,554,432 bytes, SHA-256 `a31878022fd48141b0af3a2fcebbcd27257129401f067adee764427b5a564448`. It includes Jobs 1–3 and the Eeveelution Expert.
 - **Coded:** Lass HNS Eeveelution Expert and actual Eevee overworld object on adjacent floor tiles (9,6) and (10,6); walk-up tile remains open. Expert gives a repeatable menu for classic, Relic and unusual evolutions, then returns to menu or exits. Eevee has a friendly cry interaction. Dialogue lists all 17 approved species with their exact direct-use item methods; it notes Rock Shop availability and Fog Badge stock gating accurately. No Sylveon, new graphics, species IDs or save variables.
 - **Evolution verification:** HNS `#if IS_HNS` table contains direct `EVO_ITEM` entries for all 17 guide pairs. The alternate held-item/level methods are in the non-HNS `#else` branch and are not described. This is source verification only; actual item-triggered evolution gameplay has not been run.
-- **Source tests:** `python3 test/test_pru_eeveelution_expert.py`, Job 3 Rock Shop regression, Job 1 Dark Void regression, Job 2 Mystery Egg regression, JSON parse and `git diff --check` all PASS. CI now runs the new Expert test. Status: **Coded; Source tested**.
-- **Gameplay/build:** no local ARM compiler or mGBA executable. NPC interaction, menu navigation and evolution items are **not emulator/player tested**. The prior build's Alph-ladder visual assertion failed (`brown fraction 0.1881`) and remains recorded/non-blocking; this task did not change or retest the ladder.
+- **Source tests:** `python3 test/test_pru_eeveelution_expert.py`, Job 3 Rock Shop regression, Job 1 Dark Void regression, Job 2 Mystery Egg regression, JSON parse and `git diff --check` all PASS. CI ran all source regressions and compiled the map/script changes.
+- **Build / emulator:** Actions run [41603367214](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41603367214) completed successfully; clean HNS build, 33,554,432-byte verification, artifact and release succeeded. The existing mGBA Alph-ladder test ran but failed `No textured exterior frame after warp`; the earlier `brown fraction 0.1881` failure is also retained in prior Job 3 records. Both are unrelated to the shop and remain unresolved. NPC interaction/menu and actual evolution-item gameplay are **not tested**; no local mGBA/ARM tools.
 - **Source files:** `data/maps/EcruteakCity_RockShop_hns/map.json`, `data/maps/EcruteakCity_RockShop_hns/scripts.inc`, `test/test_pru_eeveelution_expert.py`, `.github/workflows/pru-clean-build.yml`.
-- **Exact next action:** inspect CI run triggered by `86840090`. If source/build pass, verify the raw 32 MiB ROM release and SHA, update `docs/PRU_RELEASE_LEDGER.md` and this checkpoint, and add final ROM/checkpoint details to Notion. Record the Alph-ladder failure separately. If CI fails, fix only the first scoped Eeveelution Expert issue and checkpoint again.
-- **Notion:** add the source-tested implementation entry now; append verified build URL/hash and final checkpoint after release.
+- **Exact next action:** player-test the Rock Shop expert’s accessibility, all menu branches, Eevee cry and item-use evolutions in a game; test loading an existing save. No gameplay pass is claimed. Keep the Alph-ladder mGBA failure separately recorded.
+- **Notion:** source-tested and final build entries are present; final ROM URL/hash and final checkpoint commit are appended after the docs commit.
 
 ## 3 November 2026 — Job 3 Ecruteak Rock Shop (ROM built; gameplay pending)
 
