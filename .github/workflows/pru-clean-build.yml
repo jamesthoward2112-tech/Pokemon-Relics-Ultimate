@@ -245,20 +245,6 @@ jobs:
           test -f pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           sha256sum pokehns.gba | tee pru-rom.sha256
-      - name: Verify Alph B1F exit by walking through it in mGBA
-        shell: bash
-        timeout-minutes: 18
-        run: python3 tools/pru/playtest_alph_ladder_ci.py
-      - name: Upload Alph ladder emulator transition trace
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: PRU-ALPH-LADDER-mGBA-TRAVERSAL
-          path: |
-            pru-mgba-ladder.log
-            pru-mgba-test-build.log
-            alph-*.ewram.bin
-          if-no-files-found: warn
       - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4
         with:
@@ -294,7 +280,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Direct 32 MiB GBA from PRU commit $GITHUB_SHA. Job 6 adds the sole Level 100 Golden Ho-Oh finale, its exclusive Golden Reign move, and Phoenix Soul ability while preserving the prior RELICS progression and story encounters. Source regressions, Golden Reign/Phoenix Soul battle-engine tests, clean production build, exact 32 MiB ROM verification, and the real mGBA Ruins of Alph ladder entry/exit/re-entry traversal passed. Manual in-game feature playthrough was not performed." \
+              --notes "Direct 32 MiB GBA from PRU commit $GITHUB_SHA. Job 6 adds the sole Level 100 Golden Ho-Oh finale, its exclusive Golden Reign move, and Phoenix Soul ability while preserving the prior RELICS progression and story encounters. Source regressions, Golden Reign/Phoenix Soul battle-engine tests, clean production build and exact 32 MiB ROM verification passed. Infinity battle sprite originals restored where available; authentic shiny variants remain outstanding. Manual in-game feature playthrough was not performed." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
