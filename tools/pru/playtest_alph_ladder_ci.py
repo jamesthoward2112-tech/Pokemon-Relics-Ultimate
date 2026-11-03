@@ -135,3 +135,7 @@ void WarpIntoMap(void)
         path.unlink(missing_ok=True)
     TEST_ROM.unlink(missing_ok=True)
     CANONICAL.unlink(missing_ok=True)
+
+
+if __name__ == "__main__":
+    main()
