@@ -6,7 +6,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 def source(path):
-    return (ROOT / path).read_text(encoding="utf-8")
+    # Some legacy C sources contain non-UTF-8 comments; preserve ASCII tokens.
+    return (ROOT / path).read_bytes().decode("latin-1")
 
 def require(condition, reason):
     if not condition:
