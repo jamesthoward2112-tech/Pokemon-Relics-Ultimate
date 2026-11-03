@@ -1,3 +1,14 @@
+## 3 November 2026 — Job 5 Indigo tutors and Scary Face Fear (coded; source-tested; build in progress)
+
+- **Branch / source commit:** `feat/pru-relic-hunt-20261101`; `afbf21db8c1f98ab6bd884b9ac1180ef64ec7ba9`.
+- **Last successful ROM / fallback:** [Pokemon-Relics-Ultimate-0f1023351d.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-0f1023351d/Pokemon-Relics-Ultimate-0f1023351d.gba), 33,554,432 bytes, SHA-256 `5ab52fe8ae7452a2f57b5674bfd22c376a388bfad61978740b89f166cde0dbc7`.
+- **Coded:** Added Eerie Fog and Scary Face to the existing Indigo hazard tutor with aligned menu/cancel indices and selective type compatibility. Retained Scary Face's existing -2 Speed and Fear volatile; no-effect results do not inflict Fear. Restored the requested Electroweb and Follow Me / Reflect / Double Hit / Baton Pass choices to the existing doubles/setup tutors, each with selective type compatibility. Existing NPCs, hazard/cleanup/setup/doubles move paths, Snarl and Shuckle's Bug-type Sticky Web compatibility remain.
+- **Source tests PASS:** `test/test_pru_indigo_tutors_scary_face.py`; Jobs 1–4A source regressions (`check_dark_void_i_unown.py`, Mystery Egg, Rock Shop, Eeveelution Expert, Sylveon/450 Dex, False Swipe/Escape Rope); Job 3C donor-parity tests; `git diff --check`.
+- **Build / emulator:** corrected full-source Actions run [41633842320](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41633842320) is in progress; it must pass the clean 32 MiB build and blocking mGBA Alph ladder traversal. Earlier run [41633677818](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41633677818) is for the superseded initial upload and is non-authoritative. Tutor menu and Scary Face battle gameplay have not been emulator-tested.
+- **Exact next action:** verify run `41633842320`; if successful confirm release asset size/SHA and update this record + Notion. If it fails, fix only the reported source/build issue and rerun.
+- **Source files:** `data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc`, `src/chooseboxmon.c`, `data/battle_scripts_1.s`, `test/test_pru_indigo_tutors_scary_face.py`, `.github/workflows/pru-clean-build.yml`.
+- **Notion:** Job 5 source milestone entry pending; update after this checkpoint push.
+
 ## 3 November 2026 — Job 4A Escape Rope pickups corrected to Max Revives (ROM built; Alph ladder mGBA-tested)
 
 - **Branch / source commit:** `feat/pru-relic-hunt-20261101`; `0f1023351de364c8f6e37330ed1d5888289f27bd`.
