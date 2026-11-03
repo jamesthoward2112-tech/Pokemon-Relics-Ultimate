@@ -100,6 +100,8 @@ jobs:
           PY
       - name: Import pinned PRL-approved existing sprites and palettes
         run: python3 tools/pru/sync_prl_authoritative_sprites.py
+      - name: Restore exact original Infinity battle sprites after PRL sync
+        run: python3 tools/pru/install_infinity_sprite_cleanup.py
       - name: Install approved final-polish sprite donors after PRL sync
         run: python3 tools/pru/install_final_polish_sprites.py
       - name: Install approved black Relic G-Max Charaxis artwork
