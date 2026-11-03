@@ -21,7 +21,6 @@
 #include "field_specials.h"
 #include "fldeff_misc.h"
 #include "follower_npc.h"
-#include "item_ball.h"
 #include "item_menu.h"
 #include "link.h"
 #include "match_call.h"
@@ -495,7 +494,7 @@ static const u8 *GetInteractedBackgroundEventScript(struct MapPosition *position
 #if IS_HNS
         if (gSpecialVar_0x8005 == ITEM_ESCAPE_ROPE)
         {
-            gSpecialVar_0x8005 = GetPruEscapeRopePickupTm();
+            gSpecialVar_0x8005 = ITEM_MAX_REVIVE;
             gSpecialVar_0x8009 = 1;
         }
 #endif
