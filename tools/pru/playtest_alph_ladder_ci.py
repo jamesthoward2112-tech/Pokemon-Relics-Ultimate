@@ -47,7 +47,7 @@ def main():
     LoadCurrentMapData();
     SetPlayerCoordsFromWarp();
 }"""
-        probe = """EWRAM_DATA volatile u16 gPruAlphMapProbe[4] = {0};
+        probe = """EWRAM_DATA volatile u16 gPruAlphMapProbe[10] = {0};
 
 void WarpIntoMap(void)
 {
@@ -59,8 +59,25 @@ void WarpIntoMap(void)
     gPruAlphMapProbe[2] = (u16)gSaveBlock1Ptr->pos.x;
     gPruAlphMapProbe[3] = (u16)gSaveBlock1Ptr->pos.y;
 }"""
+        cb1 = """void CB1_Overworld(void)
+{
+    if (gMain.callback2 == CB2_Overworld)
+        DoCB1_Overworld(gMain.newKeys, gMain.heldKeys);
+}"""
+        cb1_probe = """void CB1_Overworld(void)
+{
+    gPruAlphMapProbe[4] |= gMain.newKeys;
+    gPruAlphMapProbe[5] |= gMain.heldKeys;
+    gPruAlphMapProbe[6] = ArePlayerFieldControlsLocked();
+    gPruAlphMapProbe[7] = (u16)gSaveBlock1Ptr->pos.x;
+    gPruAlphMapProbe[8] = (u16)gSaveBlock1Ptr->pos.y;
+    gPruAlphMapProbe[9] = (gMain.callback2 == CB2_Overworld);
+    if (gMain.callback2 == CB2_Overworld)
+        DoCB1_Overworld(gMain.newKeys, gMain.heldKeys);
+}"""
         assert overworld.count(function) == 1
-        OVERWORLD.write_text(overworld.replace(function, probe, 1))
+        assert overworld.count(cb1) == 1
+        OVERWORLD.write_text(overworld.replace(function, probe, 1).replace(cb1, cb1_probe, 1))
 
         with (ROOT / "pru-mgba-test-build.log").open("w") as log:
             subprocess.run(["make", "hns", "-j2", "-O"], cwd=ROOT,
@@ -117,7 +134,7 @@ void WarpIntoMap(void)
 
     def observation(name):
         raw = (ROOT / f"{name}.ewram.bin").read_bytes()
-        return struct.unpack_from("<4H", raw, probe_offset)
+        return struct.unpack_from("<10H", raw, probe_offset)
 
     expected = {
         "alph-outside-start": (*outside, 21, 22),
@@ -125,10 +142,21 @@ void WarpIntoMap(void)
         "alph-exited-outside": (*outside, 21, 21),
         "alph-reentered-b1f": (*interior, 15, 16),
     }
-    for name, wanted in expected.items():
-        got = observation(name)
-        print(f"mGBA {name}: map=({got[0]},{got[1]}) pos=({got[2]},{got[3]})")
-        assert got == wanted, f"{name}: expected map/position {wanted}, got {got}"
+    with LOG.open("a") as log:
+        for name, wanted in expected.items():
+            got = observation(name)
+            diagnostic = (
+                f"mGBA {name}: map=({got[0]},{got[1]}) warpPos=({got[2]},{got[3]}) "
+                f"newKeysSeen={got[4]:#06x} heldKeysSeen={got[5]:#06x} "
+                f"controlsLocked={got[6]} livePos=({got[7]},{got[8]}) "
+                f"overworldCallback={got[9]}"
+            )
+            print(diagnostic)
+            print(diagnostic, file=log)
+            assert got[:4] == wanted, (
+                f"{name}: expected map/position {wanted}, got {got[:4]}; "
+                f"diagnostics={got[4:]}"
+            )
 
     print("PASS: actual mGBA map loads verify outside -> B1F -> outside -> B1F")
     for path in ROOT.glob("alph-*.ewram.bin"):
