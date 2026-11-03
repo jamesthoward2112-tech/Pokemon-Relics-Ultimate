@@ -1,3 +1,13 @@
+## 3 November 2026 — Job 4A Escape Rope pickups corrected to Max Revives (Coded; source-tested; build pending)
+
+- **Branch / source commit:** `feat/pru-relic-hunt-20261101`; `0f1023351de364c8f6e37330ed1d5888289f27bd`.
+- **Latest successful ROM / fallback:** [Pokemon-Relics-Ultimate-0d51e26326.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-0d51e26326/Pokemon-Relics-Ultimate-0d51e26326.gba), 33,554,432 bytes, SHA-256 `389de16f35499cdcd4cbd73efba03e762981eb53f8340ebc3c4eb4dc6faeb7a7`.
+- **Coded:** All former visible, hidden, and four scripted HNS Rope field pickups now yield exactly one `ITEM_MAX_REVIVE`; removed the badge-tier helper and declaration. Preserved the reusable Escape Rope Key Item, Elm grant/recovery, False Swipe shops, all item event labels/flags/locations/graphics, and TM settings. Sprout Tower rival's Escape Rope story dialogue is unchanged. No non-HNS changes.
+- **Source tests PASS:** focused Job 4A regression (TM54 stock/teachability, Max Revive conversions, item flags/coordinates/graphics, Key Item behavior, HNS audit); Job 1 Dark Void; Job 2 Mystery Egg; Job 3 Rock Shop; Job 3A Expert; Job 3B Sylveon/450 Dex; Job 3C Ruins donor parity; `git diff --check`.
+- **Build / emulator:** Actions clean build and blocking Alph ladder mGBA traversal pending on source commit `0f102335`. Max Revive pickup gameplay is not tested; the ladder test does not test pickup contents.
+- **Exact next action:** verify Actions for `0f1023351de364c8f6e37330ed1d5888289f27bd`; on success confirm 32 MiB asset and SHA, publish/record release, update Notion and this checkpoint.
+- **Notion:** source milestone comment `40d4939d-4316-813a-87e2-001d3bc0730b`; final release update pending.
+
 ## 3 November 2026 — Job 4 False Swipe and Escape Rope (ROM built; ladder mGBA-tested; feature gameplay pending)
 
 - **Branch / source commit:** `feat/pru-relic-hunt-20261101`; `0d51e263260c4a28e6de77e8389bb5563a231b7d`. Final documentation checkpoint follows this source commit.
