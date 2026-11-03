@@ -168,3 +168,10 @@ only for features the player actually tested. Never call 401214913d player-confi
 - Direct ROM: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-aa850e57cf/Pokemon-Relics-Ultimate-aa850e57cf.gba
 - Release: https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-aa850e57cf
 - The workflow's mGBA test only validates the existing Alph ladder traversal. Dark Void singles/doubles, Omen Eye battle behavior and pre-existing save compatibility remain untested; player validation is outstanding.
+
+## Job 6 Golden Ho-Oh / Golden Reign / Phoenix Soul — source pushed, build pending
+
+- Source commit: `8abc9fc54fa8d361f33d4c50939bcb4116ba99a7` on `feat/pru-relic-hunt-20261101`; based on Job 5 checkpoint `2e9de621ec13460152663112145ac20e09c11dd6`.
+- Source scope: exclusive Golden Reign and Phoenix Soul for `SPECIES_RELIC_HO_OH`; sole level-100 Oak/Mt. Silver encounter with all RELIC, Crest and Oak gates; Tin Tower and Navel Rock remain story flybys and are no longer catchable. Legacy saves and existing Ho-Oh are retained.
+- Focused source checks for Jobs 1–6 passed locally. Added battle-engine checks are queued in Actions run [41649939179](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41649939179). Production build, 32 MiB binary verification and blocking mGBA Alph ladder test are pending.
+- Fallback remains Job 5 ROM `Pokemon-Relics-Ultimate-6325f44fca.gba`, SHA-256 `42384cddfce34153452505eed6e3d963a71929b880d930079f56219984b98ea0`. No Job 6 release URL or ROM checksum is recorded until Actions succeeds.
