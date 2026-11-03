@@ -12,7 +12,7 @@ SINGLE_BATTLE_TEST("Phoenix Soul survives a lethal damaging hit and heals one qu
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SEISMIC_TOSS, opponent);
         HP_BAR(player, hp: 1);
         ABILITY_POPUP(player, ABILITY_PHOENIX_SOUL);
-        MESSAGE("Ho-Oh endured the hit using Phoenix Soul!");
+        MESSAGE("Ho-Oh endured the hit using PHOENIX SOUL!");
     } THEN {
         EXPECT_EQ(player->hp, 26);
     }
@@ -23,10 +23,10 @@ SINGLE_BATTLE_TEST("Phoenix Soul remains spent after switching out")
     GIVEN {
         PLAYER(SPECIES_HO_OH) { Ability(ABILITY_PHOENIX_SOUL); MaxHP(100); HP(30); }
         PLAYER(SPECIES_WOBBUFFET);
-        OPPONENT(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_WOBBUFFET) { Moves(MOVE_SEISMIC_TOSS, MOVE_TACKLE, MOVE_DRAGON_RAGE); }
     } WHEN {
         TURN { MOVE(opponent, MOVE_SEISMIC_TOSS); }
-        TURN { SWITCH(player, 1); MOVE(opponent, MOVE_CELEBRATE); }
+        TURN { SWITCH(player, 1); MOVE(opponent, MOVE_TACKLE); }
         TURN { SWITCH(player, 0); MOVE(opponent, MOVE_DRAGON_RAGE); }
     } THEN {
         EXPECT_EQ(player->hp, 0);
