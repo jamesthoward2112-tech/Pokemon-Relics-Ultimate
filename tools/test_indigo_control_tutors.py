@@ -18,9 +18,9 @@ HAZARD_MOVES = [
     "MOVE_TOXIC", "MOVE_WILL_O_WISP", "MOVE_THUNDER_WAVE", "MOVE_TAUNT",
     "MOVE_ENCORE", "MOVE_KNOCK_OFF", "MOVE_ROAR", "MOVE_WHIRLWIND",
     "MOVE_DRAGON_TAIL", "MOVE_INFESTATION",
-    # Four new Insurgence moves are additive; all pre-existing move choices
-    # and species compatibility remain identical to stable a4d393.
+    # PRU move options are additive; all earlier choices remain in place.
     "MOVE_ACHILLES_HEEL", "MOVE_PERMAFROST", "MOVE_WILDFIRE", "MOVE_DARK_MATTER",
+    "MOVE_EERIE_FOG", "MOVE_SCARY_FACE",
 ]
 
 CLEANUP_MOVES = [
@@ -31,6 +31,11 @@ CLEANUP_MOVES = [
     "MOVE_PARTING_SHOT", "MOVE_SNARL", "MOVE_ICY_WIND", "MOVE_BREAKING_SWIPE",
     "MOVE_CHILLING_WATER", "MOVE_ACID_SPRAY", "MOVE_NUZZLE",
 ]
+
+SETUP_UTILITY_MOVES = [
+    "MOVE_FOLLOW_ME", "MOVE_REFLECT", "MOVE_DOUBLE_HIT", "MOVE_BATON_PASS",
+]
+DOUBLE_TARGET_MOVES = ["MOVE_ELECTROWEB"]
 
 def text() -> str:
     return SCRIPT.read_text(encoding="utf-8")
@@ -116,8 +121,14 @@ class TestIndigoControlTutors(unittest.TestCase):
         self.assertIn("CanSpeciesLearnPjrControlTutorMove(species, move)", choosebox)
         self.assertNotIn("if (IsPjrControlTutorMove(gSpecialVar_0x8005))", choosebox)
         compatibility = choosebox.split("static bool32 CanSpeciesLearnPjrControlTutorMove", 1)[1].split("static u32 CanMonLearnPjrControlMove", 1)[0]
-        for move in HAZARD_MOVES + CLEANUP_MOVES:
+        for move in HAZARD_MOVES + CLEANUP_MOVES + SETUP_UTILITY_MOVES:
             self.assertIn(f"case {move}:", compatibility)
+
+        self.assertIn("case MOVE_ELECTROWEB:", choosebox.split(
+            "static bool32 CanSpeciesLearnPruDoubleTutorMove", 1)[1].split(
+                "bool32 CanSpeciesLearnPruTutorMove", 1
+            )[0]
+        )
 
         # Move rules reflect species type and anatomy, not only the old
         # custom-ID range. New additions must stay eligible too.
