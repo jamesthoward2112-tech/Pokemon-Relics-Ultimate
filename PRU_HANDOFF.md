@@ -130,3 +130,12 @@ Cave warp elevation zero is a wildcard; do NOT claim elevation 3 itself is the b
 3. Migrate donor import outputs to approved checked-in sprite assets with hash manifest.
 4. Fix 403 publication/release-only upload; preserve last player-tested rollback.
 5. Keep PRU_HANDOFF.md and release ledger current for every AI session.
+
+
+## 4 November 2026 — Eeveelution sizing and user calf redraws (ROM built; player visual check pending)
+
+- Branch `feat/pru-relic-hunt-20261101`; source commit `91998b7daa577a822d4dbeba2cb9df64c2eb43ef`. GitHub Actions run [41817527904](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41817527904) passed sprite import/scale checks, Box 3 save validation, source regressions, battle-engine tests, clean compile, 32 MiB binary verification and release publication.
+- Applied 80% nearest-neighbor centered sizing to all ten custom Eeveelution fronts/backs/icons, rebuilt Nimbeon's party icon from the approved front and corrected icon palette assignments. Imported user-provided Miltitan/Mootiny fronts and normal palettes; preserved the back art and remapped it to the new palette; icons were derived from the supplied fronts. No shiny redraws were supplied.
+- Release [pru-build-91998b7daa](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-91998b7daa): [Pru.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-91998b7daa/Pru.gba), 33,554,432 bytes, SHA-256 `32c0f2a1f51258a3f6920335bccbf0410960c3e5666604fac08132a22562bb80`; [Pru.sav](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-91998b7daa/Pru.sav), 131,072 bytes, SHA-256 `d71a68d383115012231c2b77e7260019bfa81a75ee5c416960109fbc479446bc`.
+- Box 3 save checks passed: 24 intended Pokémon, valid records/checksums/shiny flags, level 50, no held items. Other boxes and original save were not modified.
+- Gameplay visual testing was not run in Pizza Boy; player inspection is still required for front/back sprites and party/PC icons. Do not report visual QA as complete based on source/build checks alone.
