@@ -118,6 +118,48 @@ static const u16 sInsurgenceShadowMewtwoTeachableLearnset[] =
     MOVE_UNAVAILABLE,
 };
 
+// Nolax's independent TM/tutor compatibility. Deliberately excludes
+// Snorlax's heavy-mass attacks, sleeping/eating/berry and recovery themes.
+static const u16 sNolaxTeachableLearnset[] =
+{
+    MOVE_ACROBATICS,
+    MOVE_AERIAL_ACE,
+    MOVE_AGILITY,
+    MOVE_BATON_PASS,
+    MOVE_BRICK_BREAK,
+    MOVE_CLOSE_COMBAT,
+    MOVE_CRUNCH,
+    MOVE_DETECT,
+    MOVE_DOUBLE_HIT,
+    MOVE_DOUBLE_TEAM,
+    MOVE_DRAIN_PUNCH,
+    MOVE_ENDURE,
+    MOVE_EXTREME_SPEED,
+    MOVE_FACADE,
+    MOVE_FAKE_OUT,
+    MOVE_FEINT,
+    MOVE_FOUL_PLAY,
+    MOVE_ICE_PUNCH,
+    MOVE_KNOCK_OFF,
+    MOVE_LOW_SWEEP,
+    MOVE_NIGHT_SLASH,
+    MOVE_PLAY_ROUGH,
+    MOVE_POWER_UP_PUNCH,
+    MOVE_PROTECT,
+    MOVE_QUICK_ATTACK,
+    MOVE_RETURN,
+    MOVE_SHADOW_CLAW,
+    MOVE_SUCKER_PUNCH,
+    MOVE_SWIFT,
+    MOVE_SWORDS_DANCE,
+    MOVE_TAUNT,
+    MOVE_THIEF,
+    MOVE_TRAILBLAZE,
+    MOVE_U_TURN,
+    MOVE_ZEN_HEADBUTT,
+    MOVE_UNAVAILABLE,
+};
+
 static const u16 sSkulberusTeachableLearnset[] =
 {
     MOVE_AGILITY, MOVE_DARK_PULSE, MOVE_FEINT, MOVE_FOUL_PLAY,
