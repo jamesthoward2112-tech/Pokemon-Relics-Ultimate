@@ -27,14 +27,15 @@ assert not re.search(r"if \(species == SPECIES_KHANG\)", code)
 assert "gMonIcon_Khang" in species
 assert re.search(r"gMonIcon_Khang,[\s\S]*?P_GBA_STYLE_SPECIES_ICONS \? 1 : 2\)", species)
 
-# Alphoracle uses its genuine PRL sprite and its own colours; not shared palette zero.
+# Alphoracle's approved icon silhouette must remain intact but its pixels
+# are reindexed to the shared palette #2; PC tag #14 is reserved for its
+# large Pokémon portrait and caused scrolling colour corruption.
 with Image.open(ROOT / "graphics/pokemon/alphoracle/icon.png") as icon, Image.open(ROOT / "graphics/pokemon/prl_authoritative/alphoracle/icon.png") as donor:
     assert icon.mode == donor.mode == "P" and icon.size == donor.size == (32, 64)
     assert icon.tobytes() == donor.tobytes()
-assert palette("sPRUAlphoracleIconPalette") == donor_palette("alphoracle")
-assert "{ sPRUAlphoracleIconPalette, POKE_ICON_BASE_PAL_TAG + 14 }" in code
-assert re.search(r"if \(species == SPECIES_ALPHORACLE\)\s*return 14;", code)
+    assert icon.info.get("transparency") == 0
+assert re.search(r"if \(species == SPECIES_ALPHORACLE\)\s*return 2;", code)
 block = species.split("[SPECIES_ALPHORACLE] =", 1)[1].split("[SPECIES_PINSIREX]", 1)[0]
 assert "ABILITY_MAGIC_BOUNCE" in block
 assert "ABILITY_FULL_METAL_BODY" not in block
-print("PASS: Khang and Alphoracle use correct PRL PC icon palettes; Alphoracle uses Magic Bounce")
+print("PASS: Khang stays correct; Alphoracle uses stable shared PC icon palette #2 and Magic Bounce")

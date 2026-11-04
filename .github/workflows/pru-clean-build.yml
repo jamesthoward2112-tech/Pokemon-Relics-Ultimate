@@ -122,6 +122,8 @@ jobs:
         run: python3 tools/pru/add_route30_poochyena.py
       - name: Restore approved Ruins of Alph statue artwork and clear old statue layers
         run: python3 tools/pru/install_ruins_alph_statues.py
+      - name: Repair reported PC icon palette collisions and Elite Redux backgrounds
+        run: python3 tools/pru/repair_reported_pc_sprites.py
       - name: Run source regression tests
         if: "${{ github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
         run: |
@@ -152,6 +154,7 @@ jobs:
           python3 tools/pru/check_p_bird_sprites.py
           python3 tools/pru/check_astrachi_jirachi_encounter.py
           python3 tools/pru/check_final_polish_sprite_sources.py
+          python3 tools/pru/check_reported_pc_sprite_repairs.py
           python3 tools/pru/check_seviian_noibat.py
           python3 tools/pru/check_khang_party_icon_palette.py
           python3 tools/pru/test_ruins_alph_cleanup.py

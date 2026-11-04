@@ -229,15 +229,17 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
         self.assertNotIn("- name: Verify Alph B1F exit by walking through it in mGBA", workflow)
         self.assertNotIn("python3 tools/pru/playtest_alph_ladder_ci.py", workflow)
 
-    def test_i_unown_icon_uses_mewduo_palette_without_changing_front_or_back_assets(self):
+    def test_i_unown_dark_icon_has_safe_pc_palette_without_changing_battle_assets(self):
         icon = Image.open(ROOT / "graphics/pokemon/unown_eye/icon.png")
         self.assertEqual(icon.mode, "P")
         self.assertEqual(icon.size, (32, 64))
         self.assertEqual(icon.info.get("transparency"), 0)
-        self.assertTrue({1, 2, 3, 4, 5, 6, 7}.issubset(set(icon.get_flattened_data())))
+        self.assertIn(5, set(icon.get_flattened_data()))  # true dark silhouette
+        self.assertIn(10, set(icon.get_flattened_data())) # red accent
+        self.assertNotIn(2, set(icon.get_flattened_data())) # no white silhouette
 
         icon_source = (ROOT / "src/pokemon_icon.c").read_text()
-        i_unown_branch = re.search(r"if \(species == SPECIES_UNOWN_I\)\s*return 15;", icon_source)
+        i_unown_branch = re.search(r"if \(species == SPECIES_UNOWN_I\)\s*return 9;", icon_source)
         mewduo_branch = re.search(r"if \(species == SPECIES_MEWSION\)\s*return 15;", icon_source)
         self.assertIsNotNone(i_unown_branch)
         self.assertIsNotNone(mewduo_branch)

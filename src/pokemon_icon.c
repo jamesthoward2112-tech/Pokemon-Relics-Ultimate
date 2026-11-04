@@ -254,7 +254,7 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
     if (species == SPECIES_ASTRACHI)
         return 10;
     if (species == SPECIES_UNOWN_I)
-        return 15;
+        return 9; // Dark Skarmet palette, avoids the PC's reserved palette #15.
     if (species == SPECIES_MEWSION)
         return 15;
     if (species == SPECIES_ARTICUNO)
@@ -264,7 +264,7 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
     if (species == SPECIES_MOLTRES)
         return 13;
     if (species == SPECIES_ALPHORACLE)
-        return 14; // Authentic purple-and-blue PRL indexed artwork.
+        return 2; // Shared blue/purple palette: PC #14 belongs to the portrait.
     return original;
 }
 
