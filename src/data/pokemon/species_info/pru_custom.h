@@ -322,8 +322,7 @@
     .frontAnimFrames = sAnims_SingleFramePlaceHolder, .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
     .backPic = gMonBackPic_Nimbeon, .backPicSize = MON_COORDS_SIZE(64, 64), .backPicYOffset = 6, .backAnimId = BACK_ANIM_NONE,
     .palette = gMonPalette_Nimbeon, .shinyPalette = gMonShinyPalette_Nimbeon,
-    // Its normalized party icon is indexed for the shared sky/white palette #3.
-    .iconSprite = gMonIcon_Nimbeon, .iconPalIndex = 3,
+    .iconSprite = gMonIcon_Nimbeon, .iconPalIndex = 2,
     .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
     .levelUpLearnset = sNimbeonLevelUpLearnset,
     .teachableLearnset = sNimbeonTeachableLearnset,

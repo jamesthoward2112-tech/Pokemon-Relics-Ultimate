@@ -126,7 +126,7 @@ jobs:
         run: python3 tools/pru/repair_reported_pc_sprites.py
       - name: Install user-provided Mootiny and Miltitan front sprite redraws
         run: python3 tools/pru/install_user_calf_sprites.py
-      - name: Apply 80 percent custom Eeveelution sizing and party icon palette fixes
+      - name: Restore build-538 Eeveelution art and scale it to 80 percent
         run: |
           python3 tools/pru/scale_custom_sprite_art.py
           python3 tools/pru/check_custom_sprite_scale_and_icons.py
