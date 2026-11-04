@@ -21,7 +21,7 @@ DESTINATIONS = {
 }
 ICON_PALETTES = {
     "fortotoise": 2,
-    "torkaldera": 1,
+    "torkaldera": 2,
     "tropisaur": 1,
     "armaldo": 0,
     "cradily": 0,
@@ -106,6 +106,24 @@ def make_icon_source(species: str) -> Image.Image:
     return icon
 
 
+def make_icon_from_front(species: str) -> Image.Image:
+    """Build a two-frame icon from the installed battle front, preserving pixels."""
+    with Image.open(SRC / species / "front.png") as image:
+        rgba = image.convert("RGBA")
+    box = rgba.getchannel("A").getbbox()
+    assert box is not None, species
+    crop = rgba.crop(box)
+    factor = min(30 / crop.width, 30 / crop.height)
+    size = (max(1, round(crop.width * factor)), max(1, round(crop.height * factor)))
+    sprite = crop.resize(size, Image.Resampling.NEAREST)
+    frame = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
+    frame.alpha_composite(sprite, ((32 - size[0]) // 2, 31 - size[1]))
+    icon = Image.new("RGBA", (32, 64), (0, 0, 0, 0))
+    icon.alpha_composite(frame, (0, 0))
+    icon.alpha_composite(frame, (0, 32))
+    return icon
+
+
 def install() -> None:
     for species, destination in DESTINATIONS.items():
         destination.mkdir(parents=True, exist_ok=True)
@@ -142,10 +160,14 @@ def install() -> None:
                 shutil.copyfile(source / f"{side}.png", destination / f"{side}.png")
             shutil.copyfile(source / "normal.pal", destination / "normal.pal")
             shiny = source / "shiny.pal"
-            shutil.copyfile(shiny if shiny.is_file() else source / "normal.pal", destination / "shiny.pal")
+            if species != "fortotoise":
+                shutil.copyfile(shiny if shiny.is_file() else source / "normal.pal", destination / "shiny.pal")
+            # Keep Fortotoise's pinned prior shiny palette: the supplied pack's
+            # duplicate normal palette is explicitly temporary, not authentic.
 
         icon_palette = load_jasc(POKEMON / "icon_palettes" / f"pal{ICON_PALETTES[species]}.pal")
-        icon = indexed_from_rgba(make_icon_source(species), icon_palette, nearest=True)
+        icon_art = make_icon_from_front(species) if species == "fortotoise" else make_icon_source(species)
+        icon = indexed_from_rgba(icon_art, icon_palette, nearest=True)
         assert icon.size == (32, 64) and max(icon.getdata()) < 16
         icon.save(destination / "icon.png", optimize=False)
 
@@ -191,7 +213,7 @@ def install() -> None:
     slot["species"] = "SPECIES_NOIBAT"
     encounters_path.write_text(json.dumps(encounters, indent=2) + "\n")
 
-    print("Installed approved five-species polish and authentic RR Seviian Noibat family sprites")
+    print("Installed approved polish; Fortotoise uses supplied G-Max Blastoise front/back/palette/icon")
 
 
 if __name__ == "__main__":

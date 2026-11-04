@@ -265,6 +265,8 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 13;
     if (species == SPECIES_ALPHORACLE)
         return 2; // Shared blue/purple palette: PC #14 belongs to the portrait.
+    if (species == SPECIES_RELIC_HO_OH)
+        return 6; // Gold icon uses Noxichu's compatible black/amber palette.
     return original;
 }
 

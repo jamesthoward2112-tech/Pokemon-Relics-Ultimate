@@ -1,13 +1,14 @@
 Approved final-polish battle-sprite donors
 
-fortotoise: icon palette 2; PKR/PRL Kantomon approved Porypal export
-torkaldera: icon palette 1; Elite Redux Tortemple, upcoming@52ac885b4d094faf26412530a00d526e8a319935
+fortotoise: icon palette 2; owner-supplied Gigantamax Blastoise normal art from PokeAPI/sprites Pokémon 10197. It replaces the incorrect fossilized Blastoise donor. Shared indexed 64x64 front/back and normal palette are pinned under assets/pru_final_polish/fortotoise/; icon is generated from that front using nearest-neighbour reduction.
+torkaldera: icon palette 2 (effective default SpeciesInfo setting); Elite Redux Tortemple, upcoming@52ac885b4d094faf26412530a00d526e8a319935
 tropisaur: icon palette 1; Elite Redux Brontonana, upcoming@52ac885b4d094faf26412530a00d526e8a319935
 armaldo: icon palette 0; James-locked PHR Odyssey II selected Hoenn package
 cradily: icon palette 0; James-locked PHR Odyssey II selected Hoenn package
 noibat/noivern: official Radical Red 4.1 UPS; exact species 0x362/0x363 front, back, icon, normal and shiny palette data
 
-The original donor front/back orientation is retained. Icons unavailable in
+The original donor front/back orientation is retained except Fortotoise's
+owner-requested Gigantamax Blastoise replacement. Icons unavailable in
 the approved Fortotoise and Odyssey II selections are deterministic nearest-
 neighbour reductions of the approved front art, not generated artwork.
 

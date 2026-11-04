@@ -267,15 +267,19 @@ const u16 gMonShinyPalette_DragoniteRelic[] = INCBIN_U16("graphics/pokemon/pjr_e
 
 // Jessie & James final Tin Tower visual forms.
 const u32 gMonFrontPic_AsudemJJ[] = INCBIN_U32("graphics/pokemon/arbok/asudem/front.4bpp.smol");
+const u32 gMonBackPic_AsudemJJ[] = INCBIN_U32("graphics/pokemon/arbok/asudem/back.4bpp.smol");
 const u16 gMonPalette_AsudemJJ[] = INCBIN_U16("graphics/pokemon/arbok/asudem/front.gbapal");
 const u32 gMonFrontPic_NidogodJJ[] = INCBIN_U32("graphics/pokemon/nidoking/nidogod/front.4bpp.smol");
+const u32 gMonBackPic_NidogodJJ[] = INCBIN_U32("graphics/pokemon/nidoking/nidogod/back.4bpp.smol");
 const u16 gMonPalette_NidogodJJ[] = INCBIN_U16("graphics/pokemon/nidoking/nidogod/front.gbapal");
 // Distinct TRE variant 907 (Nidoking-X), reserved for Blue's Elite 20 team.
 const u32 gMonFrontPic_NidokingXBlue[] = INCBIN_U32("graphics/pokemon/nidoking/tre_x_blue/front.4bpp.smol");
 const u16 gMonPalette_NidokingXBlue[] = INCBIN_U16("graphics/pokemon/nidoking/tre_x_blue/front.gbapal");
 const u32 gMonFrontPic_VictreebelReduxJJ[] = INCBIN_U32("graphics/pokemon/victreebel/redux/front.4bpp.smol");
+const u32 gMonBackPic_VictreebelReduxJJ[] = INCBIN_U32("graphics/pokemon/victreebel/redux/back.4bpp.smol");
 const u16 gMonPalette_VictreebelReduxJJ[] = INCBIN_U16("graphics/pokemon/victreebel/redux/front.gbapal");
 const u32 gMonFrontPic_TyranitarReduxJJ[] = INCBIN_U32("graphics/pokemon/tyranitar/mega_redux/front.4bpp.smol");
+const u32 gMonBackPic_TyranitarReduxJJ[] = INCBIN_U32("graphics/pokemon/tyranitar/mega_redux/back.4bpp.smol");
 const u16 gMonPalette_TyranitarReduxJJ[] = INCBIN_U16("graphics/pokemon/tyranitar/mega_redux/front.gbapal");
 
 // Approved PRL icon used by the dedicated Relic species.

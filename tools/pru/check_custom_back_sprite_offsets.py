@@ -23,7 +23,6 @@ NEWLY_GROUNDED = {
     "FERALODON",
     "FRYTNING",
     "GEMIGOYLE",
-    "GEMLIN",
     "GHOULBAT",
     "GRIMFOWL",
     "GUARDEON",
@@ -61,6 +60,7 @@ PRESERVED_OFFSETS = {
     "DONPHALANX": 16,
     "EDENSAUR": 7,
     "FORTOTOISE": 5,
+    "GEMLIN": 10,
     "NOLAX": 8,
     "NOXICHU": 20,
     "PYROCLAST": 8,
@@ -106,13 +106,14 @@ for name in NEWLY_GROUNDED:
 for name, expected in PRESERVED_OFFSETS.items():
     assert offsets[name] == expected, f"{name}: approved offset {expected} altered to {offsets[name]}"
 
-# These trainer-only art forms intentionally reuse FRONT graphics as backs;
-# a bulk replacement must never touch them.
+# First-clear Elite Four artwork still lacks source-authentic rear art; this
+# macro now takes an explicit per-form back argument so the missing sources
+# are visible and do not silently affect the four fixed Jessie & James forms.
 form = re.search(
-    r"#define PJR_E4_VISUAL_FORM\(.*?\.backPic = front,"
+    r"#define PJR_E4_VISUAL_FORM\(.*?\.backPic = back,"
     r".*?\.backPicYOffset = (\d+)", PJR, re.S
 )
-assert form and form.group(1) == "0", "Trainer-only E4 visual forms unexpectedly moved"
+assert form and form.group(1) == "0", "Trainer-only visual forms unexpectedly moved"
 
 print(
     f"CUSTOM_BACK_SPRITES_PASS: {len(NEWLY_GROUNDED)} grounded to +6; "
