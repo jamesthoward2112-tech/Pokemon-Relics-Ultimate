@@ -37,7 +37,12 @@ EXPECTED = {
 for relative, expected in EXPECTED.items():
     path = ASSETS / relative
     assert path.is_file(), f"missing approved donor: {relative}"
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == expected, relative
+    payload = path.read_bytes()
+    # Palette files are line-oriented text and historical Git attributes may
+    # check them out with CRLF. Pin their canonical content independent of OS.
+    if path.suffix == ".pal":
+        payload = payload.replace(b"\r\n", b"\n")
+    assert hashlib.sha256(payload).hexdigest() == expected, relative
 
 workflow = (ROOT / ".github/workflows/pru-clean-build.yml").read_text()
 sync = workflow.index("python3 tools/pru/sync_prl_authoritative_sprites.py")
