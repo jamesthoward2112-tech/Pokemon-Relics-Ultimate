@@ -1,4 +1,5 @@
 *.pal text eol=crlf
+assets/pru_final_polish/**.pal binary
 *.sh text eol=lf
 *.s text eol=lf
 *.txt text eol=lf
