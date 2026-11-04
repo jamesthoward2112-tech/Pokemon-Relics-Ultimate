@@ -64,6 +64,9 @@ def fix_i_unown() -> None:
         indexes=list(icon.getdata())
         original=icon.getpalette()
     assert original and len(original)>=33
+    target=skarmet_palette()
+    if original[:48] == [channel for rgb in target for channel in rgb] and set(indexes).issubset({0,1,5,10,11}):
+        return  # The checked-in icon is already normalized; keep the fixer idempotent.
     # The original grey/white indexed art is remapped to black charcoal and
     # dark-red accents. This is intentionally NOT the white Mewduo palette.
     # source indices 1..10: black, grey shades, white, red shades, pale white
@@ -71,7 +74,32 @@ def fix_i_unown() -> None:
     assert set(indexes).issubset(mapping), set(indexes)-set(mapping)
     icon=Image.new("P",(32,64),0)
     icon.putdata([mapping[i] for i in indexes])
-    save_png(src,icon,skarmet_palette())
+    save_png(src,icon,target)
+
+def fix_mewduo() -> None:
+    # Mewduo's approved red/grey icon artwork was assigned palette tag 15,
+    # which the PC also uses for its miscellaneous UI sprite. Reindex the
+    # existing pixels to the shared palette #2 and keep the source silhouette.
+    path = POKEMON / "mewsion/icon.png"
+    with Image.open(path) as source:
+        rgba = source.convert("RGBA")
+        assert rgba.size == (32, 64)
+    target = read_palette(POKEMON / "icon_palettes/pal2.pal")
+    rgb = list(rgba.getdata())
+    indices = []
+    for r, g, b, a in rgb:
+        if a < 128:
+            indices.append(0)
+            continue
+        # Work in 5-bit GBA colour space, matching the palette compiled by
+        # gbagfx. Index zero remains transparent by engine convention.
+        src = tuple(round(c * 31 / 255) for c in (r, g, b))
+        best = min(range(1, 16), key=lambda k: sum(
+            (src[c] - round(target[k][c] * 31 / 255)) ** 2 for c in range(3)))
+        indices.append(best)
+    icon = Image.new("P", (32, 64), 0)
+    icon.putdata(indices)
+    save_png(path, icon, target)
 
 def remove_donor_background(name: str) -> None:
     # PNG palette entry zero is the sky/green background. Tropisaur also has
@@ -119,9 +147,10 @@ def remove_donor_background(name: str) -> None:
 def main():
     fix_alphoracle()
     fix_i_unown()
+    fix_mewduo()
     for name in ("tropisaur","torkaldera"):
         remove_donor_background(name)
-    print("PC_REPAIRED: Alphoracle stable palette #2, I-Unown dark palette #9; Elite Redux backgrounds transparent")
+    print("PC_REPAIRED: Alphoracle and Mewduo stable palette #2, I-Unown dark palette #9; Elite Redux backgrounds transparent")
     print("PRESERVED: Pyroclast, all battle art except 2 transparent donor backgrounds, no species/save/map changes")
 
 if __name__=="__main__":

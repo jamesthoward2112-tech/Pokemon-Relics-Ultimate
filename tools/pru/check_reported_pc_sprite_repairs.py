@@ -9,6 +9,7 @@ code=(ROOT/"src/pokemon_icon.c").read_text()
 pc=(ROOT/"src/pokemon_storage_system.c").read_text()
 assert re.search(r"if \(species == SPECIES_ALPHORACLE\)\s*return 2;",code)
 assert re.search(r"if \(species == SPECIES_UNOWN_I\)\s*return 9;",code)
+assert re.search(r"if \(species == SPECIES_MEWSION\)\s*return 2;",code)
 assert "PALTAG_MON_ICON_13, // Moltres-P" in pc and "PALTAG_DISPLAY_MON," in pc
 # These were the two collision-prone bespoke palette tags (14,15).
 assert not re.search(r"if \(species == SPECIES_ALPHORACLE\)\s*return 14;",code)
@@ -23,6 +24,10 @@ for name,path in [
 with Image.open(POKEMON/"unown_eye/icon.png") as im:
     used=set(im.getdata())
     assert 5 in used and 10 in used and 2 not in used,"I-Unown must stay dark with red eye"
+with Image.open(POKEMON/"mewsion/icon.png") as im:
+    assert im.mode=="P" and im.size==(32,64) and im.info.get("transparency")==0
+    assert max(im.getdata())<16 and 0 in set(im.getdata())
+    assert len(set(im.getdata()))>4,"Mewduo icon must retain its indexed colour detail"
 for name in ("tropisaur","torkaldera"):
     for side in ("front","back"):
         path=POKEMON/"prl_authoritative"/name/(side+".png")
@@ -35,6 +40,7 @@ assert "Elite Redux Tortemple" in manifest and "Elite Redux Brontonana" in manif
 # Pyroclast is an approved, untouched Elite Redux sprite; no installer changes it.
 patcher=(ROOT/"tools/pru/repair_reported_pc_sprites.py").read_text()
 assert "remove_donor_background(name)" in patcher
+assert "fix_mewduo()" in patcher
 assert 'for name in ("tropisaur","torkaldera"):' in patcher
 assert not re.search(r"POKEMON\s*/\s*[\"'](?:prl_authoritative/)?pyroclast",patcher)
 print("PASS: 4 PC sprite repairs, dark I-Unown, stable Alphoracle and clean Elite Redux donor backgrounds; Pyroclast untouched")

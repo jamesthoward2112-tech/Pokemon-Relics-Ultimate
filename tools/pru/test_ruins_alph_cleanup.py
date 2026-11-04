@@ -240,7 +240,7 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
 
         icon_source = (ROOT / "src/pokemon_icon.c").read_text()
         i_unown_branch = re.search(r"if \(species == SPECIES_UNOWN_I\)\s*return 9;", icon_source)
-        mewduo_branch = re.search(r"if \(species == SPECIES_MEWSION\)\s*return 15;", icon_source)
+        mewduo_branch = re.search(r"if \(species == SPECIES_MEWSION\)\s*return 2;", icon_source)
         self.assertIsNotNone(i_unown_branch)
         self.assertIsNotNone(mewduo_branch)
 

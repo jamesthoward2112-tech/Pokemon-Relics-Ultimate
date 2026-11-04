@@ -256,7 +256,7 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
     if (species == SPECIES_UNOWN_I)
         return 9; // Dark Skarmet palette, avoids the PC's reserved palette #15.
     if (species == SPECIES_MEWSION)
-        return 15;
+        return 2; // Share a safe PC palette; tag 15 is used by the storage UI.
     if (species == SPECIES_ARTICUNO)
         return 11;
     if (species == SPECIES_ZAPDOS)

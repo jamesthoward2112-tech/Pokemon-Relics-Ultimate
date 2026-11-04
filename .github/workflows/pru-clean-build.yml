@@ -124,6 +124,8 @@ jobs:
         run: python3 tools/pru/install_ruins_alph_statues.py
       - name: Repair reported PC icon palette collisions and Elite Redux backgrounds
         run: python3 tools/pru/repair_reported_pc_sprites.py
+      - name: Validate the distributed Box 3 sprite QA save
+        run: python3 tools/pru/check_sprite_qa_save.py assets/test_saves/Pru.sav
       - name: Run source regression tests
         if: "${{ github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
         run: |
@@ -277,10 +279,12 @@ jobs:
           tag="pru-build-$(git rev-parse --short=10 HEAD)"
           file="Pokemon-Relics-Ultimate-${GITHUB_SHA:0:10}.gba"
           cp pokehns.gba "$RUNNER_TEMP/$file"
+          cp pokehns.gba "$RUNNER_TEMP/Pru.gba"
+          cp assets/test_saves/Pru.sav "$RUNNER_TEMP/Pru.sav"
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release upload "$tag" "$RUNNER_TEMP/$file" --repo "$GITHUB_REPOSITORY" --clobber
+            gh release upload "$tag" "$RUNNER_TEMP/$file" "$RUNNER_TEMP/Pru.gba" "$RUNNER_TEMP/Pru.sav" --repo "$GITHUB_REPOSITORY" --clobber
           else
-            gh release create "$tag" "$RUNNER_TEMP/$file" \
+            gh release create "$tag" "$RUNNER_TEMP/$file" "$RUNNER_TEMP/Pru.gba" "$RUNNER_TEMP/Pru.sav" \
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
@@ -289,7 +293,12 @@ jobs:
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
             --jq '.assets[].name' | grep -Fx "$file"
-          echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/$file"
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+            --jq '.assets[].name' | grep -Fx 'Pru.gba'
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+            --jq '.assets[].name' | grep -Fx 'Pru.sav'
+          echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/Pru.gba"
+          echo "DIRECT_SAV=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/Pru.sav"
 
   prune-stale-attempts:
     name: Prune failed and cancelled historical PRU runs

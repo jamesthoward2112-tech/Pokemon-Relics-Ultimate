@@ -27,6 +27,7 @@ tools/agbcc
 *.bat
 *.dump
 *.sa*
+!/assets/test_saves/Pru.sav
 Thumbs.db
 build/
 .DS_Store
