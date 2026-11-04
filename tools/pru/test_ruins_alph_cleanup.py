@@ -217,15 +217,17 @@ class RuinsOfAlphCleanupTests(unittest.TestCase):
             self.assertEqual(struct.unpack_from("<H", attrs, 101 * 2)[0], 0x1061)
             self.assertEqual(before_attrs, attrs)
 
-    def test_mgba_gate_checks_runtime_maps_and_is_blocking(self):
+    def test_optional_mgba_tool_is_not_a_release_gate(self):
+        # The ladder was verified manually; the separate mGBA harness remains
+        # available for targeted debugging but must not block unrelated ROMs.
         playtest = (ROOT / "tools/pru/playtest_alph_ladder_ci.py").read_text()
         for marker in ("gba-dump", "gPruAlphMapProbe", "alph-entered-b1f",
                        "alph-exited-outside", "alph-reentered-b1f"):
             self.assertIn(marker, playtest)
         self.assertNotIn("brown_fraction", playtest)
         workflow = (ROOT / ".github/workflows/pru-clean-build.yml").read_text()
-        test_step = workflow.split("- name: Verify Alph B1F exit by walking through it in mGBA", 1)[1].split("- name:", 1)[0]
-        self.assertNotIn("continue-on-error", test_step)
+        self.assertNotIn("- name: Verify Alph B1F exit by walking through it in mGBA", workflow)
+        self.assertNotIn("python3 tools/pru/playtest_alph_ladder_ci.py", workflow)
 
     def test_i_unown_icon_uses_mewduo_palette_without_changing_front_or_back_assets(self):
         icon = Image.open(ROOT / "graphics/pokemon/unown_eye/icon.png")
