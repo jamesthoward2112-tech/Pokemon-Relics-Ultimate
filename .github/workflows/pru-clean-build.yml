@@ -126,10 +126,10 @@ jobs:
         run: python3 tools/pru/repair_reported_pc_sprites.py
       - name: Install user-provided Mootiny and Miltitan front sprite redraws
         run: python3 tools/pru/install_user_calf_sprites.py
-      - name: Restore build-538 Eeveelution art and scale it to 80 percent
+      - name: Restore build-538 Eeveelution artwork at original size
         run: |
-          python3 tools/pru/scale_custom_sprite_art.py
-          python3 tools/pru/check_custom_sprite_scale_and_icons.py
+          python3 tools/pru/restore_build538_eeveelution_art.py
+          python3 tools/pru/check_build538_eeveelutions.py
           python3 tools/pru/check_user_calf_sprite_import.py
       - name: Validate the distributed Box 3 sprite QA save
         run: python3 tools/pru/check_sprite_qa_save.py assets/test_saves/Pru.sav
