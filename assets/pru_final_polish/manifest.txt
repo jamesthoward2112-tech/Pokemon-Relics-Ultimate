@@ -1,6 +1,6 @@
 Approved final-polish battle-sprite donors
 
-fortotoise: icon palette 2; owner-supplied Gigantamax Blastoise normal art from PokeAPI/sprites Pokémon 10197. It replaces the incorrect fossilized Blastoise donor. Shared indexed 64x64 front/back and normal palette are pinned under assets/pru_final_polish/fortotoise/; icon is generated from that front using nearest-neighbour reduction.
+fortotoise: icon palette 2; owner-supplied Gigantamax Blastoise front (blue body, dark fortress shell with cannons); back uses the top 70% of the same front; party icon uses the canonical Mega Blastoise icon. Shared indexed 64x64 front/back and normal palette are pinned under assets/pru_final_polish/fortotoise/.
 torkaldera: icon palette 2 (effective default SpeciesInfo setting); Elite Redux Tortemple, upcoming@52ac885b4d094faf26412530a00d526e8a319935
 tropisaur: icon palette 1; Elite Redux Brontonana, upcoming@52ac885b4d094faf26412530a00d526e8a319935
 armaldo: icon palette 0; James-locked PHR Odyssey II selected Hoenn package

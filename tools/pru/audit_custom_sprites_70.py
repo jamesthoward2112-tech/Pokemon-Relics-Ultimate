@@ -25,10 +25,10 @@ FLAGGED = {
     "RELIC_HO_OH", "UNOWN_EYE",
 }
 REPAIR_NOTES = {
-    "GEMLIN": "Preserved its genuine separate rear sprite and moved only the player-side battle offset down 4 pixels; donor pixels retained.",
-    "JOLLIBIRD": "Inspected genuine donor front/back/icon; retained approved pixels and individual offsets (no replacement donor art found).",
-    "GRIMFOWL": "Inspected genuine donor front/back/icon; retained approved dark-owl/pale-horn pixels and offsets.",
-    "KABLOWFISH": "Inspected genuine donor front/back/icon; retained approved white-spiked/purple design and offsets.",
+    "GEMLIN": "Retained its distinct authentic rear donor, corrected rear orientation and grounding, and reframed the undersized front with nearest-neighbour pixels.",
+    "JOLLIBIRD": "Retained its established donor design and palette; reduced oversized front/rear framing with nearest-neighbour pixels and grounded the back.",
+    "GRIMFOWL": "Retained the dark owl and pale horns; reduced oversized front/rear framing with nearest-neighbour pixels and grounded both views.",
+    "KABLOWFISH": "Retained the white-spiked body and purple features; reduced oversized front/rear framing with nearest-neighbour pixels and grounded both views.",
     "FORTOTOISE": "Replaced wrong fossil/PRL front and back with supplied normal G-Max Blastoise assets; matching icon installed.",
     "ASUDEM_JJ": "Uses its own existing donor back file; no longer uses the front as back.",
     "NIDOGOD_JJ": "Uses its own existing donor back file; no longer uses the front as back.",

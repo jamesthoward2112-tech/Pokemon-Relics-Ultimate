@@ -87,6 +87,11 @@ def make_icon_source(species: str) -> Image.Image:
     donor = SRC / species / "icon.png"
     if donor.is_file():
         with Image.open(donor) as icon:
+            icon.load()
+            # In Pokémon's indexed icon assets, palette index 0 is the clear
+            # background even when the PNG writer omitted a transparency tag.
+            if icon.mode == "P" and "transparency" not in icon.info:
+                icon.info["transparency"] = 0
             return icon.convert("RGBA")
 
     with Image.open(SRC / species / "front.png") as front:
@@ -166,7 +171,7 @@ def install() -> None:
             # duplicate normal palette is explicitly temporary, not authentic.
 
         icon_palette = load_jasc(POKEMON / "icon_palettes" / f"pal{ICON_PALETTES[species]}.pal")
-        icon_art = make_icon_from_front(species) if species == "fortotoise" else make_icon_source(species)
+        icon_art = make_icon_source(species)
         icon = indexed_from_rgba(icon_art, icon_palette, nearest=True)
         assert icon.size == (32, 64) and max(icon.getdata()) < 16
         icon.save(destination / "icon.png", optimize=False)

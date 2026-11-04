@@ -1,0 +1,1226 @@
+{
+  "video": "1000043684.mp4",
+  "reviewed_species": [
+    "Nimbeon",
+    "Drakeon",
+    "Champeon",
+    "Guardeon",
+    "Toxeon",
+    "Sphynxeon",
+    "Skarmet",
+    "Kablowfish",
+    "Grimfowl",
+    "Heracurion",
+    "Scarabub",
+    "Skarmadon",
+    "Jollibird",
+    "Osteodian",
+    "Sunflorid",
+    "Sudowarden",
+    "Mystynx",
+    "Ghoulbat",
+    "Khang",
+    "Fortotoise",
+    "Charaxis",
+    "HoOhRelic",
+    "Hitmonlee",
+    "Alakazam",
+    "Gemlin",
+    "Gemigoyle",
+    "Astrachi",
+    "Adnokana",
+    "Cheauking",
+    "Frytning",
+    "Mewsion",
+    "Tropisaur",
+    "Coelossus",
+    "Cactomb",
+    "Torkaldera",
+    "Sceptitan",
+    "Solaziken"
+  ],
+  "omitted_by_user_instruction": [
+    "Nolax"
+  ],
+  "icon_adjustments": [
+    {
+      "name": "Nimbeon",
+      "path": "graphics/pokemon/nimbeon/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            27,
+            27
+          ],
+          "after_bbox_size": [
+            22,
+            22
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            27,
+            27
+          ],
+          "after_bbox_size": [
+            22,
+            22
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Drakeon",
+      "path": "graphics/pokemon/drakeon/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            27,
+            21
+          ],
+          "after_bbox_size": [
+            22,
+            17
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            27,
+            21
+          ],
+          "after_bbox_size": [
+            22,
+            17
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Champeon",
+      "path": "graphics/pokemon/champeon/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            25,
+            19
+          ],
+          "after_bbox_size": [
+            25,
+            19
+          ],
+          "reduced": false
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            25,
+            18
+          ],
+          "after_bbox_size": [
+            25,
+            18
+          ],
+          "reduced": false
+        }
+      ]
+    },
+    {
+      "name": "Guardeon",
+      "path": "graphics/pokemon/guardeon/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            26,
+            26
+          ],
+          "after_bbox_size": [
+            21,
+            21
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            27,
+            25
+          ],
+          "after_bbox_size": [
+            22,
+            20
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Toxeon",
+      "path": "graphics/pokemon/toxeon/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            19,
+            26
+          ],
+          "after_bbox_size": [
+            15,
+            21
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            19,
+            24
+          ],
+          "after_bbox_size": [
+            19,
+            24
+          ],
+          "reduced": false
+        }
+      ]
+    },
+    {
+      "name": "Sphynxeon",
+      "path": "graphics/pokemon/sphynxeon/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            21,
+            20
+          ],
+          "after_bbox_size": [
+            21,
+            20
+          ],
+          "reduced": false
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            20,
+            19
+          ],
+          "after_bbox_size": [
+            20,
+            19
+          ],
+          "reduced": false
+        }
+      ]
+    },
+    {
+      "name": "Skarmet",
+      "path": "graphics/pokemon/skarmet/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            20,
+            24
+          ],
+          "after_bbox_size": [
+            20,
+            24
+          ],
+          "reduced": false
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            20,
+            24
+          ],
+          "after_bbox_size": [
+            20,
+            24
+          ],
+          "reduced": false
+        }
+      ]
+    },
+    {
+      "name": "Kablowfish",
+      "path": "graphics/pokemon/prl_authoritative/kablowfish/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            26,
+            22
+          ],
+          "after_bbox_size": [
+            21,
+            18
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            25,
+            22
+          ],
+          "after_bbox_size": [
+            25,
+            22
+          ],
+          "reduced": false
+        }
+      ]
+    },
+    {
+      "name": "Grimfowl",
+      "path": "graphics/pokemon/prl_authoritative/grimfowl/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            23,
+            25
+          ],
+          "after_bbox_size": [
+            23,
+            25
+          ],
+          "reduced": false
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            23,
+            24
+          ],
+          "after_bbox_size": [
+            23,
+            24
+          ],
+          "reduced": false
+        }
+      ]
+    },
+    {
+      "name": "Heracurion",
+      "path": "graphics/pokemon/prl_authoritative/heracurion/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            32,
+            29
+          ],
+          "after_bbox_size": [
+            26,
+            23
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            32,
+            28
+          ],
+          "after_bbox_size": [
+            26,
+            22
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Scarabub",
+      "path": "graphics/pokemon/prl_authoritative/scarabub/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            28,
+            26
+          ],
+          "after_bbox_size": [
+            22,
+            21
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            28,
+            26
+          ],
+          "after_bbox_size": [
+            22,
+            21
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Skarmadon",
+      "path": "graphics/pokemon/prl_authoritative/skarmadon/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            30,
+            27
+          ],
+          "after_bbox_size": [
+            24,
+            22
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            30,
+            27
+          ],
+          "after_bbox_size": [
+            24,
+            22
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Jollibird",
+      "path": "graphics/pokemon/prl_authoritative/jollibird/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            21,
+            28
+          ],
+          "after_bbox_size": [
+            17,
+            22
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            21,
+            26
+          ],
+          "after_bbox_size": [
+            17,
+            21
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Osteodian",
+      "path": "graphics/pokemon/prl_authoritative/osteodian/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            22,
+            19
+          ],
+          "after_bbox_size": [
+            22,
+            19
+          ],
+          "reduced": false
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            21,
+            20
+          ],
+          "after_bbox_size": [
+            21,
+            20
+          ],
+          "reduced": false
+        }
+      ]
+    },
+    {
+      "name": "Sunflorid",
+      "path": "graphics/pokemon/prl_authoritative/sunflorid/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            16,
+            22
+          ],
+          "after_bbox_size": [
+            16,
+            22
+          ],
+          "reduced": false
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            16,
+            21
+          ],
+          "after_bbox_size": [
+            16,
+            21
+          ],
+          "reduced": false
+        }
+      ]
+    },
+    {
+      "name": "Sudowarden",
+      "path": "graphics/pokemon/pjr_locked/sudowarden/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            20,
+            28
+          ],
+          "after_bbox_size": [
+            16,
+            22
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            20,
+            28
+          ],
+          "after_bbox_size": [
+            16,
+            22
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Mystynx",
+      "path": "graphics/pokemon/prl_authoritative/mystynx/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            24,
+            27
+          ],
+          "after_bbox_size": [
+            19,
+            22
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            24,
+            27
+          ],
+          "after_bbox_size": [
+            19,
+            22
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Ghoulbat",
+      "path": "graphics/pokemon/prl_authoritative/ghoulbat/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            29,
+            23
+          ],
+          "after_bbox_size": [
+            23,
+            18
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            30,
+            18
+          ],
+          "after_bbox_size": [
+            24,
+            14
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Khang",
+      "path": "graphics/pokemon/prl_authoritative/khang/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            28,
+            22
+          ],
+          "after_bbox_size": [
+            22,
+            18
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            28,
+            23
+          ],
+          "after_bbox_size": [
+            22,
+            18
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Fortotoise",
+      "path": "graphics/pokemon/prl_authoritative/fortotoise/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            30,
+            28
+          ],
+          "after_bbox_size": [
+            24,
+            22
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            31,
+            27
+          ],
+          "after_bbox_size": [
+            25,
+            22
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Charaxis",
+      "path": "graphics/pokemon/prl_authoritative/charaxis/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            32,
+            27
+          ],
+          "after_bbox_size": [
+            26,
+            22
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            32,
+            27
+          ],
+          "after_bbox_size": [
+            26,
+            22
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "HoOhRelic",
+      "path": "graphics/pokemon/ho_oh_relic/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            29,
+            30
+          ],
+          "after_bbox_size": [
+            23,
+            24
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            32,
+            28
+          ],
+          "after_bbox_size": [
+            26,
+            22
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Gemlin",
+      "path": "graphics/pokemon/prl_authoritative/gemlin/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            19,
+            22
+          ],
+          "after_bbox_size": [
+            19,
+            22
+          ],
+          "reduced": false
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            19,
+            22
+          ],
+          "after_bbox_size": [
+            19,
+            22
+          ],
+          "reduced": false
+        }
+      ]
+    },
+    {
+      "name": "Gemigoyle",
+      "path": "graphics/pokemon/prl_authoritative/gemigoyle/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            26,
+            26
+          ],
+          "after_bbox_size": [
+            21,
+            21
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            26,
+            26
+          ],
+          "after_bbox_size": [
+            21,
+            21
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Astrachi",
+      "path": "graphics/pokemon/astrachi/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            26,
+            23
+          ],
+          "after_bbox_size": [
+            21,
+            18
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            26,
+            23
+          ],
+          "after_bbox_size": [
+            21,
+            18
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Adnokana",
+      "path": "graphics/pokemon/adnokana/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            24,
+            23
+          ],
+          "after_bbox_size": [
+            24,
+            23
+          ],
+          "reduced": false
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            25,
+            22
+          ],
+          "after_bbox_size": [
+            25,
+            22
+          ],
+          "reduced": false
+        }
+      ]
+    },
+    {
+      "name": "Cheauking",
+      "path": "graphics/pokemon/cheauking/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            25,
+            23
+          ],
+          "after_bbox_size": [
+            25,
+            23
+          ],
+          "reduced": false
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            25,
+            22
+          ],
+          "after_bbox_size": [
+            25,
+            22
+          ],
+          "reduced": false
+        }
+      ]
+    },
+    {
+      "name": "Frytning",
+      "path": "graphics/pokemon/frytning/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            31,
+            25
+          ],
+          "after_bbox_size": [
+            25,
+            20
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            31,
+            26
+          ],
+          "after_bbox_size": [
+            25,
+            21
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Mewsion",
+      "path": "graphics/pokemon/mewsion/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            30,
+            24
+          ],
+          "after_bbox_size": [
+            24,
+            19
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            30,
+            24
+          ],
+          "after_bbox_size": [
+            24,
+            19
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Tropisaur",
+      "path": "graphics/pokemon/prl_authoritative/tropisaur/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            30,
+            30
+          ],
+          "after_bbox_size": [
+            24,
+            24
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            30,
+            30
+          ],
+          "after_bbox_size": [
+            24,
+            24
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Coelossus",
+      "path": "graphics/pokemon/prl_authoritative/coelossus/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            30,
+            30
+          ],
+          "after_bbox_size": [
+            24,
+            24
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            30,
+            30
+          ],
+          "after_bbox_size": [
+            24,
+            24
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Cactomb",
+      "path": "graphics/pokemon/prl_authoritative/cactomb/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            29,
+            28
+          ],
+          "after_bbox_size": [
+            23,
+            22
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            29,
+            28
+          ],
+          "after_bbox_size": [
+            23,
+            22
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Torkaldera",
+      "path": "graphics/pokemon/prl_authoritative/torkaldera/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            30,
+            30
+          ],
+          "after_bbox_size": [
+            24,
+            24
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            30,
+            30
+          ],
+          "after_bbox_size": [
+            24,
+            24
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Sceptitan",
+      "path": "graphics/pokemon/prl_authoritative/sceptitan/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            32,
+            27
+          ],
+          "after_bbox_size": [
+            26,
+            22
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            32,
+            26
+          ],
+          "after_bbox_size": [
+            26,
+            21
+          ],
+          "reduced": true
+        }
+      ]
+    },
+    {
+      "name": "Solaziken",
+      "path": "graphics/pokemon/prl_authoritative/solaziken/icon.png",
+      "frames": [
+        {
+          "frame": 0,
+          "before_bbox_size": [
+            32,
+            27
+          ],
+          "after_bbox_size": [
+            26,
+            22
+          ],
+          "reduced": true
+        },
+        {
+          "frame": 1,
+          "before_bbox_size": [
+            31,
+            26
+          ],
+          "after_bbox_size": [
+            25,
+            21
+          ],
+          "reduced": true
+        }
+      ]
+    }
+  ],
+  "shared_vanilla_icons_left_unchanged": [
+    {
+      "name": "Hitmonlee",
+      "path": "graphics/pokemon/hitmonlee/icon.png",
+      "result": "uses unchanged canonical vanilla icon"
+    },
+    {
+      "name": "Alakazam",
+      "path": "graphics/pokemon/alakazam/icon.png",
+      "result": "uses unchanged canonical vanilla icon"
+    }
+  ],
+  "battle_sprite_adjustments": [
+    {
+      "species": "gemlin",
+      "side": "front",
+      "path": "graphics/pokemon/prl_authoritative/gemlin/front.png",
+      "before_bbox": [
+        34,
+        36
+      ],
+      "after_bbox": [
+        42,
+        44
+      ],
+      "method": "nearest-neighbour; original palette indices retained; grounded to y=62"
+    },
+    {
+      "species": "gemlin",
+      "side": "back",
+      "path": "graphics/pokemon/prl_authoritative/gemlin/back.png",
+      "before_bbox": [
+        33,
+        36
+      ],
+      "after_bbox": [
+        33,
+        36
+      ],
+      "method": "nearest-neighbour; original palette indices retained; grounded to y=62"
+    },
+    {
+      "species": "jollibird",
+      "side": "front",
+      "path": "graphics/pokemon/prl_authoritative/jollibird/front.png",
+      "before_bbox": [
+        55,
+        52
+      ],
+      "after_bbox": [
+        44,
+        42
+      ],
+      "method": "nearest-neighbour; original palette indices retained; grounded to y=62"
+    },
+    {
+      "species": "jollibird",
+      "side": "back",
+      "path": "graphics/pokemon/prl_authoritative/jollibird/back.png",
+      "before_bbox": [
+        63,
+        50
+      ],
+      "after_bbox": [
+        50,
+        40
+      ],
+      "method": "nearest-neighbour; original palette indices retained; grounded to y=62"
+    },
+    {
+      "species": "kablowfish",
+      "side": "front",
+      "path": "graphics/pokemon/prl_authoritative/kablowfish/front.png",
+      "before_bbox": [
+        61,
+        47
+      ],
+      "after_bbox": [
+        49,
+        38
+      ],
+      "method": "nearest-neighbour; original palette indices retained; grounded to y=62"
+    },
+    {
+      "species": "kablowfish",
+      "side": "back",
+      "path": "graphics/pokemon/prl_authoritative/kablowfish/back.png",
+      "before_bbox": [
+        58,
+        45
+      ],
+      "after_bbox": [
+        47,
+        36
+      ],
+      "method": "nearest-neighbour; original palette indices retained; grounded to y=62"
+    },
+    {
+      "species": "grimfowl",
+      "side": "front",
+      "path": "graphics/pokemon/prl_authoritative/grimfowl/front.png",
+      "before_bbox": [
+        52,
+        64
+      ],
+      "after_bbox": [
+        42,
+        52
+      ],
+      "method": "nearest-neighbour; original palette indices retained; grounded to y=62"
+    },
+    {
+      "species": "grimfowl",
+      "side": "back",
+      "path": "graphics/pokemon/prl_authoritative/grimfowl/back.png",
+      "before_bbox": [
+        63,
+        64
+      ],
+      "after_bbox": [
+        49,
+        50
+      ],
+      "method": "nearest-neighbour; original palette indices retained; grounded to y=62"
+    }
+  ],
+  "palette_policy": "nearest-neighbour only; icon indices and all four reviewed donors' colours retained",
+  "human_visual_review_required": true,
+  "contact_sheet": "PRU-QA/video-review/selected-party-and-pc-icons.png"
+}

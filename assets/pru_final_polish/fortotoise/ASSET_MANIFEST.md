@@ -1,7 +1,10 @@
-# Fortotoise G-Max Blastoise asset source
+# Fortotoise Gigantamax Blastoise asset source
 
-- Design: Gigantamax Blastoise with blue body and large dark multi-cannon fortress shell.
-- Source front/back: PokeAPI/sprites Pokémon 10197, `sprites/pokemon/10197.png` and `sprites/pokemon/back/10197.png`.
-- Prepared front/back: nearest-neighbour, indexed 64×64 GBA 4bpp candidates in `front.png` and `back.png`; shared 16-entry normal palette in `normal.pal`; index 0 is transparent.
-- Source pack: supplied by the project owner for this repair. Compare the result with `PR72_reference_screenshot.png` in the owner's Library; the new sprite uses the supplied G-Max design. The screenshot file and source ROM are not redistributed in this repository.
-- No authentic shiny palette is supplied or required.
+- Approved design: blue Blastoise with a huge dark fortress shell containing multiple cannons.
+- Front: the project owner's supplied `source_front.png` (182×180; 14 opaque colours). It is resized to 64×64 with nearest-neighbour pixels and indexed without invented/recoloured artwork.
+- Back: the top 70% of that same supplied image (`back_source_crop.png`, 182×126), reduced to 64 pixels wide and grounded in a transparent 64×64 frame.
+- Both battle views use the exact shared indexed colours in `normal.pal`; palette index 0 is transparent.
+- Party/PC icon: the existing official Mega Blastoise icon in `icon.png`, indexed to palette #2. This is not derived from the battle art.
+- `source_back.png` is retained as historical provenance only. It is not used by the installer.
+- The former PokeAPI candidate is retained as `source_front_previous.png` in Git history only; it is not installed.
+- No authentic shiny palette is supplied or required. Fortotoise retains its existing pinned shiny palette.

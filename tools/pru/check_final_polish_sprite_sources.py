@@ -11,10 +11,12 @@ ROOT = Path(__file__).resolve().parents[2]
 ASSETS = ROOT / "assets/pru_final_polish"
 
 EXPECTED = {
-    "fortotoise/front.png": "d67d38ef3be0fa70c782b00aa8c6e79321e6d1f228742238e5e6bb4b618d1f53",
-    "fortotoise/back.png": "ae1947f10ff918af485f36196bf278ad7ed6e0667af6c1eb1747215af93a51f7",
-    "fortotoise/normal.pal": "f8f071ead4ef29d0ab1058584aa590a5363189ae25da3fa54b58d55041824fd1",
-    "fortotoise/source_front.png": "508e13fc5fd0da4b653851dfcd5c80d140be4fbf27d6d9667be59bf6dbf0f876",
+    "fortotoise/front.png": "4b9c4f5099e856f220f42bc8ad74721ed099b28e9a8acf88265e260b096febb8",
+    "fortotoise/back.png": "7f9e485509a5abdb756d8b8c849aafa2747f8a5afe1e11f81811a6df983fe272",
+    "fortotoise/normal.pal": "a82d45f436acf6913b3fa60517f7e93251187170b0aad19c86c09c74509f1843",
+    "fortotoise/source_front.png": "b57dc8f628a2941d3a6d47c86aab6b81aa970c3f6315cda5dbd213363dbe90e7",
+    "fortotoise/back_source_crop.png": "a786708f961bedba58ad526a27b13f8eaaea9d2c155a58798b067ef6b64f9818",
+    "fortotoise/icon.png": "7520e4c1e5c378e73339da4c363b8014cbfbc26385180a6730dc3342ae2f322e",
     "fortotoise/source_back.png": "404a07761c0dadc1a33be679fa9240d990992c890c94fc23d4f47acf38674084",
     "torkaldera/front.png": "c3c5f51399a037d3b4a50ca63a4ce8ac28de05e36d03e4125cfcfe88f46ff35c",
     "torkaldera/back.png": "95ae8f8a73aafe65dfcc017e35de6f6be5031f97710b49f297ff7fd9cd6fdaef",
@@ -47,10 +49,13 @@ for relative, expected in EXPECTED.items():
 workflow = (ROOT / ".github/workflows/pru-clean-build.yml").read_text()
 sync = workflow.index("python3 tools/pru/sync_prl_authoritative_sprites.py")
 install = workflow.index("python3 tools/pru/install_final_polish_sprites.py")
+prepare_gmax = workflow.index("python3 tools/pru/prepare_user_fortotoise.py")
 assert install > sync, "final-polish sprites must install after PRL sync"
+assert sync < prepare_gmax < install, "prepare the owner's replacement Fortotoise art before final install"
 assert "python3 tools/pru/check_final_polish_sprite_sources.py" in workflow
 assert "python3 tools/pru/install_charaxis_gmax_relic.py" in workflow
 assert "python3 tools/pru/restore_build538_eeveelution_art.py" in workflow
+assert "python3 tools/pru/install_video_review_sprite_repairs.py" in workflow
 
 for species, icon_palette in {
     "fortotoise": 2,
@@ -79,9 +84,14 @@ for side in ("front", "back"):
         assert installed.tobytes() == donor.tobytes(), f"Fortotoise {side} was overwritten after final-polish install"
 with Image.open(fort / "icon.png") as icon:
     assert icon.mode == "P" and icon.size == (32, 64) and icon.info.get("transparency") == 0
-    first, second = icon.crop((0, 0, 32, 32)), icon.crop((0, 32, 32, 64))
-    assert first.tobytes() == second.tobytes(), "Fortotoise icon frames differ"
+    assert icon.getbbox() is not None
+with Image.open(ASSETS / "fortotoise/icon.png") as source_icon:
+    assert source_icon.mode == "P" and source_icon.size == (32, 64)
+    assert list(source_icon.getdata()) == list(Image.open(fort / "icon.png").getdata())
+    assert source_icon.info.get("transparency") == 0
+assert Image.open(ASSETS / "fortotoise/source_front.png").size == (182, 180)
+assert Image.open(ASSETS / "fortotoise/back_source_crop.png").size == (182, 126)
 
-print("PASS: owner-supplied Gigantamax Blastoise Fortotoise front/back and derived icon survive the final install stage")
+print("PASS: owner's G-Max Blastoise Fortotoise front/back and Mega Blastoise icon survive the final install stage")
 print("PASS: Tortemple, Brontonana and James-locked Odyssey II fossil donors remain pinned")
 print("PASS: all five install after PRL sync with indexed front/back/icon assets and save-safe IDs")

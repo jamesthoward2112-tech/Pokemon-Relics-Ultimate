@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure Charaxis uses its black G-Max battle art palette for its own icon."""
+"""Ensure Charaxis uses Mega Charizard X icon pixels recoloured black/orange."""
 from pathlib import Path
 import re
 from PIL import Image
@@ -17,7 +17,13 @@ with Image.open(ROOT / "graphics/pokemon/prl_authoritative/charaxis/icon.png") a
     assert icon.mode == "P" and icon.size == (32, 64) and icon.info.get("transparency") == 0
     indices = set(icon.getdata())
     assert indices <= set(range(16)) and 0 in indices and len(indices & set(range(1, 16))) >= 5
+    actual = list(icon.getdata())
+with Image.open(ROOT / "graphics/pokemon/charizard/mega_x/icon.png") as source:
+    source_indices = list(source.getdata())
+mapping = {0: 0, 1: 5, 2: 4, 3: 13, 6: 12, 8: 8, 9: 7, 12: 10, 14: 3, 15: 1}
+assert set(source_indices) <= set(mapping)
+assert actual == [mapping[index] for index in source_indices], "Charaxis party icon must retain Mega X silhouette/pixels"
 colors_used = {palette[i] for i in indices if i}
 assert any(max(c) <= 15 for c in colors_used), "Charaxis icon is missing near-black pixels"
 assert any(c[0] >= 20 and c[1] >= 8 for c in colors_used), "Charaxis icon is missing ember pixels"
-print("PASS: Charaxis icon is a two-frame G-Max reduction using dark/ember palette #6")
+print("PASS: Charaxis party icon uses exact Mega Charizard X pixels, recoloured black/orange with palette #6")

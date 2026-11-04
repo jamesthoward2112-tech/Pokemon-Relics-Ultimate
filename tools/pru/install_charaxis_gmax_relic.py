@@ -40,42 +40,26 @@ def icon_palette_6() -> list[tuple[int, int, int]]:
 
 
 def make_black_gmax_icon() -> None:
-    """Build a compact icon from the approved charcoal battle front using palette #6."""
-    battle = load_palette(DST / "normal.pal")
-    # The indexed battle art uses the shared normal palette written above.
-    with Image.open(DST / "front.png") as indexed:
-        indexed.load()
-        rgba = indexed.copy()
-        rgba.putpalette([component for color in battle for component in color] + [0] * (768 - 48))
-        rgba.info["transparency"] = 0
-        rgba = rgba.convert("RGBA")
-    bounds = rgba.getchannel("A").getbbox()
-    assert bounds, "empty Charaxis front art"
-    crop = rgba.crop(bounds)
-    scale = min(30 / crop.width, 30 / crop.height)
-    size = (max(1, round(crop.width * scale)), max(1, round(crop.height * scale)))
-    sprite = crop.resize(size, Image.Resampling.NEAREST)
-    frame = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
-    frame.alpha_composite(sprite, ((32 - size[0]) // 2, 31 - size[1]))
-    icon = Image.new("RGBA", (32, 64), (0, 0, 0, 0))
-    icon.alpha_composite(frame, (0, 0))
-    icon.alpha_composite(frame, (0, 32))
+    """Use the Mega Charizard X icon with its blue accents changed to fire."""
+    source_path = ROOT / "charizard" / "mega_x" / "icon.png"
+    with Image.open(source_path) as source:
+        assert source.mode == "P" and source.size == (32, 64), source_path
+        source.load()
+        indices = list(source.getdata())
+    # Retain the original indexed Mega X pixels. Its 3 blue shades (8, 9, 12)
+    # become burnt orange, ember and hot gold in the already assigned PRU #6
+    # icon palette. Index zero remains the transparent background.
+    mapping = {
+        0: 0, 1: 5, 2: 4, 3: 13, 6: 12,
+        8: 8, 9: 7, 12: 10, 14: 3, 15: 1,
+    }
+    assert set(indices) <= set(mapping), f"Unexpected Mega X icon indices: {set(indices) - set(mapping)}"
+    icon = Image.new("P", (32, 64), 0)
+    icon.putdata([mapping[index] for index in indices])
     target = icon_palette_6()
-    result = Image.new("P", (32, 64), 0)
-    indices = []
-    for r, g, b, a in icon.getdata():
-        if not a:
-            indices.append(0)
-            continue
-        source = tuple(round(c * 31 / 255) for c in (r, g, b))
-        index = min(range(1, 16), key=lambda i: sum(
-            (source[c] - round(target[i][c] * 31 / 255)) ** 2 for c in range(3)
-        ))
-        indices.append(index)
-    result.putdata(indices)
-    result.putpalette([component for color in target for component in color] + [0] * (768 - 48))
-    result.info["transparency"] = 0
-    result.save(DST / "icon.png", optimize=False)
+    icon.putpalette([component for color in target for component in color] + [0] * (768 - 48))
+    icon.info["transparency"] = 0
+    icon.save(DST / "icon.png", optimize=False)
 
 
 def install() -> None:
@@ -126,7 +110,7 @@ def install() -> None:
     assert normal[1:5] == load_palette(SRC / "normal.pal")[1:5]
     with Image.open(DST / "icon.png") as icon:
         assert icon.mode == "P" and icon.size == (32, 64) and icon.info.get("transparency") == 0
-    print("Charaxis: authentic G-Max front/back/icon; black scales + orange fire")
+    print("Charaxis: G-Max black/orange battle art preserved; Mega Charizard X party icon recoloured from blue to orange")
 
 
 if __name__ == "__main__":
