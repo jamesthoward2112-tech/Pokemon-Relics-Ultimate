@@ -30,7 +30,12 @@ def restore_build538_art() -> dict:
     assert len(manifest["files"]) == 50
     for relative, expected in manifest["files"].items():
         source = PINNED / relative
-        assert hashlib.sha256(source.read_bytes()).hexdigest() == expected, relative
+        payload = source.read_bytes()
+        # Git's .gitattributes checks palettes out as CRLF on Actions runners.
+        # Hash the canonical text so that checkout line endings are irrelevant.
+        if source.suffix == ".pal":
+            payload = payload.replace(b"\r\n", b"\n")
+        assert hashlib.sha256(payload).hexdigest() == expected, relative
         name, filename = relative.split("/", 1)
         dest = (GFX / "prl_authoritative" / name / filename
                 if filename != "icon.png" else GFX / name / filename)
