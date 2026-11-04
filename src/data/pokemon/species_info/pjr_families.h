@@ -205,7 +205,7 @@
     .palette = gMonPalette_Mootiny,
     .shinyPalette = gMonShinyPalette_Mootiny,
     .iconSprite = gMonIcon_Mootiny,
-    .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 1 : 0,
+    .iconPalIndex = 5, // PRU Mootiny icon is indexed for the warm palette #5.
     .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
     .levelUpLearnset = sMootinyLevelUpLearnset,
     .teachableLearnset = sMiltankTeachableLearnset,
@@ -613,10 +613,11 @@
     .pokemonJumpType = PKMN_JUMP_TYPE_NONE, .levelUpLearnset = levelMoves, .teachableLearnset = teachMoves, \
 }
 
+// Miltitan's PRL icon uses the neutral/pink palette #0 indices.
 PJR_FINAL_SPECIES(SPECIES_MILTITAN, 110, 120, 105, 45, 100, 75, TYPE_NORMAL, TYPE_FAIRY,
     ABILITY_THICK_FAT, ABILITY_SCRAPPY, ABILITY_SAP_SIPPER, "Miltitan", CRY_MILTANK,
     NATIONAL_DEX_MILTANK, "Relic Cow", BODY_COLOR_PINK, gMonFrontPic_Miltitan, gMonBackPic_Miltitan,
-    gMonPalette_Miltitan, gMonShinyPalette_Miltitan, gMonIcon_Miltitan, P_GBA_STYLE_SPECIES_ICONS ? 1 : 0, sMiltitanLevelUpLearnset, sMiltankTeachableLearnset, 0, 6),
+    gMonPalette_Miltitan, gMonShinyPalette_Miltitan, gMonIcon_Miltitan, 0, sMiltitanLevelUpLearnset, sMiltankTeachableLearnset, 0, 6),
 
 PJR_FINAL_SPECIES(SPECIES_SHUCKOLOSSE, 40, 30, 230, 30, 230, 20, TYPE_BUG, TYPE_ROCK,
     ABILITY_ANCIENT_BASTION, ABILITY_NONE, ABILITY_NONE, "Shuckolosse", CRY_SHUCKLE,

@@ -1,0 +1,24 @@
+{
+  "sprites": [
+    {
+      "species": "miltitan",
+      "source": "user-provided GBA-ready artwork, 2026-11-04",
+      "front_sha256": "a8998ffc5f0096215291a4b0bd9c68794e709b04521717b434f88c58e20fd5d9",
+      "front_source_sha256": "a8998ffc5f0096215291a4b0bd9c68794e709b04521717b434f88c58e20fd5d9",
+      "palette_sha256": "b42f3700ed8a6025df5016f594217bffb44f97015096e9154d02e0f8b792935a",
+      "back": "existing approved drawing, remapped to new shared species palette by nearest RGB",
+      "shiny": "no shiny supplied; normal palette reused without invented shiny colors",
+      "icon": "derived from approved front, shared party palette #0"
+    },
+    {
+      "species": "mootiny",
+      "source": "user-provided GBA-ready artwork, 2026-11-04",
+      "front_sha256": "809456d19df1c5f94446f05e2812c2a3e79ce4575e6891c6a3da05035c67633c",
+      "front_source_sha256": "809456d19df1c5f94446f05e2812c2a3e79ce4575e6891c6a3da05035c67633c",
+      "palette_sha256": "513b5f6c174628c84ff52811a58767b7b37b47d3a14d4a9b460235c0934aadd2",
+      "back": "existing approved drawing, remapped to new shared species palette by nearest RGB",
+      "shiny": "no shiny supplied; normal palette reused without invented shiny colors",
+      "icon": "derived from approved front, shared party palette #5"
+    }
+  ]
+}
