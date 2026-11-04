@@ -19,13 +19,13 @@ EXPECTED = {
     "torkaldera/front.png": "c3c5f51399a037d3b4a50ca63a4ce8ac28de05e36d03e4125cfcfe88f46ff35c",
     "torkaldera/back.png": "95ae8f8a73aafe65dfcc017e35de6f6be5031f97710b49f297ff7fd9cd6fdaef",
     "torkaldera/icon.png": "b544be0c27a79af1860749e895c7a87da7c371ccfcab5b63588854c6249f3fe8",
-    "torkaldera/normal.pal": "2ab503c3782be7e8e60bdc7be4c8367eac526741af4a472e732530c3a6e151f4",
-    "torkaldera/shiny.pal": "5b8d6f3b7afff3b862293f5b05d7c0a7d99bb14a2a2f0fd81602127f562b64ad",
+    "torkaldera/normal.pal": "685eae2a54eb7a2874b979b4bfe82f92c5aad8851f48f28d9c7a14d99ec9a2f3",
+    "torkaldera/shiny.pal": "bda3afa232c2038458b9e7fcbcc469abaa851f6523feb86e6d212581e345b427",
     "tropisaur/front.png": "2359d76e46154119ee6ceb40748a51053e8e0f7c37f52db2bce7099b77da54a3",
     "tropisaur/back.png": "d55c06a2e5924770ce1b12b584366708e9e929b6a32b5b0a839e49de0b2554b4",
     "tropisaur/icon.png": "02754ff3f0beda9c2c8d6b96af30bb8109d7d5839e559c6474b67cf46ea0a198",
-    "tropisaur/normal.pal": "d18752f3054bf3fb51ecc06389cef1c36956a632a15923469b079e4bc2dfe0b7",
-    "tropisaur/shiny.pal": "a2136ce95651282fded3d3742274c115b14396120460e6d1e83602d93530f420",
+    "tropisaur/normal.pal": "94c8c03ca8ec6517a1b4474e3419b7950c31f2329e45fc029fe5410121087253",
+    "tropisaur/shiny.pal": "0aa1787e52716a24ddeb7dd8cdf2a52bc1fef118bda2e95f54442c3825d3aca8",
     # James-locked Odyssey II selected package intentionally names these
     # historical alternatives front/back in this orientation.
     "cradily/front.png": "0e786369d82c38d09f30f61ea74e03e4816e1a2710b9924296f9d5c9ee7feaa2",
