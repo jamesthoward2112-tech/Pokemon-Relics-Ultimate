@@ -111,7 +111,9 @@ def remove_donor_background(name: str) -> None:
         target.putdata(values)
         palette=[tuple(colors[3*i:3*i+3]) for i in range(16)]
         save_png(path,target,palette)
-        assert all(target.getpixel(xy)==0 for xy in ((0,0),(0,63),(63,0),(63,63)))
+        # Some donor sprites touch canvas corners. Never erase those actual
+        # Pokémon pixels: only border-connected known background shades.
+        assert any(v == 0 for v in values), (name, side, "no transparent pixels")
         print(f"PC_REPAIRED {name}/{side}: removed {len(seen)} border-connected background pixels")
 
 def main():
