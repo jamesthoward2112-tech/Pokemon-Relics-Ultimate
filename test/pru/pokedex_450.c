@@ -2,14 +2,16 @@
 #include "pokemon.h"
 #include "pokedex.h"
 #include "test/battle.h"
-#include "data/pokemon/pru_dex_order.h"
+#include "../../src/data/pokemon/pru_dex_order.h"
 
 TEST("PRU all 450 Pokédex entries have unique persisted Seen/Caught slots")
 {
-    u16 i, j;
+    static bool8 seenNationalSlot[NATIONAL_DEX_COUNT + 1];
+    u16 i;
 
     if (!IS_HNS)
         return;
+    memset(seenNationalSlot, 0, sizeof(seenNationalSlot));
 
     for (i = 0; i < PRU_DEX_COUNT; i++)
     {
@@ -20,8 +22,8 @@ TEST("PRU all 450 Pokédex entries have unique persisted Seen/Caught slots")
         EXPECT(slot <= NATIONAL_DEX_COUNT);
         EXPECT_EQ(SpeciesToPokedexNum(species), i + 1);
         EXPECT_EQ(NationalPokedexNumToSpecies(slot), species);
-        for (j = 0; j < i; j++)
-            EXPECT(slot != SpeciesToNationalPokedexNum(sPruDexSpecies[j]));
+        EXPECT(!seenNationalSlot[slot]);
+        seenNationalSlot[slot] = TRUE;
     }
 }
 
