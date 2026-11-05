@@ -298,10 +298,10 @@ Alola_Ulaula_Totem_sign_20_Lower:
 Alola_Ulaula_BattleVsTapuBulu::
 	lock
 	faceplayer
-	playmoncry SPECIES_CELEBI, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_TAPU_BULU, CRY_MODE_ENCOUNTER
 	msgbox Alola_Ulaula_BattleVsTapuBulu_Text_0
 	waitmoncry
-	seteventmon SPECIES_CELEBI, 60
+	seteventmon SPECIES_TAPU_BULU, 60
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	specialvar VAR_RESULT, GetBattleOutcome

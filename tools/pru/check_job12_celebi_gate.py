@@ -124,4 +124,20 @@ for champion, elite20, unown_i, old_caught, already_relic in itertools.product((
 # pre-E4 with state 9, post-Kanto pre-E20, normal post-Unown, and legacy
 # Celebi owner (including old Kanto clear). KO/run never sets completion flag.
 assert "goto_if_eq VAR_AZALEA_TOWN_STATE" not in shrine
-print("JOB12_CELEBI_PASS: 32 transition states, pre-E20, pre-Unown, old catch migration, actor hiding, retry-only noncatch outcomes")
+
+# Old Alola donor content mislabeled a visible TAPU BULU actor as a Celebi
+# battle. Keep that legendary encounter intact, but fight the depicted species.
+alola = read("data/maps/UlaUla_Forest_hns/scripts.inc")
+alola_objects = json.loads(read("data/maps/UlaUla_Forest_hns/map.json"))["object_events"]
+assert any(o.get("script") == "Alola_Ulaula_BattleVsTapuBulu" and
+           o.get("graphics_id") == "OBJ_EVENT_GFX_SPECIES(TAPU_BULU)" for o in alola_objects)
+assert "seteventmon SPECIES_TAPU_BULU, 60" in alola
+assert "playmoncry SPECIES_TAPU_BULU, CRY_MODE_ENCOUNTER" in alola
+all_celebi_events = [
+    str(path.relative_to(ROOT)).replace("\\", "/")
+    for path in (ROOT / "data/maps").glob("*/scripts.inc")
+    for line in path.read_text(encoding="utf-8").splitlines()
+    if re.match(r"^\s*seteventmon\s+SPECIES_CELEBI\b", line)
+]
+assert all_celebi_events == ["data/maps/RuinsOfAlph_Lab_hns/scripts.inc"], all_celebi_events
+print("JOB12_CELEBI_PASS: 32 progression states, legacy saves, one Celebi encounter across all maps, Tapu Bulu donor repaired")
