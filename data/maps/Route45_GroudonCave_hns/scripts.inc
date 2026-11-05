@@ -3,6 +3,9 @@ Route45_GroudonCave_hns_MapScripts::
 	.byte 0
 
 Route45_GroudonCave_OnTransition::
+	@ Do not reveal Groudon to a pre-League player, even with an old save
+	@ that already marked Maxie defeated.
+	goto_if_unset FLAG_IS_CHAMPION, Route45_GroudonCave_HideGroudon
 	goto_if_set FLAG_PRU_GROUDON_CAUGHT, Route45_GroudonCave_HideGroudon
 	goto_if_set FLAG_PRU_MAXIE_GROUDON_DEFEATED, Route45_GroudonCave_ShowGroudon
 	goto Route45_GroudonCave_HideGroudon
@@ -16,6 +19,8 @@ Route45_GroudonCave_ShowGroudon::
 	end
 
 Route45_GroudonCave_EventScript_Maxie::
+	@ Maxie and the Primal Groudon story begin after the first League.
+	goto_if_unset FLAG_IS_CHAMPION, Route45_GroudonCave_EventScript_LeagueLocked
 	@ His shiny Primal Groudon is the final ace of a six-Pokémon team.
 	trainerbattle_single TRAINER_PRU_MAXIE_GROUDON_HNS, Route45_GroudonCave_Text_MaxieIntro, Route45_GroudonCave_Text_MaxieDefeated, Route45_GroudonCave_EventScript_MaxieAfterBattle
 	end
@@ -40,6 +45,7 @@ Route45_GroudonCave_EventScript_MaxieAfterBattle::
 Route45_GroudonCave_EventScript_Groudon::
 	lock
 	faceplayer
+	goto_if_unset FLAG_IS_CHAMPION, Route45_GroudonCave_GroudonUnavailable
 	goto_if_set FLAG_PRU_GROUDON_CAUGHT, Route45_GroudonCave_GroudonUnavailable
 	goto_if_unset FLAG_PRU_MAXIE_GROUDON_DEFEATED, Route45_GroudonCave_EventScript_Maxie
 	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
@@ -65,6 +71,13 @@ Route45_GroudonCave_GroudonCaught::
 	removeobject LOCALID_PRU_GROUDON
 	release
 	end
+
+Route45_GroudonCave_EventScript_LeagueLocked::
+	msgbox Route45_GroudonCave_Text_LeagueLocked, MSGBOX_DEFAULT
+	end
+
+Route45_GroudonCave_Text_LeagueLocked:
+	.string "MAXIE: Return as JOHTO Champion.$"
 
 Route45_GroudonCave_Text_MaxieIntro:
 	.string "MAXIE: Beneath JOHTO sleeps\p"

@@ -210,6 +210,8 @@ RuinsOfAlph_Lab_EventScript_RelicCelebi::
 
 RuinsOfAlph_Lab_EventScript_RelicCelebiCaught::
 	setflag FLAG_PJR_RELIC_CELEBI
+	setflag FLAG_TEMP_6
+	removeobject LOCALID_ILEX_FOREST_RELIC_CELEBI
 	goto RuinsOfAlph_Lab_EventScript_RelicRecorded
 
 RuinsOfAlph_Lab_EventScript_RelicSuicune::
@@ -226,6 +228,8 @@ RuinsOfAlph_Lab_EventScript_RelicSuicune::
 
 RuinsOfAlph_Lab_EventScript_RelicSuicuneCaught::
 	setflag FLAG_PJR_RELIC_SUICUNE
+	setflag FLAG_HIDE_ROUTE25_SUICUNE
+	setflag FLAG_TEMP_7
 	@ Clear the caught RELIC's overworld sprite immediately. Faint/escape
 	@ outcomes never reach here, so they remain available on revisits.
 	removeobject VAR_LAST_TALKED

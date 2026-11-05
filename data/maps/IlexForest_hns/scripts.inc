@@ -3,7 +3,18 @@ IlexForest_hns_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
-IlexForest_OnTransition: 
+IlexForest_OnTransition:
+	@ Retire both old pre-RELICS Celebi actors on every map entry, including
+	@ saves that already exposed them. The GS Ball item is never removed.
+	setflag FLAG_HIDE_CELEBI
+	setflag FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI
+	setflag FLAG_TEMP_6
+	goto_if_unset FLAG_IS_CHAMPION, IlexForest_OnTransition_RelicCelebiHidden
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, IlexForest_OnTransition_RelicCelebiHidden
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, IlexForest_OnTransition_RelicCelebiHidden
+	goto_if_set FLAG_PJR_RELIC_CELEBI, IlexForest_OnTransition_RelicCelebiHidden
+	clearflag FLAG_TEMP_6
+IlexForest_OnTransition_RelicCelebiHidden:
 	call_if_eq VAR_ILEX_FOREST_FARFETCHD, 1, IlexForest_EventScript_ReenterWhenFarfetchdLeaving
 	call_if_eq VAR_ILEX_FOREST_FARFETCHD, 2, IlexForest_EventScript_ReenterDuringCutScene
 	callnative SetTimeBasedEncounters
@@ -219,22 +230,26 @@ IlexForest_EventScript_BugcatcherWayne::
 
 IlexForest_EventScript_Shrine::
 	lock
-	@ The RELICS hunt uses this actual shrine. Keep the original GS BALL
-	@ event available before the Elite 20 hunt unlocks.
-	goto_if_set FLAG_PRU_ELITE18_CLEARED, IlexForest_EventScript_Shrine_RelicCheck
-	goto_if_eq VAR_AZALEA_TOWN_STATE, 9, IlexForest_EventScript_Celebi_Event
+	@ Shrine is the one RELICS Celebi battle. Keep the GS Ball pickup,
+	@ but old VAR_AZALEA_TOWN_STATE=9 must not start a level-40 encounter.
+	goto_if_unset FLAG_IS_CHAMPION, IlexForest_EventScript_Shrine_PreRelics
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, IlexForest_EventScript_Shrine_PreRelics
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, IlexForest_EventScript_Shrine_PreRelics
+	goto_if_set FLAG_PJR_RELIC_CELEBI, IlexForest_hns_RelicCelebi_Complete
+	goto RuinsOfAlph_Lab_EventScript_RelicCelebi
+
+IlexForest_EventScript_Shrine_PreRelics::
 	msgbox IlexForest_Text_Shrine, MSGBOX_DEFAULT
 	closemessage
 	release
 	end
 
 IlexForest_EventScript_Shrine_RelicCheck::
-	goto_if_unset FLAG_IS_CHAMPION, IlexForest_hns_RelicCelebi_Unavailable
-	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, IlexForest_hns_RelicCelebi_Unavailable
-	goto_if_set FLAG_PJR_RELIC_CELEBI, IlexForest_hns_RelicCelebi_Complete
-	goto RuinsOfAlph_Lab_EventScript_RelicCelebi
+	goto IlexForest_EventScript_Shrine
 
 IlexForest_EventScript_Celebi_Event::
+	@ Never restore the old early-catch path from an older save.
+	goto IlexForest_hns_RelicCelebi_Unavailable
 	msgbox IlexForest_Text_ShrineCelebiEvent, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, IlexForest_EventScript_Shrine_Cancel
 	msgbox IlexForest_Text_InsertGSBall, MSGBOX_DEFAULT
@@ -293,6 +308,8 @@ IlexForest_EventScript_Shrine_Cancel::
 IlexForest_EventScript_SecondCelebi::
 	lock
 	faceplayer
+	@ Retired duplicate: no second Celebi encounter under any story state.
+	goto IlexForest_hns_RelicCelebi_Unavailable
 	playmoncry SPECIES_CELEBI, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
@@ -785,6 +802,7 @@ IlexForest_hns_RelicCelebi::
 	lock
 	faceplayer
 	goto_if_unset FLAG_IS_CHAMPION, IlexForest_hns_RelicCelebi_Unavailable
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, IlexForest_hns_RelicCelebi_Unavailable
 	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, IlexForest_hns_RelicCelebi_Unavailable
 	goto_if_set FLAG_PJR_RELIC_CELEBI, IlexForest_hns_RelicCelebi_Complete
 	goto RuinsOfAlph_Lab_EventScript_RelicCelebi

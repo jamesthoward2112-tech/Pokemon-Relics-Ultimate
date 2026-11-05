@@ -134,17 +134,7 @@
       "dest_warp_id": "3"
     }
   ],
-  "coord_events": [
-    {
-      "type": "trigger",
-      "x": 29,
-      "y": 22,
-      "elevation": 0,
-      "var": "VAR_COMPLETED_LUGIA",
-      "var_value": "2",
-      "script": "WhirlIslands_LugiaChamber_EventScript_TalkToKimono"
-    }
-  ],
+  "coord_events": [],
   "bg_events": [],
   "game_version": "hns",
   "region": "REGION_JOHTO"

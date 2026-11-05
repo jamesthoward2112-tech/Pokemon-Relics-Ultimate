@@ -90,6 +90,7 @@ MtMortar_B1F_hns_RelicEntei::
 	lock
 	faceplayer
 	goto_if_unset FLAG_IS_CHAMPION, MtMortar_B1F_hns_RelicEntei_Unavailable
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, MtMortar_B1F_hns_RelicEntei_Unavailable
 	goto_if_unset FLAG_PJR_RELIC_RAIKOU, MtMortar_B1F_hns_RelicEntei_Unavailable
 	goto_if_set FLAG_PJR_RELIC_ENTEI, MtMortar_B1F_hns_RelicEntei_Complete
 	goto RuinsOfAlph_Lab_EventScript_RelicEntei

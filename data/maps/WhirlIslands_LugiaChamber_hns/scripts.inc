@@ -4,11 +4,19 @@ WhirlIslands_LugiaChamber_hns_MapScripts::
 
 WhirlIslands_LugiaChamber_OnTransition:
 	@ PRU RELICS: reuse the original water Lugia (no duplicate overworld actor).
-	@ Existing saves that already caught the story Lugia can still do the hunt.
-	goto_if_set FLAG_PJR_RELIC_ENTEI, WhirlIslands_LugiaChamber_MapScript_RelicLugia
-	goto_if_eq VAR_COMPLETED_LUGIA, 2, WhirlIslands_LugiaChamber_MapScript_LugiaStory
-	goto_if_eq VAR_COMPLETED_LUGIA, 3, WhirlIslands_LugiaChamber_MapScript_LugiaPostStoryGone
-	goto_if_eq VAR_COMPLETED_LUGIA, 4, WhirlIslands_LugiaChamber_MapScript_LugiaPostStoryEncounter
+	@ No pre-League/story-route Lugia. Old save variables 2/3/4 are
+	@ deliberately ignored, including when the Kimono ceremony sets 2.
+	@ A player with an old pre-RELICS Lugia still keeps that caught Pokemon.
+	goto_if_unset FLAG_IS_CHAMPION, WhirlIslands_LugiaChamber_MapScript_RelicLugiaSealed
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, WhirlIslands_LugiaChamber_MapScript_RelicLugiaSealed
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, WhirlIslands_LugiaChamber_MapScript_RelicLugiaSealed
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, WhirlIslands_LugiaChamber_MapScript_RelicLugiaSealed
+	goto WhirlIslands_LugiaChamber_MapScript_RelicLugia
+
+WhirlIslands_LugiaChamber_MapScript_RelicLugiaSealed::
+	setflag FLAG_HIDE_LUGIA
+	setflag FLAG_HIDE_WHIRL_ISLANDS_KIMONO_GIRLS
+	removeobject LOCALID_LUGIA
 	end
 
 WhirlIslands_LugiaChamber_MapScript_RelicLugia::
@@ -48,6 +56,8 @@ WhirlIslands_LugiaChamber_MapScript_LugiaPostStoryEncounter::
 	end
 
 WhirlIslands_LugiaChamber_EventScript_TalkToKimono::
+	@ Retired story summoning cutscene; never make pre-RELICS Lugia appear.
+	goto WhirlIslands_LugiaChamber_MapScript_RelicLugiaSealed
 	lockall
 	playbgm MUS_HG_KIMONO_GIRL_DANCE, FALSE
 	msgbox WhirlIslands_LugiaChamber_Text_Kimono_Opening, MSGBOX_DEFAULT
@@ -194,6 +204,9 @@ WhirlIslands_LugiaChamber_EventScript_TalkToKimono::
 	end
 
 WhirlIslands_LugiaChamber_EventScript_Lugia::
+	@ Even an already-visible actor from an old save must use the RELICS gate.
+	goto WhirlIslands_LugiaChamber_hns_RelicLugia
+	@ Retired old story encounter (unreachable); no duplicate wild Lugia.
 	@ The existing Lugia becomes the RELICS encounter after Entei is caught.
 	goto_if_set FLAG_PJR_RELIC_ENTEI, WhirlIslands_LugiaChamber_hns_RelicLugia
 	lockall
@@ -628,6 +641,8 @@ WhirlIslands_LugiaChamber_hns_RelicLugia::
 	lock
 	faceplayer
 	goto_if_unset FLAG_IS_CHAMPION, WhirlIslands_LugiaChamber_hns_RelicLugia_Unavailable
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, WhirlIslands_LugiaChamber_hns_RelicLugia_Unavailable
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, WhirlIslands_LugiaChamber_hns_RelicLugia_Unavailable
 	goto_if_unset FLAG_PJR_RELIC_ENTEI, WhirlIslands_LugiaChamber_hns_RelicLugia_Unavailable
 	goto_if_set FLAG_PJR_RELIC_LUGIA, WhirlIslands_LugiaChamber_hns_RelicLugia_Complete
 	goto RuinsOfAlph_Lab_EventScript_RelicLugia

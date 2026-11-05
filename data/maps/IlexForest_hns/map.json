@@ -534,7 +534,8 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "IlexForest_hns_RelicCelebi",
-      "flag": "FLAG_PJR_RELIC_CELEBI"
+      "flag": "FLAG_TEMP_6",
+      "local_id": "LOCALID_ILEX_FOREST_RELIC_CELEBI"
     }
   ],
   "warp_events": [

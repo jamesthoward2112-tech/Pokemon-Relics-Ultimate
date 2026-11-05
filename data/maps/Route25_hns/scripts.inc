@@ -5,6 +5,16 @@ Route25_hns_MapScripts::
 
 Route25_MapScript_OnTransition::
 	callnative SetTimeBasedEncounters
+	@ Retire original Route 25 level-50 Suicune for every old/new save.
+	@ The RELICS Suicune is the only legal capture on this map.
+	setflag FLAG_HIDE_ROUTE25_SUICUNE
+	setflag FLAG_TEMP_7
+	goto_if_unset FLAG_IS_CHAMPION, Route25_MapScript_SuicuneVisibilityDone
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, Route25_MapScript_SuicuneVisibilityDone
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, Route25_MapScript_SuicuneVisibilityDone
+	goto_if_set FLAG_PJR_RELIC_SUICUNE, Route25_MapScript_SuicuneVisibilityDone
+	clearflag FLAG_TEMP_7
+Route25_MapScript_SuicuneVisibilityDone::
 	goto_if_eq VAR_SUICUNE_ENCOUNTERS, 7, Route25_EventScript_SetSuicuneSceneMid
 	end
 
@@ -222,6 +232,8 @@ Route25_EventScript_Eusine::
 	end
 
 Route25_EventScript_Suicune::
+	@ A visible actor retained by an old save cannot bypass RELICS.
+	goto Route25_RelicSuicune
 	lock
 	faceplayer
 	playmoncry SPECIES_SUICUNE, CRY_MODE_NORMAL
@@ -513,6 +525,7 @@ Route25_RelicSuicune::
 	lock
 	faceplayer
 	goto_if_unset FLAG_IS_CHAMPION, Route25_RelicUnavailable
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, Route25_RelicUnavailable
 	goto_if_unset FLAG_PJR_RELIC_CELEBI, Route25_RelicUnavailable
 	goto_if_set FLAG_PJR_RELIC_SUICUNE, Route25_RelicAlready
 	goto RuinsOfAlph_Lab_EventScript_RelicSuicune

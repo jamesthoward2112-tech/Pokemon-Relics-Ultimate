@@ -76,6 +76,7 @@ RuinsOfAlph_B1F_hns_RelicUnownI::
 	lock
 	faceplayer
 	goto_if_unset FLAG_IS_CHAMPION, RuinsOfAlph_B1F_hns_RelicUnownI_Unavailable
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_B1F_hns_RelicUnownI_Unavailable
 	goto_if_unset FLAG_PJR_RELIC_LUGIA, RuinsOfAlph_B1F_hns_RelicUnownI_Unavailable
 	goto_if_set FLAG_PJR_RELIC_UNOWN_I, RuinsOfAlph_B1F_hns_RelicUnownI_Complete
 	goto RuinsOfAlph_Lab_EventScript_RelicUnownI
@@ -114,6 +115,7 @@ RuinsOfAlph_B1F_hns_RelicAlphoracle::
 	lock
 	faceplayer
 	goto_if_unset FLAG_IS_CHAMPION, RuinsOfAlph_B1F_hns_RelicAlphoracle_Unavailable
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_B1F_hns_RelicAlphoracle_Unavailable
 	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_B1F_hns_RelicAlphoracle_Unavailable
 	goto_if_set FLAG_PJR_RELIC_ALPHORACLE, RuinsOfAlph_B1F_hns_RelicAlphoracle_Complete
 	playse SE_M_PETAL_DANCE

@@ -177,6 +177,7 @@ jobs:
           python3 tools/pru/check_khang_party_icon_palette.py
           python3 tools/pru/test_ruins_alph_cleanup.py
           python3 tools/pru/check_legendary_catching_respawns.py
+          python3 tools/pru/check_job7_legendary_progression.py
           python3 tools/pru/check_golden_hooh.py
           python3 tools/pru/check_dark_void_i_unown.py
           python3 test/test_pru_mystery_egg_seller.py
