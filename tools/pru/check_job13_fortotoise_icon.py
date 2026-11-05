@@ -45,4 +45,4 @@ indexed = mod.indexed_from_rgba(mod.make_icon_source("fortotoise"), mod.load_jas
 assert indexed.tobytes() == Image.open(PIN).tobytes()
 
 print("JOB13_POKESPRITE_ICON_PASS: 68x56 original; 32x64 two-frame, pal3, transparent index0, no Mega fallback")
-print("JOB13_SCOPE: Only Fortotoise selected for this review; front/back not yet changed or approved")
+print("JOB13_SCOPE: Fortotoise-only PR72 front/back approved and Pokésprite icon selected; no other Pokémon changed")

@@ -11,8 +11,8 @@ ROOT = Path(__file__).resolve().parents[2]
 ASSETS = ROOT / "assets/pru_final_polish"
 
 EXPECTED = {
-    "fortotoise/source_back.png": "4c9b04650c8c174846e533b09caf1e6e9dcaab590324f3a34c485712e2cc6e49",
-    "fortotoise/icon.png": "7520e4c1e5c378e73339da4c363b8014cbfbc26385180a6730dc3342ae2f322e",
+    # Fortotoise is pinned separately by check_job13_pr72_sprite_extract.py;
+    # legacy Mercury/PokeAPI/Mega sources are no longer authoritative.
     "torkaldera/front.png": "c3c5f51399a037d3b4a50ca63a4ce8ac28de05e36d03e4125cfcfe88f46ff35c",
     "torkaldera/back.png": "95ae8f8a73aafe65dfcc017e35de6f6be5031f97710b49f297ff7fd9cd6fdaef",
     "torkaldera/icon.png": "b544be0c27a79af1860749e895c7a87da7c371ccfcab5b63588854c6249f3fe8",
@@ -53,7 +53,7 @@ assert "python3 tools/pru/restore_build538_eeveelution_art.py" in workflow
 assert "python3 tools/pru/install_video_review_sprite_repairs.py" in workflow
 
 for species, icon_palette in {
-    "fortotoise": 2,
+    "fortotoise": 3,
     "torkaldera": 2,
     "tropisaur": 1,
     "cradily": 0,
@@ -84,15 +84,14 @@ with Image.open(ASSETS / "fortotoise/icon.png") as source_icon:
     assert source_icon.mode == "P" and source_icon.size == (32, 64)
     assert list(source_icon.getdata()) == list(Image.open(fort / "icon.png").getdata())
     assert source_icon.info.get("transparency") == 0
-assert hashlib.sha256((ASSETS / "fortotoise/source_front.png").read_bytes()).hexdigest() == "86ee4553eeb7b64ee6441d11786395a5256d5dea8e1d89aa092d4409a21a12a4"
-assert Image.open(ASSETS / "fortotoise/source_front.png").size == (96, 96)
-assert Image.open(ASSETS / "fortotoise/source_back.png").size == (64, 64)
-with Image.open(ASSETS / "fortotoise/source_back.png") as original_back, Image.open(ASSETS / "fortotoise/back.png") as installed_back:
-    original_mask = original_back.convert("RGBA").getchannel("A").point(lambda v: 255 if v else 0)
-    installed_mask = installed_back.convert("P").point(lambda v: 255 if v else 0)
-    assert original_mask.tobytes() == installed_mask.tobytes(), "PRL donor back silhouette/position changed"
-assert "PRL_BACK_SOURCE_SHA256" in (ROOT / "tools/pru/prepare_user_fortotoise.py").read_text()
+# Fortotoise must always use exact paired PR72 extraction and Pokésprite icon,
+# never the historical unapproved PokeAPI/Mercury/Mega substitute files.
+assert (ASSETS / "fortotoise/PR72_Fortotoise_front.png").is_file()
+assert (ASSETS / "fortotoise/PR72_Fortotoise_back.png").is_file()
+assert (ASSETS / "fortotoise/pokesprite_gmax_icon_GBA_pal3.png").is_file()
+assert 'f"PR72_Fortotoise_{side}.png"' in (ROOT / "tools/pru/prepare_user_fortotoise.py").read_text()
+assert "python3 tools/pru/check_job13_pr72_sprite_extract.py" in workflow
 
-print("PASS: owner's G-Max Blastoise Fortotoise front/back and Mega Blastoise icon survive the final install stage")
+print("PASS: Fortotoise uses exactly paired PR72 ROM artwork and Pokésprite G-Max icon after final install")
 print("PASS: Tortemple, Brontonana and James-locked Odyssey II fossil donors remain pinned")
 print("PASS: all five install after PRL sync with indexed front/back/icon assets and save-safe IDs")

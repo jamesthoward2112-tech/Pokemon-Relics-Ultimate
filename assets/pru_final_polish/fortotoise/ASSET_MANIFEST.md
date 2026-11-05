@@ -1,17 +1,11 @@
-# Fortotoise Gigantamax Blastoise asset source
+# Fortotoise — user-approved PRL PR72 direct extraction
 
-- Approved design: blue Blastoise with a huge dark fortress shell containing multiple cannons.
-- Front: the PRL PR72-approved fortress-shell G-Max Blastoise `source_front.png` (96×96; 14 opaque colours), selected from the back-facing G-Max sprite and mirrored to match the owner's reference. It is resized to 64×64 with nearest-neighbour pixels and indexed without invented/recoloured artwork.
-- Back: the separate, authentic 64×64 back-view artwork from the PRL Mercury G-Max Blastoise donor pack (`source_back.png`), preserved without cropping, flipping, scaling or changing its silhouette. Its small donor palette differences are snapped to the front's existing 16-colour GBA palette.
-- Both battle views use the exact shared indexed colours in `normal.pal`; palette index 0 is transparent.
-- Party/PC icon (Job 13 player choice): original Gigantamax Blastoise sprite from `msikma/pokesprite` (`pokemon-gen8/regular/blastoise-gmax.png`), pinned as `pokesprite_gmax_icon_source.png`. The approved candidate `pokesprite_gmax_icon_GBA_pal3.png` is a centred 32x64 two-frame indexed GBA icon on shared icon palette #3, installed as `icon.png`. Never revert to Mega Blastoise on a clean build.
-- Job 13 has changed the icon only; existing Job 12 front/back remain pending comparison with the uploaded PRL PR72 ROM and player visual approval. No bulk sprite edits.
-- `source_back.png` is authoritative for the back sprite; `back_source_crop.png` is obsolete and must not be installed.
-- The former red-bellied/front-facing candidate is not installed.
-- No authentic shiny palette is supplied or required. Fortotoise retains its existing pinned shiny palette.
-
-- Source: PokeAPI Pokémon #10197 back battle sprite, horizontally mirrored to match the PRL PR72 ROM screenshot. Source provenance is PokeAPI, not a binary extraction from the supplied ROM.
-- The PR72 screenshot/rear-facing design is the authority; do not substitute the red-bellied front-facing sprite.
-
-- Original PRL back donor: `/Pokémon Relic Legacy/Sprite Resources/Mercury/Mercury_GMax_Blastoise_Charizard_Eevee_Full_Donor_Pack.zip` → `Mercury_Gigantamax_Blastoise_Donor/Gigantamax_Blastoise_back_normal_64x64.png`; SHA-256 `4c9b04650c8c174846e533b09caf1e6e9dcaab590324f3a34c485712e2cc6e49`.
-- This source comes from the PRL artwork archive; it is not claimed to be a binary sprite extraction from PR72.
+- **Authoritative ROM:** `PRL_PR72_Kanto_Champion_Dialogue_20261014.gba`, 32 MiB, SHA-256 `57fac7dd5a4c859ada1612e796b17e9b549a711f80d0fb8fcd523fa03c502c4e`.
+- **Front:** `PR72_Fortotoise_front.png`, exact 64×64 indexed pixels decoded from original ROM compressed `0x8BEFB0` payload. No scaling, mirroring or recolouring. Raw 4bpp SHA-256: `fc76447d81a19214d2d2d75284c6bbffbca771eaae46f0ec7d9281b090ac6c6f`.
+- **Back:** `PR72_Fortotoise_back.png`, exact 64×64 indexed pixels decoded from original ROM compressed `0x8BEBFC` payload. No scaling, mirroring or recolouring. Raw 4bpp SHA-256: `1763c8dc5a151c66c0b3c66d342d565f5a4c0ef258764eb718a906015d3bb36d`.
+- **Battle palette:** Original 16-entry normal palette from ROM `0x8BEF90`. Shiny palette similarly from original ROM `0x8BEBDC`; matching palette indexes are essential to preserving the exact pixels and shiny colours.
+- **Party/PC icon:** User-selected standard Gigantamax Blastoise from `msikma/pokesprite`, original `pokemon-gen8/regular/blastoise-gmax.png` (68×56). The converted 32×64 two-frame 4bpp icon is `pokesprite_gmax_icon_GBA_pal3.png`; existing palette 3, reserved transparency at index 0. This is not from PR72 and is intentionally a separate approved source.
+- `front.png`, `back.png`, `normal.pal`, `shiny.pal`, and `icon.png` are generated/copied by `tools/pru/prepare_user_fortotoise.py` and installed after PRL sync via `tools/pru/install_final_polish_sprites.py`.
+- The previous PokeAPI 96×96 `source_front.png` and Mercury donor `source_back.png` are **retired** historical files. Do not use them to generate Fortotoise artwork.
+- **Scope is ONLY Fortotoise.** No Job 10 mass sprite resizing/icons, no other species; Job 12 is the gameplay baseline.
+- Verified by `tools/pru/check_job13_pr72_sprite_extract.py` and `tools/pru/check_job13_fortotoise_icon.py`; direct PR72 raw 4bpp SHA checks guarantee image fidelity.

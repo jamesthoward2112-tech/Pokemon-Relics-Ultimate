@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105]
+    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105, fix/pru-job13-fortotoise-icon-20261105]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -188,6 +188,7 @@ jobs:
           python3 tools/pru/check_job11_text_pages.py
           python3 tools/pru/check_job12_celebi_gate.py
           python3 tools/pru/check_job13_fortotoise_icon.py
+          python3 tools/pru/check_job13_pr72_sprite_extract.py
           python3 test/test_pru_sylveon_dex.py
           python3 test/test_pru_false_swipe_escape_rope.py
           python3 test/test_pru_indigo_tutors_scary_face.py
@@ -326,7 +327,7 @@ jobs:
             pru-rom.sha256
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' || github.ref == 'refs/heads/fix/pru-job11-text-20261105' || github.ref == 'refs/heads/fix/pru-job12-celebi-20261105')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
+        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' || github.ref == 'refs/heads/fix/pru-job11-text-20261105' || github.ref == 'refs/heads/fix/pru-job12-celebi-20261105' || github.ref == 'refs/heads/fix/pru-job13-fortotoise-icon-20261105')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -423,7 +424,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Job 12 from accepted Job 11 efdd0a71b9 (itself Job 9-based). Prevents pre-E20 and duplicate Celebi encounters, retires the erroneous Alola Celebi/Tapu Bulu battle outside the approved 450, and credits legacy caught Celebi only after I-Unown, preserves the GS Ball and save IDs. Retains Job 11 dialogue/Ho-Oh name fixes. No rejected Job 10 bulk artwork changes; ROM is technically tested but in-game scenario QA requires confirmation." \
+              --notes "Job 13 Fortotoise: BOTH battle sprites are exact 64x64 unscaled front/back images decompressed from user-uploaded PRL PR72 ROM with matching original normal/shiny palettes, plus approved 2-frame Pokésprite Gigantamax Blastoise box icon (pal3). No other species changed; rejected Job 10 bulk artwork excluded. Built on accepted Job 12 (Celebi RELICS quest), preserving Jobs 7-9, 11-12, 450-Dex and save compatibility. All source, sprite pixel-hash, mGBA boot and build tests required; visual playtest remains valuable." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \

@@ -165,10 +165,9 @@ def install() -> None:
                 shutil.copyfile(source / f"{side}.png", destination / f"{side}.png")
             shutil.copyfile(source / "normal.pal", destination / "normal.pal")
             shiny = source / "shiny.pal"
-            if species != "fortotoise":
-                shutil.copyfile(shiny if shiny.is_file() else source / "normal.pal", destination / "shiny.pal")
-            # Keep Fortotoise's pinned prior shiny palette: the supplied pack's
-            # duplicate normal palette is explicitly temporary, not authentic.
+            # Job 13 now includes the real PR72 shiny palette indexed for the
+            # exact PR72 front/back frames; old palette order is incompatible.
+            shutil.copyfile(shiny if shiny.is_file() else source / "normal.pal", destination / "shiny.pal")
 
         icon_palette = load_jasc(POKEMON / "icon_palettes" / f"pal{ICON_PALETTES[species]}.pal")
         icon_art = make_icon_source(species)
