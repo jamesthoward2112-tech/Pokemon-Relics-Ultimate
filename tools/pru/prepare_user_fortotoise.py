@@ -110,10 +110,13 @@ def main() -> None:
     indexed(remapped_back, colors).save(ASSET / "back.png", optimize=False)
     save_palette(ASSET / "normal.pal", colors)
 
-    with Image.open(ROOT / "graphics/pokemon/blastoise/mega/icon.png") as icon:
+    # User-selected Pokésprite Gigantamax Blastoise icon. Never replace this
+    # with Mega Blastoise during CI; keep the approved two-frame GBA candidate.
+    source_icon = ASSET / "pokesprite_gmax_icon_GBA_pal3.png"
+    with Image.open(source_icon) as icon:
         assert icon.mode == "P" and icon.size == (32, 64)
-        icon.load()
-        icon.info["transparency"] = 0
+        assert icon.info.get("transparency") == 0
+        assert max(icon.getdata()) < 16
         icon.save(ASSET / "icon.png", optimize=False)
 
     # The approved build retains its previously pinned shiny palette; the
@@ -126,7 +129,7 @@ def main() -> None:
         assert max(check.getdata()) < 16 and check.info.get("transparency") == 0
     with Image.open(ASSET / "icon.png") as check:
         assert check.mode == "P" and check.size == (32, 64)
-    print("FORTOTOISE: approved PR72 fortress front, original 64x64 PRL Mercury back, Mega Blastoise icon; shared GBA palette")
+    print("FORTOTOISE: existing PR72 fortress front and PRL back preserved; Pokésprite G-Max icon (palette 3) prepared")
 
 
 if __name__ == "__main__":

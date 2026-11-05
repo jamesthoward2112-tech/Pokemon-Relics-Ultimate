@@ -20,7 +20,7 @@ DESTINATIONS = {
     "cradily": POKEMON / "cradily",
 }
 ICON_PALETTES = {
-    "fortotoise": 2,
+    "fortotoise": 3,
     "torkaldera": 2,
     "tropisaur": 1,
     "armaldo": 0,

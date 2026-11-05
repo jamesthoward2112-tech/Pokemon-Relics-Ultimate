@@ -187,6 +187,7 @@ jobs:
           python3 test/test_pru_eeveelution_expert.py
           python3 tools/pru/check_job11_text_pages.py
           python3 tools/pru/check_job12_celebi_gate.py
+          python3 tools/pru/check_job13_fortotoise_icon.py
           python3 test/test_pru_sylveon_dex.py
           python3 test/test_pru_false_swipe_escape_rope.py
           python3 test/test_pru_indigo_tutors_scary_face.py

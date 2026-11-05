@@ -736,7 +736,7 @@ PJR_RED_SPECIES(SPECIES_CHARAXIS, 80, 120, 85, 90, 80, 125, TYPE_FIRE, TYPE_FLYI
 PJR_RED_SPECIES(SPECIES_FORTOTOISE, 95, 80, 155, 100, 105, 50, TYPE_WATER, TYPE_STEEL,
     ABILITY_STURDY, "Fortotoise", CRY_BLASTOISE, NATIONAL_DEX_BLASTOISE, BODY_COLOR_BLUE,
     gMonFrontPic_Fortotoise, gMonBackPic_Fortotoise, gMonPalette_Fortotoise, gMonShinyPalette_Fortotoise, gMonIcon_Fortotoise,
-    sFortotoiseLevelUpLearnset, sBlastoiseTeachableLearnset, 600, 0, 5, 2),
+    sFortotoiseLevelUpLearnset, sBlastoiseTeachableLearnset, 600, 0, 5, 3),
 
 PJR_RED_SPECIES(SPECIES_KHANG, 105, 105, 95, 50, 90, 110, TYPE_NORMAL, TYPE_NORMAL,
     ABILITY_PARENTAL_BOND, "Khang", CRY_KANGASKHAN, NATIONAL_DEX_KANGASKHAN, BODY_COLOR_BROWN,
