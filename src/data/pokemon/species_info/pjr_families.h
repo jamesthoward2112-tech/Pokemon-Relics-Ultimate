@@ -672,7 +672,7 @@ PJR_FINAL_SPECIES(SPECIES_GHOULBAT, 95, 110, 90, 80, 95, 130, TYPE_GHOST, TYPE_F
     .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
     .abilities = { ABILITY_PHOENIX_SOUL, ABILITY_PHOENIX_SOUL, ABILITY_PHOENIX_SOUL },
     .bodyColor = BODY_COLOR_YELLOW,
-    .speciesName = _("Relic Ho-Oh"), .cryId = CRY_HO_OH, .natDexNum = NATIONAL_DEX_HO_OH,
+    .speciesName = _("Ho-Oh"), .cryId = CRY_HO_OH, .natDexNum = NATIONAL_DEX_HO_OH,
     .categoryName = _("Relic"), .height = 38, .weight = 1990,
     .description = COMPOUND_STRING(
         "An ancient Ho-Oh awakened by Relic\n"

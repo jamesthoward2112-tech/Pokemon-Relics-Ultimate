@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101]
+    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -185,6 +185,7 @@ jobs:
           python3 test/test_pru_mystery_egg_seller.py
           python3 test/test_pru_ecruteak_rock_shop.py
           python3 test/test_pru_eeveelution_expert.py
+          python3 tools/pru/check_job11_text_pages.py
           python3 test/test_pru_sylveon_dex.py
           python3 test/test_pru_false_swipe_escape_rope.py
           python3 test/test_pru_indigo_tutors_scary_face.py
@@ -323,7 +324,7 @@ jobs:
             pru-rom.sha256
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
+        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' || github.ref == 'refs/heads/fix/pru-job11-text-20261105')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -420,7 +421,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "32 MiB PRU ROM from commit $GITHUB_SHA, based on approved build #542. Restores accepted build-538 Eeveelutions, Mootiny/Miltitan and all preserved gameplay; adds supplied G-Max Blastoise Fortotoise front/back/icon, repaired PC icons and source-authentic Jessie & James backs. Includes the unchanged 70-species inspection save and source/compiled sprite QA reports. Ten E4 Relic back views remain unresolved because no authentic rear art is present in the pinned assets. No manual emulator visual review is claimed." \
+              --notes "Job 11 from the approved Job 9 baseline 768ca315f8. Fixes Eeveelution Expert textbox pagination and displays the Golden/Relic form as Ho-Oh. No Job 10 bulk icon or sprite changes. Preserves all Job 9 gameplay, Pokédex and save compatibility fixes; technical build and emulator boot verification do not constitute complete visual sign-off." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \

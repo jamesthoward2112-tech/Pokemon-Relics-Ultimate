@@ -111,62 +111,63 @@ EcruteakCity_RockShop_Advanced:
 	pokemartlistend
 
 EcruteakCity_RockShop_Text_ExpertGreeting:
-	.string "Ah, an EEVEE enthusiast! My friend\n"
-	.string "and I have studied all 18 of PRU's\n"
-	.string "approved EEVEELUTIONS!$"
+    .string "Ah, an EEVEE fan!\n"
+    .string "My friend and I studied\p"
+    .string "all 18 of PRU's\n"
+    .string "approved EEVEELUTIONS!$"
 
 EcruteakCity_RockShop_Text_ExpertPrompt:
-	.string "Which evolution group would you like\n"
-	.string "to learn about?$"
+    .string "Which evolution group\n"
+    .string "would you like to study?$"
 
 EcruteakCity_RockShop_Text_ExpertOptionClassic:
-	.string "Classic Eeveelutions$"
+    .string "Classic Eeveelutions$"
 EcruteakCity_RockShop_Text_ExpertOptionRelic:
-	.string "Relic Eeveelutions$"
+    .string "Relic Eeveelutions$"
 EcruteakCity_RockShop_Text_ExpertOptionUnusual:
-	.string "More unusual evolutions$"
+    .string "More unusual evolutions$"
 EcruteakCity_RockShop_Text_ExpertOptionGoodbye:
-	.string "Goodbye$"
+    .string "Goodbye$"
 
 EcruteakCity_RockShop_Text_ExpertClassic:
-	.string "WATER STONE: VAPOREON\n"
-	.string "THUNDER STONE: JOLTEON\n"
-	.string "FIRE STONE: FLAREON\n"
-	.string "SUN STONE: ESPEON\p"
-	.string "MOON STONE: UMBREON\n"
-	.string "LEAF STONE: LEAFEON\n"
-	.string "ICE STONE: GLACEON\n"
-	.string "DAWN STONE: SYLVEON\p"
-	.string "DAWN STONE is sold here after the\n"
-	.string "FOG BADGE.$"
+    .string "WATER STONE: VAPOREON\n"
+    .string "THUNDER STONE: JOLTEON\p"
+    .string "FIRE STONE: FLAREON\n"
+    .string "SUN STONE: ESPEON\p"
+    .string "MOON STONE: UMBREON\n"
+    .string "LEAF STONE: LEAFEON\p"
+    .string "ICE STONE: GLACEON\n"
+    .string "DAWN STONE: SYLVEON\p"
+    .string "DAWN STONE is sold here after the\n"
+    .string "FOG BADGE.$"
 
 EcruteakCity_RockShop_Text_ExpertRelic:
-	.string "ANCIENT STONE: EEVEEON\n"
-	.string "SHINY STONE: NIMBEON\n"
-	.string "DUSK STONE: OMEON\p"
-	.string "Our shop stocks the ANCIENT STONE.\n"
-	.string "SHINY and DUSK STONES are added\n"
-	.string "after the FOG BADGE.$"
+    .string "ANCIENT STONE: EEVEEON\n"
+    .string "SHINY STONE: NIMBEON\p"
+    .string "DUSK STONE: OMEON\n"
+    .string "ANCIENT STONE is sold here.\p"
+    .string "SHINY and DUSK STONES\n"
+    .string "unlock after the FOG BADGE.$"
 
 EcruteakCity_RockShop_Text_ExpertUnusual:
-	.string "EXPERT BELT: CHAMPEON\n"
-	.string "SILVER POWDER: LEPIDEON\n"
-	.string "SOFT SAND: SPHYNXEON\n"
-	.string "METAL COAT: GUARDEON\p"
-	.string "HARD STONE: OBSIDEON\n"
-	.string "POISON BARB: TOXEON\n"
-	.string "DRAGON FANG: DRAKEON\p"
-	.string "Use the matching item directly on\n"
-	.string "EEVEE. These seven items aren't\n"
-	.string "stocked in this Rock Shop.$"
+    .string "EXPERT BELT: CHAMPEON\n"
+    .string "SILVER POWDER: LEPIDEON\p"
+    .string "SOFT SAND: SPHYNXEON\n"
+    .string "METAL COAT: GUARDEON\p"
+    .string "HARD STONE: OBSIDEON\n"
+    .string "POISON BARB: TOXEON\p"
+    .string "DRAGON FANG: DRAKEON\n"
+    .string "Use the matching item on EEVEE.\p"
+    .string "These seven items aren't\n"
+    .string "stocked in this Rock Shop.$"
 
 EcruteakCity_RockShop_Text_ExpertGoodbye:
-	.string "Happy evolving! EEVEE and I will be\n"
-	.string "here whenever you need advice.$"
+    .string "Happy evolving! EEVEE and I\n"
+    .string "are always here to help!$"
 
 EcruteakCity_RockShop_Text_ExpertEevee:
-	.string "EEVEE tilts its head and chirps\n"
-	.string "happily!$"
+    .string "EEVEE tilts its head and\n"
+    .string "chirps happily!$"
 
 EcruteakCity_RockShop_Text_Collector:
 	.string "These stones have been gathered\n"
