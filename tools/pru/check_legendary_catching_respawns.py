@@ -84,7 +84,12 @@ oak = read("data/maps/MtSilver_SummitDay_hns/scripts.inc")
 assert "seteventmon SPECIES_RELIC_HO_OH, 100" in oak
 assert "setflag FLAG_PJR_RELIC_HO_OH" in oak
 ilex = read("data/maps/IlexForest_hns/scripts.inc")
-assert "call_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, IlexForest_EventScript_SecondCelebiCaught" in ilex
+assert "seteventmon SPECIES_CELEBI, 40" not in ilex
+assert "goto IlexForest_hns_RelicCelebi_Unavailable" in ilex.split("IlexForest_EventScript_SecondCelebi::",1)[1][:120]
+assert "call_if_set FLAG_CAUGHT_CELEBI, IlexForest_OnTransition_CreditLegacyCelebi" in ilex
+hof = read("data/maps/PokemonLeague_HallOfFame_hns/scripts.inc")
+assert "clearflag FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI" not in hof
+assert "setflag FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI" in hof
 
 jirachi = read("src/data/pokemon/species_info/gen_3_families.h")
 assert "[SPECIES_JIRACHI]" in jirachi and ".frontPic = gMonFrontPic_Jirachi" in jirachi

@@ -12,13 +12,21 @@ IlexForest_OnTransition:
 	goto_if_unset FLAG_IS_CHAMPION, IlexForest_OnTransition_RelicCelebiHidden
 	goto_if_unset FLAG_PRU_ELITE18_CLEARED, IlexForest_OnTransition_RelicCelebiHidden
 	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, IlexForest_OnTransition_RelicCelebiHidden
+	@ A pre-patch player with Celebi already caught has completed this step.
+	@ Award credit only after E20 and I-Unown; never spawn a duplicate.
+	call_if_set FLAG_CAUGHT_CELEBI, IlexForest_OnTransition_CreditLegacyCelebi
 	goto_if_set FLAG_PJR_RELIC_CELEBI, IlexForest_OnTransition_RelicCelebiHidden
 	clearflag FLAG_TEMP_6
 IlexForest_OnTransition_RelicCelebiHidden:
 	call_if_eq VAR_ILEX_FOREST_FARFETCHD, 1, IlexForest_EventScript_ReenterWhenFarfetchdLeaving
 	call_if_eq VAR_ILEX_FOREST_FARFETCHD, 2, IlexForest_EventScript_ReenterDuringCutScene
 	callnative SetTimeBasedEncounters
-	end	
+	end
+
+IlexForest_OnTransition_CreditLegacyCelebi::
+	setflag FLAG_PJR_RELIC_CELEBI
+	setflag FLAG_TEMP_6
+	return
 
 IlexForest_EventScript_ReenterWhenFarfetchdLeaving::
 	setobjectxyperm LOCALID_ILEX_FOREST_FARFETCHD_1, 33, 51
@@ -236,6 +244,7 @@ IlexForest_EventScript_Shrine::
 	goto_if_unset FLAG_PRU_ELITE18_CLEARED, IlexForest_EventScript_Shrine_PreRelics
 	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, IlexForest_EventScript_Shrine_PreRelics
 	goto_if_set FLAG_PJR_RELIC_CELEBI, IlexForest_hns_RelicCelebi_Complete
+	goto_if_set FLAG_CAUGHT_CELEBI, IlexForest_hns_RelicCelebi_CreditLegacy
 	goto RuinsOfAlph_Lab_EventScript_RelicCelebi
 
 IlexForest_EventScript_Shrine_PreRelics::
@@ -247,95 +256,15 @@ IlexForest_EventScript_Shrine_PreRelics::
 IlexForest_EventScript_Shrine_RelicCheck::
 	goto IlexForest_EventScript_Shrine
 
+@ The early H&S ceremony and post-Kanto second Celebi are retired.
+@ Keep these symbols for map/event compatibility; neither can battle.
 IlexForest_EventScript_Celebi_Event::
-	@ Never restore the old early-catch path from an older save.
 	goto IlexForest_hns_RelicCelebi_Unavailable
-	msgbox IlexForest_Text_ShrineCelebiEvent, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, FALSE, IlexForest_EventScript_Shrine_Cancel
-	msgbox IlexForest_Text_InsertGSBall, MSGBOX_DEFAULT
-	clearflag FLAG_HIDE_CELEBI
-	addobject LOCALID_ILEX_FOREST_CELEBI
-	playse SE_M_PETAL_DANCE
-	applymovement LOCALID_ILEX_FOREST_CELEBI, IlexForest_Movement_Celebi1
-	waitmovement 0
-	playse SE_M_PETAL_DANCE
-	applymovement LOCALID_ILEX_FOREST_CELEBI, IlexForest_Movement_Celebi2
-	turnobject OBJ_EVENT_ID_PLAYER, DIR_SOUTH
-	waitmovement 0
-	playse SE_M_PETAL_DANCE
-	applymovement LOCALID_ILEX_FOREST_CELEBI, IlexForest_Movement_Celebi3
-	waitmovement 0
-	turnobject OBJ_EVENT_ID_PLAYER, DIR_WEST
-	playmoncry SPECIES_CELEBI, CRY_MODE_ENCOUNTER
-	delay 40
-	waitmoncry
-	seteventmon SPECIES_CELEBI, 40
-	special BattleSetup_StartLegendaryBattle
-waitstate
-	specialvar VAR_RESULT, GetBattleOutcome
-	call_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, IlexForest_EventScript_Shrine_Caught
-	fadescreenswapbuffers FADE_TO_BLACK
-	removeobject LOCALID_ILEX_FOREST_CELEBI
-	setflag FLAG_HIDE_CELEBI
-	special GivePartyMonNationalRibbon
-	fadescreenswapbuffers FADE_FROM_BLACK
-IlexForest_EventScript_Kurt::
-	clearflag FLAG_HIDE_ILEX_FOREST_KURT
-	addobject LOCALID_ILEX_FOREST_KURT
-	applymovement LOCALID_ILEX_FOREST_KURT, IlexForest_Movement_Kurt1
-	waitmovement 0
-	turnobject OBJ_EVENT_ID_PLAYER, DIR_SOUTH
-	msgbox IlexForest_Text_KurtCaughtCelebi, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_ILEX_FOREST_KURT, IlexForest_Movement_Kurt2
-	waitmovement 0
-	setflag FLAG_HIDE_ILEX_FOREST_KURT
-	removeobject LOCALID_ILEX_FOREST_KURT
-	setvar VAR_AZALEA_TOWN_STATE, 10
-	release
-	end
-
-IlexForest_EventScript_Shrine_Caught::
-	setflag FLAG_CAUGHT_CELEBI
-	return
-
-IlexForest_EventScript_Shrine_Cancel::
-	closemessage
-	release
-	end
-
 
 IlexForest_EventScript_SecondCelebi::
 	lock
 	faceplayer
-	@ Retired duplicate: no second Celebi encounter under any story state.
 	goto IlexForest_hns_RelicCelebi_Unavailable
-	playmoncry SPECIES_CELEBI, CRY_MODE_ENCOUNTER
-	delay 40
-	waitmoncry
-	seteventmon SPECIES_CELEBI, 40
-	special BattleSetup_StartLegendaryBattle
-waitstate
-	specialvar VAR_RESULT, GetBattleOutcome
-	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, IlexForest_EventScript_SecondCelebiRan
-	@ Knockout only removes the visible NPC for this visit. Only capture
-	@ permanently hides the second, separately unlocked Celebi encounter.
-	call_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, IlexForest_EventScript_SecondCelebiCaught
-	fadescreenswapbuffers FADE_TO_BLACK
-	removeobject LOCALID_ILEX_FOREST_SECOND_CELEBI
-	fadescreenswapbuffers FADE_FROM_BLACK
-	special GivePartyMonNationalRibbon
-	release
-	end
-
-IlexForest_EventScript_SecondCelebiCaught::
-	setflag FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI
-	return
-
-IlexForest_EventScript_SecondCelebiRan::
-	release
-	end
-
 
 IlexForest_EventScript_Sign::
 	lock
@@ -805,12 +734,20 @@ IlexForest_hns_RelicCelebi::
 	goto_if_unset FLAG_PRU_ELITE18_CLEARED, IlexForest_hns_RelicCelebi_Unavailable
 	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, IlexForest_hns_RelicCelebi_Unavailable
 	goto_if_set FLAG_PJR_RELIC_CELEBI, IlexForest_hns_RelicCelebi_Complete
+	goto_if_set FLAG_CAUGHT_CELEBI, IlexForest_hns_RelicCelebi_CreditLegacy
 	goto RuinsOfAlph_Lab_EventScript_RelicCelebi
 
 IlexForest_hns_RelicCelebi_Unavailable::
 	msgbox IlexForest_hns_RelicCelebi_TextUnavailable, MSGBOX_DEFAULT
 	release
 	end
+
+IlexForest_hns_RelicCelebi_CreditLegacy::
+	@ Works for old saves already standing beside the shrine actor.
+	setflag FLAG_PJR_RELIC_CELEBI
+	setflag FLAG_TEMP_6
+	removeobject LOCALID_ILEX_FOREST_RELIC_CELEBI
+	goto IlexForest_hns_RelicCelebi_Complete
 
 IlexForest_hns_RelicCelebi_Complete::
 	msgbox IlexForest_hns_RelicCelebi_TextComplete, MSGBOX_DEFAULT

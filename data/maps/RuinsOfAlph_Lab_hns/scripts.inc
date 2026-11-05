@@ -15,6 +15,8 @@ RuinsOfAlph_Lab_EventScript_Scientist1::
 	goto_if_unset FLAG_PJR_RELIC_ENTEI, RuinsOfAlph_Lab_EventScript_HintEntei
 	goto_if_unset FLAG_PJR_RELIC_LUGIA, RuinsOfAlph_Lab_EventScript_HintLugia
 	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, RuinsOfAlph_Lab_EventScript_HintUnownI
+	@ Existing Celebi owners advance without a second encounter.
+	call_if_set FLAG_CAUGHT_CELEBI, RuinsOfAlph_Lab_EventScript_CreditLegacyCelebi
 	goto_if_unset FLAG_PJR_RELIC_CELEBI, RuinsOfAlph_Lab_EventScript_HintCelebi
 	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_Lab_EventScript_HintSuicune
 	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, RuinsOfAlph_Lab_EventScript_HintAlphoracle
@@ -34,6 +36,10 @@ RuinsOfAlph_Lab_EventScript_RelicsFullyComplete::
 	msgbox RuinsOfAlph_Lab_Text_RelicsFullyComplete, MSGBOX_DEFAULT
 	release
 	end
+
+RuinsOfAlph_Lab_EventScript_CreditLegacyCelebi::
+	setflag FLAG_PJR_RELIC_CELEBI
+	return
 
 @ One clear introduction on the first RELIC, then the route clue.
 @ Old saves retain their recorded catch flags and bypass already caught marks.
@@ -197,6 +203,12 @@ RuinsOfAlph_Lab_EventScript_RelicUnownICaught::
 	goto RuinsOfAlph_Lab_EventScript_RelicRecorded
 
 RuinsOfAlph_Lab_EventScript_RelicCelebi::
+	@ Defence in depth: this script must never bypass the shrine gates.
+	goto_if_unset FLAG_IS_CHAMPION, IlexForest_hns_RelicCelebi_Unavailable
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, IlexForest_hns_RelicCelebi_Unavailable
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, IlexForest_hns_RelicCelebi_Unavailable
+	goto_if_set FLAG_PJR_RELIC_CELEBI, IlexForest_hns_RelicCelebi_Complete
+	goto_if_set FLAG_CAUGHT_CELEBI, IlexForest_hns_RelicCelebi_CreditLegacy
 	msgbox RuinsOfAlph_Lab_Text_RelicCelebi, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RuinsOfAlph_Lab_EventScript_RelicDecline
 	seteventmon SPECIES_CELEBI, 67
@@ -209,6 +221,7 @@ RuinsOfAlph_Lab_EventScript_RelicCelebi::
 	goto RuinsOfAlph_Lab_EventScript_RelicRetry
 
 RuinsOfAlph_Lab_EventScript_RelicCelebiCaught::
+	setflag FLAG_CAUGHT_CELEBI
 	setflag FLAG_PJR_RELIC_CELEBI
 	setflag FLAG_TEMP_6
 	removeobject LOCALID_ILEX_FOREST_RELIC_CELEBI

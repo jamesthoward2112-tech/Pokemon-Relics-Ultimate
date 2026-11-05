@@ -166,7 +166,8 @@ PRU_HallOfFame_Continue::
 	clearflag FLAG_HIDE_HO_OH
 	call PokemonLeague_HallOfFame_EventScript_SpawnRoamers
 	call_if_ge VAR_SUICUNE_ENCOUNTERS, 8, PokemonLeague_HallOfFame_EventScript_SpawnSuicune
-	call_if_set FLAG_CAUGHT_CELEBI, PokemonLeague_HallOfFame_EventScript_SpawnSecondCelebi
+	@ Do not resurrect the retired second Celebi on Kanto or replay clears.
+	setflag FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI
 	call_if_ge VAR_VIRIDIAN_FOREST_PICHU, 4, PokemonLeague_HallOfFame_EventScript_SpawnPichu
 	call_if_ge VAR_ALOLA_STATE, 4, PokemonLeague_HallOfFame_EventScript_SpawnAlolaMons
 	call PokemonLeague_HallOfFame_EventScript_SpawnSinjohMons
@@ -222,7 +223,8 @@ PokemonLeague_HallOfFame_EventScript_SpawnSuicune::
 	return
 
 PokemonLeague_HallOfFame_EventScript_SpawnSecondCelebi::
-	clearflag FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI
+	@ Legacy symbol kept for compatibility, but never spawn a duplicate.
+	setflag FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI
 	return
 
 PokemonLeague_HallOfFame_Movement_LanceEnter:
