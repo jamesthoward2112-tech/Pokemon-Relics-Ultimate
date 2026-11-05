@@ -4640,8 +4640,11 @@ static void HandleTurnActionSelectionState(void)
                     break;
                 }
 
-                if (gBattleTypeFlags & BATTLE_TYPE_TRAINER
-                    && gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_TRAINER_HILL)
+                // In PRU all trainer battles use the ordinary 'can't run'
+                // response. Do not enter the forfeit confirmation script:
+                // it can strand the selection state and freeze the battle.
+                if (!IS_HNS && (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+                    && (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_TRAINER_HILL))
                     && gBattleResources->bufferB[battler][1] == B_ACTION_RUN)
                 {
                     gSelectionBattleScripts[battler] = BattleScript_AskIfWantsToForfeitMatch;
@@ -5808,13 +5811,13 @@ static void HandleEndTurn_RanFromBattle(void)
 {
     gCurrentActionFuncId = 0;
 
-    if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER && gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    if (!IS_HNS && (gBattleTypeFlags & BATTLE_TYPE_FRONTIER) && (gBattleTypeFlags & BATTLE_TYPE_TRAINER))
     {
         gBattlescriptCurrInstr = BattleScript_PrintPlayerForfeited;
         gBattleOutcome = B_OUTCOME_FORFEITED;
         gSaveBlock2Ptr->frontier.disableRecordBattle = TRUE;
     }
-    else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_HILL)
+    else if (!IS_HNS && (gBattleTypeFlags & BATTLE_TYPE_TRAINER_HILL))
     {
         gBattlescriptCurrInstr = BattleScript_PrintPlayerForfeited;
         gBattleOutcome = B_OUTCOME_FORFEITED;
@@ -6554,7 +6557,9 @@ s32 Factorial(s32 n)
 
 bool32 CanPlayerForfeitNormalTrainerBattle(void)
 {
-    if (!B_RUN_TRAINER_BATTLE)
+    // HNS PRU should never allow quitting a trainer battle, even if this
+    // game-specific setting is later changed by a shared config import.
+    if (IS_HNS || !B_RUN_TRAINER_BATTLE)
         return FALSE;
 
     if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)

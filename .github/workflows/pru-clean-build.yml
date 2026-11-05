@@ -179,6 +179,7 @@ jobs:
           python3 tools/pru/check_legendary_catching_respawns.py
           python3 tools/pru/check_job7_legendary_progression.py
           python3 tools/pru/check_job8_pokedex.py
+          python3 tools/pru/check_job9_trainer_forfeit.py
           python3 tools/pru/check_golden_hooh.py
           python3 tools/pru/check_dark_void_i_unown.py
           python3 test/test_pru_mystery_egg_seller.py
@@ -223,6 +224,7 @@ jobs:
           make -j2 check BUILD=hns TESTS=test/battle/move_effects_combined/golden_reign.c
           make -j2 check BUILD=hns TESTS=test/battle/ability/phoenix_soul.c
           make -j2 check BUILD=hns TESTS=test/pru/pokedex_450.c
+          make -j2 check BUILD=hns TESTS=test/pru/trainer_forfeit_disabled.c
       - name: Restore pinned PJR multiboot binary build inputs
         shell: bash
         run: |
