@@ -10,7 +10,7 @@ pc=(ROOT/"src/pokemon_storage_system.c").read_text()
 assert re.search(r"if \(species == SPECIES_ALPHORACLE\)\s*return 2;",code)
 assert re.search(r"if \(species == SPECIES_UNOWN_I\)\s*return 9;",code)
 assert re.search(r"if \(species == SPECIES_MEWSION\)\s*return 2;",code)
-assert "PALTAG_MON_ICON_13, // Moltres-P" in pc and "PALTAG_DISPLAY_MON," in pc
+assert "PALTAG_MON_ICON_13, // Moltres-P" in pc and "PALTAG_DISPLAY_MON = POKE_ICON_BASE_PAL_TAG + 32," in pc
 # These were the two collision-prone bespoke palette tags (14,15).
 assert not re.search(r"if \(species == SPECIES_ALPHORACLE\)\s*return 14;",code)
 assert not re.search(r"if \(species == SPECIES_UNOWN_I\)\s*return 15;",code)

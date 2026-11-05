@@ -253,7 +253,11 @@ enum {
     PALTAG_MON_ICON_11, // Articuno-P
     PALTAG_MON_ICON_12, // Zapdos-P
     PALTAG_MON_ICON_13, // Moltres-P
-    PALTAG_DISPLAY_MON,
+    // Icon palette table now extends through Gemlin at icon tag +16.
+    // The old PC display/marking tags used +14/+16 respectively, aliasing
+    // custom icon palette tags and recolouring icons only inside storage.
+    // Keep the PC's own sprite tags in a separate non-overlapping range.
+    PALTAG_DISPLAY_MON = POKE_ICON_BASE_PAL_TAG + 32,
     PALTAG_MISC_1,
     PALTAG_MARKING_COMBO,
     PALTAG_BOX_TITLE,
@@ -4027,7 +4031,9 @@ static void StartDisplayMonMosaicEffect(void)
     if (sStorage->displayMonSprite)
     {
         sStorage->displayMonSprite->oam.mosaic = TRUE;
-        sStorage->displayMonSprite->data[0] = 10;
+        // Long 10-step mosaic made valid sprites look like huge broken blocks
+        // while moving around the PC. Keep a short 2-step reveal instead.
+        sStorage->displayMonSprite->data[0] = 2;
         sStorage->displayMonSprite->data[1] = 1;
         sStorage->displayMonSprite->callback = SpriteCB_DisplayMonMosaic;
         SetGpuReg(REG_OFFSET_MOSAIC, (sStorage->displayMonSprite->data[0] << 12) | (sStorage->displayMonSprite->data[0] << 8));
@@ -4532,8 +4538,9 @@ static void InitMonIconFields(void)
     // The PC needs OBJ palettes for its cursor, large portrait, waveform and
     // item icons as well as Pokémon. Preloading all 14 icon palettes exhausts
     // the GBA's 16 slots and causes custom icons to borrow changing colours.
+    // Custom icon palettes, including Swamplith and Gemlin, are loaded only
+    // when those species actually appear. The PC has just 16 OBJ palettes.
     LoadMonIconBasePalettes();
-    LoadMonIconPalette(SPECIES_SWAMPLITH);
     for (i = 0; i < MAX_MON_ICONS; i++)
         sStorage->numIconsPerSpecies[i] = 0;
     for (i = 0; i < MAX_MON_ICONS; i++)

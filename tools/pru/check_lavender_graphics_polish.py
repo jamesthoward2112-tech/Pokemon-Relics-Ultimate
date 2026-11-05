@@ -46,7 +46,7 @@ assert "LoadMonIconPalettes();" not in pc_icon_init
 pc_sprite_creator = pc.rsplit("static struct Sprite *CreateMonIconSprite(u16 species,", 1)[1]
 pc_sprite_creator = pc_sprite_creator.split("static void DestroyBoxMonIcon", 1)[0]
 assert "LoadMonIconPalette(species);" in pc_sprite_creator
-assert "LoadMonIconPalette(SPECIES_SWAMPLITH);" in pc_icon_init
+assert "LoadMonIconPalette(SPECIES_SWAMPLITH);" not in pc_icon_init, "Swamplith must use on-demand loading to preserve OBJ slots"
 
 print("PASS: PC icon palette tags and loading protect Swamplith colours")
 
