@@ -41,6 +41,7 @@ jobs:
           path: |
             docs/RelicDex/PRU_Job15_Final_450_Front_Sprites.zip
             docs/RelicDex/PRU_Job15_450_Mechanics.json
+            docs/RelicDex/PRU_Job15_Source_Trainer_Encounters_Art.zip
           if-no-files-found: error
           retention-days: 90
           compression-level: 0
