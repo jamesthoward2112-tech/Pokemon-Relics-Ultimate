@@ -218,6 +218,12 @@ jobs:
           python3 tools/pru/install_video_review_sprite_repairs.py
           python3 tools/pru/check_video_review_sprite_repairs.py
           python3 tools/pru/audit_custom_sprites_70.py
+      - name: Job 10 - normalise unique custom PC icons and verify palettes
+        run: |
+          set -euo pipefail
+          python3 tools/pru/install_job10_sprite_icons.py
+          python3 tools/pru/check_job10_sprite_icons.py
+          python3 tools/pru/audit_custom_sprites_70.py
       - name: Run Golden Reign and Phoenix Soul battle-engine tests
         run: |
           set -euo pipefail
@@ -345,7 +351,7 @@ jobs:
           cp pokehns.gba "$RUNNER_TEMP/Pru.gba"
           cp assets/test_saves/Pru.sav "$RUNNER_TEMP/Pru.sav"
           cp assets/test_saves/PRU-70-Sprite-Inspection.sav "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav"
-          zip -qr "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" PRU-QA/sprite-audit-70.json PRU-QA/sprite-audit-70.md PRU-QA/compiled-sprite-audit-70.json PRU-QA/compiled-sprite-audit-70.md PRU-QA/contact-sheets PRU-QA/video-review
+          zip -qr "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" PRU-QA/sprite-audit-70.json PRU-QA/sprite-audit-70.md PRU-QA/compiled-sprite-audit-70.json PRU-QA/compiled-sprite-audit-70.md PRU-QA/contact-sheets PRU-QA/video-review PRU-QA/job10
           zip -q "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" \
             assets/pru_final_polish/fortotoise/ASSET_MANIFEST.md \
             assets/pru_final_polish/fortotoise/source_front.png \
@@ -412,6 +418,13 @@ jobs:
                   for side in ("front", "back"):
                       path = root / "graphics/pokemon/prl_authoritative" / species / f"{side}.png"
                       zf.write(path, f"video-review/battle/{species}/{side}.png")
+              import json
+              job10 = json.loads((root / "PRU-QA/job10/icon-changes.json").read_text())
+              for item in job10["changes"]:
+                  path = root / item["path"]
+                  zf.write(path, f"job10/icons/{item['name']}.png")
+              zf.write(root / "PRU-QA/job10/before-after-icons.png", "job10/before-after-icons.png")
+              zf.write(root / "PRU-QA/job10/icon-changes.json", "job10/icon-changes.json")
           PY
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$tag" "$RUNNER_TEMP/$file" "$RUNNER_TEMP/Pru.gba" "$RUNNER_TEMP/Pru.sav" "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav" "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" --repo "$GITHUB_REPOSITORY" --clobber
@@ -420,7 +433,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "32 MiB PRU ROM from commit $GITHUB_SHA, based on approved build #542. Restores accepted build-538 Eeveelutions, Mootiny/Miltitan and all preserved gameplay; adds supplied G-Max Blastoise Fortotoise front/back/icon, repaired PC icons and source-authentic Jessie & James backs. Includes the unchanged 70-species inspection save and source/compiled sprite QA reports. Ten E4 Relic back views remain unresolved because no authentic rear art is present in the pinned assets. No manual emulator visual review is claimed." \
+              --notes "32 MiB PRU ROM from commit $GITHUB_SHA, based on approved build #542. Restores accepted build-538 Eeveelutions, Mootiny/Miltitan and all preserved gameplay; adds supplied G-Max Blastoise Fortotoise front/back/icon, repaired PC icons and source-authentic Jessie & James backs. Job 10 normalises remaining unique PC icons to 24px with indexed palettes and a before-after QA sheet. Includes the unchanged 70-species inspection save and source/compiled sprite QA reports. Ten E4 Relic back views remain unresolved because no authentic rear art is present in the pinned assets. No manual emulator visual review is claimed." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
