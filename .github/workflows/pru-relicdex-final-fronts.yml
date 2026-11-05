@@ -1,0 +1,44 @@
+name: PRU RelicDex canonical 450 front sprites
+
+on:
+  push:
+    branches:
+      - docs/pru-relicdex-final-450-20261105
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate exactly 450 Job 15 front images and source manifest
+        run: |
+          python3 - <<'PY'
+          import csv,hashlib
+          from pathlib import Path
+          import zipfile
+          p=Path("docs/RelicDex/Final 450 Front Sprites")
+          rows=list(csv.DictReader((p/"FRONT_SPRITES_MANIFEST.csv").open(encoding="utf-8")))
+          assert len(rows)==450
+          assert [int(x["dex"]) for x in rows]==list(range(1,451))
+          for x in rows:
+              img=p/x["filename"]
+              assert img.is_file(),img
+              assert img.read_bytes()[:8]==b"\x89PNG\r\n\x1a\n"
+              assert hashlib.sha256(img.read_bytes()).hexdigest()==x["sha256"],x
+          with zipfile.ZipFile("docs/RelicDex/PRU_Job15_Final_450_Front_Sprites.zip") as z:
+              assert len([n for n in z.namelist() if n.endswith(".png")])==450
+          print("RELICDEX_450_PASS 450 numbered pngs, hash-matched exact Job15 first front frames")
+          PY
+      - name: Upload canonical 450 Job 15 front sprites for RelicDex
+        uses: actions/upload-artifact@v4
+        with:
+          name: PRU-JOB15-FINAL-450-FRONTS
+          path: docs/RelicDex/PRU_Job15_Final_450_Front_Sprites.zip
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0
