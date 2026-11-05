@@ -20,7 +20,13 @@ SOURCE_HASHES={
  "shiny.pal":"c47e5e529b13f3b4be7df16f65414016cfefb6cc1de47ce30f0b1eace97f101f",
 }
 
-def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+def sha(path):
+    data=path.read_bytes()
+    # Git can check out JASC-PAL text as CRLF on Windows or Linux; preserve
+    # source palette colours without comparing platform-specific line endings.
+    if path.suffix==".pal":
+        data=data.replace(b"\r\n",b"\n")
+    return hashlib.sha256(data).hexdigest()
 def bbox(image):
     return image.point(lambda idx:255 if idx else 0).getbbox()
 def pixcol(image):
