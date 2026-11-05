@@ -16,7 +16,13 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 assert sha(SOURCE) == "c0bc21061a512b2e00aac77b785314129ab02ac2ec9645274938058fa9764875"
-assert sha(ICON) == sha(PIN) == sha(DEST / "icon.png")
+# PNG encoding metadata may differ when Pillow writes the destination.
+# What matters in-game is exact indexed pixels + GBA palette.
+assert sha(ICON) == sha(PIN)
+with Image.open(DEST / "icon.png") as installed, Image.open(PIN) as pinned:
+    assert installed.mode == pinned.mode == "P" and installed.size == pinned.size == (32,64)
+    assert installed.tobytes() == pinned.tobytes()
+    assert installed.getpalette()[:48] == pinned.getpalette()[:48]
 with Image.open(SOURCE) as source:
     assert source.size == (68, 56)
 with Image.open(ICON) as icon:
