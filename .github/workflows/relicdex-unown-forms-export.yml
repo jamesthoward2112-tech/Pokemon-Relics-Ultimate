@@ -1,0 +1,43 @@
+name: RelicDex Unown forms asset export
+
+on:
+  push:
+    branches:
+      - docs/pru-relicdex-final-450-20261105
+
+permissions:
+  contents: read
+
+jobs:
+  unown-forms:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out approved Job 15 ROM source
+        uses: actions/checkout@v4
+        with:
+          ref: 77f9bf0b4fb592c591c5048da66b369b52e9b9fe
+      - name: Validate A-Z punctuation and Eye-Unown original art
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          base=Path('graphics/pokemon/unown')
+          files=[base/'front.png']+[base/l/'front.png' for l in 'bcdefghijklmnopqrstuvwxyz']+[base/l/'front.png' for l in ['exclamation','question']]+[Path('graphics/pokemon/unown_eye/front.png')]
+          assert len(files)==29
+          assert all(f.is_file() for f in files),[str(f) for f in files if not f.is_file()]
+          print('PRU_UNOWN_29_ART_PASS',len(files))
+          PY
+      - name: Export exact in-game source sprites for all Unown forms
+        uses: actions/upload-artifact@v4
+        with:
+          name: PRU-JOB15-UNOWN-29-FRONT-FORMS
+          path: |
+            graphics/pokemon/unown/**/front.png
+            graphics/pokemon/unown/front.png
+            graphics/pokemon/unown_eye/front.png
+            src/data/pokemon/level_up_learnsets/pjr.h
+            src/data/pokemon/level_up_learnsets/gen_2.h
+            src/data/pokemon/species_info/gen_2_families.h
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
