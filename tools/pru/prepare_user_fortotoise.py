@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Prepare Fortotoise's user-supplied G-Max Blastoise battle art.
 
-The front is a nearest-neighbour 64x64 reduction of the supplied image. The
+The front is a nearest-neighbour 64x64 reduction of the PR72-approved
+back-facing G-Max Blastoise artwork (mirrored for the requested orientation). The
 back uses exactly its top 70 percent, reduced to 64 pixels wide and grounded
 inside a 64x64 frame. Both pictures share the source's original colours.
 """
@@ -15,7 +16,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 ASSET = ROOT / "assets/pru_final_polish/fortotoise"
-USER_SOURCE_SHA256 = "b57dc8f628a2941d3a6d47c86aab6b81aa970c3f6315cda5dbd213363dbe90e7"
+USER_SOURCE_SHA256 = "86ee4553eeb7b64ee6441d11786395a5256d5dea8e1d89aa092d4409a21a12a4"
 
 
 def colors_from_source(image: Image.Image) -> list[tuple[int, int, int]]:
@@ -60,7 +61,7 @@ def main() -> None:
     )
     with Image.open(source_path) as original:
         source = original.convert("RGBA")
-    assert source.size == (182, 180), (source_path, source.size)
+    assert source.size == (96, 96), (source_path, source.size)
     assert source.getchannel("A").getbbox() is not None
     colors = colors_from_source(source)
     ASSET.mkdir(parents=True, exist_ok=True)
