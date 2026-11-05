@@ -59,11 +59,11 @@ def main() -> None:
         source_path = ASSETS / "icons" / f"{name}.png"
         assert source_path.is_file(), source_path
         output_path = icon_paths[name]
-        with Image.open(source_path) as src, Image.open(output_path) as out:
-            assert src.size == out.size == (32, 64), (name, src.size, out.size)
-            assert src.mode == out.mode and out.mode in {"P", "RGBA"}, (name, src.mode, out.mode)
+        with Image.open(source_path) as reference, Image.open(output_path) as out:
+            assert reference.size == out.size == (32, 64), (name, reference.size, out.size)
+            assert reference.mode in {"P", "RGBA"} and out.mode in {"P", "RGBA"}, (name, reference.mode, out.mode)
             if out.mode == "P":
-                assert src.getpalette() == out.getpalette()
+                assert max(out.getdata()) < 16 and out.info.get("transparency", 0) == 0
             else:
                 assert out.getchannel("A").getbbox() is not None
             if name not in untouched:

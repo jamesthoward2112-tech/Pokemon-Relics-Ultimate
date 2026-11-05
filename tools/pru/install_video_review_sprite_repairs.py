@@ -65,10 +65,10 @@ def icon_bbox(frame: Image.Image) -> tuple[int, int, int, int] | None:
 
 
 def shrink_icon(path: Path, symbol: str) -> dict:
-    # Always scale from a pinned pre-adjustment icon. This keeps repeated
-    # local and CI runs deterministic instead of shrinking an already-shrunk
-    # icon again.
-    source_path = SOURCES / "icons" / f"{symbol}.png"
+    # Scale the icon installed by the complete preceding sprite pipeline.
+    # That tree is the approved post-installer source the user sees; pinned
+    # review snapshots are references, not replacements for newer installers.
+    source_path = path
     with Image.open(source_path) as source:
         source.load()
         assert source.mode in {"P", "RGBA"} and source.size == (32, 64), (path, source.mode, source.size)

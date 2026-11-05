@@ -178,16 +178,23 @@ def remove_donor_background(name: str) -> None:
 def rebuild_icon_from_front(name: str, icon_palette_index: int) -> None:
     """Make a clean two-frame party icon from approved battle front pixels."""
     folder = POKEMON / "prl_authoritative" / name
+    if not folder.exists():
+        folder = POKEMON / name
     image_path = folder / "front.png"
     palette_path = folder / "normal.pal"
     with Image.open(image_path) as source:
-        assert source.mode == "P" and source.size == (64, 64), image_path
+        assert source.mode in {"P", "RGBA"} and source.size == (64, 64), image_path
         colors = [tuple(map(int, line.split())) for line in palette_path.read_text().splitlines()[3:19]]
         assert len(colors) == 16, palette_path
-        rgba = source.copy()
-        rgba.putpalette([value for rgb in colors for value in rgb] + [0] * (768 - 48))
-        rgba.info["transparency"] = 0
-        rgba = rgba.convert("RGBA")
+        if source.mode == "P":
+            rgba = source.copy()
+            rgba.putpalette([value for rgb in colors for value in rgb] + [0] * (768 - 48))
+            rgba.info["transparency"] = 0
+            rgba = rgba.convert("RGBA")
+        else:
+            # Imported RGBA fronts already contain approved donor colours;
+            # preserve them exactly until mapping into the runtime icon palette.
+            rgba = source.copy()
     bounds = rgba.getchannel("A").getbbox()
     assert bounds, f"empty {name} front sprite"
     crop = rgba.crop(bounds)
@@ -228,7 +235,12 @@ def main():
     rebuild_icon_from_front("tropisaur", 1)
     rebuild_icon_from_front("torkaldera", 2)
     rebuild_icon_from_front("coelossus", 2)
-    print("PC_REPAIRED: Alphoracle and Mewduo stable palette #2, I-Unown dark palette #9, Golden Ho-Oh custom gold icon; Elite Redux backgrounds transparent")
+    # These two imports had blurry RGBA orb icons that rendered neon green/pink
+    # despite purple battle art. Rebuild from their accepted crisp battle fronts
+    # and use shared blue/purple palette #2; no battle artwork is changed.
+    rebuild_icon_from_front("adnokana", 2)
+    rebuild_icon_from_front("cheauking", 2)
+    print("PC_REPAIRED: Alphoracle and Mewduo stable palette #2, I-Unown dark palette #9, Adnokana/Cheauking indexed icons from approved fronts; Elite Redux backgrounds transparent")
     print("PRESERVED: Pyroclast, all battle art except 2 transparent donor backgrounds, no species/save/map changes")
 
 if __name__=="__main__":

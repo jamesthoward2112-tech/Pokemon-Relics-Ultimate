@@ -46,6 +46,15 @@ for name, palette_index in (("tropisaur", 1), ("torkaldera", 2), ("coelossus", 2
     block = species.split(f"[SPECIES_{name.upper()}] =",1)[1].split("[SPECIES_",1)[0]
     if name == "torkaldera":
         assert "P_GBA_STYLE_SPECIES_ICONS ? 1 : 2" in block, "Torkaldera's rebuilt icon must follow runtime palette #2"
+for name in ("adnokana", "cheauking"):
+    path = POKEMON / name / "icon.png"
+    with Image.open(path) as icon:
+        assert icon.mode == "P" and icon.size == (32, 64) and icon.info.get("transparency") == 0, path
+        assert max(icon.getdata()) < 16 and 0 in set(icon.getdata()), path
+        assert icon.getpalette()[:48] == [v for line in (POKEMON / "icon_palettes/pal2.pal").read_text().splitlines()[3:19] for v in map(int, line.split())], path
+    species = (ROOT / "src/data/pokemon/species_info/pru_custom.h").read_text()
+    block = species.split(f"[SPECIES_{name.upper()}] =", 1)[1].split("[SPECIES_", 1)[0]
+    assert ".iconPalIndex = 2," in block, name
 manifest=(ROOT/"assets/pru_final_polish/manifest.txt").read_text()
 assert "Elite Redux Tortemple" in manifest and "Elite Redux Brontonana" in manifest
 # Pyroclast is an approved, untouched Elite Redux sprite; no installer changes it.
@@ -54,4 +63,4 @@ assert "remove_donor_background(name)" in patcher
 assert "fix_mewduo()" in patcher
 assert 'for name in ("tropisaur","torkaldera"):' in patcher
 assert not re.search(r"POKEMON\s*/\s*[\"'](?:prl_authoritative/)?pyroclast",patcher)
-print("PASS: PC palette repairs, transparent Tropisaur/Torkaldera/Coelossus icons, clean Elite Redux backgrounds; Pyroclast untouched")
+print("PASS: PC palette repairs, transparent donor icons, indexed Adnokana/Cheauking rebuilds, clean Elite Redux backgrounds; Pyroclast untouched")
