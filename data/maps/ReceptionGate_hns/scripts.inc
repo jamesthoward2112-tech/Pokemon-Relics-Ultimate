@@ -56,7 +56,7 @@ ReceptionGate_Trigger::
     applymovement LOCALID_INDIGOJUNCTION_POLICEMAN, Common_Movement_ExclamationMark
     delay 55
     waitmovement LOCALID_INDIGOJUNCTION_POLICEMAN
-    goto_if_lt VAR_ECRUTEAK_CITY_THEATER, 8, ReceptionGate_EventScript_Kimono
+    goto_if_lt VAR_ECRUTEAK_CITY_THEATER, 7, ReceptionGate_EventScript_Kimono
     msgbox VictoryRoadGate_Text_Officer, MSGBOX_DEFAULT
     goto_if_unset FLAG_BADGE08_GET, ReceptionGate_EventScript_NotEnough
     msgbox VictoryRoadGate_Text_EightBadges, MSGBOX_DEFAULT
@@ -93,9 +93,9 @@ VictoryRoadGate_Text_Officer:
     .string "themselves may pass.$"
 
 VictoryRoadGate_Text_Kimono:
-    .string "Sorry kid, this way is closed until\n"
-    .string "someone deals with that LEGENDARY\l"
-    .string "POKéMON...$"
+    .string "Sorry kid, this way is closed.\n"
+    .string "The KIMONO GIRLS' ceremony\l"
+    .string "must be completed first.$"
 
 VictoryRoadGate_Text_NotEnoughBadges:
     .string "You don't have all the GYM BADGES\n"

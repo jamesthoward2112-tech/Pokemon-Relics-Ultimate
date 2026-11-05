@@ -56,8 +56,11 @@ assert "EcruteakCity_Theater_EventScript_LegendaryCutscene::" in theater
 assert "setvar VAR_ECRUTEAK_CITY_THEATER, 6" in theater, "Theatre gauntlet state changed"
 assert "setvar VAR_ECRUTEAK_CITY_THEATER, 7" in theater, "Legendary release state changed"
 assert "setvar VAR_ECRUTEAK_CITY_THEATER, 8" not in theater, "Do not skip the Legendary battle"
-assert "goto_if_lt VAR_ECRUTEAK_CITY_THEATER, 8, ReceptionGate_EventScript_Kimono" in gate
+assert "goto_if_lt VAR_ECRUTEAK_CITY_THEATER, 7, ReceptionGate_EventScript_Kimono" in gate, "Post-ceremony state 7 must allow Victory Road"
+assert "goto_if_lt VAR_ECRUTEAK_CITY_THEATER, 8, ReceptionGate_EventScript_Kimono" not in gate, "Old pre-RELICS Lugia requirement must not return"
+assert "goto_if_unset FLAG_BADGE08_GET, ReceptionGate_EventScript_NotEnough" in gate, "All eight badges still required"
+assert "someone deals with that LEGENDARY" not in gate, "League NPC should not send player to locked Lugia"
 for trainer in ("MIHARU", "YOUKO", "SHIZUKO"):
     assert f"TRAINER_{trainer}_HNS" in parties, "Later Sinjoh Kimono encounters must remain intact"
 
-print("PASS: five distinct Ghost / Eerie Fog Kimono singles, original Elm/Legendary gate preserved")
+print("PASS: five Ghost / Eerie Fog Kimono singles; League opens after ceremony without pre-RELICS Lugia")
