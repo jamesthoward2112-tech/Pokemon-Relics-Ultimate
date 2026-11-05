@@ -102,7 +102,7 @@ jobs:
         run: python3 tools/pru/sync_prl_authoritative_sprites.py
       - name: Restore exact original Infinity battle sprites after PRL sync
         run: python3 tools/pru/install_infinity_sprite_cleanup.py
-      - name: Prepare the user-supplied G-Max Blastoise assets
+      - name: Prepare PR72 fortress front and original PRL Mercury rear artwork
         run: python3 tools/pru/prepare_user_fortotoise.py
       - name: Install approved final-polish sprite donors after PRL sync
         run: python3 tools/pru/install_final_polish_sprites.py
@@ -344,7 +344,7 @@ jobs:
           zip -q "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" \
             assets/pru_final_polish/fortotoise/ASSET_MANIFEST.md \
             assets/pru_final_polish/fortotoise/source_front.png \
-            assets/pru_final_polish/fortotoise/back_source_crop.png \
+            assets/pru_final_polish/fortotoise/source_back.png \
             assets/pru_final_polish/fortotoise/icon.png \
             assets/pru_final_polish/fortotoise/front.png \
             assets/pru_final_polish/fortotoise/back.png \

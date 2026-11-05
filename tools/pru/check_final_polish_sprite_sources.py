@@ -11,13 +11,8 @@ ROOT = Path(__file__).resolve().parents[2]
 ASSETS = ROOT / "assets/pru_final_polish"
 
 EXPECTED = {
-    "fortotoise/front.png": "4b9c4f5099e856f220f42bc8ad74721ed099b28e9a8acf88265e260b096febb8",
-    "fortotoise/back.png": "7f9e485509a5abdb756d8b8c849aafa2747f8a5afe1e11f81811a6df983fe272",
-    "fortotoise/normal.pal": "a82d45f436acf6913b3fa60517f7e93251187170b0aad19c86c09c74509f1843",
-    "fortotoise/source_front.png": "b57dc8f628a2941d3a6d47c86aab6b81aa970c3f6315cda5dbd213363dbe90e7",
-    "fortotoise/back_source_crop.png": "a786708f961bedba58ad526a27b13f8eaaea9d2c155a58798b067ef6b64f9818",
+    "fortotoise/source_back.png": "4c9b04650c8c174846e533b09caf1e6e9dcaab590324f3a34c485712e2cc6e49",
     "fortotoise/icon.png": "7520e4c1e5c378e73339da4c363b8014cbfbc26385180a6730dc3342ae2f322e",
-    "fortotoise/source_back.png": "404a07761c0dadc1a33be679fa9240d990992c890c94fc23d4f47acf38674084",
     "torkaldera/front.png": "c3c5f51399a037d3b4a50ca63a4ce8ac28de05e36d03e4125cfcfe88f46ff35c",
     "torkaldera/back.png": "95ae8f8a73aafe65dfcc017e35de6f6be5031f97710b49f297ff7fd9cd6fdaef",
     "torkaldera/icon.png": "b544be0c27a79af1860749e895c7a87da7c371ccfcab5b63588854c6249f3fe8",
@@ -89,8 +84,14 @@ with Image.open(ASSETS / "fortotoise/icon.png") as source_icon:
     assert source_icon.mode == "P" and source_icon.size == (32, 64)
     assert list(source_icon.getdata()) == list(Image.open(fort / "icon.png").getdata())
     assert source_icon.info.get("transparency") == 0
-assert Image.open(ASSETS / "fortotoise/source_front.png").size == (182, 180)
-assert Image.open(ASSETS / "fortotoise/back_source_crop.png").size == (182, 126)
+assert hashlib.sha256((ASSETS / "fortotoise/source_front.png").read_bytes()).hexdigest() == "86ee4553eeb7b64ee6441d11786395a5256d5dea8e1d89aa092d4409a21a12a4"
+assert Image.open(ASSETS / "fortotoise/source_front.png").size == (96, 96)
+assert Image.open(ASSETS / "fortotoise/source_back.png").size == (64, 64)
+with Image.open(ASSETS / "fortotoise/source_back.png") as original_back, Image.open(ASSETS / "fortotoise/back.png") as installed_back:
+    original_mask = original_back.convert("RGBA").getchannel("A").point(lambda v: 255 if v else 0)
+    installed_mask = installed_back.convert("P").point(lambda v: 255 if v else 0)
+    assert original_mask.tobytes() == installed_mask.tobytes(), "PRL donor back silhouette/position changed"
+assert "PRL_BACK_SOURCE_SHA256" in (ROOT / "tools/pru/prepare_user_fortotoise.py").read_text()
 
 print("PASS: owner's G-Max Blastoise Fortotoise front/back and Mega Blastoise icon survive the final install stage")
 print("PASS: Tortemple, Brontonana and James-locked Odyssey II fossil donors remain pinned")

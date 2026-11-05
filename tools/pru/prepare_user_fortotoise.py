@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Prepare Fortotoise's user-supplied G-Max Blastoise battle art.
+"""Prepare PR72-style Fortotoise front and the genuine PRL Mercury donor back.
 
-The front is a nearest-neighbour 64x64 reduction of the PR72-approved
-back-facing G-Max Blastoise artwork (mirrored for the requested orientation). The
-back uses exactly its top 70 percent, reduced to 64 pixels wide and grounded
-inside a 64x64 frame. Both pictures share the source's original colours.
+The G-Max fortress-shell front is preserved unchanged. The separate original
+64x64 PRL donor back is palette-snapped to the same GBA 16-colour bank without
+resizing, mirroring, cropping, or changing any visible/transparent pixels.
 """
 from __future__ import annotations
 
@@ -17,6 +16,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 ASSET = ROOT / "assets/pru_final_polish/fortotoise"
 USER_SOURCE_SHA256 = "86ee4553eeb7b64ee6441d11786395a5256d5dea8e1d89aa092d4409a21a12a4"
+PRL_BACK_SOURCE_SHA256 = "4c9b04650c8c174846e533b09caf1e6e9dcaab590324f3a34c485712e2cc6e49"
 
 
 def colors_from_source(image: Image.Image) -> list[tuple[int, int, int]]:
@@ -48,6 +48,35 @@ def indexed(image: Image.Image, colors: list[tuple[int, int, int]]) -> Image.Ima
     return out
 
 
+def match_donor_back_palette(donor: Image.Image, colors: list[tuple[int, int, int]]) -> Image.Image:
+    """Map PRL's near-identical BGR555 colours to the front's indexed palette.
+
+    Keep the original 64x64 back-view pixels and transparency exactly in place.
+    An unexpected colour fails instead of being silently mis-recoloured.
+    """
+    original = donor.convert("RGBA")
+    assert original.size == (64, 64), original.size
+    palette = colors[1:]
+    lookup: dict[tuple[int, int, int], tuple[int, int, int]] = {}
+    converted = []
+    for r, g, b, alpha in original.getdata():
+        if alpha == 0:
+            converted.append((0, 0, 0, 0))
+            continue
+        key = (r, g, b)
+        if key not in lookup:
+            distance, position = min(
+                (sum((key[channel] - colour[channel]) ** 2 for channel in range(3)), i)
+                for i, colour in enumerate(palette)
+            )
+            assert distance <= 100, f"Unexpected PRL back colour: {key}"
+            lookup[key] = palette[position]
+        converted.append((*lookup[key], 255))
+    result = Image.new("RGBA", original.size, (0, 0, 0, 0))
+    result.putdata(converted)
+    assert list(original.getchannel("A").getdata()) == list(result.getchannel("A").getdata())
+    return result
+
 def save_palette(path: Path, colors: list[tuple[int, int, int]]) -> None:
     path.write_text("JASC-PAL\n0100\n16\n" + "\n".join(
         f"{r} {g} {b}" for r, g, b in colors
@@ -69,15 +98,16 @@ def main() -> None:
     front = source.resize((64, 64), Image.Resampling.NEAREST)
     indexed(front, colors).save(ASSET / "front.png", optimize=False)
 
-    crop_height = round(source.height * 0.70)
-    crop = source.crop((0, 0, source.width, crop_height))
-    crop.save(ASSET / "back_source_crop.png", optimize=False)
-    back_width = 64
-    back_height = round(crop.height * back_width / crop.width)
-    reduced_back = crop.resize((back_width, back_height), Image.Resampling.NEAREST)
-    back_canvas = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
-    back_canvas.alpha_composite(reduced_back, ((64 - back_width) // 2, 62 - back_height))
-    indexed(back_canvas, colors).save(ASSET / "back.png", optimize=False)
+    # This is PRL's independent back battle sprite, not a crop of the front.
+    back_source_path = ASSET / "source_back.png"
+    assert hashlib.sha256(back_source_path.read_bytes()).hexdigest() == PRL_BACK_SOURCE_SHA256, (
+        "Fortotoise's approved PRL donor back changed; re-review before converting"
+    )
+    with Image.open(back_source_path) as original_back:
+        donor_back = original_back.convert("RGBA")
+    assert donor_back.size == (64, 64), donor_back.size
+    remapped_back = match_donor_back_palette(donor_back, colors)
+    indexed(remapped_back, colors).save(ASSET / "back.png", optimize=False)
     save_palette(ASSET / "normal.pal", colors)
 
     with Image.open(ROOT / "graphics/pokemon/blastoise/mega/icon.png") as icon:
@@ -96,7 +126,7 @@ def main() -> None:
         assert max(check.getdata()) < 16 and check.info.get("transparency") == 0
     with Image.open(ASSET / "icon.png") as check:
         assert check.mode == "P" and check.size == (32, 64)
-    print("FORTOTOISE: supplied G-Max Blastoise front, top-70%-crop back, Mega Blastoise icon; shared 16-colour GBA palette")
+    print("FORTOTOISE: approved PR72 fortress front, original 64x64 PRL Mercury back, Mega Blastoise icon; shared GBA palette")
 
 
 if __name__ == "__main__":
