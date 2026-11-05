@@ -38,7 +38,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: PRU-JOB15-FINAL-450-FRONTS
-          path: docs/RelicDex/PRU_Job15_Final_450_Front_Sprites.zip
+          path: |
+            docs/RelicDex/PRU_Job15_Final_450_Front_Sprites.zip
+            docs/RelicDex/PRU_Job15_450_Mechanics.json
           if-no-files-found: error
           retention-days: 90
           compression-level: 0
