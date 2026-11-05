@@ -886,6 +886,7 @@ bool8 TryIncrementMonLevel(struct Pokemon *mon);
 u8 CanLearnTeachableMove(u16 species, enum Move move);
 u8 GetLevelUpMovesBySpecies(u16 species, u16 *moves);
 u16 SpeciesToPokedexNum(u16 species);
+void PruReconcileLegacyDexFlagsFromOwnedMons(void);
 bool32 IsSpeciesInRegionalDex(u16 species);
 bool32 IsSpeciesInKantoDex(u16 species);
 bool32 IsSpeciesInHoennDex(u16 species);

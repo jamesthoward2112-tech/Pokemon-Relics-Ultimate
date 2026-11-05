@@ -2050,14 +2050,18 @@ void CB2_OpenPokedexPlusHGSS(void)
         sPokedexView = AllocZeroed(sizeof(struct PokedexView));
         ResetPokedexView(sPokedexView);
         CreateTask(Task_OpenPokedexMainPage, 0);
-        sPokedexView->dexMode = gSaveBlock2Ptr->pokedex.mode;
-        if (!IsNationalPokedexEnabled())
+        // PRU has one complete 450-entry family Dex from the first opening.
+        // Recover separately owned Relic entries from old save party/boxes.
+        if (IS_HNS)
+            PruReconcileLegacyDexFlagsFromOwnedMons();
+        sPokedexView->dexMode = IS_HNS ? DEX_MODE_NATIONAL : gSaveBlock2Ptr->pokedex.mode;
+        if (!IsNationalPokedexEnabled() && !IS_HNS)
             sPokedexView->dexMode = DEX_MODE_HOENN;
         sPokedexView->dexOrder = gSaveBlock2Ptr->pokedex.order;
         sPokedexView->selectedPokemon = sLastSelectedPokemon;
         sPokedexView->pokeBallRotation = sPokeBallRotation;
         sPokedexView->selectedScreen = AREA_SCREEN;
-        if (!IsNationalPokedexEnabled())
+        if (!IsNationalPokedexEnabled() && !IS_HNS)
         {
             sPokedexView->seenCount = GetRegionalPokedexCount(FLAG_GET_SEEN);
             sPokedexView->ownCount = GetRegionalPokedexCount(FLAG_GET_CAUGHT);
@@ -2340,8 +2344,8 @@ static void Task_ClosePokedex(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        gSaveBlock2Ptr->pokedex.mode = sPokedexView->dexMode;
-        if (!IsNationalPokedexEnabled())
+        gSaveBlock2Ptr->pokedex.mode = IS_HNS ? DEX_MODE_NATIONAL : sPokedexView->dexMode;
+        if (!IsNationalPokedexEnabled() && !IS_HNS)
             gSaveBlock2Ptr->pokedex.mode = DEX_MODE_HOENN;
         gSaveBlock2Ptr->pokedex.order = sPokedexView->dexOrder;
         ClearMonSprites();
@@ -2497,6 +2501,80 @@ static bool8 LoadPokedexListPage(u8 page)
     return FALSE;
 }
 
+static bool32 PruDexEntrySortsBefore(u16 nationalA, u16 nationalB, u8 order)
+{
+    u16 speciesA = NationalPokedexNumToSpecies(nationalA);
+    u16 speciesB = NationalPokedexNumToSpecies(nationalB);
+    s32 a, b;
+
+    if (order == ORDER_ALPHABETICAL)
+        return StringCompare(GetSpeciesName(speciesA), GetSpeciesName(speciesB)) < 0;
+
+    if (order == ORDER_HEAVIEST || order == ORDER_LIGHTEST)
+    {
+        a = gSpeciesInfo[speciesA].weight;
+        b = gSpeciesInfo[speciesB].weight;
+    }
+    else
+    {
+        a = gSpeciesInfo[speciesA].height;
+        b = gSpeciesInfo[speciesB].height;
+    }
+    if (a == b)
+        return SpeciesToPokedexNum(speciesA) < SpeciesToPokedexNum(speciesB);
+    if (order == ORDER_HEAVIEST || order == ORDER_TALLEST)
+        return a > b;
+    return a < b;
+}
+
+static void CreatePruPokedexList(u8 order)
+{
+    u16 i;
+    u16 count = 0;
+
+    // Keep National Dex IDs/flag slots internally. Only the displayed
+    // numbers and traversal order use the 450-entry PRU family sequence.
+    for (i = 0; i < PRU_DEX_COUNT; i++)
+    {
+        u16 nationalNum = SpeciesToNationalPokedexNum(sPruDexSpecies[i]);
+        bool32 seen = GetSetPokedexFlag(nationalNum, FLAG_GET_SEEN);
+        bool32 caught = GetSetPokedexFlag(nationalNum, FLAG_GET_CAUGHT);
+
+        if (order == ORDER_NUMERICAL)
+        {
+            sPokedexView->pokedexList[i].dexNum = nationalNum;
+            sPokedexView->pokedexList[i].seen = seen;
+            sPokedexView->pokedexList[i].owned = caught;
+            if (seen || caught)
+                sPokedexView->pokemonListCount = i + 1;
+        }
+        else if ((order == ORDER_ALPHABETICAL && (seen || caught))
+              || (order != ORDER_ALPHABETICAL && caught))
+        {
+            u16 insert = count++;
+            while (insert > 0 && PruDexEntrySortsBefore(
+                       nationalNum, sPokedexView->pokedexList[insert - 1].dexNum, order))
+            {
+                sPokedexView->pokedexList[insert] = sPokedexView->pokedexList[insert - 1];
+                insert--;
+            }
+            sPokedexView->pokedexList[insert].dexNum = nationalNum;
+            sPokedexView->pokedexList[insert].seen = seen;
+            sPokedexView->pokedexList[insert].owned = caught;
+        }
+    }
+
+    if (order != ORDER_NUMERICAL)
+        sPokedexView->pokemonListCount = count;
+
+    for (i = sPokedexView->pokemonListCount; i < OBTAINABLE_DEX_COUNT; i++)
+    {
+        sPokedexView->pokedexList[i].dexNum = 0xFFFF;
+        sPokedexView->pokedexList[i].seen = FALSE;
+        sPokedexView->pokedexList[i].owned = FALSE;
+    }
+}
+
 static void CreatePokedexList(u8 dexMode, u8 order)
 {
     u16 vars[3]; //I have no idea why three regular variables are stored in an array, but whatever.
@@ -2506,6 +2584,12 @@ static void CreatePokedexList(u8 dexMode, u8 order)
     s16 i;
 
     sPokedexView->pokemonListCount = 0;
+
+    if (IS_HNS)
+    {
+        CreatePruPokedexList(order);
+        return;
+    }
 
     switch (dexMode)
     {
@@ -2751,10 +2835,12 @@ static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 unused)
     u16 dexNum, offset = 0;
 
     dexNum = sPokedexView->pokedexList[entryNum].dexNum;
-    if (sPokedexView->dexMode == DEX_MODE_HOENN)
+    if (IS_HNS)
+        dexNum = SpeciesToPokedexNum(NationalPokedexNumToSpecies(dexNum));
+    else if (sPokedexView->dexMode == DEX_MODE_HOENN)
         dexNum = NationalToRegionalOrder(dexNum);
     else
-        dexNum =  NationalToObtainableOrder(dexNum);
+        dexNum = NationalToObtainableOrder(dexNum);
     memcpy(text, sText_No0000, ARRAY_COUNT(sText_No0000));
     if (OBTAINABLE_DEX_COUNT > 999 && sPokedexView->dexMode != DEX_MODE_HOENN)
     {
@@ -4606,7 +4692,9 @@ static void PrintMonInfo(u32 num, u32 value, u32 owned, u32 newEntry)
     const u8 *description;
     u8 digitCount = (OBTAINABLE_DEX_COUNT > 999 && value != 0) ? 4 : 3;
 
-    if (value == 0)
+    if (IS_HNS)
+        value = SpeciesToPokedexNum(NationalPokedexNumToSpecies(num));
+    else if (value == 0)
         value = NationalToRegionalOrder(num);
     else
         value = NationalToObtainableOrder(num);
@@ -8906,7 +8994,7 @@ static u8 GetSearchModeSelection(u8 taskId, u8 option)
     default:
         return 0;
     case SEARCH_MODE:
-        return sPokedexModes[id];
+        return IS_HNS ? DEX_MODE_NATIONAL : sPokedexModes[id];
     case SEARCH_ORDER:
         return sOrderOptions[id];
     case SEARCH_NAME:

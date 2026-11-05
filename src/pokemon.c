@@ -7520,11 +7520,74 @@ bool8 IsMonPastEvolutionLevel(struct Pokemon *mon)
     return FALSE;
 }
 
+// Save compatibility: retain every pre-Job-8 National Dex bit for the
+// original species. Unofficial Relic evolutions previously shared a base
+// species' National Dex number; give ONLY those canonical custom species
+// unused Unova-era flag slots (495 upwards), without changing any SPECIES ID,
+// save block layout, or pre-existing flag byte. The approved PRU roster has
+// no native National Dex species in this reserved interval.
+#define PRU_EXTRA_NATIONAL_DEX_START NATIONAL_DEX_SNIVY
+#define PRU_EXTRA_NATIONAL_DEX_END NATIONAL_DEX_CHESPIN
+
+static bool32 IsPruNativeNationalSpecies(u16 species)
+{
+    u16 nationalNum = gSpeciesInfo[species].natDexNum;
+
+    return nationalNum != NATIONAL_DEX_NONE
+        && nationalNum <= NATIONAL_DEX_COUNT
+        && sNationalToSpeciesOrder[nationalNum - 1] == species;
+}
+
+static u16 PruExtraNationalSlotForSpecies(u16 species)
+{
+    u16 i;
+    u16 slot = PRU_EXTRA_NATIONAL_DEX_START;
+
+    for (i = 0; i < PRU_DEX_COUNT; i++)
+    {
+        u16 candidate = sPruDexSpecies[i];
+
+        if (!IsPruNativeNationalSpecies(candidate))
+        {
+            if (candidate == species)
+                return (slot < PRU_EXTRA_NATIONAL_DEX_END) ? slot : NATIONAL_DEX_NONE;
+            slot++;
+        }
+    }
+    return NATIONAL_DEX_NONE;
+}
+
+static u16 PruExtraSpeciesForNationalSlot(u16 nationalNum)
+{
+    u16 i;
+    u16 slot = PRU_EXTRA_NATIONAL_DEX_START;
+
+    for (i = 0; i < PRU_DEX_COUNT && slot <= nationalNum; i++)
+    {
+        u16 candidate = sPruDexSpecies[i];
+
+        if (!IsPruNativeNationalSpecies(candidate))
+        {
+            if (slot == nationalNum)
+                return candidate;
+            slot++;
+        }
+    }
+    return SPECIES_NONE;
+}
+
 u16 NationalPokedexNumToSpecies(enum NationalDexOrder nationalNum)
 {
     if (!nationalNum || nationalNum > NATIONAL_DEX_COUNT)
         return 0;
 
+    if (IS_HNS && nationalNum >= PRU_EXTRA_NATIONAL_DEX_START
+            && nationalNum < PRU_EXTRA_NATIONAL_DEX_END)
+    {
+        u16 species = PruExtraSpeciesForNationalSlot(nationalNum);
+        if (species != SPECIES_NONE)
+            return species;
+    }
     return sNationalToSpeciesOrder[nationalNum - 1];
 }
 
@@ -7579,7 +7642,51 @@ enum NationalDexOrder SpeciesToNationalPokedexNum(u16 species)
     if (!species)
         return NATIONAL_DEX_NONE;
 
+    if (IS_HNS && !IsPruNativeNationalSpecies(species))
+    {
+        u16 extraSlot = PruExtraNationalSlotForSpecies(species);
+        if (extraSlot != NATIONAL_DEX_NONE)
+            return extraSlot;
+    }
     return gSpeciesInfo[species].natDexNum;
+}
+
+// Rebuild custom Pokémon Seen/Caught records from Pokémon still owned in a
+// pre-Job-8 save. We can prove ownership from party/PC contents, but CANNOT
+// safely infer encounters for released Pokémon from a shared old base flag.
+// Never mark a custom evolution merely because its old base form was seen.
+void PruReconcileLegacyDexFlagsFromOwnedMons(void)
+{
+    u16 i, box, slot, species, extraSlot;
+
+    if (!IS_HNS)
+        return;
+
+    for (i = 0; i < gPlayerPartyCount && i < PARTY_SIZE; i++)
+    {
+        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES);
+        extraSlot = PruExtraNationalSlotForSpecies(species);
+        if (extraSlot != NATIONAL_DEX_NONE)
+        {
+            GetSetPokedexFlag(extraSlot, FLAG_SET_SEEN);
+            GetSetPokedexFlag(extraSlot, FLAG_SET_CAUGHT);
+        }
+    }
+    for (box = 0; box < TOTAL_BOXES_COUNT; box++)
+    {
+        for (slot = 0; slot < IN_BOX_COUNT; slot++)
+        {
+            species = GetBoxMonDataAt(box, slot, MON_DATA_SPECIES);
+            if (!species)
+                continue;
+            extraSlot = PruExtraNationalSlotForSpecies(species);
+            if (extraSlot != NATIONAL_DEX_NONE)
+            {
+                GetSetPokedexFlag(extraSlot, FLAG_SET_SEEN);
+                GetSetPokedexFlag(extraSlot, FLAG_SET_CAUGHT);
+            }
+        }
+    }
 }
 
 u32 SpeciesToRegionalPokedexNum(u16 species)
