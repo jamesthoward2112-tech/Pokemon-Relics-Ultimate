@@ -125,10 +125,44 @@ static const u16 sPRUMewduoIconPalette[16] =
 // six palettes recoloured it badly in PC/party; load this only on demand.
 static const u16 sPRUGemlinOriginalIconPalette[16] =
 {
-    RGB(14, 24, 20), RGB(2, 1, 3), RGB(4, 2, 5), RGB(8, 4, 10),
-    RGB(10, 6, 13), RGB(13, 8, 17), RGB(16, 10, 20), RGB(19, 13, 23),
-    RGB(23, 16, 25), RGB(8, 12, 16), RGB(14, 20, 24), RGB(21, 25, 27),
-    RGB(28, 30, 30), RGB(22, 6, 9), RGB(30, 9, 13), RGB(11, 7, 14)
+    RGB(0, 31, 0), RGB(6, 3, 12), RGB(11, 6, 19), RGB(15, 8, 23),
+    RGB(19, 11, 26), RGB(22, 14, 29), RGB(27, 20, 31), RGB(13, 8, 16),
+    RGB(27, 6, 18), RGB(31, 12, 24), RGB(5, 13, 18), RGB(9, 21, 25),
+    RGB(16, 29, 30), RGB(29, 31, 31), RGB(4, 4, 8), RGB(24, 13, 27)
+};
+
+
+// Temporary five-icon chibi QA palettes; game data and species ABI unchanged.
+static const u16 sPRUChibiGemigoylePalette[16] =
+{
+    RGB(0, 31, 0), RGB(4, 4, 7), RGB(8, 7, 11), RGB(12, 11, 15),
+    RGB(16, 15, 19), RGB(22, 21, 23), RGB(27, 25, 29), RGB(13, 6, 15),
+    RGB(19, 4, 13), RGB(26, 7, 18), RGB(31, 13, 25), RGB(31, 22, 29),
+    RGB(9, 9, 16), RGB(30, 29, 31), RGB(5, 3, 9), RGB(19, 13, 22)
+};
+
+static const u16 sPRUChibiJollibirdPalette[16] =
+{
+    RGB(0, 31, 0), RGB(4, 5, 7), RGB(10, 9, 11), RGB(17, 16, 17),
+    RGB(24, 23, 24), RGB(29, 29, 29), RGB(31, 31, 31), RGB(14, 3, 4),
+    RGB(23, 4, 4), RGB(29, 7, 6), RGB(31, 16, 13), RGB(25, 13, 5),
+    RGB(31, 21, 9), RGB(14, 20, 22), RGB(22, 26, 27), RGB(6, 13, 17)
+};
+
+static const u16 sPRUChibiGrimfowlPalette[16] =
+{
+    RGB(0, 31, 0), RGB(2, 2, 3), RGB(5, 5, 5), RGB(8, 9, 8),
+    RGB(11, 12, 11), RGB(15, 16, 15), RGB(18, 20, 18), RGB(25, 26, 24),
+    RGB(31, 31, 29), RGB(12, 8, 2), RGB(19, 14, 4), RGB(27, 22, 8),
+    RGB(31, 27, 15), RGB(14, 13, 10), RGB(6, 8, 10), RGB(22, 23, 21)
+};
+
+static const u16 sPRUChibiKablowfishPalette[16] =
+{
+    RGB(0, 31, 0), RGB(5, 4, 6), RGB(9, 7, 11), RGB(14, 12, 14),
+    RGB(19, 17, 18), RGB(24, 21, 22), RGB(29, 26, 25), RGB(31, 30, 28),
+    RGB(14, 6, 16), RGB(20, 9, 20), RGB(26, 13, 22), RGB(19, 8, 3),
+    RGB(28, 13, 6), RGB(31, 22, 11), RGB(14, 19, 21), RGB(21, 26, 28)
 };
 
 const struct SpritePalette gMonIconPaletteTable[] =
@@ -150,6 +184,10 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUAlphoracleIconPalette, POKE_ICON_BASE_PAL_TAG + 14 },
     { sPRUMewduoIconPalette, POKE_ICON_BASE_PAL_TAG + 15 },
     { sPRUGemlinOriginalIconPalette, POKE_ICON_BASE_PAL_TAG + 16 },
+    { sPRUChibiGemigoylePalette, POKE_ICON_BASE_PAL_TAG + 17 },
+    { sPRUChibiJollibirdPalette, POKE_ICON_BASE_PAL_TAG + 18 },
+    { sPRUChibiGrimfowlPalette, POKE_ICON_BASE_PAL_TAG + 19 },
+    { sPRUChibiKablowfishPalette, POKE_ICON_BASE_PAL_TAG + 20 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -260,7 +298,15 @@ static const u16 sSpriteImageSizes[3][4] =
 static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
 {
     if (species == SPECIES_GEMLIN)
-        return 16; // Exact pre-PoryPal Gemlin purple/blue indexed artwork.
+        return 16;
+    if (species == SPECIES_GEMIGOYLE)
+        return 17;
+    if (species == SPECIES_JOLLIBIRD)
+        return 18;
+    if (species == SPECIES_GRIMFOWL)
+        return 19;
+    if (species == SPECIES_KABLOWFISH)
+        return 20; // Exact pre-PoryPal Gemlin purple/blue indexed artwork.
     if (species == SPECIES_SWAMPLITH)
         return 8;
     if (species == SPECIES_SKARMET)
@@ -508,7 +554,7 @@ const u8 *GetMonIconTilesIsEgg(u16 species, u32 personality, bool32 isEgg)
 void TryLoadAllMonIconPalettesAtOffset(u16 offset)
 {
     s32 i;
-    if (offset <= BG_PLTT_ID(16 - ARRAY_COUNT(gMonIconPaletteTable)))
+    if (ARRAY_COUNT(gMonIconPaletteTable) <= 16 && offset <= BG_PLTT_ID(16 - ARRAY_COUNT(gMonIconPaletteTable)))
     {
         for (i = 0; i < (int)ARRAY_COUNT(gMonIconPaletteTable); i++)
         {
