@@ -43,6 +43,13 @@ for required in ("CreatePruPokedexList(order);",
                  "return IS_HNS ? DEX_MODE_NATIONAL : sPokedexModes[id]"):
     assert required in hgss,required
 assert "PRU_DEX_COUNT 450" in order
+# Every HGSS screen must treat PRU as unlocked National from the first Dex
+# opening, including the search menu, return paths, palettes and stat pages.
+assert "if (!IsNationalPokedexEnabled())" not in hgss
+assert "else if (!IsNationalPokedexEnabled())" not in hgss
+assert "if ((!IsNationalPokedexEnabled() || sPokedexView->dexMode" not in hgss
+assert "value = SpeciesToPokedexNum(NationalPokedexNumToSpecies(num));" in hgss
+assert hgss.count("value = SpeciesToPokedexNum(NationalPokedexNumToSpecies(num));") == 2
 assert "u8 dexSeen[NUM_DEX_FLAG_BYTES]" in read("include/global.h")
 assert "u8 dexCaught[NUM_DEX_FLAG_BYTES]" in read("include/global.h")
 assert "if (IS_HNS)" in engine
