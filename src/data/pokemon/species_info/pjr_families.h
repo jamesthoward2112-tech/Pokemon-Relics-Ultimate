@@ -45,7 +45,7 @@
     .palette = gMonPalette_Scarabub,
     .shinyPalette = gMonShinyPalette_Scarabub,
     .iconSprite = gMonIcon_Scarabub,
-    .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 2 : 0,
+    .iconPalIndex = 3, // Scarabub's existing indexed icon uses BLUE pal3, never yellow pal0.
     .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
     .levelUpLearnset = sScarabubLevelUpLearnset,
     .teachableLearnset = sHeracrossTeachableLearnset,

@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105, fix/pru-job13-fortotoise-icon-20261105]
+    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105, fix/pru-job13-fortotoise-icon-20261105, fix/pru-job14-baby-sprites-20261105]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -102,7 +102,7 @@ jobs:
         run: python3 tools/pru/sync_prl_authoritative_sprites.py
       - name: Restore exact original Infinity battle sprites after PRL sync
         run: python3 tools/pru/install_infinity_sprite_cleanup.py
-      - name: Prepare PR72 fortress front and original PRL Mercury rear artwork
+      - name: Prepare exact paired PR72 Fortotoise battle sprites
         run: python3 tools/pru/prepare_user_fortotoise.py
       - name: Install approved final-polish sprite donors after PRL sync
         run: python3 tools/pru/install_final_polish_sprites.py
@@ -222,6 +222,12 @@ jobs:
           python3 tools/pru/install_video_review_sprite_repairs.py
           python3 tools/pru/check_video_review_sprite_repairs.py
           python3 tools/pru/audit_custom_sprites_70.py
+      - name: Install Gemlin and Scarabub player-approved baby sprites last
+        run: |
+          set -euo pipefail
+          python3 tools/pru/install_approved_baby_sprites.py
+          python3 tools/pru/check_job14_baby_sprites.py
+          python3 tools/pru/audit_custom_sprites_70.py
       - name: Run Golden Reign and Phoenix Soul battle-engine tests
         run: |
           set -euo pipefail
@@ -327,7 +333,7 @@ jobs:
             pru-rom.sha256
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' || github.ref == 'refs/heads/fix/pru-job11-text-20261105' || github.ref == 'refs/heads/fix/pru-job12-celebi-20261105' || github.ref == 'refs/heads/fix/pru-job13-fortotoise-icon-20261105')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
+        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' || github.ref == 'refs/heads/fix/pru-job11-text-20261105' || github.ref == 'refs/heads/fix/pru-job12-celebi-20261105' || github.ref == 'refs/heads/fix/pru-job13-fortotoise-icon-20261105' || github.ref == 'refs/heads/fix/pru-job14-baby-sprites-20261105')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -424,7 +430,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Job 13 Fortotoise: BOTH battle sprites are exact 64x64 unscaled front/back images decompressed from user-uploaded PRL PR72 ROM with matching original normal/shiny palettes, plus approved 2-frame Pokésprite Gigantamax Blastoise box icon (pal3). No other species changed; rejected Job 10 bulk artwork excluded. Built on accepted Job 12 (Celebi RELICS quest), preserving Jobs 7-9, 11-12, 450-Dex and save compatibility. All source, sprite pixel-hash, mGBA boot and build tests required; visual playtest remains valuable." \
+              --notes "Job 14 approved baby sprites from Job 13 (Fortotoise PR72 front/back and Pokésprite icon preserved). Gemlin now has exact pre-PoryPal original front, flipped rear and 2-frame icon with bespoke original purple/blue icon palette. Scarabub front/back reduced carefully to 44x40 and 44x41 from indexed originals; party icon remains its exact original blue artwork with correct pal3 selector. All other species untouched, rejected Job 10 artwork excluded, Jobs 7-13 game logic/save compatibility preserved. Build tests/mGBA boot verified; in-game visuals need player sign-off." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \

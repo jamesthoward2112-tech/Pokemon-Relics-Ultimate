@@ -120,6 +120,17 @@ static const u16 sPRUMewduoIconPalette[16] =
     RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
 };
 
+// Gemlin is the original ChatGPT artwork predating PoryPal. Its tiny purple
+// silhouette and blue crystal need their own 16 indexed colours. The shared
+// six palettes recoloured it badly in PC/party; load this only on demand.
+static const u16 sPRUGemlinOriginalIconPalette[16] =
+{
+    RGB(14, 24, 20), RGB(2, 1, 3), RGB(4, 2, 5), RGB(8, 4, 10),
+    RGB(10, 6, 13), RGB(13, 8, 17), RGB(16, 10, 20), RGB(19, 13, 23),
+    RGB(23, 16, 25), RGB(8, 12, 16), RGB(14, 20, 24), RGB(21, 25, 27),
+    RGB(28, 30, 30), RGB(22, 6, 9), RGB(30, 9, 13), RGB(11, 7, 14)
+};
+
 const struct SpritePalette gMonIconPaletteTable[] =
 {
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
@@ -138,6 +149,7 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUMoltresPIconPalette, POKE_ICON_BASE_PAL_TAG + 13 },
     { sPRUAlphoracleIconPalette, POKE_ICON_BASE_PAL_TAG + 14 },
     { sPRUMewduoIconPalette, POKE_ICON_BASE_PAL_TAG + 15 },
+    { sPRUGemlinOriginalIconPalette, POKE_ICON_BASE_PAL_TAG + 16 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -247,6 +259,8 @@ static const u16 sSpriteImageSizes[3][4] =
 // Swamplith party icon selects its bespoke ninth palette when rendered.
 static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
 {
+    if (species == SPECIES_GEMLIN)
+        return 16; // Exact pre-PoryPal Gemlin purple/blue indexed artwork.
     if (species == SPECIES_SWAMPLITH)
         return 8;
     if (species == SPECIES_SKARMET)
