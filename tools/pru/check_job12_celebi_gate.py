@@ -125,14 +125,18 @@ for champion, elite20, unown_i, old_caught, already_relic in itertools.product((
 # Celebi owner (including old Kanto clear). KO/run never sets completion flag.
 assert "goto_if_eq VAR_AZALEA_TOWN_STATE" not in shrine
 
-# Old Alola donor content mislabeled a visible TAPU BULU actor as a Celebi
-# battle. Keep that legendary encounter intact, but fight the depicted species.
+# Old Alola donor content mislabeled a visible Tapu Bulu actor as a Celebi
+# battle. Both are forbidden as an extra Alola capture; retire the battle.
 alola = read("data/maps/UlaUla_Forest_hns/scripts.inc")
 alola_objects = json.loads(read("data/maps/UlaUla_Forest_hns/map.json"))["object_events"]
 assert any(o.get("script") == "Alola_Ulaula_BattleVsTapuBulu" and
            o.get("graphics_id") == "OBJ_EVENT_GFX_SPECIES(TAPU_BULU)" for o in alola_objects)
-assert "seteventmon SPECIES_TAPU_BULU, 60" in alola
-assert "playmoncry SPECIES_TAPU_BULU, CRY_MODE_ENCOUNTER" in alola
+assert "seteventmon SPECIES_TAPU_BULU" not in alola
+assert "seteventmon SPECIES_CELEBI" not in alola
+assert "playmoncry SPECIES_TAPU_BULU" not in alola
+alola_actor = alola.split("Alola_Ulaula_BattleVsTapuBulu::", 1)[1].split("Alola_Ulaula_BattleVsTapuBulu_2:", 1)[0]
+assert "BattleSetup_StartLegendaryBattle" not in alola_actor
+assert "setflag FLAG_HIDE_TAPU_BULU" in alola_actor and "removeobject Ulaula_Tapu" in alola_actor
 all_celebi_events = [
     str(path.relative_to(ROOT)).replace("\\", "/")
     for path in (ROOT / "data/maps").glob("*/scripts.inc")
@@ -140,4 +144,4 @@ all_celebi_events = [
     if re.match(r"^\s*seteventmon\s+SPECIES_CELEBI\b", line)
 ]
 assert all_celebi_events == ["data/maps/RuinsOfAlph_Lab_hns/scripts.inc"], all_celebi_events
-print("JOB12_CELEBI_PASS: 32 progression states, legacy saves, one Celebi encounter across all maps, Tapu Bulu donor repaired")
+print("JOB12_CELEBI_PASS: 32 progression states, legacy saves, one Celebi encounter across all maps, Alola duplicate retired")

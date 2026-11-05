@@ -298,20 +298,13 @@ Alola_Ulaula_Totem_sign_20_Lower:
 Alola_Ulaula_BattleVsTapuBulu::
 	lock
 	faceplayer
-	playmoncry SPECIES_TAPU_BULU, CRY_MODE_ENCOUNTER
-	msgbox Alola_Ulaula_BattleVsTapuBulu_Text_0
-	waitmoncry
-	seteventmon SPECIES_TAPU_BULU, 60
-	special BattleSetup_StartLegendaryBattle
-	waitstate
-	specialvar VAR_RESULT, GetBattleOutcome
-	compare VAR_RESULT, B_OUTCOME_CAUGHT
-	goto_if_eq Alola_Ulaula_BattleVsTapuBulu_2
-	compare VAR_RESULT, B_OUTCOME_WON
-	goto_if_eq Alola_Ulaula_BattleVsTapuBulu_3
-	release
-	end
-
+	@ The old donor actor depicted Tapu Bulu but incorrectly awarded a
+	@ second Celebi. Neither species is a catchable Alola battle here:
+	@ Celebi belongs to post-E20 RELICS, and Tapu Bulu is outside PRU 450.
+	msgbox Alola_Ulaula_BattleVsTapuBulu_Text_0, MSGBOX_DEFAULT
+	setflag FLAG_HIDE_TAPU_BULU
+	setflag FLAG_BATTLED_TAPU_BULU
+	removeobject Ulaula_Tapu
 	release
 	end
 

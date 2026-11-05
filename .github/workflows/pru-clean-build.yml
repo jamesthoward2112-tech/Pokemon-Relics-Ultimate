@@ -422,7 +422,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Job 12 from accepted Job 11 efdd0a71b9 (itself Job 9-based). Prevents all pre-E20 and duplicate Celebi encounters, credits legacy caught Celebi only after I-Unown, preserves the GS Ball and save IDs. Retains Job 11 dialogue/Ho-Oh name fixes. No rejected Job 10 bulk artwork changes; ROM is technically tested but in-game scenario QA requires confirmation." \
+              --notes "Job 12 from accepted Job 11 efdd0a71b9 (itself Job 9-based). Prevents pre-E20 and duplicate Celebi encounters, retires the erroneous Alola Celebi/Tapu Bulu battle outside the approved 450, and credits legacy caught Celebi only after I-Unown, preserves the GS Ball and save IDs. Retains Job 11 dialogue/Ho-Oh name fixes. No rejected Job 10 bulk artwork changes; ROM is technically tested but in-game scenario QA requires confirmation." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
