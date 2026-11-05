@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105, fix/pru-job13-fortotoise-icon-20261105, fix/pru-job14-baby-sprites-20261105]
+    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105, fix/pru-job13-fortotoise-icon-20261105, fix/pru-job14-baby-sprites-20261105, test/pru-approved-four-sprite-playtest]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'

@@ -9,6 +9,7 @@ species, stats, moves, maps, events, save data, or Eeveelution battle sprites.
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 from pathlib import Path
 
@@ -39,13 +40,18 @@ ICON_SYMBOLS = (
 BATTLE_FRAME_LIMITS = {
     ("gemlin", "front"): 44,
     ("gemlin", "back"): 44,
-    ("jollibird", "front"): 44,
-    ("jollibird", "back"): 50,
-    ("kablowfish", "front"): 49,
-    ("kablowfish", "back"): 47,
-    ("grimfowl", "front"): 52,
-    ("grimfowl", "back"): 50,
+    # Player-approved replacement poses, preserved at their hand-framed
+    # 64x64 size. The source assets use the existing species palettes.
+    ("gemigoyle", "front"): 64,
+    ("gemigoyle", "back"): 64,
+    ("jollibird", "front"): 64,
+    ("jollibird", "back"): 64,
+    ("kablowfish", "front"): 64,
+    ("kablowfish", "back"): 64,
+    ("grimfowl", "front"): 64,
+    ("grimfowl", "back"): 64,
 }
+APPROVED_BATTLE_REPLACEMENTS = {"gemigoyle", "jollibird", "kablowfish", "grimfowl"}
 
 
 def graphics_asset_paths(kind: str) -> dict[str, Path]:
@@ -117,6 +123,33 @@ def fit_battle_sprite(name: str, side: str, max_extent: int) -> dict:
         assert source.mode == "P" and source.size == (64, 64), (source_path, source.mode, source.size)
         palette = source.getpalette()
         source.info["transparency"] = 0
+        if name in APPROVED_BATTLE_REPLACEMENTS:
+            # These are the player's accepted alternate poses. Preserve their
+            # exact pixel placement and palette indices; only transparent
+            # index 0 is used as the background.
+            assert source.info.get("transparency") == 0
+            normal_pal = (SOURCES / name / "normal.pal").read_text().splitlines()
+            colors = [tuple(map(int, line.split())) for line in normal_pal[3:3 + int(normal_pal[2])]]
+            assert len(colors) == 16
+            assert palette[:48] == [component for color in colors for component in color]
+            used = set(source.getdata())
+            assert max(used) < 16 and len(used) <= 16
+            if side == "back":
+                assert all(source.getpixel((x, y)) == 0 for y in range(51, 64) for x in range(64))
+            destination = GFX / "prl_authoritative" / name / f"{side}.png"
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            source_path_bytes = source_path.read_bytes()
+            destination.write_bytes(source_path_bytes)
+            # The new pixel data is indexed against this exact existing
+            # palette; restore it after the older pinned donor sync stage.
+            (destination.parent / "normal.pal").write_bytes(
+                (SOURCES / name / "normal.pal").read_bytes()
+            )
+            return {"species": name, "side": side,
+                    "path": str(destination.relative_to(ROOT)),
+                    "before_bbox": list(icon_bbox(source)), "after_bbox": list(icon_bbox(source)),
+                    "method": "exact player-approved 64x64 pixels; existing game palette indices retained",
+                    "sha256": hashlib.sha256(source_path_bytes).hexdigest()}
         bounds = icon_bbox(source)
         assert bounds is not None, source_path
         crop = source.crop(bounds)
