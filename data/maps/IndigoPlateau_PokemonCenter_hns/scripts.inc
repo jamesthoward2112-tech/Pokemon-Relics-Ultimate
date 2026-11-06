@@ -1025,12 +1025,35 @@ PRU_Elite20_StartFinale::
 	goto_if_set FLAG_PRU_E20_CREDITS_SHOWN, PRU_Elite20_StartFinale_Return
 	goto_if_unset FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite20_StartFinale_Return
 	msgbox PRU_Elite20_Text_FinalCelebration, MSGBOX_DEFAULT
+	call PRU_Elite20_CinematicPrelude
 	setflag FLAG_PRU_E20_CREDITS_SHOWN
 	setflag FLAG_PRU_E20_CREDITS_PENDING
 	special GameClear
 	waitstate
 PRU_Elite20_StartFinale_Return::
 	return
+
+@ Job 16: cinematic teaser, NOT an additional Ho-Oh encounter.
+@ The sole Lv100 catchable Golden Ho-Oh remains post-RELICS on Mt Silver.
+PRU_Elite20_CinematicPrelude::
+	fadescreen FADE_TO_BLACK
+	delay 30
+	playbgm MUS_HG_VS_HO_OH, 0
+	fadescreen FADE_FROM_BLACK
+	delay 24
+	showmonpic SPECIES_RELIC_HO_OH, 10, 2
+	playmoncry SPECIES_RELIC_HO_OH, CRY_MODE_ENCOUNTER
+	waitmoncry
+	msgbox PRU_Elite20_Text_CinematicPrelude, MSGBOX_DEFAULT
+	hidemonpic
+	delay 24
+	return
+
+PRU_Elite20_Text_CinematicPrelude:
+	.string "The sky glows with ancient\\n"
+	.string "GOLDEN wings...\\p"
+	.string "The RELICS have awakened.\\n"
+	.string "Your journey is not over!$"
 
 PRU_Elite20_Text_FinalCelebration:
 	.string "OAK: You defeated the ELITE 20!\p"

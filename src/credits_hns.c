@@ -22,6 +22,7 @@
 #include "graphics.h"
 #include "pokedex.h"
 #include "event_data.h"
+#include "constants/flags_hns.h"
 #include "random.h"
 
 #if IS_HNS
@@ -170,15 +171,27 @@ static const u8 sPRUE20Text_Champion[] = _("ELITE 20 CHAMPION");
 static const u8 sPRUE20Text_Kanto[] = _("KANTO AND JOHTO");
 static const u8 sPRUE20Text_Journey[] = _("YOUR JOURNEY CONTINUES");
 static const u8 sPRUE20Text_Relics[] = _("THE GOLDEN RELIC HO-OH");
+static const u8 sPRUE20Text_Flight[] = _("ANCIENT WINGS CROSS THE SKY");
+static const u8 sPRUE20Text_Awaken[] = _("THE SIX RELICS STIR");
+static const u8 sPRUE20Text_Beasts[] = _("RAIKOU / ENTEI / LUGIA");
+static const u8 sPRUE20Text_Spirits[] = _("I-UNOWN / CELEBI / SUICUNE");
+static const u8 sPRUE20Text_Oracle[] = _("ALPHORACLE AWAITS");
 #include "data/credits_hns.h"
 static const struct CreditsEntry sE20Title = {0, TRUE, sPRUE20Text_Title};
 static const struct CreditsEntry sE20Champion = {0, TRUE, sPRUE20Text_Champion};
 static const struct CreditsEntry sE20Kanto = {0, TRUE, sPRUE20Text_Kanto};
 static const struct CreditsEntry sE20Journey = {0, FALSE, sPRUE20Text_Journey};
 static const struct CreditsEntry sE20Relics = {0, TRUE, sPRUE20Text_Relics};
+static const struct CreditsEntry sE20Flight = {0, FALSE, sPRUE20Text_Flight};
+static const struct CreditsEntry sE20Awaken = {0, TRUE, sPRUE20Text_Awaken};
+static const struct CreditsEntry sE20Beasts = {0, FALSE, sPRUE20Text_Beasts};
+static const struct CreditsEntry sE20Spirits = {0, FALSE, sPRUE20Text_Spirits};
+static const struct CreditsEntry sE20Oracle = {0, TRUE, sPRUE20Text_Oracle};
 static const struct CreditsEntry *const sElite20CreditsIntroPages[][ENTRIES_PER_PAGE] = {
  { &sE20Title, &sE20Champion, &sE20Kanto, &sE20Journey, &sCreditsEntry_EmptyString },
- { &sE20Relics, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
+ { &sE20Relics, &sE20Flight, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
+ { &sE20Awaken, &sE20Beasts, &sE20Spirits, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
+ { &sE20Oracle, &sE20Journey, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
 };
 #define E20_INTRO_PAGE_COUNT ARRAY_COUNT(sElite20CreditsIntroPages)
 
@@ -414,6 +427,10 @@ void CB2_StartCreditsSequence(void)
     u8 taskId;
     s16 bikeTaskId;
     u8 pageTaskId;
+
+    // Job 16: initialise the mode from the one-time Elite 20 event trigger.
+    // Johto / Kanto League credits must always retain their usual visuals.
+    gPruElite20CreditsActive = FlagGet(FLAG_PRU_E20_CREDITS_PENDING);
 
     ResetGpuAndVram();
     SetVBlankCallback(NULL);
@@ -842,7 +859,8 @@ static u8 CheckChangeScene(u8 page, u8 taskId)
     // three-at-a-time Relic montage for the remainder of the credits.
     if (gPruElite20CreditsActive)
     {
-        if (page == PAGE_INTERVAL * 1)
+        // Start the Relic gallery directly after the Golden Ho-Oh opening.
+        if (page == E20_INTRO_PAGE_COUNT)
         {
             gTasks[taskId].tNextMode = MODE_SHOW_MONS;
             return TRUE;
@@ -1059,8 +1077,9 @@ static void SpriteCB_CreditsRelicHoOh(struct Sprite *sprite)
         return;
     }
 
-    sprite->x--;
-    sprite->data[0] += 2;
+    // Golden Ho-Oh flies across the sky: visual only, never a capture event.
+    sprite->x -= 2;
+    sprite->data[0] += 3;
     sprite->y2 = Sin(sprite->data[0], 3);
     if (sprite->x < -32)
     {
@@ -1619,14 +1638,33 @@ static const u16 sPruCreditsSpecies[] =
     SPECIES_MIMIKYU_DISGUISED,
 };
 
+// These eight existing species lead the E20 gallery without adding new Dex IDs.
+static const u16 sPruElite20OpeningSpecies[] =
+{
+    SPECIES_RAIKOU, SPECIES_ENTEI, SPECIES_LUGIA,
+    SPECIES_UNOWN_I, SPECIES_CELEBI, SPECIES_SUICUNE,
+    SPECIES_ALPHORACLE, SPECIES_RELIC_HO_OH,
+};
+
 static void DeterminePokemonToShow(void)
 {
     u16 i;
 
-    // Keep species IDs directly so forms sharing a National Dex number do not
-    // collapse to vanilla graphics.
+    // Keep exact species IDs, including PRU Relic forms and existing save IDs.
     for (i = 0; i < NUM_MON_SLIDES; i++)
-        sCreditsData->monToShow[i] = sPruCreditsSpecies[i % ARRAY_COUNT(sPruCreditsSpecies)];
+    {
+        u16 index = i;
+        if (gPruElite20CreditsActive)
+        {
+            if (i < ARRAY_COUNT(sPruElite20OpeningSpecies))
+            {
+                sCreditsData->monToShow[i] = sPruElite20OpeningSpecies[i];
+                continue;
+            }
+            index -= ARRAY_COUNT(sPruElite20OpeningSpecies);
+        }
+        sCreditsData->monToShow[i] = sPruCreditsSpecies[index % ARRAY_COUNT(sPruCreditsSpecies)];
+    }
 
     sCreditsData->numCaughtMon = 0;
     sCreditsData->numMonToShow = NUM_MON_SLIDES;
