@@ -29,7 +29,12 @@ class FaeraniumSpriteLockTests(unittest.TestCase):
                     HEADER,
                 )
                 self.assertIsNotNone(matched, f"Missing Faeranium {symbol} resource")
-                self.assertEqual(matched.group(1), f"{APPROVED}/{asset}")
+                expected = (
+                    f"graphics/pokemon/pjr_locked/faeranium/{asset}"
+                    if symbol in {"Palette", "ShinyPalette"}
+                    else f"{APPROVED}/{asset}"
+                )
+                self.assertEqual(matched.group(1), expected)
 
     def test_pinned_prl_import_must_not_replace_the_user_approved_art(self):
         self.assertIn("faeranium", PRU_VISUAL_OVERRIDES)
@@ -41,8 +46,9 @@ class FaeraniumSpriteLockTests(unittest.TestCase):
                 self.assertEqual(image.size, size)
                 self.assertEqual(image.mode, "P")
                 self.assertLessEqual(len(set(image.getdata())), 16)
+        locked = ROOT / "graphics/pokemon/pjr_locked/faeranium"
         for file in ("normal.pal", "shiny.pal"):
-            self.assertTrue((directory / file).is_file(), file)
+            self.assertTrue((locked / file).is_file(), file)
 
 
 if __name__ == "__main__":
