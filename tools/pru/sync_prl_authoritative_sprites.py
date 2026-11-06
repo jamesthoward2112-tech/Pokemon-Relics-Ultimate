@@ -118,6 +118,9 @@ def main():
                     "Pyroclast exact Elite Redux front missing or modified"
                 )
                 continue
+            # Keep user-approved Khang/Nolax battle art, icons and palettes across clean builds.
+            if slug in {"khang", "nolax"} and dest.exists():
+                continue
             if not dest.exists() or dest.read_bytes() != contents:
                 dest.write_bytes(contents)
         for key, source in list(headers.items()):

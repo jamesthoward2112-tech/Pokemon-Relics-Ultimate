@@ -142,6 +142,24 @@ static const u16 sPRUAncientGuardianDragoniteIconPalette[16] =
     RGB(20, 24, 31), RGB(13, 21, 19), RGB(12, 12, 11), RGB(8, 8, 8),
 };
 
+// Approved 2026-11-06 Khang/Nolax GBA 4bpp party colour palette.
+static const u16 sPRUKhangIconPalette[16] =
+{
+    RGB(0, 0, 0), RGB(2, 1, 2), RGB(6, 4, 4), RGB(10, 5, 4),
+    RGB(14, 7, 5), RGB(19, 10, 6), RGB(23, 13, 7), RGB(26, 17, 10),
+    RGB(9, 8, 8), RGB(14, 12, 12), RGB(18, 16, 14), RGB(22, 19, 14),
+    RGB(29, 25, 19), RGB(30, 29, 24), RGB(21, 4, 5), RGB(30, 30, 29),
+};
+
+// Approved 2026-11-06 Khang/Nolax GBA 4bpp party colour palette.
+static const u16 sPRUNolaxIconPalette[16] =
+{
+    RGB(0, 0, 0), RGB(2, 1, 3), RGB(3, 3, 7), RGB(4, 4, 9),
+    RGB(5, 6, 10), RGB(6, 7, 11), RGB(8, 9, 13), RGB(11, 8, 8),
+    RGB(19, 15, 12), RGB(24, 19, 15), RGB(28, 26, 21), RGB(30, 28, 23),
+    RGB(17, 4, 6), RGB(27, 11, 13), RGB(31, 30, 27), RGB(31, 31, 30),
+};
+
 const struct SpritePalette gMonIconPaletteTable[] =
 {
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
@@ -162,6 +180,8 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUMewduoIconPalette, POKE_ICON_BASE_PAL_TAG + 15 },
     { sPRUGemlinOriginalIconPalette, POKE_ICON_BASE_PAL_TAG + 16 },
     { sPRUAncientGuardianDragoniteIconPalette, POKE_ICON_BASE_PAL_TAG + 17 },
+    { sPRUKhangIconPalette, POKE_ICON_BASE_PAL_TAG + 18 },
+    { sPRUNolaxIconPalette, POKE_ICON_BASE_PAL_TAG + 19 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -271,6 +291,10 @@ static const u16 sSpriteImageSizes[3][4] =
 // Swamplith party icon selects its bespoke ninth palette when rendered.
 static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
 {
+    if (species == SPECIES_KHANG)
+        return 18;
+    if (species == SPECIES_NOLAX)
+        return 19;
     if (species == SPECIES_GEMLIN)
         return 16; // Exact pre-PoryPal Gemlin purple/blue indexed artwork.
     if (species == SPECIES_SWAMPLITH)
