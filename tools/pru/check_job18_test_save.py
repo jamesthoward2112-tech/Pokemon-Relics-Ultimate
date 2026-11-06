@@ -53,7 +53,7 @@ for _, slot_rows, _ in slots:
 
 sb1 = b"".join(rows[i][:DATA_SIZE] for i in range(1, 4)) + rows[4][:sizes[4]]
 groups = json.loads((ROOT / "data/maps/map_groups.json").read_text())
-map_group = list(groups).index("gMapGroup_Dungeons_Hns")
+map_group = groups["group_order"].index("gMapGroup_Dungeons_Hns")
 map_num = groups["gMapGroup_Dungeons_Hns"].index("TinTower_RoofDay_hns")
 assert struct.unpack_from("<bbbxhh", sb1, 0x04) == (map_group, map_num, -1, 9, 13)
 assert struct.unpack_from("<H", sb1, 0)[0] == 6, "SaveBlock1 version is not current"
