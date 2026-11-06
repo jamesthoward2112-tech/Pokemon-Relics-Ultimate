@@ -59,6 +59,14 @@ assert struct.unpack_from("<bbbxhh", sb1, 0x04) == (map_group, map_num, -1, 9, 1
 assert struct.unpack_from("<H", sb1, 0)[0] == 6, "SaveBlock1 version is not current"
 assert sb1[PARTY_COUNT_OFFSET] == 6
 
+# Pizza Boy may select either valid save copy. Both must start at the same
+# armed Tin Tower trigger; validating only the newest sector counter misses
+# the stale Blackthorn backup that caused the black-screen report.
+for slot_counter, slot_rows, _ in slots:
+    slot_sb1 = b"".join(slot_rows[i][:DATA_SIZE] for i in range(1, 4)) + slot_rows[4][:sizes[4]]
+    assert struct.unpack_from("<bbbxhh", slot_sb1, 0x04) == (map_group, map_num, -1, 9, 13), (slot_counter, struct.unpack_from("<bbbxhh", slot_sb1, 0x04))
+    assert struct.unpack_from("<H", slot_sb1, SAVEBLOCK1_VARS_OFFSET + (0x405E - 0x4000) * 2)[0] == 2, (slot_counter, "ceremony trigger not armed")
+
 flags = sb1[SAVEBLOCK1_FLAGS_OFFSET:]
 def flag(value):
     return bool(flags[value // 8] & (1 << (value % 8)))
