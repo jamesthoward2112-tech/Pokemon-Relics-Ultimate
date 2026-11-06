@@ -194,6 +194,7 @@ static const struct CreditsEntry *const sElite20CreditsIntroPages[][ENTRIES_PER_
  { &sE20Oracle, &sE20Journey, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
 };
 #define E20_INTRO_PAGE_COUNT ARRAY_COUNT(sElite20CreditsIntroPages)
+#include "data/credits_pru.h"
 
 static const struct BgTemplate sBackgroundTemplates[] =
 {
@@ -779,13 +780,26 @@ static void Task_UpdatePage(u8 taskId)
     case 2:
         if (gTasks[gTasks[taskId].tMainTaskId].func == Task_CreditsMain)
         {
-            if (gTasks[taskId].tCurrentPage < PAGE_COUNT + (gPruElite20CreditsActive ? E20_INTRO_PAGE_COUNT : 0))
+            if (gTasks[taskId].tCurrentPage < (gPruElite20CreditsActive ? E20_TOTAL_PAGE_COUNT : PAGE_COUNT))
             {
                 for (i = 0; i < ENTRIES_PER_PAGE; i++)
                 {
-                    const struct CreditsEntry *entry = gPruElite20CreditsActive && gTasks[taskId].tCurrentPage < E20_INTRO_PAGE_COUNT
-                        ? sElite20CreditsIntroPages[gTasks[taskId].tCurrentPage][i]
-                        : sCreditsEntryPointerTable[gTasks[taskId].tCurrentPage - (gPruElite20CreditsActive ? E20_INTRO_PAGE_COUNT : 0)][i];
+                    const struct CreditsEntry *entry;
+
+                    // E20 shows only PRU credits. The earlier Johto/Kanto
+                    // championships keep the complete original HnS sequence.
+                    if (gPruElite20CreditsActive)
+                    {
+                        if (gTasks[taskId].tCurrentPage < E20_INTRO_PAGE_COUNT)
+                            entry = sElite20CreditsIntroPages[gTasks[taskId].tCurrentPage][i];
+                        else
+                            entry = sPruE20CreditsPages[gTasks[taskId].tCurrentPage - E20_INTRO_PAGE_COUNT][i];
+                    }
+                    else
+                    {
+                        entry = sCreditsEntryPointerTable[gTasks[taskId].tCurrentPage][i];
+                    }
+
                     PrintCreditsText(entry->text, 5 + i * 16, entry->isTitle);
                 }
                 CopyWindowToVram(0, COPYWIN_GFX);
@@ -851,7 +865,8 @@ static void Task_UpdatePage(u8 taskId)
 
 #undef tDelay
 
-#define PAGE_INTERVAL ((PAGE_COUNT + (gPruElite20CreditsActive ? E20_INTRO_PAGE_COUNT : 0)) / 9)
+// The nine scenery cuts remain exclusive to the original League credits.
+#define PAGE_INTERVAL (PAGE_COUNT / 9)
 
 static u8 CheckChangeScene(u8 page, u8 taskId)
 {
