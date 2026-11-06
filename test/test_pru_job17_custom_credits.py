@@ -20,7 +20,8 @@ assert "FlagClear(FLAG_PRU_E20_CREDITS_PENDING);" in clear
 assert "gPruElite20CreditsActive = FlagGet(FLAG_PRU_E20_CREDITS_PENDING);" not in credits
 assert "sCreditsEntryPointerTable[PAGE_COUNT][ENTRIES_PER_PAGE]" in legacy
 assert "sElite20CreditsIntroPages" in credits
-assert "FLAG_PRU_E20_CREDITS_PENDING" in finale
+summit = Path("data/maps/MtSilver_SummitDay_hns/scripts.inc").read_text(encoding="utf-8")
+assert "FLAG_PRU_E20_CREDITS_PENDING" in summit
 assert "FLAG_PRU_E20_REWARD_CLAIMED" in finale
 assert "giveitem ITEM_MASTER_BALL, 6" in finale
 assert "giveitem ITEM_ANCIENT_STONE, 5" in finale

@@ -1,17 +1,9 @@
-# PRU Tin Tower — Guardian Dragonite and Ultimate Relic encounter design
+# PRU Tin Tower — Ancient Guardian Dragonite
 
-User proposed replacing the original non-catchable Kimono Girls' rooftop Ho-Oh appearance with a unique custom-sprite Dragonite, while reserving the sole Ho-Oh for post-RELICS.
+Job 18 replaces the former Tin Tower Ho-Oh appearance with a unique, non-catchable Level 60 Ancient Guardian Dragonite battle during the Kimono Girls' ceremony. The event uses the user's exact Elite Redux Mega Dragonite front, back and party-icon art, with the trainer-only `SPECIES_DRAGONITE_RELIC` visual form and no new Pokédex entry or Mega mechanics.
 
-Current first rooftop state (VAR_COMPLETED_HO_OH == 2): Kimono Girls dance, Ho-Oh sprite approaches, and is no longer catchable. Current late state ==4 incorrectly keeps that sprite hidden. The Ruins of Alph Relic Professor and Red direct the player to the Tin Tower roof, while the only catchable Relic Ho-Oh was moved to Oak on Mt Silver. This is a story inconsistency requiring a future event revision.
+The fixed boss set is Adamant, Multiscale, Weakness Policy, 31 IVs, 252 HP / 252 Attack / 4 Speed EVs, and Dragon Dance / Dual Wingbeat / Dragon Claw / Roost. It can be retried after defeat or escape. A persistent completion flag resolves the ceremony; existing saves that already completed the former Tin Tower story are migrated without replaying it.
 
-Proposed story resolution, pending finished custom GBA assets and gameplay validation:
+Golden Ho-Oh remains the sole catchable Ho-Oh and is summoned by Oak at Mt Silver after the final Elite 20 victory and all seven RELICS. The Crest is not an encounter requirement. Capture starts the established cinematic and custom credits once.
 
-1. **First story visit**: Kimono Girls summon an ancient Dragonite guardian as a flyby. Give it its OWN approved original overworld/cutscene sprites (not a global Dragonite recolour); change cry and all Ho-Oh-specific animation/dialogue references for that cutscene. Do not grant or set any Ho-Oh catch flags.
-2. **After seven RELICS and authentic Ancient Rainbow Crest**: Rooftop displays a **single catchable Golden Relic Ho-Oh** (SPECIES_RELIC_HO_OH), with battle attempt retry when not caught, atomic caught flag, and save-compatible map-entry reconciliation. Do not spawn before flags or a second Ho-Oh elsewhere.
-3. **Mt Silver**: Retain Oak as optional/rewarding final trainer challenge, but do NOT let him summon a second Ho-Oh. Preserve completed E20 status, current save flags, Red's history and Oak's epilogue. Align Relic Professor/Red/Jessie & James hints to the rooftop.
-4. **GBA asset QA**: custom Guardian Dragonite overworld walk/flight frames and appropriate battle/front/back/party art if it will be catchable (otherwise do not create unnecessary new species slots). Respect 64x64 sprite budgets, transparent edges, 16-colour per sprite, palette isolation, 450 species, icons unchanged unless requested.
-5. **Phoenix Soul**: post-lethal HP bar must visibly show a drop to 1 HP and a second heal animation of 25% max HP; internal HP increase alone is insufficient. Source confirmation and emulator battle QA needed. Do not claim this item complete in the Ground-immunity patch.
-
-Already implemented separately: Mt Silver sign wording to 'Shortcut to the top?' and Phoenix Soul Ground immunity via the ungrounded-ability path; base Fire/Fairy typing retained. Both need real gameplay QA.
-
-Do not silently alter story events or publish the Guardian Dragonite cutscene before its source graphics and tests exist.
+Source and hosted build checks do not replace hands-on playtesting. The repository has no progressed pre-Dragonite save; a test save must be captured from a real mGBA session before it can be distributed as a verified fixture.

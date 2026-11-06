@@ -51,7 +51,8 @@ event_mon = section(pokemon, "void CreateEnemyEventMon(void)", "static u16 Calcu
 assert "species == SPECIES_RELIC_HO_OH && level == 100" in event_mon
 assert "SetMonMoveSlot(&gEnemyParty[0], MOVE_GOLDEN_REIGN, 0);" in event_mon
 assert "SetMonMoveSlot(&gEnemyParty[0], MOVE_PHOENIX_HYMN, 2);" in event_mon
-assert "ABILITY_NUM" not in event_mon
+golden_event = section(event_mon, "if (species == SPECIES_RELIC_HO_OH && level == 100)", "if (species == SPECIES_DRAGONITE_RELIC && level == 60)")
+assert "ABILITY_NUM" not in golden_event
 
 battle = read("src/battle_util.c")
 phoenix = section(battle, "else if (ctx->abilityDef == ABILITY_PHOENIX_SOUL", "else if (GetConfig(B_STURDY)")
@@ -69,25 +70,28 @@ assert "pjrPhoenixSoulPending[battler] = FALSE" in phoenix_heal
 assert "pjrPhoenixSoulUsed[MAX_BATTLERS_COUNT]" in read("include/battle.h")
 
 oak = read("data/maps/MtSilver_SummitDay_hns/scripts.inc")
-oak_event = section(oak, "MtSilver_SummitDay_EventScript_OakSummon::", "MtSilver_SummitDay_EventScript_OakRelicCaught::")
+oak_event = section(oak, "MtSilver_SummitDay_EventScript_RelicOak::", "MtSilver_SummitDay_EventScript_OakSummon::")
 for flag in (
     "FLAG_PRU_ELITE18_CLEARED", "FLAG_PJR_RELIC_RAIKOU", "FLAG_PJR_RELIC_ENTEI",
     "FLAG_PJR_RELIC_LUGIA", "FLAG_PJR_RELIC_UNOWN_I", "FLAG_PJR_RELIC_CELEBI",
-    "FLAG_PJR_RELIC_SUICUNE", "FLAG_PJR_RELIC_ALPHORACLE", "FLAG_PJR_GOT_RAINBOW_CREST",
+    "FLAG_PJR_RELIC_SUICUNE", "FLAG_PJR_RELIC_ALPHORACLE",
 ):
     assert f"goto_if_unset {flag}" in oak_event
-assert "checkitem ITEM_ANCIENT_RAINBOW_CREST" in oak_event
-assert "seteventmon SPECIES_RELIC_HO_OH, 100" in oak_event
+assert "checkitem ITEM_ANCIENT_RAINBOW_CREST" not in oak_event
 caught = section(oak, "MtSilver_SummitDay_EventScript_OakRelicCaught::", "MtSilver_SummitDay_EventScript_OakEpilogue::")
 assert "setflag FLAG_PJR_RELIC_HO_OH" in caught and "setflag FLAG_HIDE_HO_OH" in caught
+assert "seteventmon SPECIES_RELIC_HO_OH, 100" in section(oak, "MtSilver_SummitDay_EventScript_OakSummon::", "MtSilver_SummitDay_EventScript_OakRelicCaught::")
 
 for path in ("data/maps/TinTower_RoofDay_hns/scripts.inc", "data/maps/NavelRock_Summit_Frlg/scripts.inc", "data/maps/NavelRock_Top/scripts.inc"):
     source = read(path)
     assert "seteventmon SPECIES_HO_OH" not in source, path
-    assert "BattleSetup_StartLegendaryBattle" not in source, path
+    if path.startswith("data/maps/TinTower"):
+        assert "seteventmon SPECIES_DRAGONITE_RELIC, 60, ITEM_WEAKNESS_POLICY" in source
+    else:
+        assert "BattleSetup_StartLegendaryBattle" not in source, path
 all_scripts = "\n".join(p.read_text(errors="ignore") for p in (ROOT / "data/maps").rglob("*.inc"))
 assert all_scripts.count("seteventmon SPECIES_RELIC_HO_OH,") == 1
 assert "TinTower_RoofDay_Text_GoldenHoOhRumour" in read("data/maps/TinTower_RoofDay_hns/scripts.inc")
 
-print("PASS: 700 BST Golden Ho-Oh, exclusive moveset/ability, Phoenix Soul, sole gated Lv100 encounter, legacy art and flags")
+print("PASS: 700 BST Golden Ho-Oh, exclusive moveset/ability, Phoenix Soul, sole E20+7 RELICS Lv100 encounter, legacy art and flags")
 

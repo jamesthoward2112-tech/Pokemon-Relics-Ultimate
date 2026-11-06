@@ -46,7 +46,7 @@ PRU_KantoE4_OakCongratulations:
 	.string "KANTO ELITE FOUR and RED!\p"
 	.string "Now visit the SAFFRON\n"
 	.string "FIGHTING DOJO VIP.\p"
-	.string "The ELITE 18 awaits you there.\n"
+	.string "The ELITE 20 awaits you there.\n"
 	.string "It is the ultimate challenge!$"
 
 PokemonLeague_ChampionsRoom_OnResume::

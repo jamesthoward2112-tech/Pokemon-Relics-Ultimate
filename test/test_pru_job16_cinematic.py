@@ -16,16 +16,14 @@ assert "sElite20CreditsIntroPages" in credits
 assert "sPruElite20OpeningSpecies" in credits
 for species in ("RAIKOU","ENTEI","LUGIA","UNOWN_I","CELEBI","SUICUNE","ALPHORACLE","RELIC_HO_OH"):
     assert "SPECIES_" + species in credits
-start = event.index("PRU_Elite20_StartFinale::")
-end = event.index("PRU_Elite20_StartFinale_Return::", start)
-finale = event[start:end]
-assert finale.count("msgbox PRU_Elite20_Text_GoldenSky") == 1
-assert finale.index("msgbox PRU_Elite20_Text_GoldenSky") < finale.index("special GameClear")
-assert finale.count("setflag FLAG_PRU_E20_CREDITS_PENDING") == 1
-assert finale.count("setflag FLAG_PRU_E20_CREDITS_SHOWN") == 1
-assert "SPECIES_RELIC_HO_OH" not in finale
-assert "seteventmon" not in finale
-assert "showmonpic" not in finale
+start = summit.index("MtSilver_SummitDay_EventScript_OakRelicCaught::")
+end = summit.index("MtSilver_SummitDay_EventScript_OakEpilogue::", start)
+finale = summit[start:end]
+assert "setflag FLAG_PRU_E20_CREDITS_PENDING" in finale
+assert "setflag FLAG_PRU_GOLDEN_FINALE_SHOWN" in finale
+assert finale.index("setflag FLAG_PRU_E20_CREDITS_PENDING") < finale.index("special GameClear")
+assert finale.count("special GameClear") == 1
+assert "PRU_Elite20_StartFinale::\n\treturn" in event
 assert "PRU_Elite20_CinematicPrelude" not in event
 assert "PRU_Elite20_Text_GoldenSky:" in event
 assert "PRU_Elite20_ClaimRewards::" in event

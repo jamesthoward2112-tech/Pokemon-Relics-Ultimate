@@ -47,9 +47,15 @@ class Elite20FinaleRewardTests(unittest.TestCase):
         self.assertGreaterEqual(script.count("goto_if_eq VAR_RESULT, FALSE, PRU_Elite20_BagFull"), 2)
         self.assertNotIn("setflag FLAG_PRU_E20_REWARD_CLAIMED", section("PRU_Elite20_BagFull"))
 
-    def test_professors_tease_six_relics_and_oak_at_mt_silver(self):
+    def test_professors_tease_the_ultimate_relic_without_revealing_the_summit(self):
         self.assertIn("R - E - L - I - C - S", SCRIPTS)
-        self.assertIn("MT. SILVER", SCRIPTS)
+        oak = SCRIPTS.split("PRU_Elite20_Text_OakRelics:", 1)[1].split("PRU_Elite20_Text_GoldenSky:", 1)[0]
+        oak += SCRIPTS.split("PRU_Elite20_Text_GoldenSky:", 1)[1].split("PRU_Elite20_Text_FinalCelebration:", 1)[0]
+        self.assertIn("Ultimate Ancient Relic", oak)
+        self.assertNotIn("MT. SILVER", oak)
+        self.assertNotIn("TIN TOWER", oak)
+        directions = SCRIPTS.split("PRU_Elite20_Text_RuinsDirections:", 1)[1].split("PRU_Elite20_Text_Champion:", 1)[0]
+        self.assertIn("RUINS OF ALPH RESEARCH LAB", directions)
         self.assertIn("ELITE 20", ELM)
         self.assertNotIn("ELITE 18 in SAFFRON", ELM)
 

@@ -3582,8 +3582,8 @@
 #define FLAG_PRU_RELIC_OAK_EPILOGUE_COMPLETE                    0x94C
 #define FLAG_PRU_RAYQUAZA_CAUGHT                                0x94D
 #define FLAG_PRU_HIDE_RAYQUAZA                                  0x94E
-#define FLAG_UNUSED_0x94F                                       0
-#define FLAG_UNUSED_0x950                                       0
+#define FLAG_PRU_GUARDIAN_DRAGONITE_COMPLETE                    0x94F // Tin Tower ceremony is resolved, including old-save migration.
+#define FLAG_PRU_GOLDEN_FINALE_SHOWN                            0x950 // Job 18 cinematic/credits have already started.
 #define FLAG_UNUSED_0x951                                       0
 #define FLAG_UNUSED_0x952                                       0
 #define FLAG_UNUSED_0x953                                       0

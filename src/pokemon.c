@@ -3694,7 +3694,9 @@ void CreateEnemyEventMon(void)
 
     u32 personality = GetMonPersonality(species,
         GetSynchronizedGender(STATIC_WILDMON_ORIGIN, species),
-        GetSynchronizedNature(STATIC_WILDMON_ORIGIN, species),
+        (species == SPECIES_DRAGONITE_RELIC && level == 60)
+            ? NATURE_ADAMANT
+            : GetSynchronizedNature(STATIC_WILDMON_ORIGIN, species),
         RANDOM_UNOWN_LETTER);
 
     CreateEventMon(&gEnemyParty[0], species, level, personality, OTID_STRUCT_PLAYER_ID);
@@ -3708,6 +3710,29 @@ void CreateEnemyEventMon(void)
         SetMonMoveSlot(&gEnemyParty[0], MOVE_SACRED_FIRE, 1);
         SetMonMoveSlot(&gEnemyParty[0], MOVE_PHOENIX_HYMN, 2);
         SetMonMoveSlot(&gEnemyParty[0], MOVE_RECOVER, 3);
+        CalculateMonStats(&gEnemyParty[0]);
+    }
+    // The Tin Tower Dragonite is a non-catchable, trainer-only visual form.
+    // Its fixed competitive spread is deliberately limited to this event.
+    if (species == SPECIES_DRAGONITE_RELIC && level == 60)
+    {
+        u8 iv = MAX_PER_STAT_IVS;
+        u8 ev = 0;
+        u8 abilityNum = 2; // Multiscale is Dragonite's hidden ability.
+        SetMonData(&gEnemyParty[0], MON_DATA_ABILITY_NUM, &abilityNum);
+        for (u8 stat = 0; stat < NUM_STATS; stat++)
+            SetMonData(&gEnemyParty[0], MON_DATA_HP_IV + stat, &iv);
+        for (u8 stat = 0; stat < NUM_STATS; stat++)
+            SetMonData(&gEnemyParty[0], MON_DATA_HP_EV + stat, &ev);
+        ev = 252;
+        SetMonData(&gEnemyParty[0], MON_DATA_HP_EV, &ev);
+        SetMonData(&gEnemyParty[0], MON_DATA_ATK_EV, &ev);
+        ev = 4;
+        SetMonData(&gEnemyParty[0], MON_DATA_SPEED_EV, &ev);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_DANCE, 0);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_DUAL_WINGBEAT, 1);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_DRAGON_CLAW, 2);
+        SetMonMoveSlot(&gEnemyParty[0], MOVE_ROOST, 3);
         CalculateMonStats(&gEnemyParty[0]);
     }
     if (itemId)

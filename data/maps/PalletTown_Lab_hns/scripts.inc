@@ -50,8 +50,8 @@ PalletTown_Lab_EventScript_OakRelicsNext::
 	goto_if_unset FLAG_PJR_RELIC_CELEBI, PalletTown_Lab_EventScript_OakRelicsCelebi
 	goto_if_unset FLAG_PJR_RELIC_SUICUNE, PalletTown_Lab_EventScript_OakRelicsSuicune
 	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, PalletTown_Lab_EventScript_OakRelicsAlphoracle
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, PalletTown_Lab_EventScript_OakRelicsCrest
-	goto PalletTown_Lab_EventScript_OakRelicsHoOh
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, PalletTown_Lab_EventScript_OakRelicsNeedElite20
+	goto PalletTown_Lab_EventScript_OakRelicsFinalResearch
 
 PalletTown_Lab_EventScript_OakRelicsStart::
 	msgbox PalletTown_Lab_Text_OakRelicsStart, MSGBOX_DEFAULT
@@ -81,12 +81,12 @@ PalletTown_Lab_EventScript_OakRelicsAlphoracle::
 	msgbox PalletTown_Lab_Text_OakRelicsAlphoracle, MSGBOX_DEFAULT
 	release
 	end
-PalletTown_Lab_EventScript_OakRelicsCrest::
-	msgbox PalletTown_Lab_Text_OakRelicsCrest, MSGBOX_DEFAULT
+PalletTown_Lab_EventScript_OakRelicsNeedElite20::
+	msgbox PalletTown_Lab_Text_OakRelicsNeedElite20, MSGBOX_DEFAULT
 	release
 	end
-PalletTown_Lab_EventScript_OakRelicsHoOh::
-	msgbox PalletTown_Lab_Text_OakRelicsHoOh, MSGBOX_DEFAULT
+PalletTown_Lab_EventScript_OakRelicsFinalResearch::
+	msgbox PalletTown_Lab_Text_OakRelicsFinalResearch, MSGBOX_DEFAULT
 	release
 	end
 PalletTown_Lab_EventScript_OakRelicsComplete::
@@ -108,8 +108,10 @@ PalletTown_Lab_Text_OakRelicsExplain:
 	.string "ancient powers in JOHTO.\p"
 	.string "Their names spell R-E-L-I-C-S.\n"
 	.string "Each holds an ancient voice.\p"
-	.string "Their combined RESONANCE may\n"
-	.string "awaken GOLDEN RELIC HO-OH.\p"
+	.string "Their combined resonance may\n"
+	.string "awaken the ULTIMATE ANCIENT\l"
+	.string "RELIC. I can't stop wondering\n"
+	.string "what kind of power it holds.\p"
 	.string "I'll help you track each clue.\n"
 	.string "Here's where to go next!$"
 PalletTown_Lab_Text_OakRelicsStart:
@@ -145,16 +147,17 @@ PalletTown_Lab_Text_OakRelicsAlphoracle:
 	.string "OAK: All six letters shine!\p"
 	.string "Visit the RUINS OF ALPH LAB\n"
 	.string "for the FIRST VOICE: ALPHORACLE.$"
-PalletTown_Lab_Text_OakRelicsCrest:
-	.string "OAK: The FIRST VOICE is awake!\p"
-	.string "Climb MT. SILVER and challenge\n"
-	.string "RED for the RAINBOW CREST.$"
-PalletTown_Lab_Text_OakRelicsHoOh:
-	.string "OAK: You have the CREST!\p"
-	.string "Go to MT. SILVER's summit.\n"
-	.string "I'll await your final test,\p"
-	.string "then we'll summon the GOLDEN\n"
-	.string "RELIC HO-OH together!$"
+PalletTown_Lab_Text_OakRelicsNeedElite20:
+	.string "OAK: The seven RELICS are ready,\n"
+	.string "but I still need to complete the\l"
+	.string "ELITE 20 challenge. Return to\n"
+	.string "the RUINS OF ALPH lab afterward.$"
+PalletTown_Lab_Text_OakRelicsFinalResearch:
+	.string "OAK: The seven RELICS and my\n"
+	.string "ELITE 20 victory are recorded.\p"
+	.string "Return to the RUINS OF ALPH LAB.\n"
+	.string "The scientist has the final\l"
+	.string "research directions.$"
 PalletTown_Lab_Text_OakRelicsComplete:
 	.string "OAK: The RELICS are united!\p"
 	.string "ELM and I are proud of you,\n"

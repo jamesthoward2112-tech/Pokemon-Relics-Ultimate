@@ -60,3 +60,12 @@
 
 ## Pre-1.0.x:
 - **[Version 0.9.0](docs/changelogs/0.9.x/0.9.0.md) - 🦕 Retroactive Version**
+# Job 18 — final story, Golden Ho-Oh and Ancient Guardian Dragonite
+
+- Oak's Elite 20 victory now reveals the Ultimate Ancient Relic without disclosing its location. The Ruins of Alph scientist directs the player to Mt Silver only after the final Elite 20 victory and all seven RELICS.
+- Replaced the Tin Tower Kimono Girls' former Ho-Oh event with a retryable, non-catchable Level 60 Ancient Guardian Dragonite fight. Imported the approved Elite Redux Mega Dragonite front/back/icon assets as a trainer-only visual form, with the requested Multiscale / Weakness Policy battle build.
+- Removed the Mt Silver Oak trainer battle. Oak's original dialogue now describes his obsession and failed attempt; he summons the only catchable Level 100 Golden Ho-Oh after the two story requirements. Defeat or escape permits retry; capture starts the existing Job 16 cinematic and Job 17 credits once.
+- Updated the Mt Silver shortcut sign to `Shortcut to Top`. Kept the six one-time E20 Master Balls, existing Golden Reign / Phoenix Soul implementation, Red and save flags.
+- Updated source regressions and the hosted clean-build workflow to include Job 18 checks and publish a clearly labelled Job 18 test release.
+
+**Known limitation:** no pre-Dragonite playthrough save was present in the accepted source or attached files. This change does not fabricate a `.sav`; a genuine mGBA-created pre-battle save remains outstanding. The hosted build and emulator results are recorded in the Job 18 ledger once the workflow completes.

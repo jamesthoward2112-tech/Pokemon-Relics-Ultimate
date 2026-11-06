@@ -6,19 +6,20 @@ ROOT = Path(__file__).resolve().parents[1]
 def source(path): return (ROOT / path).read_text()
 
 class E20FinaleStoryTests(unittest.TestCase):
-    def test_relic_oak_requires_e20_and_completed_six_clues(self):
+    def test_summit_requires_e20_and_seven_relics_without_crest(self):
         s=source("data/maps/MtSilver_SummitDay_hns/scripts.inc")
         block=s.split("MtSilver_SummitDay_EventScript_SyncRelicOak::",1)[1].split("MtSilver_SummitDay_EventScript_SyncOakDone::",1)[0]
-        for flag in ("FLAG_PRU_ELITE18_CLEARED","FLAG_PJR_RELIC_RAIKOU","FLAG_PJR_RELIC_ENTEI","FLAG_PJR_RELIC_LUGIA","FLAG_PJR_RELIC_UNOWN_I","FLAG_PJR_RELIC_CELEBI","FLAG_PJR_RELIC_SUICUNE","FLAG_PJR_RELIC_ALPHORACLE","FLAG_PJR_GOT_RAINBOW_CREST"):
+        for flag in ("FLAG_PRU_ELITE18_CLEARED","FLAG_PJR_RELIC_RAIKOU","FLAG_PJR_RELIC_ENTEI","FLAG_PJR_RELIC_LUGIA","FLAG_PJR_RELIC_UNOWN_I","FLAG_PJR_RELIC_CELEBI","FLAG_PJR_RELIC_SUICUNE","FLAG_PJR_RELIC_ALPHORACLE"):
             with self.subTest(flag=flag): self.assertIn("goto_if_unset "+flag,block)
-    def test_oak_battle_and_single_relic_capture(self):
+        self.assertNotIn("FLAG_PJR_GOT_RAINBOW_CREST",block)
+    def test_no_second_oak_battle_and_single_relic_capture(self):
         s=source("data/maps/MtSilver_SummitDay_hns/scripts.inc")
-        self.assertIn("TRAINER_PRU_E18_18_A_MASTER_HNS",s)
-        self.assertIn("seteventmon SPECIES_RELIC_HO_OH, 85",s)
-        self.assertIn("goto_if_set FLAG_PJR_RELIC_HO_OH, MtSilver_SummitDay_EventScript_OakEpilogue",s)
+        oak=s.split("MtSilver_SummitDay_EventScript_RelicOak::",1)[1].split("MtSilver_SummitDay_EventScript_OakSummon::",1)[0]
+        self.assertNotIn("trainerbattle",oak)
+        self.assertIn("seteventmon SPECIES_RELIC_HO_OH, 100",s)
         self.assertIn("setflag FLAG_PJR_RELIC_HO_OH",s)
         self.assertIn("setflag FLAG_PRU_RELIC_OAK_EPILOGUE_COMPLETE",s)
-        self.assertNotIn("special GameClear",s)
+        self.assertIn("special GameClear",s)
     def test_oak_overworld_and_original_tin_tower_stay_intact(self):
         import json
         o=json.loads(source("data/maps/MtSilver_SummitDay_hns/map.json"))
@@ -30,13 +31,13 @@ class E20FinaleStoryTests(unittest.TestCase):
         s=source("data/maps/MtSilver_SummitDay_hns/scripts.inc")
         defeated=s.split("MtSilver_SummitDay_EventScript_RedOnDefeat::",1)[1].split("MtSilver_SummitDay_EventScript_AwardCrest::",1)[0]
         sync=s.split("MtSilver_SummitDay_EventScript_SyncOakDone::",1)[1].split("MtSilver_SummitDay_EventScript_RelicOak::",1)[0]
-        epilogue=s.split("MtSilver_SummitDay_EventScript_OakEpilogue::",1)[1].split("MtSilver_SummitDay_EventScript_OakNeedCrest::",1)[0]
+        epilogue=s.split("MtSilver_SummitDay_EventScript_OakEpilogue::",1)[1].split("MtSilver_SummitDay_EventScript_OakNeedRequirements::",1)[0]
         pending=s.split("MtSilver_SummitDay_EventScript_CheckPendingCrest::",1)[1].split("MtSilver_SummitDay_EventScript_RedCrestStillPending::",1)[0]
         self.assertIn("setflag FLAG_HIDE_MTSILVER_RED",defeated)
         self.assertIn("goto_if_set FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_RedVictoryComplete",defeated)
         self.assertLess(defeated.index("goto_if_set FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_RedVictoryComplete"), defeated.index("clearflag FLAG_HIDE_MTSILVER_RED"))
-        self.assertNotIn("clearflag FLAG_HIDE_MTSILVER_RED",sync)
-        self.assertNotIn("clearflag FLAG_HIDE_MTSILVER_RED",epilogue)
+        self.assertIn("goto_if_set FLAG_DEFEATED_RED, MtSilver_SummitDay_EventScript_SyncOakReturn",sync)
+        self.assertIn("goto_if_set FLAG_DEFEATED_RED, MtSilver_SummitDay_EventScript_OakEpilogueDone",epilogue)
         self.assertIn("setflag FLAG_HIDE_MTSILVER_RED",pending)
         self.assertIn("removeobject LOCALID_MTSILVER_RED",pending)
         self.assertIn("goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_RedCrestStillPending",pending)
@@ -45,5 +46,5 @@ class E20FinaleStoryTests(unittest.TestCase):
         self.assertIn("giveitem ITEM_MASTER_BALL, 6",s)
         self.assertIn("giveitem ITEM_ANCIENT_STONE, 5",s)
         self.assertIn("call PRU_Elite20_StartFinale",s)
-        self.assertIn("goto_if_set FLAG_PRU_E20_CREDITS_SHOWN",s)
+        self.assertNotIn("special GameClear",s)
 if __name__=="__main__": unittest.main()

@@ -1,0 +1,18 @@
+{
+  "sprite_design": "Elite Redux Mega Dragonite (blue-crystal variant)",
+  "status": "user-approved art; not yet integrated into playable PRU ROM",
+  "source": "PJR_Elite_Redux_73_Native_Assets.zip / PJR_Redux_Asset_Bank",
+  "intended_unique_use": "Ancient Guardian Dragonite \u2014 Kimono Girls Tin Tower event",
+  "not_to_reassign_to": "Lance / trainers / regular wild Dragonite",
+  "files": {
+    "front.png": {
+      "sha256": "b35cd8dcb12cae133beb608144902172262fda90110e28b45008fbe2bbf84589"
+    },
+    "back.png": {
+      "sha256": "8b68818cd56def13e61beb9703db428151ad52fd4734098ca34a5ce35c560cd0"
+    },
+    "icon.png": {
+      "sha256": "332ab7c028bb6b51c84e282ebc39d16ccd82cad367e1156a83a1fd16253656c8"
+    }
+  }
+}

@@ -131,6 +131,17 @@ static const u16 sPRUGemlinOriginalIconPalette[16] =
     RGB(28, 30, 30), RGB(22, 6, 9), RGB(30, 9, 13), RGB(11, 7, 14)
 };
 
+// Exact icon palette from the user-approved Elite Redux Mega Dragonite art.
+// This palette and icon index are reserved for the non-catchable Tin Tower
+// Ancient Guardian, not ordinary Dragonite or another trainer's Pokémon.
+static const u16 sPRUAncientGuardianDragoniteIconPalette[16] =
+{
+    RGB(12, 19, 16), RGB(16, 16, 14), RGB(23, 23, 23), RGB(31, 31, 31),
+    RGB(23, 20, 8), RGB(30, 30, 5), RGB(26, 12, 8), RGB(30, 18, 5),
+    RGB(17, 15, 31), RGB(12, 9, 25), RGB(29, 14, 19), RGB(31, 22, 20),
+    RGB(20, 24, 31), RGB(13, 21, 19), RGB(12, 12, 11), RGB(8, 8, 8),
+};
+
 const struct SpritePalette gMonIconPaletteTable[] =
 {
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
@@ -150,6 +161,7 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUAlphoracleIconPalette, POKE_ICON_BASE_PAL_TAG + 14 },
     { sPRUMewduoIconPalette, POKE_ICON_BASE_PAL_TAG + 15 },
     { sPRUGemlinOriginalIconPalette, POKE_ICON_BASE_PAL_TAG + 16 },
+    { sPRUAncientGuardianDragoniteIconPalette, POKE_ICON_BASE_PAL_TAG + 17 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -271,6 +283,8 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 9; // Dark Skarmet palette, avoids the PC's reserved palette #15.
     if (species == SPECIES_MEWSION)
         return 2; // Share a safe PC palette; tag 15 is used by the storage UI.
+    if (species == SPECIES_DRAGONITE_RELIC)
+        return 17; // Exact blue-crystal guardian icon palette.
     if (species == SPECIES_ARTICUNO)
         return 11;
     if (species == SPECIES_ZAPDOS)

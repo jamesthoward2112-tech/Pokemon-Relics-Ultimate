@@ -1015,6 +1015,7 @@ PRU_Elite18_Gauntlet::
 	@ receives Oak and Elm's story reveal (including repeat victories).
 	msgbox PRU_Elite20_Text_ElmRelics, MSGBOX_DEFAULT
 	msgbox PRU_Elite20_Text_OakRelics, MSGBOX_DEFAULT
+	msgbox PRU_Elite20_Text_GoldenSky, MSGBOX_DEFAULT
 	msgbox PRU_Elite20_Text_RuinsDirections, MSGBOX_DEFAULT
 	call PRU_Elite20_ClaimRewards
 	call PRU_Elite20_StartFinale
@@ -1022,24 +1023,16 @@ PRU_Elite18_Gauntlet::
 	end
 
 PRU_Elite20_StartFinale::
-	goto_if_set FLAG_PRU_E20_CREDITS_SHOWN, PRU_Elite20_StartFinale_Return
-	goto_if_unset FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite20_StartFinale_Return
-	msgbox PRU_Elite20_Text_FinalCelebration, MSGBOX_DEFAULT
-	msgbox PRU_Elite20_Text_GoldenSky, MSGBOX_DEFAULT
-	setflag FLAG_PRU_E20_CREDITS_SHOWN
-	setflag FLAG_PRU_E20_CREDITS_PENDING
-	special GameClear
-	waitstate
-PRU_Elite20_StartFinale_Return::
 	return
 
-@ The actual Golden Ho-Oh flyby is rendered inside the E20-only credits;
-@ never introduce an extra legendary through this Dojo script.
 PRU_Elite20_Text_GoldenSky:
-	.string "The sky glows with ancient\n"
-	.string "GOLDEN wings...\p"
-	.string "The RELICS have awakened.\n"
-	.string "Your journey is not over!$"
+	.string "OAK: Seven RELICS may awaken\n"
+	.string "the ULTIMATE ANCIENT RELIC.\p"
+	.string "Its power exceeds anything\n"
+	.string "I've ever studied. I can't stop\p"
+	.string "thinking about its strength.\p"
+	.string "ELM: Let the research guide us,\n"
+	.string "Professor. We mustn't rush it.$"
 
 PRU_Elite20_Text_FinalCelebration:
 	.string "OAK: You defeated the ELITE 20!\p"
@@ -1467,10 +1460,15 @@ PRU_Elite20_Text_ElmRelics:
 	.string "Follow R - E - L - I - C - S.\n"
 	.string "The RUINS OF ALPH hold clues.$"
 PRU_Elite20_Text_OakRelics:
-	.string "OAK: Their combined resonance\n"
-	.string "may awaken a GOLDEN RELIC HO-OH.\p"
-	.string "When the RELICS quest is done,\n"
-	.string "seek me atop MT. SILVER.\p"
+	.string "OAK: The RELICS point to an\n"
+	.string "Ultimate Ancient Relic.\p"
+	.string "Its power must be extraordinary.\n"
+	.string "Only the worthiest trainer could\p"
+	.string "hope to summon it.\p"
+	.string "I find myself wondering about it\n"
+	.string "more than I should...$"
+
+PRU_Elite20_Text_OakRelicsUnused:
 	.string "We've also prepared a prize\n"
 	.string "worthy of an ELITE 20 CHAMPION!$"
 PRU_Elite20_Text_RuinsDirections:

@@ -261,8 +261,13 @@ const u32 gMonFrontPic_GyaradosRelic[] = INCBIN_U32("graphics/pokemon/pjr_e4/gya
 const u16 gMonPalette_GyaradosRelic[] = INCBIN_U16("graphics/pokemon/pjr_e4/gyarados_relic/normal.gbapal");
 const u16 gMonShinyPalette_GyaradosRelic[] = INCBIN_U16("graphics/pokemon/pjr_e4/gyarados_relic/shiny.gbapal");
 const u32 gMonFrontPic_DragoniteRelic[] = INCBIN_U32("graphics/pokemon/pjr_e4/dragonite_relic/front.4bpp.smol");
+const u32 gMonBackPic_DragoniteGuardian[] = INCBIN_U32("graphics/pokemon/ancient_guardian_dragonite/back.4bpp.smol");
+const u32 gMonFrontPic_DragoniteGuardian[] = INCBIN_U32("graphics/pokemon/ancient_guardian_dragonite/front.4bpp.smol");
+const u16 gMonPalette_DragoniteGuardian[] = INCBIN_U16("graphics/pokemon/ancient_guardian_dragonite/normal.gbapal");
+const u16 gMonShinyPalette_DragoniteGuardian[] = INCBIN_U16("graphics/pokemon/ancient_guardian_dragonite/shiny.gbapal");
 const u16 gMonPalette_DragoniteRelic[] = INCBIN_U16("graphics/pokemon/pjr_e4/dragonite_relic/normal.gbapal");
 const u16 gMonShinyPalette_DragoniteRelic[] = INCBIN_U16("graphics/pokemon/pjr_e4/dragonite_relic/shiny.gbapal");
+const u8 gMonIcon_DragoniteGuardian[] = INCBIN_U8("graphics/pokemon/ancient_guardian_dragonite/icon.4bpp");
 
 
 // Jessie & James final Tin Tower visual forms.

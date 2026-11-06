@@ -10,7 +10,6 @@ RuinsOfAlph_Lab_EventScript_Scientist1::
 	lock
 	faceplayer
 	goto_if_unset FLAG_IS_CHAMPION, RuinsOfAlph_Lab_EventScript_Scientist1Standard
-	goto_if_unset FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_Lab_EventScript_Scientist1Standard
 	goto_if_unset FLAG_PJR_RELIC_RAIKOU, RuinsOfAlph_Lab_EventScript_IntroduceRelics
 	goto_if_unset FLAG_PJR_RELIC_ENTEI, RuinsOfAlph_Lab_EventScript_HintEntei
 	goto_if_unset FLAG_PJR_RELIC_LUGIA, RuinsOfAlph_Lab_EventScript_HintLugia
@@ -20,15 +19,15 @@ RuinsOfAlph_Lab_EventScript_Scientist1::
 	goto_if_unset FLAG_PJR_RELIC_CELEBI, RuinsOfAlph_Lab_EventScript_HintCelebi
 	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_Lab_EventScript_HintSuicune
 	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, RuinsOfAlph_Lab_EventScript_HintAlphoracle
-	@ PRU: after ALPHORACLE, guide by actual crest/Ho-Oh capture flags.
+	@ The final route requires the seventh RELIC and the completed Elite 20.
 	goto_if_set FLAG_PJR_RELIC_HO_OH, RuinsOfAlph_Lab_EventScript_RelicsFullyComplete
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, RuinsOfAlph_Lab_EventScript_RelicNeedsCrest
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_Lab_EventScript_RelicNeedsElite20
 	msgbox RuinsOfAlph_Lab_Text_RelicsComplete, MSGBOX_DEFAULT
 	release
 	end
 
-RuinsOfAlph_Lab_EventScript_RelicNeedsCrest::
-	msgbox RuinsOfAlph_Lab_Text_AlphoracleCaughtNeedsCrest, MSGBOX_DEFAULT
+RuinsOfAlph_Lab_EventScript_RelicNeedsElite20::
+	msgbox RuinsOfAlph_Lab_Text_RelicNeedsElite20, MSGBOX_DEFAULT
 	release
 	end
 
@@ -262,14 +261,15 @@ RuinsOfAlph_Lab_EventScript_RelicAlphoracle::
 
 RuinsOfAlph_Lab_EventScript_RelicAlphoracleCaught::
 	setflag FLAG_PJR_RELIC_ALPHORACLE
-	goto_if_set FLAG_PJR_GOT_RAINBOW_CREST, RuinsOfAlph_Lab_EventScript_UnlockRelicHoOh
-	msgbox RuinsOfAlph_Lab_Text_AlphoracleCaughtNeedsCrest, MSGBOX_DEFAULT
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_Lab_EventScript_RelicNeedsElite20
+	msgbox RuinsOfAlph_Lab_Text_RelicsComplete, MSGBOX_DEFAULT
 	release
 	end
 
 RuinsOfAlph_Lab_EventScript_UnlockRelicHoOh::
-	setvar VAR_COMPLETED_HO_OH, 4
-	clearflag FLAG_HIDE_HO_OH
+	@ Keep the old entry point harmless for older event links. It no longer
+	@ unlocks a Tin Tower Ho-Oh or gates Golden Ho-Oh at Mt. Silver.
+	return
 	msgbox RuinsOfAlph_Lab_Text_AlphoracleCaught, MSGBOX_DEFAULT
 	release
 	end
@@ -352,28 +352,33 @@ RuinsOfAlph_Lab_Text_RelicDecline:
 
 RuinsOfAlph_Lab_Text_AlphoracleCaughtNeedsCrest:
 	.string "ALPHORACLE accepts your bond.\p"
-	.string "The FIRST VOICE is awake, but the\n"
-	.string "final rainbow remains sealed.\p"
-	.string "A champion waits on MT. SILVER.$"
+	.string "The seventh RELIC is recorded.\n"
+	.string "The ELITE 20 challenge remains.$"
 
 RuinsOfAlph_Lab_Text_AlphoracleCaught:
 	.string "ALPHORACLE accepts your bond.\p"
-	.string "The ANCIENT RAINBOW CREST answers\n"
-	.string "the awakened network.\p"
-	.string "A final resonance answers from\n"
-	.string "the TIN TOWER roof...$"
+	.string "The seventh RELIC is recorded.\p"
+	.string "Return here after completing the\n"
+	.string "ELITE 20 for the final signal.$"
 
 RuinsOfAlph_Lab_Text_RelicsComplete:
-	.string "All six RELICS and the FIRST VOICE\n"
-	.string "are recorded.\p"
-	.string "The CREST is reacting!\p"
-	.string "Seek the ULTIMATE RELIC at\n"
-	.string "the top of TIN TOWER.$"
+	.string "The seven RELICS are united.\n"
+	.string "OAK has defeated the ELITE 20.\p"
+	.string "Both conditions are met.\p"
+	.string "The ULTIMATE ANCIENT RELIC waits\n"
+	.string "at MT. SILVER's summit.\p"
+	.string "Go there, {PLAYER}. It awaits you.$"
+
+RuinsOfAlph_Lab_Text_RelicNeedsElite20:
+	.string "The seven RELICS are united, but\n"
+	.string "OAK still must complete the\p"
+	.string "ELITE 20 challenge.\p"
+	.string "Return after his final battle.\n"
+	.string "Then we can trace the last signal.$"
 
 RuinsOfAlph_Lab_Text_RelicsFullyComplete:
-	.string "All seven signals are recorded.\p"
-	.string "Even HO-OH has answered the\n"
-	.string "ANCIENT RAINBOW CREST!\p"
+	.string "The ULTIMATE RELIC has answered\n"
+	.string "your call. What a discovery!\p"
 	.string "The RELIC network is stable.\n"
 	.string "Our research can begin anew.$"
 

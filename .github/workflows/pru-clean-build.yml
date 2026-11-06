@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105, fix/pru-job13-fortotoise-icon-20261105, fix/pru-job14-baby-sprites-20261105, fix/pru-job15-pc-icon-palette-collisions-20261105, feat/pru-job16-golden-hooh-cinematic-20261106, feat/pru-job17-custom-credits-20261106]
+    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105, fix/pru-job13-fortotoise-icon-20261105, fix/pru-job14-baby-sprites-20261105, fix/pru-job15-pc-icon-palette-collisions-20261105, feat/pru-job16-golden-hooh-cinematic-20261106, feat/pru-job17-custom-credits-20261106, feat/pru-job18-final-story-dragonite-20261106]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -181,6 +181,15 @@ jobs:
           python3 tools/pru/check_job8_pokedex.py
           python3 tools/pru/check_job9_trainer_forfeit.py
           python3 tools/pru/check_golden_hooh.py
+          python3 test/test_pru_job18_final_story.py
+          python3 test/test_pru_e20_finale_story.py
+          python3 - <<'PY'
+          import os, subprocess, sys
+          from pathlib import Path
+          for path in sorted(Path('test').glob('test_pru_e20_*.py')):
+              subprocess.run([sys.executable, str(path)], check=True,
+                             env={**os.environ, 'PYTHONPATH': '.'})
+          PY
           python3 test/test_pru_job16_cinematic.py
           python3 test/test_pru_job17_custom_credits.py
           python3 test/test_pru_development_debug.py
@@ -340,7 +349,7 @@ jobs:
             pru-rom.sha256
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' || github.ref == 'refs/heads/fix/pru-job11-text-20261105' || github.ref == 'refs/heads/fix/pru-job12-celebi-20261105' || github.ref == 'refs/heads/fix/pru-job13-fortotoise-icon-20261105' || github.ref == 'refs/heads/fix/pru-job14-baby-sprites-20261105' || github.ref == 'refs/heads/fix/pru-job15-pc-icon-palette-collisions-20261105' || github.ref == 'refs/heads/feat/pru-job16-golden-hooh-cinematic-20261106' || github.ref == 'refs/heads/feat/pru-job17-custom-credits-20261106')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
+        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' || github.ref == 'refs/heads/fix/pru-job11-text-20261105' || github.ref == 'refs/heads/fix/pru-job12-celebi-20261105' || github.ref == 'refs/heads/fix/pru-job13-fortotoise-icon-20261105' || github.ref == 'refs/heads/fix/pru-job14-baby-sprites-20261105' || github.ref == 'refs/heads/fix/pru-job15-pc-icon-palette-collisions-20261105' || github.ref == 'refs/heads/feat/pru-job16-golden-hooh-cinematic-20261106' || github.ref == 'refs/heads/feat/pru-job17-custom-credits-20261106' || github.ref == 'refs/heads/feat/pru-job18-final-story-dragonite-20261106')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -357,7 +366,13 @@ jobs:
             fi
           fi
           tag="pru-build-$(git rev-parse --short=10 HEAD)"
-          file="Pokemon-Relics-Ultimate-${GITHUB_SHA:0:10}.gba"
+          if test "$GITHUB_REF" = "refs/heads/feat/pru-job18-final-story-dragonite-20261106"; then
+            file="Pokemon-Relics-Ultimate-Job18-${GITHUB_SHA:0:10}.gba"
+            release_title="Pokémon Relics Ultimate — Job 18 Test Release"
+          else
+            file="Pokemon-Relics-Ultimate-${GITHUB_SHA:0:10}.gba"
+            release_title="Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}"
+          fi
           cp pokehns.gba "$RUNNER_TEMP/$file"
           cp pokehns.gba "$RUNNER_TEMP/Pru.gba"
           cp assets/test_saves/Pru.sav "$RUNNER_TEMP/Pru.sav"
@@ -436,8 +451,8 @@ jobs:
             gh release create "$tag" "$RUNNER_TEMP/$file" "$RUNNER_TEMP/Pru.gba" "$RUNNER_TEMP/Pru.sav" "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav" "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" \
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
-              --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Job 15 targeted PC icon rendering fix on accepted Job 14. Gemlin party/PC palette tag collision corrected by moving PC interface palette tags out of reserved custom icon range and removing needless Swamplith palette preload. Preserves original purple Gemlin sprite, Fortotoise PR72 and baby Scarabub artwork, 450 species, save compatibility and gameplay. Audits exactly 15 video-selected PC icons, flags nine serious source-vs-runtime colour mismatches and five art-framing issues for subsequent individually approved fixes. Does NOT automatically recolour or resize other Pokemon. Automated checks and mGBA boot, manual visual QA still required." \
+              --title "$release_title" \
+              --notes "Job 18 test build. Implements the revised Elite 20 / Alph Lab / Mt Silver story, the unique non-catchable Ancient Guardian Dragonite at Tin Tower using the exact approved Elite Redux Mega Dragonite sprites, and Golden Ho-Oh's capture-triggered Job 16 cinematic and Job 17 custom credits. Preserves the sole catchable level 100 Golden Ho-Oh, the six one-time E20 Master Balls, prior saves and the 450-Pokemon roster. Canonical source regressions, clean 32 MiB build, mGBA boot and battle-engine checks are reported in the workflow run. Limitation: this source checkout does not contain an existing pre-Dragonite progressed save; the requested dedicated .sav is not included rather than distributing a fabricated or unverified save. Ceremony/ending interactions still require gameplay QA." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
