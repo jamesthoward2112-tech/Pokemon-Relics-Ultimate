@@ -19,10 +19,15 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
         for tab in ("TAB_NUZLOCKE", "TAB_RANDOMIZER", "TAB_DIFFICULTY", "TAB_CHALLENGES"):
             self.assertIn(tab, source("src/challenge_menu.c"))
 
-    def test_debug_is_inaccessible(self):
+    def test_debug_enabled_for_playtesting_but_disabled_for_release(self):
         cfg = source("include/config/debug.h")
-        for setting in ("DEBUG_OVERWORLD_MENU", "DEBUG_BATTLE_MENU", "DEBUG_POKEMON_SPRITE_VISUALIZER"):
-            self.assertRegex(cfg, r"#define\s+" + setting + r"\s+FALSE")
+        release = source("include/constants/global.h")
+        # Development ROMs use battle/overworld debug until Master Alpha.
+        for setting in ("DEBUG_OVERWORLD_MENU", "DEBUG_BATTLE_MENU"):
+            self.assertRegex(cfg, r"#define\s+" + setting + r"\s+DISABLED_ON_RELEASE")
+        self.assertRegex(cfg, r"#define\s+DEBUG_POKEMON_SPRITE_VISUALIZER\s+FALSE")
+        self.assertIn("#define DISABLED_ON_RELEASE FALSE", release)
+        self.assertIn("#define DISABLED_ON_RELEASE TRUE", release)
 
     def test_rayquaza_shrine_dialogue_uses_assembler_escapes(self):
         script = source("data/maps/DragonsDen_StormShrine_hns/scripts.inc")
