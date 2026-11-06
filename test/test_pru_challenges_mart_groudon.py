@@ -129,10 +129,10 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
         for flag in (
             "FLAG_PJR_RELIC_RAIKOU", "FLAG_PJR_RELIC_ENTEI", "FLAG_PJR_RELIC_LUGIA",
             "FLAG_PJR_RELIC_UNOWN_I", "FLAG_PJR_RELIC_CELEBI", "FLAG_PJR_RELIC_SUICUNE",
-            "FLAG_PJR_RELIC_ALPHORACLE", "FLAG_PJR_GOT_RAINBOW_CREST",
-            "FLAG_PJR_RELIC_HO_OH",
+            "FLAG_PJR_RELIC_ALPHORACLE", "FLAG_PJR_RELIC_HO_OH",
         ):
             self.assertIn(flag, oak)
+        self.assertNotIn("FLAG_PJR_GOT_RAINBOW_CREST", oak)
         for location in ("VIOLET CITY", "ROUTE 32", "RUINS OF ALPH", "RESEARCH LAB", "RAIKOU"):
             self.assertIn(location, oak)
         # The final Oak/Elm round now tells everyone where the quest starts
@@ -144,7 +144,8 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
         self.assertLess(cleared.index("msgbox PRU_Elite20_Text_RuinsDirections"),
                         cleared.index("call PRU_Elite20_ClaimRewards"))
         self.assertIn("goto_if_set FLAG_PRU_E20_REWARD_CLAIMED", e20)
-        self.assertIn("goto_if_set FLAG_PRU_E20_CREDITS_SHOWN", e20)
+        self.assertNotIn("call PRU_Elite20_StartFinale", cleared)
+        self.assertIn("FLAG_PRU_HOOH_FINALE_COMPLETE", e20)
         self.assertNotIn(r'\\n"', oak)
         self.assertNotIn(r'\\p"', oak)
 
