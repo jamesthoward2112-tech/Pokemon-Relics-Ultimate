@@ -9,7 +9,7 @@ graphics = (ROOT / "src/data/graphics/pjr.h").read_text()
 unresolved = {
     "ALAKAZAM_RELIC", "SLOWKING_RELIC", "BEEDRILL_RELIC", "CROBAT_RELIC",
     "HITMONCHAN_RELIC", "HITMONLEE_RELIC", "MACHAMP_RELIC", "HOUNDOOM_RELIC",
-    "GYARADOS_RELIC", "DRAGONITE_RELIC",
+    "GYARADOS_RELIC",
 }
 fixed = {
     "ASUDEM_JJ": "AsudemJJ", "NIDOGOD_JJ": "NidogodJJ",
@@ -37,6 +37,13 @@ for name, slug in {
 }.items():
     path = ROOT / "graphics/pokemon" / slug / "back.png"
     assert path.is_file(), path
+
+# Job 18 installs the supplied, paired blue-crystal Guardian Dragonite front
+# and back. It is intentionally distinct from the generic fallback forms.
+guardian = re.search(r"PJR_E4_VISUAL_FORM\(SPECIES_DRAGONITE_RELIC,([^\n]+)", species)
+assert guardian and "gMonFrontPic_DragoniteGuardian" in guardian.group(1)
+assert "gMonBackPic_DragoniteGuardian" in guardian.group(1)
+assert "gMonBackPic_DragoniteGuardian[]" in graphics
 
 assert ".backPic = back," in species
 print("PASS: all four Jessie & James visual forms use their own distinct back assets")
