@@ -380,7 +380,7 @@
     .catchRate = 60, .expYield = 173,
     .genderRatio = PERCENT_FEMALE(50), .eggCycles = 20, .friendship = STANDARD_FRIENDSHIP,
     .growthRate = GROWTH_MEDIUM_FAST, .eggGroups = MON_EGG_GROUPS(EGG_GROUP_AMORPHOUS),
-    .abilities = { ABILITY_PLUS, ABILITY_MINUS, ABILITY_NONE }, .bodyColor = BODY_COLOR_BLACK,
+    .abilities = { ABILITY_LEVITATE, ABILITY_LEVITATE, ABILITY_NONE }, .bodyColor = BODY_COLOR_BLACK,
     .speciesName = _("Frytning"), .cryId = CRY_WEEZING, .natDexNum = NATIONAL_DEX_WEEZING,
     .categoryName = _("Storm"), .height = 12, .weight = 95,
     .description = COMPOUND_STRING("Storm charge crackles through the dark gases\nsealed inside its body."),
