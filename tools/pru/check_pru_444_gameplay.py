@@ -109,7 +109,10 @@ for path in sorted((ROOT / "data/maps").glob("*_hns/scripts.inc")):
                 # intentional quest-only special form; reject it everywhere else.
                 relic_summit = path.name == "scripts.inc" and path.parent.name == "MtSilver_SummitDay_hns"
                 relic_command = line.lstrip().startswith(("playmoncry SPECIES_RELIC_HO_OH", "seteventmon SPECIES_RELIC_HO_OH"))
-                if not (species == "SPECIES_RELIC_HO_OH" and relic_summit and relic_command):
+                guardian_tower = path.name == "scripts.inc" and path.parent.name == "TinTower_RoofDay_hns"
+                guardian_command = line.lstrip().startswith(("playmoncry SPECIES_DRAGONITE_RELIC", "seteventmon SPECIES_DRAGONITE_RELIC"))
+                if not ((species == "SPECIES_RELIC_HO_OH" and relic_summit and relic_command)
+                        or (species == "SPECIES_DRAGONITE_RELIC" and guardian_tower and guardian_command)):
                     errors.append(f"{path.relative_to(ROOT)}:{line_number}: forbidden scripted Pokémon {species}")
 
 evolution = (ROOT / "src/pokemon.c").read_text(encoding="utf-8")
