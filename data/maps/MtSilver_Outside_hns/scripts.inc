@@ -28,4 +28,4 @@ MtSilver_Outside_Text_Sign:
 	.string "MT. SILVER\n"
 	.string "A hidden trail skips the\n"
 	.string "long climb.\p"
-	.string "Take the shortcut to RED?$"
+	.string "Shortcut to the top?$"

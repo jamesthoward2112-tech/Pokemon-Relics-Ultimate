@@ -6249,7 +6249,8 @@ static bool32 IsBattlerUngroundedByAbilityItemOrEffect(enum BattlerId battler, e
         return TRUE;
     if (holdEffect == HOLD_EFFECT_AIR_BALLOON)
         return TRUE;
-    if (ability == ABILITY_LEVITATE)
+    // Phoenix Soul's Ho-Oh remains airborne despite its Relic Fire/Fairy typing.
+    if (ability == ABILITY_LEVITATE || ability == ABILITY_PHOENIX_SOUL)
         return TRUE;
     return FALSE;
 }
@@ -8732,12 +8733,12 @@ static inline uq4_12_t CalcTypeEffectivenessMultiplierInternal(struct BattleCont
         && !(ctx->holdEffectDef == HOLD_EFFECT_RING_TARGET && IS_BATTLER_OF_TYPE(ctx->battlerDef, TYPE_FLYING) && !IsBattlerUngroundedByAbilityItemOrEffect(ctx->battlerDef, ctx->abilityDef, ctx->holdEffectDef)))
     {
         modifier = UQ_4_12(0.0);
-        if (ctx->updateFlags && ctx->abilityDef == ABILITY_LEVITATE)
+        if (ctx->updateFlags && (ctx->abilityDef == ABILITY_LEVITATE || ctx->abilityDef == ABILITY_PHOENIX_SOUL))
         {
             gBattleStruct->moveResultFlags[ctx->battlerDef] |= (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE);
-            gLastUsedAbility = ABILITY_LEVITATE;
+            gLastUsedAbility = ctx->abilityDef;
             ctx->abilityBlocked = TRUE;
-            RecordAbilityBattle(ctx->battlerDef, ABILITY_LEVITATE);
+            RecordAbilityBattle(ctx->battlerDef, ctx->abilityDef);
         }
         else if (ctx->holdEffectDef == HOLD_EFFECT_AIR_BALLOON)
         {
