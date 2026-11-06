@@ -39,7 +39,8 @@ for donor in ("POKEMON RELIC LEGACY", "POKEMON JOHTO RELICS", "POKEMON KANTO REL
               "POKEMON HOENN RELICS", "POKEMON INFINITY", "POKEMON INSURGENCE",
               "POKEMON ELITE REDUX", "POKEMON XENOVERSE", "POKEMON SHINING VICTORY",
               "POKEMON ODYSSEY II", "POKEMON TOURMALINE", "POKEMON ALTERED",
-              "TRE 2026 SPRITE BANK", "POKEMON RHYTHM", "POKEMON HOENN'S LAST WISH"):
+              "TRE 2026 SPRITE BANK", "POKEMON RHYTHM", "POKEMON HOENN'S LAST WISH",
+              "POKEMON KANTO ULTIMATE V2"):
     assert donor in lines, f"Missing documented sprite donor: {donor}"
 assert "E20_TOTAL_PAGE_COUNT" in pru
 assert "test/test_pru_job17_custom_credits.py" in workflow
