@@ -360,12 +360,24 @@ jobs:
               exit 0
             fi
           fi
-          tag="pru-build-$(git rev-parse --short=10 HEAD)"
+          if test "$GITHUB_REF" = "refs/heads/feat/pru-job18-20261106"; then
+            tag="pru-job18-test-$(git rev-parse --short=10 HEAD)"
+            release_title="Pokémon Relics Ultimate — Job 18 Test Release"
+            release_notes="Job 18 test build from accepted Job 17 source. Includes the revised Elite 20 / Alph Lab / Mt Silver story, the Golden Ho-Oh ending and approved Ancient Guardian Dragonite assets. Automated source checks and clean 32 MiB build run with mGBA boot validation. The dedicated PRU_Job18_Before_Ancient_Guardian.sav is not yet available; do not use the unrelated QA save assets as a substitute."
+          else
+            tag="pru-build-$(git rev-parse --short=10 HEAD)"
+            release_title="Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}"
+            release_notes="Job build from the corresponding PRU development source."
+          fi
           file="Pokemon-Relics-Ultimate-${GITHUB_SHA:0:10}.gba"
           cp pokehns.gba "$RUNNER_TEMP/$file"
           cp pokehns.gba "$RUNNER_TEMP/Pru.gba"
-          cp assets/test_saves/Pru.sav "$RUNNER_TEMP/Pru.sav"
-          cp assets/test_saves/PRU-70-Sprite-Inspection.sav "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav"
+          release_assets=("$RUNNER_TEMP/$file" "$RUNNER_TEMP/Pru.gba")
+          if test "$GITHUB_REF" != "refs/heads/feat/pru-job18-20261106"; then
+            cp assets/test_saves/Pru.sav "$RUNNER_TEMP/Pru.sav"
+            cp assets/test_saves/PRU-70-Sprite-Inspection.sav "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav"
+            release_assets+=("$RUNNER_TEMP/Pru.sav" "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav")
+          fi
           zip -qr "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" PRU-QA/sprite-audit-70.json PRU-QA/sprite-audit-70.md PRU-QA/compiled-sprite-audit-70.json PRU-QA/compiled-sprite-audit-70.md PRU-QA/contact-sheets PRU-QA/video-review
           zip -q "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" \
             assets/pru_final_polish/fortotoise/ASSET_MANIFEST.md \
@@ -435,30 +447,36 @@ jobs:
                       zf.write(path, f"video-review/battle/{species}/{side}.png")
           PY
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release upload "$tag" "$RUNNER_TEMP/$file" "$RUNNER_TEMP/Pru.gba" "$RUNNER_TEMP/Pru.sav" "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav" "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" --repo "$GITHUB_REPOSITORY" --clobber
+            gh release upload "$tag" "${release_assets[@]}" "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" --repo "$GITHUB_REPOSITORY" --clobber
           else
-            gh release create "$tag" "$RUNNER_TEMP/$file" "$RUNNER_TEMP/Pru.gba" "$RUNNER_TEMP/Pru.sav" "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav" "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" \
+            gh release create "$tag" "${release_assets[@]}" "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" \
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
-              --title "Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}" \
-              --notes "Job 15 targeted PC icon rendering fix on accepted Job 14. Gemlin party/PC palette tag collision corrected by moving PC interface palette tags out of reserved custom icon range and removing needless Swamplith palette preload. Preserves original purple Gemlin sprite, Fortotoise PR72 and baby Scarabub artwork, 450 species, save compatibility and gameplay. Audits exactly 15 video-selected PC icons, flags nine serious source-vs-runtime colour mismatches and five art-framing issues for subsequent individually approved fixes. Does NOT automatically recolour or resize other Pokemon. Automated checks and mGBA boot, manual visual QA still required." \
+              --title "$release_title" \
+              --notes "$release_notes" \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
             --jq '.assets[].name' | grep -Fx "$file"
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
             --jq '.assets[].name' | grep -Fx 'Pru.gba'
-          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
-            --jq '.assets[].name' | grep -Fx 'Pru.sav'
-          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
-            --jq '.assets[].name' | grep -Fx 'PRU-70-Sprite-Inspection.sav'
+          if test "$GITHUB_REF" != "refs/heads/feat/pru-job18-20261106"; then
+            gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fx 'Pru.sav'
+            gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fx 'PRU-70-Sprite-Inspection.sav'
+          fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
             --jq '.assets[].name' | grep -Fx 'PRU-Sprite-QA-Reports.zip'
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
             --jq '.assets[].name' | grep -Fx 'PRU-Sprite-Corrections.zip'
           echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/Pru.gba"
-          echo "DIRECT_SAV=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/Pru.sav"
-          echo "INSPECTION_SAV=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/PRU-70-Sprite-Inspection.sav"
+          if test -f "$RUNNER_TEMP/PRU_Job18_Before_Ancient_Guardian.sav"; then
+            gh release upload "$tag" "$RUNNER_TEMP/PRU_Job18_Before_Ancient_Guardian.sav" --repo "$GITHUB_REPOSITORY" --clobber
+            echo "DIRECT_SAV=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/PRU_Job18_Before_Ancient_Guardian.sav"
+          fi
+          if test "$GITHUB_REF" != "refs/heads/feat/pru-job18-20261106"; then
+            echo "DIRECT_SAV=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/Pru.sav"
+            echo "INSPECTION_SAV=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/PRU-70-Sprite-Inspection.sav"
+          fi
           echo "SPRITE_QA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/PRU-Sprite-QA-Reports.zip"
           echo "SPRITE_CORRECTIONS=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/PRU-Sprite-Corrections.zip"
 
