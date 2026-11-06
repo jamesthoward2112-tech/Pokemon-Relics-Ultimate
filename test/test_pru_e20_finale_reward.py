@@ -23,7 +23,7 @@ class Elite20FinaleRewardTests(unittest.TestCase):
         self.assertRegex(FLAGS, r"#define FLAG_PRU_E20_REWARD_CLAIMED\s+0x947\b")
 
     def test_full_gauntlet_sets_existing_clear_flag_then_claims_prize(self):
-        script = section("PRU_Elite18_Gauntlet")
+        script = SCRIPTS.split("PRU_Elite18_Gauntlet::", 1)[1].split("PRU_Elite18_ChoosePair::", 1)[0]
         self.assertLess(script.index("setflag FLAG_PRU_ELITE18_CLEARED"), script.index("call PRU_Elite20_ClaimRewards"))
 
     def test_old_completed_save_can_claim_without_replaying_all_twenty(self):
