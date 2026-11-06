@@ -954,8 +954,6 @@ PRU_Elite18_Steward::
 
 PRU_Elite20_Steward_Cleared::
 	goto_if_unset FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite20_Steward_PendingReward
-	@ Saves that claimed the prize in an earlier build still get their finale.
-	call PRU_Elite20_StartFinale
 	goto PRU_Elite18_AskChallenge
 
 PRU_Elite20_Steward_PendingReward::
@@ -963,7 +961,6 @@ PRU_Elite20_Steward_PendingReward::
 	@ Oak's repeatable RELICS explanation is also available in his lab.
 	call PRU_Elite20_ClaimRewards
 	goto_if_unset FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite18_Exit
-	call PRU_Elite20_StartFinale
 	goto PRU_Elite18_AskChallenge
 
 PRU_Elite18_AskChallenge::
@@ -1011,22 +1008,20 @@ PRU_Elite18_Gauntlet::
 	setflag FLAG_PRU_ELITE18_CLEARED
 	special HealPlayerParty
 	msgbox PRU_Elite18_Text_Cleared, MSGBOX_DEFAULT
-	@ Independent of rewards / credits flags, so every E20 gauntlet win
-	@ receives Oak and Elm's story reveal (including repeat victories).
+	@ Oak reveals the relic's existence, but not its location. The existing
+	@ rewards remain one-time; the finale now waits for Golden Ho-Oh's capture.
 	msgbox PRU_Elite20_Text_ElmRelics, MSGBOX_DEFAULT
 	msgbox PRU_Elite20_Text_OakRelics, MSGBOX_DEFAULT
 	msgbox PRU_Elite20_Text_RuinsDirections, MSGBOX_DEFAULT
 	call PRU_Elite20_ClaimRewards
-	call PRU_Elite20_StartFinale
 	release
 	end
 
 PRU_Elite20_StartFinale::
-	goto_if_set FLAG_PRU_E20_CREDITS_SHOWN, PRU_Elite20_StartFinale_Return
-	goto_if_unset FLAG_PRU_E20_REWARD_CLAIMED, PRU_Elite20_StartFinale_Return
+	goto_if_set FLAG_PRU_HOOH_FINALE_COMPLETE, PRU_Elite20_StartFinale_Return
+	setflag FLAG_PRU_HOOH_FINALE_COMPLETE
 	msgbox PRU_Elite20_Text_FinalCelebration, MSGBOX_DEFAULT
 	msgbox PRU_Elite20_Text_GoldenSky, MSGBOX_DEFAULT
-	setflag FLAG_PRU_E20_CREDITS_SHOWN
 	setflag FLAG_PRU_E20_CREDITS_PENDING
 	special GameClear
 	waitstate
@@ -1042,11 +1037,10 @@ PRU_Elite20_Text_GoldenSky:
 	.string "Your journey is not over!$"
 
 PRU_Elite20_Text_FinalCelebration:
-	.string "OAK: You defeated the ELITE 20!\p"
-	.string "ELM: Every region's finest have\n"
-	.string "seen your extraordinary team.\p"
-	.string "OAK: Let your journey be\n"
-	.string "remembered among the RELICS!$"
+	.string "OAK: You did it! GOLDEN HO-OH\n"
+	.string "chose you as its trainer!\p"
+	.string "That power... I have never\n"
+	.string "seen anything like it.$"
 
 PRU_Elite20_ClaimRewards::
 	@ Both pockets must have room before giving either prize. The new flag
@@ -1467,15 +1461,15 @@ PRU_Elite20_Text_ElmRelics:
 	.string "Follow R - E - L - I - C - S.\n"
 	.string "The RUINS OF ALPH hold clues.$"
 PRU_Elite20_Text_OakRelics:
-	.string "OAK: Their combined resonance\n"
-	.string "may awaken a GOLDEN RELIC HO-OH.\p"
-	.string "When the RELICS quest is done,\n"
-	.string "seek me atop MT. SILVER.\p"
-	.string "We've also prepared a prize\n"
-	.string "worthy of an ELITE 20 CHAMPION!$"
+	.string "OAK: Seven RELICS may awaken\n"
+	.string "the ULTIMATE ANCIENT RELIC.\p"
+	.string "A legendary POKeMON whose\n"
+	.string "power is beyond my studies.\p"
+	.string "Only the worthiest can summon\n"
+	.string "it... I must know more!$"
 PRU_Elite20_Text_RuinsDirections:
 	.string "OAK: To begin, fly to VIOLET\n"
-	.string "CITY and go SOUTH to ROUTE 32.\p"
+	.string "CITY. Go SOUTH to ROUTE 32.\p"
 	.string "Take the WEST path to the\n"
 	.string "RUINS OF ALPH RESEARCH LAB.\p"
 	.string "Speak to the SCIENTIST there.\n"

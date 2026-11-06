@@ -455,8 +455,10 @@ GoldenrodCity_RadioTower_5F_Text_RecoveredSilverWing:
 
 GoldenrodCity_RadioTower_5F_Text_RecoveredRainbowWing:
 	.string "DIRECTOR: There you are!\p"
-	.string "That RAINBOW WING may lead you to\n"
-	.string "HO-OH at the TIN TOWER.$"
+	.string "That RAINBOW WING recalls old\n"
+	.string "HO-OH legends of ECRUTEAK.\p"
+	.string "For current RELIC research, ask\n"
+	.string "the RUINS OF ALPH scientists.$"
 
 GoldenrodCity_RadioTower_5F_Text_DirectorIntro:
 	.string "DIRECTOR: Hello, {PLAYER}!\p"

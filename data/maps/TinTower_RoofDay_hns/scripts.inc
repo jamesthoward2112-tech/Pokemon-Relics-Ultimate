@@ -5,36 +5,25 @@ TinTower_RoofDay_hns_MapScripts::
 TinTower_RoofDay_OnTransition:
 	call_if_set FLAG_DAY_POKEMON, TinTower_RoofDay_EventScript_SetNight
 	call_if_unset FLAG_DAY_POKEMON, TinTower_RoofDay_EventScript_SetDay
-	call TinTower_RoofDay_EventScript_SyncRelicHoOhState
-	goto_if_eq VAR_COMPLETED_HO_OH, 2, TinTower_RoofDay_MapScript_HoohStory
-	goto_if_eq VAR_COMPLETED_HO_OH, 3, TinTower_RoofDay_MapScript_HoohPostStoryGone
-	goto_if_eq VAR_COMPLETED_HO_OH, 4, TinTower_RoofDay_MapScript_HoohPostStoryEncounter
+	call TinTower_RoofDay_EventScript_SyncGuardianState
+	goto_if_eq VAR_COMPLETED_HO_OH, 2, TinTower_RoofDay_MapScript_GuardianStory
 	end
 
 @ Save-compatible self-heal for the final RELIC encounter.  Older saves could
 @ own the Crest and Alphoracle but still have VAR_COMPLETED_HO_OH stuck at 3,
 @ leaving an empty roof.  Derive the unlock from the real quest flags on entry.
-TinTower_RoofDay_EventScript_SyncRelicHoOhState::
-	goto_if_set FLAG_PJR_RELIC_HO_OH, TinTower_RoofDay_EventScript_SyncRelicHoOhCaught
-	goto_if_unset FLAG_PJR_RELIC_RAIKOU, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_ENTEI, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_LUGIA, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_CELEBI, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_SUICUNE, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, TinTower_RoofDay_EventScript_SyncRelicHoOhDone
-	setvar VAR_COMPLETED_HO_OH, 4
-	setflag FLAG_HIDE_HO_OH
+TinTower_RoofDay_EventScript_SyncGuardianState::
+	goto_if_set FLAG_PRU_TIN_GUARDIAN_DEFEATED, TinTower_RoofDay_EventScript_GuardianDone
+	goto_if_set FLAG_PJR_RELIC_HO_OH, TinTower_RoofDay_EventScript_GuardianLegacyDone
+	goto_if_ge VAR_COMPLETED_HO_OH, 3, TinTower_RoofDay_EventScript_GuardianLegacyDone
 	return
 
-TinTower_RoofDay_EventScript_SyncRelicHoOhCaught::
-	setvar VAR_COMPLETED_HO_OH, 3
-	setflag FLAG_HIDE_HO_OH
+TinTower_RoofDay_EventScript_GuardianLegacyDone::
+	setflag FLAG_PRU_TIN_GUARDIAN_DEFEATED
+TinTower_RoofDay_EventScript_GuardianDone::
+	setflag FLAG_HIDE_TIN_TOWER_GUARDIAN
 	return
 
-TinTower_RoofDay_EventScript_SyncRelicHoOhDone::
-	return
 
 TinTower_RoofDay_EventScript_SetNight::
 	setmaplayoutindex LAYOUT_TIN_TOWER_ROOF_NIGHT_HNS
@@ -44,24 +33,15 @@ TinTower_RoofDay_EventScript_SetDay::
 	setmaplayoutindex LAYOUT_TIN_TOWER_ROOF_DAY_HNS
 	return
 
-TinTower_RoofDay_MapScript_HoohStory::
-	clearflag FLAG_HIDE_HO_OH
-	end
-
-TinTower_RoofDay_MapScript_HoohPostStoryGone::
+TinTower_RoofDay_MapScript_GuardianStory::
+	goto_if_set FLAG_PRU_TIN_GUARDIAN_DEFEATED, TinTower_RoofDay_MapScript_GuardianDone
 	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
-	goto_if_set FLAG_CAUGHT_HO_OH, TinTower_RoofDay_MapScript_HoohCaught
-	@ Story appearances remain visible as cutscenes, never as a second catch.
-	setflag FLAG_HIDE_HO_OH
+	clearflag FLAG_HIDE_TIN_TOWER_GUARDIAN
 	end
 
-TinTower_RoofDay_MapScript_HoohCaught::
-	setflag FLAG_HIDE_HO_OH
+TinTower_RoofDay_MapScript_GuardianDone::
+	setflag FLAG_HIDE_TIN_TOWER_GUARDIAN
 	end
-
-TinTower_RoofDay_MapScript_HoohPostStoryEncounter::
-	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
-	goto TinTower_RoofDay_MapScript_HoohCaught
 
 TinTower_RoofDay_EventScript_TalkToKimono::
 	lockall
@@ -165,21 +145,22 @@ TinTower_RoofDay_EventScript_TalkToKimono::
 	setvar VAR_0x8004, 3  @ num loops
 	setvar VAR_0x8005, 35 @ delay
 	special LoopWingFlapSE
-	applymovement LOCALID_HO_OH, TinTower_RoofDay_Movement_HoOhAppear
+	applymovement LOCALID_TIN_TOWER_GUARDIAN, TinTower_RoofDay_Movement_GuardianAppear
 	applymovement OBJ_EVENT_ID_CAMERA, TinTower_RoofDay_Movement_CameraPanUp
 	waitmovement 0
 	delay 50
 	@ setweather WEATHER_NONE
 	@ doweather
 	waitse
-	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
+	playbgm MUS_HG_HO_OH_APPEARS, 0
+	playmoncry SPECIES_DRAGONITE, CRY_MODE_ENCOUNTER
 	delay 30
 	waitmoncry
 	delay 60
 	setvar VAR_0x8004, 3  @ num loops
 	setvar VAR_0x8005, 35 @ delay
 	special LoopWingFlapSE
-	applymovement LOCALID_HO_OH, TinTower_RoofDay_Movement_HoOhApproach
+	applymovement LOCALID_TIN_TOWER_GUARDIAN, TinTower_RoofDay_Movement_GuardianApproach
 	waitmovement 0
 	applymovement OBJ_EVENT_ID_CAMERA, TinTower_RoofDay_Movement_CameraPanDown
 	waitmovement 0
@@ -193,33 +174,34 @@ TinTower_RoofDay_EventScript_TalkToKimono::
 	msgbox TinTower_RoofDay_Text_Kimono_Closing1, MSGBOX_DEFAULT
 	waitmessage
 	closemessage
-	releaseall
-	end
-
-TinTower_RoofDay_EventScript_HoOh::
-	lockall
-	goto_if_set FLAG_PJR_RELIC_HO_OH, TinTower_RoofDay_EventScript_AlreadyCaughtRelic
-	goto_if_eq VAR_COMPLETED_HO_OH, 2, TinTower_RoofDay_EventScript_HoOhStoryFarewell
-	msgbox TinTower_RoofDay_Text_GoldenHoOhRumour, MSGBOX_DEFAULT
-	releaseall
-	end
-
-@ Preserve the Kimono Girls' progression without starting a catchable battle.
-TinTower_RoofDay_EventScript_HoOhStoryFarewell::
+	playse SE_M_PETAL_DANCE
+	delay 30
+	msgbox TinTower_RoofDay_Text_GuardianChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PRU_ANCIENT_GUARDIAN_DRAGONITE, TinTower_RoofDay_Text_GuardianVictory
+	setflag FLAG_PRU_TIN_GUARDIAN_DEFEATED
+	setflag FLAG_HIDE_TIN_TOWER_GUARDIAN
+	removeobject LOCALID_TIN_TOWER_GUARDIAN
 	setflag FLAG_HIDE_TIN_TOWER_KIMONO_GIRLS
-	setflag FLAG_HIDE_HO_OH
 	clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_KIMONOS
 	clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_ZUKI
 	clearflag FLAG_HIDE_ECRUTEAK_CITY_THEATER_NPCS
 	setvar VAR_ECRUTEAK_CITY_THEATER, 8
 	setvar VAR_COMPLETED_HO_OH, 3
-	msgbox TinTower_RoofDay_Text_GoldenHoOhRumour, MSGBOX_DEFAULT
+	playse SE_M_PETAL_DANCE
+	delay 30
+	msgbox TinTower_RoofDay_Text_GuardianFarewell, MSGBOX_DEFAULT
 	releaseall
 	end
 
-TinTower_RoofDay_EventScript_AlreadyCaughtRelic::
-	setflag FLAG_HIDE_HO_OH
-	removeobject LOCALID_HO_OH
+TinTower_RoofDay_EventScript_GuardianDragonite::
+	lockall
+	goto_if_set FLAG_PRU_TIN_GUARDIAN_DEFEATED, TinTower_RoofDay_EventScript_GuardianAlreadyDefeated
+	msgbox TinTower_RoofDay_Text_GuardianRumour, MSGBOX_DEFAULT
+	releaseall
+	end
+
+TinTower_RoofDay_EventScript_GuardianAlreadyDefeated::
+	msgbox TinTower_RoofDay_Text_GuardianFarewell, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -228,11 +210,7 @@ TinTower_RoofDay_EventScript_Zuki::
 	msgbox TinTower_RoofDay_Text_Zuki_Before, MSGBOX_NPC
 	end
 TinTower_RoofDay_EventScript_ZukiAfter::
-	goto_if_unset FLAG_CAUGHT_HO_OH, TinTower_RoofDay_EventScript_ZukiAfterNotCaught
-	msgbox TinTower_RoofDay_Text_Kimono_AfterCaught, MSGBOX_NPC
-	end
-TinTower_RoofDay_EventScript_ZukiAfterNotCaught::
-	msgbox TinTower_RoofDay_Text_Kimono_AfterNotCaught, MSGBOX_NPC
+	msgbox TinTower_RoofDay_Text_Kimono_After, MSGBOX_NPC
 	end
 
 TinTower_RoofDay_EventScript_Naoko::
@@ -267,22 +245,32 @@ TinTower_RoofDay_EventScript_KuniAfter::
 	msgbox TinTower_RoofDay_Text_Kimono_After, MSGBOX_NPC
 	end
 
-TinTower_RoofDay_Text_GoldenHoOhRumour:
-	.string "A golden shape vanished into the\n"
-	.string "sunlight. A distant summit calls.$"
+TinTower_RoofDay_Text_GuardianRumour:
+	.string "A blue-crystal Dragonite\n"
+	.string "watches over the TIN TOWER.$"
+
+TinTower_RoofDay_Text_GuardianChallenge:
+	.string "The KIMONO GIRLS bow as one.\p"
+	.string "The ancient guardian accepts\n"
+	.string "your challenge!$"
+
+TinTower_RoofDay_Text_GuardianVictory:
+	.string "The KIMONO GIRLS honour\n"
+	.string "the guardian's strength.$"
+
+TinTower_RoofDay_Text_GuardianFarewell:
+	.string "The guardian bows, then\n"
+	.string "vanishes in blue light.\p"
+	.string "The KIMONO GIRLS complete\n"
+	.string "their ancient ceremony.$"
 
 TinTower_RoofDay_Text_Kimono_AfterNotCaught:
-	.string "You made HO-OH appear, and the\n"
-	.string "golden bird flew beyond our sight.\p"
-	.string "Take care on your journey...$"
+	.string "The ancient guardian has been\n"
+	.string "honoured. Travel safely.$"
 
 TinTower_RoofDay_Text_Kimono_AfterCaught:
-	.string "You have not only made HO-OH\n"
-	.string "appear, but you have also caught\l"
-	.string "it...\p"
-	.string "There is nothing more for us to\n"
-	.string "say. Take care of yourself in your\l"
-	.string "journey...$"
+	.string "The ancient guardian has been\n"
+	.string "honoured. Travel safely.$"
 
 TinTower_RoofDay_Movement_CameraPanUp:
 	walk_up
@@ -304,7 +292,7 @@ TinTower_RoofDay_Movement_CameraPanDown:
 	walk_down
 	step_end
 
-TinTower_RoofDay_Movement_HoOhApproach:
+TinTower_RoofDay_Movement_GuardianApproach:
 	walk_down
 	walk_down
 	walk_down
@@ -315,7 +303,7 @@ TinTower_RoofDay_Movement_HoOhApproach:
 	delay_16
 	step_end
 
-TinTower_RoofDay_Movement_HoOhAppear:
+TinTower_RoofDay_Movement_GuardianAppear:
 	delay_16
 	delay_16
 	walk_in_place_down
@@ -537,40 +525,29 @@ TinTower_RoofDay_Movement_Kimono_Dance_Shift_Right2:
 	step_end
 
 TinTower_RoofDay_Text_Zuki_Before::
-	.string "ZUKI: Go, face HO-OH. $"
+	.string "ZUKI: The guardian awaits.$"
 TinTower_RoofDay_Text_Naoko_Before::
-	.string "NAOKO: Go, face HO-OH. $"
+	.string "NAOKO: The guardian awaits.$"
 TinTower_RoofDay_Text_Miki_Before::
-	.string "MIKI: Go, face HO-OH. $"
+	.string "MIKI: The guardian awaits.$"
 TinTower_RoofDay_Text_Sayo_Before::
-	.string "SAYO: Go, face HO-OH. $"
+	.string "SAYO: The guardian awaits.$"
 TinTower_RoofDay_Text_Kuni_Before::
-	.string "KUNI: Go, face HO-OH. $"
+	.string "KUNI: The guardian awaits.$"
 
 TinTower_RoofDay_Text_Kimono_Opening::
-	.string "KIMONO GIRL: That's right.\n"
-	.string "This is where we welcome HO-OH.\p"
-	.string "When the dance we practiced many\n"
-	.string "days becomes one with the sound of the\p"
-	.string "CLEAR BELL we entrusted to you, then\n"
-	.string "HO-OH shall come down from the great\l"
-	.string "arch of the sky once again. $"
+	.string "The CLEAR BELL resounds\n"
+	.string "through this tower.\p"
+	.string "Our dance will call the\n"
+	.string "guardian watches over it.$"
 
 TinTower_RoofDay_Text_Kimono_Closing1::
-	.string "That is indeed HO-OH...\n"
-	.string "The guardian of the sky from\p"
-	.string "ancient times... \p"
-	.string "So many have tried again and again,\n"
-	.string "only to fail...\p"
-	.string "{PLAYER}, your heart in complete\n"
-	.string "harmony with the CLEAR BELL has finally\p"
-	.string "allowed it to appear...\n"
-	.string "{PLAYER}, don't you see?\p"
-	.string "HO-OH... It must have been waiting for\n"
-	.string "someone like you all this time.\p"
-	.string "Wouldn't you agree? $"
+	.string "The CLEAR BELL has answered!\p"
+	.string "The ancient guardian is here\n"
+	.string "to test your heart and\n"
+	.string "strength.$"
 
 TinTower_RoofDay_Text_Kimono_After::
-	.string "You have done a great job.\n"
-	.string "Say hello to PROF.ELM for us.$"
+	.string "You have honoured the guardian.\n"
+	.string "Say hello to PROF. ELM for us.$"
 

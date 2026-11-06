@@ -1,2289 +1,1 @@
-#include "global.h"
-#include "graphics.h"
-
-#if IS_HNS
-const u32 gBattleTextboxTiles[] = INCBIN_U32("graphics/battle_interface/hns/textbox.4bpp.smol");
-const u16 gBattleTextboxPalette[] = INCBIN_U16("graphics/battle_interface/hns/textbox.gbapal");
-const u32 gBattleTextboxTilemap[] = INCBIN_U32("graphics/battle_interface/hns/textbox_map.bin.smolTM");
-#else
-const u32 gBattleTextboxTiles[] = INCBIN_U32("graphics/battle_interface/textbox.4bpp.smol");
-const u16 gBattleTextboxPalette[] = INCBIN_U16("graphics/battle_interface/textbox.gbapal");
-const u32 gBattleTextboxTilemap[] = INCBIN_U32("graphics/battle_interface/textbox_map.bin.smolTM");
-#endif
-
-const u32 gUnusedGfx_OldCharmap[] = INCBIN_U32("graphics/unused/old_charmap.4bpp.smol"); // japanese table and bunch of stuff
-const u32 gUnusedTimemap_OldCharmap[] = INCBIN_U32("graphics/unused/old_charmap.bin.smolTM");
-const u16 gUnusedPal_OldCharmap[] = INCBIN_U16("graphics/unused/old_charmap.gbapal");
-
-const u32 gSmokescreenImpactTiles[] = INCBIN_U32("graphics/battle_anims/sprites/smokescreen_impact.4bpp.smol");
-const u16 gSmokescreenImpactPalette[] = INCBIN_U16("graphics/battle_anims/sprites/smokescreen_impact.gbapal");
-
-#include "data/graphics/pokeballs.h"
-
-const u32 gBlankGfxCompressed[] = INCBIN_U32("graphics/interface/blank.4bpp.smol");
-
-// New Battle anims Particles
-const u32 gBattleAnimSpriteGfx_WhiteStreak[] = INCBIN_U32("graphics/battle_anims/sprites/white_streak.4bpp.smol");
-const u16 gBattleAnimSpritePal_WhiteStreak[] = INCBIN_U16("graphics/battle_anims/sprites/white_streak.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PurpleJab[] = INCBIN_U32("graphics/battle_anims/sprites/purple_jab.4bpp.smol");
-const u16 gBattleAnimSpritePal_PurpleJab[] = INCBIN_U16("graphics/battle_anims/sprites/purple_jab.gbapal");
-
-const u16 gBattleAnimSpritePal_ToxicSpikes[] = INCBIN_U16("graphics/battle_anims/sprites/toxic_spikes.gbapal");
-
-const u32 gBattleAnimSpriteGfx_EnergyBall[] = INCBIN_U32("graphics/battle_anims/sprites/energy_ball.4bpp.smol");
-const u16 gBattleAnimSpritePal_EnergyBall[] = INCBIN_U16("graphics/battle_anims/sprites/energy_ball.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MegaStone[] = INCBIN_U32("graphics/battle_anims/sprites/mega_stone.4bpp.smol");
-const u16 gBattleAnimSpritePal_MegaStone[] = INCBIN_U16("graphics/battle_anims/sprites/mega_stone.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MegaParticles[] = INCBIN_U32("graphics/battle_anims/sprites/mega_particles.4bpp.smol");
-const u16 gBattleAnimSpritePal_MegaParticles[] = INCBIN_U16("graphics/battle_anims/sprites/mega_particles.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MegaSymbol[] = INCBIN_U32("graphics/battle_anims/sprites/mega_symbol.4bpp.smol");
-const u16 gBattleAnimSpritePal_MegaSymbol[] = INCBIN_U16("graphics/battle_anims/sprites/mega_symbol.gbapal");
-
-const u32 gBattleAnimSpriteGfx_AlphaSymbol[] = INCBIN_U32("graphics/battle_anims/sprites/alpha_symbol.4bpp.smol");
-const u16 gBattleAnimSpritePal_AlphaSymbol[] = INCBIN_U16("graphics/battle_anims/sprites/alpha_symbol.gbapal");
-
-const u32 gBattleAnimSpriteGfx_OmegaSymbol[] = INCBIN_U32("graphics/battle_anims/sprites/omega_symbol.4bpp.smol");
-const u16 gBattleAnimSpritePal_OmegaSymbol[] = INCBIN_U16("graphics/battle_anims/sprites/omega_symbol.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TeraSymbol[] = INCBIN_U32("graphics/battle_anims/sprites/tera_symbol.4bpp.smol");
-const u16 gBattleAnimSpritePal_TeraSymbol[] = INCBIN_U16("graphics/battle_anims/sprites/tera_symbol.gbapal");
-
-const u32 gBattleAnimSpriteGfx_FlashCannonBall[] = INCBIN_U32("graphics/battle_anims/sprites/flash_cannon_ball.4bpp.smol");
-const u16 gBattleAnimSpritePal_FlashCannonBall[] = INCBIN_U16("graphics/battle_anims/sprites/flash_cannon_ball.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WaterGun[] = INCBIN_U32("graphics/battle_anims/sprites/water_gun.4bpp.smol");
-const u16 gBattleAnimSpritePal_WaterGun[] = INCBIN_U16("graphics/battle_anims/sprites/water_gun.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Punishment[] = INCBIN_U32("graphics/battle_anims/sprites/punishment.4bpp.smol");
-const u16 gBattleAnimSpritePal_Punishment[] = INCBIN_U16("graphics/battle_anims/sprites/punishment.gbapal");
-
-const u32 gBattleAnimSpriteGfx_QuickGuard[] = INCBIN_U32("graphics/battle_anims/sprites/quick_guard.4bpp.smol");
-const u16 gBattleAnimSpritePal_QuickGuard[] = INCBIN_U16("graphics/battle_anims/sprites/quick_guard.gbapal");
-
-const u32 gBattleAnimSpriteGfx_AlphaStone[] = INCBIN_U32("graphics/battle_anims/sprites/alpha_stone.4bpp.smol");
-const u16 gBattleAnimSpritePal_AlphaStone[] = INCBIN_U16("graphics/battle_anims/sprites/alpha_stone.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TeraCrystal[] = INCBIN_U32("graphics/battle_anims/sprites/tera_crystal.4bpp.smol");
-const u16 gBattleAnimSpritePal_TeraCrystal[] = INCBIN_U16("graphics/battle_anims/sprites/tera_crystal.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TeraShatter[] = INCBIN_U32("graphics/battle_anims/sprites/tera_shatter.4bpp.smol");
-const u16 gBattleAnimSpritePal_TeraShatter[] = INCBIN_U16("graphics/battle_anims/sprites/tera_shatter.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Anchor[] = INCBIN_U32("graphics/battle_anims/sprites/anchor.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Apple[] = INCBIN_U32("graphics/battle_anims/sprites/apple.4bpp.smol");
-const u16 gBattleAnimSpritePal_Apple[] = INCBIN_U16("graphics/battle_anims/sprites/apple.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Arrows[] = INCBIN_U32("graphics/battle_anims/sprites/arrows.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_AssuranceHand[] = INCBIN_U32("graphics/battle_anims/sprites/assurance_hand.4bpp.smol");
-const u16 gBattleAnimSpritePal_AssuranceHand[] = INCBIN_U16("graphics/battle_anims/sprites/assurance_hand.gbapal");
-
-const u32 gBattleAnimSpriteGfx_AuraSphere[] = INCBIN_U32("graphics/battle_anims/sprites/aura_sphere.4bpp.smol");
-const u16 gBattleAnimSpritePal_AuraSphere[] = INCBIN_U16("graphics/battle_anims/sprites/aura_sphere.gbapal");
-
-const u16 gBattleAnimSpritePal_AvalancheRocks[] = INCBIN_U16("graphics/battle_anims/sprites/avalanche_rocks.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewPokeball[] = INCBIN_U32("graphics/battle_anims/sprites/baton_pass_ball.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewPokeball[] = INCBIN_U16("graphics/battle_anims/sprites/baton_pass_ball.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Beam[] = INCBIN_U32("graphics/battle_anims/sprites/beam.4bpp.smol");
-const u16 gBattleAnimSpritePal_Beam[] = INCBIN_U16("graphics/battle_anims/sprites/beam.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BerryEaten[] = INCBIN_U32("graphics/battle_anims/sprites/berry_eaten.4bpp.smol");
-const u16 gBattleAnimSpritePal_BerryEaten[] = INCBIN_U16("graphics/battle_anims/sprites/berry_eaten.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BerryNormal[] = INCBIN_U32("graphics/battle_anims/sprites/berry_normal.4bpp.smol");
-const u16 gBattleAnimSpritePal_BerryNormal[] = INCBIN_U16("graphics/battle_anims/sprites/berry_normal.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BigRock[] = INCBIN_U32("graphics/battle_anims/sprites/big_rock.4bpp.smol");
-const u16 gBattleAnimSpritePal_BigRock[] = INCBIN_U16("graphics/battle_anims/sprites/big_rock.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BlacephalonHead[] = INCBIN_U32("graphics/battle_anims/sprites/blacephalon_head.4bpp.smol");
-const u16 gBattleAnimSpritePal_BlacephalonHead[] = INCBIN_U16("graphics/battle_anims/sprites/blacephalon_head.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BloodMoon[] = INCBIN_U32("graphics/battle_anims/sprites/blood_moon.4bpp.smol");
-const u16 gBattleAnimSpritePal_BloodMoon[] = INCBIN_U16("graphics/battle_anims/sprites/blood_moon.gbapal");
-
-const u16 gBattleAnimSpritePal_BlueFlare[] = INCBIN_U16("graphics/battle_anims/sprites/blue_flare.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Branch[] = INCBIN_U32("graphics/battle_anims/sprites/branch.4bpp.smol");
-const u16 gBattleAnimSpritePal_Branch[] = INCBIN_U16("graphics/battle_anims/sprites/branch.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Brine[] = INCBIN_U32("graphics/battle_anims/sprites/brine.4bpp.smol");
-const u16 gBattleAnimSpritePal_Brine[] = INCBIN_U16("graphics/battle_anims/sprites/brine.gbapal");
-
-const u32 gBattleAnimSpriteGfx_ChainLink[] = INCBIN_U32("graphics/battle_anims/sprites/chain_link.4bpp.smol");
-const u16 gBattleAnimSpritePal_ChainLink[] = INCBIN_U16("graphics/battle_anims/sprites/chain_link.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Chop[] = INCBIN_U32("graphics/battle_anims/sprites/chop.4bpp.smol");
-const u16 gBattleAnimSpritePal_Chop[] = INCBIN_U16("graphics/battle_anims/sprites/chop.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Cacoon[] = INCBIN_U32("graphics/battle_anims/sprites/cacoon.4bpp.smol");
-const u16 gBattleAnimSpritePal_Cacoon[] = INCBIN_U16("graphics/battle_anims/sprites/cacoon.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Confide[] = INCBIN_U32("graphics/battle_anims/sprites/confide.4bpp.smol");
-const u16 gBattleAnimSpritePal_Confide[] = INCBIN_U16("graphics/battle_anims/sprites/confide.gbapal");
-
-const u32 gBattleAnimSpriteGfx_CraftyShield[] = INCBIN_U32("graphics/battle_anims/sprites/crafty_shield.4bpp.smol");
-const u16 gBattleAnimSpritePal_CraftyShield[] = INCBIN_U16("graphics/battle_anims/sprites/crafty_shield.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewNail[] = INCBIN_U32("graphics/battle_anims/sprites/curse_nail.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewNail[] = INCBIN_U16("graphics/battle_anims/sprites/curse_nail.gbapal");
-
-const u16 gBattleAnimSpritePal_DracoMeteor[] = INCBIN_U16("graphics/battle_anims/sprites/draco_meteor.gbapal");
-
-const u32 gBattleAnimSpriteGfx_DragonPulseRing[] = INCBIN_U32("graphics/battle_anims/sprites/dragon_pulse_ring.4bpp.smol");
-const u16 gBattleAnimSpritePal_DragonPulseRing[] = INCBIN_U16("graphics/battle_anims/sprites/dragon_pulse_ring.gbapal");
-
-const u32 gBattleAnimSpriteGfx_DreepyMissile[] = INCBIN_U32("graphics/battle_anims/sprites/dreepy_missile.4bpp.smol");
-const u16 gBattleAnimSpritePal_DreepyMissile[] = INCBIN_U16("graphics/battle_anims/sprites/dreepy_missile.gbapal");
-const u32 gBattleAnimSpriteGfx_DreepyMissileShiny[] = INCBIN_U32("graphics/battle_anims/sprites/dreepy_missile.4bpp.smol");
-const u16 gBattleAnimSpritePal_DreepyMissileShiny[] = INCBIN_U16("graphics/battle_anims/sprites/dreepy_missile_shiny.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Drill[] = INCBIN_U32("graphics/battle_anims/sprites/drill.4bpp.smol");
-const u16 gBattleAnimSpritePal_Drill[] = INCBIN_U16("graphics/battle_anims/sprites/drill.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewEmbers[] = INCBIN_U32("graphics/battle_anims/sprites/embers.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewEmbers[] = INCBIN_U16("graphics/battle_anims/sprites/embers.gbapal");
-
-const u32 gBattleAnimSpriteGfx_FairyLockChains[] = INCBIN_U32("graphics/battle_anims/sprites/fairy_lock_chains.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Fishies[] = INCBIN_U32("graphics/battle_anims/sprites/fishies.4bpp.smol");
-const u16 gBattleAnimSpritePal_Fishies[] = INCBIN_U16("graphics/battle_anims/sprites/fishies.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewFly[] = INCBIN_U32("graphics/battle_anims/sprites/fly.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewFly[] = INCBIN_U16("graphics/battle_anims/sprites/fly.gbapal");
-
-const u16 gBattleAnimSpritePal_FusionFlare[] = INCBIN_U16("graphics/battle_anims/sprites/fusion_flare.gbapal");
-
-const u16 gBattleAnimSpritePal_GarbagePoisonPillar[] = INCBIN_U16("graphics/battle_anims/sprites/garbage_poison_column.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Gear[] = INCBIN_U32("graphics/battle_anims/sprites/gear.4bpp.smol");
-const u16 gBattleAnimSpritePal_Gear[] = INCBIN_U16("graphics/battle_anims/sprites/gear.gbapal");
-
-const u32 gBattleAnimSpriteGfx_GigavoltHavocSpear[] = INCBIN_U32("graphics/battle_anims/sprites/gigavolt_havoc_spear.4bpp.smol");
-const u16 gBattleAnimSpritePal_GigavoltHavocSpear[] = INCBIN_U16("graphics/battle_anims/sprites/gigavolt_havoc_spear.gbapal");
-
-const u32 gBattleAnimSpriteGfx_GoldenApple[] = INCBIN_U32("graphics/battle_anims/sprites/golden_apple.4bpp.smol");
-const u16 gBattleAnimSpritePal_GoldenApple[] = INCBIN_U16("graphics/battle_anims/sprites/golden_apple.gbapal");
-
-const u16 gBattleAnimSpritePal_GreenDrake[] = INCBIN_U16("graphics/battle_anims/sprites/green_drake.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewGreenStar[] = INCBIN_U32("graphics/battle_anims/sprites/green_star_new.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewGreenStar[] = INCBIN_U16("graphics/battle_anims/sprites/green_star_new.gbapal");
-
-const u32 gBattleAnimSpriteGfx_HeartStamp[] = INCBIN_U32("graphics/battle_anims/sprites/heart_stamp.4bpp.smol");
-const u16 gBattleAnimSpritePal_HeartStamp[] = INCBIN_U16("graphics/battle_anims/sprites/heart_stamp.gbapal");
-
-const u32 gBattleAnimSpriteGfx_ZygardeHexes[] = INCBIN_U32("graphics/battle_anims/sprites/hexes.4bpp.smol");
-const u16 gBattleAnimSpritePal_ZygardeHexes[] = INCBIN_U16("graphics/battle_anims/sprites/hexes.gbapal");
-
-const u32 gBattleAnimSpriteGfx_HoopaHand[] = INCBIN_U32("graphics/battle_anims/sprites/hoopa_hand.4bpp.smol");
-const u16 gBattleAnimSpritePal_HoopaHand[] = INCBIN_U16("graphics/battle_anims/sprites/hoopa_hand.gbapal");
-
-const u32 gBattleAnimSpriteGfx_HoopaRing[] = INCBIN_U32("graphics/battle_anims/sprites/hoopa_ring.4bpp.smol");
-const u16 gBattleAnimSpritePal_HoopaRing[] = INCBIN_U16("graphics/battle_anims/sprites/hoopa_ring.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewHornHit[] = INCBIN_U32("graphics/battle_anims/sprites/horn_hit_new.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewHornHit[] = INCBIN_U16("graphics/battle_anims/sprites/horn_hit_new.gbapal");
-
-const u32 gBattleAnimSpriteGfx_HornLeech[] = INCBIN_U32("graphics/battle_anims/sprites/horn_leech.4bpp.smol");
-const u16 gBattleAnimSpritePal_HornLeech[] = INCBIN_U16("graphics/battle_anims/sprites/horn_leech.gbapal");
-
-const u32 gBattleAnimSpriteGfx_HorseshoeFist[] = INCBIN_U32("graphics/battle_anims/sprites/horseshoe_fist.4bpp.smol");
-const u16 gBattleAnimSpritePal_HorseshoeFist[] = INCBIN_U16("graphics/battle_anims/sprites/horseshoe_fist.gbapal");
-
-const u32 gBattleAnimSpriteGfx_HydroPump[] = INCBIN_U32("graphics/battle_anims/sprites/hydro_pump.4bpp.smol");
-const u16 gBattleAnimSpritePal_HydroPump[] = INCBIN_U16("graphics/battle_anims/sprites/hydro_pump.gbapal");
-
-const u32 gBattleAnimSpriteGfx_IceRock[] = INCBIN_U32("graphics/battle_anims/sprites/ice_rock.4bpp.smol");
-const u16 gBattleAnimSpritePal_IceRock[] = INCBIN_U16("graphics/battle_anims/sprites/ice_rock.gbapal");
-
-const u32 gBattleAnimSpriteGfx_LargeSpike[] = INCBIN_U32("graphics/battle_anims/sprites/large_spike.4bpp.smol");
-const u16 gBattleAnimSpritePal_LargeSpike[] = INCBIN_U16("graphics/battle_anims/sprites/large_spike.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewLeaf[] = INCBIN_U32("graphics/battle_anims/sprites/leaves.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewLeaf[] = INCBIN_U16("graphics/battle_anims/sprites/leaves.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewLeechSeed[] = INCBIN_U32("graphics/battle_anims/sprites/leech_seed.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewLeechSeed[] = INCBIN_U16("graphics/battle_anims/sprites/leech_seed.gbapal");
-
-const u32 gBattleAnimSpriteGfx_LightningRain[] = INCBIN_U32("graphics/battle_anims/sprites/lightning_rain.4bpp.smol");
-const u16 gBattleAnimSpritePal_LightningRain[] = INCBIN_U16("graphics/battle_anims/sprites/lightning_rain.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewEye[] = INCBIN_U32("graphics/battle_anims/sprites/mean_look.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewEye[] = INCBIN_U16("graphics/battle_anims/sprites/mean_look.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MetalBits[] = INCBIN_U32("graphics/battle_anims/sprites/metal_bits.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_MudBomb[] = INCBIN_U32("graphics/battle_anims/sprites/mud_bomb.4bpp.smol");
-const u16 gBattleAnimSpritePal_MudBomb[] = INCBIN_U16("graphics/battle_anims/sprites/mud_bomb.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Mushroom[] = INCBIN_U32("graphics/battle_anims/sprites/mushroom.4bpp.smol");
-const u16 gBattleAnimSpritePal_Mushroom[] = INCBIN_U16("graphics/battle_anims/sprites/mushroom.gbapal");
-
-const u16 gBattleAnimSpritePal_NaturalGiftRing[] = INCBIN_U16("graphics/battle_anims/sprites/natural_gift_ring.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NecrozmaStar[] = INCBIN_U32("graphics/battle_anims/sprites/necrozma_star.4bpp.smol");
-const u16 gBattleAnimSpritePal_NecrozmaStar[] = INCBIN_U16("graphics/battle_anims/sprites/necrozma_star.gbapal");
-
-const u16 gBattleAnimSpritePal_NewImpact[] = INCBIN_U16("graphics/battle_anims/sprites/impact_new.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Obstruct[] = INCBIN_U32("graphics/battle_anims/sprites/obstruct.4bpp.smol");
-const u16 gBattleAnimSpritePal_Obstruct[] = INCBIN_U16("graphics/battle_anims/sprites/obstruct.gbapal");
-
-const u32 gBattleAnimSpriteGfx_OmegaStone[] = INCBIN_U32("graphics/battle_anims/sprites/omega_stone.4bpp.smol");
-const u16 gBattleAnimSpritePal_OmegaStone[] = INCBIN_U16("graphics/battle_anims/sprites/omega_stone.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PinkDiamond[] = INCBIN_U32("graphics/battle_anims/sprites/pink_diamond.4bpp.smol");
-const u16 gBattleAnimSpritePal_PinkDiamond[] = INCBIN_U16("graphics/battle_anims/sprites/pink_diamond.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PoisonColumn[] = INCBIN_U32("graphics/battle_anims/sprites/poison_column.4bpp.smol");
-const u16 gBattleAnimSpritePal_PoisonColumn[] = INCBIN_U16("graphics/battle_anims/sprites/poison_column.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PowerTrick[] = INCBIN_U32("graphics/battle_anims/sprites/power_trick.4bpp.smol");
-const u16 gBattleAnimSpritePal_PowerTrick[] = INCBIN_U16("graphics/battle_anims/sprites/power_trick.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PurpleChain[] = INCBIN_U32("graphics/battle_anims/sprites/purple_chain.4bpp.smol");
-const u16 gBattleAnimSpritePal_PurpleChain[] = INCBIN_U16("graphics/battle_anims/sprites/purple_chain.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PurpleDrake[] = INCBIN_U32("graphics/battle_anims/sprites/purple_drake.4bpp.smol");
-const u16 gBattleAnimSpritePal_PurpleDrake[] = INCBIN_U16("graphics/battle_anims/sprites/purple_drake.gbapal");
-
-const u32 gBattleAnimSpriteGfx_RazorShell[] = INCBIN_U32("graphics/battle_anims/sprites/razor_shell.4bpp.smol");
-const u16 gBattleAnimSpritePal_RazorShell[] = INCBIN_U16("graphics/battle_anims/sprites/razor_shell.gbapal");
-
-const u32 gBattleAnimSpriteGfx_RedExplosion[] = INCBIN_U32("graphics/battle_anims/sprites/red_explosion.4bpp.smol");
-const u16 gBattleAnimSpritePal_RedExplosion[] = INCBIN_U16("graphics/battle_anims/sprites/red_explosion.gbapal");
-
-const u32 gBattleAnimSpriteGfx_RocksSmall[] = INCBIN_U32("graphics/battle_anims/sprites/rock_small.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_NewRocks[] = INCBIN_U32("graphics/battle_anims/sprites/rocks_new.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewRocks[] = INCBIN_U16("graphics/battle_anims/sprites/rocks_new.gbapal");
-
-const u32 gBattleAnimSpriteGfx_ShellLeft[] = INCBIN_U32("graphics/battle_anims/sprites/shell_left.4bpp.smol");
-const u16 gBattleAnimSpritePal_ShellLeft[] = INCBIN_U16("graphics/battle_anims/sprites/shell_left.gbapal");
-
-const u32 gBattleAnimSpriteGfx_ShellRight[] = INCBIN_U32("graphics/battle_anims/sprites/shell_right.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_SpacialRendSlices[] = INCBIN_U16("graphics/battle_anims/sprites/spacial_rend_slices.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewSpikes[] = INCBIN_U32("graphics/battle_anims/sprites/spikes_new.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewSpikes[] = INCBIN_U16("graphics/battle_anims/sprites/spikes_new.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SpiritShackleArrow[] = INCBIN_U32("graphics/battle_anims/sprites/spirit_shackle_arrow.4bpp.smol");
-const u16 gBattleAnimSpritePal_SpiritShackleArrow[] = INCBIN_U16("graphics/battle_anims/sprites/spirit_shackle_arrow.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SteamEruption[] = INCBIN_U32("graphics/battle_anims/sprites/steam_eruption.4bpp.smol");
-const u16 gBattleAnimSpritePal_SteamEruption[] = INCBIN_U16("graphics/battle_anims/sprites/steam_eruption.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Steamroller[] = INCBIN_U32("graphics/battle_anims/sprites/steamroller.4bpp.smol");
-const u16 gBattleAnimSpritePal_Steamroller[] = INCBIN_U16("graphics/battle_anims/sprites/steamroller.gbapal");
-
-const u32 gBattleAnimSpriteGfx_StonePillar[] = INCBIN_U32("graphics/battle_anims/sprites/stone_pillar.4bpp.smol");
-const u16 gBattleAnimSpritePal_StonePillar[] = INCBIN_U16("graphics/battle_anims/sprites/stone_pillar.gbapal");
-
-const u16 gBattleAnimSpritePal_Poltergeist[] = INCBIN_U16("graphics/battle_anims/sprites/poltergeist.gbapal");
-
-const u16 gBattleAnimSpritePal_SteelBeam[] = INCBIN_U16("graphics/battle_anims/sprites/steel_beam.gbapal");
-
-const u32 gBattleAnimSpriteGfx_StraightBeam[] = INCBIN_U32("graphics/battle_anims/sprites/straight_beam.4bpp.smol");
-const u16 gBattleAnimSpritePal_StraightBeam[] = INCBIN_U16("graphics/battle_anims/sprites/straight_beam.gbapal");
-
-const u16 gBattleAnimSpritePal_NewSurf[] = INCBIN_U16("graphics/battle_anims/sprites/surf_new.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewSword[] = INCBIN_U32("graphics/battle_anims/sprites/sword_new.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewSword[] = INCBIN_U16("graphics/battle_anims/sprites/sword_new.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewTeeth[] = INCBIN_U32("graphics/battle_anims/sprites/teeth_new.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewTeeth[] = INCBIN_U16("graphics/battle_anims/sprites/teeth_new.gbapal");
-
-const u32 gBattleAnimSpriteGfx_NewHandsAndFeet[] = INCBIN_U32("graphics/battle_anims/sprites/hands_and_feet_new.4bpp.smol");
-const u16 gBattleAnimSpritePal_NewHandsAndFeet[] = INCBIN_U16("graphics/battle_anims/sprites/hands_and_feet_new.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Tornado[] = INCBIN_U32("graphics/battle_anims/sprites/tornado.4bpp.smol");
-const u16 gBattleAnimSpritePal_Tornado[] = INCBIN_U16("graphics/battle_anims/sprites/tornado.gbapal");
-
-const u32 gBattleAnimSpriteGfx_ZMoveSymbol[] = INCBIN_U32("graphics/battle_anims/sprites/z_move_symbol.4bpp.smol");
-const u16 gBattleAnimSpritePal_ZMoveSymbol[] = INCBIN_U16("graphics/battle_anims/sprites/z_move_symbol.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Teapot[] = INCBIN_U32("graphics/battle_anims/sprites/new/teapot.4bpp.smol");
-const u16 gBattleAnimSpritePal_Teapot[] = INCBIN_U16("graphics/battle_anims/sprites/new/teapot.gbapal");
-
-// Battle anims
-const u32 gBattleAnimSpriteGfx_Bubble[] = INCBIN_U32("graphics/battle_anims/sprites/bubble.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Bone[] = INCBIN_U32("graphics/battle_anims/sprites/bone.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_AirWave[] = INCBIN_U32("graphics/battle_anims/sprites/air_wave.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Orb[] = INCBIN_U32("graphics/battle_anims/sprites/orb.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Sword[] = INCBIN_U32("graphics/battle_anims/sprites/sword.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Seed[] = INCBIN_U32("graphics/battle_anims/sprites/seed.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_SeedBrown[] = INCBIN_U32("graphics/battle_anims/sprites/seed_new.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_RainDrops[] = INCBIN_U16("graphics/battle_anims/sprites/rain_drops.gbapal");
-const u16 gBattleAnimSpritePal_Bone[] = INCBIN_U16("graphics/battle_anims/sprites/bone.gbapal");
-const u16 gBattleAnimSpritePal_AirWave[] = INCBIN_U16("graphics/battle_anims/sprites/air_wave.gbapal");
-const u16 gBattleAnimSpritePal_Orb[] = INCBIN_U16("graphics/battle_anims/sprites/orb.gbapal");
-const u16 gBattleAnimSpritePal_Sword[] = INCBIN_U16("graphics/battle_anims/sprites/sword.gbapal");
-const u16 gBattleAnimSpritePal_Seed[] = INCBIN_U16("graphics/battle_anims/sprites/seed.gbapal");
-const u16 gBattleAnimSpritePal_SeedBrown[] = INCBIN_U16("graphics/battle_anims/sprites/seed_new.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Needle[] = INCBIN_U32("graphics/battle_anims/sprites/needle.4bpp.smol");
-const u16 gBattleAnimSpritePal_Needle[] = INCBIN_U16("graphics/battle_anims/sprites/needle.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Explosion6[] = INCBIN_U32("graphics/battle_anims/sprites/explosion_6.4bpp.smol");
-const u16 gBattleAnimSpritePal_Explosion6[] = INCBIN_U16("graphics/battle_anims/sprites/explosion_6.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PinkOrb[] = INCBIN_U32("graphics/battle_anims/sprites/pink_orb.4bpp.smol");
-const u16 gBattleAnimSpritePal_PinkOrb[] = INCBIN_U16("graphics/battle_anims/sprites/pink_orb.gbapal");
-
-const u16 gBattleAnimSpritePal_IceCube[] = INCBIN_U16("graphics/battle_anims/sprites/ice_cube.gbapal");
-const u32 gBattleAnimSpriteGfx_IceCube[] = INCBIN_U32("graphics/battle_anims/sprites/ice_cube.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Gust[] = INCBIN_U32("graphics/battle_anims/sprites/gust.4bpp.smol");
-const u16 gBattleAnimSpritePal_Gust[] = INCBIN_U16("graphics/battle_anims/sprites/gust.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Spark2[] = INCBIN_U32("graphics/battle_anims/sprites/spark_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_Spark2[] = INCBIN_U16("graphics/battle_anims/sprites/spark_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Orange[] = INCBIN_U32("graphics/battle_anims/sprites/orange.4bpp.smol");
-const u16 gBattleAnimSpritePal_Orange[] = INCBIN_U16("graphics/battle_anims/sprites/orange.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Spikes[] = INCBIN_U32("graphics/battle_anims/sprites/spikes.4bpp.smol");
-const u16 gBattleAnimSpritePal_Spikes[] = INCBIN_U16("graphics/battle_anims/sprites/spikes.gbapal");
-
-const u32 gBattleAnimSpriteGfx_YellowBall[] = INCBIN_U32("graphics/battle_anims/sprites/yellow_ball.4bpp.smol");
-const u16 gBattleAnimSpritePal_YellowBall[] = INCBIN_U16("graphics/battle_anims/sprites/yellow_ball.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TiedBag[] = INCBIN_U32("graphics/battle_anims/sprites/tied_bag.4bpp.smol");
-const u16 gBattleAnimSpritePal_TiedBag[] = INCBIN_U16("graphics/battle_anims/sprites/tied_bag.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BlackSmoke[] = INCBIN_U32("graphics/battle_anims/sprites/black_smoke.4bpp.smol");
-const u16 gBattleAnimSpritePal_BlackSmoke[] = INCBIN_U16("graphics/battle_anims/sprites/black_smoke.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BlackBall[] = INCBIN_U32("graphics/battle_anims/sprites/black_ball.4bpp.smol");
-const u16 gBattleAnimSpritePal_BlackBall[] = INCBIN_U16("graphics/battle_anims/sprites/black_ball.gbapal");
-
-const u16 gBattleAnimSpritePal_Glass[] = INCBIN_U16("graphics/battle_anims/sprites/glass.gbapal");
-const u32 gBattleAnimSpriteGfx_Glass[] = INCBIN_U32("graphics/battle_anims/sprites/glass.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_HornHit[] = INCBIN_U32("graphics/battle_anims/sprites/horn_hit.4bpp.smol");
-const u16 gBattleAnimSpritePal_HornHit[] = INCBIN_U16("graphics/battle_anims/sprites/horn_hit.gbapal");
-
-const u16 gBattleAnimSpritePal_BlueShards[] = INCBIN_U16("graphics/battle_anims/sprites/blue_shards.gbapal");
-const u32 gBattleAnimSpriteGfx_BlueShards[] = INCBIN_U32("graphics/battle_anims/sprites/blue_shards.4bpp.smol");
-
-const u16 gBattleAnimUnusedPal_MusicNotes[] = INCBIN_U16("graphics/battle_anims/unused/music_notes.gbapal");
-const u32 gBattleAnimUnusedGfx_MusicNotes[] = INCBIN_U32("graphics/battle_anims/unused/music_notes.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_Hit[] = INCBIN_U16("graphics/battle_anims/sprites/hit.gbapal");
-const u32 gBattleAnimSpriteGfx_Hit[] = INCBIN_U32("graphics/battle_anims/sprites/hit.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_Hit2[] = INCBIN_U16("graphics/battle_anims/sprites/hit_2.gbapal");
-
-const u16 gBattleAnimSpritePal_WavingHand[] = INCBIN_U16("graphics/battle_anims/sprites/waving_hand.gbapal");
-const u32 gBattleAnimSpriteGfx_WavingHand[] = INCBIN_U32("graphics/battle_anims/sprites/waving_hand.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Feint[] = INCBIN_U32("graphics/battle_anims/sprites/feint_punch.4bpp.smol");
-const u16 gBattleAnimSpritePal_Feint[] = INCBIN_U16("graphics/battle_anims/sprites/feint_punch.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TrumpCard[] = INCBIN_U32("graphics/battle_anims/sprites/trump_cards.4bpp.smol");
-const u16 gBattleAnimSpritePal_TrumpCard[] = INCBIN_U16("graphics/battle_anims/sprites/trump_cards.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TrumpCardParticles[] = INCBIN_U32("graphics/battle_anims/sprites/trump_card_particles.4bpp.smol");
-const u16 gBattleAnimSpritePal_TrumpCardParticles[] = INCBIN_U16("graphics/battle_anims/sprites/trump_card_particles.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Acupressure[] = INCBIN_U32("graphics/battle_anims/sprites/acupressure.4bpp.smol");
-const u16 gBattleAnimSpritePal_Acupressure[] = INCBIN_U16("graphics/battle_anims/sprites/acupressure.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WringOut[] = INCBIN_U32("graphics/battle_anims/sprites/wring_out.4bpp.smol");
-const u16 gBattleAnimSpritePal_WringOut[] = INCBIN_U16("graphics/battle_anims/sprites/wring_out.gbapal");
-
-const u32 gBattleAnimSpriteGfx_ClosingEye[] = INCBIN_U32("graphics/battle_anims/sprites/closing_eye.4bpp.smol");
-const u16 gBattleAnimSpritePal_ClosingEye[] = INCBIN_U16("graphics/battle_anims/sprites/closing_eye.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BlueStar[] = INCBIN_U32("graphics/battle_anims/sprites/blue_star.4bpp.smol");
-const u16 gBattleAnimSpritePal_BlueStar[] = INCBIN_U16("graphics/battle_anims/sprites/blue_star.gbapal");
-
-const u16 gBattleAnimSpritePal_BubbleBurst[] = INCBIN_U16("graphics/battle_anims/sprites/bubble_burst.gbapal");
-const u32 gBattleAnimSpriteGfx_BubbleBurst[] = INCBIN_U32("graphics/battle_anims/sprites/bubble_burst.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_HitDuplicate[] = INCBIN_U32("graphics/battle_anims/sprites/hit_duplicate.4bpp.smol");
-const u16 gBattleAnimSpritePal_HitDuplicate[] = INCBIN_U16("graphics/battle_anims/sprites/hit_duplicate.gbapal");
-
-const u16 gBattleAnimSpritePal_Leer[] = INCBIN_U16("graphics/battle_anims/sprites/leer.gbapal");
-const u32 gBattleAnimSpriteGfx_Leer[] = INCBIN_U32("graphics/battle_anims/sprites/leer.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_BlueBurst[] = INCBIN_U16("graphics/battle_anims/sprites/blue_burst.gbapal");
-const u32 gBattleAnimSpriteGfx_BlueBurst[] = INCBIN_U32("graphics/battle_anims/sprites/blue_burst.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_SmallEmber[] = INCBIN_U32("graphics/battle_anims/sprites/small_ember.4bpp.smol");
-const u16 gBattleAnimSpritePal_SmallEmber[] = INCBIN_U16("graphics/battle_anims/sprites/small_ember.gbapal");
-
-const u32 gBattleAnimSpriteGfx_GraySmoke[] = INCBIN_U32("graphics/battle_anims/sprites/gray_smoke.4bpp.smol");
-const u16 gBattleAnimSpritePal_GraySmoke[] = INCBIN_U16("graphics/battle_anims/sprites/gray_smoke.gbapal");
-
-const u16 gBattleAnimSpritePal_Fire[] = INCBIN_U16("graphics/battle_anims/sprites/fire.gbapal");
-const u32 gBattleAnimSpriteGfx_Fire[] = INCBIN_U32("graphics/battle_anims/sprites/fire.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_SpinningFire[] = INCBIN_U32("graphics/battle_anims/sprites/spinning_fire.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_FirePlume[] = INCBIN_U32("graphics/battle_anims/sprites/fire_plume.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_Lightning2[] = INCBIN_U16("graphics/battle_anims/sprites/lightning_2.gbapal");
-const u32 gBattleAnimSpriteGfx_Lightning2[] = INCBIN_U32("graphics/battle_anims/sprites/lightning_2.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Lightning[] = INCBIN_U32("graphics/battle_anims/sprites/lightning.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_ColoredOrbs[] = INCBIN_U32("graphics/battle_anims/sprites/colored_orbs.4bpp.smol");
-const u16 gBattleAnimSpritePal_ColoredOrbs[] = INCBIN_U16("graphics/battle_anims/sprites/colored_orbs.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WorrySeed[] = INCBIN_U32("graphics/battle_anims/sprites/worry_seed.4bpp.smol");
-const u16 gBattleAnimSpritePal_WorrySeed[] = INCBIN_U16("graphics/battle_anims/sprites/worry_seed.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SmallCloud[] = INCBIN_U32("graphics/battle_anims/sprites/small_cloud.4bpp.smol");
-const u16 gBattleAnimSpritePal_SmallCloud[] = INCBIN_U16("graphics/battle_anims/sprites/small_cloud.gbapal");
-
-const u32 gBattleAnimSpriteGfx_AttackOrder[] = INCBIN_U32("graphics/battle_anims/sprites/attack_order.4bpp.smol");
-const u16 gBattleAnimSpritePal_AttackOrder[] = INCBIN_U16("graphics/battle_anims/sprites/attack_order.gbapal");
-
-const u32 gBattleAnimSpriteGfx_DragonPulse[] = INCBIN_U32("graphics/battle_anims/sprites/dragon_pulse.4bpp.smol");
-const u16 gBattleAnimSpritePal_DragonPulse[] = INCBIN_U16("graphics/battle_anims/sprites/dragon_pulse.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WoodHammer[] = INCBIN_U32("graphics/battle_anims/sprites/wood_hammer.4bpp.smol");
-const u16 gBattleAnimSpritePal_WoodHammer[] = INCBIN_U16("graphics/battle_anims/sprites/wood_hammer.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PsychoCut[] = INCBIN_U32("graphics/battle_anims/sprites/psycho_cut.4bpp.smol");
-const u16 gBattleAnimSpritePal_PsychoCut[] = INCBIN_U16("graphics/battle_anims/sprites/psycho_cut.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PowerGem[] = INCBIN_U32("graphics/battle_anims/sprites/power_gem.4bpp.smol");
-const u16 gBattleAnimSpritePal_PowerGem[] = INCBIN_U16("graphics/battle_anims/sprites/power_gem.gbapal");
-
-const u32 gBattleAnimSpriteGfx_StoneEdge[] = INCBIN_U32("graphics/battle_anims/sprites/stone_edge.4bpp.smol");
-const u16 gBattleAnimSpritePal_StoneEdge[] = INCBIN_U16("graphics/battle_anims/sprites/stone_edge.gbapal");
-
-const u32 gBattleAnimSpriteGfx_StealthRock[] = INCBIN_U32("graphics/battle_anims/sprites/stealth_rock.4bpp.smol");
-const u16 gBattleAnimSpritePal_StealthRock[] = INCBIN_U16("graphics/battle_anims/sprites/stealth_rock.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PoisonJab[] = INCBIN_U32("graphics/battle_anims/sprites/poison_jab.4bpp.smol");
-const u16 gBattleAnimSpritePal_PoisonJab[] = INCBIN_U16("graphics/battle_anims/sprites/poison_jab.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SpinningBall[] = INCBIN_U32("graphics/battle_anims/unused/spinning_ball.4bpp.smol");
-const u16 gBattleAnimSpritePal_SpinningBall[] = INCBIN_U16("graphics/battle_anims/unused/spinning_ball.gbapal");
-const u16 gBattleAnimSpritePal_SpinningBall2[] = INCBIN_U16("graphics/battle_anims/unused/spinning_ball_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WoodHammerHammer[] = INCBIN_U32("graphics/battle_anims/sprites/wood_hammer_hammer.4bpp.smol");
-const u16 gBattleAnimSpritePal_WoodHammerHammer[] = INCBIN_U16("graphics/battle_anims/sprites/wood_hammer_hammer.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Snowflakes[] = INCBIN_U32("graphics/battle_anims/sprites/snowflakes.4bpp.smol");
-const u16 gBattleAnimSpritePal_Snowflakes[] = INCBIN_U16("graphics/battle_anims/sprites/snowflakes.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SyrupBlob[] = INCBIN_U32("graphics/battle_anims/sprites/syrup_bomb_blob.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_SyrupShell[] = INCBIN_U32("graphics/battle_anims/sprites/syrup_bomb_shell.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_SyrupSplat[] = INCBIN_U32("graphics/battle_anims/sprites/syrup_bomb_splat.4bpp.smol");
-const u16 gBattleAnimSpritePal_SyrupRed[] = INCBIN_U16("graphics/battle_anims/sprites/syrup_red.gbapal");
-const u16 gBattleAnimSpritePal_SyrupYellow[] = INCBIN_U16("graphics/battle_anims/sprites/syrup_yellow.gbapal");
-
-const u32 gBattleAnimSpriteGfx_IvyCudgel[] = INCBIN_U32("graphics/battle_anims/sprites/cudgel.4bpp.smol");
-const u16 gBattleAnimSpritePal_IvyCudgelGrass[] = INCBIN_U16("graphics/pokemon/ogerpon/normal.gbapal");
-const u16 gBattleAnimSpritePal_IvyCudgelFire[] = INCBIN_U16("graphics/pokemon/ogerpon/hearthflame/normal.gbapal");
-const u16 gBattleAnimSpritePal_IvyCudgelRock[] = INCBIN_U16("graphics/pokemon/ogerpon/cornerstone/normal.gbapal");
-const u16 gBattleAnimSpritePal_IvyCudgelWater[] = INCBIN_U16("graphics/pokemon/ogerpon/wellspring/normal.gbapal");
-
-// old battle interface data, unused
-
-const u32 gOldBattleInterfaceGfx[] = INCBIN_U32("graphics/unused/obi1.4bpp.smol");
-const u16 gOldBattleInterfacePal_1_2_3[] = INCBIN_U16("graphics/unused/obi_palpak1.gbapal"); // palettes 1-3
-const u16 gOldBattleInterfacePal4[] = INCBIN_U16("graphics/unused/old_pal4.gbapal"); // 4 is by itself
-const u16 gOldBattleInterfacePal_5_6_7[] = INCBIN_U16("graphics/unused/obi_palpak3.gbapal"); // palettes 5-7
-const u32 gOldBattleInterfaceGfx2[] = INCBIN_U32("graphics/unused/obi2.4bpp.smol");
-const u32 gOldBattleInterfaceTilemap[] = INCBIN_U32("graphics/unused/old_battle_interface_tilemap.bin.smolTM");
-
-const u16 gBattleAnimSpritePal_ClawSlash2[] = INCBIN_U16("graphics/battle_anims/sprites/claw_slash_2.gbapal");
-const u16 gBattleAnimSpritePal_ClawSlash[] = INCBIN_U16("graphics/battle_anims/sprites/claw_slash.gbapal");
-
-const u32 gBattleAnimSpriteGfx_ClawSlash2[] = INCBIN_U32("graphics/battle_anims/sprites/claw_slash_2.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_ClawSlash[] = INCBIN_U32("graphics/battle_anims/sprites/claw_slash.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Scratch3[] = INCBIN_U32("graphics/battle_anims/sprites/scratch_3.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Scratch2[] = INCBIN_U32("graphics/battle_anims/sprites/scratch_2.4bpp.smol");
-
-const u32 gUnusedHpBar_Gfx[] = INCBIN_U32("graphics/battle_interface/hpbar_unused.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_BubbleBurst2[] = INCBIN_U32("graphics/battle_anims/sprites/bubble_burst_2.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_BubbleBurst2[] = INCBIN_U16("graphics/battle_anims/sprites/bubble_burst_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_IceChunk[] = INCBIN_U32("graphics/battle_anims/sprites/ice_chunk.4bpp.smol");
-const u16 gBattleAnimSpritePal_IceChunk[] = INCBIN_U16("graphics/battle_anims/sprites/ice_chunk.gbapal");
-
-const u16 gBattleAnimSpritePal_Glass2[] = INCBIN_U16("graphics/battle_anims/sprites/glass_2.gbapal");
-const u32 gBattleAnimSpriteGfx_Glass2[] = INCBIN_U32("graphics/battle_anims/sprites/glass_2.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_PinkHeart2[] = INCBIN_U16("graphics/battle_anims/sprites/pink_heart_2.gbapal");
-const u32 gBattleAnimSpriteGfx_PinkHeart2[] = INCBIN_U32("graphics/battle_anims/sprites/pink_heart_2.4bpp.smol");
-
-const u32 gBattleInterfaceGfx_UnusedWindow1[] = INCBIN_U32("graphics/battle_interface/unused_window.4bpp.smol");
-const u16 gBattleInterfacePal_UnusedWindow1[] = INCBIN_U16("graphics/battle_interface/unused_window.gbapal");
-
-const u32 gBattleInterfaceGfx_BattleBar[] = INCBIN_U32("graphics/battle_interface/battle_bar.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_SapDrip[] = INCBIN_U32("graphics/battle_anims/sprites/sap_drip.4bpp.smol");
-const u16 gBattleAnimSpritePal_SapDrip[] = INCBIN_U16("graphics/battle_anims/sprites/sap_drip.gbapal");
-
-const u16 gBattleAnimSpritePal_SapDrip2[] = INCBIN_U16("graphics/battle_anims/sprites/sap_drip_2.gbapal");
-
-const u32 gBattleInterfaceGfx_UnusedWindow2[] = INCBIN_U32("graphics/battle_interface/unused_window2.4bpp.smol");
-const u32 gBattleInterfaceGfx_UnusedWindow2Bar[] = INCBIN_U32("graphics/battle_interface/unused_window2bar.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Sparkle1[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_1.4bpp.smol");
-const u16 gBattleAnimSpritePal_Sparkle1[] = INCBIN_U16("graphics/battle_anims/sprites/sparkle_1.gbapal");
-
-const u16 gBattleAnimSpritePal_Sparkle2[] = INCBIN_U16("graphics/battle_anims/sprites/sparkle_2.gbapal");
-const u16 gBattleAnimSpritePal_HumanoidFoot[] = INCBIN_U16("graphics/battle_anims/sprites/humanoid_foot.gbapal");
-
-const u32 gBattleAnimSpriteGfx_HumanoidFoot[] = INCBIN_U32("graphics/battle_anims/sprites/humanoid_foot.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_MonsterFoot[] = INCBIN_U32("graphics/battle_anims/sprites/monster_foot.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_HumanoidHand[] = INCBIN_U32("graphics/battle_anims/sprites/humanoid_hand.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_LineSketch[] = INCBIN_U32("graphics/battle_anims/unused/line_sketch.4bpp.smol");
-const u16 gBattleAnimSpritePal_LineSketch[] = INCBIN_U16("graphics/battle_anims/unused/line_sketch.gbapal");
-
-const u32 gBattleAnimSpriteGfx_YellowUnk[] = INCBIN_U32("graphics/battle_anims/sprites/yellow_unk.4bpp.smol");
-const u16 gBattleAnimSpritePal_YellowUnk[] = INCBIN_U16("graphics/battle_anims/sprites/yellow_unk.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SlamHit[] = INCBIN_U32("graphics/battle_anims/sprites/slam_hit.4bpp.smol");
-const u16 gBattleAnimSpritePal_SlamHit[] = INCBIN_U16("graphics/battle_anims/sprites/slam_hit.gbapal");
-
-const u32 gBattleAnimSpriteGfx_RedFist[] = INCBIN_U32("graphics/battle_anims/sprites/red_fist.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Ring[] = INCBIN_U32("graphics/battle_anims/sprites/ring.4bpp.smol");
-const u16 gBattleAnimSpritePal_Ring[] = INCBIN_U16("graphics/battle_anims/sprites/ring.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Rocks[] = INCBIN_U32("graphics/battle_anims/sprites/rocks.4bpp.smol");
-const u16 gBattleAnimSpritePal_Rocks[] = INCBIN_U16("graphics/battle_anims/sprites/rocks.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Z[] = INCBIN_U32("graphics/battle_anims/sprites/z.4bpp.smol");
-const u16 gBattleAnimSpritePal_Z[] = INCBIN_U16("graphics/battle_anims/sprites/z.gbapal");
-
-const u32 gBattleAnimSpriteGfx_YellowUnk2[] = INCBIN_U32("graphics/battle_anims/sprites/yellow_unk_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_YellowUnk2[] = INCBIN_U16("graphics/battle_anims/sprites/yellow_unk_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_AirSlash[] = INCBIN_U32("graphics/battle_anims/sprites/air_slash.4bpp.smol");
-const u16 gBattleAnimSpritePal_AirSlash[] = INCBIN_U16("graphics/battle_anims/sprites/air_slash.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SpinningGreenOrbs[] = INCBIN_U32("graphics/battle_anims/sprites/spinning_green_orbs.4bpp.smol");
-const u16 gBattleAnimSpritePal_SpinningGreenOrbs[] = INCBIN_U16("graphics/battle_anims/sprites/spinning_green_orbs.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Leaf[] = INCBIN_U32("graphics/battle_anims/sprites/leaf.4bpp.smol");
-const u16 gBattleAnimSpritePal_Leaf[] = INCBIN_U16("graphics/battle_anims/sprites/leaf.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MetronomeSmallHand[] = INCBIN_U32("graphics/battle_anims/unused/metronome_hand_small.4bpp.smol"); // unused, was for metronome at one point
-
-const u16 gBattleAnimSpritePal_Clapping[] = INCBIN_U16("graphics/battle_anims/sprites/clapping.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PoisonPowder[] = INCBIN_U32("graphics/battle_anims/sprites/poison_powder.4bpp.smol");
-const u16 gBattleAnimSpritePal_PoisonPowder[] = INCBIN_U16("graphics/battle_anims/sprites/poison_powder.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BrownTriangle[] = INCBIN_U32("graphics/battle_anims/sprites/brown_triangle.4bpp.smol");
-const u16 gBattleAnimSpritePal_BrownTriangle[] = INCBIN_U16("graphics/battle_anims/sprites/brown_triangle.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Sparkle3[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_3.4bpp.smol");
-const u16 gBattleAnimSpritePal_Sparkle3[] = INCBIN_U16("graphics/battle_anims/sprites/sparkle_3.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Sparkle4[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_4.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_MusicNotes[] = INCBIN_U32("graphics/battle_anims/sprites/music_notes.4bpp.smol");
-const u16 gBattleAnimSpritePal_MusicNotes[] = INCBIN_U16("graphics/battle_anims/sprites/music_notes.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Duck[] = INCBIN_U32("graphics/battle_anims/sprites/duck.4bpp.smol");
-const u16 gBattleAnimSpritePal_Duck[] = INCBIN_U16("graphics/battle_anims/sprites/duck.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Alert[] = INCBIN_U32("graphics/battle_anims/sprites/alert.4bpp.smol");
-const u16 gBattleAnimSpritePal_Alert[] = INCBIN_U16("graphics/battle_anims/sprites/alert.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Shock4[] = INCBIN_U32("graphics/battle_anims/sprites/shock_4.4bpp.smol");
-const u16 gBattleAnimSpritePal_Shock4[] = INCBIN_U16("graphics/battle_anims/sprites/shock_4.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Shock[] = INCBIN_U32("graphics/battle_anims/sprites/shock.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Bell2[] = INCBIN_U32("graphics/battle_anims/sprites/bell_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_Bell2[] = INCBIN_U16("graphics/battle_anims/sprites/bell_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PinkGlove[] = INCBIN_U32("graphics/battle_anims/sprites/pink_glove.4bpp.smol");
-const u16 gBattleAnimSpritePal_PinkGlove[] = INCBIN_U16("graphics/battle_anims/sprites/pink_glove.gbapal");
-
-const u16 gBattleAnimUnused_Unknown1[] = INCBIN_U16("graphics/battle_anims/unused/unknown_1.bin");
-const u16 gBattleAnimUnused_Unknown2[] = INCBIN_U16("graphics/battle_anims/unused/unknown_2.bin");
-const u16 gBattleAnimUnused_Unknown3[] = INCBIN_U16("graphics/battle_anims/unused/unknown_3.bin");
-
-const u32 gBattleAnimUnusedGfx_LineSketch2[] = INCBIN_U32("graphics/battle_anims/unused/line_sketch_2.8bpp.smol");
-const u16 gBattleAnimUnusedPal_LineSketch2[] = INCBIN_U16("graphics/battle_anims/unused/line_sketch_2.gbapal");
-const u32 gBattleAnimUnusedTilemap_LineSketch2[] = INCBIN_U32("graphics/battle_anims/unused/line_sketch_2.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_BlueLines[] = INCBIN_U32("graphics/battle_anims/sprites/blue_lines.4bpp.smol");
-const u16 gBattleAnimSpritePal_BlueLines[] = INCBIN_U16("graphics/battle_anims/sprites/blue_lines.gbapal");
-
-const u16 gBattleAnimSpritePal_Impact3[] = INCBIN_U16("graphics/battle_anims/sprites/impact_3.gbapal");
-const u16 gBattleAnimSpritePal_Impact2[] = INCBIN_U16("graphics/battle_anims/sprites/impact_2.gbapal");
-const u16 gBattleAnimSpritePal_Reticle[] = INCBIN_U16("graphics/battle_anims/sprites/reticle.gbapal");
-const u16 gBattleAnimSpritePal_Breath[] = INCBIN_U16("graphics/battle_anims/sprites/breath.gbapal");
-const u16 gBattleAnimSpritePal_Snowball[] = INCBIN_U16("graphics/battle_anims/sprites/snowball.gbapal");
-const u16 gBattleAnimSpritePal_Vine[] = INCBIN_U16("graphics/battle_anims/sprites/vine.gbapal");
-const u16 gBattleAnimSpritePal_Sword2[] = INCBIN_U16("graphics/battle_anims/sprites/sword_2.gbapal");
-const u16 gBattleAnimSpritePal_RedTube[] = INCBIN_U16("graphics/battle_anims/sprites/red_tube.gbapal");
-const u16 gBattleAnimSpritePal_Amnesia[] = INCBIN_U16("graphics/battle_anims/sprites/amnesia.gbapal");
-const u16 gBattleAnimSpritePal_String2[] = INCBIN_U16("graphics/battle_anims/sprites/string_2.gbapal");
-
-const u32 gBattleAnimUnused_Unknown4[] = INCBIN_U32("graphics/battle_anims/unused/unknown_4.bin.smolTM");
-
-const u16 gBattleAnimSpritePal_Pencil2[] = INCBIN_U16("graphics/battle_anims/sprites/pencil_2.gbapal");
-const u16 gBattleAnimSpritePal_Petal[] = INCBIN_U16("graphics/battle_anims/sprites/petal.gbapal");
-const u16 gBattleAnimSpritePal_BentSpoon[] = INCBIN_U16("graphics/battle_anims/sprites/bent_spoon.gbapal");
-const u16 gBattleAnimSpritePal_Coin[] = INCBIN_U16("graphics/battle_anims/sprites/coin.gbapal");
-const u16 gBattleAnimSpritePal_CrackedEgg[] = INCBIN_U16("graphics/battle_anims/sprites/cracked_egg.gbapal");
-const u16 gBattleAnimSpritePal_FreshEgg[] = INCBIN_U16("graphics/battle_anims/sprites/fresh_egg.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Impact3[] = INCBIN_U32("graphics/battle_anims/sprites/impact_3.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Impact2[] = INCBIN_U32("graphics/battle_anims/sprites/impact_2.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Reticle[] = INCBIN_U32("graphics/battle_anims/sprites/reticle.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Breath[] = INCBIN_U32("graphics/battle_anims/sprites/breath.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Snowball[] = INCBIN_U32("graphics/battle_anims/sprites/snowball.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Vine[] = INCBIN_U32("graphics/battle_anims/sprites/vine.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Sword2[] = INCBIN_U32("graphics/battle_anims/sprites/sword_2.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Clapping[] = INCBIN_U32("graphics/battle_anims/sprites/clapping.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_RedTube[] = INCBIN_U32("graphics/battle_anims/sprites/red_tube.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Amnesia[] = INCBIN_U32("graphics/battle_anims/sprites/amnesia.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_String2[] = INCBIN_U32("graphics/battle_anims/sprites/string_2.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Pencil2[] = INCBIN_U32("graphics/battle_anims/sprites/pencil_2.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Petal[] = INCBIN_U32("graphics/battle_anims/sprites/petal.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_BentSpoon[] = INCBIN_U32("graphics/battle_anims/sprites/bent_spoon.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Web[] = INCBIN_U32("graphics/battle_anims/sprites/web.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Coin[] = INCBIN_U32("graphics/battle_anims/sprites/coin.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_CrackedEgg[] = INCBIN_U32("graphics/battle_anims/sprites/cracked_egg.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_HatchedEgg[] = INCBIN_U32("graphics/battle_anims/sprites/hatched_egg.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_FreshEgg[] = INCBIN_U32("graphics/battle_anims/sprites/fresh_egg.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Fangs[] = INCBIN_U32("graphics/battle_anims/sprites/fangs.4bpp.smol");
-const u16 gBattleAnimSpritePal_Fangs[] = INCBIN_U16("graphics/battle_anims/sprites/fangs.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Explosion2[] = INCBIN_U32("graphics/battle_anims/sprites/explosion_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_Explosion2[] = INCBIN_U16("graphics/battle_anims/sprites/explosion_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Explosion3[] = INCBIN_U32("graphics/battle_anims/sprites/explosion_3.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_WaterDroplet[] = INCBIN_U32("graphics/battle_anims/sprites/water_droplet.4bpp.smol");
-const u16 gBattleAnimSpritePal_WaterDroplet[] = INCBIN_U16("graphics/battle_anims/sprites/water_droplet.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WaterDroplet2[] = INCBIN_U32("graphics/battle_anims/sprites/water_droplet_2.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Seed2[] = INCBIN_U32("graphics/battle_anims/sprites/seed_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_Seed2[] = INCBIN_U16("graphics/battle_anims/sprites/seed_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Sprout[] = INCBIN_U32("graphics/battle_anims/sprites/sprout.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_RedWand[] = INCBIN_U32("graphics/battle_anims/sprites/red_wand.4bpp.smol");
-const u16 gBattleAnimSpritePal_RedWand[] = INCBIN_U16("graphics/battle_anims/sprites/red_wand.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PurpleGreenUnk[] = INCBIN_U32("graphics/battle_anims/sprites/purple_green_unk.4bpp.smol");
-const u16 gBattleAnimSpritePal_PurpleGreenUnk[] = INCBIN_U16("graphics/battle_anims/sprites/purple_green_unk.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WaterColumn[] = INCBIN_U32("graphics/battle_anims/sprites/water_column.4bpp.smol");
-const u16 gBattleAnimSpritePal_WaterColumn[] = INCBIN_U16("graphics/battle_anims/sprites/water_column.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MudUnk[] = INCBIN_U32("graphics/battle_anims/sprites/mud_unk.4bpp.smol");
-const u16 gBattleAnimSpritePal_MudUnk[] = INCBIN_U16("graphics/battle_anims/sprites/mud_unk.gbapal");
-
-const u32 gUnusedTilemap_BlueFrame[] = INCBIN_U32("graphics/unused/blue_frame.bin.smolTM"); // P1, P2, P3 and P4 tilemaps?
-const u32 gUnusedTilemap_RedYellowGreenFrame[] = INCBIN_U32("graphics/unused/redyellowgreen_frame.bin.smolTM");
-const u32 gUnusedGfx_ColorFrames[] = INCBIN_U32("graphics/unused/color_frames.4bpp.smol");
-const u16 gUnusedPal_ColorFrames[] = INCBIN_U16("graphics/unused/color_frames.gbapal");
-
-const u32 gBattleAnimSpriteGfx_RainDrops[] = INCBIN_U32("graphics/battle_anims/sprites/rain_drops.4bpp.smol");
-
-const u32 gBattleAnimUnusedGfx_WaterSplash[] = INCBIN_U32("graphics/battle_anims/unused/water_splash.8bpp.smol");
-const u32 gBattleAnimUnusedTilemap_WaterSplash[] = INCBIN_U32("graphics/battle_anims/unused/water_splash.bin.smolTM");
-const u16 gBattleAnimUnusedPal_WaterSplash[] = INCBIN_U16("graphics/battle_anims/unused/water_splash.gbapal");
-
-const u32 gUnusedGfx_BasicFrame[] = INCBIN_U32("graphics/unused/basic_frame.4bpp.smol");
-const u16 gUnusedPal_BasicFrame[] = INCBIN_U16("graphics/unused/basic_frame.gbapal");
-const u32 gUnusedTilemap_BasicFrame[] = INCBIN_U32("graphics/unused/basic_frame.bin.smolTM");
-
-// Battle Interface
-
-// Gen 4 (HGSS-style) palettes â€” engine-wide
-const u16 gBattleInterface_BallStatusBarPalGen4[] = INCBIN_U16("graphics/battle_interface/gen4/ball_status_bar.gbapal");
-const u16 gBattleInterface_BallDisplayPalGen4[] = INCBIN_U16("graphics/battle_interface/gen4/ball_display.gbapal");
-
-// Gen 3 palettes â€” per-game
-#if IS_HNS
-const u16 gBattleInterface_BallStatusBarPalGen3[] = INCBIN_U16("graphics/battle_interface/hns/ball_status_bar.gbapal");
-const u16 gBattleInterface_BallDisplayPalGen3[] = INCBIN_U16("graphics/battle_interface/hns/ball_display.gbapal");
-#else
-const u16 gBattleInterface_BallStatusBarPalGen3[] = INCBIN_U16("graphics/battle_interface/ball_status_bar.gbapal");
-const u16 gBattleInterface_BallDisplayPalGen3[] = INCBIN_U16("graphics/battle_interface/ball_display.gbapal");
-#endif
-
-// Gen 4 healthbox elements â€” engine-wide
-const u8 gHealthboxElementsGfxTableGen4[][32] = INCBIN_U8("graphics/battle_interface/gen4/hpbar.4bpp",
-                                                  "graphics/battle_interface/gen4/expbar.4bpp",
-                                                  "graphics/battle_interface/gen4/status.4bpp",
-                                                  "graphics/battle_interface/gen4/misc.4bpp",
-                                                  "graphics/battle_interface/gen4/hpbar_anim.4bpp",
-                                                  "graphics/battle_interface/gen4/misc_frameend.4bpp",
-                                                  "graphics/battle_interface/gen4/ball_display.4bpp",
-                                                  "graphics/battle_interface/gen4/ball_caught_indicator.4bpp",
-                                                  "graphics/battle_interface/gen4/status2.4bpp",
-                                                  "graphics/battle_interface/gen4/status3.4bpp",
-                                                  "graphics/battle_interface/gen4/status4.4bpp",
-                                                  "graphics/battle_interface/gen4/healthbox_doubles_frameend.4bpp",
-                                                  "graphics/battle_interface/gen4/healthbox_doubles_frameend_bar.4bpp",
-                                                  "graphics/battle_interface/gen4/shiny_icon.4bpp");
-
-// Gen 3 healthbox elements â€” per-game
-#if IS_HNS
-const u8 gHealthboxElementsGfxTableGen3[][32] = INCBIN_U8("graphics/battle_interface/hns/hpbar.4bpp",
-                                                  "graphics/battle_interface/hns/expbar.4bpp",
-                                                  "graphics/battle_interface/hns/status.4bpp",
-                                                  "graphics/battle_interface/hns/misc.4bpp",
-                                                  "graphics/battle_interface/hns/hpbar_anim.4bpp",
-                                                  "graphics/battle_interface/hns/misc_frameend.4bpp",
-                                                  "graphics/battle_interface/hns/ball_display.4bpp",
-                                                  "graphics/battle_interface/hns/ball_caught_indicator.4bpp",
-                                                  "graphics/battle_interface/hns/status2.4bpp",
-                                                  "graphics/battle_interface/hns/status3.4bpp",
-                                                  "graphics/battle_interface/hns/status4.4bpp",
-                                                  "graphics/battle_interface/hns/healthbox_doubles_frameend.4bpp",
-                                                  "graphics/battle_interface/hns/healthbox_doubles_frameend_bar.4bpp",
-                                                  "graphics/battle_interface/shiny_icon.4bpp");
-#else
-const u8 gHealthboxElementsGfxTableGen3[][32] = INCBIN_U8("graphics/battle_interface/hpbar.4bpp",
-                                                  "graphics/battle_interface/expbar.4bpp",
-                                                  "graphics/battle_interface/status.4bpp",
-                                                  "graphics/battle_interface/misc.4bpp",
-                                                  "graphics/battle_interface/hpbar_anim.4bpp",
-                                                  "graphics/battle_interface/misc_frameend.4bpp",
-                                                  "graphics/battle_interface/ball_display.4bpp",
-                                                  "graphics/battle_interface/ball_caught_indicator.4bpp",
-                                                  "graphics/battle_interface/status2.4bpp",
-                                                  "graphics/battle_interface/status3.4bpp",
-                                                  "graphics/battle_interface/status4.4bpp",
-                                                  "graphics/battle_interface/healthbox_doubles_frameend.4bpp",
-                                                  "graphics/battle_interface/healthbox_doubles_frameend_bar.4bpp");
-#endif
-const u32 gNuzlockeFirstEncounterIndicatorGfx[] = INCBIN_U32("graphics/battle_interface/nuzlocke_indicator.4bpp");
-const u32 gBattleInterfaceGfx_UnusedWindow3[] = INCBIN_U32("graphics/battle_interface/unused_window3.4bpp.smol");
-const u32 gBattleInterfaceGfx_UnusedWindow4[] = INCBIN_U32("graphics/battle_interface/unused_window4.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_FurySwipes[] = INCBIN_U32("graphics/battle_anims/sprites/fury_swipes.4bpp.smol");
-const u16 gBattleAnimSpritePal_FurySwipes[] = INCBIN_U16("graphics/battle_anims/sprites/fury_swipes.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Vine2[] = INCBIN_U32("graphics/battle_anims/sprites/vine_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_Vine2[] = INCBIN_U16("graphics/battle_anims/sprites/vine_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Teeth[] = INCBIN_U32("graphics/battle_anims/sprites/teeth.4bpp.smol");
-const u16 gBattleAnimSpritePal_Teeth[] = INCBIN_U16("graphics/battle_anims/sprites/teeth.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Bone2[] = INCBIN_U32("graphics/battle_anims/sprites/bone_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_Bone2[] = INCBIN_U16("graphics/battle_anims/sprites/bone_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WhiteBag[] = INCBIN_U32("graphics/battle_anims/sprites/white_bag.4bpp.smol");
-const u16 gBattleAnimSpritePal_WhiteBag[] = INCBIN_U16("graphics/battle_anims/sprites/white_bag.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Unknown[] = INCBIN_U32("graphics/battle_anims/sprites/unknown.4bpp.smol");
-const u16 gBattleAnimSpritePal_Unknown[] = INCBIN_U16("graphics/battle_anims/sprites/unknown.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PurpleCoral[] = INCBIN_U32("graphics/battle_anims/sprites/purple_coral.4bpp.smol");
-const u16 gBattleAnimSpritePal_PurpleCoral[] = INCBIN_U16("graphics/battle_anims/sprites/purple_coral.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PurpleDroplet[] = INCBIN_U32("graphics/battle_anims/sprites/purple_droplet.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Shock2[] = INCBIN_U32("graphics/battle_anims/sprites/shock_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_Shock2[] = INCBIN_U16("graphics/battle_anims/sprites/shock_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_ClosingEye2[] = INCBIN_U32("graphics/battle_anims/sprites/closing_eye_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_ClosingEye2[] = INCBIN_U16("graphics/battle_anims/sprites/closing_eye_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MetalBall[] = INCBIN_U32("graphics/battle_anims/sprites/metal_ball.4bpp.smol");
-const u16 gBattleAnimSpritePal_MetalBall[] = INCBIN_U16("graphics/battle_anims/sprites/metal_ball.gbapal");
-
-#if !P_GBA_STYLE_SPECIES_GFX
-    const u32 gBattleAnimSpriteGfx_MonsterDoll[] = INCBIN_U32("graphics/battle_anims/sprites/monster_doll.4bpp.smol");
-    const u16 gBattleAnimSpritePal_MonsterDoll[] = INCBIN_U16("graphics/battle_anims/sprites/monster_doll.gbapal");
-#else
-    const u32 gBattleAnimSpriteGfx_MonsterDoll[] = INCBIN_U32("graphics/battle_anims/sprites/monster_doll_gba.4bpp.smol");
-    const u16 gBattleAnimSpritePal_MonsterDoll[] = INCBIN_U16("graphics/battle_anims/sprites/monster_doll_gba.gbapal");
-#endif //P_GBA_STYLE_SPECIES_GFX
-
-const u32 gBattleAnimSpriteGfx_Whirlwind[] = INCBIN_U32("graphics/battle_anims/sprites/whirlwind.4bpp.smol");
-const u16 gBattleAnimSpritePal_Whirlwind[] = INCBIN_U16("graphics/battle_anims/sprites/whirlwind.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Whirlwind2[] = INCBIN_U32("graphics/battle_anims/sprites/whirlwind_2.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Explosion4[] = INCBIN_U32("graphics/battle_anims/sprites/explosion_4.4bpp.smol");
-const u16 gBattleAnimSpritePal_Explosion4[] = INCBIN_U16("graphics/battle_anims/sprites/explosion_4.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Explosion5[] = INCBIN_U32("graphics/battle_anims/sprites/explosion_5.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Tongue[] = INCBIN_U32("graphics/battle_anims/sprites/tongue.4bpp.smol");
-const u16 gBattleAnimSpritePal_Tongue[] = INCBIN_U16("graphics/battle_anims/sprites/tongue.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Smoke[] = INCBIN_U32("graphics/battle_anims/sprites/smoke.4bpp.smol");
-const u16 gBattleAnimSpritePal_Smoke[] = INCBIN_U16("graphics/battle_anims/sprites/smoke.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Smoke2[] = INCBIN_U32("graphics/battle_anims/sprites/smoke_2.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_BlueFlames[] = INCBIN_U32("graphics/battle_anims/sprites/blue_flames.4bpp.smol");
-const u16 gBattleAnimSpritePal_BlueFlames[] = INCBIN_U16("graphics/battle_anims/sprites/blue_flames.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BlueFlames2[] = INCBIN_U32("graphics/battle_anims/sprites/blue_flames_2.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_TatsugiriCurly[] = INCBIN_U32("graphics/battle_anims/sprites/tatsugiri_curly.4bpp.smol");
-const u16 gBattleAnimSpritePal_TatsugiriCurly[] = INCBIN_U16("graphics/battle_anims/sprites/tatsugiri_curly.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TatsugiriDroopy[] = INCBIN_U32("graphics/battle_anims/sprites/tatsugiri_droopy.4bpp.smol");
-const u16 gBattleAnimSpritePal_TatsugiriDroopy[] = INCBIN_U16("graphics/battle_anims/sprites/tatsugiri_droopy.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TatsugiriStretchy[] = INCBIN_U32("graphics/battle_anims/sprites/tatsugiri_stretchy.4bpp.smol");
-const u16 gBattleAnimSpritePal_TatsugiriStretchy[] = INCBIN_U16("graphics/battle_anims/sprites/tatsugiri_stretchy.gbapal");
-
-// Contest
-const u32 gJPContestGfx1[] = INCBIN_U32("graphics/contest/japanese/composite_1.4bpp.smol");
-const u16 gJPContestPal[] = INCBIN_U16("graphics/contest/japanese/palette.gbapal");
-const u32 gJPContestBgTilemap[] = INCBIN_U32("graphics/contest/japanese/bg.bin.smolTM");
-const u32 gJPContestWindowsTilemap[] = INCBIN_U32("graphics/contest/japanese/windows.bin.smolTM");
-const u32 gJPContestGfx2[] = INCBIN_U32("graphics/contest/japanese/composite_2.4bpp.smol");
-
-const u16 gContestInterfaceAudiencePalette[] = INCBIN_U16("graphics/contest/interface.gbapal");
-const u32 gContestAudienceTilemap[] = INCBIN_U32("graphics/contest/audience.bin.smolTM");
-const u32 gContestInterfaceTilemap[] = INCBIN_U32("graphics/contest/interface.bin.smolTM");
-const u32 gJPContestInterfaceTilemap[] = INCBIN_U32("graphics/contest/japanese/interface.bin.smolTM");
-const u32 gJPContestAudienceTilemap[] = INCBIN_U32("graphics/contest/japanese/audience.bin.smolTM");
-const u32 gContestCurtainTilemap[] = INCBIN_U32("graphics/contest/curtain.bin.smolTM");
-
-const u32 gContestInterfaceGfx[] = INCBIN_U32("graphics/contest/interface.4bpp.smol");
-const u32 gContestAudienceGfx[] = INCBIN_U32("graphics/contest/audience.4bpp.smol");
-const u32 gContestFaces_Gfx[] = INCBIN_U32("graphics/contest/faces.4bpp.smol");
-const u32 gContestJudgeSymbolsGfx[] = INCBIN_U32("graphics/contest/judge_symbols.4bpp.smol");
-const u16 gContestJudgeSymbolsPal[] = INCBIN_U16("graphics/contest/judge_symbols.gbapal");
-const u8 gContestSliderHeart_Gfx[] = INCBIN_U8("graphics/contest/slider_heart.4bpp");
-
-// JP equivalent of the Applause meter
-const u32 gJPContestVoltageGfx[] = INCBIN_U32("graphics/contest/japanese/voltage.4bpp.smol");
-const u16 gJPContestVoltagePal[] = INCBIN_U16("graphics/contest/japanese/voltage.gbapal");
-
-// Contest results
-const u32 gContestResults_Gfx[]                  = INCBIN_U32("graphics/contest/results_screen/tiles.4bpp.smol");
-const u32 gContestResults_WinnerBanner_Tilemap[] = INCBIN_U32("graphics/contest/results_screen/winner_banner.bin.smolTM");
-const u32 gContestResults_Interface_Tilemap[]    = INCBIN_U32("graphics/contest/results_screen/interface.bin.smolTM");
-const u32 gContestResults_Bg_Tilemap[]           = INCBIN_U32("graphics/contest/results_screen/bg.bin.smolTM");
-const u16 gContestResults_Pal[]                  = INCBIN_U16("graphics/contest/results_screen/tiles.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Impact[] = INCBIN_U32("graphics/battle_anims/sprites/impact.4bpp.smol");
-const u16 gBattleAnimSpritePal_Impact[] = INCBIN_U16("graphics/battle_anims/sprites/impact.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Particles[] = INCBIN_U32("graphics/battle_anims/sprites/particles.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Particles2[] = INCBIN_U32("graphics/battle_anims/sprites/particles2.4bpp.smol");
-const u16 gBattleAnimSpritePal_Particles2[] = INCBIN_U16("graphics/battle_anims/sprites/particles2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_CircleImpact[] = INCBIN_U32("graphics/battle_anims/sprites/circle_impact.4bpp.smol");
-const u16 gBattleAnimSpritePal_CircleImpact[] = INCBIN_U16("graphics/battle_anims/sprites/circle_impact.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Scratch[] = INCBIN_U32("graphics/battle_anims/sprites/scratch.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_SharpTeeth[] = INCBIN_U32("graphics/battle_anims/sprites/sharp_teeth.4bpp.smol");
-const u16 gBattleAnimSpritePal_SharpTeeth[] = INCBIN_U16("graphics/battle_anims/sprites/sharp_teeth.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Clamp[] = INCBIN_U32("graphics/battle_anims/sprites/clamp.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Cut[] = INCBIN_U32("graphics/battle_anims/sprites/cut.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_RainbowRings[] = INCBIN_U32("graphics/battle_anims/sprites/rainbow_rings.4bpp.smol");
-const u16 gBattleAnimSpritePal_RainbowRings[] = INCBIN_U16("graphics/battle_anims/sprites/rainbow_rings.gbapal");
-
-const u32 gBattleAnimSpriteGfx_IceCrystals[] = INCBIN_U32("graphics/battle_anims/sprites/ice_crystals.4bpp.smol");
-const u16 gBattleAnimSpritePal_IceCrystals[] = INCBIN_U16("graphics/battle_anims/sprites/ice_crystals.gbapal");
-
-const u32 gBattleAnimSpriteGfx_IceSpikes[] = INCBIN_U32("graphics/battle_anims/sprites/ice_spikes.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_OldBeatUp[] = INCBIN_U32("graphics/battle_anims/unused/old_beatup.4bpp.smol");
-const u16 gBattleAnimSpritePal_OldBeatUp[] = INCBIN_U16("graphics/battle_anims/unused/old_beatup.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Orbs[] = INCBIN_U32("graphics/battle_anims/sprites/orbs.4bpp.smol");
-const u16 gBattleAnimSpritePal_Orbs[] = INCBIN_U16("graphics/battle_anims/sprites/orbs.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WaterOrb[] = INCBIN_U32("graphics/battle_anims/sprites/water_orb.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_WaterImpact[] = INCBIN_U32("graphics/battle_anims/sprites/water_impact.4bpp.smol");
-const u16 gBattleAnimSpritePal_WaterImpact[] = INCBIN_U16("graphics/battle_anims/sprites/water_impact.gbapal");
-
-const u16 gBattleAnimSpritePal_BrownOrb[] = INCBIN_U16("graphics/battle_anims/sprites/brown_orb.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MudSand[] = INCBIN_U32("graphics/battle_anims/sprites/mud_sand.4bpp.smol");
-const u16 gBattleAnimSpritePal_MudSand[] = INCBIN_U16("graphics/battle_anims/sprites/mud_sand.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PoisonBubble[] = INCBIN_U32("graphics/battle_anims/sprites/poison_bubble.4bpp.smol");
-const u16 gBattleAnimSpritePal_PoisonBubble[] = INCBIN_U16("graphics/battle_anims/sprites/poison_bubble.gbapal");
-
-const u32 gBattleAnimSpriteGfx_ToxicBubble[] = INCBIN_U32("graphics/battle_anims/sprites/toxic_bubble.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_HornHit2[] = INCBIN_U32("graphics/battle_anims/sprites/horn_hit_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_HornHit2[] = INCBIN_U16("graphics/battle_anims/sprites/horn_hit_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_AirWave2[] = INCBIN_U32("graphics/battle_anims/sprites/air_wave_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_AirWave2[] = INCBIN_U16("graphics/battle_anims/sprites/air_wave_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SmallBubbles[] = INCBIN_U32("graphics/battle_anims/sprites/small_bubbles.4bpp.smol");
-const u16 gBattleAnimSpritePal_SmallBubbles[] = INCBIN_U16("graphics/battle_anims/sprites/small_bubbles.gbapal");
-
-const u32 gBattleAnimSpriteGfx_RoundShadow[] = INCBIN_U32("graphics/battle_anims/sprites/round_shadow.4bpp.smol");
-const u16 gBattleAnimSpritePal_RoundShadow[] = INCBIN_U16("graphics/battle_anims/sprites/round_shadow.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Sunlight[] = INCBIN_U32("graphics/battle_anims/sprites/sunlight.4bpp.smol");
-const u16 gBattleAnimSpritePal_Sunlight[] = INCBIN_U16("graphics/battle_anims/sprites/sunlight.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Spore[] = INCBIN_U32("graphics/battle_anims/sprites/spore.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_Spore[] = INCBIN_U16("graphics/battle_anims/sprites/spore.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Flower[] = INCBIN_U32("graphics/battle_anims/sprites/flower.4bpp.smol");
-const u16 gBattleAnimSpritePal_Flower[] = INCBIN_U16("graphics/battle_anims/sprites/flower.gbapal");
-
-const u32 gBattleAnimSpriteGfx_RazorLeaf[] = INCBIN_U32("graphics/battle_anims/sprites/razor_leaf.4bpp.smol");
-const u16 gBattleAnimSpritePal_RazorLeaf[] = INCBIN_U16("graphics/battle_anims/sprites/razor_leaf.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MistCloud[] = INCBIN_U32("graphics/battle_anims/sprites/mist_cloud.4bpp.smol");
-const u16 gBattleAnimSpritePal_MistCloud[] = INCBIN_U16("graphics/battle_anims/sprites/mist_cloud.gbapal");
-
-const u32 gBattleAnimUnusedGfx_Lights[] = INCBIN_U32("graphics/battle_anims/unused/lights.4bpp.smol");
-const u16 gBattleAnimUnusedPal_Lights[] = INCBIN_U16("graphics/battle_anims/unused/lights.gbapal");
-const u32 gBattleAnimUnusedTilemap_Lights[] = INCBIN_U32("graphics/battle_anims/unused/lights.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_WhirlwindLines[] = INCBIN_U32("graphics/battle_anims/sprites/whirlwind_lines.4bpp.smol");
-const u16 gBattleAnimSpritePal_WhirlwindLines[] = INCBIN_U16("graphics/battle_anims/sprites/whirlwind_lines.gbapal");
-
-const u32 gBattleAnimSpriteGfx_GoldRing[] = INCBIN_U32("graphics/battle_anims/sprites/gold_ring.4bpp.smol");
-const u16 gBattleAnimSpritePal_GoldRing[] = INCBIN_U16("graphics/battle_anims/sprites/gold_ring.gbapal");
-
-const u16 gBattleAnimSpritePal_BlueRing2[] = INCBIN_U16("graphics/battle_anims/sprites/blue_ring_2.gbapal");
-const u16 gBattleAnimSpritePal_PurpleRing[] = INCBIN_U16("graphics/battle_anims/sprites/purple_ring.gbapal");
-const u16 gBattleAnimSpritePal_BlueRing[] = INCBIN_U16("graphics/battle_anims/sprites/blue_ring.gbapal");
-
-const u32 gBattleAnimSpriteGfx_GreenLightWall[] = INCBIN_U32("graphics/battle_anims/sprites/green_light_wall.4bpp.smol");
-const u16 gBattleAnimSpritePal_GreenLightWall[] = INCBIN_U16("graphics/battle_anims/sprites/green_light_wall.gbapal");
-
-const u16 gBattleAnimSpritePal_BlueLightWall[] = INCBIN_U16("graphics/battle_anims/sprites/blue_light_wall.gbapal");
-const u16 gBattleAnimSpritePal_RedLightWall[] = INCBIN_U16("graphics/battle_anims/sprites/red_light_wall.gbapal");
-const u16 gBattleAnimSpritePal_GrayLightWall[] = INCBIN_U16("graphics/battle_anims/sprites/gray_light_wall.gbapal");
-const u16 gBattleAnimSpritePal_OrangeLightWall[] = INCBIN_U16("graphics/battle_anims/sprites/orange_light_wall.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BlackBall2[] = INCBIN_U32("graphics/battle_anims/sprites/black_ball_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_BlackBall2[] = INCBIN_U16("graphics/battle_anims/sprites/black_ball_2.gbapal");
-
-const u16 gBattleAnimSpritePal_PurpleGasCloud[] = INCBIN_U16("graphics/battle_anims/sprites/purple_gas_cloud.gbapal");
-
-const u32 gContestJudgeGfx[] = INCBIN_U32("graphics/contest/judge.4bpp.smol");
-const u16 gContest2Pal[] = INCBIN_U16("graphics/contest/judge.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Spark[] = INCBIN_U32("graphics/battle_anims/sprites/spark.4bpp.smol");
-const u16 gBattleAnimSpritePal_Spark[] = INCBIN_U16("graphics/battle_anims/sprites/spark.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SparkH[] = INCBIN_U32("graphics/battle_anims/sprites/spark_h.4bpp.smol");
-
-const u32 gBattleAnimBgImage_Dark[] = INCBIN_U32("graphics/battle_anims/backgrounds/dark.4bpp.smol");
-const u16 gBattleAnimBgPalette_Dark[] = INCBIN_U16("graphics/battle_anims/backgrounds/dark.gbapal");
-const u32 gBattleAnimBgTilemap_Dark[] = INCBIN_U32("graphics/battle_anims/backgrounds/dark.bin.smolTM");
-
-const u32 gMetalShineGfx[] = INCBIN_U32("graphics/battle_anims/masks/metal_shine.4bpp.smol");
-const u16 gMetalShinePalette[] = INCBIN_U16("graphics/battle_anims/masks/metal_shine.gbapal");
-const u32 gMetalShineTilemap[] = INCBIN_U32("graphics/battle_anims/masks/metal_shine.bin.smolTM");
-
-const u32 gUnusedGfx_Goosuto[] = INCBIN_U32("graphics/battle_anims/unused/goosuto.4bpp.smol"); // ghost
-const u16 gUnusedPal_Goosuto[] = INCBIN_U16("graphics/battle_anims/unused/goosuto.gbapal");
-const u32 gUnusedTilemap_Goosuto[] = INCBIN_U32("graphics/battle_anims/unused/goosuto.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_YellowStar[] = INCBIN_U32("graphics/battle_anims/sprites/yellow_star.4bpp.smol");
-const u16 gBattleAnimSpritePal_YellowStar[] = INCBIN_U16("graphics/battle_anims/sprites/yellow_star.gbapal");
-
-const u32 gBattleAnimSpriteGfx_LargeFreshEgg[] = INCBIN_U32("graphics/battle_anims/sprites/large_fresh_egg.4bpp.smol");
-const u16 gBattleAnimSpritePal_LargeFreshEgg[] = INCBIN_U16("graphics/battle_anims/sprites/large_fresh_egg.gbapal");
-
-const u32 gBattleAnimSpriteGfx_ShadowBall[] = INCBIN_U32("graphics/battle_anims/sprites/shadow_ball.4bpp.smol");
-const u16 gBattleAnimSpritePal_ShadowBall[] = INCBIN_U16("graphics/battle_anims/sprites/shadow_ball.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Lick[] = INCBIN_U32("graphics/battle_anims/sprites/lick.4bpp.smol");
-const u16 gBattleAnimSpritePal_Lick[] = INCBIN_U16("graphics/battle_anims/sprites/lick.gbapal");
-
-const u32 gBattleAnimSpriteGfx_VoidLines[] = INCBIN_U32("graphics/battle_anims/sprites/void_lines.4bpp.smol");
-const u16 gBattleAnimSpritePal_VoidLines[] = INCBIN_U16("graphics/battle_anims/sprites/void_lines.gbapal");
-
-const u16 gBattleAnimSpritePal_String[] = INCBIN_U16("graphics/battle_anims/sprites/string.gbapal");
-const u32 gBattleAnimSpriteGfx_String[] = INCBIN_U32("graphics/battle_anims/sprites/string.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_WebThread[] = INCBIN_U32("graphics/battle_anims/sprites/web_thread.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_SpiderWeb[] = INCBIN_U32("graphics/battle_anims/sprites/spider_web.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Lightbulb[] = INCBIN_U32("graphics/battle_anims/sprites/lightbulb.4bpp.smol");
-const u16 gBattleAnimSpritePal_Lightbulb[] = INCBIN_U16("graphics/battle_anims/sprites/lightbulb.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Slash[] = INCBIN_U32("graphics/battle_anims/sprites/slash.4bpp.smol");
-const u16 gBattleAnimSpritePal_Slash[] = INCBIN_U16("graphics/battle_anims/sprites/slash.gbapal");
-
-const u32 gBattleAnimSpriteGfx_FocusEnergy[] = INCBIN_U32("graphics/battle_anims/sprites/focus_energy.4bpp.smol");
-const u16 gBattleAnimSpritePal_FocusEnergy[] = INCBIN_U16("graphics/battle_anims/sprites/focus_energy.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SphereToCube[] = INCBIN_U32("graphics/battle_anims/sprites/sphere_to_cube.4bpp.smol");
-const u16 gBattleAnimSpritePal_SphereToCube[] = INCBIN_U16("graphics/battle_anims/sprites/sphere_to_cube.gbapal");
-
-const u32 gBattleAnimBgImage_Psychic[] = INCBIN_U32("graphics/battle_anims/backgrounds/psychic.4bpp.smol");
-const u16 gBattleAnimBgPalette_Psychic[] = INCBIN_U16("graphics/battle_anims/backgrounds/psychic.gbapal");
-const u32 gBattleAnimBgTilemap_Psychic[] = INCBIN_U32("graphics/battle_anims/backgrounds/psychic.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_Eye[] = INCBIN_U32("graphics/battle_anims/sprites/eye.4bpp.smol");
-const u16 gBattleAnimSpritePal_Eye[] = INCBIN_U16("graphics/battle_anims/sprites/eye.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Tendrils[] = INCBIN_U32("graphics/battle_anims/sprites/tendrils.4bpp.smol");
-const u16 gBattleAnimSpritePal_Tendrils[] = INCBIN_U16("graphics/battle_anims/sprites/tendrils.gbapal");
-
-// Gen 4 healthboxes â€” engine-wide
-const u32 gHealthboxSinglesPlayerGfxGen4[] = INCBIN_U32("graphics/battle_interface/gen4/healthbox_singles_player.4bpp.smol");
-const u32 gHealthboxSinglesPlayerGfx_FrontierGen4[] = INCBIN_U32("graphics/battle_interface/gen4/healthbox_singles_player_frontier.4bpp.smol");
-const u32 gHealthboxSinglesOpponentGfxGen4[] = INCBIN_U32("graphics/battle_interface/gen4/healthbox_singles_opponent.4bpp.smol");
-const u32 gHealthboxDoublesPlayerGfxGen4[] = INCBIN_U32("graphics/battle_interface/gen4/healthbox_doubles_player.4bpp.smol");
-const u32 gHealthboxDoublesOpponentGfxGen4[] = INCBIN_U32("graphics/battle_interface/gen4/healthbox_doubles_opponent.4bpp.smol");
-const u32 gHealthboxSafariGfxGen4[] = INCBIN_U32("graphics/battle_interface/gen4/healthbox_safari.4bpp.smol");
-
-// Gen 3 healthboxes â€” per-game
-#if IS_HNS
-const u32 gHealthboxSinglesPlayerGfxGen3[] = INCBIN_U32("graphics/battle_interface/hns/healthbox_singles_player.4bpp.smol");
-const u32 gHealthboxSinglesPlayerGfx_FrontierGen3[] = INCBIN_U32("graphics/battle_interface/hns/healthbox_singles_player_frontier.4bpp.smol");
-const u32 gHealthboxSinglesOpponentGfxGen3[] = INCBIN_U32("graphics/battle_interface/hns/healthbox_singles_opponent.4bpp.smol");
-const u32 gHealthboxDoublesPlayerGfxGen3[] = INCBIN_U32("graphics/battle_interface/hns/healthbox_doubles_player.4bpp.smol");
-const u32 gHealthboxDoublesOpponentGfxGen3[] = INCBIN_U32("graphics/battle_interface/hns/healthbox_doubles_opponent.4bpp.smol");
-const u32 gHealthboxSafariGfxGen3[] = INCBIN_U32("graphics/battle_interface/hns/healthbox_safari.4bpp.smol");
-#else
-const u32 gHealthboxSinglesPlayerGfxGen3[] = INCBIN_U32("graphics/battle_interface/healthbox_singles_player.4bpp.smol");
-const u32 gHealthboxSinglesPlayerGfx_FrontierGen3[] = INCBIN_U32("graphics/battle_interface/healthbox_singles_player.4bpp.smol");
-const u32 gHealthboxSinglesOpponentGfxGen3[] = INCBIN_U32("graphics/battle_interface/healthbox_singles_opponent.4bpp.smol");
-const u32 gHealthboxDoublesPlayerGfxGen3[] = INCBIN_U32("graphics/battle_interface/healthbox_doubles_player.4bpp.smol");
-const u32 gHealthboxDoublesOpponentGfxGen3[] = INCBIN_U32("graphics/battle_interface/healthbox_doubles_opponent.4bpp.smol");
-const u32 gHealthboxSafariGfxGen3[] = INCBIN_U32("graphics/battle_interface/healthbox_safari.4bpp.smol");
-#endif
-
-const u32 gUnusedGfx_Shadow[] = INCBIN_U32("graphics/unused/shadow.4bpp.smol");
-const u16 gUnusedPal_Shadow[] = INCBIN_U16("graphics/unused/shadow.gbapal");
-
-const u32 gBattleAnimSpriteGfx_LockOn[] = INCBIN_U32("graphics/battle_anims/sprites/lock_on.4bpp.smol");
-const u16 gBattleAnimSpritePal_LockOn[] = INCBIN_U16("graphics/battle_anims/sprites/lock_on.gbapal");
-
-const u32 gBattleAnimSpriteGfx_OpeningEye[] = INCBIN_U32("graphics/battle_anims/sprites/opening_eye.4bpp.smol");
-const u16 gBattleAnimSpritePal_OpeningEye[] = INCBIN_U16("graphics/battle_anims/sprites/opening_eye.gbapal");
-
-const u32 gBattleAnimSpriteGfx_RoundWhiteHalo[] = INCBIN_U32("graphics/battle_anims/sprites/round_white_halo.4bpp.smol");
-const u16 gBattleAnimSpritePal_RoundWhiteHalo[] = INCBIN_U16("graphics/battle_anims/sprites/round_white_halo.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TealAlert[] = INCBIN_U32("graphics/battle_anims/sprites/teal_alert.4bpp.smol");
-const u16 gBattleAnimSpritePal_TealAlert[] = INCBIN_U16("graphics/battle_anims/sprites/teal_alert.gbapal");
-
-const u32 gBattleAnimSpriteGfx_FangAttack[] = INCBIN_U32("graphics/battle_anims/sprites/fang_attack.4bpp.smol");
-const u16 gBattleAnimSpritePal_FangAttack[] = INCBIN_U16("graphics/battle_anims/sprites/fang_attack.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PurpleHandOutline[] = INCBIN_U32("graphics/battle_anims/sprites/purple_hand_outline.4bpp.smol");
-const u16 gBattleAnimSpritePal_PurpleHandOutline[] = INCBIN_U16("graphics/battle_anims/sprites/purple_hand_outline.gbapal");
-
-const u32 gBattleAnimMaskImage_Curse[] = INCBIN_U32("graphics/battle_anims/masks/curse.4bpp.smol");
-const u32 gBattleAnimMaskTilemap_Curse[] = INCBIN_U32("graphics/battle_anims/masks/curse.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_Pencil[] = INCBIN_U32("graphics/battle_anims/sprites/pencil.4bpp.smol");
-const u16 gBattleAnimSpritePal_Pencil[] = INCBIN_U16("graphics/battle_anims/sprites/pencil.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Spiral[] = INCBIN_U32("graphics/battle_anims/sprites/spiral.4bpp.smol");
-const u16 gBattleAnimSpritePal_Spiral[] = INCBIN_U16("graphics/battle_anims/sprites/spiral.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Moon[] = INCBIN_U32("graphics/battle_anims/sprites/moon.4bpp.smol");
-const u16 gBattleAnimSpritePal_Moon[] = INCBIN_U16("graphics/battle_anims/sprites/moon.gbapal");
-
-const u32 gBattleAnimSpriteGfx_GreenSparkle[] = INCBIN_U32("graphics/battle_anims/sprites/green_sparkle.4bpp.smol");
-const u16 gBattleAnimSpritePal_GreenSparkle[] = INCBIN_U16("graphics/battle_anims/sprites/green_sparkle.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SnoreZ[] = INCBIN_U32("graphics/battle_anims/sprites/snore_z.4bpp.smol");
-const u16 gBattleAnimSpritePal_SnoreZ[] = INCBIN_U16("graphics/battle_anims/sprites/snore_z.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Explosion[] = INCBIN_U32("graphics/battle_anims/sprites/explosion.4bpp.smol");
-const u16 gBattleAnimSpritePal_Explosion[] = INCBIN_U16("graphics/battle_anims/sprites/explosion.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Nail[] = INCBIN_U32("graphics/battle_anims/sprites/nail.4bpp.smol");
-const u16 gBattleAnimSpritePal_Nail[] = INCBIN_U16("graphics/battle_anims/sprites/nail.gbapal");
-
-const u32 gBattleAnimSpriteGfx_GhostlySpirit[] = INCBIN_U32("graphics/battle_anims/sprites/ghostly_spirit.4bpp.smol");
-const u16 gBattleAnimSpritePal_GhostlySpirit[] = INCBIN_U16("graphics/battle_anims/sprites/ghostly_spirit.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WarmRock[] = INCBIN_U32("graphics/battle_anims/sprites/warm_rock.4bpp.smol");
-const u16 gBattleAnimSpritePal_WarmRock[] = INCBIN_U16("graphics/battle_anims/sprites/warm_rock.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PunchImpact[] = INCBIN_U32("graphics/battle_anims/sprites/punch_impact.4bpp.smol");
-const u16 gBattleAnimSpritePal_PunchImpact[] = INCBIN_U16("graphics/battle_anims/sprites/punch_impact.gbapal");
-
-const u32 gBattleAnimSpriteGfx_BreakingEgg[] = INCBIN_U32("graphics/battle_anims/sprites/breaking_egg.4bpp.smol");
-const u16 gBattleAnimSpritePal_BreakingEgg[] = INCBIN_U16("graphics/battle_anims/sprites/breaking_egg.gbapal");
-
-const u32 gBattleAnimSpriteGfx_ThinRing[] = INCBIN_U32("graphics/battle_anims/sprites/thin_ring.4bpp.smol");
-const u16 gBattleAnimSpritePal_ThinRing[] = INCBIN_U16("graphics/battle_anims/sprites/thin_ring.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MusicNotes2[] = INCBIN_U32("graphics/battle_anims/sprites/music_notes_2.4bpp.smol");
-const u16 gBattleAnimSpritePal_MusicNotes2[] = INCBIN_U16("graphics/battle_anims/sprites/music_notes_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Bell[] = INCBIN_U32("graphics/battle_anims/sprites/bell.4bpp.smol");
-const u16 gBattleAnimSpritePal_Bell[] = INCBIN_U16("graphics/battle_anims/sprites/bell.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SpeedDust[] = INCBIN_U32("graphics/battle_anims/sprites/speed_dust.4bpp.smol");
-const u16 gBattleAnimSpritePal_SpeedDust[] = INCBIN_U16("graphics/battle_anims/sprites/speed_dust.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TornMetal[] = INCBIN_U32("graphics/battle_anims/sprites/torn_metal.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_ThoughtBubble[] = INCBIN_U32("graphics/battle_anims/sprites/thought_bubble.4bpp.smol");
-const u16 gBattleAnimSpritePal_ThoughtBubble[] = INCBIN_U16("graphics/battle_anims/sprites/thought_bubble.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Finger[] = INCBIN_U32("graphics/battle_anims/sprites/finger.4bpp.smol");
-const u16 gBattleAnimSpritePal_Finger[] = INCBIN_U16("graphics/battle_anims/sprites/finger.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MagentaHeart[] = INCBIN_U32("graphics/battle_anims/sprites/magenta_heart.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_PinkHeart[] = INCBIN_U16("graphics/battle_anims/sprites/pink_heart.gbapal");
-const u16 gBattleAnimSpritePal_MagentaHeart[] = INCBIN_U16("graphics/battle_anims/sprites/magenta_heart.gbapal");
-const u16 gBattleAnimSpritePal_RedHeart[] = INCBIN_U16("graphics/battle_anims/sprites/red_heart.gbapal");
-
-const u32 gBattleAnimBgImage_Attract[] = INCBIN_U32("graphics/battle_anims/backgrounds/attract.4bpp.smol");
-const u16 gBattleAnimBgPalette_Attract[] = INCBIN_U16("graphics/battle_anims/backgrounds/attract.gbapal");
-const u32 gBattleAnimBgTilemap_Attract[] = INCBIN_U32("graphics/battle_anims/backgrounds/attract.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_RedOrb[] = INCBIN_U32("graphics/battle_anims/sprites/red_orb.4bpp.smol");
-const u16 gBattleAnimSpritePal_RedOrb[] = INCBIN_U16("graphics/battle_anims/sprites/red_orb.gbapal");
-
-const u32 gBattleAnimSpriteGfx_CircleOfLight[] = INCBIN_U32("graphics/battle_anims/sprites/circle_of_light.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_ElectricOrbs[] = INCBIN_U32("graphics/battle_anims/sprites/electric_orbs.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Electricity[] = INCBIN_U32("graphics/battle_anims/sprites/electricity.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_ElectricOrbs[] = INCBIN_U16("graphics/battle_anims/sprites/electric_orbs.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Finger2[] = INCBIN_U32("graphics/battle_anims/sprites/finger_2.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_MovementWaves[] = INCBIN_U32("graphics/battle_anims/sprites/movement_waves.4bpp.smol");
-const u16 gBattleAnimSpritePal_MovementWaves[] = INCBIN_U16("graphics/battle_anims/sprites/movement_waves.gbapal");
-
-const u16 gBattleAnimBgPalette_ScaryFace[] = INCBIN_U16("graphics/battle_anims/backgrounds/scary_face.gbapal");
-const u32 gBattleAnimBgImage_ScaryFace[] = INCBIN_U32("graphics/battle_anims/backgrounds/scary_face.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_EyeSparkle[] = INCBIN_U16("graphics/battle_anims/sprites/eye_sparkle.gbapal");
-const u32 gBattleAnimSpriteGfx_EyeSparkle[] = INCBIN_U32("graphics/battle_anims/sprites/eye_sparkle.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Anger[] = INCBIN_U32("graphics/battle_anims/sprites/anger.4bpp.smol");
-const u16 gBattleAnimSpritePal_Anger[] = INCBIN_U16("graphics/battle_anims/sprites/anger.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Conversion[] = INCBIN_U32("graphics/battle_anims/sprites/conversion.4bpp.smol");
-const u16 gBattleAnimSpritePal_Conversion[] = INCBIN_U16("graphics/battle_anims/sprites/conversion.gbapal");
-
-const u16 gBattleAnimSpritePal_Angel[] = INCBIN_U16("graphics/battle_anims/sprites/angel.gbapal");
-const u32 gBattleAnimSpriteGfx_Angel[] = INCBIN_U32("graphics/battle_anims/sprites/angel.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_Devil[] = INCBIN_U16("graphics/battle_anims/sprites/devil.gbapal");
-const u32 gBattleAnimSpriteGfx_Devil[] = INCBIN_U32("graphics/battle_anims/sprites/devil.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Swipe[] = INCBIN_U32("graphics/battle_anims/sprites/swipe.4bpp.smol");
-const u16 gBattleAnimSpritePal_Swipe[] = INCBIN_U16("graphics/battle_anims/sprites/swipe.gbapal");
-
-const u16 gBattleAnimSpritePal_Roots[] = INCBIN_U16("graphics/battle_anims/sprites/roots.gbapal");
-const u32 gBattleAnimSpriteGfx_Roots[] = INCBIN_U32("graphics/battle_anims/sprites/roots.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_ItemBag[] = INCBIN_U16("graphics/battle_anims/sprites/item_bag.gbapal");
-const u32 gBattleAnimSpriteGfx_ItemBag[] = INCBIN_U32("graphics/battle_anims/sprites/item_bag.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_TriAttackTriangle[] = INCBIN_U16("graphics/battle_anims/sprites/tri_attack_triangle.gbapal");
-const u32 gBattleAnimSpriteGfx_TriAttackTriangle[] = INCBIN_U32("graphics/battle_anims/sprites/tri_attack_triangle.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_LetterZ[] = INCBIN_U16("graphics/battle_anims/sprites/letter_z.gbapal");
-const u32 gBattleAnimSpriteGfx_LetterZ[] = INCBIN_U32("graphics/battle_anims/sprites/letter_z.4bpp.smol");
-
-const u16 gBattleAnimBgPalette_Impact[] = INCBIN_U16("graphics/battle_anims/backgrounds/impact.gbapal");
-const u32 gBattleAnimBgImage_Impact[] = INCBIN_U32("graphics/battle_anims/backgrounds/impact.4bpp.smol");
-const u32 gBattleAnimBgTilemap_ImpactOpponent[] = INCBIN_U32("graphics/battle_anims/backgrounds/impact_opponent.bin.smolTM");
-
-const u32 gBattleAnimBgTilemap_ImpactPlayer[] = INCBIN_U32("graphics/battle_anims/backgrounds/impact_player.bin.smolTM");
-const u32 gBattleAnimBgTilemap_ImpactContests[] = INCBIN_U32("graphics/battle_anims/backgrounds/impact_contests.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_JaggedMusicNote[] = INCBIN_U32("graphics/battle_anims/sprites/jagged_music_note.4bpp.smol");
-const u16 gBattleAnimSpritePal_JaggedMusicNote[] = INCBIN_U16("graphics/battle_anims/sprites/jagged_music_note.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Spotlight[] = INCBIN_U32("graphics/battle_anims/sprites/spotlight.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Pokeball[] = INCBIN_U32("graphics/battle_anims/sprites/pokeball.4bpp.smol");
-const u16 gBattleAnimSpritePal_Pokeball[] = INCBIN_U16("graphics/battle_anims/sprites/pokeball.gbapal");
-
-const u32 gBattleAnimSpriteGfx_RapidSpin[] = INCBIN_U32("graphics/battle_anims/sprites/rapid_spin.4bpp.smol");
-const u16 gBattleAnimSpritePal_RapidSpin[] = INCBIN_U16("graphics/battle_anims/sprites/rapid_spin.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MilkBottle[] = INCBIN_U32("graphics/battle_anims/sprites/milk_bottle.4bpp.smol");
-const u16 gBattleAnimSpritePal_MilkBottle[] = INCBIN_U16("graphics/battle_anims/sprites/milk_bottle.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WispFire[] = INCBIN_U32("graphics/battle_anims/sprites/wisp_fire.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_WispOrb[] = INCBIN_U16("graphics/battle_anims/sprites/wisp_orb.gbapal");
-const u32 gBattleAnimSpriteGfx_WispOrb[] = INCBIN_U32("graphics/battle_anims/sprites/wisp_orb.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_GoldStars[] = INCBIN_U32("graphics/battle_anims/sprites/gold_stars.4bpp.smol");
-const u16 gBattleAnimSpritePal_GoldStars[] = INCBIN_U16("graphics/battle_anims/sprites/gold_stars.gbapal");
-
-const u32 gBattleAnimSpriteGfx_EclipsingOrb[] = INCBIN_U32("graphics/battle_anims/sprites/eclipsing_orb.4bpp.smol");
-const u16 gBattleAnimSpritePal_EclipsingOrb[] = INCBIN_U16("graphics/battle_anims/sprites/eclipsing_orb.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PinkPetal[] = INCBIN_U32("graphics/battle_anims/sprites/pink_petal.4bpp.smol");
-const u16 gBattleAnimSpritePal_PinkPetal[] = INCBIN_U16("graphics/battle_anims/sprites/pink_petal.gbapal");
-
-const u32 gBattleAnimSpriteGfx_GrayOrb[] = INCBIN_U32("graphics/battle_anims/sprites/gray_orb.4bpp.smol");
-const u16 gBattleAnimSpritePal_GrayOrb[] = INCBIN_U16("graphics/battle_anims/sprites/gray_orb.gbapal");
-
-const u16 gBattleAnimSpritePal_BlueOrb[] = INCBIN_U16("graphics/battle_anims/sprites/blue_orb.gbapal");
-const u16 gBattleAnimSpritePal_RedOrb2[] = INCBIN_U16("graphics/battle_anims/sprites/red_orb_2.gbapal");
-
-const u32 gBattleAnimBgImage_Drill[] = INCBIN_U32("graphics/battle_anims/backgrounds/drill.4bpp.smol");
-const u16 gBattleAnimBgPalette_Drill[] = INCBIN_U16("graphics/battle_anims/backgrounds/drill.gbapal");
-
-const u16 gBattleAnimBgPalette_Sky[] = INCBIN_U16("graphics/battle_anims/backgrounds/sky.gbapal");
-
-const u32 gBattleAnimBgTilemap_Drill[] = INCBIN_U32("graphics/battle_anims/backgrounds/drill.bin.smolTM");
-const u32 gBattleAnimBgTilemap_DrillContests[] = INCBIN_U32("graphics/battle_anims/backgrounds/drill_contests.bin.smolTM");
-
-const u32 gBattleAnimBgImage_Aurora[] = INCBIN_U32("graphics/battle_anims/backgrounds/aurora.4bpp.smol");
-const u16 gBattleAnimBgPalette_Aurora[] = INCBIN_U16("graphics/battle_anims/backgrounds/aurora.gbapal");
-const u32 gBattleAnimBgTilemap_Aurora[] = INCBIN_U32("graphics/battle_anims/backgrounds/aurora.bin.smolTM");
-
-const u32 gBattleAnimBgTilemap_HighspeedOpponent[] = INCBIN_U32("graphics/battle_anims/backgrounds/highspeed_opponent.bin.smolTM");
-const u16 gBattleAnimBgPalette_Highspeed[] = INCBIN_U16("graphics/battle_anims/backgrounds/highspeed.gbapal");
-
-const u16 gBattleAnimBgPalette_Bug[] = INCBIN_U16("graphics/battle_anims/backgrounds/bug.gbapal");
-
-const u32 gBattleAnimBgImage_Highspeed[] = INCBIN_U32("graphics/battle_anims/backgrounds/highspeed.4bpp.smol");
-const u32 gBattleAnimBgTilemap_HighspeedPlayer[] = INCBIN_U32("graphics/battle_anims/backgrounds/highspeed_player.bin.smolTM");
-
-const u32 gBattleAnimMaskImage_LightBeam[] = INCBIN_U32("graphics/battle_anims/masks/light_beam.4bpp.smol");
-const u16 gBattleAnimMaskPalette_LightBeam[] = INCBIN_U16("graphics/battle_anims/masks/light_beam.gbapal");
-const u32 gBattleAnimMaskTilemap_LightBeam[] = INCBIN_U32("graphics/battle_anims/masks/light_beam.bin.smolTM");
-
-const u32 gBattleAnimBgTilemap_GuillotineOpponent[] = INCBIN_U32("graphics/battle_anims/backgrounds/guillotine_opponent.bin.smolTM");
-const u32 gBattleAnimBgTilemap_GuillotinePlayer[] = INCBIN_U32("graphics/battle_anims/backgrounds/guillotine_player.bin.smolTM");
-const u32 gBattleAnimBgTilemap_GuillotineContests[] = INCBIN_U32("graphics/battle_anims/backgrounds/guillotine_contests.bin.smolTM");
-
-const u32 gBattleAnimBgImage_Guillotine[] = INCBIN_U32("graphics/battle_anims/backgrounds/guillotine.4bpp.smol");
-const u16 gBattleAnimBgPalette_Guillotine[] = INCBIN_U16("graphics/battle_anims/backgrounds/guillotine.gbapal");
-
-const u32 gBattleAnimBgImage_Thunder[] = INCBIN_U32("graphics/battle_anims/backgrounds/thunder.4bpp.smol");
-const u16 gBattleAnimBgPalette_Thunder[] = INCBIN_U16("graphics/battle_anims/backgrounds/thunder.gbapal");
-const u32 gBattleAnimBgTilemap_Thunder[] = INCBIN_U32("graphics/battle_anims/backgrounds/thunder.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_PainSplit[] = INCBIN_U32("graphics/battle_anims/sprites/pain_split.4bpp.smol");
-const u16 gBattleAnimSpritePal_PainSplit[] = INCBIN_U16("graphics/battle_anims/sprites/pain_split.gbapal");
-
-const u32 gBattleAnimSpriteGfx_HandsAndFeet[] = INCBIN_U32("graphics/battle_anims/sprites/hands_and_feet.4bpp.smol");
-const u16 gBattleAnimSpritePal_HandsAndFeet[] = INCBIN_U16("graphics/battle_anims/sprites/hands_and_feet.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Confetti[] = INCBIN_U32("graphics/battle_anims/sprites/confetti.4bpp.smol");
-const u16 gBattleAnimSpritePal_Confetti[] = INCBIN_U16("graphics/battle_anims/sprites/confetti.gbapal");
-
-#if !P_GBA_STYLE_SPECIES_GFX
-    const u32 gBattleAnimSpriteGfx_Substitute[] = INCBIN_U32("graphics/battle_anims/sprites/substitute.4bpp.smol");
-    const u32 gBattleAnimSpriteGfx_SubstituteBack[] = INCBIN_U32("graphics/battle_anims/sprites/substitute_back.4bpp.smol");
-    const u16 gBattleAnimSpritePal_Substitute[] = INCBIN_U16("graphics/battle_anims/sprites/substitute.gbapal");
-#else
-    const u32 gBattleAnimSpriteGfx_Substitute[] = INCBIN_U32("graphics/battle_anims/sprites/substitute_gba.4bpp.smol");
-    const u32 gBattleAnimSpriteGfx_SubstituteBack[] = INCBIN_U32("graphics/battle_anims/sprites/substitute_back_gba.4bpp.smol");
-    const u16 gBattleAnimSpritePal_Substitute[] = INCBIN_U16("graphics/battle_anims/sprites/substitute_gba.gbapal");
-#endif //P_GBA_STYLE_SPECIES_GFX
-
-const u32 gBattleAnimSpriteGfx_GreenStar[] = INCBIN_U32("graphics/battle_anims/sprites/green_star.4bpp.smol");
-const u16 gBattleAnimSpritePal_GreenStar[] = INCBIN_U16("graphics/battle_anims/sprites/green_star.gbapal");
-
-const u32 gConfetti_Gfx[] = INCBIN_U32("graphics/misc/confetti.4bpp.smol");
-const u16 gConfetti_Pal[] = INCBIN_U16("graphics/misc/confetti.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PinkCloud[] = INCBIN_U32("graphics/battle_anims/sprites/pink_cloud.4bpp.smol");
-const u16 gBattleAnimSpritePal_PinkCloud[] = INCBIN_U16("graphics/battle_anims/sprites/pink_cloud.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SweatDrop[] = INCBIN_U32("graphics/battle_anims/sprites/sweat_drop.4bpp.smol");
-const u16 gBattleAnimSpritePal_SweatDrop[] = INCBIN_U16("graphics/battle_anims/sprites/sweat_drop.gbapal");
-
-const u32 gStatAnim_Gfx[]              = INCBIN_U32("graphics/battle_anims/stat_change/tiles.4bpp.smol");
-const u32 gStatAnim_Increase_Tilemap[] = INCBIN_U32("graphics/battle_anims/stat_change/increase.bin.smolTM");
-const u32 gStatAnim_Decrease_Tilemap[] = INCBIN_U32("graphics/battle_anims/stat_change/decrease.bin.smolTM");
-const u16 gStatAnim_Defense_Pal[]      = INCBIN_U16("graphics/battle_anims/stat_change/defense.gbapal");
-const u16 gStatAnim_Attack_Pal[]       = INCBIN_U16("graphics/battle_anims/stat_change/attack.gbapal");
-const u16 gStatAnim_Accuracy_Pal[]     = INCBIN_U16("graphics/battle_anims/stat_change/accuracy.gbapal");
-const u16 gStatAnim_Speed_Pal[]        = INCBIN_U16("graphics/battle_anims/stat_change/speed.gbapal");
-const u16 gStatAnim_Multiple_Pal[]     = INCBIN_U16("graphics/battle_anims/stat_change/multiple.gbapal");
-const u16 gStatAnim_Evasion_Pal[]      = INCBIN_U16("graphics/battle_anims/stat_change/evasion.gbapal");
-const u16 gStatAnim_SpAttack_Pal[]     = INCBIN_U16("graphics/battle_anims/stat_change/sp_attack.gbapal");
-const u16 gStatAnim_SpDefense_Pal[]    = INCBIN_U16("graphics/battle_anims/stat_change/sp_defense.gbapal");
-
-const u32 gCureBubblesGfx[] = INCBIN_U32("graphics/battle_anims/masks/cure_bubbles.4bpp.smol");
-const u16 gCureBubblesPal[] = INCBIN_U16("graphics/battle_anims/masks/cure_bubbles.gbapal");
-const u32 gCureBubblesTilemap[] = INCBIN_U32("graphics/battle_anims/masks/cure_bubbles.bin.smolTM");
-
-const u16 gBattleAnimSpritePal_PurpleScratch[] = INCBIN_U16("graphics/battle_anims/sprites/purple_scratch.gbapal");
-const u32 gBattleAnimSpriteGfx_PurpleScratch[] = INCBIN_U32("graphics/battle_anims/sprites/purple_scratch.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_PurpleSwipe[] = INCBIN_U32("graphics/battle_anims/sprites/purple_swipe.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_GuardRing[] = INCBIN_U32("graphics/battle_anims/sprites/guard_ring.4bpp.smol");
-const u16 gBattleAnimSpritePal_GuardRing[] = INCBIN_U16("graphics/battle_anims/sprites/guard_ring.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TagHand[] = INCBIN_U32("graphics/battle_anims/sprites/tag_hand.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_NoiseLine[] = INCBIN_U32("graphics/battle_anims/sprites/noise_line.4bpp.smol");
-
-const u32 UnusedLevelupAnimationGfx[] = INCBIN_U32("graphics/battle_anims/masks/unused_level_up.4bpp.smol");
-const u32 UnusedLevelupAnimationTilemap[] = INCBIN_U32("graphics/battle_anims/masks/unused_level_up.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_SmallRedEye[] = INCBIN_U32("graphics/battle_anims/sprites/small_red_eye.4bpp.smol");
-const u16 gBattleAnimSpritePal_SmallRedEye[] = INCBIN_U16("graphics/battle_anims/sprites/small_red_eye.gbapal");
-
-const u32 gBattleAnimSpriteGfx_HollowOrb[] = INCBIN_U32("graphics/battle_anims/sprites/hollow_orb.4bpp.smol");
-const u16 gBattleAnimSpritePal_HollowOrb[] = INCBIN_U16("graphics/battle_anims/sprites/hollow_orb.gbapal");
-
-const u32 gBattleAnimSpriteGfx_XSign[] = INCBIN_U32("graphics/battle_anims/sprites/x_sign.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_BluegreenOrb[] = INCBIN_U32("graphics/battle_anims/sprites/bluegreen_orb.4bpp.smol");
-const u16 gBattleAnimSpritePal_BluegreenOrb[] = INCBIN_U16("graphics/battle_anims/sprites/bluegreen_orb.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PinkVioletOrb[] = INCBIN_U32("graphics/battle_anims/sprites/pinkvio_orb.4bpp.smol");
-const u16 gBattleAnimSpritePal_PinkVioletOrb[] = INCBIN_U16("graphics/battle_anims/sprites/pinkvio_orb.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PawPrint[] = INCBIN_U32("graphics/battle_anims/sprites/paw_print.4bpp.smol");
-const u16 gBattleAnimSpritePal_PawPrint[] = INCBIN_U16("graphics/battle_anims/sprites/paw_print.gbapal");
-
-const u32 gBattleAnimSpriteGfx_PurpleFlame[] = INCBIN_U32("graphics/battle_anims/sprites/purple_flame.4bpp.smol");
-const u16 gBattleAnimSpritePal_PurpleFlame[] = INCBIN_U16("graphics/battle_anims/sprites/purple_flame.gbapal");
-
-const u32 gBattleAnimSpriteGfx_RedBall[] = INCBIN_U32("graphics/battle_anims/sprites/red_ball.4bpp.smol");
-const u16 gBattleAnimSpritePal_RedBall[] = INCBIN_U16("graphics/battle_anims/sprites/red_ball.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SmellingsaltEffect[] = INCBIN_U32("graphics/battle_anims/sprites/smellingsalt_effect.4bpp.smol");
-const u16 gBattleAnimSpritePal_SmellingsaltEffect[] = INCBIN_U16("graphics/battle_anims/sprites/smellingsalt_effect.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MagnifyingGlass[] = INCBIN_U32("graphics/battle_anims/sprites/magnifying_glass.4bpp.smol");
-const u16 gBattleAnimSpritePal_MagnifyingGlass[] = INCBIN_U16("graphics/battle_anims/sprites/magnifying_glass.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Meteor[] = INCBIN_U32("graphics/battle_anims/sprites/meteor.4bpp.smol");
-const u16 gBattleAnimSpritePal_Meteor[] = INCBIN_U16("graphics/battle_anims/sprites/meteor.gbapal");
-
-const u32 gBattleAnimSpriteGfx_FlatRock[] = INCBIN_U32("graphics/battle_anims/sprites/flat_rock.4bpp.smol");
-const u16 gBattleAnimSpritePal_FlatRock[] = INCBIN_U16("graphics/battle_anims/sprites/flat_rock.gbapal");
-
-const u32 gBattleAnimSpriteGfx_TeraStarstormBeam[] = INCBIN_U32("graphics/battle_anims/sprites/starstorm_beam.4bpp.smol");
-const u16 gBattleAnimSpritePal_TeraStarstormBeam[] = INCBIN_U16("graphics/battle_anims/sprites/starstorm_beam.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SaltParticle[] = INCBIN_U32("graphics/battle_anims/sprites/salt_particle.4bpp.smol");
-const u16 gBattleAnimSpritePal_SaltParticle[] = INCBIN_U16("graphics/battle_anims/sprites/salt_particle.gbapal");
-
-const u16 gBattleAnimUnusedPal_Unknown2[] = INCBIN_U16("graphics/battle_anims/unused/unknown_2.gbapal");
-
-#include "data/graphics/trainers.h"
-
-const u32 gBattleVSFrame_Gfx[] = INCBIN_U32("graphics/battle_transitions/vs_frame.4bpp.smol");
-const u32 gBattleVSFrame_Tilemap[] = INCBIN_U32("graphics/battle_transitions/vs_frame.bin.smolTM");
-const u16 gBattleVSFrame_Pal[] = INCBIN_U16("graphics/battle_transitions/vs_frame.gbapal");
-
-const u32 gVsLettersGfx[] = INCBIN_U32("graphics/battle_transitions/vs.4bpp.smol");
-
-#include "data/graphics/battle_environment.h"
-
-// Battle Dome
-const u32 gDomeTourneyTree_Gfx[] = INCBIN_U32("graphics/battle_frontier/tourney_tree.4bpp.smol");
-const u32 gDomeTourneyLine_Gfx[] = INCBIN_U32("graphics/battle_frontier/tourney_line.4bpp.smol"); // the red glow mask for the tourney advancement lines
-const u32 gDomeTourneyTree_Tilemap[] = INCBIN_U32("graphics/battle_frontier/tourney_tree.bin.smolTM");
-const u32 gDomeTourneyLineDown_Tilemap[] = INCBIN_U32("graphics/battle_frontier/tourney_line_down_map.bin.smolTM");
-const u32 gDomeTourneyLineUp_Tilemap[] = INCBIN_U32("graphics/battle_frontier/tourney_line_up_map.bin.smolTM");
-const u32 gDomeTourneyInfoCard_Gfx[] = INCBIN_U32("graphics/battle_frontier/tourney_info_card.4bpp.smol");
-const u32 gDomeTourneyInfoCard_Tilemap[] = INCBIN_U32("graphics/battle_frontier/tourney_info_card_tilemap.bin.smolTM");
-const u32 gDomeTourneyInfoCardBg_Tilemap[] = INCBIN_U32("graphics/battle_frontier/tourney_info_card_bg.bin.smolTM");
-const u32 gDomeTourneyTreeButtons_Gfx[] = INCBIN_U32("graphics/battle_frontier/tourney_buttons.4bpp.smol"); // exit/cancel and PokÃ© Ball buttons
-const u16 gDomeTourneyTree_Pal[] = INCBIN_U16("graphics/battle_frontier/tourney_tree.gbapal");
-const u16 gDomeTourneyTreeButtons_Pal[] = INCBIN_U16("graphics/battle_frontier/tourney_buttons.gbapal");
-const u16 gDomeTourneyMatchCardBg_Pal[] = INCBIN_U16("graphics/battle_frontier/tourney_match_card_bg.gbapal");
-
-const u32 gBattleArenaJudgmentSymbolsGfx[] = INCBIN_U32("graphics/battle_frontier/arena_judgment_symbols.4bpp.smol");
-const u16 gBattleArenaJudgmentSymbolsPalette[] = INCBIN_U16("graphics/battle_frontier/arena_judgment_symbols.gbapal");
-
-const u16 gBattleWindowTextPalette[] = INCBIN_U16("graphics/battle_interface/text.gbapal");
-const u16 gPPTextPalette[] = INCBIN_U16("graphics/battle_interface/text_pp.gbapal");
-
-const u16 gTilesetAnims_BattleDomePals0_0[] = INCBIN_U16("graphics/battle_frontier/dome_anim1.gbapal");
-const u16 gTilesetAnims_BattleDomePals0_1[] = INCBIN_U16("graphics/battle_frontier/dome_anim2.gbapal");
-const u16 gTilesetAnims_BattleDomePals0_2[] = INCBIN_U16("graphics/battle_frontier/dome_anim3.gbapal");
-const u16 gTilesetAnims_BattleDomePals0_3[] = INCBIN_U16("graphics/battle_frontier/dome_anim4.gbapal");
-
-static const u16 sUnused0[] = {0x13F, 0x119, 0x113, 0x10E};
-
-const u16 gBattlePyramidFloor_Pal[][16] = INCBIN_U16("graphics/battle_frontier/pyramid_floor.gbapal");
-
-const u32 gMultiBattleIntroBg_Opponent_Tilemap[] = INCBIN_U32("graphics/battle_frontier/multi_battle_intro_bg_opponent.bin.smolTM");
-const u32 gMultiBattleIntroBg_Player_Tilemap[] = INCBIN_U32("graphics/battle_frontier/multi_battle_intro_bg_player.bin.smolTM");
-
-#include "data/graphics/intro_scene.h"
-
-const u32 gBattleAnimSpriteGfx_FlyingDirt[] = INCBIN_U32("graphics/battle_anims/sprites/flying_dirt.4bpp.smol");
-const u16 gBattleAnimSpritePal_FlyingDirt[] = INCBIN_U16("graphics/battle_anims/sprites/flying_dirt.gbapal");
-
-const u32 gBattleAnimBgTilemap_Sandstorm[] = INCBIN_U32("graphics/battle_anims/backgrounds/sandstorm_brew.bin.smolTM");
-const u32 gBattleAnimBgImage_Sandstorm[] = INCBIN_U32("graphics/battle_anims/backgrounds/sandstorm_brew.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_Windstorm[] = INCBIN_U16("graphics/battle_anims/backgrounds/windstorm_brew.gbapal");
-
-const u32 gBattleAnimSpriteGfx_MetalSoundWaves[] = INCBIN_U32("graphics/battle_anims/sprites/metal_sound_waves.4bpp.smol");
-const u16 gBattleAnimSpritePal_MetalSoundWaves[] = INCBIN_U16("graphics/battle_anims/sprites/metal_sound_waves.gbapal");
-
-const u32 gBattleAnimBgImage_Ice[] = INCBIN_U32("graphics/battle_anims/backgrounds/ice.4bpp.smol");
-const u16 gBattleAnimBgPalette_Ice[] = INCBIN_U16("graphics/battle_anims/backgrounds/ice.gbapal");
-const u32 gBattleAnimBgTilemap_Ice[] = INCBIN_U32("graphics/battle_anims/backgrounds/ice.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_IcicleSpear[] = INCBIN_U32("graphics/battle_anims/sprites/icicle_spear.4bpp.smol");
-const u16 gBattleAnimSpritePal_IcicleSpear[] = INCBIN_U16("graphics/battle_anims/sprites/icicle_spear.gbapal");
-
-const u32 gContestNextTurnGfx[] = INCBIN_U32("graphics/contest/nextturn.4bpp.smol");
-const u8 gContestNextTurnNumbersGfx[] = INCBIN_U8("graphics/contest/nextturn_numbers.4bpp");
-const u8 gContestNextTurnRandomGfx[] = INCBIN_U8("graphics/contest/nextturn_random.4bpp");
-
-const u32 gBattleAnimSpriteGfx_GlowyRedOrb[] = INCBIN_U32("graphics/battle_anims/sprites/glowy_red_orb.4bpp.smol");
-const u16 gBattleAnimSpritePal_GlowyRedOrb[] = INCBIN_U16("graphics/battle_anims/sprites/glowy_red_orb.gbapal");
-const u16 gBattleAnimSpritePal_GlowyGreenOrb[] = INCBIN_U16("graphics/battle_anims/sprites/glowy_green_orb.gbapal");
-const u16 gBattleAnimSpritePal_SleepPowder[] = INCBIN_U16("graphics/battle_anims/sprites/sleep_powder.gbapal");
-const u16 gBattleAnimSpritePal_StunSpore[] = INCBIN_U16("graphics/battle_anims/sprites/stun_spore.gbapal");
-
-const u32 gContestApplauseGfx[] = INCBIN_U32("graphics/contest/applause.4bpp.smol");
-const u8 gContestApplauseMeterGfx[] = INCBIN_U8("graphics/contest/applause_meter.4bpp");
-
-const u16 gContestPal[] = INCBIN_U16("graphics/contest/nextturn.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Splash[] = INCBIN_U32("graphics/battle_anims/sprites/splash.4bpp.smol");
-const u16 gBattleAnimSpritePal_Splash[] = INCBIN_U16("graphics/battle_anims/sprites/splash.gbapal");
-
-const u32 gBattleAnimSpriteGfx_SweatBead[] = INCBIN_U32("graphics/battle_anims/sprites/sweat_bead.4bpp.smol");
-
-const u32 gBattleAnimSpriteGfx_Pokeblock[] = INCBIN_U32("graphics/battle_anims/sprites/pokeblock.4bpp.smol");
-const u16 gBattleAnimSpritePal_Pokeblock[] = INCBIN_U16("graphics/battle_anims/sprites/pokeblock.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Gem1[] = INCBIN_U32("graphics/battle_anims/sprites/gem_1.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Gem2[] = INCBIN_U32("graphics/battle_anims/sprites/gem_2.4bpp.smol");
-const u32 gBattleAnimSpriteGfx_Gem3[] = INCBIN_U32("graphics/battle_anims/sprites/gem_3.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_Gem1[] = INCBIN_U16("graphics/battle_anims/sprites/gem_1.gbapal");
-
-const u32 gBattleAnimBgImage_InAir[] = INCBIN_U32("graphics/battle_anims/backgrounds/in_air.4bpp.smol");
-const u16 gBattleAnimBgPalette_InAir[] = INCBIN_U16("graphics/battle_anims/backgrounds/in_air.gbapal");
-const u32 gBattleAnimBgTilemap_InAir[] = INCBIN_U32("graphics/battle_anims/backgrounds/in_air.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_Protect[] = INCBIN_U32("graphics/battle_anims/sprites/protect.4bpp.smol");
-const u16 gBattleAnimSpritePal_Protect[] = INCBIN_U16("graphics/battle_anims/sprites/protect.gbapal");
-
-const u16 gBattleAnimBackgroundImageMuddyWater_Pal[] = INCBIN_U16("graphics/battle_anims/backgrounds/water_muddy.gbapal");
-
-// Gen 4 shadow â€” engine-wide
-const u32 gEnemyMonShadow_GfxGen4[] = INCBIN_U32("graphics/battle_interface/gen4/enemy_mon_shadow.4bpp.smol");
-// Gen 3 shadow â€” per-game
-#if IS_HNS
-const u32 gEnemyMonShadow_GfxGen3[] = INCBIN_U32("graphics/battle_interface/hns/enemy_mon_shadow.4bpp.smol");
-#else
-const u32 gEnemyMonShadow_GfxGen3[] = INCBIN_U32("graphics/battle_interface/enemy_mon_shadow.4bpp.smol");
-#endif
-const u32 gEnemyMonShadowsSized_GfxGen4[] = INCBIN_U32("graphics/battle_interface/gen4/enemy_mon_shadows_sized.4bpp.smol");
-const u32 gEnemyMonShadowsSized_GfxGen3[] = INCBIN_U32("graphics/battle_interface/enemy_mon_shadows_sized.4bpp.smol");
-
-// Gen 4 ball status bar â€” engine-wide
-const u32 gBattleInterface_BallStatusBarGfxGen4[] = INCBIN_U32("graphics/battle_interface/gen4/ball_status_bar.4bpp.smol");
-// Gen 3 ball status bar â€” per-game
-#if IS_HNS
-const u32 gBattleInterface_BallStatusBarGfxGen3[] = INCBIN_U32("graphics/battle_interface/hns/ball_status_bar.4bpp.smol");
-#else
-const u32 gBattleInterface_BallStatusBarGfxGen3[] = INCBIN_U32("graphics/battle_interface/ball_status_bar.4bpp.smol");
-#endif
-
-const u32 gBattleAnimBgImage_Ghost[] = INCBIN_U32("graphics/battle_anims/backgrounds/ghost.4bpp.smol");
-const u16 gBattleAnimBgPalette_Ghost[] = INCBIN_U16("graphics/battle_anims/backgrounds/ghost.gbapal");
-const u32 gBattleAnimBgTilemap_Ghost[] = INCBIN_U32("graphics/battle_anims/backgrounds/ghost.bin.smolTM");
-
-const u16 gBattleAnimSpritePal_WhipHit[] = INCBIN_U16("graphics/battle_anims/sprites/whip_hit.gbapal");
-
-const u16 gBattleAnimBgPalette_SolarBeam[] = INCBIN_U16("graphics/battle_anims/backgrounds/solarbeam.gbapal");
-const u32 gBattleAnimBgTilemap_SolarBeam[] = INCBIN_U32("graphics/battle_anims/backgrounds/solarbeam.bin.smolTM"); // Unused
-
-const u16 gBattleAnimBgPalette_MagmaStorm[] = INCBIN_U16("graphics/battle_anims/backgrounds/magma_storm.gbapal");
-
-//new battle bgs
-
-const u32 gBattleAnimBgImage_Hurricane[] = INCBIN_U32("graphics/battle_anims/backgrounds/hurricane.4bpp.smol");
-const u16 gBattleAnimBgPalette_Hurricane[] = INCBIN_U16("graphics/battle_anims/backgrounds/hurricane.gbapal");
-const u32 gBattleAnimBgTilemap_Hurricane[] = INCBIN_U32("graphics/battle_anims/backgrounds/hurricane.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_RockWrecker[] = INCBIN_U16("graphics/battle_anims/backgrounds/rock_wrecker.gbapal");
-
-const u32 gBattleAnimBgTilemap_GigaImpactPlayer[] = INCBIN_U32("graphics/battle_anims/backgrounds/giga_impact_player.bin.smolTM");
-const u32 gBattleAnimBgTilemap_GigaImpactOpponent[] = INCBIN_U32("graphics/battle_anims/backgrounds/giga_impact_opponent.bin.smolTM");
-const u32 gBattleAnimBgTilemap_GigaImpactContest[] = INCBIN_U32("graphics/battle_anims/backgrounds/giga_impact_contest.bin.smolTM");
-const u32 gBattleAnimBgImage_GigaImpact[] = INCBIN_U32("graphics/battle_anims/backgrounds/giga_impact.4bpp.smol");
-const u32 gBattleAnimBgImage_GigaImpactContest[] = INCBIN_U32("graphics/battle_anims/backgrounds/giga_impact_contest.4bpp.smol");
-const u16 gBattleAnimBgPalette_GigaImpact[] = INCBIN_U16("graphics/battle_anims/backgrounds/giga_impact.gbapal");
-
-const u32 gBattleAnimBgImage_SpacialRend[] = INCBIN_U32("graphics/battle_anims/backgrounds/spacial_rend.4bpp.smol");
-const u16 gBattleAnimBgPalette_SpacialRend[] = INCBIN_U16("graphics/battle_anims/backgrounds/spacial_rend.gbapal");
-
-const u16 gBattleAnimBgPalette_SludgeWave[] = INCBIN_U16("graphics/battle_anims/backgrounds/sludge_wave.gbapal");
-
-const u32 gBattleAnimBgImage_Aeroblast[] = INCBIN_U32("graphics/battle_anims/backgrounds/aeroblast_tiles.4bpp.smol");
-const u16 gBattleAnimBgPalette_Aeroblast[] = INCBIN_U16("graphics/battle_anims/backgrounds/aeroblast.gbapal");
-const u32 gBattleAnimBgTilemap_Aeroblast[] = INCBIN_U32("graphics/battle_anims/backgrounds/aeroblast_map.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_AuraSphere[] = INCBIN_U16("graphics/battle_anims/backgrounds/aura_sphere.gbapal");
-
-const u32 gBattleAnimBgImage_BlackholeEclipse[] = INCBIN_U32("graphics/battle_anims/backgrounds/blackhole_eclipse.4bpp.smol");
-const u16 gBattleAnimBgPalette_BlackholeEclipse[] = INCBIN_U16("graphics/battle_anims/backgrounds/blackhole_eclipse.gbapal");
-const u32 gBattleAnimBgTilemap_BlackholeEclipse[] = INCBIN_U32("graphics/battle_anims/backgrounds/blackhole_eclipse.bin.smolTM");
-
-const u32 gBattleAnimBgImage_BloomDoom[] = INCBIN_U32("graphics/battle_anims/backgrounds/bloom_doom.4bpp.smol");
-const u16 gBattleAnimBgPalette_BloomDoom[] = INCBIN_U16("graphics/battle_anims/backgrounds/bloom_doom.gbapal");
-const u32 gBattleAnimBgTilemap_BloomDoom[] = INCBIN_U32("graphics/battle_anims/backgrounds/bloom_doom.bin.smolTM");
-
-const u32 gBattleAnimBgImage_BoltStrike[] = INCBIN_U32("graphics/battle_anims/backgrounds/bolt_strike.4bpp.smol");
-const u16 gBattleAnimBgPalette_BoltStrike[] = INCBIN_U16("graphics/battle_anims/backgrounds/bolt_strike.gbapal");
-const u32 gBattleAnimBgTilemap_BoltStrike[] = INCBIN_U32("graphics/battle_anims/backgrounds/bolt_strike.bin.smolTM");
-
-const u32 gBattleAnimBgImage_ClangorousSoulblaze[] = INCBIN_U32("graphics/battle_anims/backgrounds/clangorous_soulblaze.4bpp.smol");
-const u16 gBattleAnimBgPalette_ClangorousSoulblaze[] = INCBIN_U16("graphics/battle_anims/backgrounds/clangorous_soulblaze.gbapal");
-const u32 gBattleAnimBgTilemap_ClangorousSoulblaze[] = INCBIN_U32("graphics/battle_anims/backgrounds/clangorous_soulblaze.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_DynamaxCannon[] = INCBIN_U16("graphics/battle_anims/backgrounds/dynamax_cannon.gbapal");
-
-const u32 gBattleAnimBgImage_Fire1[] = INCBIN_U32("graphics/battle_anims/backgrounds/fire1.4bpp.smol");
-const u16 gBattleAnimBgPalette_Fire1[] = INCBIN_U16("graphics/battle_anims/backgrounds/fire1.gbapal");
-const u32 gBattleAnimBgTilemap_Fire1[] = INCBIN_U32("graphics/battle_anims/backgrounds/fire1.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_Fire2[] = INCBIN_U16("graphics/battle_anims/backgrounds/fire2.gbapal");
-
-const u32 gBattleAnimBgImage_FocusBlast[] = INCBIN_U32("graphics/battle_anims/backgrounds/focus_blast.4bpp.smol");
-const u16 gBattleAnimBgPalette_FocusBlast[] = INCBIN_U16("graphics/battle_anims/backgrounds/focus_blast.gbapal");
-const u32 gBattleAnimBgTilemap_FocusBlast[] = INCBIN_U32("graphics/battle_anims/backgrounds/focus_blast.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_GarbageFalls[] = INCBIN_U16("graphics/battle_anims/backgrounds/garbage_falls.gbapal");
-
-const u16 gBattleAnimBgPalette_GunkShot[] = INCBIN_U16("graphics/battle_anims/backgrounds/gunk_shot.gbapal");
-
-const u32 gBattleAnimBgImage_HydroCannon[] = INCBIN_U32("graphics/battle_anims/backgrounds/hydro_cannon.4bpp.smol");
-const u16 gBattleAnimBgPalette_HydroCannon[] = INCBIN_U16("graphics/battle_anims/backgrounds/hydro_cannon.gbapal");
-const u32 gBattleAnimBgTilemap_HydroCannon[] = INCBIN_U32("graphics/battle_anims/backgrounds/hydro_cannon.bin.smolTM");
-const u16 gBattleAnimBgPalette_Chloroblast[] = INCBIN_U16("graphics/battle_anims/backgrounds/chloroblast.gbapal");
-
-const u32 gBattleAnimBgImage_HydroPump[] = INCBIN_U32("graphics/battle_anims/backgrounds/hydro_pump.4bpp.smol");
-const u16 gBattleAnimBgPalette_HydroPump[] = INCBIN_U16("graphics/battle_anims/backgrounds/hydro_pump.gbapal");
-const u32 gBattleAnimBgTilemap_HydroPump[] = INCBIN_U32("graphics/battle_anims/backgrounds/hydro_pump.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_HyperBeam[] = INCBIN_U16("graphics/battle_anims/backgrounds/hyper_beam.gbapal");
-
-const u16 gBattleAnimBgPalette_HyperspaceFury[] = INCBIN_U16("graphics/battle_anims/backgrounds/hyperspace_fury.gbapal");
-
-const u32 gBattleAnimBgImage_InfernoOverdrive[] = INCBIN_U32("graphics/battle_anims/backgrounds/inferno_overdrive.4bpp.smol");
-const u16 gBattleAnimBgPalette_InfernoOverdrive[] = INCBIN_U16("graphics/battle_anims/backgrounds/inferno_overdrive.gbapal");
-const u32 gBattleAnimBgTilemap_InfernoOverdrive[] = INCBIN_U32("graphics/battle_anims/backgrounds/inferno_overdrive.bin.smolTM");
-
-const u32 gBattleAnimBgImage_LeafStorm[] = INCBIN_U32("graphics/battle_anims/backgrounds/leaf_storm.4bpp.smol");
-const u16 gBattleAnimBgPalette_LeafStorm[] = INCBIN_U16("graphics/battle_anims/backgrounds/leaf_storm.gbapal");
-const u32 gBattleAnimBgTilemap_LeafStorm[] = INCBIN_U32("graphics/battle_anims/backgrounds/leaf_storm.bin.smolTM");
-
-const u32 gBattleAnimBgImage_MaliciousMoonsault[] = INCBIN_U32("graphics/battle_anims/backgrounds/malicious_moonsault.4bpp.smol");
-const u16 gBattleAnimBgPalette_MaliciousMoonsault[] = INCBIN_U16("graphics/battle_anims/backgrounds/malicious_moonsault.gbapal");
-const u32 gBattleAnimBgTilemap_MaliciousMoonsault[] = INCBIN_U32("graphics/battle_anims/backgrounds/malicious_moonsault.bin.smolTM");
-
-const u32 gBattleAnimBgImage_MaxLightning[] = INCBIN_U32("graphics/battle_anims/backgrounds/max_lightning.4bpp.smol");
-const u16 gBattleAnimBgPalette_MaxLightning[] = INCBIN_U16("graphics/battle_anims/backgrounds/max_lightning.gbapal");
-const u32 gBattleAnimBgTilemap_MaxLightning[] = INCBIN_U32("graphics/battle_anims/backgrounds/max_lightning.bin.smolTM");
-
-const u32 gBattleAnimBgImage_NeverendingNightmare[] = INCBIN_U32("graphics/battle_anims/backgrounds/neverending_nightmare.4bpp.smol");
-const u16 gBattleAnimBgPalette_NeverendingNightmare[] = INCBIN_U16("graphics/battle_anims/backgrounds/neverending_nightmare.gbapal");
-const u32 gBattleAnimBgTilemap_NeverendingNightmare[] = INCBIN_U32("graphics/battle_anims/backgrounds/neverending_nightmare.bin.smolTM");
-
-#if B_NEW_TERRAIN_BACKGROUNDS
-const u32 gBattleAnimBgImage_ElectricTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/new_electric_terrain.4bpp.smol");
-const u16 gBattleAnimBgPalette_ElectricTerrain[] = INCBIN_U16("graphics/battle_anims/backgrounds/new_electric_terrain.gbapal");
-const u32 gBattleAnimBgTilemap_ElectricTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/new_electric_terrain.bin.smolTM");
-
-const u32 gBattleAnimBgImage_GrassyTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/new_grassy_terrain.4bpp.smol");
-const u16 gBattleAnimBgPalette_GrassyTerrain[] = INCBIN_U16("graphics/battle_anims/backgrounds/new_grassy_terrain.gbapal");
-const u32 gBattleAnimBgTilemap_GrassyTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/new_grassy_terrain.bin.smolTM");
-
-const u32 gBattleAnimBgImage_MistyTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/new_misty_terrain.4bpp.smol");
-const u16 gBattleAnimBgPalette_MistyTerrain[] = INCBIN_U16("graphics/battle_anims/backgrounds/new_misty_terrain.gbapal");
-const u32 gBattleAnimBgTilemap_MistyTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/new_misty_terrain.bin.smolTM");
-
-const u32 gBattleAnimBgImage_PsychicTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/new_psychic_terrain.4bpp.smol");
-const u16 gBattleAnimBgPalette_PsychicTerrain[] = INCBIN_U16("graphics/battle_anims/backgrounds/new_psychic_terrain.gbapal");
-const u32 gBattleAnimBgTilemap_PsychicTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/new_psychic_terrain.bin.smolTM");
-#else
-const u32 gBattleAnimBgImage_PsychicTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/psychic_terrain.4bpp.smol");
-const u16 gBattleAnimBgPalette_PsychicTerrain[] = INCBIN_U16("graphics/battle_anims/backgrounds/psychic_terrain.gbapal");
-const u32 gBattleAnimBgTilemap_PsychicTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/psychic_terrain.bin.smolTM");
-
-const u32 gBattleAnimBgImage_ElectricTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/electric_terrain.4bpp.smol");
-const u16 gBattleAnimBgPalette_ElectricTerrain[] = INCBIN_U16("graphics/battle_anims/backgrounds/electric_terrain.gbapal");
-const u32 gBattleAnimBgTilemap_ElectricTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/electric_terrain.bin.smolTM");
-
-const u32 gBattleAnimBgImage_GrassyTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/grassy_terrain.4bpp.smol");
-const u16 gBattleAnimBgPalette_GrassyTerrain[] = INCBIN_U16("graphics/battle_anims/backgrounds/grassy_terrain.gbapal");
-const u32 gBattleAnimBgTilemap_GrassyTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/grassy_terrain.bin.smolTM");
-
-const u32 gBattleAnimBgImage_MistyTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/misty_terrain.4bpp.smol");
-const u16 gBattleAnimBgPalette_MistyTerrain[] = INCBIN_U16("graphics/battle_anims/backgrounds/misty_terrain.gbapal");
-const u32 gBattleAnimBgTilemap_MistyTerrain[] = INCBIN_U32("graphics/battle_anims/backgrounds/misty_terrain.bin.smolTM");
-#endif
-
-const u32 gBattleAnimBgImage_Nightmare[] = INCBIN_U32("graphics/battle_anims/backgrounds/nightmare.4bpp.smol");
-const u16 gBattleAnimBgPalette_Nightmare[] = INCBIN_U16("graphics/battle_anims/backgrounds/nightmare.gbapal");
-const u32 gBattleAnimBgTilemap_Nightmare[] = INCBIN_U32("graphics/battle_anims/backgrounds/nightmare.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_PoisonFalls[] = INCBIN_U16("graphics/battle_anims/backgrounds/poison_falls.gbapal");
-
-const u16 gBattleAnimBgPalette_PsychicNew[] = INCBIN_U16("graphics/battle_anims/backgrounds/psychic_new.gbapal");
-
-const u32 gBattleAnimBgImage_ShatteredPsyche[] = INCBIN_U32("graphics/battle_anims/backgrounds/shattered_psyche.4bpp.smol");
-const u16 gBattleAnimBgPalette_ShatteredPsyche[] = INCBIN_U16("graphics/battle_anims/backgrounds/shattered_psyche.gbapal");
-const u32 gBattleAnimBgTilemap_ShatteredPsyche[] = INCBIN_U32("graphics/battle_anims/backgrounds/shattered_psyche.bin.smolTM");
-
-const u32 gBattleAnimBgImage_RockField[] = INCBIN_U32("graphics/battle_anims/backgrounds/rock_field.4bpp.smol");
-const u16 gBattleAnimBgPalette_RockDay[] = INCBIN_U16("graphics/battle_anims/backgrounds/rock_day.gbapal");
-const u32 gBattleAnimBgTilemap_RockField[] = INCBIN_U32("graphics/battle_anims/backgrounds/rock_field.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_RockAfternoon[] = INCBIN_U16("graphics/battle_anims/backgrounds/rock_afternoon.gbapal");
-
-const u16 gBattleAnimBgPalette_RockNight[] = INCBIN_U16("graphics/battle_anims/backgrounds/rock_night.gbapal");
-
-const u32 gBattleAnimBgImage_SnuggleForever[] = INCBIN_U32("graphics/battle_anims/backgrounds/snuggle_forever.4bpp.smol");
-const u16 gBattleAnimBgPalette_SnuggleForever[] = INCBIN_U16("graphics/battle_anims/backgrounds/snuggle_forever.gbapal");
-const u32 gBattleAnimBgTilemap_SnuggleForever[] = INCBIN_U32("graphics/battle_anims/backgrounds/snuggle_forever.bin.smolTM");
-
-const u32 gBattleAnimBgImage_SoulStealing7StarStrike[] = INCBIN_U32("graphics/battle_anims/backgrounds/soulstealing_7star_strike.4bpp.smol");
-const u16 gBattleAnimBgPalette_SoulStealing7StarStrike[] = INCBIN_U16("graphics/battle_anims/backgrounds/soulstealing_7star_strike.gbapal");
-const u32 gBattleAnimBgTilemap_SoulStealing7StarStrike[] = INCBIN_U32("graphics/battle_anims/backgrounds/soulstealing_7star_strike.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_TectonicRage[] = INCBIN_U16("graphics/battle_anims/backgrounds/tectonic_rage.gbapal");
-
-const u32 gBattleAnimBgImage_TrickRoom[] = INCBIN_U32("graphics/battle_anims/backgrounds/trick_room.4bpp.smol");
-const u16 gBattleAnimBgPalette_TrickRoom[] = INCBIN_U16("graphics/battle_anims/backgrounds/trick_room.gbapal");
-const u32 gBattleAnimBgTilemap_TrickRoom[] = INCBIN_U32("graphics/battle_anims/backgrounds/trick_room.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_MagicRoom[] = INCBIN_U16("graphics/battle_anims/backgrounds/magic_room.gbapal");
-
-const u16 gBattleAnimBgPalette_WonderRoom[] = INCBIN_U16("graphics/battle_anims/backgrounds/wonder_room.gbapal");
-
-const u32 gBattleAnimBgImage_TwinkleTackle[] = INCBIN_U32("graphics/battle_anims/backgrounds/twinkle_tackle.4bpp.smol");
-const u16 gBattleAnimBgPalette_TwinkleTackle[] = INCBIN_U16("graphics/battle_anims/backgrounds/twinkle_tackle.gbapal");
-const u32 gBattleAnimBgTilemap_TwinkleTackle[] = INCBIN_U32("graphics/battle_anims/backgrounds/twinkle_tackle.bin.smolTM");
-
-const u32 gBattleAnimBgImage_WaterPulse[] = INCBIN_U32("graphics/battle_anims/backgrounds/water_pulse.4bpp.smol");
-const u16 gBattleAnimBgPalette_WaterPulse[] = INCBIN_U16("graphics/battle_anims/backgrounds/water_pulse.gbapal");
-const u32 gBattleAnimBgTilemap_WaterPulse[] = INCBIN_U32("graphics/battle_anims/backgrounds/water_pulse.bin.smolTM");
-
-const u32 gBattleAnimBgImage_Waterfall[] = INCBIN_U32("graphics/battle_anims/backgrounds/waterfall.4bpp.smol");
-const u16 gBattleAnimBgPalette_Waterfall[] = INCBIN_U16("graphics/battle_anims/backgrounds/waterfall.gbapal");
-const u32 gBattleAnimBgTilemap_Waterfall[] = INCBIN_U32("graphics/battle_anims/backgrounds/waterfall.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_DarkVoid[] = INCBIN_U16("graphics/battle_anims/backgrounds/dark_void.gbapal");
-const u32 gBattleAnimBgTilemap_DarkVoid[] = INCBIN_U32("graphics/battle_anims/backgrounds/dark_void.bin.smolTM");
-
-const u32 gBattleAnimBgImage_ZMoveActivate[] = INCBIN_U32("graphics/battle_anims/backgrounds/zmove_activate.4bpp.smol");
-const u16 gBattleAnimBgPalette_ZMoveActivate[] = INCBIN_U16("graphics/battle_anims/backgrounds/zmove_activate.gbapal");
-const u32 gBattleAnimBgTilemap_ZMoveActivate[] = INCBIN_U32("graphics/battle_anims/backgrounds/zmove_activate.bin.smolTM");
-
-const u32 gBattleAnimBgImage_ZMoveMountain[] = INCBIN_U32("graphics/battle_anims/backgrounds/zmove_mountain.4bpp.smol");
-const u16 gBattleAnimBgPalette_ZMoveMountain[] = INCBIN_U16("graphics/battle_anims/backgrounds/zmove_mountain.gbapal");
-const u32 gBattleAnimBgTilemap_ZMoveMountain[] = INCBIN_U32("graphics/battle_anims/backgrounds/zmove_mountain.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_SteelBeam[] = INCBIN_U16("graphics/battle_anims/backgrounds/steel_beam.gbapal");
-
-// misc
-const u32 gBerryBlenderCenter_Gfx[] = INCBIN_U32("graphics/berry_blender/center.8bpp.smol");
-const u32 gBerryBlenderOuter_Gfx[] = INCBIN_U32("graphics/berry_blender/outer.4bpp.smol");
-const u32 gBerryBlenderOuter_Tilemap[] = INCBIN_U32("graphics/berry_blender/outer_map.bin.smolTM");
-
-const u16 gBattleAnimBgPalette_Cosmic[] = INCBIN_U16("graphics/battle_anims/backgrounds/cosmic.gbapal");
-const u32 gBattleAnimBgImage_Cosmic[] = INCBIN_U32("graphics/battle_anims/backgrounds/cosmic.4bpp.smol");
-const u32 gBattleAnimBgTilemap_Cosmic[] = INCBIN_U32("graphics/battle_anims/backgrounds/cosmic.bin.smolTM");
-
-const u16 gBattleAnimSpritePal_SlamHit2[] = INCBIN_U16("graphics/battle_anims/sprites/slam_hit_2.gbapal");
-const u32 gBattleAnimSpriteGfx_SlamHit2[] = INCBIN_U32("graphics/battle_anims/sprites/slam_hit_2.4bpp.smol");
-
-const u32 gBattleAnimFogTilemap[] = INCBIN_U32("graphics/battle_anims/backgrounds/fog.bin.smolTM");
-
-const u16 gBattleAnimSpritePal_WeatherBall[] = INCBIN_U16("graphics/battle_anims/sprites/weather_ball.gbapal");
-const u32 gBattleAnimSpriteGfx_WeatherBall[] = INCBIN_U32("graphics/battle_anims/sprites/weather_ball.4bpp.smol");
-
-const u32 gBattleAnimBgTilemap_ScaryFacePlayer[] = INCBIN_U32("graphics/battle_anims/backgrounds/scary_face_player.bin.smolTM");
-const u32 gBattleAnimBgTilemap_ScaryFaceOpponent[] = INCBIN_U32("graphics/battle_anims/backgrounds/scary_face_opponent.bin.smolTM");
-const u32 gBattleAnimBgTilemap_ScaryFaceContest[] = INCBIN_U32("graphics/battle_anims/backgrounds/scary_face_contest.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_Hail[] = INCBIN_U32("graphics/battle_anims/sprites/hail.4bpp.smol");
-const u16 gBattleAnimSpritePal_Hail[] = INCBIN_U16("graphics/battle_anims/sprites/hail.gbapal");
-
-const u32 gBattleAnimSpriteGfx_GreenSpike[] = INCBIN_U32("graphics/battle_anims/sprites/green_spike.4bpp.smol");
-const u16 gBattleAnimSpritePal_GreenSpike[] = INCBIN_U16("graphics/battle_anims/sprites/green_spike.gbapal");
-const u16 gBattleAnimSpritePal_WhiteCircleOfLight[] = INCBIN_U16("graphics/battle_anims/sprites/white_circle_of_light.gbapal");
-const u16 gBattleAnimSpritePal_GlowyBlueOrb[] = INCBIN_U16("graphics/battle_anims/sprites/glowy_blue_orb.gbapal");
-
-const u32 gBattleAnimSpriteGfx_Recycle[] = INCBIN_U32("graphics/battle_anims/sprites/recycle.4bpp.smol");
-const u16 gBattleAnimSpritePal_Recycle[] = INCBIN_U16("graphics/battle_anims/sprites/recycle.gbapal");
-
-const u32 gBattleAnimSpriteGfx_RedParticles[] = INCBIN_U32("graphics/battle_anims/sprites/red_particles.4bpp.smol");
-const u16 gBattleAnimSpritePal_RedParticles[] = INCBIN_U16("graphics/battle_anims/sprites/red_particles.gbapal");
-
-const u32 gBattleAnimSpriteGfx_DirtMound[] = INCBIN_U32("graphics/battle_anims/sprites/dirt_mound.4bpp.smol");
-const u16 gBattleAnimSpritePal_DirtMound[] = INCBIN_U16("graphics/battle_anims/sprites/dirt_mound.gbapal");
-
-const u32 gBattleAnimBgImage_Fissure[] = INCBIN_U32("graphics/battle_anims/backgrounds/fissure.4bpp.smol");
-const u16 gBattleAnimBgPalette_Fissure[] = INCBIN_U16("graphics/battle_anims/backgrounds/fissure.gbapal");
-const u32 gBattleAnimBgTilemap_Fissure[] = INCBIN_U32("graphics/battle_anims/backgrounds/fissure.bin.smolTM");
-
-const u32 gBattleAnimSpriteGfx_Bird[] = INCBIN_U32("graphics/battle_anims/sprites/bird.4bpp.smol");
-const u16 gBattleAnimSpritePal_Bird[] = INCBIN_U16("graphics/battle_anims/sprites/bird.gbapal");
-
-const u32 gBattleAnimSpriteGfx_CrossImpact[] = INCBIN_U32("graphics/battle_anims/sprites/cross_impact.4bpp.smol");
-const u16 gBattleAnimSpritePal_CrossImpact[] = INCBIN_U16("graphics/battle_anims/sprites/cross_impact.gbapal");
-
-const u32 gBattleAnimBgImage_Surf[] = INCBIN_U32("graphics/battle_anims/backgrounds/water.4bpp.smol");
-const u16 gBattleAnimBgPalette_Surf[] = INCBIN_U16("graphics/battle_anims/backgrounds/water.gbapal");
-
-const u32 gBattleAnimBgTilemap_SurfOpponent[] = INCBIN_U32("graphics/battle_anims/backgrounds/water_opponent.bin.smolTM");
-const u32 gBattleAnimBgTilemap_SurfPlayer[] = INCBIN_U32("graphics/battle_anims/backgrounds/water_player.bin.smolTM");
-const u32 gBattleAnimBgTilemap_SurfContest[] = INCBIN_U32("graphics/battle_anims/backgrounds/water_contest.bin.smolTM");
-
-const u16 gBattleAnimSpritePal_Slash2[] = INCBIN_U16("graphics/battle_anims/sprites/slash_2.gbapal");
-
-const u32 gBattleAnimSpriteGfx_WhiteShadow[] = INCBIN_U32("graphics/battle_anims/sprites/white_shadow.4bpp.smol");
-const u16 gBattleAnimSpritePal_WhiteShadow[] = INCBIN_U16("graphics/battle_anims/sprites/white_shadow.gbapal");
-
-// Pledge Effect field status - Rainbow
-const u32 gBattleAnimBgImage_RainbowPlayer[] = INCBIN_U32("graphics/battle_anims/backgrounds/rainbow_player_tile.4bpp.smol");
-const u32 gBattleAnimBgImage_RainbowOpponent[] = INCBIN_U32("graphics/battle_anims/backgrounds/rainbow_opponent_tile.4bpp.smol");
-const u16 gBattleAnimBGPalette_Rainbow[] = INCBIN_U16("graphics/battle_anims/backgrounds/rainbow_player_tile.gbapal");
-const u32 gBattleAnimBgTilemap_RainbowPlayer[] = INCBIN_U32("graphics/battle_anims/backgrounds/rainbow_player_tile.bin.smolTM");
-const u32 gBattleAnimBgTilemap_RainbowOpponent[] = INCBIN_U32("graphics/battle_anims/backgrounds/rainbow_opponent_tile.bin.smolTM");
-
-// Pledge Effect field status - Swamp
-const u32 gBattleAnimBgImage_Swamp[] = INCBIN_U32("graphics/battle_anims/backgrounds/swampswizzle.4bpp.smol");
-const u16 gBattleAnimBGPalette_Swamp[] = INCBIN_U16("graphics/battle_anims/backgrounds/swampswizzle.gbapal");
-const u32 gBattleAnimBgTilemap_Swamp[] = INCBIN_U32("graphics/battle_anims/backgrounds/swampswizzle.bin.smolTM");
-
-#if IS_HNS
-const u32 gPartyMenuBg_Gfx[] = INCBIN_U32("graphics/party_menu/hns/bg.4bpp.smol");
-const u16 gPartyMenuBg_Pal[] = INCBIN_U16("graphics/party_menu/hns/bg.gbapal");
-const u32 gPartyMenuBg_Tilemap[] = INCBIN_U32("graphics/party_menu/hns/bg.bin.smolTM");
-#else
-const u32 gPartyMenuBg_Gfx[] = INCBIN_U32("graphics/party_menu/bg.4bpp.smol");
-const u16 gPartyMenuBg_Pal[] = INCBIN_U16("graphics/party_menu/bg.gbapal");
-const u32 gPartyMenuBg_Tilemap[] = INCBIN_U32("graphics/party_menu/bg.bin.smolTM");
-#endif
-
-const u32 gPartyMenuPokeball_Gfx[] = INCBIN_U32("graphics/party_menu/pokeball.4bpp.smol");
-const u32 gPartyMenuPokeballSmall_Gfx[] = INCBIN_U32("graphics/party_menu/pokeball_small.4bpp.smol"); //unused
-const u16 gPartyMenuPokeball_Pal[] = INCBIN_U16("graphics/party_menu/pokeball.gbapal");
-
-const u32 gStatusGfx_Icons[] = INCBIN_U32("graphics/interface/status_icons.4bpp.smol");
-const u16 gStatusPal_Icons[] = INCBIN_U16("graphics/interface/status_icons.gbapal");
-
-const u16 gCategoryIcons_Pal[] = INCBIN_U16("graphics/interface/category_icons.gbapal");
-const u32 gCategoryIcons_Gfx[] = INCBIN_U32("graphics/interface/category_icons.4bpp.smol");
-
-const u32 gMoveTypes_Gfx[] = INCBIN_U32("graphics/types/move_types.4bpp.smol");
-const u16 gMoveTypes_Pal[] = INCBIN_U16("graphics/types/move_types.gbapal");
-
-const u32 gSummaryMoveSelect_Gfx[] = INCBIN_U32("graphics/summary_screen/move_select.4bpp.smol");
-const u16 gSummaryMoveSelect_Pal[] = INCBIN_U16("graphics/summary_screen/move_select.gbapal");
-
-#if IS_HNS
-const u32 gSummaryScreen_Gfx[]                = INCBIN_U32("graphics/summary_screen/hns/tiles.4bpp.smol");
-const u16 gSummaryScreen_Pal[]                = INCBIN_U16("graphics/summary_screen/hns/tiles.gbapal");
-#else
-const u32 gSummaryScreen_Gfx[]                = INCBIN_U32("graphics/summary_screen/tiles.4bpp.smol");
-const u16 gSummaryScreen_Pal[]                = INCBIN_U16("graphics/summary_screen/tiles.gbapal");
-#endif
-const u32 gSummaryPage_Info_Tilemap[]         = INCBIN_U32("graphics/summary_screen/page_info.bin.smolTM");
-const u32 gSummaryPage_Skills_Tilemap[]       = INCBIN_U32("graphics/summary_screen/page_skills.bin.smolTM");
-const u32 gSummaryPage_BattleMoves_Tilemap[]  = INCBIN_U32("graphics/summary_screen/page_battle_moves.bin.smolTM");
-const u32 gSummaryPage_ContestMoves_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_contest_moves.bin.smolTM");
-const u32 gSummaryPage_InfoEgg_Tilemap[]      = INCBIN_U32("graphics/summary_screen/page_info_egg.bin.smolTM");
-
-#if IS_HNS
-const u32 gBagMaleTiles[] = INCBIN_U32("graphics/bag/hns/bag_male.4bpp.smol");
-const u32 gBagFemaleTiles[] = INCBIN_U32("graphics/bag/hns/bag_female.4bpp.smol");
-const u16 gBagPalette[] = INCBIN_U16("graphics/bag/hns/bag.gbapal");
-const u16 gBagScreenMale_Pal[] = INCBIN_U16("graphics/bag/hns/menu_male.gbapal");
-const u16 gBagScreenFemale_Pal[] = INCBIN_U16("graphics/bag/hns/menu_female.gbapal");
-#else
-const u32 gBagMaleTiles[] = INCBIN_U32("graphics/bag/bag_male.4bpp.smol");
-const u32 gBagFemaleTiles[] = INCBIN_U32("graphics/bag/bag_female.4bpp.smol");
-const u16 gBagPalette[] = INCBIN_U16("graphics/bag/bag.gbapal");
-const u16 gBagScreenMale_Pal[] = INCBIN_U16("graphics/bag/menu_male.gbapal");
-const u16 gBagScreenFemale_Pal[] = INCBIN_U16("graphics/bag/menu_female.gbapal");
-#endif
-
-const u32 gBagScreen_Gfx[] = INCBIN_U32("graphics/bag/menu.4bpp.smol");
-#if I_COMBINE_BAG_POCKETS == TRUE
-const u32 gBagScreen_GfxTileMap[] = INCBIN_U32("graphics/bag/menu_6.bin.smolTM");
-#else
-const u32 gBagScreen_GfxTileMap[] = INCBIN_U32("graphics/bag/menu_8.bin.smolTM");
-#endif
-
-const u32 gBattlePyramidBag_Gfx[]          = INCBIN_U32("graphics/bag/bag_pyramid.4bpp.smol");
-const u16 gBattlePyramidBag_Pal[]          = INCBIN_U16("graphics/bag/bag_pyramid.gbapal"); // female palette is first and male is second.
-const u32 gBattlePyramidBagTilemap[]       = INCBIN_U32("graphics/bag/menu_pyramid.bin.smolTM");
-const u16 gBattlePyramidBagInterface_Pal[] = INCBIN_U16("graphics/bag/menu_pyramid.gbapal");
-
-const u32 gSwapLineGfx[] = INCBIN_U32("graphics/interface/swap_line.4bpp.smol");
-const u16 gSwapLinePal[] = INCBIN_U16("graphics/interface/swap_line.gbapal");
-
-const u32 gShopMenu_Gfx[] = INCBIN_U32("graphics/shop/menu.4bpp.smol");
-const u16 gShopMenu_Pal[] = INCBIN_U16("graphics/shop/menu.gbapal");
-const u32 gShopMenu_Tilemap[] = INCBIN_U32("graphics/shop/menu.bin.smolTM");
-const u32 gShopMenuMoney_Gfx[] = INCBIN_U32("graphics/shop/money.4bpp.smol");
-const u32 gShopMenuBP_Gfx[] = INCBIN_U32("graphics/shop/bp.4bpp.smol");
-
-// Pokeblock
-
-const u32 gMenuPokeblock_Gfx[] = INCBIN_U32("graphics/pokeblock/menu.4bpp.smol");
-const u16 gMenuPokeblock_Pal[] = INCBIN_U16("graphics/pokeblock/menu.gbapal");
-
-const u32 gMenuPokeblockDevice_Gfx[] = INCBIN_U32("graphics/pokeblock/device.4bpp.smol");
-const u16 gMenuPokeblockDevice_Pal[] = INCBIN_U16("graphics/pokeblock/device.gbapal");
-
-const u32 gMenuPokeblock_Tilemap[] = INCBIN_U32("graphics/pokeblock/menu.bin.smolTM");
-
-const u32 gPokeblock_Gfx[] = INCBIN_U32("graphics/pokeblock/pokeblock.4bpp.smol");
-const u16 gPokeblockRed_Pal[] = INCBIN_U16("graphics/pokeblock/red.gbapal");
-const u16 gPokeblockBlue_Pal[] = INCBIN_U16("graphics/pokeblock/blue.gbapal");
-const u16 gPokeblockPink_Pal[] = INCBIN_U16("graphics/pokeblock/pink.gbapal");
-const u16 gPokeblockGreen_Pal[] = INCBIN_U16("graphics/pokeblock/green.gbapal");
-const u16 gPokeblockYellow_Pal[] = INCBIN_U16("graphics/pokeblock/yellow.gbapal");
-const u16 gPokeblockPurple_Pal[] = INCBIN_U16("graphics/pokeblock/purple.gbapal");
-const u16 gPokeblockIndigo_Pal[] = INCBIN_U16("graphics/pokeblock/indigo.gbapal");
-const u16 gPokeblockBrown_Pal[] = INCBIN_U16("graphics/pokeblock/brown.gbapal");
-const u16 gPokeblockLiteBlue_Pal[] = INCBIN_U16("graphics/pokeblock/liteblue.gbapal");
-const u16 gPokeblockOlive_Pal[] = INCBIN_U16("graphics/pokeblock/olive.gbapal");
-const u16 gPokeblockGray_Pal[] = INCBIN_U16("graphics/pokeblock/gray.gbapal");
-const u16 gPokeblockBlack_Pal[] = INCBIN_U16("graphics/pokeblock/black.gbapal");
-const u16 gPokeblockWhite_Pal[] = INCBIN_U16("graphics/pokeblock/white.gbapal");
-const u16 gPokeblockGold_Pal[] = INCBIN_U16("graphics/pokeblock/gold.gbapal");
-
-const u32 gPokeblockFeedBg_Tilemap[] = INCBIN_U32("graphics/pokeblock/feeding_bg.bin.smolTM");
-
-#include "data/graphics/berries.h"
-#include "data/graphics/rayquaza_scene.h"
-#include "data/graphics/items.h"
-#include "data/graphics/decorations.h"
-
-const u16 gBattleAnimSpritePal_Shock3[] = INCBIN_U16("graphics/battle_anims/sprites/shock_3.gbapal");
-const u32 gBattleAnimSpriteGfx_Shock3[] = INCBIN_U32("graphics/battle_anims/sprites/shock_3.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_WhiteFeather[] = INCBIN_U16("graphics/battle_anims/sprites/white_feather.gbapal");
-const u32 gBattleAnimSpriteGfx_WhiteFeather[] = INCBIN_U32("graphics/battle_anims/sprites/white_feather.4bpp.smol");
-
-const u16 gBattleAnimSpritePal_Sparkle6[] = INCBIN_U16("graphics/battle_anims/sprites/sparkle_6.gbapal");
-const u32 gBattleAnimSpriteGfx_Sparkle6[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_6.4bpp.smol");
-
-const u16 gCableCarBg_Pal[]    = INCBIN_U16("graphics/cable_car/bg.gbapal");
-const u16 gCableCar_Pal[]      = INCBIN_U16("graphics/cable_car/cable_car.gbapal");
-const u32 gCableCarBg_Gfx[]    = INCBIN_U32("graphics/cable_car/bg.4bpp.smol");
-const u32 gCableCar_Gfx[]      = INCBIN_U32("graphics/cable_car/cable_car.4bpp.smol");
-const u32 gCableCarDoor_Gfx[]  = INCBIN_U32("graphics/cable_car/door.4bpp.smol");
-const u32 gCableCarCable_Gfx[] = INCBIN_U32("graphics/cable_car/cable.4bpp.smol");
-
-// Roulette
-const u32 gRouletteMenu_Gfx[] = INCBIN_U32("graphics/roulette/window.4bpp.smol");
-const u32 gRouletteWheel_Gfx[] = INCBIN_U32("graphics/roulette/wheel.8bpp.smol");
-const u32 gRouletteCenter_Gfx[] = INCBIN_U32("graphics/roulette/center.4bpp.smol");
-const u32 gRouletteHeaders_Gfx[] = INCBIN_U32("graphics/roulette/headers.4bpp.smol");
-const u32 gRouletteCredit_Gfx[] = INCBIN_U32("graphics/roulette/credit.4bpp.smol");
-const u32 gRouletteNumbers_Gfx[] = INCBIN_U32("graphics/roulette/numbers.4bpp.smol");
-const u32 gRouletteMultiplier_Gfx[] = INCBIN_U32("graphics/roulette/multiplier.4bpp.smol");
-
-#include "data/graphics/mail.h"
-
-const u16 gFrontierFactoryMenu_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/menu.gbapal");
-const u16 gFrontierFactoryMenu_Gfx[] = INCBIN_U16("graphics/battle_frontier/factory_screen/menu.4bpp");
-const u16 gFrontierFactoryMenu_Tilemap[] = INCBIN_U16("graphics/battle_frontier/factory_screen/menu.bin");
-
-const u32 gFrontierPassMedals_Gfx[] = INCBIN_U32("graphics/frontier_pass/medals.4bpp.smol");
-
-const u16 gFrontierPassCursor_Pal[] = INCBIN_U16("graphics/frontier_pass/cursor.gbapal");
-
-const u16 gFrontierPassMapCursor_Pal[] = INCBIN_U16("graphics/frontier_pass/map_cursor.gbapal");
-
-const u16 gFrontierPassMedalsSilver_Pal[] = INCBIN_U16("graphics/frontier_pass/silver.gbapal");
-const u16 gFrontierPassMedalsGold_Pal[] = INCBIN_U16("graphics/frontier_pass/gold.gbapal");
-
-// PokÃ©dex
-const u16 gPokedexBgHoenn_Pal[] = INCBIN_U16("graphics/pokedex/bg_hoenn.gbapal");
-const u16 gPokedexSearchResults_Pal[] = INCBIN_U16("graphics/pokedex/search_results_bg.gbapal");
-const u16 gPokedexBgNational_Pal[] = INCBIN_U16("graphics/pokedex/bg_national.gbapal");
-const u32 gPokedexMenu_Gfx[] = INCBIN_U32("graphics/pokedex/menu.4bpp.smol");
-const u32 gPokedexInterface_Gfx[] = INCBIN_U32("graphics/pokedex/interface.4bpp.smol");
-const u32 gUnused_PokedexNoBall[] = INCBIN_U32("graphics/pokedex/noball_unused.4bpp.smol");
-const u32 gPokedexStartMenuMain_Tilemap[] = INCBIN_U32("graphics/pokedex/start_menu_main.bin.smolTM");
-const u32 gPokedexStartMenuSearchResults_Tilemap[] = INCBIN_U32("graphics/pokedex/start_menu_search_results.bin.smolTM");
-const u32 gPokedexList_Tilemap[] = INCBIN_U32("graphics/pokedex/list.bin.smolTM");
-const u32 gPokedexListUnderlay_Tilemap[] = INCBIN_U32("graphics/pokedex/list_underlay.bin.smolTM");
-const u32 gPokedexSizeScreen_Tilemap[] = INCBIN_U32("graphics/pokedex/size_screen.bin.smolTM");
-const u32 gPokedexScreenSelectBarMain_Tilemap[] = INCBIN_U32("graphics/pokedex/screen_select_bar_main.bin.smolTM");
-const u32 gPokedexScreenSelectBarSubmenu_Tilemap[] = INCBIN_U32("graphics/pokedex/screen_select_bar_submenu.bin.smolTM");
-const u32 gPokedexInfoScreen_Tilemap[] = INCBIN_U32("graphics/pokedex/info_screen.bin.smolTM");
-const u32 gPokedexCryScreen_Tilemap[] = INCBIN_U32("graphics/pokedex/cry_screen.bin.smolTM");
-const u16 gPokedexSearchMenu_Pal[] = INCBIN_U16("graphics/pokedex/search_menu.gbapal");
-const u32 gPokedexSearchMenu_Gfx[] = INCBIN_U32("graphics/pokedex/search_menu.4bpp.smol");
-const u32 gPokedexSearchMenuNational_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_national.bin.smolTM");
-const u32 gPokedexSearchMenuHoenn_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_hoenn.bin.smolTM");
-
-const u16 gSummaryScreen_MoveEffect_Battle_Tilemap[] = INCBIN_U16("graphics/summary_screen/effect_battle.bin");
-const u16 gSummaryScreen_MoveEffect_Contest_Tilemap[] = INCBIN_U16("graphics/summary_screen/effect_contest.bin");
-const u16 gSummaryScreen_MoveEffect_Cancel_Tilemap[] = INCBIN_U16("graphics/summary_screen/effect_cancel.bin");
-
-const u16 gIntroCopyright_Pal[] = INCBIN_U16("graphics/intro/copyright.gbapal");
-const u32 gIntroCopyright_Gfx[] = INCBIN_U32("graphics/intro/copyright.4bpp.smol");
-const u32 gIntroCopyright_Tilemap[] = INCBIN_U32("graphics/intro/copyright.bin.smolTM");
-
-const u16 gPokedexAreaScreenAreaUnknown_Pal[] = INCBIN_U16("graphics/pokedex/area_unknown.gbapal");
-const u32 gPokedexAreaScreenAreaUnknown_Gfx[] = INCBIN_U32("graphics/pokedex/area_unknown.4bpp.smol");
-
-const u16 gMenuInfoElements1_Pal[] = INCBIN_U16("graphics/interface/menu_info1.gbapal");
-const u16 gMenuInfoElements2_Pal[] = INCBIN_U16("graphics/interface/menu_info2.gbapal");
-const u16 gMenuInfoElements3_Pal[] = INCBIN_U16("graphics/interface/menu_info3.gbapal");
-const u8 gMenuInfoElements_Gfx[] = INCBIN_U8("graphics/interface/menu_info.4bpp");
-
-const u8 gBagMenuHMIcon_Gfx[] = INCBIN_U8("graphics/bag/hm.4bpp");
-
-// contest results screen
-
-const u16 gContestResultsTitle_Normal_Tilemap[] = INCBIN_U16("graphics/contest/results_screen/title_normal.bin");
-const u16 gContestResultsTitle_Super_Tilemap[]  = INCBIN_U16("graphics/contest/results_screen/title_super.bin");
-const u16 gContestResultsTitle_Hyper_Tilemap[]  = INCBIN_U16("graphics/contest/results_screen/title_hyper.bin");
-const u16 gContestResultsTitle_Master_Tilemap[] = INCBIN_U16("graphics/contest/results_screen/title_master.bin");
-const u16 gContestResultsTitle_Link_Tilemap[]   = INCBIN_U16("graphics/contest/results_screen/title_link.bin");
-const u16 gContestResultsTitle_Cool_Tilemap[]   = INCBIN_U16("graphics/contest/results_screen/title_cool.bin");
-const u16 gContestResultsTitle_Beauty_Tilemap[] = INCBIN_U16("graphics/contest/results_screen/title_beauty.bin");
-const u16 gContestResultsTitle_Cute_Tilemap[]   = INCBIN_U16("graphics/contest/results_screen/title_cute.bin");
-const u16 gContestResultsTitle_Smart_Tilemap[]  = INCBIN_U16("graphics/contest/results_screen/title_smart.bin");
-const u16 gContestResultsTitle_Tough_Tilemap[]  = INCBIN_U16("graphics/contest/results_screen/title_tough.bin");
-const u16 gContestResultsTitle_Tilemap[]        = INCBIN_U16("graphics/contest/results_screen/title.bin");
-
-// PokÃ©Nav
-
-const u16 gPokenavCondition_Pal[] = INCBIN_U16("graphics/pokenav/condition/graph.gbapal");
-const u32 gPokenavCondition_Gfx[] = INCBIN_U32("graphics/pokenav/condition/graph.4bpp.smol");
-const u32 gPokenavCondition_Tilemap[] = INCBIN_U32("graphics/pokenav/condition/graph.bin.smolTM");
-
-#if IS_HNS
-const u16 gPokenavOptions_Tilemap[] = INCBIN_U16("graphics/pokenav/hns/options/options.bin");
-const u32 gPokenavOptions_Gfx[] = INCBIN_U32("graphics/pokenav/hns/options/options.4bpp.smol");
-const u16 gPokenavOptions_Pal[] = INCBIN_U16("graphics/pokenav/hns/options/options.gbapal");
-#else
-const u16 gPokenavOptions_Tilemap[] = INCBIN_U16("graphics/pokenav/options/options.bin");
-const u32 gPokenavOptions_Gfx[] = INCBIN_U32("graphics/pokenav/options/options.4bpp.smol");
-const u16 gPokenavOptions_Pal[] = INCBIN_U16("graphics/pokenav/options/options.gbapal");
-#endif
-
-#if IS_HNS
-const u16 gPokenavHeader_Pal[] = INCBIN_U16("graphics/pokenav/hns/header.gbapal");
-const u32 gPokenavHeader_Gfx[] = INCBIN_U32("graphics/pokenav/hns/header.4bpp.smol");
-const u32 gPokenavHeader_Tilemap[] = INCBIN_U32("graphics/pokenav/hns/header.bin.smolTM");
-#else
-const u16 gPokenavHeader_Pal[] = INCBIN_U16("graphics/pokenav/header.gbapal");
-const u32 gPokenavHeader_Gfx[] = INCBIN_U32("graphics/pokenav/header.4bpp.smol"); // TODO: use width 9 and makefile rule for cleanliness, make wasnt behaving, didnt want to apply num_tiles to this
-const u32 gPokenavHeader_Tilemap[] = INCBIN_U32("graphics/pokenav/header.bin.smolTM");
-#endif
-
-#if IS_HNS
-const u16 gPokenavLeftHeader_Pal[] = INCBIN_U16("graphics/pokenav/hns/left_headers/palette.gbapal");
-#else
-const u16 gPokenavLeftHeader_Pal[] = INCBIN_U16("graphics/pokenav/left_headers/palette.gbapal");
-#endif
-const u32 gPokenavLeftHeaderBeauty_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/beauty.4bpp.smol");
-const u32 gPokenavLeftHeaderSmart_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/smart.4bpp.smol");
-const u32 gPokenavLeftHeaderCondition_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/condition.4bpp.smol");
-const u32 gPokenavLeftHeaderCute_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/cute.4bpp.smol");
-#if IS_HNS
-const u32 gPokenavLeftHeaderMatchCall_Gfx[] = INCBIN_U32("graphics/pokenav/hns/left_headers/match_call.4bpp.smol");
-#else
-const u32 gPokenavLeftHeaderMatchCall_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/match_call.4bpp.smol");
-#endif
-const u32 gPokenavLeftHeaderMainMenu_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/main_menu.4bpp.smol");
-#if IS_HNS
-const u32 gPokenavLeftHeaderHoennMap_Gfx[] = INCBIN_U32("graphics/pokenav/hns/left_headers/hoenn_map.4bpp.smol");
-#else
-const u32 gPokenavLeftHeaderHoennMap_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/hoenn_map.4bpp.smol");
-#endif
-const u32 gPokenavLeftHeaderRibbons_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/ribbons.4bpp.smol");
-const u32 gPokenavLeftHeaderSearch_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/search.4bpp.smol");
-const u32 gPokenavLeftHeaderTough_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/tough.4bpp.smol");
-const u32 gPokenavLeftHeaderCool_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/cool.4bpp.smol");
-const u32 gPokenavLeftHeaderParty_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/party.4bpp.smol");
-
-#if IS_HNS
-const u16 gPokenavMessageBox_Pal[] = INCBIN_U16("graphics/pokenav/hns/message.gbapal");
-const u32 gPokenavMessageBox_Gfx[] = INCBIN_U32("graphics/pokenav/hns/message.4bpp.smol");
-#else
-const u16 gPokenavMessageBox_Pal[] = INCBIN_U16("graphics/pokenav/message.gbapal");
-const u32 gPokenavMessageBox_Gfx[] = INCBIN_U32("graphics/pokenav/message.4bpp.smol");
-#endif
-const u32 gPokenavMessageBox_Tilemap[] = INCBIN_U32("graphics/pokenav/message.bin.smolTM");
-
-const u16 gRegionMapCityZoomTiles_Pal[] = INCBIN_U16("graphics/pokenav/region_map/zoom_tiles.gbapal");
-const u32 gRegionMapCityZoomText_Gfx[] = INCBIN_U32("graphics/pokenav/region_map/city_zoom_text.4bpp.smol");
-
-const u16 gPokenavConditionCancel_Pal[] = INCBIN_U16("graphics/pokenav/condition/cancel.gbapal");
-const u8 gPokenavConditionCancel_Gfx[] = INCBIN_U8("graphics/pokenav/condition/cancel.4bpp");
-
-const u16 gMonMarkingsMenu_Pal[] = INCBIN_U16("graphics/interface/mon_markings_menu.gbapal");
-const u8 gMonMarkingsMenu_Gfx[] = INCBIN_U8("graphics/interface/mon_markings_menu.4bpp");
-
-const u16 gBerryBlenderMiscPalette[] = INCBIN_U16("graphics/berry_blender/misc.gbapal");
-const u16 gBerryBlenderArrowPalette[] = INCBIN_U16("graphics/berry_blender/arrow.gbapal");
-const u8 gBerryBlenderBetaArrow_Gfx[] = INCBIN_U8("graphics/berry_blender/arrow_old.4bpp"); //unused
-const u8 gBerryBlenderScoreSymbols_Gfx[] = INCBIN_U8("graphics/berry_blender/score_symbols.4bpp");
-const u8 gBerryBlenderParticles_Gfx[] = INCBIN_U8("graphics/berry_blender/particles.4bpp");
-static const u8 sEmpty0[0x120] = {0};
-const u8 gBerryBlenderCountdownNumbers_Gfx[] = INCBIN_U8("graphics/berry_blender/countdown_numbers.4bpp");
-const u8 gBerryBlenderStart_Gfx[] = INCBIN_U8("graphics/berry_blender/start.4bpp");
-static const u8 sEmpty1[0x200] = {0};
-const u8 gBerryBlenderPlayerArrow_Gfx[] = INCBIN_U8("graphics/berry_blender/arrow.4bpp");
-static const u8 sEmpty2[0x2C0] = {0};
-
-const u16 gEasyChatRectangleCursor_Pal[] = INCBIN_U16("graphics/easy_chat/rectangle_cursor.gbapal");
-const u32 gEasyChatRectangleCursor_Gfx[] = INCBIN_U32("graphics/easy_chat/rectangle_cursor.4bpp.smol");
-
-const u16 gEasyChatButtonWindow_Pal[] = INCBIN_U16("graphics/easy_chat/button_window.gbapal");
-const u32 gEasyChatButtonWindow_Gfx[] = INCBIN_U32("graphics/easy_chat/button_window.4bpp.smol");
-
-const u32 gEasyChatMode_Gfx[] = INCBIN_U32("graphics/easy_chat/mode.4bpp.smol");
-const u16 gEasyChatMode_Pal[] = INCBIN_U16("graphics/easy_chat/mode.gbapal");
-
-const u32 gEasyChatWindow_Gfx[] = INCBIN_U32("graphics/easy_chat/window.4bpp.smol"); // uses mode pal
-const u32 gEasyChatWindow_Tilemap[] = INCBIN_U32("graphics/easy_chat/window.bin.smolTM");
-
-const u16 gWallClockMale_Pal[]      = INCBIN_U16("graphics/wallclock/male.gbapal");
-const u16 gWallClockFemale_Pal[]    = INCBIN_U16("graphics/wallclock/female.gbapal");
-const u32 gWallClock_Gfx[]          = INCBIN_U32("graphics/wallclock/clock.4bpp.smol");
-const u32 gWallClockStart_Tilemap[] = INCBIN_U32("graphics/wallclock/clock_start.bin.smolTM");
-const u32 gWallClockView_Tilemap[]  = INCBIN_U32("graphics/wallclock/clock_view.bin.smolTM");
-
-const u16 gUsePokeblockCondition_Pal[] = INCBIN_U16("graphics/pokeblock/use_screen/condition.gbapal");
-const u32 gUsePokeblockCondition_Gfx[] = INCBIN_U32("graphics/pokeblock/use_screen/condition.4bpp.smol");
-
-const u16 gUsePokeblockUpDown_Pal[] = INCBIN_U16("graphics/pokeblock/use_screen/updown.gbapal");
-const u8 gUsePokeblockUpDown_Gfx[] = INCBIN_U8("graphics/pokeblock/use_screen/updown.4bpp");
-
-const u16 gUsePokeblockGraph_Pal[] = INCBIN_U16("graphics/pokeblock/use_screen/graph.gbapal");
-const u32 gUsePokeblockGraph_Gfx[] = INCBIN_U32("graphics/pokeblock/use_screen/graph.4bpp.smol");
-
-const u32 gUsePokeblockGraph_Tilemap[] = INCBIN_U32("graphics/pokeblock/use_screen/graph.bin.smolTM");
-const u16 gUsePokeblockNatureWin_Pal[] = INCBIN_U16("graphics/pokeblock/use_screen/nature.gbapal");
-
-#include "data/graphics/slot_machine.h"
-
-// trainer card
-
-#if IS_HNS
-const u16 gHnsTrainerCardGreen_Pal[] = INCBIN_U16("graphics/trainer_card/hns/green.gbapal");
-#endif
-const u16 gHoennTrainerCardGreen_Pal[] = INCBIN_U16("graphics/trainer_card/green.gbapal");
-const u32 gHoennTrainerCard_Gfx[] = INCBIN_U32("graphics/trainer_card/tiles.4bpp.smol");
-const u32 gHoennTrainerCardBg_Tilemap[] = INCBIN_U32("graphics/trainer_card/bg.bin.smolTM");
-const u32 gHoennTrainerCardFront_Tilemap[] = INCBIN_U32("graphics/trainer_card/front.bin.smolTM");
-const u32 gHoennTrainerCardBack_Tilemap[] = INCBIN_U32("graphics/trainer_card/back.bin.smolTM");
-const u32 gHoennTrainerCardFrontLink_Tilemap[] = INCBIN_U32("graphics/trainer_card/front_link.bin.smolTM");
-
-const u16 gKantoTrainerCardBlue_Pal[] = INCBIN_U16("graphics/trainer_card/frlg/blue.gbapal");
-const u32 gKantoTrainerCard_Gfx[] = INCBIN_U32("graphics/trainer_card/frlg/tiles.4bpp.smol");
-const u32 gKantoTrainerCardBg_Tilemap[] = INCBIN_U32("graphics/trainer_card/frlg/bg.bin.smolTM");
-const u32 gKantoTrainerCardFront_Tilemap[] = INCBIN_U32("graphics/trainer_card/frlg/front.bin.smolTM");
-const u32 gKantoTrainerCardBack_Tilemap[] = INCBIN_U32("graphics/trainer_card/frlg/back.bin.smolTM");
-const u32 gKantoTrainerCardFrontLink_Tilemap[] = INCBIN_U32("graphics/trainer_card/frlg/front_link.bin.smolTM");
-
-// PokÃ©mon storage system
-
-const u32 gStorageSystemMenu_Gfx[] = INCBIN_U32("graphics/pokemon_storage/menu.4bpp.smol");
-const u16 gStorageSystemPartyMenu_Pal[] = INCBIN_U16("graphics/pokemon_storage/party_menu.gbapal");
-const u32 gStorageSystemPartyMenu_Tilemap[] = INCBIN_U32("graphics/pokemon_storage/party_menu.bin.smolTM");
-
-// naming screen
-
-const u16 gNamingScreenMenu_Pal[6][16] =
-{
-    INCBIN_U16("graphics/naming_screen/menu.gbapal"),
-    INCBIN_U16("graphics/naming_screen/page_swap_upper.gbapal"),
-    INCBIN_U16("graphics/naming_screen/page_swap_lower.gbapal"),
-    INCBIN_U16("graphics/naming_screen/page_swap_others.gbapal"),
-    INCBIN_U16("graphics/naming_screen/buttons.gbapal"),
-    INCBIN_U16("graphics/naming_screen/cursor.gbapal"),
-};
-const u32 gNamingScreenMenu_Gfx[]                = INCBIN_U32("graphics/naming_screen/menu.4bpp.smol");
-const u32 gNamingScreenPageSwapFrame_Gfx[]       = INCBIN_U32("graphics/naming_screen/page_swap_frame.4bpp");
-const u32 gNamingScreenBackButton_Gfx[]          = INCBIN_U32("graphics/naming_screen/back_button.4bpp");
-const u32 gNamingScreenOKButton_Gfx[]            = INCBIN_U32("graphics/naming_screen/ok_button.4bpp");
-const u32 gNamingScreenPageSwapUpper_Gfx[]       = INCBIN_U32("graphics/naming_screen/page_swap_upper.4bpp");
-const u32 gNamingScreenPageSwapLower_Gfx[]       = INCBIN_U32("graphics/naming_screen/page_swap_lower.4bpp");
-const u32 gNamingScreenPageSwapOthers_Gfx[]      = INCBIN_U32("graphics/naming_screen/page_swap_others.4bpp");
-const u32 gNamingScreenCursor_Gfx[]              = INCBIN_U32("graphics/naming_screen/cursor.4bpp");
-const u32 gNamingScreenCursorSquished_Gfx[]      = INCBIN_U32("graphics/naming_screen/cursor_squished.4bpp");
-const u32 gNamingScreenCursorFilled_Gfx[]        = INCBIN_U32("graphics/naming_screen/cursor_filled.4bpp");
-const u32 gNamingScreenPageSwapButton_Gfx[]      = INCBIN_U32("graphics/naming_screen/page_swap_button.4bpp");
-const u32 gNamingScreenInputArrow_Gfx[]          = INCBIN_U32("graphics/naming_screen/input_arrow.4bpp");
-const u32 gNamingScreenUnderscore_Gfx[]          = INCBIN_U32("graphics/naming_screen/underscore.4bpp");
-const u32 gNamingScreenBackground_Tilemap[]      = INCBIN_U32("graphics/naming_screen/background.bin.smolTM");
-const u32 gNamingScreenKeyboardUpper_Tilemap[]   = INCBIN_U32("graphics/naming_screen/keyboard_upper.bin.smolTM");
-const u32 gNamingScreenKeyboardLower_Tilemap[]   = INCBIN_U32("graphics/naming_screen/keyboard_lower.bin.smolTM");
-const u32 gNamingScreenKeyboardSymbols_Tilemap[] = INCBIN_U32("graphics/naming_screen/keyboard_symbols.bin.smolTM");
-
-// union room chat
-const u16 gUnionRoomChat_Background_Pal[] = INCBIN_U16("graphics/union_room_chat/background.gbapal");
-const u32 gUnionRoomChat_Background_Gfx[] = INCBIN_U32("graphics/union_room_chat/background.4bpp.smol");
-const u32 gUnionRoomChat_Background_Tilemap[] = INCBIN_U32("graphics/union_room_chat/background.bin.smolTM");
-const u16 gUnionRoomChat_InputText_Pal[] = INCBIN_U16("graphics/union_room_chat/input_text.gbapal");
-const u16 gUnionRoomChat_Keyboard_Pal[] = INCBIN_U16("graphics/union_room_chat/keyboard.gbapal");
-const u32 gUnionRoomChat_Keyboard_Gfx[] = INCBIN_U32("graphics/union_room_chat/keyboard.4bpp.smol");
-const u32 gUnionRoomChat_Keyboard_Tilemap[] = INCBIN_U32("graphics/union_room_chat/keyboard.bin.smolTM");
-const u32 gUnionRoomChat_RButtonLabels[] = INCBIN_U32("graphics/union_room_chat/r_button_labels.4bpp.smol");
-
-const u16 ALIGNED(4) gTilesetPalettes_General[][16] =
-{
-    INCBIN_U16("data/tilesets/primary/general/palettes/00.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/01.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/02.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/03.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/04.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/05.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/06.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/07.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/08.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/09.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/10.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/11.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/12.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/13.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/14.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/15.gbapal"),
-};
-
-const u32 gTilesetTiles_General[] = INCBIN_U32("data/tilesets/primary/general/tiles.4bpp.smol");
-
-// trade/egg hatch
-
-const u16 gTradeGba_Pal[] = INCBIN_U16("graphics/trade/gba.gbapal");
-const u16 gTradeGba2_Pal[] = INCBIN_U16("graphics/trade/gba_pal2.gbapal");
-const u8 gTradeGba_Gfx[] = INCBIN_U8("graphics/trade/gba.4bpp");
-
-static const u16 sEmptyPal[16] = {0};
-
-#include "data/graphics/berry_fix.h"
-
-// Trade
-const u16 gTradeMenu_Pal[] = INCBIN_U16("graphics/trade/menu.gbapal");
-const u16 gTradeCursor_Pal[] = INCBIN_U16("graphics/trade/cursor.gbapal");
-const u8 gTradeMenu_Gfx[] = INCBIN_U8("graphics/trade/menu.4bpp");
-const u8 gTradeCursor_Gfx[] = INCBIN_U8("graphics/trade/cursor.4bpp");
-const u16 gTradeUnused_Tilemap[] = INCBIN_U16("graphics/trade/unused.bin");
-const u16 gTradeMenu_Tilemap[] = INCBIN_U16("graphics/trade/menu.bin");
-const u16 gTradeMenuMonBox_Tilemap[] = INCBIN_U16("graphics/trade/menu_mon_box.bin");
-
-#if IS_HNS
-const u16 gMessageBox_Pal[] = INCBIN_U16("graphics/text_window/hns/message_box.gbapal");
-const u8 gMessageBox_Gfx[] = INCBIN_U8("graphics/text_window/hns/message_box.4bpp");
-#else
-const u16 gMessageBox_Pal[] = INCBIN_U16("graphics/text_window/message_box.gbapal");
-const u8 gMessageBox_Gfx[] = INCBIN_U8("graphics/text_window/message_box.4bpp");
-#endif
-const u8 gSignpostWindow_Gfx[] = INCBIN_U8("graphics/text_window/signpost.4bpp");
-
-const u32 gWallpaperIcon_Cross[] = INCBIN_U32("graphics/pokemon_storage/wallpapers/icons/cross.4bpp.smol");
-const u32 gWallpaperIcon_Bolt[] = INCBIN_U32("graphics/pokemon_storage/wallpapers/icons/bolt.4bpp.smol");
-const u32 gWallpaperIcon_Plusle[] = INCBIN_U32("graphics/pokemon_storage/wallpapers/icons/plusle.4bpp.smol");
-
-const u16 gWallpaperPalettes_Horizontal[][16] =
-{
-    INCBIN_U16("graphics/pokemon_storage/wallpapers/friends_frame2.gbapal"),
-    INCBIN_U16("graphics/pokemon_storage/wallpapers/horizontal/bg.gbapal"),
-};
-
-const u32 gWallpaperTiles_Horizontal[] = INCBIN_U32("graphics/pokemon_storage/wallpapers/horizontal/tiles.4bpp.smol");
-const u32 gWallpaperTilemap_Horizontal[] = INCBIN_U32("graphics/pokemon_storage/wallpapers/horizontal/tilemap.bin.smolTM");
-
-const u16 gWallpaperPalettes_Ribbon[][16] =
-{
-    INCBIN_U16("graphics/pokemon_storage/wallpapers/ribbon/frame.gbapal"),
-    INCBIN_U16("graphics/pokemon_storage/wallpapers/ribbon/bg.gbapal"),
-};
-
-const u32 gWallpaperTiles_Ribbon[] = INCBIN_U32("graphics/pokemon_storage/wallpapers/ribbon/tiles.4bpp.smol");
-const u32 gWallpaperTilemap_Ribbon[] = INCBIN_U32("graphics/pokemon_storage/wallpapers/ribbon/tilemap.bin.smolTM");
-
-const u16 gPokenavRibbonsSummaryBg_Pal[] = INCBIN_U16("graphics/pokenav/ribbons/summary_bg.gbapal");
-const u32 gPokenavRibbonsSummaryBg_Gfx[] = INCBIN_U32("graphics/pokenav/ribbons/summary_bg.4bpp.smol");
-const u32 gPokenavRibbonsSummaryBg_Tilemap[] = INCBIN_U32("graphics/pokenav/ribbons/summary_bg.bin.smolTM");
-
-const u16 gMonIconPalettes[][16] =
-{
-    INCBIN_U16("graphics/pokemon/icon_palettes/pal0.gbapal"),
-    INCBIN_U16("graphics/pokemon/icon_palettes/pal1.gbapal"),
-    INCBIN_U16("graphics/pokemon/icon_palettes/pal2.gbapal"),
-    INCBIN_U16("graphics/pokemon/icon_palettes/pal3.gbapal"),
-    INCBIN_U16("graphics/pokemon/icon_palettes/pal4.gbapal"),
-    INCBIN_U16("graphics/pokemon/icon_palettes/pal5.gbapal"),
-};
-
-#if IS_HNS
-const u16 gTitleScreenBgPalettes[]         = INCBIN_U16("graphics/title_screen/hns/pokemon_logo.gbapal",
-                                                        "graphics/title_screen/hns/rayquaza_and_clouds.gbapal");
-const u16 gTitleScreenEmeraldVersionPal[]  = INCBIN_U16("graphics/title_screen/hns/emerald_version.gbapal");
-const u32 gTitleScreenCloudsTilemap[]      = INCBIN_U32("graphics/title_screen/clouds.bin.smolTM");
-const u32 gTitleScreenPokemonLogoGfx[]     = INCBIN_U32("graphics/title_screen/hns/pokemon_logo.8bpp.smol");
-const u32 gTitleScreenEmeraldVersionGfx[]  = INCBIN_U32("graphics/title_screen/hns/emerald_version.8bpp.smol");
-const u16 gTitleScreenPressStartPal[]      = INCBIN_U16("graphics/title_screen/hns/press_start.gbapal");
-const u32 gTitleScreenPressStartGfx[]      = INCBIN_U32("graphics/title_screen/hns/press_start.4bpp.smol");
-const u32 gTitleScreenPokemonLogoTilemap[] = INCBIN_U32("graphics/title_screen/hns/pokemon_logo.bin.smolTM");
-#else
-const u16 gTitleScreenBgPalettes[]         = INCBIN_U16("graphics/title_screen/pokemon_logo.gbapal",
-                                                        "graphics/title_screen/rayquaza_and_clouds.gbapal");
-const u16 gTitleScreenEmeraldVersionPal[]  = INCBIN_U16("graphics/title_screen/emerald_version.gbapal");
-const u32 gTitleScreenCloudsTilemap[]      = INCBIN_U32("graphics/title_screen/clouds.bin.smolTM");
-const u32 gTitleScreenPokemonLogoGfx[]     = INCBIN_U32("graphics/title_screen/pokemon_logo.8bpp.smol");
-const u32 gTitleScreenEmeraldVersionGfx[]  = INCBIN_U32("graphics/title_screen/emerald_version.8bpp.smol");
-const u16 gTitleScreenPressStartPal[]      = INCBIN_U16("graphics/title_screen/press_start.gbapal");
-const u32 gTitleScreenPressStartGfx[]      = INCBIN_U32("graphics/title_screen/press_start.4bpp.smol");
-const u32 gTitleScreenPokemonLogoTilemap[] = INCBIN_U32("graphics/title_screen/pokemon_logo.bin.smolTM");
-#endif
-
-const u16 gFrontierPassBg_Pal[][16]                      = INCBIN_U16("graphics/frontier_pass/bg.gbapal"); // 8 x 16
-const u32 gFrontierPassBg_Gfx[]                          = INCBIN_U32("graphics/frontier_pass/bg.4bpp.smol");
-const u32 gFrontierPassMapAndCard_Gfx[]                  = INCBIN_U32("graphics/frontier_pass/map_and_card.8bpp.smol");
-const u32 gFrontierPassBg_Tilemap[]                      = INCBIN_U32("graphics/frontier_pass/bg.bin.smolTM");
-const u32 gFrontierPassCancelButton_Tilemap[]            = INCBIN_U32("graphics/frontier_pass/cancel.bin");
-const u32 gFrontierPassCancelButtonHighlighted_Tilemap[] = INCBIN_U32("graphics/frontier_pass/cancel_highlighted.bin");
-
-// Berry Crush
-const u16 gBerryCrush_Crusher_Pal[] = INCBIN_U16("graphics/berry_crush/crusher.gbapal");
-const u32 gBerryCrush_Crusher_Gfx[] = INCBIN_U32("graphics/berry_crush/crusher.4bpp.smol");
-const u32 gBerryCrush_TextWindows_Tilemap[] = INCBIN_U32("graphics/berry_crush/text_windows.bin.smolTM");
-
-const u32 gBattleIcons_Gfx1[] = INCBIN_U32("graphics/types/battle_icons1.4bpp.smol");
-const u32 gBattleIcons_Gfx2[] = INCBIN_U32("graphics/types/battle_icons2.4bpp.smol");
-const u16 gBattleIcons_Pal1[] = INCBIN_U16("graphics/types/battle_icons1.gbapal");
-const u16 gBattleIcons_Pal2[] = INCBIN_U16("graphics/types/battle_icons2.gbapal");
-
-const u16 gGhostPalette[] = INCBIN_U16("graphics/pokemon/ghost/front.gbapal");
-const u32 gGhostFrontPic[] = INCBIN_U32("graphics/pokemon/ghost/front.4bpp.smol");
-
-// PRU: 55 PokÃ©mon Rhythm battle environments, optimized for GBA BG3 VRAM.
-#include "data/pru_rhythm_gfx.h"
+YªçŠx-®éÜj×¢ëiºÚ+Š§j[h‘éÜ¢éíç´Õ:-jZ.¶›­–)Ş³R6–æ6ÇVFR&vÆö&Âæ‚ ¢6–æ6ÇVFR&w&†–72æ‚  ¢6–b•5ô„å0¦6öç7BS3"t&GFÆUFW‡F&÷…F–ÆW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6Rö†ç2÷FW‡F&÷‚ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆUFW‡F&÷…ÆWGFUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUö–çFW&f6Rö†ç2÷FW‡F&÷‚æv&Â"“°¦6öç7BS3"t&GFÆUFW‡F&÷…F–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6Rö†ç2÷FW‡F&÷…öÖæ&–âç6ÖöÅDÒ"“°¢6VÇ6P¦6öç7BS3"t&GFÆUFW‡F&÷…F–ÆW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6R÷FW‡F&÷‚ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆUFW‡F&÷…ÆWGFUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUö–çFW&f6R÷FW‡F&÷‚æv&Â"“°¦6öç7BS3"t&GFÆUFW‡F&÷…F–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6R÷FW‡F&÷…öÖæ&–âç6ÖöÅDÒ"“°¢6VæF–` ¦6öç7BS3"uVçW6VDvg…ôöÆD6†&ÖµÒÒ”ä4$”åõS3"‚&w&†–72÷VçW6VBööÆEö6†&ÖãF'ç6ÖöÂ"“²òò¦æW6RF&ÆRæB'Væ6‚öb7GVf`¦6öç7BS3"uVçW6VEF–ÖVÖôöÆD6†&ÖµÒÒ”ä4$”åõS3"‚&w&†–72÷VçW6VBööÆEö6†&Öæ&–âç6ÖöÅDÒ"“°¦6öç7BSbuVçW6VEÅôöÆD6†&ÖµÒÒ”ä4$”åõSb‚&w&†–72÷VçW6VBööÆEö6†&Öæv&Â"“° ¦6öç7BS3"u6Öö¶W67&VVä–×7EF–ÆW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6Öö¶W67&VVåö–×7BãF'ç6ÖöÂ"“°¦6öç7BSbu6Öö¶W67&VVä–×7EÆWGFUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6Öö¶W67&VVåö–×7Bæv&Â"“° ¢6–æ6ÇVFR&FFöw&†–72÷ö¶V&ÆÇ2æ‚  ¦6öç7BS3"t&Ææ´vg„6ö×&W76VEµÒÒ”ä4$”åõS3"‚&w&†–72ö–çFW&f6Rö&Ææ²ãF'ç6ÖöÂ"“° ¢òòæWr&GFÆRæ–×2'F–6ÆW0¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õv†—FU7G&VµµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷v†—FU÷7G&V²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõv†—FU7G&VµµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷v†—FU÷7G&V²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õW'ÆT¦%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUö¦"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõW'ÆT¦%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUö¦"æv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõF÷†–57–¶W5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷F÷†–5÷7–¶W2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôVæW&w”&ÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öVæW&w•ö&ÆÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôVæW&w”&ÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öVæW&w•ö&ÆÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÖVv7FöæUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖVv÷7FöæRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÖVv7FöæUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖVv÷7FöæRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÖVv'F–6ÆW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖVv÷'F–6ÆW2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÖVv'F–6ÆW5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖVv÷'F–6ÆW2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÖVv7–Ö&öÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖVv÷7–Ö&öÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÖVv7–Ö&öÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖVv÷7–Ö&öÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÇ†7–Ö&öÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÇ†÷7–Ö&öÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÇ†7–Ö&öÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÇ†÷7–Ö&öÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôöÖVv7–Ö&öÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ööÖVv÷7–Ö&öÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôöÖVv7–Ö&öÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ööÖVv÷7–Ö&öÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õFW&7–Ö&öÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FW&÷7–Ö&öÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõFW&7–Ö&öÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FW&÷7–Ö&öÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôfÆ6„6ææöä&ÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öfÆ6…ö6ææöåö&ÆÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôfÆ6„6ææöä&ÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öfÆ6…ö6ææöåö&ÆÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õvFW$wVåµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vFW%öwVâãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõvFW$wVåµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vFW%öwVâæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õVæ—6†ÖVçEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷Væ—6†ÖVçBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõVæ—6†ÖVçEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷Væ—6†ÖVçBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õV–6´wV&EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷V–6µöwV&BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõV–6´wV&EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷V–6µöwV&Bæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÇ†7FöæUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÇ†÷7FöæRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÇ†7FöæUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÇ†÷7FöæRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õFW&7'—7FÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FW&ö7'—7FÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõFW&7'—7FÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FW&ö7'—7FÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õFW&6†GFW%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FW&÷6†GFW"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõFW&6†GFW%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FW&÷6†GFW"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæ6†÷%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öæ6†÷"ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÆUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÆUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô'&÷w5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'&÷w2ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô77W&æ6T†æEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö77W&æ6Uö†æBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô77W&æ6T†æEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö77W&æ6Uö†æBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôW&7†W&UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öW&÷7†W&RãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôW&7†W&UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öW&÷7†W&Ræv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôfÆæ6†U&ö6·5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öfÆæ6†U÷&ö6·2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWuö¶V&ÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&Föå÷75ö&ÆÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWuö¶V&ÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&Föå÷75ö&ÆÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&VÕµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&VÒãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&VÕµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&VÒæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&W''”VFVåµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&W''•öVFVâãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&W''”VFVåµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&W''•öVFVâæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&W''”æ÷&ÖÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&W''•öæ÷&ÖÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&W''”æ÷&ÖÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&W''•öæ÷&ÖÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&–u&ö6µµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&–u÷&ö6²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&–u&ö6µµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&–u÷&ö6²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&Æ6W†Æöä†VEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&Æ6W†Æöåö†VBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&Æ6W†Æöä†VEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&Æ6W†Æöåö†VBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&ÆööDÖööåµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÆööEöÖööâãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&ÆööDÖööåµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÆööEöÖööâæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&ÇVTfÆ&UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVUöfÆ&Ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô'&æ6…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'&æ6‚ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô'&æ6…µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'&æ6‚æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô'&–æUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'&–æRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô'&–æUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'&–æRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6†–äÆ–æµµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6†–åöÆ–æ²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô6†–äÆ–æµµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6†–åöÆ–æ²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6†÷µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6†÷ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô6†÷µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6†÷æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô66ööåµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö66ööâãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô66ööåµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö66ööâæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6öæf–FUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6öæf–FRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô6öæf–FUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6öæf–FRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô7&gG•6†–VÆEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö7&gG•÷6†–VÆBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô7&gG•6†–VÆEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö7&gG•÷6†–VÆBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWtæ–ÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö7W'6Uöæ–ÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWtæ–ÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö7W'6Uöæ–Âæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôG&6ôÖWFV÷%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öG&6õöÖWFV÷"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôG&vöåVÇ6U&–æuµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öG&vöå÷VÇ6U÷&–ærãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôG&vöåVÇ6U&–æuµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öG&vöå÷VÇ6U÷&–æræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôG&VW”Ö—76–ÆUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öG&VW•öÖ—76–ÆRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôG&VW”Ö—76–ÆUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öG&VW•öÖ—76–ÆRæv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôG&VW”Ö—76–ÆU6†–ç•µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öG&VW•öÖ—76–ÆRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôG&VW”Ö—76–ÆU6†–ç•µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öG&VW•öÖ—76–ÆU÷6†–ç’æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôG&–ÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öG&–ÆÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôG&–ÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öG&–ÆÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWtVÖ&W'5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öVÖ&W'2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWtVÖ&W'5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öVÖ&W'2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôf—'”Æö6´6†–ç5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öf—'•öÆö6µö6†–ç2ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôf—6†–W5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öf—6†–W2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôf—6†–W5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öf—6†–W2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWtfÇ•µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öfÇ’ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWtfÇ•µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öfÇ’æv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôgW6–öäfÆ&UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ögW6–öåöfÆ&Ræv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôv&&vUö—6öå–ÆÆ%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öv&&vU÷ö—6öåö6öÇVÖâæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôvV%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2övV"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôvV%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2övV"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôv–vföÇD†fö57V%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öv–vföÇEö†fö5÷7V"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôv–vföÇD†fö57V%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öv–vföÇEö†fö5÷7V"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôvöÆFVäÆUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2övöÆFVåöÆRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôvöÆFVäÆUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2övöÆFVåöÆRæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôw&VVäG&¶UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öw&VVåöG&¶Ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWtw&VVå7F%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öw&VVå÷7F%öæWrãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWtw&VVå7F%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öw&VVå÷7F%öæWræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô†V'E7F×µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†V'E÷7F×ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô†V'E7F×µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†V'E÷7F×æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ§–v&FT†W†W5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†W†W2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ§–v&FT†W†W5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†W†W2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô†ö÷†æEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†ö÷ö†æBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô†ö÷†æEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†ö÷ö†æBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô†ö÷&–æuµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†ö÷÷&–ærãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô†ö÷&–æuµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†ö÷÷&–æræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWt†÷&ä†—EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†÷&åö†—EöæWrãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWt†÷&ä†—EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†÷&åö†—EöæWræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô†÷&äÆVV6…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†÷&åöÆVV6‚ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô†÷&äÆVV6…µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†÷&åöÆVV6‚æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô†÷'6W6†öTf—7EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†÷'6W6†öUöf—7BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô†÷'6W6†öTf—7EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†÷'6W6†öUöf—7Bæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô‡–G&õV×µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö‡–G&õ÷V×ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô‡–G&õV×µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö‡–G&õ÷V×æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô–6U&ö6µµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–6U÷&ö6²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô–6U&ö6µµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–6U÷&ö6²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÆ&vU7–¶UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆ&vU÷7–¶RãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÆ&vU7–¶UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆ&vU÷7–¶Ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWtÆVeµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆVfW2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWtÆVeµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆVfW2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWtÆVV6…6VVEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆVV6…÷6VVBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWtÆVV6…6VVEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆVV6…÷6VVBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÆ–v‡Fæ–æu&–åµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆ–v‡Fæ–æu÷&–âãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÆ–v‡Fæ–æu&–åµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆ–v‡Fæ–æu÷&–âæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWtW–UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖVåöÆöö²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWtW–UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖVåöÆöö²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÖWFÄ&—G5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖWFÅö&—G2ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô×VD&öÖ%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö×VEö&öÖ"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô×VD&öÖ%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö×VEö&öÖ"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô×W6‡&ööÕµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö×W6‡&ööÒãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô×W6‡&ööÕµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö×W6‡&ööÒæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæGW&Äv–gE&–æuµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öæGW&Åöv–gE÷&–æræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæV7&÷¦Ö7F%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öæV7&÷¦Ö÷7F"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæV7&÷¦Ö7F%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öæV7&÷¦Ö÷7F"æv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWt–×7EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–×7EöæWræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôö'7G'V7EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öö'7G'V7BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôö'7G'V7EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öö'7G'V7Bæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôöÖVv7FöæUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ööÖVv÷7FöæRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôöÖVv7FöæUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ööÖVv÷7FöæRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ–æ´F–ÖöæEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–æµöF–ÖöæBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ–æ´F–ÖöæEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–æµöF–ÖöæBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õö—6öä6öÇVÖåµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷ö—6öåö6öÇVÖâãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõö—6öä6öÇVÖåµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷ö—6öåö6öÇVÖâæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ÷vW%G&–6µµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷÷vW%÷G&–6²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ÷vW%G&–6µµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷÷vW%÷G&–6²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õW'ÆT6†–åµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUö6†–âãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõW'ÆT6†–åµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUö6†–âæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õW'ÆTG&¶UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUöG&¶RãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõW'ÆTG&¶UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUöG&¶Ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&¦÷%6†VÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&¦÷%÷6†VÆÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&¦÷%6†VÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&¦÷%÷6†VÆÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&VDW‡Æ÷6–öåµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&VEöW‡Æ÷6–öâãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&VDW‡Æ÷6–öåµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&VEöW‡Æ÷6–öâæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&ö6·56ÖÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&ö6µ÷6ÖÆÂãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWu&ö6·5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&ö6·5öæWrãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWu&ö6·5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&ö6·5öæWræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6†VÆÄÆVgEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†VÆÅöÆVgBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6†VÆÄÆVgEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†VÆÅöÆVgBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6†VÆÅ&–v‡EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†VÆÅ÷&–v‡BãF'ç6ÖöÂ"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ76–Å&VæE6Æ–6W5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷76–Å÷&VæE÷6Æ–6W2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWu7–¶W5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7–¶W5öæWrãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWu7–¶W5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7–¶W5öæWræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7—&—E6†6¶ÆT'&÷uµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7—&—E÷6†6¶ÆUö'&÷rãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7—&—E6†6¶ÆT'&÷uµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7—&—E÷6†6¶ÆUö'&÷ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7FVÔW'WF–öåµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7FVÕöW'WF–öâãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7FVÔW'WF–öåµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7FVÕöW'WF–öâæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7FV×&öÆÆW%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7FV×&öÆÆW"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7FV×&öÆÆW%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7FV×&öÆÆW"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7FöæU–ÆÆ%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7FöæU÷–ÆÆ"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7FöæU–ÆÆ%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7FöæU÷–ÆÆ"æv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõöÇFW&vV—7EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷öÇFW&vV—7Bæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7FVVÄ&VÕµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7FVVÅö&VÒæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7G&–v‡D&VÕµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7G&–v‡Eö&VÒãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7G&–v‡D&VÕµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7G&–v‡Eö&VÒæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWu7W&eµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7W&eöæWræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWu7v÷&EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7v÷&EöæWrãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWu7v÷&EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7v÷&EöæWræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWuFVWF…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FVWF…öæWrãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWuFVWF…µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FVWF…öæWræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæWt†æG4æDfVWEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†æG5öæEöfVWEöæWrãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæWt†æG4æDfVWEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†æG5öæEöfVWEöæWræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õF÷&æFõµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷F÷&æFòãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõF÷&æFõµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷F÷&æFòæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ¤Ö÷fU7–Ö&öÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷¥öÖ÷fU÷7–Ö&öÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ¤Ö÷fU7–Ö&öÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷¥öÖ÷fU÷7–Ö&öÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õFV÷EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öæWr÷FV÷BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõFV÷EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öæWr÷FV÷Bæv&Â"“° ¢òò&GFÆRæ–×0¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô'V&&ÆUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'V&&ÆRãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&öæUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&öæRãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô—%vfUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö—%÷vfRãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô÷&%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö÷&"ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7v÷&EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7v÷&BãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6VVEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6VVBãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6VVD'&÷våµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6VVEöæWrãF'ç6ÖöÂ"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&–äG&÷5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&–åöG&÷2æv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&öæUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&öæRæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô—%vfUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö—%÷vfRæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô÷&%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö÷&"æv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7v÷&EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7v÷&Bæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6VVEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6VVBæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6VVD'&÷våµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6VVEöæWræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôæVVFÆUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öæVVFÆRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôæVVFÆUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öæVVFÆRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôW‡Æ÷6–öãeµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öW‡Æ÷6–öåóbãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôW‡Æ÷6–öãeµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öW‡Æ÷6–öåóbæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ–æ´÷&%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–æµö÷&"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ–æ´÷&%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–æµö÷&"æv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô–6T7V&UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–6Uö7V&Ræv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô–6T7V&UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–6Uö7V&RãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôwW7EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öwW7BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôwW7EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öwW7Bæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7&³%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&µó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7&³%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&µó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô÷&ævUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö÷&ævRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô÷&ævUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö÷&ævRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7–¶W5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7–¶W2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7–¶W5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7–¶W2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ–VÆÆ÷t&ÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–VÆÆ÷uö&ÆÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ–VÆÆ÷t&ÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–VÆÆ÷uö&ÆÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õF–VD&uµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷F–VEö&rãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõF–VD&uµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷F–VEö&ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&Æ6µ6Öö¶UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&Æ6µ÷6Öö¶RãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&Æ6µ6Öö¶UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&Æ6µ÷6Öö¶Ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&Æ6´&ÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&Æ6µö&ÆÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&Æ6´&ÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&Æ6µö&ÆÂæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôvÆ75µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2övÆ72æv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôvÆ75µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2övÆ72ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô†÷&ä†—EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†÷&åö†—BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô†÷&ä†—EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†÷&åö†—Bæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&ÇVU6†&G5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVU÷6†&G2æv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&ÇVU6†&G5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVU÷6†&G2ãF'ç6ÖöÂ"“° ¦6öç7BSbt&GFÆTæ–ÕVçW6VEÅô×W6–4æ÷FW5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBö×W6–5öæ÷FW2æv&Â"“°¦6öç7BS3"t&GFÆTæ–ÕVçW6VDvg…ô×W6–4æ÷FW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBö×W6–5öæ÷FW2ãF'ç6ÖöÂ"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô†—EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†—Bæv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô†—EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†—BãF'ç6ÖöÂ"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô†—C%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†—Eó"æv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõvf–æt†æEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vf–æuö†æBæv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õvf–æt†æEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vf–æuö†æBãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôfV–çEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öfV–çE÷Væ6‚ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôfV–çEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öfV–çE÷Væ6‚æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õG'V×6&EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷G'V×ö6&G2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõG'V×6&EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷G'V×ö6&G2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õG'V×6&E'F–6ÆW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷G'V×ö6&E÷'F–6ÆW2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõG'V×6&E'F–6ÆW5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷G'V×ö6&E÷'F–6ÆW2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô7W&W77W&UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö7W&W77W&RãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô7W&W77W&UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö7W&W77W&Ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õw&–æt÷WEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷w&–æuö÷WBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõw&–æt÷WEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷w&–æuö÷WBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6Æ÷6–ætW–UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6Æ÷6–æuöW–RãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô6Æ÷6–ætW–UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6Æ÷6–æuöW–Ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&ÇVU7F%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVU÷7F"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&ÇVU7F%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVU÷7F"æv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô'V&&ÆT'W'7EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'V&&ÆUö'W'7Bæv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô'V&&ÆT'W'7EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'V&&ÆUö'W'7BãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô†—DGWÆ–6FUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†—EöGWÆ–6FRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô†—DGWÆ–6FUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†—EöGWÆ–6FRæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÆVW%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆVW"æv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÆVW%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆVW"ãF'ç6ÖöÂ"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&ÇVT'W'7EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVUö'W'7Bæv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&ÇVT'W'7EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVUö'W'7BãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6ÖÆÄVÖ&W%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6ÖÆÅöVÖ&W"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6ÖÆÄVÖ&W%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6ÖÆÅöVÖ&W"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôw&•6Öö¶UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öw&•÷6Öö¶RãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôw&•6Öö¶UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öw&•÷6Öö¶Ræv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôf—&UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öf—&Ræv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôf—&UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öf—&RãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7–ææ–ætf—&UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7–ææ–æuöf—&RãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôf—&UÇVÖUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öf—&U÷ÇVÖRãF'ç6ÖöÂ"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÆ–v‡Fæ–æs%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆ–v‡Fæ–æuó"æv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÆ–v‡Fæ–æs%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆ–v‡Fæ–æuó"ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÆ–v‡Fæ–æuµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆ–v‡Fæ–ærãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6öÆ÷&VD÷&'5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6öÆ÷&VEö÷&'2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô6öÆ÷&VD÷&'5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6öÆ÷&VEö÷&'2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õv÷''•6VVEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷v÷''•÷6VVBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõv÷''•6VVEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷v÷''•÷6VVBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6ÖÆÄ6Æ÷VEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6ÖÆÅö6Æ÷VBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6ÖÆÄ6Æ÷VEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6ÖÆÅö6Æ÷VBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôGF6´÷&FW%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öGF6µö÷&FW"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôGF6´÷&FW%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öGF6µö÷&FW"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôG&vöåVÇ6UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öG&vöå÷VÇ6RãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôG&vöåVÇ6UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öG&vöå÷VÇ6Ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õvööD†ÖÖW%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vööEö†ÖÖW"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõvööD†ÖÖW%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vööEö†ÖÖW"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7–6†ô7WEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7–6†õö7WBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7–6†ô7WEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7–6†õö7WBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ÷vW$vVÕµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷÷vW%övVÒãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ÷vW$vVÕµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷÷vW%övVÒæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7FöæTVFvUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7FöæUöVFvRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7FöæTVFvUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7FöæUöVFvRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7FVÇF…&ö6µµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7FVÇF…÷&ö6²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7FVÇF…&ö6µµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7FVÇF…÷&ö6²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õö—6öä¦%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷ö—6öåö¦"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõö—6öä¦%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷ö—6öåö¦"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7–ææ–æt&ÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VB÷7–ææ–æuö&ÆÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7–ææ–æt&ÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VB÷7–ææ–æuö&ÆÂæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7–ææ–æt&ÆÃ%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VB÷7–ææ–æuö&ÆÅó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õvööD†ÖÖW$†ÖÖW%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vööEö†ÖÖW%ö†ÖÖW"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõvööD†ÖÖW$†ÖÖW%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vööEö†ÖÖW%ö†ÖÖW"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6æ÷vfÆ¶W5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6æ÷vfÆ¶W2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6æ÷vfÆ¶W5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6æ÷vfÆ¶W2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7—'W&Æö%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7—'Wö&öÖ%ö&Æö"ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7—'W6†VÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7—'Wö&öÖ%÷6†VÆÂãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7—'W7ÆEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7—'Wö&öÖ%÷7ÆBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7—'W&VEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7—'W÷&VBæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7—'W–VÆÆ÷uµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7—'W÷–VÆÆ÷ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô—g”7VFvVÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö7VFvVÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô—g”7VFvVÄw&75µÒÒ”ä4$”åõSb‚&w&†–72÷ö¶VÖöâöövW'öâöæ÷&ÖÂæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô—g”7VFvVÄf—&UµÒÒ”ä4$”åõSb‚&w&†–72÷ö¶VÖöâöövW'öâö†V'F†fÆÖRöæ÷&ÖÂæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô—g”7VFvVÅ&ö6µµÒÒ”ä4$”åõSb‚&w&†–72÷ö¶VÖöâöövW'öâö6÷&æW'7FöæRöæ÷&ÖÂæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô—g”7VFvVÅvFW%µÒÒ”ä4$”åõSb‚&w&†–72÷ö¶VÖöâöövW'öâ÷vVÆÇ7&–æröæ÷&ÖÂæv&Â"“° ¢òòöÆB&GFÆR–çFW&f6RFFÂVçW6V@ ¦6öç7BS3"töÆD&GFÆT–çFW&f6Tvg…µÒÒ”ä4$”åõS3"‚&w&†–72÷VçW6VBöö&“ãF'ç6ÖöÂ"“°¦6öç7BSbtöÆD&GFÆT–çFW&f6UÅóó%ó5µÒÒ”ä4$”åõSb‚&w&†–72÷VçW6VBöö&•÷Ç³æv&Â"“²òòÆWGFW2Ó0¦6öç7BSbtöÆD&GFÆT–çFW&f6UÃEµÒÒ”ä4$”åõSb‚&w&†–72÷VçW6VBööÆE÷ÃBæv&Â"“²òòB—2'’—G6VÆ`¦6öç7BSbtöÆD&GFÆT–çFW&f6UÅóUóeóuµÒÒ”ä4$”åõSb‚&w&†–72÷VçW6VBöö&•÷Ç³2æv&Â"“²òòÆWGFW2RÓp¦6öç7BS3"töÆD&GFÆT–çFW&f6Tvgƒ%µÒÒ”ä4$”åõS3"‚&w&†–72÷VçW6VBöö&“"ãF'ç6ÖöÂ"“°¦6öç7BS3"töÆD&GFÆT–çFW&f6UF–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72÷VçW6VBööÆEö&GFÆUö–çFW&f6U÷F–ÆVÖæ&–âç6ÖöÅDÒ"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô6Æu6Æ6ƒ%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6Æu÷6Æ6…ó"æv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô6Æu6Æ6…µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6Æu÷6Æ6‚æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6Æu6Æ6ƒ%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6Æu÷6Æ6…ó"ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6Æu6Æ6…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6Æu÷6Æ6‚ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ67&F6ƒ5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷67&F6…ó2ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ67&F6ƒ%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷67&F6…ó"ãF'ç6ÖöÂ"“° ¦6öç7BS3"uVçW6VD‡&%ôvg…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6Rö‡&%÷VçW6VBãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô'V&&ÆT'W'7C%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'V&&ÆUö'W'7Eó"ãF'ç6ÖöÂ"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô'V&&ÆT'W'7C%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'V&&ÆUö'W'7Eó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô–6T6‡VæµµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–6Uö6‡Væ²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô–6T6‡VæµµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–6Uö6‡Væ²æv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôvÆ73%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2övÆ75ó"æv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôvÆ73%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2övÆ75ó"ãF'ç6ÖöÂ"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ–æ´†V'C%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–æµö†V'Eó"æv&Â"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ–æ´†V'C%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–æµö†V'Eó"ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆT–çFW&f6Tvg…õVçW6VEv–æF÷sµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6R÷VçW6VE÷v–æF÷rãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆT–çFW&f6UÅõVçW6VEv–æF÷sµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUö–çFW&f6R÷VçW6VE÷v–æF÷ræv&Â"“° ¦6öç7BS3"t&GFÆT–çFW&f6Tvg…ô&GFÆT&%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6Rö&GFÆUö&"ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6G&—µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6öG&—ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6G&—µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6öG&—æv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6G&—%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6öG&—ó"æv&Â"“° ¦6öç7BS3"t&GFÆT–çFW&f6Tvg…õVçW6VEv–æF÷s%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6R÷VçW6VE÷v–æF÷s"ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆT–çFW&f6Tvg…õVçW6VEv–æF÷s$&%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6R÷VçW6VE÷v–æF÷s&&"ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7&¶ÆSµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&¶ÆUóãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7&¶ÆSµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&¶ÆUóæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7&¶ÆS%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&¶ÆUó"æv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô‡VÖæö–Dfö÷EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö‡VÖæö–Eöfö÷Bæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô‡VÖæö–Dfö÷EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö‡VÖæö–Eöfö÷BãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÖöç7FW$fö÷EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖöç7FW%öfö÷BãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô‡VÖæö–D†æEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö‡VÖæö–Eö†æBãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÆ–æU6¶WF6…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBöÆ–æU÷6¶WF6‚ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÆ–æU6¶WF6…µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBöÆ–æU÷6¶WF6‚æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ–VÆÆ÷uVæµµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–VÆÆ÷u÷Væ²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ–VÆÆ÷uVæµµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–VÆÆ÷u÷Væ²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6ÆÔ†—EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6ÆÕö†—BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6ÆÔ†—EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6ÆÕö†—Bæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&VDf—7EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&VEöf—7BãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&–æuµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&–ærãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&–æuµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&–æræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&ö6·5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&ö6·2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&ö6·5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&ö6·2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ¥µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷¢ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ¥µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷¢æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ–VÆÆ÷uVæ³%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–VÆÆ÷u÷Væµó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ–VÆÆ÷uVæ³%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–VÆÆ÷u÷Væµó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô—%6Æ6…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö—%÷6Æ6‚ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô—%6Æ6…µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö—%÷6Æ6‚æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7–ææ–ætw&VVä÷&'5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7–ææ–æuöw&VVåö÷&'2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7–ææ–ætw&VVä÷&'5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7–ææ–æuöw&VVåö÷&'2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÆVeµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆVbãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÆVeµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆVbæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÖWG&öæöÖU6ÖÆÄ†æEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBöÖWG&öæöÖUö†æE÷6ÖÆÂãF'ç6ÖöÂ"“²òòVçW6VBÂv2f÷"ÖWG&öæöÖRBöæRö–ç@ ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô6Æ–æuµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6Æ–æræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õö—6öå÷vFW%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷ö—6öå÷÷vFW"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõö—6öå÷vFW%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷ö—6öå÷÷vFW"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô'&÷våG&–ævÆUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'&÷vå÷G&–ævÆRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô'&÷våG&–ævÆUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'&÷vå÷G&–ævÆRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7&¶ÆS5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&¶ÆUó2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7&¶ÆS5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&¶ÆUó2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7&¶ÆSEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&¶ÆUóBãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô×W6–4æ÷FW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö×W6–5öæ÷FW2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô×W6–4æ÷FW5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö×W6–5öæ÷FW2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôGV6µµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öGV6²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôGV6µµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öGV6²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÆW'EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆW'BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÆW'EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆW'Bæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6†ö6³EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†ö6µóBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6†ö6³EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†ö6µóBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6†ö6µµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†ö6²ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&VÆÃ%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&VÆÅó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&VÆÃ%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&VÆÅó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ–æ´vÆ÷fUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–æµövÆ÷fRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ–æ´vÆ÷fUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–æµövÆ÷fRæv&Â"“° ¦6öç7BSbt&GFÆTæ–ÕVçW6VEõVæ¶æ÷vãµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VB÷Væ¶æ÷våóæ&–â"“°¦6öç7BSbt&GFÆTæ–ÕVçW6VEõVæ¶æ÷vã%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VB÷Væ¶æ÷våó"æ&–â"“°¦6öç7BSbt&GFÆTæ–ÕVçW6VEõVæ¶æ÷vã5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VB÷Væ¶æ÷våó2æ&–â"“° ¦6öç7BS3"t&GFÆTæ–ÕVçW6VDvg…ôÆ–æU6¶WF6ƒ%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBöÆ–æU÷6¶WF6…ó"ã†'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–ÕVçW6VEÅôÆ–æU6¶WF6ƒ%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBöÆ–æU÷6¶WF6…ó"æv&Â"“°¦6öç7BS3"t&GFÆTæ–ÕVçW6VEF–ÆVÖôÆ–æU6¶WF6ƒ%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBöÆ–æU÷6¶WF6…ó"æ&–âç6ÖöÅDÒ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&ÇVTÆ–æW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVUöÆ–æW2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&ÇVTÆ–æW5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVUöÆ–æW2æv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô–×7C5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–×7Eó2æv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô–×7C%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–×7Eó"æv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&WF–6ÆUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&WF–6ÆRæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô'&VF…µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'&VF‚æv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6æ÷v&ÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6æ÷v&ÆÂæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõf–æUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷f–æRæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7v÷&C%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7v÷&Eó"æv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&VEGV&UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&VE÷GV&Ræv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÖæW6–µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖæW6–æv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7G&–æs%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7G&–æuó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–ÕVçW6VEõVæ¶æ÷vãEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VB÷Væ¶æ÷våóBæ&–âç6ÖöÅDÒ"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõVæ6–Ã%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷Væ6–Åó"æv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõWFÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷WFÂæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&VçE7ööåµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&VçE÷7ööâæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô6ö–åµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6ö–âæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô7&6¶VDVvuµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö7&6¶VEöVvræv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôg&W6„VvuµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ög&W6…öVvræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô–×7C5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–×7Eó2ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô–×7C%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–×7Eó"ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&WF–6ÆUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&WF–6ÆRãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô'&VF…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'&VF‚ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6æ÷v&ÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6æ÷v&ÆÂãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õf–æUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷f–æRãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7v÷&C%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7v÷&Eó"ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6Æ–æuµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6Æ–ærãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&VEGV&UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&VE÷GV&RãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÖæW6–µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖæW6–ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7G&–æs%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7G&–æuó"ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õVæ6–Ã%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷Væ6–Åó"ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õWFÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷WFÂãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&VçE7ööåµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&VçE÷7ööâãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õvV%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vV"ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6ö–åµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6ö–âãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô7&6¶VDVvuµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö7&6¶VEöVvrãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô†F6†VDVvuµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†F6†VEöVvrãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôg&W6„VvuµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ög&W6…öVvrãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôfæw5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öfæw2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôfæw5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öfæw2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôW‡Æ÷6–öã%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öW‡Æ÷6–öåó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôW‡Æ÷6–öã%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öW‡Æ÷6–öåó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôW‡Æ÷6–öã5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öW‡Æ÷6–öåó2ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õvFW$G&÷ÆWEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vFW%öG&÷ÆWBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõvFW$G&÷ÆWEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vFW%öG&÷ÆWBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õvFW$G&÷ÆWC%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vFW%öG&÷ÆWEó"ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6VVC%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6VVEó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6VVC%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6VVEó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7&÷WEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&÷WBãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&VEvæEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&VE÷væBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&VEvæEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&VE÷væBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õW'ÆTw&VVåVæµµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUöw&VVå÷Væ²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõW'ÆTw&VVåVæµµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUöw&VVå÷Væ²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õvFW$6öÇVÖåµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vFW%ö6öÇVÖâãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõvFW$6öÇVÖåµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vFW%ö6öÇVÖâæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô×VEVæµµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö×VE÷Væ²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô×VEVæµµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö×VE÷Væ²æv&Â"“° ¦6öç7BS3"uVçW6VEF–ÆVÖô&ÇVTg&ÖUµÒÒ”ä4$”åõS3"‚&w&†–72÷VçW6VBö&ÇVUög&ÖRæ&–âç6ÖöÅDÒ"“²òòÂ"Â2æBBF–ÆVÖ3ğ¦6öç7BS3"uVçW6VEF–ÆVÖõ&VE–VÆÆ÷tw&VVäg&ÖUµÒÒ”ä4$”åõS3"‚&w&†–72÷VçW6VB÷&VG–VÆÆ÷vw&VVåög&ÖRæ&–âç6ÖöÅDÒ"“°¦6öç7BS3"uVçW6VDvg…ô6öÆ÷$g&ÖW5µÒÒ”ä4$”åõS3"‚&w&†–72÷VçW6VBö6öÆ÷%ög&ÖW2ãF'ç6ÖöÂ"“°¦6öç7BSbuVçW6VEÅô6öÆ÷$g&ÖW5µÒÒ”ä4$”åõSb‚&w&†–72÷VçW6VBö6öÆ÷%ög&ÖW2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&–äG&÷5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&–åöG&÷2ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–ÕVçW6VDvg…õvFW%7Æ6…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VB÷vFW%÷7Æ6‚ã†'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆTæ–ÕVçW6VEF–ÆVÖõvFW%7Æ6…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VB÷vFW%÷7Æ6‚æ&–âç6ÖöÅDÒ"“°¦6öç7BSbt&GFÆTæ–ÕVçW6VEÅõvFW%7Æ6…µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VB÷vFW%÷7Æ6‚æv&Â"“° ¦6öç7BS3"uVçW6VDvg…ô&6–4g&ÖUµÒÒ”ä4$”åõS3"‚&w&†–72÷VçW6VBö&6–5ög&ÖRãF'ç6ÖöÂ"“°¦6öç7BSbuVçW6VEÅô&6–4g&ÖUµÒÒ”ä4$”åõSb‚&w&†–72÷VçW6VBö&6–5ög&ÖRæv&Â"“°¦6öç7BS3"uVçW6VEF–ÆVÖô&6–4g&ÖUµÒÒ”ä4$”åõS3"‚&w&†–72÷VçW6VBö&6–5ög&ÖRæ&–âç6ÖöÅDÒ"“° ¢òò&GFÆR–çFW&f6P ¢òòvVâB„„u52×7G–ÆR’ÆWGFW2(	BVæv–æR×v–FP¦6öç7BSbt&GFÆT–çFW&f6Uô&ÆÅ7FGW4&%ÄvVãEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUö–çFW&f6RövVãBö&ÆÅ÷7FGW5ö&"æv&Â"“°¦6öç7BSbt&GFÆT–çFW&f6Uô&ÆÄF—7Æ•ÄvVãEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUö–çFW&f6RövVãBö&ÆÅöF—7Æ’æv&Â"“° ¢òòvVâ2ÆWGFW2(	BW"ÖvÖP¢6–b•5ô„å0¦6öç7BSbt&GFÆT–çFW&f6Uô&ÆÅ7FGW4&%ÄvVã5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUö–çFW&f6Rö†ç2ö&ÆÅ÷7FGW5ö&"æv&Â"“°¦6öç7BSbt&GFÆT–çFW&f6Uô&ÆÄF—7Æ•ÄvVã5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUö–çFW&f6Rö†ç2ö&ÆÅöF—7Æ’æv&Â"“°¢6VÇ6P¦6öç7BSbt&GFÆT–çFW&f6Uô&ÆÅ7FGW4&%ÄvVã5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUö–çFW&f6Rö&ÆÅ÷7FGW5ö&"æv&Â"“°¦6öç7BSbt&GFÆT–çFW&f6Uô&ÆÄF—7Æ•ÄvVã5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUö–çFW&f6Rö&ÆÅöF—7Æ’æv&Â"“°¢6VæF–` ¢òòvVâB†VÇF†&÷‚VÆVÖVçG2(	BVæv–æR×v–FP¦6öç7BS‚t†VÇF†&÷„VÆVÖVçG4vg…F&ÆTvVãEµÕ³3%ÒÒ”ä4$”åõS‚‚&w&†–72ö&GFÆUö–çFW&f6RövVãBö‡&"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãBöW‡&"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãB÷7FGW2ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãBöÖ—62ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãBö‡&%öæ–ÒãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãBöÖ—65ög&ÖVVæBãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãBö&ÆÅöF—7Æ’ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãBö&ÆÅö6Vv‡Eö–æF–6F÷"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãB÷7FGW3"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãB÷7FGW32ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãB÷7FGW3BãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãBö†VÇF†&÷…öF÷V&ÆW5ög&ÖVVæBãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãBö†VÇF†&÷…öF÷V&ÆW5ög&ÖVVæEö&"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RövVãB÷6†–ç•ö–6öâãF'"“° ¢òòvVâ2†VÇF†&÷‚VÆVÖVçG2(	BW"ÖvÖP¢6–b•5ô„å0¦6öç7BS‚t†VÇF†&÷„VÆVÖVçG4vg…F&ÆTvVã5µÕ³3%ÒÒ”ä4$”åõS‚‚&w&†–72ö&GFÆUö–çFW&f6Rö†ç2ö‡&"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2öW‡&"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2÷7FGW2ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2öÖ—62ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2ö‡&%öæ–ÒãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2öÖ—65ög&ÖVVæBãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2ö&ÆÅöF—7Æ’ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2ö&ÆÅö6Vv‡Eö–æF–6F÷"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2÷7FGW3"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2÷7FGW32ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2÷7FGW3BãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2ö†VÇF†&÷…öF÷V&ÆW5ög&ÖVVæBãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†ç2ö†VÇF†&÷…öF÷V&ÆW5ög&ÖVVæEö&"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6R÷6†–ç•ö–6öâãF'"“°¢6VÇ6P¦6öç7BS‚t†VÇF†&÷„VÆVÖVçG4vg…F&ÆTvVã5µÕ³3%ÒÒ”ä4$”åõS‚‚&w&†–72ö&GFÆUö–çFW&f6Rö‡&"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RöW‡&"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6R÷7FGW2ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RöÖ—62ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö‡&%öæ–ÒãF'"À¢&w&†–72ö&GFÆUö–çFW&f6RöÖ—65ög&ÖVVæBãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö&ÆÅöF—7Æ’ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö&ÆÅö6Vv‡Eö–æF–6F÷"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6R÷7FGW3"ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6R÷7FGW32ãF'"À¢&w&†–72ö&GFÆUö–çFW&f6R÷7FGW3BãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†VÇF†&÷…öF÷V&ÆW5ög&ÖVVæBãF'"À¢&w&†–72ö&GFÆUö–çFW&f6Rö†VÇF†&÷…öF÷V&ÆW5ög&ÖVVæEö&"ãF'"“°¢6VæF–`¦6öç7BS3"tçW¦Æö6¶Tf—'7DVæ6÷VçFW$–æF–6F÷$vg…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6RöçW¦Æö6¶Uö–æF–6F÷"ãF'"“°¦6öç7BS3"t&GFÆT–çFW&f6Tvg…õVçW6VEv–æF÷s5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6R÷VçW6VE÷v–æF÷s2ãF'ç6ÖöÂ"“°¦6öç7BS3"t&GFÆT–çFW&f6Tvg…õVçW6VEv–æF÷sEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUö–çFW&f6R÷VçW6VE÷v–æF÷sBãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôgW'•7v—W5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ögW'•÷7v—W2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôgW'•7v—W5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ögW'•÷7v—W2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õf–æS%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷f–æUó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõf–æS%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷f–æUó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õFVWF…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FVWF‚ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõFVWF…µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FVWF‚æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&öæS%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&öæUó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&öæS%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&öæUó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õv†—FT&uµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷v†—FUö&rãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõv†—FT&uµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷v†—FUö&ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õVæ¶æ÷våµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷Væ¶æ÷vâãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõVæ¶æ÷våµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷Væ¶æ÷vâæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õW'ÆT6÷&ÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUö6÷&ÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõW'ÆT6÷&ÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUö6÷&Âæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õW'ÆTG&÷ÆWEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUöG&÷ÆWBãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6†ö6³%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†ö6µó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6†ö6³%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†ö6µó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6Æ÷6–ætW–S%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6Æ÷6–æuöW–Uó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô6Æ÷6–ætW–S%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6Æ÷6–æuöW–Uó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÖWFÄ&ÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖWFÅö&ÆÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÖWFÄ&ÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖWFÅö&ÆÂæv&Â"“° ¢6–bôt$õ5E”ÄUõ5T4”U5ôte€¢6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÖöç7FW$FöÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖöç7FW%öFöÆÂãF'ç6ÖöÂ"“°¢6öç7BSbt&GFÆTæ–Õ7&—FUÅôÖöç7FW$FöÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖöç7FW%öFöÆÂæv&Â"“°¢6VÇ6P¢6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÖöç7FW$FöÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖöç7FW%öFöÆÅöv&ãF'ç6ÖöÂ"“°¢6öç7BSbt&GFÆTæ–Õ7&—FUÅôÖöç7FW$FöÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖöç7FW%öFöÆÅöv&æv&Â"“°¢6VæF–bòõôt$õ5E”ÄUõ5T4”U5ôte€ ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õv†—&Çv–æEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷v†—&Çv–æBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõv†—&Çv–æEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷v†—&Çv–æBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õv†—&Çv–æC%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷v†—&Çv–æEó"ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôW‡Æ÷6–öãEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öW‡Æ÷6–öåóBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôW‡Æ÷6–öãEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öW‡Æ÷6–öåóBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôW‡Æ÷6–öãUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öW‡Æ÷6–öåóRãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õFöæwVUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FöæwVRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõFöæwVUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FöæwVRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6Öö¶UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6Öö¶RãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6Öö¶UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6Öö¶Ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6Öö¶S%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6Öö¶Uó"ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&ÇVTfÆÖW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVUöfÆÖW2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&ÇVTfÆÖW5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVUöfÆÖW2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&ÇVTfÆÖW3%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVUöfÆÖW5ó"ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õFG7Vv—&”7W&Ç•µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FG7Vv—&•ö7W&Ç’ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõFG7Vv—&”7W&Ç•µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FG7Vv—&•ö7W&Ç’æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õFG7Vv—&”G&ö÷•µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FG7Vv—&•öG&ö÷’ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõFG7Vv—&”G&ö÷•µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FG7Vv—&•öG&ö÷’æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õFG7Vv—&•7G&WF6‡•µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FG7Vv—&•÷7G&WF6‡’ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõFG7Vv—&•7G&WF6‡•µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷FG7Vv—&•÷7G&WF6‡’æv&Â"“° ¢òò6öçFW7@¦6öç7BS3"t¥6öçFW7DvgƒµÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö¦æW6Rö6ö×÷6—FUóãF'ç6ÖöÂ"“°¦6öç7BSbt¥6öçFW7EÅµÒÒ”ä4$”åõSb‚&w&†–72ö6öçFW7Bö¦æW6R÷ÆWGFRæv&Â"“°¦6öç7BS3"t¥6öçFW7D&uF–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö¦æW6Rö&ræ&–âç6ÖöÅDÒ"“°¦6öç7BS3"t¥6öçFW7Ev–æF÷w5F–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö¦æW6R÷v–æF÷w2æ&–âç6ÖöÅDÒ"“°¦6öç7BS3"t¥6öçFW7Dvgƒ%µÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö¦æW6Rö6ö×÷6—FUó"ãF'ç6ÖöÂ"“° ¦6öç7BSbt6öçFW7D–çFW&f6TVF–Væ6UÆWGFUµÒÒ”ä4$”åõSb‚&w&†–72ö6öçFW7Bö–çFW&f6Ræv&Â"“°¦6öç7BS3"t6öçFW7DVF–Væ6UF–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7BöVF–Væ6Ræ&–âç6ÖöÅDÒ"“°¦6öç7BS3"t6öçFW7D–çFW&f6UF–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö–çFW&f6Ræ&–âç6ÖöÅDÒ"“°¦6öç7BS3"t¥6öçFW7D–çFW&f6UF–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö¦æW6Rö–çFW&f6Ræ&–âç6ÖöÅDÒ"“°¦6öç7BS3"t¥6öçFW7DVF–Væ6UF–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö¦æW6RöVF–Væ6Ræ&–âç6ÖöÅDÒ"“°¦6öç7BS3"t6öçFW7D7W'F–åF–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö7W'F–âæ&–âç6ÖöÅDÒ"“° ¦6öç7BS3"t6öçFW7D–çFW&f6Tvg…µÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö–çFW&f6RãF'ç6ÖöÂ"“°¦6öç7BS3"t6öçFW7DVF–Væ6Tvg…µÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7BöVF–Væ6RãF'ç6ÖöÂ"“°¦6öç7BS3"t6öçFW7Df6W5ôvg…µÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Böf6W2ãF'ç6ÖöÂ"“°¦6öç7BS3"t6öçFW7D§VFvU7–Ö&öÇ4vg…µÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö§VFvU÷7–Ö&öÇ2ãF'ç6ÖöÂ"“°¦6öç7BSbt6öçFW7D§VFvU7–Ö&öÇ5ÅµÒÒ”ä4$”åõSb‚&w&†–72ö6öçFW7Bö§VFvU÷7–Ö&öÇ2æv&Â"“°¦6öç7BS‚t6öçFW7E6Æ–FW$†V'Eôvg…µÒÒ”ä4$”åõS‚‚&w&†–72ö6öçFW7B÷6Æ–FW%ö†V'BãF'"“° ¢òò¥WV—fÆVçBöbF†RÆW6RÖWFW ¦6öç7BS3"t¥6öçFW7EföÇFvTvg…µÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö¦æW6R÷föÇFvRãF'ç6ÖöÂ"“°¦6öç7BSbt¥6öçFW7EföÇFvUÅµÒÒ”ä4$”åõSb‚&w&†–72ö6öçFW7Bö¦æW6R÷föÇFvRæv&Â"“° ¢òò6öçFW7B&W7VÇG0¦6öç7BS3"t6öçFW7E&W7VÇG5ôvg…µÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7B÷&W7VÇG5÷67&VVâ÷F–ÆW2ãF'ç6ÖöÂ"“°¦6öç7BS3"t6öçFW7E&W7VÇG5õv–ææW$&ææW%õF–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7B÷&W7VÇG5÷67&VVâ÷v–ææW%ö&ææW"æ&–âç6ÖöÅDÒ"“°¦6öç7BS3"t6öçFW7E&W7VÇG5ô–çFW&f6UõF–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7B÷&W7VÇG5÷67&VVâö–çFW&f6Ræ&–âç6ÖöÅDÒ"“°¦6öç7BS3"t6öçFW7E&W7VÇG5ô&uõF–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7B÷&W7VÇG5÷67&VVâö&ræ&–âç6ÖöÅDÒ"“°¦6öç7BSbt6öçFW7E&W7VÇG5õÅµÒÒ”ä4$”åõSb‚&w&†–72ö6öçFW7B÷&W7VÇG5÷67&VVâ÷F–ÆW2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô–×7EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–×7BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô–×7EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–×7Bæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ'F–6ÆW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷'F–6ÆW2ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ'F–6ÆW3%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷'F–6ÆW3"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ'F–6ÆW3%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷'F–6ÆW3"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6—&6ÆT–×7EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6—&6ÆUö–×7BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô6—&6ÆT–×7EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6—&6ÆUö–×7Bæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ67&F6…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷67&F6‚ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6†'FVWF…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†'÷FVWF‚ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6†'FVWF…µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†'÷FVWF‚æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô6Æ×µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö6Æ×ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô7WEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö7WBãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&–æ&÷u&–æw5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&–æ&÷u÷&–æw2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&–æ&÷u&–æw5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&–æ&÷u÷&–æw2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô–6T7'—7FÇ5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–6Uö7'—7FÇ2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô–6T7'—7FÇ5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–6Uö7'—7FÇ2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô–6U7–¶W5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö–6U÷7–¶W2ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôöÆD&VEWµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBööÆEö&VGWãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôöÆD&VEWµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBööÆEö&VGWæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô÷&'5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö÷&'2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô÷&'5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö÷&'2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õvFW$÷&%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vFW%ö÷&"ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õvFW$–×7EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vFW%ö–×7BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõvFW$–×7EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷vFW%ö–×7Bæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô'&÷vä÷&%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö'&÷våö÷&"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô×VE6æEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö×VE÷6æBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô×VE6æEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö×VE÷6æBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õö—6öä'V&&ÆUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷ö—6öåö'V&&ÆRãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõö—6öä'V&&ÆUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷ö—6öåö'V&&ÆRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õF÷†–4'V&&ÆUµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷F÷†–5ö'V&&ÆRãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô†÷&ä†—C%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†÷&åö†—Eó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô†÷&ä†—C%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö†÷&åö†—Eó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô—%vfS%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö—%÷vfUó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô—%vfS%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö—%÷vfUó"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6ÖÆÄ'V&&ÆW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6ÖÆÅö'V&&ÆW2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6ÖÆÄ'V&&ÆW5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6ÖÆÅö'V&&ÆW2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&÷VæE6†F÷uµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&÷VæE÷6†F÷rãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&÷VæE6†F÷uµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&÷VæE÷6†F÷ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7VæÆ–v‡EµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7VæÆ–v‡BãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7VæÆ–v‡EµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7VæÆ–v‡Bæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7÷&UµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7÷&RãF'ç6ÖöÂ"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7÷&UµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7÷&Ræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôfÆ÷vW%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öfÆ÷vW"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôfÆ÷vW%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öfÆ÷vW"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ&¦÷$ÆVeµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&¦÷%öÆVbãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&¦÷$ÆVeµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&¦÷%öÆVbæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÖ—7D6Æ÷VEµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖ—7Eö6Æ÷VBãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÖ—7D6Æ÷VEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÖ—7Eö6Æ÷VBæv&Â"“° ¦6öç7BS3"t&GFÆTæ–ÕVçW6VDvg…ôÆ–v‡G5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBöÆ–v‡G2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–ÕVçW6VEÅôÆ–v‡G5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBöÆ–v‡G2æv&Â"“°¦6öç7BS3"t&GFÆTæ–ÕVçW6VEF–ÆVÖôÆ–v‡G5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBöÆ–v‡G2æ&–âç6ÖöÅDÒ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õv†—&Çv–æDÆ–æW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷v†—&Çv–æEöÆ–æW2ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõv†—&Çv–æDÆ–æW5µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷v†—&Çv–æEöÆ–æW2æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôvöÆE&–æuµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2övöÆE÷&–ærãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôvöÆE&–æuµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2övöÆE÷&–æræv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&ÇVU&–æs%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVU÷&–æuó"æv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõW'ÆU&–æuµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆU÷&–æræv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&ÇVU&–æuµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVU÷&–æræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôw&VVäÆ–v‡EvÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öw&VVåöÆ–v‡E÷vÆÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôw&VVäÆ–v‡EvÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öw&VVåöÆ–v‡E÷vÆÂæv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&ÇVTÆ–v‡EvÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&ÇVUöÆ–v‡E÷vÆÂæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ&VDÆ–v‡EvÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷&VEöÆ–v‡E÷vÆÂæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôw&”Æ–v‡EvÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öw&•öÆ–v‡E÷vÆÂæv&Â"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô÷&ævTÆ–v‡EvÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö÷&ævUöÆ–v‡E÷vÆÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ô&Æ6´&ÆÃ%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&Æ6µö&ÆÅó"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅô&Æ6´&ÆÃ%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2ö&Æ6µö&ÆÅó"æv&Â"“° ¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõW'ÆTv46Æ÷VEµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷W'ÆUöv5ö6Æ÷VBæv&Â"“° ¦6öç7BS3"t6öçFW7D§VFvTvg…µÒÒ”ä4$”åõS3"‚&w&†–72ö6öçFW7Bö§VFvRãF'ç6ÖöÂ"“°¦6öç7BSbt6öçFW7C%ÅµÒÒ”ä4$”åõSb‚&w&†–72ö6öçFW7Bö§VFvRæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7&µµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ7&µµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ7&´…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷7&µö‚ãF'ç6ÖöÂ"“° ¦6öç7BS3"t&GFÆTæ–Ô&t–ÖvUôF&µµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2ö&6¶w&÷VæG2öF&²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Ô&uÆWGFUôF&µµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2ö&6¶w&÷VæG2öF&²æv&Â"“°¦6öç7BS3"t&GFÆTæ–Ô&uF–ÆVÖôF&µµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2ö&6¶w&÷VæG2öF&²æ&–âç6ÖöÅDÒ"“° ¦6öç7BS3"tÖWFÅ6†–æTvg…µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2öÖ6·2öÖWFÅ÷6†–æRãF'ç6ÖöÂ"“°¦6öç7BSbtÖWFÅ6†–æUÆWGFUµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2öÖ6·2öÖWFÅ÷6†–æRæv&Â"“°¦6öç7BS3"tÖWFÅ6†–æUF–ÆVÖµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2öÖ6·2öÖWFÅ÷6†–æRæ&–âç6ÖöÅDÒ"“° ¦6öç7BS3"uVçW6VDvg…ôvö÷7WFõµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBövö÷7WFòãF'ç6ÖöÂ"“²òòv†÷7@¦6öç7BSbuVçW6VEÅôvö÷7WFõµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBövö÷7WFòæv&Â"“°¦6öç7BS3"uVçW6VEF–ÆVÖôvö÷7WFõµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷VçW6VBövö÷7WFòæ&–âç6ÖöÅDÒ"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ–VÆÆ÷u7F%µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–VÆÆ÷u÷7F"ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ–VÆÆ÷u7F%µÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷–VÆÆ÷u÷7F"æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÆ&vTg&W6„VvuµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆ&vUög&W6…öVvrãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÆ&vTg&W6„VvuµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆ&vUög&W6…öVvræv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õ6†F÷t&ÆÅµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†F÷uö&ÆÂãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅõ6†F÷t&ÆÅµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2÷6†F÷uö&ÆÂæv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…ôÆ–6µµÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆ–6²ãF'ç6ÖöÂ"“°¦6öç7BSbt&GFÆTæ–Õ7&—FUÅôÆ–6µµÒÒ”ä4$”åõSb‚&w&†–72ö&GFÆUöæ–×2÷7&—FW2öÆ–6²æv&Â"“° ¦6öç7BS3"t&GFÆTæ–Õ7&—FTvg…õfö–DÆ–æW5µÒÒ”ä4$”åõS3"‚&w&†–72ö&GFÆUöæ–×2÷7&—F^zÓ[h‘éì¶»§q«^u°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}É…å=É‰mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É…å}½Éˆ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}É…å=É‰mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É…å}½Éˆ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}	±Õ•=É‰mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½‰±Õ•}½Éˆ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}I•‘=ÉˆÉmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É•‘}½É‰|È¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}É¥±±mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‘É¥±°¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}É¥±±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‘É¥±°¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}M­åmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í­ä¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}É¥±±mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‘É¥±°¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}É¥±±½¹Ñ•ÍÑÍmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‘É¥±±}½¹Ñ•ÍÑÌ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}ÕÉ½É…mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½…ÕÉ½É„¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}ÕÉ½É…mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½…ÕÉ½É„¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}ÕÉ½É…mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½…ÕÉ½É„¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}!¥¡ÍÁ••‘=ÁÁ½¹•¹Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡¥¡ÍÁ••‘}½ÁÁ½¹•¹Ğ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}!¥¡ÍÁ••‘mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡¥¡ÍÁ••¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}	Õmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‰Õœ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}!¥¡ÍÁ••‘mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡¥¡ÍÁ••¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}!¥¡ÍÁ••‘A±…å•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡¥¡ÍÁ••‘}Á±…å•È¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ5…Í­%µ…•}1¥¡Ñ	•…µmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½µ…Í­Ì½±¥¡Ñ}‰•…´¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ5…Í­A…±•ÑÑ•}1¥¡Ñ	•…µmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½µ…Í­Ì½±¥¡Ñ}‰•…´¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ5…Í­Q¥±•µ…Á}1¥¡Ñ	•…µmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½µ…Í­Ì½±¥¡Ñ}‰•…´¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}Õ¥±±½Ñ¥¹•=ÁÁ½¹•¹Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Õ¥±±½Ñ¥¹•}½ÁÁ½¹•¹Ğ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}Õ¥±±½Ñ¥¹•A±…å•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Õ¥±±½Ñ¥¹•}Á±…å•È¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}Õ¥±±½Ñ¥¹•½¹Ñ•ÍÑÍmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Õ¥±±½Ñ¥¹•}½¹Ñ•ÍÑÌ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}Õ¥±±½Ñ¥¹•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Õ¥±±½Ñ¥¹”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}Õ¥±±½Ñ¥¹•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Õ¥±±½Ñ¥¹”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}Q¡Õ¹‘•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Ñ¡Õ¹‘•È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}Q¡Õ¹‘•Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Ñ¡Õ¹‘•È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}Q¡Õ¹‘•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Ñ¡Õ¹‘•È¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}A…¥¹MÁ±¥Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Á…¥¹}ÍÁ±¥Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}A…¥¹MÁ±¥Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Á…¥¹}ÍÁ±¥Ğ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}!…¹‘Í¹‘••Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½¡…¹‘Í}…¹‘}™••Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}!…¹‘Í¹‘••Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½¡…¹‘Í}…¹‘}™••Ğ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}½¹™•ÑÑ¥mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½½¹™•ÑÑ¤¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}½¹™•ÑÑ¥mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½½¹™•ÑÑ¤¹‰…Á…°ˆ¤ì((¥˜€…A}	}MQe1}MA%M}`(€€€½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}MÕ‰ÍÑ¥ÑÕÑ•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÕ‰ÍÑ¥ÑÕÑ”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(€€€½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}MÕ‰ÍÑ¥ÑÕÑ•	…­mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÕ‰ÍÑ¥ÑÕÑ•}‰…¬¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(€€€½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}MÕ‰ÍÑ¥ÑÕÑ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÕ‰ÍÑ¥ÑÕÑ”¹‰…Á…°ˆ¤ì(•±Í”(€€€½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}MÕ‰ÍÑ¥ÑÕÑ•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÕ‰ÍÑ¥ÑÕÑ•}‰„¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(€€€½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}MÕ‰ÍÑ¥ÑÕÑ•	…­mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÕ‰ÍÑ¥ÑÕÑ•}‰…­}‰„¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(€€€½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}MÕ‰ÍÑ¥ÑÕÑ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÕ‰ÍÑ¥ÑÕÑ•}‰„¹‰…Á…°ˆ¤ì(•¹‘¥˜€¼½A}	}MQe1}MA%M}`()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}É••¹MÑ…Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É••¹}ÍÑ…È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}É••¹MÑ…Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É••¹}ÍÑ…È¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ½¹™•ÑÑ¥}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½µ¥ÍŒ½½¹™•ÑÑ¤¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ½¹™•ÑÑ¥}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½µ¥ÍŒ½½¹™•ÑÑ¤¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}A¥¹­±½Õ‘mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Á¥¹­}±½Õ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}A¥¹­±½Õ‘mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Á¥¹­}±½Õ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}Mİ•…ÑÉ½Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Íİ•…Ñ}‘É½À¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}Mİ•…ÑÉ½Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Íİ•…Ñ}‘É½À¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈMÑ…Ñ¹¥µ}™ámt€€€€€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÑ…Ñ}¡…¹”½Ñ¥±•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈMÑ…Ñ¹¥µ}%¹É•…Í•}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÑ…Ñ}¡…¹”½¥¹É•…Í”¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈMÑ…Ñ¹¥µ}•É•…Í•}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÑ…Ñ}¡…¹”½‘•É•…Í”¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÄØMÑ…Ñ¹¥µ}•™•¹Í•}A…±mt€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÑ…Ñ}¡…¹”½‘•™•¹Í”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØMÑ…Ñ¹¥µ}ÑÑ…­}A…±mt€€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÑ…Ñ}¡…¹”½…ÑÑ…¬¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØMÑ…Ñ¹¥µ}ÕÉ…å}A…±mt€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÑ…Ñ}¡…¹”½…ÕÉ…ä¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØMÑ…Ñ¹¥µ}MÁ••‘}A…±mt€€€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÑ…Ñ}¡…¹”½ÍÁ••¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØMÑ…Ñ¹¥µ}5Õ±Ñ¥Á±•}A…±mt€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÑ…Ñ}¡…¹”½µÕ±Ñ¥Á±”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØMÑ…Ñ¹¥µ}Ù…Í¥½¹}A…±mt€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÑ…Ñ}¡…¹”½•Ù…Í¥½¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØMÑ…Ñ¹¥µ}MÁÑÑ…­}A…±mt€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÑ…Ñ}¡…¹”½ÍÁ}…ÑÑ…¬¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØMÑ…Ñ¹¥µ}MÁ•™•¹Í•}A…±mt€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÑ…Ñ}¡…¹”½ÍÁ}‘•™•¹Í”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈÕÉ•	Õ‰‰±•Í™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½µ…Í­Ì½ÕÉ•}‰Õ‰‰±•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØÕÉ•	Õ‰‰±•ÍA…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½µ…Í­Ì½ÕÉ•}‰Õ‰‰±•Ì¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈÕÉ•	Õ‰‰±•ÍQ¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½µ…Í­Ì½ÕÉ•}‰Õ‰‰±•Ì¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}AÕÉÁ±•MÉ…Ñ¡mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÁÕÉÁ±•}ÍÉ…Ñ ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}AÕÉÁ±•MÉ…Ñ¡mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÁÕÉÁ±•}ÍÉ…Ñ ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}AÕÉÁ±•Mİ¥Á•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÁÕÉÁ±•}Íİ¥Á”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}Õ…É‘I¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Õ…É‘}É¥¹œ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}Õ…É‘I¥¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Õ…É‘}É¥¹œ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}Q…!…¹‘mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Ñ…}¡…¹¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}9½¥Í•1¥¹•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½¹½¥Í•}±¥¹”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÌÈU¹ÕÍ•‘1•Ù•±ÕÁ¹¥µ…Ñ¥½¹™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½µ…Í­Ì½Õ¹ÕÍ•‘}±•Ù•±}ÕÀ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈU¹ÕÍ•‘1•Ù•±ÕÁ¹¥µ…Ñ¥½¹Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½µ…Í­Ì½Õ¹ÕÍ•‘}±•Ù•±}ÕÀ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}Mµ…±±I•‘å•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Íµ…±±}É•‘}•å”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}Mµ…±±I•‘å•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Íµ…±±}É•‘}•å”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}!½±±½İ=É‰mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½¡½±±½İ}½Éˆ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}!½±±½İ=É‰mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½¡½±±½İ}½Éˆ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}aM¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½á}Í¥¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}	±Õ•É••¹=É‰mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½‰±Õ•É••¹}½Éˆ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}	±Õ•É••¹=É‰mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½‰±Õ•É••¹}½Éˆ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}A¥¹­Y¥½±•Ñ=É‰mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Á¥¹­Ù¥½}½Éˆ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}A¥¹­Y¥½±•Ñ=É‰mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Á¥¹­Ù¥½}½Éˆ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}A…İAÉ¥¹Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Á…İ}ÁÉ¥¹Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}A…İAÉ¥¹Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Á…İ}ÁÉ¥¹Ğ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}AÕÉÁ±•±…µ•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÁÕÉÁ±•}™±…µ”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}AÕÉÁ±•±…µ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÁÕÉÁ±•}™±…µ”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}I•‘	…±±mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É•‘}‰…±°¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}I•‘	…±±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É•‘}‰…±°¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}Mµ•±±¥¹Í…±Ñ™™•Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Íµ•±±¥¹Í…±Ñ}•™™•Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}Mµ•±±¥¹Í…±Ñ™™•Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Íµ•±±¥¹Í…±Ñ}•™™•Ğ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}5…¹¥™å¥¹±…ÍÍmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½µ…¹¥™å¥¹}±…ÍÌ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}5…¹¥™å¥¹±…ÍÍmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½µ…¹¥™å¥¹}±…ÍÌ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}5•Ñ•½Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½µ•Ñ•½È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}5•Ñ•½Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½µ•Ñ•½È¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}±…ÑI½­mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½™±…Ñ}É½¬¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}±…ÑI½­mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½™±…Ñ}É½¬¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}Q•É…MÑ…ÉÍÑ½Éµ	•…µmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÑ…ÉÍÑ½Éµ}‰•…´¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}Q•É…MÑ…ÉÍÑ½Éµ	•…µmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÑ…ÉÍÑ½Éµ}‰•…´¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}M…±ÑA…ÉÑ¥±•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Í…±Ñ}Á…ÉÑ¥±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}M…±ÑA…ÉÑ¥±•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Í…±Ñ}Á…ÉÑ¥±”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µU¹ÕÍ•‘A…±}U¹­¹½İ¸Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½Õ¹ÕÍ•½Õ¹­¹½İ¹|È¹‰…Á…°ˆ¤ì((¥¹±Õ‘”€‰‘…Ñ„½É…Á¡¥Ì½ÑÉ…¥¹•ÉÌ¹ ˆ()½¹ÍĞÔÌÈ	…ÑÑ±•YMÉ…µ•}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}ÑÉ…¹Í¥Ñ¥½¹Ì½ÙÍ}™É…µ”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•YMÉ…µ•}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}ÑÉ…¹Í¥Ñ¥½¹Ì½ÙÍ}™É…µ”¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•YMÉ…µ•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}ÑÉ…¹Í¥Ñ¥½¹Ì½ÙÍ}™É…µ”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈYÍ1•ÑÑ•ÉÍ™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}ÑÉ…¹Í¥Ñ¥½¹Ì½ÙÌ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì((¥¹±Õ‘”€‰‘…Ñ„½É…Á¡¥Ì½‰…ÑÑ±•}•¹Ù¥É½¹µ•¹Ğ¹ ˆ((¼¼	…ÑÑ±”½µ”)½¹ÍĞÔÌÈ½µ•Q½ÕÉ¹•åQÉ••}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}ÑÉ•”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ½µ•Q½ÕÉ¹•å1¥¹•}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}±¥¹”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì€¼¼Ñ¡”É•±½Üµ…Í¬™½ÈÑ¡”Ñ½ÕÉ¹•ä…‘Ù…¹•µ•¹Ğ±¥¹•Ì)½¹ÍĞÔÌÈ½µ•Q½ÕÉ¹•åQÉ••}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}ÑÉ•”¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ½µ•Q½ÕÉ¹•å1¥¹•½İ¹}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}±¥¹•}‘½İ¹}µ…À¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ½µ•Q½ÕÉ¹•å1¥¹•UÁ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}±¥¹•}ÕÁ}µ…À¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ½µ•Q½ÕÉ¹•å%¹™½…É‘}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}¥¹™½}…É¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ½µ•Q½ÕÉ¹•å%¹™½…É‘}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}¥¹™½}…É‘}Ñ¥±•µ…À¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ½µ•Q½ÕÉ¹•å%¹™½…É‘	}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}¥¹™½}…É‘}‰œ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ½µ•Q½ÕÉ¹•åQÉ••	ÕÑÑ½¹Í}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}‰ÕÑÑ½¹Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì€¼¼•á¥Ğ½…¹•°…¹A½¯¤	…±°‰ÕÑÑ½¹Ì)½¹ÍĞÔÄØ½µ•Q½ÕÉ¹•åQÉ••}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}ÑÉ•”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ½µ•Q½ÕÉ¹•åQÉ••	ÕÑÑ½¹Í}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}‰ÕÑÑ½¹Ì¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ½µ•Q½ÕÉ¹•å5…Ñ¡…É‘	}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½Ñ½ÕÉ¹•å}µ…Ñ¡}…É‘}‰œ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•É•¹…)Õ‘µ•¹ÑMåµ‰½±Í™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½…É•¹…}©Õ‘µ•¹Ñ}Íåµ‰½±Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•É•¹…)Õ‘µ•¹ÑMåµ‰½±ÍA…±•ÑÑ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½…É•¹…}©Õ‘µ•¹Ñ}Íåµ‰½±Ì¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•]¥¹‘½İQ•áÑA…±•ÑÑ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}¥¹Ñ•É™…”½Ñ•áĞ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØAAQ•áÑA…±•ÑÑ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}¥¹Ñ•É™…”½Ñ•áÑ}ÁÀ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØQ¥±•Í•Ñ¹¥µÍ}	…ÑÑ±•½µ•A…±ÌÁ|Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½‘½µ•}…¹¥´Ä¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØQ¥±•Í•Ñ¹¥µÍ}	…ÑÑ±•½µ•A…±ÌÁ|Åmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½‘½µ•}…¹¥´È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØQ¥±•Í•Ñ¹¥µÍ}	…ÑÑ±•½µ•A…±ÌÁ|Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½‘½µ•}…¹¥´Ì¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØQ¥±•Í•Ñ¹¥µÍ}	…ÑÑ±•½µ•A…±ÌÁ|Ímt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½‘½µ•}…¹¥´Ğ¹‰…Á…°ˆ¤ì()ÍÑ…Ñ¥Œ½¹ÍĞÔÄØÍU¹ÕÍ•Ámt€ôìÁàÄÍ°€ÁàÄÄä°€ÁàÄÄÌ°€ÁàÄÁôì()½¹ÍĞÔÄØ	…ÑÑ±•AåÉ…µ¥‘±½½É}A…±mulÄÙt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½ÁåÉ…µ¥‘}™±½½È¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ5Õ±Ñ¥	…ÑÑ±•%¹ÑÉ½	}=ÁÁ½¹•¹Ñ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½µÕ±Ñ¥}‰…ÑÑ±•}¥¹ÑÉ½}‰}½ÁÁ½¹•¹Ğ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ5Õ±Ñ¥	…ÑÑ±•%¹ÑÉ½	}A±…å•É}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½µÕ±Ñ¥}‰…ÑÑ±•}¥¹ÑÉ½}‰}Á±…å•È¹‰¥¸¹Íµ½±Q4ˆ¤ì((¥¹±Õ‘”€‰‘…Ñ„½É…Á¡¥Ì½¥¹ÑÉ½}Í•¹”¹ ˆ()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}±å¥¹¥ÉÑmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½™±å¥¹}‘¥ÉĞ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}±å¥¹¥ÉÑmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½™±å¥¹}‘¥ÉĞ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}M…¹‘ÍÑ½Éµmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í…¹‘ÍÑ½Éµ}‰É•Ü¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}M…¹‘ÍÑ½Éµmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í…¹‘ÍÑ½Éµ}‰É•Ü¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}]¥¹‘ÍÑ½Éµmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ¥¹‘ÍÑ½Éµ}‰É•Ü¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}5•Ñ…±M½Õ¹‘]…Ù•Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½µ•Ñ…±}Í½Õ¹‘}İ…Ù•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}5•Ñ…±M½Õ¹‘]…Ù•Ímt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½µ•Ñ…±}Í½Õ¹‘}İ…Ù•Ì¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}%•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}%•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}%•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}%¥±•MÁ•…Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½¥¥±•}ÍÁ•…È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}%¥±•MÁ•…Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½¥¥±•}ÍÁ•…È¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ½¹Ñ•ÍÑ9•áÑQÕÉ¹™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½¹•áÑÑÕÉ¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔà½¹Ñ•ÍÑ9•áÑQÕÉ¹9Õµ‰•ÉÍ™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½¹•áÑÑÕÉ¹}¹Õµ‰•ÉÌ¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔà½¹Ñ•ÍÑ9•áÑQÕÉ¹I…¹‘½µ™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½¹•áÑÑÕÉ¹}É…¹‘½´¸Ñ‰ÁÀˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}±½İåI•‘=É‰mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½±½İå}É•‘}½Éˆ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}±½İåI•‘=É‰mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½±½İå}É•‘}½Éˆ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}±½İåÉ••¹=É‰mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½±½İå}É••¹}½Éˆ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}M±••ÁA½İ‘•Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Í±••Á}Á½İ‘•È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}MÑÕ¹MÁ½É•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÑÕ¹}ÍÁ½É”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ½¹Ñ•ÍÑÁÁ±…ÕÍ•™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½…ÁÁ±…ÕÍ”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔà½¹Ñ•ÍÑÁÁ±…ÕÍ•5•Ñ•É™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½…ÁÁ±…ÕÍ•}µ•Ñ•È¸Ñ‰ÁÀˆ¤ì()½¹ÍĞÔÄØ½¹Ñ•ÍÑA…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½¹•áÑÑÕÉ¸¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}MÁ±…Í¡mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÁ±…Í ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}MÁ±…Í¡mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÁ±…Í ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}Mİ•…Ñ	•…‘mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Íİ•…Ñ}‰•…¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}A½­•‰±½­mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Á½­•‰±½¬¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}A½­•‰±½­mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Á½­•‰±½¬¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}•´Åmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½•µ|Ä¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}•´Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½•µ|È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}•´Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½•µ|Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}•´Åmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½•µ|Ä¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}%¹¥Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥¹}…¥È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}%¹¥Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥¹}…¥È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}%¹¥Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥¹}…¥È¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}AÉ½Ñ•Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÁÉ½Ñ•Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}AÉ½Ñ•Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÁÉ½Ñ•Ğ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	…­É½Õ¹‘%µ…•5Õ‘‘å]…Ñ•É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•É}µÕ‘‘ä¹‰…Á…°ˆ¤ì((¼¼•¸€ĞÍ¡…‘½ÜƒŠP•¹¥¹”µİ¥‘”)½¹ÍĞÔÌÈ¹•µå5½¹M¡…‘½İ}™á•¸Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}¥¹Ñ•É™…”½•¸Ğ½•¹•µå}µ½¹}Í¡…‘½Ü¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(¼¼•¸€ÌÍ¡…‘½ÜƒŠPÁ•Èµ…µ”(¥˜%M}!9L)½¹ÍĞÔÌÈ¹•µå5½¹M¡…‘½İ}™á•¸Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}¥¹Ñ•É™…”½¡¹Ì½•¹•µå}µ½¹}Í¡…‘½Ü¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(•±Í”)½¹ÍĞÔÌÈ¹•µå5½¹M¡…‘½İ}™á•¸Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}¥¹Ñ•É™…”½•¹•µå}µ½¹}Í¡…‘½Ü¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(•¹‘¥˜)½¹ÍĞÔÌÈ¹•µå5½¹M¡…‘½İÍM¥é•‘}™á•¸Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}¥¹Ñ•É™…”½•¸Ğ½•¹•µå}µ½¹}Í¡…‘½İÍ}Í¥é•¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ¹•µå5½¹M¡…‘½İÍM¥é•‘}™á•¸Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}¥¹Ñ•É™…”½•¹•µå}µ½¹}Í¡…‘½İÍ}Í¥é•¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì((¼¼•¸€Ğ‰…±°ÍÑ…ÑÕÌ‰…ÈƒŠP•¹¥¹”µİ¥‘”)½¹ÍĞÔÌÈ	…ÑÑ±•%¹Ñ•É™…•}	…±±MÑ…ÑÕÍ	…É™á•¸Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}¥¹Ñ•É™…”½•¸Ğ½‰…±±}ÍÑ…ÑÕÍ}‰…È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(¼¼•¸€Ì‰…±°ÍÑ…ÑÕÌ‰…ÈƒŠPÁ•Èµ…µ”(¥˜%M}!9L)½¹ÍĞÔÌÈ	…ÑÑ±•%¹Ñ•É™…•}	…±±MÑ…ÑÕÍ	…É™á•¸Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}¥¹Ñ•É™…”½¡¹Ì½‰…±±}ÍÑ…ÑÕÍ}‰…È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(•±Í”)½¹ÍĞÔÌÈ	…ÑÑ±•%¹Ñ•É™…•}	…±±MÑ…ÑÕÍ	…É™á•¸Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}¥¹Ñ•É™…”½‰…±±}ÍÑ…ÑÕÍ}‰…È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(•¹‘¥˜()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}¡½ÍÑmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡½ÍĞ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}¡½ÍÑmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡½ÍĞ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}¡½ÍÑmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡½ÍĞ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}]¡¥Á!¥Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½İ¡¥Á}¡¥Ğ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}M½±…É	•…µmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í½±…É‰•…´¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}M½±…É	•…µmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í½±…É‰•…´¹‰¥¸¹Íµ½±Q4ˆ¤ì€¼¼U¹ÕÍ•()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}5…µ…MÑ½Éµmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½µ…µ…}ÍÑ½É´¹‰…Á…°ˆ¤ì((¼½¹•Ü‰…ÑÑ±”‰Ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}!ÕÉÉ¥…¹•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡ÕÉÉ¥…¹”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}!ÕÉÉ¥…¹•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡ÕÉÉ¥…¹”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}!ÕÉÉ¥…¹•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡ÕÉÉ¥…¹”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}I½­]É•­•Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É½­}İÉ•­•È¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}¥…%µÁ…ÑA±…å•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥…}¥µÁ…Ñ}Á±…å•È¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}¥…%µÁ…Ñ=ÁÁ½¹•¹Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥…}¥µÁ…Ñ}½ÁÁ½¹•¹Ğ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}¥…%µÁ…Ñ½¹Ñ•ÍÑmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥…}¥µÁ…Ñ}½¹Ñ•ÍĞ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}¥…%µÁ…Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥…}¥µÁ…Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}¥…%µÁ…Ñ½¹Ñ•ÍÑmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥…}¥µÁ…Ñ}½¹Ñ•ÍĞ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}¥…%µÁ…Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥…}¥µÁ…Ğ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}MÁ…¥…±I•¹‘mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½ÍÁ…¥…±}É•¹¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}MÁ…¥…±I•¹‘mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½ÍÁ…¥…±}É•¹¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}M±Õ‘•]…Ù•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í±Õ‘•}İ…Ù”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}•É½‰±…ÍÑmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½…•É½‰±…ÍÑ}Ñ¥±•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}•É½‰±…ÍÑmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½…•É½‰±…ÍĞ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}•É½‰±…ÍÑmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½…•É½‰±…ÍÑ}µ…À¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}ÕÉ…MÁ¡•É•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½…ÕÉ…}ÍÁ¡•É”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}	±…­¡½±•±¥ÁÍ•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‰±…­¡½±•}•±¥ÁÍ”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}	±…­¡½±•±¥ÁÍ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‰±…­¡½±•}•±¥ÁÍ”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}	±…­¡½±•±¥ÁÍ•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‰±…­¡½±•}•±¥ÁÍ”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}	±½½µ½½µmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‰±½½µ}‘½½´¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}	±½½µ½½µmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‰±½½µ}‘½½´¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}	±½½µ½½µmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‰±½½µ}‘½½´¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}	½±ÑMÑÉ¥­•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‰½±Ñ}ÍÑÉ¥­”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}	½±ÑMÑÉ¥­•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‰½±Ñ}ÍÑÉ¥­”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}	½±ÑMÑÉ¥­•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‰½±Ñ}ÍÑÉ¥­”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}±…¹½É½ÕÍM½Õ±‰±…é•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½±…¹½É½ÕÍ}Í½Õ±‰±…é”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}±…¹½É½ÕÍM½Õ±‰±…é•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½±…¹½É½ÕÍ}Í½Õ±‰±…é”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}±…¹½É½ÕÍM½Õ±‰±…é•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½±…¹½É½ÕÍ}Í½Õ±‰±…é”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}å¹…µ…á…¹¹½¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‘å¹…µ…á}…¹¹½¸¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}¥É”Åmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½™¥É”Ä¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}¥É”Åmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½™¥É”Ä¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}¥É”Åmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½™¥É”Ä¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}¥É”Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½™¥É”È¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}½ÕÍ	±…ÍÑmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½™½ÕÍ}‰±…ÍĞ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}½ÕÍ	±…ÍÑmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½™½ÕÍ}‰±…ÍĞ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}½ÕÍ	±…ÍÑmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½™½ÕÍ}‰±…ÍĞ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}…É‰…•…±±Ímt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½…É‰…•}™…±±Ì¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}Õ¹­M¡½Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Õ¹­}Í¡½Ğ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}!å‘É½…¹¹½¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡å‘É½}…¹¹½¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}!å‘É½…¹¹½¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡å‘É½}…¹¹½¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}!å‘É½…¹¹½¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡å‘É½}…¹¹½¸¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}¡±½É½‰±…ÍÑmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡±½É½‰±…ÍĞ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}!å‘É½AÕµÁmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡å‘É½}ÁÕµÀ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}!å‘É½AÕµÁmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡å‘É½}ÁÕµÀ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}!å‘É½AÕµÁmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡å‘É½}ÁÕµÀ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}!åÁ•É	•…µmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡åÁ•É}‰•…´¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}!åÁ•ÉÍÁ…•ÕÉåmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¡åÁ•ÉÍÁ…•}™ÕÉä¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}%¹™•É¹½=Ù•É‘É¥Ù•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥¹™•É¹½}½Ù•É‘É¥Ù”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}%¹™•É¹½=Ù•É‘É¥Ù•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥¹™•É¹½}½Ù•É‘É¥Ù”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}%¹™•É¹½=Ù•É‘É¥Ù•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¥¹™•É¹½}½Ù•É‘É¥Ù”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}1•…™MÑ½Éµmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½±•…™}ÍÑ½É´¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}1•…™MÑ½Éµmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½±•…™}ÍÑ½É´¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}1•…™MÑ½Éµmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½±•…™}ÍÑ½É´¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}5…±¥¥½ÕÍ5½½¹Í…Õ±Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½µ…±¥¥½ÕÍ}µ½½¹Í…Õ±Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}5…±¥¥½ÕÍ5½½¹Í…Õ±Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½µ…±¥¥½ÕÍ}µ½½¹Í…Õ±Ğ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}5…±¥¥½ÕÍ5½½¹Í…Õ±Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½µ…±¥¥½ÕÍ}µ½½¹Í…Õ±Ğ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}5…á1¥¡Ñ¹¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½µ…á}±¥¡Ñ¹¥¹œ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}5…á1¥¡Ñ¹¥¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½µ…á}±¥¡Ñ¹¥¹œ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}5…á1¥¡Ñ¹¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½µ…á}±¥¡Ñ¹¥¹œ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}9•Ù•É•¹‘¥¹9¥¡Ñµ…É•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•Ù•É•¹‘¥¹}¹¥¡Ñµ…É”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}9•Ù•É•¹‘¥¹9¥¡Ñµ…É•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•Ù•É•¹‘¥¹}¹¥¡Ñµ…É”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}9•Ù•É•¹‘¥¹9¥¡Ñµ…É•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•Ù•É•¹‘¥¹}¹¥¡Ñµ…É”¹‰¥¸¹Íµ½±Q4ˆ¤ì((¥˜	}9]}QII%9}	-I=U9L)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}±•ÑÉ¥Q•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}•±•ÑÉ¥}Ñ•ÉÉ…¥¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}±•ÑÉ¥Q•ÉÉ…¥¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}•±•ÑÉ¥}Ñ•ÉÉ…¥¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}±•ÑÉ¥Q•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}•±•ÑÉ¥}Ñ•ÉÉ…¥¸¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}É…ÍÍåQ•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}É…ÍÍå}Ñ•ÉÉ…¥¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}É…ÍÍåQ•ÉÉ…¥¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}É…ÍÍå}Ñ•ÉÉ…¥¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}É…ÍÍåQ•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}É…ÍÍå}Ñ•ÉÉ…¥¸¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}5¥ÍÑåQ•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}µ¥ÍÑå}Ñ•ÉÉ…¥¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}5¥ÍÑåQ•ÉÉ…¥¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}µ¥ÍÑå}Ñ•ÉÉ…¥¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}5¥ÍÑåQ•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}µ¥ÍÑå}Ñ•ÉÉ…¥¸¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}AÍå¡¥Q•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}ÁÍå¡¥}Ñ•ÉÉ…¥¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}AÍå¡¥Q•ÉÉ…¥¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}ÁÍå¡¥}Ñ•ÉÉ…¥¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}AÍå¡¥Q•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹•İ}ÁÍå¡¥}Ñ•ÉÉ…¥¸¹‰¥¸¹Íµ½±Q4ˆ¤ì(•±Í”)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}AÍå¡¥Q•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½ÁÍå¡¥}Ñ•ÉÉ…¥¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}AÍå¡¥Q•ÉÉ…¥¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½ÁÍå¡¥}Ñ•ÉÉ…¥¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}AÍå¡¥Q•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½ÁÍå¡¥}Ñ•ÉÉ…¥¸¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}±•ÑÉ¥Q•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½•±•ÑÉ¥}Ñ•ÉÉ…¥¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}±•ÑÉ¥Q•ÉÉ…¥¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½•±•ÑÉ¥}Ñ•ÉÉ…¥¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}±•ÑÉ¥Q•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½•±•ÑÉ¥}Ñ•ÉÉ…¥¸¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}É…ÍÍåQ•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É…ÍÍå}Ñ•ÉÉ…¥¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}É…ÍÍåQ•ÉÉ…¥¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É…ÍÍå}Ñ•ÉÉ…¥¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}É…ÍÍåQ•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É…ÍÍå}Ñ•ÉÉ…¥¸¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}5¥ÍÑåQ•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½µ¥ÍÑå}Ñ•ÉÉ…¥¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}5¥ÍÑåQ•ÉÉ…¥¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½µ¥ÍÑå}Ñ•ÉÉ…¥¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}5¥ÍÑåQ•ÉÉ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½µ¥ÍÑå}Ñ•ÉÉ…¥¸¹‰¥¸¹Íµ½±Q4ˆ¤ì(•¹‘¥˜()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}9¥¡Ñµ…É•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹¥¡Ñµ…É”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}9¥¡Ñµ…É•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹¥¡Ñµ…É”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}9¥¡Ñµ…É•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½¹¥¡Ñµ…É”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}A½¥Í½¹…±±Ímt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Á½¥Í½¹}™…±±Ì¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}AÍå¡¥9•İmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½ÁÍå¡¥}¹•Ü¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}M¡…ÑÑ•É•‘AÍå¡•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í¡…ÑÑ•É•‘}ÁÍå¡”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}M¡…ÑÑ•É•‘AÍå¡•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í¡…ÑÑ•É•‘}ÁÍå¡”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}M¡…ÑÑ•É•‘AÍå¡•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í¡…ÑÑ•É•‘}ÁÍå¡”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}I½­¥•±‘mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É½­}™¥•±¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}I½­…åmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É½­}‘…ä¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}I½­¥•±‘mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É½­}™¥•±¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}I½­™Ñ•É¹½½¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É½­}…™Ñ•É¹½½¸¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}I½­9¥¡Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É½­}¹¥¡Ğ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}M¹Õ±•½É•Ù•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í¹Õ±•}™½É•Ù•È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}M¹Õ±•½É•Ù•Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í¹Õ±•}™½É•Ù•È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}M¹Õ±•½É•Ù•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í¹Õ±•}™½É•Ù•È¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}M½Õ±MÑ•…±¥¹œİMÑ…ÉMÑÉ¥­•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í½Õ±ÍÑ•…±¥¹|İÍÑ…É}ÍÑÉ¥­”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}M½Õ±MÑ•…±¥¹œİMÑ…ÉMÑÉ¥­•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í½Õ±ÍÑ•…±¥¹|İÍÑ…É}ÍÑÉ¥­”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}M½Õ±MÑ•…±¥¹œİMÑ…ÉMÑÉ¥­•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í½Õ±ÍÑ•…±¥¹|İÍÑ…É}ÍÑÉ¥­”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}Q•Ñ½¹¥I…•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Ñ•Ñ½¹¥}É…”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}QÉ¥­I½½µmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½ÑÉ¥­}É½½´¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}QÉ¥­I½½µmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½ÑÉ¥­}É½½´¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}QÉ¥­I½½µmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½ÑÉ¥­}É½½´¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}5…¥I½½µmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½µ…¥}É½½´¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}]½¹‘•ÉI½½µmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ½¹‘•É}É½½´¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}Qİ¥¹­±•Q…­±•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Ñİ¥¹­±•}Ñ…­±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}Qİ¥¹­±•Q…­±•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Ñİ¥¹­±•}Ñ…­±”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}Qİ¥¹­±•Q…­±•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Ñİ¥¹­±•}Ñ…­±”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}]…Ñ•ÉAÕ±Í•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•É}ÁÕ±Í”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}]…Ñ•ÉAÕ±Í•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•É}ÁÕ±Í”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}]…Ñ•ÉAÕ±Í•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•É}ÁÕ±Í”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}]…Ñ•É™…±±mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•É™…±°¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}]…Ñ•É™…±±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•É™…±°¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}]…Ñ•É™…±±mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•É™…±°¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}…É­Y½¥‘mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‘…É­}Ù½¥¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}…É­Y½¥‘mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½‘…É­}Ù½¥¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}i5½Ù•Ñ¥Ù…Ñ•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½éµ½Ù•}…Ñ¥Ù…Ñ”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}i5½Ù•Ñ¥Ù…Ñ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½éµ½Ù•}…Ñ¥Ù…Ñ”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}i5½Ù•Ñ¥Ù…Ñ•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½éµ½Ù•}…Ñ¥Ù…Ñ”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}i5½Ù•5½Õ¹Ñ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½éµ½Ù•}µ½Õ¹Ñ…¥¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}i5½Ù•5½Õ¹Ñ…¥¹mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½éµ½Ù•}µ½Õ¹Ñ…¥¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}i5½Ù•5½Õ¹Ñ…¥¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½éµ½Ù•}µ½Õ¹Ñ…¥¸¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}MÑ••±	•…µmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½ÍÑ••±}‰•…´¹‰…Á…°ˆ¤ì((¼¼µ¥ÍŒ)½¹ÍĞÔÌÈ	•ÉÉå	±•¹‘•É•¹Ñ•É}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰•ÉÉå}‰±•¹‘•È½•¹Ñ•È¸á‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	•ÉÉå	±•¹‘•É=ÕÑ•É}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰•ÉÉå}‰±•¹‘•È½½ÕÑ•È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	•ÉÉå	±•¹‘•É=ÕÑ•É}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰•ÉÉå}‰±•¹‘•È½½ÕÑ•É}µ…À¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}½Íµ¥mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½½Íµ¥Œ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}½Íµ¥mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½½Íµ¥Œ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}½Íµ¥mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½½Íµ¥Œ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}M±…µ!¥ĞÉmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Í±…µ}¡¥Ñ|È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}M±…µ!¥ĞÉmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Í±…µ}¡¥Ñ|È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ½Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½™½œ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}]•…Ñ¡•É	…±±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½İ•…Ñ¡•É}‰…±°¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}]•…Ñ¡•É	…±±mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½İ•…Ñ¡•É}‰…±°¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}M…Éå…•A±…å•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í…Éå}™…•}Á±…å•È¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}M…Éå…•=ÁÁ½¹•¹Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í…Éå}™…•}½ÁÁ½¹•¹Ğ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}M…Éå…•½¹Ñ•ÍÑmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Í…Éå}™…•}½¹Ñ•ÍĞ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}!…¥±mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½¡…¥°¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}!…¥±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½¡…¥°¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}É••¹MÁ¥­•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É••¹}ÍÁ¥­”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}É••¹MÁ¥­•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É••¹}ÍÁ¥­”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}]¡¥Ñ•¥É±•=™1¥¡Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½İ¡¥Ñ•}¥É±•}½™}±¥¡Ğ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}±½İå	±Õ•=É‰mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½±½İå}‰±Õ•}½Éˆ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}I•å±•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É•å±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}I•å±•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É•å±”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}I•‘A…ÉÑ¥±•Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É•‘}Á…ÉÑ¥±•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}I•‘A…ÉÑ¥±•Ímt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É•‘}Á…ÉÑ¥±•Ì¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}¥ÉÑ5½Õ¹‘mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½‘¥ÉÑ}µ½Õ¹¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}¥ÉÑ5½Õ¹‘mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½‘¥ÉÑ}µ½Õ¹¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}¥ÍÍÕÉ•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½™¥ÍÍÕÉ”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}¥ÍÍÕÉ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½™¥ÍÍÕÉ”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}¥ÍÍÕÉ•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½™¥ÍÍÕÉ”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}	¥É‘mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½‰¥É¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}	¥É‘mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½‰¥É¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}É½ÍÍ%µÁ…Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É½ÍÍ}¥µÁ…Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}É½ÍÍ%µÁ…Ñmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½É½ÍÍ}¥µÁ…Ğ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}MÕÉ™mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}MÕÉ™mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•È¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}MÕÉ™=ÁÁ½¹•¹Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•É}½ÁÁ½¹•¹Ğ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}MÕÉ™A±…å•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•É}Á±…å•È¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}MÕÉ™½¹Ñ•ÍÑmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½İ…Ñ•É}½¹Ñ•ÍĞ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}M±…Í Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Í±…Í¡|È¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}]¡¥Ñ•M¡…‘½İmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½İ¡¥Ñ•}Í¡…‘½Ü¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}]¡¥Ñ•M¡…‘½İmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½İ¡¥Ñ•}Í¡…‘½Ü¹‰…Á…°ˆ¤ì((¼¼A±•‘”™™•Ğ™¥•±ÍÑ…ÑÕÌ€´I…¥¹‰½Ü)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}I…¥¹‰½İA±…å•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É…¥¹‰½İ}Á±…å•É}Ñ¥±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}I…¥¹‰½İ=ÁÁ½¹•¹Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É…¥¹‰½İ}½ÁÁ½¹•¹Ñ}Ñ¥±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}I…¥¹‰½İmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É…¥¹‰½İ}Á±…å•É}Ñ¥±”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}I…¥¹‰½İA±…å•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É…¥¹‰½İ}Á±…å•É}Ñ¥±”¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}I…¥¹‰½İ=ÁÁ½¹•¹Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½É…¥¹‰½İ}½ÁÁ½¹•¹Ñ}Ñ¥±”¹‰¥¸¹Íµ½±Q4ˆ¤ì((¼¼A±•‘”™™•Ğ™¥•±ÍÑ…ÑÕÌ€´Mİ…µÀ)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	%µ…•}Mİ…µÁmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Íİ…µÁÍİ¥éé±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•¹¥µ	A…±•ÑÑ•}Mİ…µÁmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Íİ…µÁÍİ¥éé±”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µ	Q¥±•µ…Á}Mİ…µÁmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½‰…­É½Õ¹‘Ì½Íİ…µÁÍİ¥éé±”¹‰¥¸¹Íµ½±Q4ˆ¤ì((¥˜%M}!9L)½¹ÍĞÔÌÈA…ÉÑå5•¹Õ	}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á…ÉÑå}µ•¹Ô½¡¹Ì½‰œ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØA…ÉÑå5•¹Õ	}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á…ÉÑå}µ•¹Ô½¡¹Ì½‰œ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈA…ÉÑå5•¹Õ	}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á…ÉÑå}µ•¹Ô½¡¹Ì½‰œ¹‰¥¸¹Íµ½±Q4ˆ¤ì(•±Í”)½¹ÍĞÔÌÈA…ÉÑå5•¹Õ	}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á…ÉÑå}µ•¹Ô½‰œ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØA…ÉÑå5•¹Õ	}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á…ÉÑå}µ•¹Ô½‰œ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈA…ÉÑå5•¹Õ	}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á…ÉÑå}µ•¹Ô½‰œ¹‰¥¸¹Íµ½±Q4ˆ¤ì(•¹‘¥˜()½¹ÍĞÔÌÈA…ÉÑå5•¹ÕA½­•‰…±±}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á…ÉÑå}µ•¹Ô½Á½­•‰…±°¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA…ÉÑå5•¹ÕA½­•‰…±±Mµ…±±}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á…ÉÑå}µ•¹Ô½Á½­•‰…±±}Íµ…±°¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì€¼½Õ¹ÕÍ•)½¹ÍĞÔÄØA…ÉÑå5•¹ÕA½­•‰…±±}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á…ÉÑå}µ•¹Ô½Á½­•‰…±°¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈMÑ…ÑÕÍ™á}%½¹Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¥¹Ñ•É™…”½ÍÑ…ÑÕÍ}¥½¹Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØMÑ…ÑÕÍA…±}%½¹Ímt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½¥¹Ñ•É™…”½ÍÑ…ÑÕÍ}¥½¹Ì¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ…Ñ•½Éå%½¹Í}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½¥¹Ñ•É™…”½…Ñ•½Éå}¥½¹Ì¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ…Ñ•½Éå%½¹Í}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¥¹Ñ•É™…”½…Ñ•½Éå}¥½¹Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÌÈ5½Ù•QåÁ•Í}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑåÁ•Ì½µ½Ù•}ÑåÁ•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ5½Ù•QåÁ•Í}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑåÁ•Ì½µ½Ù•}ÑåÁ•Ì¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈMÕµµ…Éå5½Ù•M•±•Ñ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½µ½Ù•}Í•±•Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØMÕµµ…Éå5½Ù•M•±•Ñ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½µ½Ù•}Í•±•Ğ¹‰…Á…°ˆ¤ì((¥˜%M}!9L)½¹ÍĞÔÌÈMÕµµ…ÉåMÉ••¹}™ámt€€€€€€€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½¡¹Ì½Ñ¥±•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØMÕµµ…ÉåMÉ••¹}A…±mt€€€€€€€€€€€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½¡¹Ì½Ñ¥±•Ì¹‰…Á…°ˆ¤ì(•±Í”)½¹ÍĞÔÌÈMÕµµ…ÉåMÉ••¹}™ámt€€€€€€€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½Ñ¥±•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØMÕµµ…ÉåMÉ••¹}A…±mt€€€€€€€€€€€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½Ñ¥±•Ì¹‰…Á…°ˆ¤ì(•¹‘¥˜)½¹ÍĞÔÌÈMÕµµ…ÉåA…•}%¹™½}Q¥±•µ…Ámt€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½Á…•}¥¹™¼¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈMÕµµ…ÉåA…•}M­¥±±Í}Q¥±•µ…Ámt€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½Á…•}Í­¥±±Ì¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈMÕµµ…ÉåA…•}	…ÑÑ±•5½Ù•Í}Q¥±•µ…Ámt€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½Á…•}‰…ÑÑ±•}µ½Ù•Ì¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈMÕµµ…ÉåA…•}½¹Ñ•ÍÑ5½Ù•Í}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½Á…•}½¹Ñ•ÍÑ}µ½Ù•Ì¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈMÕµµ…ÉåA…•}%¹™½}Q¥±•µ…Ámt€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½Á…•}¥¹™½}•œ¹‰¥¸¹Íµ½±Q4ˆ¤ì((¥˜%M}!9L)½¹ÍĞÔÌÈ	…5…±•Q¥±•Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…œ½¡¹Ì½‰…}µ…±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	…•µ…±•Q¥±•Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…œ½¡¹Ì½‰…}™•µ…±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…A…±•ÑÑ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…œ½¡¹Ì½‰…œ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	…MÉ••¹5…±•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…œ½¡¹Ì½µ•¹Õ}µ…±”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	…MÉ••¹•µ…±•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…œ½¡¹Ì½µ•¹Õ}™•µ…±”¹‰…Á…°ˆ¤ì(•±Í”)½¹ÍĞÔÌÈ	…5…±•Q¥±•Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…œ½‰…}µ…±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	…•µ…±•Q¥±•Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…œ½‰…}™•µ…±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…A…±•ÑÑ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…œ½‰…œ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	…MÉ••¹5…±•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…œ½µ•¹Õ}µ…±”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	…MÉ••¹•µ…±•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…œ½µ•¹Õ}™•µ…±”¹‰…Á…°ˆ¤ì(•¹‘¥˜()½¹ÍĞÔÌÈ	…MÉ••¹}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…œ½µ•¹Ô¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(¥˜%}=5	%9}	}A=-QL€ôôQIU)½¹ÍĞÔÌÈ	…MÉ••¹}™áQ¥±•5…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…œ½µ•¹Õ|Ø¹‰¥¸¹Íµ½±Q4ˆ¤ì(•±Í”)½¹ÍĞÔÌÈ	…MÉ••¹}™áQ¥±•5…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…œ½µ•¹Õ|à¹‰¥¸¹Íµ½±Q4ˆ¤ì(•¹‘¥˜()½¹ÍĞÔÌÈ	…ÑÑ±•AåÉ…µ¥‘	…}™ámt€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…œ½‰…}ÁåÉ…µ¥¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•AåÉ…µ¥‘	…}A…±mt€€€€€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…œ½‰…}ÁåÉ…µ¥¹‰…Á…°ˆ¤ì€¼¼™•µ…±”Á…±•ÑÑ”¥Ì™¥ÉÍĞ…¹µ…±”¥ÌÍ•½¹¸)½¹ÍĞÔÌÈ	…ÑÑ±•AåÉ…µ¥‘	…Q¥±•µ…Ámt€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…œ½µ•¹Õ}ÁåÉ…µ¥¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•AåÉ…µ¥‘	…%¹Ñ•É™…•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…œ½µ•¹Õ}ÁåÉ…µ¥¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈMİ…Á1¥¹•™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¥¹Ñ•É™…”½Íİ…Á}±¥¹”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØMİ…Á1¥¹•A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½¥¹Ñ•É™…”½Íİ…Á}±¥¹”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈM¡½Á5•¹Õ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Í¡½À½µ•¹Ô¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØM¡½Á5•¹Õ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Í¡½À½µ•¹Ô¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈM¡½Á5•¹Õ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Í¡½À½µ•¹Ô¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈM¡½Á5•¹Õ5½¹•å}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Í¡½À½µ½¹•ä¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈM¡½Á5•¹Õ	A}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Í¡½À½‰À¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì((¼¼A½­•‰±½¬()½¹ÍĞÔÌÈ5•¹ÕA½­•‰±½­}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‰±½¬½µ•¹Ô¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ5•¹ÕA½­•‰±½­}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½µ•¹Ô¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ5•¹ÕA½­•‰±½­•Ù¥•}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‰±½¬½‘•Ù¥”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ5•¹ÕA½­•‰±½­•Ù¥•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½‘•Ù¥”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ5•¹ÕA½­•‰±½­}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‰±½¬½µ•¹Ô¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈA½­•‰±½­}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‰±½¬½Á½­•‰±½¬¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­I•‘}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½É•¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­	±Õ•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½‰±Õ”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­A¥¹­}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½Á¥¹¬¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­É••¹}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½É••¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­e•±±½İ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½å•±±½Ü¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­AÕÉÁ±•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½ÁÕÉÁ±”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­%¹‘¥½}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½¥¹‘¥¼¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­	É½İ¹}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½‰É½İ¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­1¥Ñ•	±Õ•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½±¥Ñ•‰±Õ”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­=±¥Ù•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½½±¥Ù”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­É…å}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½É…ä¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­	±…­}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½‰±…¬¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­]¡¥Ñ•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½İ¡¥Ñ”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‰±½­½±‘}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½½±¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈA½­•‰±½­••‘	}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‰±½¬½™••‘¥¹}‰œ¹‰¥¸¹Íµ½±Q4ˆ¤ì((¥¹±Õ‘”€‰‘…Ñ„½É…Á¡¥Ì½‰•ÉÉ¥•Ì¹ ˆ(¥¹±Õ‘”€‰‘…Ñ„½É…Á¡¥Ì½É…åÅÕ…é…}Í•¹”¹ ˆ(¥¹±Õ‘”€‰‘…Ñ„½É…Á¡¥Ì½¥Ñ•µÌ¹ ˆ(¥¹±Õ‘”€‰‘…Ñ„½É…Á¡¥Ì½‘•½É…Ñ¥½¹Ì¹ ˆ()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}M¡½¬Ímt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Í¡½­|Ì¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}M¡½¬Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½Í¡½­|Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}]¡¥Ñ••…Ñ¡•Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½İ¡¥Ñ•}™•…Ñ¡•È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}]¡¥Ñ••…Ñ¡•Émt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½İ¡¥Ñ•}™•…Ñ¡•È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØ	…ÑÑ±•¹¥µMÁÉ¥Ñ•A…±}MÁ…É­±”Ùmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÁ…É­±•|Ø¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•¹¥µMÁÉ¥Ñ•™á}MÁ…É­±”Ùmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰…ÑÑ±•}…¹¥µÌ½ÍÁÉ¥Ñ•Ì½ÍÁ…É­±•|Ø¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØ…‰±•…É	}A…±mt€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½…‰±•}…È½‰œ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ…‰±•…É}A…±mt€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½…‰±•}…È½…‰±•}…È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ…‰±•…É	}™ámt€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½…‰±•}…È½‰œ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ…‰±•…É}™ámt€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½…‰±•}…È½…‰±•}…È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ…‰±•…É½½É}™ámt€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½…‰±•}…È½‘½½È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ…‰±•…É…‰±•}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½…‰±•}…È½…‰±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì((¼¼I½Õ±•ÑÑ”)½¹ÍĞÔÌÈI½Õ±•ÑÑ•5•¹Õ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½É½Õ±•ÑÑ”½İ¥¹‘½Ü¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈI½Õ±•ÑÑ•]¡••±}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½É½Õ±•ÑÑ”½İ¡••°¸á‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈI½Õ±•ÑÑ••¹Ñ•É}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½É½Õ±•ÑÑ”½•¹Ñ•È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈI½Õ±•ÑÑ•!•…‘•ÉÍ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½É½Õ±•ÑÑ”½¡•…‘•ÉÌ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈI½Õ±•ÑÑ•É•‘¥Ñ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½É½Õ±•ÑÑ”½É•‘¥Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈI½Õ±•ÑÑ•9Õµ‰•ÉÍ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½É½Õ±•ÑÑ”½¹Õµ‰•ÉÌ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈI½Õ±•ÑÑ•5Õ±Ñ¥Á±¥•É}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½É½Õ±•ÑÑ”½µÕ±Ñ¥Á±¥•È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì((¥¹±Õ‘”€‰‘…Ñ„½É…Á¡¥Ì½µ…¥°¹ ˆ()½¹ÍĞÔÄØÉ½¹Ñ¥•É…Ñ½Éå5•¹Õ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½™…Ñ½Éå}ÍÉ••¸½µ•¹Ô¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØÉ½¹Ñ¥•É…Ñ½Éå5•¹Õ}™ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½™…Ñ½Éå}ÍÉ••¸½µ•¹Ô¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÄØÉ½¹Ñ¥•É…Ñ½Éå5•¹Õ}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰…ÑÑ±•}™É½¹Ñ¥•È½™…Ñ½Éå}ÍÉ••¸½µ•¹Ô¹‰¥¸ˆ¤ì()½¹ÍĞÔÌÈÉ½¹Ñ¥•ÉA…ÍÍ5•‘…±Í}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½™É½¹Ñ¥•É}Á…ÍÌ½µ•‘…±Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØÉ½¹Ñ¥•ÉA…ÍÍÕÉÍ½É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½™É½¹Ñ¥•É}Á…ÍÌ½ÕÉÍ½È¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØÉ½¹Ñ¥•ÉA…ÍÍ5…ÁÕÉÍ½É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½™É½¹Ñ¥•É}Á…ÍÌ½µ…Á}ÕÉÍ½È¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØÉ½¹Ñ¥•ÉA…ÍÍ5•‘…±ÍM¥±Ù•É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½™É½¹Ñ¥•É}Á…ÍÌ½Í¥±Ù•È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØÉ½¹Ñ¥•ÉA…ÍÍ5•‘…±Í½±‘}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½™É½¹Ñ¥•É}Á…ÍÌ½½±¹‰…Á…°ˆ¤ì((¼¼A½¯¥‘•à)½¹ÍĞÔÄØA½­•‘•á	!½•¹¹}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‘•à½‰}¡½•¹¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‘•áM•…É¡I•ÍÕ±ÑÍ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‘•à½Í•…É¡}É•ÍÕ±ÑÍ}‰œ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØA½­•‘•á	9…Ñ¥½¹…±}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‘•à½‰}¹…Ñ¥½¹…°¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•á5•¹Õ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½µ•¹Ô¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•á%¹Ñ•É™…•}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½¥¹Ñ•É™…”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈU¹ÕÍ•‘}A½­•‘•á9½	…±±mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½¹½‰…±±}Õ¹ÕÍ•¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•áMÑ…ÉÑ5•¹Õ5…¥¹}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½ÍÑ…ÉÑ}µ•¹Õ}µ…¥¸¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•áMÑ…ÉÑ5•¹ÕM•…É¡I•ÍÕ±ÑÍ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½ÍÑ…ÉÑ}µ•¹Õ}Í•…É¡}É•ÍÕ±ÑÌ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•á1¥ÍÑ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½±¥ÍĞ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•á1¥ÍÑU¹‘•É±…å}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½±¥ÍÑ}Õ¹‘•É±…ä¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•áM¥é•MÉ••¹}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½Í¥é•}ÍÉ••¸¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•áMÉ••¹M•±•Ñ	…É5…¥¹}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½ÍÉ••¹}Í•±•Ñ}‰…É}µ…¥¸¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•áMÉ••¹M•±•Ñ	…ÉMÕ‰µ•¹Õ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½ÍÉ••¹}Í•±•Ñ}‰…É}ÍÕ‰µ•¹Ô¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•á%¹™½MÉ••¹}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½¥¹™½}ÍÉ••¸¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•áÉåMÉ••¹}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½Éå}ÍÉ••¸¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÄØA½­•‘•áM•…É¡5•¹Õ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‘•à½Í•…É¡}µ•¹Ô¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•áM•…É¡5•¹Õ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½Í•…É¡}µ•¹Ô¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•áM•…É¡5•¹Õ9…Ñ¥½¹…±}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½Í•…É¡}µ•¹Õ}¹…Ñ¥½¹…°¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•áM•…É¡5•¹Õ!½•¹¹}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½Í•…É¡}µ•¹Õ}¡½•¹¸¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØMÕµµ…ÉåMÉ••¹}5½Ù•™™•Ñ}	…ÑÑ±•}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½•™™•Ñ}‰…ÑÑ±”¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØMÕµµ…ÉåMÉ••¹}5½Ù•™™•Ñ}½¹Ñ•ÍÑ}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½•™™•Ñ}½¹Ñ•ÍĞ¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØMÕµµ…ÉåMÉ••¹}5½Ù•™™•Ñ}…¹•±}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÍÕµµ…Éå}ÍÉ••¸½•™™•Ñ}…¹•°¹‰¥¸ˆ¤ì()½¹ÍĞÔÄØ%¹ÑÉ½½ÁåÉ¥¡Ñ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½¥¹ÑÉ¼½½ÁåÉ¥¡Ğ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ%¹ÑÉ½½ÁåÉ¥¡Ñ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¥¹ÑÉ¼½½ÁåÉ¥¡Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ%¹ÑÉ½½ÁåÉ¥¡Ñ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¥¹ÑÉ¼½½ÁåÉ¥¡Ğ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØA½­•‘•áÉ•…MÉ••¹É•…U¹­¹½İ¹}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‘•à½…É•…}Õ¹­¹½İ¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈA½­•‘•áÉ•…MÉ••¹É•…U¹­¹½İ¹}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‘•à½…É•…}Õ¹­¹½İ¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØ5•¹Õ%¹™½±•µ•¹ÑÌÅ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½¥¹Ñ•É™…”½µ•¹Õ}¥¹™¼Ä¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ5•¹Õ%¹™½±•µ•¹ÑÌÉ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½¥¹Ñ•É™…”½µ•¹Õ}¥¹™¼È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ5•¹Õ%¹™½±•µ•¹ÑÌÍ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½¥¹Ñ•É™…”½µ•¹Õ}¥¹™¼Ì¹‰…Á…°ˆ¤ì)½¹ÍĞÔà5•¹Õ%¹™½±•µ•¹ÑÍ}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½¥¹Ñ•É™…”½µ•¹Õ}¥¹™¼¸Ñ‰ÁÀˆ¤ì()½¹ÍĞÔà	…5•¹Õ!5%½¹}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½‰…œ½¡´¸Ñ‰ÁÀˆ¤ì((¼¼½¹Ñ•ÍĞÉ•ÍÕ±ÑÌÍÉ••¸()½¹ÍĞÔÄØ½¹Ñ•ÍÑI•ÍÕ±ÑÍQ¥Ñ±•}9½Éµ…±}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½É•ÍÕ±ÑÍ}ÍÉ••¸½Ñ¥Ñ±•}¹½Éµ…°¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØ½¹Ñ•ÍÑI•ÍÕ±ÑÍQ¥Ñ±•}MÕÁ•É}Q¥±•µ…Ámt€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½É•ÍÕ±ÑÍ}ÍÉ••¸½Ñ¥Ñ±•}ÍÕÁ•È¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØ½¹Ñ•ÍÑI•ÍÕ±ÑÍQ¥Ñ±•}!åÁ•É}Q¥±•µ…Ámt€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½É•ÍÕ±ÑÍ}ÍÉ••¸½Ñ¥Ñ±•}¡åÁ•È¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØ½¹Ñ•ÍÑI•ÍÕ±ÑÍQ¥Ñ±•}5…ÍÑ•É}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½É•ÍÕ±ÑÍ}ÍÉ••¸½Ñ¥Ñ±•}µ…ÍÑ•È¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØ½¹Ñ•ÍÑI•ÍÕ±ÑÍQ¥Ñ±•}1¥¹­}Q¥±•µ…Ámt€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½É•ÍÕ±ÑÍ}ÍÉ••¸½Ñ¥Ñ±•}±¥¹¬¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØ½¹Ñ•ÍÑI•ÍÕ±ÑÍQ¥Ñ±•}½½±}Q¥±•µ…Ámt€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½É•ÍÕ±ÑÍ}ÍÉ••¸½Ñ¥Ñ±•}½½°¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØ½¹Ñ•ÍÑI•ÍÕ±ÑÍQ¥Ñ±•}	•…ÕÑå}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½É•ÍÕ±ÑÍ}ÍÉ••¸½Ñ¥Ñ±•}‰•…ÕÑä¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØ½¹Ñ•ÍÑI•ÍÕ±ÑÍQ¥Ñ±•}ÕÑ•}Q¥±•µ…Ámt€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½É•ÍÕ±ÑÍ}ÍÉ••¸½Ñ¥Ñ±•}ÕÑ”¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØ½¹Ñ•ÍÑI•ÍÕ±ÑÍQ¥Ñ±•}Mµ…ÉÑ}Q¥±•µ…Ámt€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½É•ÍÕ±ÑÍ}ÍÉ••¸½Ñ¥Ñ±•}Íµ…ÉĞ¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØ½¹Ñ•ÍÑI•ÍÕ±ÑÍQ¥Ñ±•}Q½Õ¡}Q¥±•µ…Ámt€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½É•ÍÕ±ÑÍ}ÍÉ••¸½Ñ¥Ñ±•}Ñ½Õ ¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØ½¹Ñ•ÍÑI•ÍÕ±ÑÍQ¥Ñ±•}Q¥±•µ…Ámt€€€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½½¹Ñ•ÍĞ½É•ÍÕ±ÑÍ}ÍÉ••¸½Ñ¥Ñ±”¹‰¥¸ˆ¤ì((¼¼A½¯¥9…Ø()½¹ÍĞÔÄØA½­•¹…Ù½¹‘¥Ñ¥½¹}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½½¹‘¥Ñ¥½¸½É…Á ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù½¹‘¥Ñ¥½¹}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½½¹‘¥Ñ¥½¸½É…Á ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù½¹‘¥Ñ¥½¹}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½½¹‘¥Ñ¥½¸½É…Á ¹‰¥¸¹Íµ½±Q4ˆ¤ì((¥˜%M}!9L)½¹ÍĞÔÄØA½­•¹…Ù=ÁÑ¥½¹Í}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡¹Ì½½ÁÑ¥½¹Ì½½ÁÑ¥½¹Ì¹‰¥¸ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù=ÁÑ¥½¹Í}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡¹Ì½½ÁÑ¥½¹Ì½½ÁÑ¥½¹Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØA½­•¹…Ù=ÁÑ¥½¹Í}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡¹Ì½½ÁÑ¥½¹Ì½½ÁÑ¥½¹Ì¹‰…Á…°ˆ¤ì(•±Í”)½¹ÍĞÔÄØA½­•¹…Ù=ÁÑ¥½¹Í}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½½ÁÑ¥½¹Ì½½ÁÑ¥½¹Ì¹‰¥¸ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù=ÁÑ¥½¹Í}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½½ÁÑ¥½¹Ì½½ÁÑ¥½¹Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØA½­•¹…Ù=ÁÑ¥½¹Í}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½½ÁÑ¥½¹Ì½½ÁÑ¥½¹Ì¹‰…Á…°ˆ¤ì(•¹‘¥˜((¥˜%M}!9L)½¹ÍĞÔÄØA½­•¹…Ù!•…‘•É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡¹Ì½¡•…‘•È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù!•…‘•É}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡¹Ì½¡•…‘•È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù!•…‘•É}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡¹Ì½¡•…‘•È¹‰¥¸¹Íµ½±Q4ˆ¤ì(•±Í”)½¹ÍĞÔÄØA½­•¹…Ù!•…‘•É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡•…‘•È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù!•…‘•É}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡•…‘•È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì€¼¼Q=<èÕÍ”İ¥‘Ñ €ä…¹µ…­•™¥±”ÉÕ±”™½È±•…¹±¥¹•ÍÌ°µ…­”İ…Í¹Ğ‰•¡…Ù¥¹œ°‘¥‘¹Ğİ…¹ĞÑ¼…ÁÁ±ä¹Õµ}Ñ¥±•ÌÑ¼Ñ¡¥Ì)½¹ÍĞÔÌÈA½­•¹…Ù!•…‘•É}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡•…‘•È¹‰¥¸¹Íµ½±Q4ˆ¤ì(•¹‘¥˜((¥˜%M}!9L)½¹ÍĞÔÄØA½­•¹…Ù1•™Ñ!•…‘•É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡¹Ì½±•™Ñ}¡•…‘•ÉÌ½Á…±•ÑÑ”¹‰…Á…°ˆ¤ì(•±Í”)½¹ÍĞÔÄØA½­•¹…Ù1•™Ñ!•…‘•É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½Á…±•ÑÑ”¹‰…Á…°ˆ¤ì(•¹‘¥˜)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•É	•…ÕÑå}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½‰•…ÕÑä¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•ÉMµ…ÉÑ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½Íµ…ÉĞ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•É½¹‘¥Ñ¥½¹}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½½¹‘¥Ñ¥½¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•ÉÕÑ•}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½ÕÑ”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(¥˜%M}!9L)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•É5…Ñ¡…±±}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡¹Ì½±•™Ñ}¡•…‘•ÉÌ½µ…Ñ¡}…±°¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(•±Í”)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•É5…Ñ¡…±±}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½µ…Ñ¡}…±°¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(•¹‘¥˜)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•É5…¥¹5•¹Õ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½µ…¥¹}µ•¹Ô¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(¥˜%M}!9L)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•É!½•¹¹5…Á}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡¹Ì½±•™Ñ}¡•…‘•ÉÌ½¡½•¹¹}µ…À¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(•±Í”)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•É!½•¹¹5…Á}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½¡½•¹¹}µ…À¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(•¹‘¥˜)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•ÉI¥‰‰½¹Í}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½É¥‰‰½¹Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•ÉM•…É¡}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½Í•…É ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•ÉQ½Õ¡}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½Ñ½Õ ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•É½½±}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½½½°¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù1•™Ñ!•…‘•ÉA…ÉÑå}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½±•™Ñ}¡•…‘•ÉÌ½Á…ÉÑä¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì((¥˜%M}!9L)½¹ÍĞÔÄØA½­•¹…Ù5•ÍÍ…•	½á}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡¹Ì½µ•ÍÍ…”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù5•ÍÍ…•	½á}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½¡¹Ì½µ•ÍÍ…”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(•±Í”)½¹ÍĞÔÄØA½­•¹…Ù5•ÍÍ…•	½á}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½µ•ÍÍ…”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…Ù5•ÍÍ…•	½á}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½µ•ÍÍ…”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì(•¹‘¥˜)½¹ÍĞÔÌÈA½­•¹…Ù5•ÍÍ…•	½á}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½µ•ÍÍ…”¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØI•¥½¹5…Á¥Ñåi½½µQ¥±•Í}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½É•¥½¹}µ…À½é½½µ}Ñ¥±•Ì¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈI•¥½¹5…Á¥Ñåi½½µQ•áÑ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½É•¥½¹}µ…À½¥Ñå}é½½µ}Ñ•áĞ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØA½­•¹…Ù½¹‘¥Ñ¥½¹…¹•±}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½½¹‘¥Ñ¥½¸½…¹•°¹‰…Á…°ˆ¤ì)½¹ÍĞÔàA½­•¹…Ù½¹‘¥Ñ¥½¹…¹•±}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½Á½­•¹…Ø½½¹‘¥Ñ¥½¸½…¹•°¸Ñ‰ÁÀˆ¤ì()½¹ÍĞÔÄØ5½¹5…É­¥¹Í5•¹Õ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½¥¹Ñ•É™…”½µ½¹}µ…É­¥¹Í}µ•¹Ô¹‰…Á…°ˆ¤ì)½¹ÍĞÔà5½¹5…É­¥¹Í5•¹Õ}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½¥¹Ñ•É™…”½µ½¹}µ…É­¥¹Í}µ•¹Ô¸Ñ‰ÁÀˆ¤ì()½¹ÍĞÔÄØ	•ÉÉå	±•¹‘•É5¥ÍA…±•ÑÑ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰•ÉÉå}‰±•¹‘•È½µ¥ÍŒ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	•ÉÉå	±•¹‘•ÉÉÉ½İA…±•ÑÑ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰•ÉÉå}‰±•¹‘•È½…ÉÉ½Ü¹‰…Á…°ˆ¤ì)½¹ÍĞÔà	•ÉÉå	±•¹‘•É	•Ñ…ÉÉ½İ}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½‰•ÉÉå}‰±•¹‘•È½…ÉÉ½İ}½±¸Ñ‰ÁÀˆ¤ì€¼½Õ¹ÕÍ•)½¹ÍĞÔà	•ÉÉå	±•¹‘•ÉM½É•Måµ‰½±Í}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½‰•ÉÉå}‰±•¹‘•È½Í½É•}Íåµ‰½±Ì¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔà	•ÉÉå	±•¹‘•ÉA…ÉÑ¥±•Í}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½‰•ÉÉå}‰±•¹‘•È½Á…ÉÑ¥±•Ì¸Ñ‰ÁÀˆ¤ì)ÍÑ…Ñ¥Œ½¹ÍĞÔàÍµÁÑäÁlÁàÄÈÁt€ôìÁôì)½¹ÍĞÔà	•ÉÉå	±•¹‘•É½Õ¹Ñ‘½İ¹9Õµ‰•ÉÍ}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½‰•ÉÉå}‰±•¹‘•È½½Õ¹Ñ‘½İ¹}¹Õµ‰•ÉÌ¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔà	•ÉÉå	±•¹‘•ÉMÑ…ÉÑ}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½‰•ÉÉå}‰±•¹‘•È½ÍÑ…ÉĞ¸Ñ‰ÁÀˆ¤ì)ÍÑ…Ñ¥Œ½¹ÍĞÔàÍµÁÑäÅlÁàÈÀÁt€ôìÁôì)½¹ÍĞÔà	•ÉÉå	±•¹‘•ÉA±…å•ÉÉÉ½İ}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½‰•ÉÉå}‰±•¹‘•È½…ÉÉ½Ü¸Ñ‰ÁÀˆ¤ì)ÍÑ…Ñ¥Œ½¹ÍĞÔàÍµÁÑäÉlÁàÉÁt€ôìÁôì()½¹ÍĞÔÄØ…Íå¡…ÑI•Ñ…¹±•ÕÉÍ½É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½•…Íå}¡…Ğ½É•Ñ…¹±•}ÕÉÍ½È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ…Íå¡…ÑI•Ñ…¹±•ÕÉÍ½É}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½•…Íå}¡…Ğ½É•Ñ…¹±•}ÕÉÍ½È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØ…Íå¡…Ñ	ÕÑÑ½¹]¥¹‘½İ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½•…Íå}¡…Ğ½‰ÕÑÑ½¹}İ¥¹‘½Ü¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ…Íå¡…Ñ	ÕÑÑ½¹]¥¹‘½İ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½•…Íå}¡…Ğ½‰ÕÑÑ½¹}İ¥¹‘½Ü¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÌÈ…Íå¡…Ñ5½‘•}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½•…Íå}¡…Ğ½µ½‘”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ…Íå¡…Ñ5½‘•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½•…Íå}¡…Ğ½µ½‘”¹‰…Á…°ˆ¤ì()½¹ÍĞÔÌÈ…Íå¡…Ñ]¥¹‘½İ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½•…Íå}¡…Ğ½İ¥¹‘½Ü¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì€¼¼ÕÍ•Ìµ½‘”Á…°)½¹ÍĞÔÌÈ…Íå¡…Ñ]¥¹‘½İ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½•…Íå}¡…Ğ½İ¥¹‘½Ü¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ]…±±±½­5…±•}A…±mt€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½İ…±±±½¬½µ…±”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ]…±±±½­•µ…±•}A…±mt€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½İ…±±±½¬½™•µ…±”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ]…±±±½­}™ámt€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½İ…±±±½¬½±½¬¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ]…±±±½­MÑ…ÉÑ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½İ…±±±½¬½±½­}ÍÑ…ÉĞ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ]…±±±½­Y¥•İ}Q¥±•µ…Ámt€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½İ…±±±½¬½±½­}Ù¥•Ü¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØUÍ•A½­•‰±½­½¹‘¥Ñ¥½¹}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½ÕÍ•}ÍÉ••¸½½¹‘¥Ñ¥½¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈUÍ•A½­•‰±½­½¹‘¥Ñ¥½¹}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‰±½¬½ÕÍ•}ÍÉ••¸½½¹‘¥Ñ¥½¸¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØUÍ•A½­•‰±½­UÁ½İ¹}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½ÕÍ•}ÍÉ••¸½ÕÁ‘½İ¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔàUÍ•A½­•‰±½­UÁ½İ¹}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½Á½­•‰±½¬½ÕÍ•}ÍÉ••¸½ÕÁ‘½İ¸¸Ñ‰ÁÀˆ¤ì()½¹ÍĞÔÄØUÍ•A½­•‰±½­É…Á¡}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½ÕÍ•}ÍÉ••¸½É…Á ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈUÍ•A½­•‰±½­É…Á¡}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‰±½¬½ÕÍ•}ÍÉ••¸½É…Á ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÌÈUÍ•A½­•‰±½­É…Á¡}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•‰±½¬½ÕÍ•}ÍÉ••¸½É…Á ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÄØUÍ•A½­•‰±½­9…ÑÕÉ•]¥¹}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•‰±½¬½ÕÍ•}ÍÉ••¸½¹…ÑÕÉ”¹‰…Á…°ˆ¤ì((¥¹±Õ‘”€‰‘…Ñ„½É…Á¡¥Ì½Í±½Ñ}µ…¡¥¹”¹ ˆ((¼¼ÑÉ…¥¹•È…É((¥˜%M}!9L)½¹ÍĞÔÄØ!¹ÍQÉ…¥¹•É…É‘É••¹}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½¡¹Ì½É••¸¹‰…Á…°ˆ¤ì(•¹‘¥˜)½¹ÍĞÔÄØ!½•¹¹QÉ…¥¹•É…É‘É••¹}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½É••¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ!½•¹¹QÉ…¥¹•É…É‘}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½Ñ¥±•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ!½•¹¹QÉ…¥¹•É…É‘	}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½‰œ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ!½•¹¹QÉ…¥¹•É…É‘É½¹Ñ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½™É½¹Ğ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ!½•¹¹QÉ…¥¹•É…É‘	…­}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½‰…¬¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ!½•¹¹QÉ…¥¹•É…É‘É½¹Ñ1¥¹­}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½™É½¹Ñ}±¥¹¬¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ-…¹Ñ½QÉ…¥¹•É…É‘	±Õ•}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½™É±œ½‰±Õ”¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ-…¹Ñ½QÉ…¥¹•É…É‘}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½™É±œ½Ñ¥±•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ-…¹Ñ½QÉ…¥¹•É…É‘	}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½™É±œ½‰œ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ-…¹Ñ½QÉ…¥¹•É…É‘É½¹Ñ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½™É±œ½™É½¹Ğ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ-…¹Ñ½QÉ…¥¹•É…É‘	…­}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½™É±œ½‰…¬¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ-…¹Ñ½QÉ…¥¹•É…É‘É½¹Ñ1¥¹­}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑÉ…¥¹•É}…É½™É±œ½™É½¹Ñ}±¥¹¬¹‰¥¸¹Íµ½±Q4ˆ¤ì((¼¼A½¯¥µ½¸ÍÑ½É…”ÍåÍÑ•´()½¹ÍĞÔÌÈMÑ½É…•MåÍÑ•µ5•¹Õ}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½µ•¹Ô¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØMÑ½É…•MåÍÑ•µA…ÉÑå5•¹Õ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½Á…ÉÑå}µ•¹Ô¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈMÑ½É…•MåÍÑ•µA…ÉÑå5•¹Õ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½Á…ÉÑå}µ•¹Ô¹‰¥¸¹Íµ½±Q4ˆ¤ì((¼¼¹…µ¥¹œÍÉ••¸()½¹ÍĞÔÄØ9…µ¥¹MÉ••¹5•¹Õ}A…±lÙulÄÙt€ô)ì(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½µ•¹Ô¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½Á…•}Íİ…Á}ÕÁÁ•È¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½Á…•}Íİ…Á}±½İ•È¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½Á…•}Íİ…Á}½Ñ¡•ÉÌ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½‰ÕÑÑ½¹Ì¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½ÕÉÍ½È¹‰…Á…°ˆ¤°)ôì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹5•¹Õ}™ámt€€€€€€€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½µ•¹Ô¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹A…•Mİ…ÁÉ…µ•}™ámt€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½Á…•}Íİ…Á}™É…µ”¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹	…­	ÕÑÑ½¹}™ámt€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½‰…­}‰ÕÑÑ½¸¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹=-	ÕÑÑ½¹}™ámt€€€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½½­}‰ÕÑÑ½¸¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹A…•Mİ…ÁUÁÁ•É}™ámt€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½Á…•}Íİ…Á}ÕÁÁ•È¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹A…•Mİ…Á1½İ•É}™ámt€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½Á…•}Íİ…Á}±½İ•È¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹A…•Mİ…Á=Ñ¡•ÉÍ}™ámt€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½Á…•}Íİ…Á}½Ñ¡•ÉÌ¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹ÕÉÍ½É}™ámt€€€€€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½ÕÉÍ½È¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹ÕÉÍ½ÉMÅÕ¥Í¡•‘}™ámt€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½ÕÉÍ½É}ÍÅÕ¥Í¡•¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹ÕÉÍ½É¥±±•‘}™ámt€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½ÕÉÍ½É}™¥±±•¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹A…•Mİ…Á	ÕÑÑ½¹}™ámt€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½Á…•}Íİ…Á}‰ÕÑÑ½¸¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹%¹ÁÕÑÉÉ½İ}™ámt€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½¥¹ÁÕÑ}…ÉÉ½Ü¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹U¹‘•ÉÍ½É•}™ámt€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½Õ¹‘•ÉÍ½É”¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹	…­É½Õ¹‘}Q¥±•µ…Ámt€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½‰…­É½Õ¹¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹-•å‰½…É‘UÁÁ•É}Q¥±•µ…Ámt€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½­•å‰½…É‘}ÕÁÁ•È¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹-•å‰½…É‘1½İ•É}Q¥±•µ…Ámt€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½­•å‰½…É‘}±½İ•È¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈ9…µ¥¹MÉ••¹-•å‰½…É‘Måµ‰½±Í}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½¹…µ¥¹}ÍÉ••¸½­•å‰½…É‘}Íåµ‰½±Ì¹‰¥¸¹Íµ½±Q4ˆ¤ì((¼¼Õ¹¥½¸É½½´¡…Ğ)½¹ÍĞÔÄØU¹¥½¹I½½µ¡…Ñ}	…­É½Õ¹‘}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Õ¹¥½¹}É½½µ}¡…Ğ½‰…­É½Õ¹¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈU¹¥½¹I½½µ¡…Ñ}	…­É½Õ¹‘}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Õ¹¥½¹}É½½µ}¡…Ğ½‰…­É½Õ¹¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈU¹¥½¹I½½µ¡…Ñ}	…­É½Õ¹‘}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Õ¹¥½¹}É½½µ}¡…Ğ½‰…­É½Õ¹¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÄØU¹¥½¹I½½µ¡…Ñ}%¹ÁÕÑQ•áÑ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Õ¹¥½¹}É½½µ}¡…Ğ½¥¹ÁÕÑ}Ñ•áĞ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØU¹¥½¹I½½µ¡…Ñ}-•å‰½…É‘}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Õ¹¥½¹}É½½µ}¡…Ğ½­•å‰½…É¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈU¹¥½¹I½½µ¡…Ñ}-•å‰½…É‘}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Õ¹¥½¹}É½½µ}¡…Ğ½­•å‰½…É¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈU¹¥½¹I½½µ¡…Ñ}-•å‰½…É‘}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Õ¹¥½¹}É½½µ}¡…Ğ½­•å‰½…É¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈU¹¥½¹I½½µ¡…Ñ}I	ÕÑÑ½¹1…‰•±Ímt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Õ¹¥½¹}É½½µ}¡…Ğ½É}‰ÕÑÑ½¹}±…‰•±Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØ1%9 Ğ¤Q¥±•Í•ÑA…±•ÑÑ•Í}•¹•É…±mulÄÙt€ô)ì(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÀÀ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÀÄ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÀÈ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÀÌ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÀĞ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÀÔ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÀØ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÀÜ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼Àà¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼Àä¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÄÀ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÄÄ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÄÈ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÄÌ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÄĞ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Á…±•ÑÑ•Ì¼ÄÔ¹‰…Á…°ˆ¤°)ôì()½¹ÍĞÔÌÈQ¥±•Í•ÑQ¥±•Í}•¹•É…±mt€ô%9	%9}TÌÈ ‰‘…Ñ„½Ñ¥±•Í•ÑÌ½ÁÉ¥µ…Éä½•¹•É…°½Ñ¥±•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì((¼¼ÑÉ…‘”½•œ¡…Ñ ()½¹ÍĞÔÄØQÉ…‘•‰…}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑÉ…‘”½‰„¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØQÉ…‘•‰„É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑÉ…‘”½‰…}Á…°È¹‰…Á…°ˆ¤ì)½¹ÍĞÔàQÉ…‘•‰…}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½ÑÉ…‘”½‰„¸Ñ‰ÁÀˆ¤ì()ÍÑ…Ñ¥Œ½¹ÍĞÔÄØÍµÁÑåA…±lÄÙt€ôìÁôì((¥¹±Õ‘”€‰‘…Ñ„½É…Á¡¥Ì½‰•ÉÉå}™¥à¹ ˆ((¼¼QÉ…‘”)½¹ÍĞÔÄØQÉ…‘•5•¹Õ}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑÉ…‘”½µ•¹Ô¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØQÉ…‘•ÕÉÍ½É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑÉ…‘”½ÕÉÍ½È¹‰…Á…°ˆ¤ì)½¹ÍĞÔàQÉ…‘•5•¹Õ}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½ÑÉ…‘”½µ•¹Ô¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔàQÉ…‘•ÕÉÍ½É}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½ÑÉ…‘”½ÕÉÍ½È¸Ñ‰ÁÀˆ¤ì)½¹ÍĞÔÄØQÉ…‘•U¹ÕÍ•‘}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑÉ…‘”½Õ¹ÕÍ•¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØQÉ…‘•5•¹Õ}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑÉ…‘”½µ•¹Ô¹‰¥¸ˆ¤ì)½¹ÍĞÔÄØQÉ…‘•5•¹Õ5½¹	½á}Q¥±•µ…Ámt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑÉ…‘”½µ•¹Õ}µ½¹}‰½à¹‰¥¸ˆ¤ì((¥˜%M}!9L)½¹ÍĞÔÄØ5•ÍÍ…•	½á}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Ñ•áÑ}İ¥¹‘½Ü½¡¹Ì½µ•ÍÍ…•}‰½à¹‰…Á…°ˆ¤ì)½¹ÍĞÔà5•ÍÍ…•	½á}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½Ñ•áÑ}İ¥¹‘½Ü½¡¹Ì½µ•ÍÍ…•}‰½à¸Ñ‰ÁÀˆ¤ì(•±Í”)½¹ÍĞÔÄØ5•ÍÍ…•	½á}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Ñ•áÑ}İ¥¹‘½Ü½µ•ÍÍ…•}‰½à¹‰…Á…°ˆ¤ì)½¹ÍĞÔà5•ÍÍ…•	½á}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½Ñ•áÑ}İ¥¹‘½Ü½µ•ÍÍ…•}‰½à¸Ñ‰ÁÀˆ¤ì(•¹‘¥˜)½¹ÍĞÔàM¥¹Á½ÍÑ]¥¹‘½İ}™ámt€ô%9	%9}Tà ‰É…Á¡¥Ì½Ñ•áÑ}İ¥¹‘½Ü½Í¥¹Á½ÍĞ¸Ñ‰ÁÀˆ¤ì()½¹ÍĞÔÌÈ]…±±Á…Á•É%½¹}É½ÍÍmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½İ…±±Á…Á•ÉÌ½¥½¹Ì½É½ÍÌ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ]…±±Á…Á•É%½¹}	½±Ñmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½İ…±±Á…Á•ÉÌ½¥½¹Ì½‰½±Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ]…±±Á…Á•É%½¹}A±ÕÍ±•mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½İ…±±Á…Á•ÉÌ½¥½¹Ì½Á±ÕÍ±”¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì()½¹ÍĞÔÄØ]…±±Á…Á•ÉA…±•ÑÑ•Í}!½É¥é½¹Ñ…±mulÄÙt€ô)ì(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½İ…±±Á…Á•ÉÌ½™É¥•¹‘Í}™É…µ”È¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½İ…±±Á…Á•ÉÌ½¡½É¥é½¹Ñ…°½‰œ¹‰…Á…°ˆ¤°)ôì()½¹ÍĞÔÌÈ]…±±Á…Á•ÉQ¥±•Í}!½É¥é½¹Ñ…±mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½İ…±±Á…Á•ÉÌ½¡½É¥é½¹Ñ…°½Ñ¥±•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ]…±±Á…Á•ÉQ¥±•µ…Á}!½É¥é½¹Ñ…±mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½İ…±±Á…Á•ÉÌ½¡½É¥é½¹Ñ…°½Ñ¥±•µ…À¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ]…±±Á…Á•ÉA…±•ÑÑ•Í}I¥‰‰½¹mulÄÙt€ô)ì(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½İ…±±Á…Á•ÉÌ½É¥‰‰½¸½™É…µ”¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½İ…±±Á…Á•ÉÌ½É¥‰‰½¸½‰œ¹‰…Á…°ˆ¤°)ôì()½¹ÍĞÔÌÈ]…±±Á…Á•ÉQ¥±•Í}I¥‰‰½¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½İ…±±Á…Á•ÉÌ½É¥‰‰½¸½Ñ¥±•Ì¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ]…±±Á…Á•ÉQ¥±•µ…Á}I¥‰‰½¹mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•µ½¹}ÍÑ½É…”½İ…±±Á…Á•ÉÌ½É¥‰‰½¸½Ñ¥±•µ…À¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØA½­•¹…ÙI¥‰‰½¹ÍMÕµµ…Éå	}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•¹…Ø½É¥‰‰½¹Ì½ÍÕµµ…Éå}‰œ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…ÙI¥‰‰½¹ÍMÕµµ…Éå	}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½É¥‰‰½¹Ì½ÍÕµµ…Éå}‰œ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈA½­•¹…ÙI¥‰‰½¹ÍMÕµµ…Éå	}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•¹…Ø½É¥‰‰½¹Ì½ÍÕµµ…Éå}‰œ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÄØ5½¹%½¹A…±•ÑÑ•ÍmulÄÙt€ô)ì(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¸½¥½¹}Á…±•ÑÑ•Ì½Á…°À¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¸½¥½¹}Á…±•ÑÑ•Ì½Á…°Ä¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¸½¥½¹}Á…±•ÑÑ•Ì½Á…°È¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¸½¥½¹}Á…±•ÑÑ•Ì½Á…°Ì¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¸½¥½¹}Á…±•ÑÑ•Ì½Á…°Ğ¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¸½¥½¹}Á…±•ÑÑ•Ì½Á…°Ô¹‰…Á…°ˆ¤°(€€€%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¸½¥½¹}Á…±•ÑÑ•Ì½Á…°Ø¹‰…Á…°ˆ¤°)ôì((¥˜%M}!9L)½¹ÍĞÔÄØQ¥Ñ±•MÉ••¹	A…±•ÑÑ•Ímt€€€€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½¡¹Ì½Á½­•µ½¹}±½¼¹‰…Á…°ˆ°(€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½¡¹Ì½É…åÅÕ…é…}…¹‘}±½Õ‘Ì¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØQ¥Ñ±•MÉ••¹µ•É…±‘Y•ÉÍ¥½¹A…±mt€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½¡¹Ì½•µ•É…±‘}Ù•ÉÍ¥½¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈQ¥Ñ±•MÉ••¹±½Õ‘ÍQ¥±•µ…Ámt€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½±½Õ‘Ì¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈQ¥Ñ±•MÉ••¹A½­•µ½¹1½½™ámt€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½¡¹Ì½Á½­•µ½¹}±½¼¸á‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈQ¥Ñ±•MÉ••¹µ•É…±‘Y•ÉÍ¥½¹™ámt€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½¡¹Ì½•µ•É…±‘}Ù•ÉÍ¥½¸¸á‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØQ¥Ñ±•MÉ••¹AÉ•ÍÍMÑ…ÉÑA…±mt€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½¡¹Ì½ÁÉ•ÍÍ}ÍÑ…ÉĞ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈQ¥Ñ±•MÉ••¹AÉ•ÍÍMÑ…ÉÑ™ámt€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½¡¹Ì½ÁÉ•ÍÍ}ÍÑ…ÉĞ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈQ¥Ñ±•MÉ••¹A½­•µ½¹1½½Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½¡¹Ì½Á½­•µ½¹}±½¼¹‰¥¸¹Íµ½±Q4ˆ¤ì(•±Í”)½¹ÍĞÔÄØQ¥Ñ±•MÉ••¹	A…±•ÑÑ•Ímt€€€€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½Á½­•µ½¹}±½¼¹‰…Á…°ˆ°(€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½É…åÅÕ…é…}…¹‘}±½Õ‘Ì¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØQ¥Ñ±•MÉ••¹µ•É…±‘Y•ÉÍ¥½¹A…±mt€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½•µ•É…±‘}Ù•ÉÍ¥½¸¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈQ¥Ñ±•MÉ••¹±½Õ‘ÍQ¥±•µ…Ámt€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½±½Õ‘Ì¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈQ¥Ñ±•MÉ••¹A½­•µ½¹1½½™ámt€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½Á½­•µ½¹}±½¼¸á‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈQ¥Ñ±•MÉ••¹µ•É…±‘Y•ÉÍ¥½¹™ámt€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½•µ•É…±‘}Ù•ÉÍ¥½¸¸á‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØQ¥Ñ±•MÉ••¹AÉ•ÍÍMÑ…ÉÑA…±mt€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½ÁÉ•ÍÍ}ÍÑ…ÉĞ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈQ¥Ñ±•MÉ••¹AÉ•ÍÍMÑ…ÉÑ™ámt€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½ÁÉ•ÍÍ}ÍÑ…ÉĞ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈQ¥Ñ±•MÉ••¹A½­•µ½¹1½½Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Ñ¥Ñ±•}ÍÉ••¸½Á½­•µ½¹}±½¼¹‰¥¸¹Íµ½±Q4ˆ¤ì(•¹‘¥˜()½¹ÍĞÔÄØÉ½¹Ñ¥•ÉA…ÍÍ	}A…±mulÄÙt€€€€€€€€€€€€€€€€€€€€€€ô%9	%9}TÄØ ‰É…Á¡¥Ì½™É½¹Ñ¥•É}Á…ÍÌ½‰œ¹‰…Á…°ˆ¤ì€¼¼€àà€ÄØ)½¹ÍĞÔÌÈÉ½¹Ñ¥•ÉA…ÍÍ	}™ámt€€€€€€€€€€€€€€€€€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½™É½¹Ñ¥•É}Á…ÍÌ½‰œ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈÉ½¹Ñ¥•ÉA…ÍÍ5…Á¹‘…É‘}™ámt€€€€€€€€€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½™É½¹Ñ¥•É}Á…ÍÌ½µ…Á}…¹‘}…É¸á‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈÉ½¹Ñ¥•ÉA…ÍÍ	}Q¥±•µ…Ámt€€€€€€€€€€€€€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½™É½¹Ñ¥•É}Á…ÍÌ½‰œ¹‰¥¸¹Íµ½±Q4ˆ¤ì)½¹ÍĞÔÌÈÉ½¹Ñ¥•ÉA…ÍÍ…¹•±	ÕÑÑ½¹}Q¥±•µ…Ámt€€€€€€€€€€€€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½™É½¹Ñ¥•É}Á…ÍÌ½…¹•°¹‰¥¸ˆ¤ì)½¹ÍĞÔÌÈÉ½¹Ñ¥•ÉA…ÍÍ…¹•±	ÕÑÑ½¹!¥¡±¥¡Ñ•‘}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½™É½¹Ñ¥•É}Á…ÍÌ½…¹•±}¡¥¡±¥¡Ñ•¹‰¥¸ˆ¤ì((¼¼	•ÉÉäÉÕÍ )½¹ÍĞÔÄØ	•ÉÉåÉÕÍ¡}ÉÕÍ¡•É}A…±mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½‰•ÉÉå}ÉÕÍ ½ÉÕÍ¡•È¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ	•ÉÉåÉÕÍ¡}ÉÕÍ¡•É}™ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰•ÉÉå}ÉÕÍ ½ÉÕÍ¡•È¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	•ÉÉåÉÕÍ¡}Q•áÑ]¥¹‘½İÍ}Q¥±•µ…Ámt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½‰•ÉÉå}ÉÕÍ ½Ñ•áÑ}İ¥¹‘½İÌ¹‰¥¸¹Íµ½±Q4ˆ¤ì()½¹ÍĞÔÌÈ	…ÑÑ±•%½¹Í}™àÅmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑåÁ•Ì½‰…ÑÑ±•}¥½¹ÌÄ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÌÈ	…ÑÑ±•%½¹Í}™àÉmt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½ÑåÁ•Ì½‰…ÑÑ±•}¥½¹ÌÈ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•%½¹Í}A…°Åmt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑåÁ•Ì½‰…ÑÑ±•}¥½¹ÌÄ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÄØ	…ÑÑ±•%½¹Í}A…°Émt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½ÑåÁ•Ì½‰…ÑÑ±•}¥½¹ÌÈ¹‰…Á…°ˆ¤ì()½¹ÍĞÔÄØ¡½ÍÑA…±•ÑÑ•mt€ô%9	%9}TÄØ ‰É…Á¡¥Ì½Á½­•µ½¸½¡½ÍĞ½™É½¹Ğ¹‰…Á…°ˆ¤ì)½¹ÍĞÔÌÈ¡½ÍÑÉ½¹ÑA¥mt€ô%9	%9}TÌÈ ‰É…Á¡¥Ì½Á½­•µ½¸½¡½ÍĞ½™É½¹Ğ¸Ñ‰ÁÀ¹Íµ½°ˆ¤ì((¼¼AITè€ÔÔA½¯¥µ½¸I¡åÑ¡´‰…ÑÑ±”•¹Ù¥É½¹µ•¹ÑÌ°½ÁÑ¥µ¥é•™½È		ÌYI4¸(¥¹±Õ‘”€‰‘…Ñ„½ÁÉÕ}É¡åÑ¡µ}™à¹ ˆ(

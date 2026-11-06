@@ -76,7 +76,7 @@ TinTower_1F_Sage3_Text:
 	.string "of a much older network.$"
 
 TinTower_1F_Sage4_Text1:
-	.string "HO-OH appears to have descended\n"
+	.string "An ancient guardian appeared\n"
 	.string "upon this, the TIN TOWER!$"
 
 TinTower_1F_Sage4_Text2:
@@ -95,10 +95,10 @@ TinTower_1F_Sage6_Text2:
 
 TinTower_1F_EusineHoOh_Text:
 	.string "I knew it.\p"
-	.string "I knew you'd get to see the POKéMON\n"
-	.string "of rainbow colors, <PLAYER>.\p"
-	.string "It happened just as I envisioned.\n"
-	.string "My research isn't bad, I might say.\p"
+	.string "I knew the tower's guardian would\n"
+	.string "answer the CLEAR BELL, <PLAYER>.\p"
+	.string "Those blue crystalline wings...\n"
+	.string "my research wasn't bad!\p"
 	.string "I'm going to keep studying POKéMON\n"
 	.string "to become a famous POKéMANIAC!$"
 

@@ -75,7 +75,7 @@ TinTower_9F_EventScript_NoFinalRocket::
 
 TinTower_9F_Text_JessieJamesFinalSeen:
 	.string "JESSIE: Twerp! Did you really think\n"
-	.string "we'd let you claim the ULTIMATE RELIC?\p"
+	.string "we'd let you explore this tower?\p"
 	.string "JAMES: One last performance.\n"
 	.string "And this time, we're not holding back!$"
 
@@ -85,8 +85,8 @@ TinTower_9F_Text_JessieJamesFinalBeaten:
 
 TinTower_9F_Text_JessieJamesFinalAfter:
 	.string "JESSIE: Fine! The summit is yours.\p"
-	.string "JAMES: But if that HO-OH joins you...\n"
-	.string "we're taking credit for the warm-up!$"
+	.string "JAMES: If the ancient guardian\n"
+	.string "notices you, we're taking credit!$"
 
 TinTower_9F_Text_JessieJamesNeedTwo:
 	.string "JAMES: This is a double battle!\n"
