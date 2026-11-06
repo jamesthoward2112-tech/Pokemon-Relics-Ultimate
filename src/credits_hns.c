@@ -428,9 +428,9 @@ void CB2_StartCreditsSequence(void)
     s16 bikeTaskId;
     u8 pageTaskId;
 
-    // Job 16: initialise the mode from the one-time Elite 20 event trigger.
-    // Johto / Kanto League credits must always retain their usual visuals.
-    gPruElite20CreditsActive = FlagGet(FLAG_PRU_E20_CREDITS_PENDING);
+    // GameClear has already consumed the pending flag, cleared it for saves,
+    // and set gPruElite20CreditsActive. Keep that live mode unchanged here.
+    // Reading the cleared flag again would suppress the E20 cinematic.
 
     ResetGpuAndVram();
     SetVBlankCallback(NULL);

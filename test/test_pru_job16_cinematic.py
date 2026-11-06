@@ -5,7 +5,10 @@ event = Path("data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc").read_text(
 league = Path("data/maps/PokemonLeague_HallOfFame_hns/scripts.inc").read_text(encoding="utf-8")
 summit = Path("data/maps/MtSilver_SummitDay_hns/scripts.inc").read_text(encoding="utf-8")
 
-assert "gPruElite20CreditsActive = FlagGet(FLAG_PRU_E20_CREDITS_PENDING);" in credits
+game_clear = Path("src/post_battle_event_funcs.c").read_text(encoding="utf-8")
+assert "gPruElite20CreditsActive = FlagGet(FLAG_PRU_E20_CREDITS_PENDING);" in game_clear
+assert "FlagClear(FLAG_PRU_E20_CREDITS_PENDING);" in game_clear
+assert "gPruElite20CreditsActive = FlagGet(FLAG_PRU_E20_CREDITS_PENDING);" not in credits
 assert "if (gPruElite20CreditsActive)" in credits
 assert "if (page == E20_INTRO_PAGE_COUNT)" in credits
 assert "CreateCreditsRelicHoOhSprite" in credits
