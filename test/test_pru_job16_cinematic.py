@@ -16,17 +16,15 @@ for species in ("RAIKOU","ENTEI","LUGIA","UNOWN_I","CELEBI","SUICUNE","ALPHORACL
 start = event.index("PRU_Elite20_StartFinale::")
 end = event.index("PRU_Elite20_StartFinale_Return::", start)
 finale = event[start:end]
-assert finale.count("call PRU_Elite20_CinematicPrelude") == 1
-assert finale.index("call PRU_Elite20_CinematicPrelude") < finale.index("special GameClear")
+assert finale.count("msgbox PRU_Elite20_Text_GoldenSky") == 1
+assert finale.index("msgbox PRU_Elite20_Text_GoldenSky") < finale.index("special GameClear")
 assert finale.count("setflag FLAG_PRU_E20_CREDITS_PENDING") == 1
 assert finale.count("setflag FLAG_PRU_E20_CREDITS_SHOWN") == 1
-prelude = event.split("PRU_Elite20_CinematicPrelude::",1)[1].split("PRU_Elite20_Text_CinematicPrelude:",1)[0]
-assert "showmonpic SPECIES_RELIC_HO_OH" in prelude
-assert "playmoncry SPECIES_RELIC_HO_OH" in prelude
-assert "hidemonpic" in prelude
-assert "seteventmon" not in prelude
-assert "givepokemon" not in prelude
-assert "FLAG_PJR_RELIC_HO_OH" not in prelude
+assert "SPECIES_RELIC_HO_OH" not in finale
+assert "seteventmon" not in finale
+assert "showmonpic" not in finale
+assert "PRU_Elite20_CinematicPrelude" not in event
+assert "PRU_Elite20_Text_GoldenSky:" in event
 assert "PRU_Elite20_ClaimRewards::" in event
 assert "giveitem ITEM_MASTER_BALL, 6" in event
 assert "giveitem ITEM_ANCIENT_STONE, 5" in event
