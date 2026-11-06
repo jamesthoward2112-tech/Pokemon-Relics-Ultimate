@@ -1777,7 +1777,11 @@
 // so existing saved Eggs and all 450 legitimate Pokédex species stay stable.
 #define SPECIES_NIDOKING_X_BLUE                         1644
 
-#define NUM_SPECIES (SPECIES_NIDOKING_X_BLUE + 1)
+// Hidden encounter-only visual form. Shares National Dex #149 and is omitted
+// from the 450-species PRU Pokédex and randomizer pool.
+#define SPECIES_DRAGONITE_GUARDIAN                      1645
+
+#define NUM_SPECIES (SPECIES_DRAGONITE_GUARDIAN + 1)
 
 #define SPECIES_SHINY_TAG 5000
 

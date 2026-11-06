@@ -1011,12 +1011,32 @@ PRU_Elite18_Gauntlet::
 	setflag FLAG_PRU_ELITE18_CLEARED
 	special HealPlayerParty
 	msgbox PRU_Elite18_Text_Cleared, MSGBOX_DEFAULT
-	@ Independent of rewards / credits flags, so every E20 gauntlet win
-	@ receives Oak and Elm's story reveal (including repeat victories).
+	@ New clears receive the reveal once. Existing completed RELICS saves are
+	@ recognized from their capture flags and never get the first-clear speech.
+	goto_if_set FLAG_PRU_E20_RELICS_REVEAL_SHOWN, PRU_Elite20_RepeatReveal
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, PRU_Elite20_FirstReveal
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, PRU_Elite20_FirstReveal
+	goto_if_unset FLAG_PJR_RELIC_LUGIA, PRU_Elite20_FirstReveal
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, PRU_Elite20_FirstReveal
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, PRU_Elite20_FirstReveal
+	goto_if_unset FLAG_PJR_RELIC_SUICUNE, PRU_Elite20_FirstReveal
+	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, PRU_Elite20_FirstReveal
+	setflag FLAG_PRU_E20_RELICS_REVEAL_SHOWN
+	msgbox PRU_Elite20_Text_RelicsAlreadyFound, MSGBOX_DEFAULT
+	goto PRU_Elite20_ContinueAfterReveal
+
+PRU_Elite20_FirstReveal::
+	setflag FLAG_PRU_E20_RELICS_REVEAL_SHOWN
 	msgbox PRU_Elite20_Text_ElmRelics, MSGBOX_DEFAULT
 	msgbox PRU_Elite20_Text_OakRelics, MSGBOX_DEFAULT
 	msgbox PRU_Elite20_Text_GoldenSky, MSGBOX_DEFAULT
 	msgbox PRU_Elite20_Text_RuinsDirections, MSGBOX_DEFAULT
+	goto PRU_Elite20_ContinueAfterReveal
+
+PRU_Elite20_RepeatReveal::
+	msgbox PRU_Elite20_Text_RepeatReveal, MSGBOX_DEFAULT
+
+PRU_Elite20_ContinueAfterReveal::
 	call PRU_Elite20_ClaimRewards
 	call PRU_Elite20_StartFinale
 	release
@@ -1455,7 +1475,7 @@ PRU_Elite18_Text_Cleared:
 	.string "Our MASTER teams await rematches!$"
 PRU_Elite20_Text_ElmRelics:
 	.string "ELM: Listen, {PLAYER}!\p"
-	.string "Our research found six ancient\n"
+	.string "Our research found seven ancient\n"
 	.string "RELICS, each with a hidden voice.\p"
 	.string "Follow R - E - L - I - C - S.\n"
 	.string "The RUINS OF ALPH hold clues.$"
@@ -1467,6 +1487,18 @@ PRU_Elite20_Text_OakRelics:
 	.string "hope to summon it.\p"
 	.string "I find myself wondering about it\n"
 	.string "more than I should...$"
+
+PRU_Elite20_Text_RelicsAlreadyFound:
+	.string "OAK: You've already gathered all\n"
+	.string "seven RELICS. Remarkable!\p"
+	.string "The Ultimate Ancient Relic must\n"
+	.string "be close now. I can't stop\p"
+	.string "wondering what it will reveal...$"
+PRU_Elite20_Text_RepeatReveal:
+	.string "OAK: You have already heard our\n"
+	.string "RELICS discovery. I keep thinking\p"
+	.string "about the Ultimate Ancient Relic.\n"
+	.string "Its power must be extraordinary...$"
 
 PRU_Elite20_Text_OakRelicsUnused:
 	.string "We've also prepared a prize\n"

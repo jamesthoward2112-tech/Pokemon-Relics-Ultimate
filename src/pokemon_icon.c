@@ -283,7 +283,7 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 9; // Dark Skarmet palette, avoids the PC's reserved palette #15.
     if (species == SPECIES_MEWSION)
         return 2; // Share a safe PC palette; tag 15 is used by the storage UI.
-    if (species == SPECIES_DRAGONITE_RELIC)
+    if (species == SPECIES_DRAGONITE_GUARDIAN)
         return 17; // Exact blue-crystal guardian icon palette.
     if (species == SPECIES_ARTICUNO)
         return 11;

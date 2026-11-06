@@ -170,7 +170,7 @@ TinTower_RoofDay_EventScript_TalkToKimono::
 	@ setweather WEATHER_NONE
 	@ doweather
 	waitse
-	playmoncry SPECIES_DRAGONITE_RELIC, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_DRAGONITE_GUARDIAN, CRY_MODE_ENCOUNTER
 	delay 30
 	waitmoncry
 	delay 60
@@ -192,7 +192,7 @@ TinTower_RoofDay_EventScript_TalkToKimono::
 	waitmessage
 	closemessage
 	msgbox TinTower_RoofDay_Text_GuardianChallenge, MSGBOX_DEFAULT
-	seteventmon SPECIES_DRAGONITE_RELIC, 60, ITEM_WEAKNESS_POLICY
+	seteventmon SPECIES_DRAGONITE_GUARDIAN, 60, ITEM_WEAKNESS_POLICY
 	setflag FLAG_NO_WILD_CATCHING
 	special BattleSetup_StartLegendaryBattle
 	waitstate

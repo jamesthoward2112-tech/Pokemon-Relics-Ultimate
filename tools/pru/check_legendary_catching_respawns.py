@@ -73,7 +73,13 @@ assert "goto_if_set FLAG_CAUGHT_HO_OH, TinTower_RoofDay_MapScript_HoohCaught" in
 assert "TinTower_RoofDay_EventScript_HoOhRetry::" not in hooh
 assert "TinTower_RoofDay_EventScript_HoOhPostgame::" not in hooh
 assert "seteventmon SPECIES_HO_OH" not in hooh
-assert "seteventmon SPECIES_DRAGONITE_RELIC, 60, ITEM_WEAKNESS_POLICY" in hooh
+assert "seteventmon SPECIES_DRAGONITE_GUARDIAN, 60, ITEM_WEAKNESS_POLICY" in hooh
+e20 = read("data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc")
+assert "FLAG_PRU_E20_RELICS_REVEAL_SHOWN" in e20
+assert "PRU_Elite20_Text_RelicsAlreadyFound" in e20
+assert "Our research found seven ancient" in e20
+silver_sign = read("data/maps/MtSilver_Outside_hns/scripts.inc")
+assert "MtSilver_Outside_EventScript_SignCancel::\n\tclosemessage\n\trelease\n\tend" in silver_sign
 assert "BattleSetup_StartLegendaryBattle" in hooh
 assert "TinTower_RoofDay_EventScript_HoOhStoryFarewell::" in hooh
 assert "setvar VAR_COMPLETED_HO_OH, 3" in hooh

@@ -63,9 +63,10 @@
 # Job 18 — final story, Golden Ho-Oh and Ancient Guardian Dragonite
 
 - Oak's Elite 20 victory now reveals the Ultimate Ancient Relic without disclosing its location. The Ruins of Alph scientist directs the player to Mt Silver only after the final Elite 20 victory and all seven RELICS.
-- Replaced the Tin Tower Kimono Girls' former Ho-Oh event with a retryable, non-catchable Level 60 Ancient Guardian Dragonite fight. Imported the approved Elite Redux Mega Dragonite front/back/icon assets as a trainer-only visual form, with the requested Multiscale / Weakness Policy battle build.
+- Replaced the Tin Tower Kimono Girls' former Ho-Oh event with a retryable, non-catchable Level 60 Ancient Guardian Dragonite fight. Imported the approved Elite Redux Mega Dragonite front/back/icon assets into a hidden encounter-only Dragonite form (same Pokédex identity, excluded from the 450 list). Trainer Dragonite Relic retains standard artwork and its existing battle data; the boss has the requested Multiscale / Weakness Policy build.
 - Removed the Mt Silver Oak trainer battle. Oak's original dialogue now describes his obsession and failed attempt; he summons the only catchable Level 100 Golden Ho-Oh after the two story requirements. Defeat or escape permits retry; capture starts the existing Job 16 cinematic and Job 17 credits once.
-- Updated the Mt Silver shortcut sign to `Shortcut to Top`. Kept the six one-time E20 Master Balls, existing Golden Reign / Phoenix Soul implementation, Red and save flags.
+- Updated the Mt Silver shortcut sign to `Shortcut to Top`; choosing No now closes and releases the sign interaction cleanly. Kept the six one-time E20 Master Balls, existing Golden Reign / Phoenix Soul implementation, Red and save flags.
+- Elite 20 story text now recognizes older saves with all seven RELICS already registered and avoids replaying the first-clear explanation on later rematches; Oak explicitly acknowledges collected RELICS.
 - Updated source regressions and the hosted clean-build workflow to include Job 18 checks and publish a clearly labelled Job 18 test release.
 - Added `PRU_Job18_Before_Ancient_Guardian.sav`, a separate save-edited fixture based on a copy of the checked-in PRU test save. It places the player before the ceremony with Elite 20 and all seven RELICS complete, an unresolved Dragonite event, six full-HP level-60 party members and healing supplies. The source save fixtures and player saves are untouched.
 

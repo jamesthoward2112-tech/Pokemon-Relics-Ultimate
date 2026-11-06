@@ -32,6 +32,7 @@ name_aliases = {
     "Farfetchd": "Farfetch'd",
     "Nidoran M": "Nidoran♂",
     "Nidoran F": "Nidoran♀",
+    "Dragonite Relic": "Dragonite",  # Trainer form uses standard art; Guardian is separate.
 }
 # These forms share a canonical Pokédex species and do not add entries.
 form_pattern = re.compile(r"SPECIES_UNOWN_[A-Z_]+|SPECIES_CASTFORM_(NORMAL|SUNNY|RAINY|SNOWY)|SPECIES_DEOXYS_(NORMAL|ATTACK|DEFENSE|SPEED)")
@@ -110,9 +111,9 @@ for path in sorted((ROOT / "data/maps").glob("*_hns/scripts.inc")):
                 relic_summit = path.name == "scripts.inc" and path.parent.name == "MtSilver_SummitDay_hns"
                 relic_command = line.lstrip().startswith(("playmoncry SPECIES_RELIC_HO_OH", "seteventmon SPECIES_RELIC_HO_OH"))
                 guardian_tower = path.name == "scripts.inc" and path.parent.name == "TinTower_RoofDay_hns"
-                guardian_command = line.lstrip().startswith(("playmoncry SPECIES_DRAGONITE_RELIC", "seteventmon SPECIES_DRAGONITE_RELIC"))
+                guardian_command = line.lstrip().startswith(("playmoncry SPECIES_DRAGONITE_GUARDIAN", "seteventmon SPECIES_DRAGONITE_GUARDIAN"))
                 if not ((species == "SPECIES_RELIC_HO_OH" and relic_summit and relic_command)
-                        or (species == "SPECIES_DRAGONITE_RELIC" and guardian_tower and guardian_command)):
+                        or (species == "SPECIES_DRAGONITE_GUARDIAN" and guardian_tower and guardian_command)):
                     errors.append(f"{path.relative_to(ROOT)}:{line_number}: forbidden scripted Pokémon {species}")
 
 evolution = (ROOT / "src/pokemon.c").read_text(encoding="utf-8")

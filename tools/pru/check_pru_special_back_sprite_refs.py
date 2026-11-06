@@ -39,11 +39,16 @@ for name, slug in {
     assert path.is_file(), path
 
 # Job 18 installs the supplied, paired blue-crystal Guardian Dragonite front
-# and back. It is intentionally distinct from the generic fallback forms.
-guardian = re.search(r"PJR_E4_VISUAL_FORM\(SPECIES_DRAGONITE_RELIC,([^\n]+)", species)
+# and back. It is intentionally exclusive to the Tin Tower event.
+guardian = re.search(r"PJR_E4_VISUAL_FORM\(SPECIES_DRAGONITE_GUARDIAN,([^\n]+)", species)
 assert guardian and "gMonFrontPic_DragoniteGuardian" in guardian.group(1)
 assert "gMonBackPic_DragoniteGuardian" in guardian.group(1)
 assert "gMonBackPic_DragoniteGuardian[]" in graphics
+relic = re.search(r"PJR_E4_VISUAL_FORM\(SPECIES_DRAGONITE_RELIC,([^\n]+)", species)
+assert relic and "gMonFrontPic_Dragonite," in relic.group(1)
+assert "gMonBackPic_Dragonite," in relic.group(1)
+assert "seteventmon SPECIES_DRAGONITE_GUARDIAN, 60" in (ROOT / "data/maps/TinTower_RoofDay_hns/scripts.inc").read_text()
+assert "SPECIES_DRAGONITE_GUARDIAN" not in (ROOT / "src/data/pokemon/pru_dex_order.h").read_text()
 
 assert ".backPic = back," in species
 print("PASS: all four Jessie & James visual forms use their own distinct back assets")

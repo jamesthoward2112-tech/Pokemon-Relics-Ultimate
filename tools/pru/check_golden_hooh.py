@@ -51,7 +51,7 @@ event_mon = section(pokemon, "void CreateEnemyEventMon(void)", "static u16 Calcu
 assert "species == SPECIES_RELIC_HO_OH && level == 100" in event_mon
 assert "SetMonMoveSlot(&gEnemyParty[0], MOVE_GOLDEN_REIGN, 0);" in event_mon
 assert "SetMonMoveSlot(&gEnemyParty[0], MOVE_PHOENIX_HYMN, 2);" in event_mon
-golden_event = section(event_mon, "if (species == SPECIES_RELIC_HO_OH && level == 100)", "if (species == SPECIES_DRAGONITE_RELIC && level == 60)")
+golden_event = section(event_mon, "if (species == SPECIES_RELIC_HO_OH && level == 100)", "if (species == SPECIES_DRAGONITE_GUARDIAN && level == 60)")
 assert "ABILITY_NUM" not in golden_event
 
 battle = read("src/battle_util.c")
@@ -86,7 +86,7 @@ for path in ("data/maps/TinTower_RoofDay_hns/scripts.inc", "data/maps/NavelRock_
     source = read(path)
     assert "seteventmon SPECIES_HO_OH" not in source, path
     if path.startswith("data/maps/TinTower"):
-        assert "seteventmon SPECIES_DRAGONITE_RELIC, 60, ITEM_WEAKNESS_POLICY" in source
+        assert "seteventmon SPECIES_DRAGONITE_GUARDIAN, 60, ITEM_WEAKNESS_POLICY" in source
     else:
         assert "BattleSetup_StartLegendaryBattle" not in source, path
 all_scripts = "\n".join(p.read_text(errors="ignore") for p in (ROOT / "data/maps").rglob("*.inc"))

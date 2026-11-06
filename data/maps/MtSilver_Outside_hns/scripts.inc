@@ -9,6 +9,8 @@ MtSilver_Outside_OnTransition:
 	end
 
 MtSilver_Outside_EventScript_Sign::
+	lock
+	faceplayer
 	msgbox MtSilver_Outside_Text_Sign, MSGBOX_YESNO
 	switch VAR_RESULT
 	case YES, MtSilver_Outside_EventScript_SummitShortcut
@@ -22,6 +24,8 @@ MtSilver_Outside_EventScript_SummitShortcut::
 	end
 
 MtSilver_Outside_EventScript_SignCancel::
+	closemessage
+	release
 	end
 
 MtSilver_Outside_Text_Sign:
