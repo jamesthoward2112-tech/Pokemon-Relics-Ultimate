@@ -27,7 +27,7 @@ actor = block(ilex, "IlexForest_hns_RelicCelebi::", "IlexForest_hns_RelicCelebi_
 old = block(ilex, "IlexForest_EventScript_Celebi_Event::", "IlexForest_EventScript_SecondCelebi::")
 second = block(ilex, "IlexForest_EventScript_SecondCelebi::", "IlexForest_EventScript_Sign::")
 battle = block(lab, "RuinsOfAlph_Lab_EventScript_RelicCelebi::", "RuinsOfAlph_Lab_EventScript_RelicSuicune::")
-scientist = block(lab, "RuinsOfAlph_Lab_EventScript_Scientist1::", "RuinsOfAlph_Lab_EventScript_RelicNeedsCrest::")
+scientist = block(lab, "RuinsOfAlph_Lab_EventScript_Scientist1::", "RuinsOfAlph_Lab_EventScript_RelicNeedsElite20::")
 
 for flag in flags:
     assert f"goto_if_unset {flag}," in trans, flag
@@ -39,6 +39,8 @@ assert trans.index("call_if_set FLAG_CAUGHT_CELEBI") < trans.index("clearflag FL
 assert "setflag FLAG_PJR_RELIC_CELEBI" in trans
 assert "call_if_set FLAG_CAUGHT_CELEBI, RuinsOfAlph_Lab_EventScript_CreditLegacyCelebi" in scientist
 assert scientist.index("goto_if_unset FLAG_PJR_RELIC_UNOWN_I") < scientist.index("call_if_set FLAG_CAUGHT_CELEBI")
+assert "goto_if_unset FLAG_PJR_RELIC_ALPHORACLE" in scientist
+assert "goto_if_unset FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_Lab_EventScript_RelicNeedsElite20" in scientist
 for b in (shrine, actor, battle):
     assert f"goto_if_set {relic}," in b
     assert f"goto_if_set {legacy}," in b
