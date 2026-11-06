@@ -18,5 +18,5 @@
 
 - Source regressions: `check_job18_story.py`, `check_golden_hooh.py`, and `check_job18_assets.py` pass.
 - `git diff --check` passes.
-- Local ROM build is blocked because this environment lacks `arm-none-eabi-gcc`, `pkg-config`, and `libpng` headers. The Job 18 branch is wired into the canonical clean-build workflow for the hosted build.
+- Local ROM build is unavailable because this environment lacks `arm-none-eabi-gcc`, `pkg-config`, and libpng headers. The canonical hosted build is running; it has passed setup, source regressions, art installation, Dragonite asset checks, and the sprite audits. Hosted compilation and mGBA boot are pending.
 - The genuine pre-Dragonite `.sav`, mGBA save/reload test, compiled ROM, hosted emulator results, commit SHA, and release URLs will be recorded after the clean build/save validation completes. No test save or ROM is claimed in this source-only checkpoint.
