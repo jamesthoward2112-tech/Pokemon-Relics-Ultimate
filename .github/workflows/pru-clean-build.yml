@@ -366,14 +366,16 @@ jobs:
               assert colors and len(colors) > 32, f'mGBA game screen stayed blank for {filename}'
               print(f'mGBA rendered the game screen for {filename}: {game_screen.width}x{game_screen.height}, {len(colors)} colors')
           PY
-      - name: Upload direct GBA test artifact after successful source build
+      - name: Preserve built ROM and mGBA captures for inspection
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: PRU-CANONICAL-SOURCE-VALIDATED
+          name: PRU-JOB18-BUILD-AND-EMULATOR-EVIDENCE
           path: |
             pokehns.gba
             pru-rom.sha256
-          if-no-files-found: error
+            PRU-QA/video-review/mgba/
+          if-no-files-found: warn
       - name: Publish compiled raw GBA to GitHub prerelease
         if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' || github.ref == 'refs/heads/fix/pru-job11-text-20261105' || github.ref == 'refs/heads/fix/pru-job12-celebi-20261105' || github.ref == 'refs/heads/fix/pru-job13-fortotoise-icon-20261105' || github.ref == 'refs/heads/fix/pru-job14-baby-sprites-20261105' || github.ref == 'refs/heads/fix/pru-job15-pc-icon-palette-collisions-20261105' || github.ref == 'refs/heads/feat/pru-job16-golden-hooh-cinematic-20261106' || github.ref == 'refs/heads/feat/pru-job17-custom-credits-20261106' || github.ref == 'refs/heads/feat/pru-job18-final-story-dragonite-20261106')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
         shell: bash
