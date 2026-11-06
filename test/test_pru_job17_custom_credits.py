@@ -34,7 +34,7 @@ for text in ("balesleftpeg", "CHATGPT", "CLAUDE", "GEMINI", "POKEEMERALD-EXPANSI
              "LIL DILL", "POKESPRITE", "PORYPAL", "GITHUB", "GAME FREAK",
              "NINTENDO", "CREATURES INC.", "THANK YOU FOR PLAYING"):
     assert text in lines, f"Missing required attribution: {text}"
-assert not re.search(r"james\\s+howard", pru, re.IGNORECASE), "Private creator name leaked into game credits"
+assert "james howard" not in pru.lower(), "Private creator name leaked into game credits"
 for donor in ("POKEMON RELIC LEGACY", "POKEMON JOHTO RELICS", "POKEMON KANTO RELICS",
               "POKEMON HOENN RELICS", "POKEMON INFINITY", "POKEMON INSURGENCE",
               "POKEMON ELITE REDUX", "POKEMON XENOVERSE", "POKEMON SHINING VICTORY",
