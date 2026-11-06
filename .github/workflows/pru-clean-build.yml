@@ -315,11 +315,16 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p PRU-QA/video-review/mgba
+          mkdir -p "$RUNNER_TEMP/mgba-config/mgba"
+          cat > "$RUNNER_TEMP/mgba-config/mgba/qt.ini" <<'EOF'
+          [General]
+          displayDriver=0
+          EOF
           cp assets/test_saves/PRU_Job18_Before_Ancient_Guardian.sav pokehns.sav
           capture_mgba() {
             local image="$1" log="$2" startup_image="$3"
             xvfb-run -a -s '-screen 0 1280x960x24' bash -euo pipefail -c '
-              QT_OPENGL=software LIBGL_ALWAYS_SOFTWARE=1 mgba-qt pokehns.gba >"$2" 2>&1 &
+              XDG_CONFIG_HOME="$RUNNER_TEMP/mgba-config" QT_OPENGL=software LIBGL_ALWAYS_SOFTWARE=1 mgba-qt pokehns.gba >"$2" 2>&1 &
               emulator_pid=$!
               trap "kill $emulator_pid >/dev/null 2>&1 || true; wait $emulator_pid >/dev/null 2>&1 || true" EXIT
               for attempt in $(seq 1 30); do
