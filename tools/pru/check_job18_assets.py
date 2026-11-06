@@ -27,5 +27,9 @@ assert "gMonFrontPic_AncientGuardianDragonite" in species
 assert "gMonBackPic_AncientGuardianDragonite" in species
 assert "gMonIcon_AncientGuardianDragonite" in species
 assert "PJR_E4_VISUAL_FORM(SPECIES_ANCIENT_GUARDIAN_DRAGONITE," in species
+assert "BODY_COLOR_BROWN,gMonFrontPic_AncientGuardianDragonite" in species
+assert "gMonIcon_AncientGuardianDragonite,0,sDragoniteLevelUpLearnset" in species
+icon_code = (ROOT / "src/pokemon_icon.c").read_text()
+assert "if (species == SPECIES_ANCIENT_GUARDIAN_DRAGONITE)\n        return 17;" in icon_code
 
 print("PASS: approved Dragonite artwork is byte-locked, 4bpp-ready, and registered to its dedicated species")
