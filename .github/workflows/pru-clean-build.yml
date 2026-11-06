@@ -139,6 +139,8 @@ jobs:
           python3 tools/pru/check_70_sprite_inspection_save.py assets/test_saves/PRU-70-Sprite-Inspection.sav
       - name: Validate the distributed Box 3 sprite QA save
         run: python3 tools/pru/check_sprite_qa_save.py assets/test_saves/Pru.sav
+      - name: Validate the dedicated Job 18 pre-Guardian save
+        run: python3 tools/pru/check_job18_test_save.py assets/test_saves/PRU_Job18_Before_Ancient_Guardian.sav
       - name: Run source regression tests
         if: "${{ github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
         run: |
@@ -307,38 +309,45 @@ jobs:
           test -f pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           sha256sum pokehns.gba | tee pru-rom.sha256
-      - name: Load the compiled ROM and inspection save in mGBA
+      - name: Load and reload the Job 18 pre-Guardian save in mGBA
         timeout-minutes: 3
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p PRU-QA/video-review/mgba
-          cp assets/test_saves/PRU-70-Sprite-Inspection.sav pokehns.sav
-          xvfb-run -a -s '-screen 0 1280x960x24' bash -euo pipefail -c '
-            mgba-qt pokehns.gba >PRU-QA/video-review/mgba/mgba.log 2>&1 &
-            emulator_pid=$!
-            trap "kill $emulator_pid >/dev/null 2>&1 || true; wait $emulator_pid >/dev/null 2>&1 || true" EXIT
-            for attempt in $(seq 1 30); do
-              window_id=$(xdotool search --onlyvisible --name "mGBA" 2>/dev/null | head -n1 || true)
-              test -n "$window_id" && break
-              sleep 1
-            done
-            test -n "${window_id:-}"
-            xdotool windowfocus "$window_id"
-            sleep 5
-            xdotool key Return
-            sleep 8
-            import -window root PRU-QA/video-review/mgba/inspection-save.png
-          '
-          test -s PRU-QA/video-review/mgba/inspection-save.png
-          ! grep -Eiq 'fatal|segmentation fault|could not load|failed to load' PRU-QA/video-review/mgba/mgba.log
+          cp assets/test_saves/PRU_Job18_Before_Ancient_Guardian.sav pokehns.sav
+          capture_mgba() {
+            local image="$1" log="$2"
+            xvfb-run -a -s '-screen 0 1280x960x24' bash -euo pipefail -c '
+              mgba-qt pokehns.gba >"$2" 2>&1 &
+              emulator_pid=$!
+              trap "kill $emulator_pid >/dev/null 2>&1 || true; wait $emulator_pid >/dev/null 2>&1 || true" EXIT
+              for attempt in $(seq 1 30); do
+                window_id=$(xdotool search --onlyvisible --name "mGBA" 2>/dev/null | head -n1 || true)
+                test -n "$window_id" && break
+                sleep 1
+              done
+              test -n "${window_id:-}"
+              xdotool windowfocus "$window_id"
+              sleep 5
+              xdotool key Return
+              sleep 8
+              import -window root "$1"
+            ' _ "$image" "$log"
+          }
+          capture_mgba PRU-QA/video-review/mgba/pre-guardian-save.png PRU-QA/video-review/mgba/mgba-first-load.log
+          capture_mgba PRU-QA/video-review/mgba/pre-guardian-save-reloaded.png PRU-QA/video-review/mgba/mgba-reload.log
+          test -s PRU-QA/video-review/mgba/pre-guardian-save.png
+          test -s PRU-QA/video-review/mgba/pre-guardian-save-reloaded.png
+          ! grep -Eiq 'fatal|segmentation fault|could not load|failed to load' PRU-QA/video-review/mgba/mgba-first-load.log PRU-QA/video-review/mgba/mgba-reload.log
           python3 - <<'PY'
           from PIL import Image
-          image = Image.open('PRU-QA/video-review/mgba/inspection-save.png').convert('RGB')
-          colors = image.getcolors(maxcolors=image.width * image.height)
-          assert image.width >= 240 and image.height >= 160
-          assert colors and len(colors) > 32
-          print(f'mGBA rendered the inspection save: {image.width}x{image.height}, {len(colors)} colors')
+          for filename in ('pre-guardian-save.png', 'pre-guardian-save-reloaded.png'):
+              image = Image.open('PRU-QA/video-review/mgba/' + filename).convert('RGB')
+              colors = image.getcolors(maxcolors=image.width * image.height)
+              assert image.width >= 240 and image.height >= 160
+              assert colors and len(colors) > 32
+              print(f'mGBA loaded and rendered {filename}: {image.width}x{image.height}, {len(colors)} colors')
           PY
       - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4
@@ -377,6 +386,7 @@ jobs:
           cp pokehns.gba "$RUNNER_TEMP/Pru.gba"
           cp assets/test_saves/Pru.sav "$RUNNER_TEMP/Pru.sav"
           cp assets/test_saves/PRU-70-Sprite-Inspection.sav "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav"
+          cp assets/test_saves/PRU_Job18_Before_Ancient_Guardian.sav "$RUNNER_TEMP/PRU_Job18_Before_Ancient_Guardian.sav"
           zip -qr "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" PRU-QA/sprite-audit-70.json PRU-QA/sprite-audit-70.md PRU-QA/compiled-sprite-audit-70.json PRU-QA/compiled-sprite-audit-70.md PRU-QA/contact-sheets PRU-QA/video-review
           zip -q "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" \
             assets/pru_final_polish/fortotoise/ASSET_MANIFEST.md \
@@ -446,13 +456,13 @@ jobs:
                       zf.write(path, f"video-review/battle/{species}/{side}.png")
           PY
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release upload "$tag" "$RUNNER_TEMP/$file" "$RUNNER_TEMP/Pru.gba" "$RUNNER_TEMP/Pru.sav" "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav" "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" --repo "$GITHUB_REPOSITORY" --clobber
+            gh release upload "$tag" "$RUNNER_TEMP/$file" "$RUNNER_TEMP/Pru.gba" "$RUNNER_TEMP/Pru.sav" "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav" "$RUNNER_TEMP/PRU_Job18_Before_Ancient_Guardian.sav" "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" --repo "$GITHUB_REPOSITORY" --clobber
           else
-            gh release create "$tag" "$RUNNER_TEMP/$file" "$RUNNER_TEMP/Pru.gba" "$RUNNER_TEMP/Pru.sav" "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav" "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" \
+            gh release create "$tag" "$RUNNER_TEMP/$file" "$RUNNER_TEMP/Pru.gba" "$RUNNER_TEMP/Pru.sav" "$RUNNER_TEMP/PRU-70-Sprite-Inspection.sav" "$RUNNER_TEMP/PRU_Job18_Before_Ancient_Guardian.sav" "$RUNNER_TEMP/PRU-Sprite-QA-Reports.zip" "$RUNNER_TEMP/PRU-Sprite-Corrections.zip" \
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "$release_title" \
-              --notes "Job 18 test build. Implements the revised Elite 20 / Alph Lab / Mt Silver story, the unique non-catchable Ancient Guardian Dragonite at Tin Tower using the exact approved Elite Redux Mega Dragonite sprites, and Golden Ho-Oh's capture-triggered Job 16 cinematic and Job 17 custom credits. Preserves the sole catchable level 100 Golden Ho-Oh, the six one-time E20 Master Balls, prior saves and the 450-Pokemon roster. Canonical source regressions, clean 32 MiB build, mGBA boot and battle-engine checks are reported in the workflow run. Limitation: this source checkout does not contain an existing pre-Dragonite progressed save; the requested dedicated .sav is not included rather than distributing a fabricated or unverified save. Ceremony/ending interactions still require gameplay QA." \
+              --notes "Job 18 test build. Implements the revised Elite 20 / Alph Lab / Mt Silver story, the unique non-catchable Ancient Guardian Dragonite at Tin Tower using the exact approved Elite Redux Mega Dragonite sprites, and Golden Ho-Oh's capture-triggered Job 16 cinematic and Job 17 custom credits. Preserves the sole catchable level 100 Golden Ho-Oh, the six one-time E20 Master Balls, prior saves and the 450-Pokemon roster. Includes a separate save-edited pre-ceremony fixture made from a copy of the checked-in PRU test save; sector checksums, prerequisite flags, six healthy level-60 party records and healing items are validated, and mGBA load/reload screenshots are recorded by the workflow. It is not a player-captured campaign save; the Dragonite ceremony and Golden Ho-Oh ending still require hands-on gameplay QA." \
               --prerelease
           fi
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
@@ -464,12 +474,15 @@ jobs:
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
             --jq '.assets[].name' | grep -Fx 'PRU-70-Sprite-Inspection.sav'
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+            --jq '.assets[].name' | grep -Fx 'PRU_Job18_Before_Ancient_Guardian.sav'
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
             --jq '.assets[].name' | grep -Fx 'PRU-Sprite-QA-Reports.zip'
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
             --jq '.assets[].name' | grep -Fx 'PRU-Sprite-Corrections.zip'
           echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/Pru.gba"
           echo "DIRECT_SAV=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/Pru.sav"
           echo "INSPECTION_SAV=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/PRU-70-Sprite-Inspection.sav"
+          echo "JOB18_TEST_SAV=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/PRU_Job18_Before_Ancient_Guardian.sav"
           echo "SPRITE_QA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/PRU-Sprite-QA-Reports.zip"
           echo "SPRITE_CORRECTIONS=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/PRU-Sprite-Corrections.zip"
 
