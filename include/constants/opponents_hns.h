@@ -828,7 +828,8 @@
 #define TRAINER_PRU_E20_MAY_MASTER_HNS                  783
 #define TRAINER_PRU_E20_RIVAL_MASTER_HNS                784
 #define TRAINER_PRU_E20_GIOVANNI_MASTER_HNS             785
-#define TRAINERS_COUNT_HNS                       786
+#define TRAINER_PRU_ANCIENT_GUARDIAN_DRAGONITE           786
+#define TRAINERS_COUNT_HNS                       787
 #define MAX_TRAINERS_COUNT_HNS                   864
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_HNS_H

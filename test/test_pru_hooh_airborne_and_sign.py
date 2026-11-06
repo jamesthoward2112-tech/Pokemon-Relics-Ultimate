@@ -15,7 +15,7 @@ assert "IsBattlerGroundedInverseCheck" in u
 relic = info.split("[SPECIES_RELIC_HO_OH] =", 1)[1].split("\n[SPECIES_", 1)[0]
 assert "TYPE_FIRE, TYPE_FAIRY" in relic
 assert "ABILITY_PHOENIX_SOUL" in relic
-assert 'Shortcut to the top?$' in sign
+assert 'Shortcut to Top$' in sign
 assert 'shortcut to RED' not in sign
 assert 'warp MAP_MT_SILVER_SUMMIT_DAY_HNS, 10, 8' in sign
 assert "python3 test/test_pru_hooh_airborne_and_sign.py" in ci

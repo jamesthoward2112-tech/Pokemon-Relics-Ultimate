@@ -50,7 +50,6 @@ PalletTown_Lab_EventScript_OakRelicsNext::
 	goto_if_unset FLAG_PJR_RELIC_CELEBI, PalletTown_Lab_EventScript_OakRelicsCelebi
 	goto_if_unset FLAG_PJR_RELIC_SUICUNE, PalletTown_Lab_EventScript_OakRelicsSuicune
 	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, PalletTown_Lab_EventScript_OakRelicsAlphoracle
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, PalletTown_Lab_EventScript_OakRelicsCrest
 	goto PalletTown_Lab_EventScript_OakRelicsHoOh
 
 PalletTown_Lab_EventScript_OakRelicsStart::
@@ -106,11 +105,12 @@ PalletTown_Lab_Text_OakRelicsOptionOther:
 PalletTown_Lab_Text_OakRelicsExplain:
 	.string "OAK: ELM and I discovered six\n"
 	.string "ancient powers in JOHTO.\p"
-	.string "Their names spell R-E-L-I-C-S.\n"
+	.string "They spell R-E-L-I-C-S.\n"
 	.string "Each holds an ancient voice.\p"
 	.string "Their combined RESONANCE may\n"
-	.string "awaken GOLDEN RELIC HO-OH.\p"
-	.string "I'll help you track each clue.\n"
+	.string "awaken an ULTIMATE ANCIENT\n"
+	.string "RELIC.\p"
+	.string "I'll help you find each clue.\n"
 	.string "Here's where to go next!$"
 PalletTown_Lab_Text_OakRelicsStart:
 	.string "OAK: Fly to VIOLET CITY.\n"
@@ -146,15 +146,13 @@ PalletTown_Lab_Text_OakRelicsAlphoracle:
 	.string "Visit the RUINS OF ALPH LAB\n"
 	.string "for the FIRST VOICE: ALPHORACLE.$"
 PalletTown_Lab_Text_OakRelicsCrest:
-	.string "OAK: The FIRST VOICE is awake!\p"
-	.string "Climb MT. SILVER and challenge\n"
-	.string "RED for the RAINBOW CREST.$"
+	.string "OAK: ALPHORACLE is awake!\p"
+	.string "Ask the RUINS OF ALPH\n"
+	.string "scientist what comes next.$"
 PalletTown_Lab_Text_OakRelicsHoOh:
-	.string "OAK: You have the CREST!\p"
-	.string "Go to MT. SILVER's summit.\n"
-	.string "I'll await your final test,\p"
-	.string "then we'll summon the GOLDEN\n"
-	.string "RELIC HO-OH together!$"
+	.string "OAK: All seven RELICS unite!\p"
+	.string "Return to the RUINS OF ALPH.\n"
+	.string "The scientist can guide you.$"
 PalletTown_Lab_Text_OakRelicsComplete:
 	.string "OAK: The RELICS are united!\p"
 	.string "ELM and I are proud of you,\n"

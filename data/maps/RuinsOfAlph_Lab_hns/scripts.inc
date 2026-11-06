@@ -10,7 +10,7 @@ RuinsOfAlph_Lab_EventScript_Scientist1::
 	lock
 	faceplayer
 	goto_if_unset FLAG_IS_CHAMPION, RuinsOfAlph_Lab_EventScript_Scientist1Standard
-	goto_if_unset FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_Lab_EventScript_Scientist1Standard
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_Lab_EventScript_NeedElite20
 	goto_if_unset FLAG_PJR_RELIC_RAIKOU, RuinsOfAlph_Lab_EventScript_IntroduceRelics
 	goto_if_unset FLAG_PJR_RELIC_ENTEI, RuinsOfAlph_Lab_EventScript_HintEntei
 	goto_if_unset FLAG_PJR_RELIC_LUGIA, RuinsOfAlph_Lab_EventScript_HintLugia
@@ -20,15 +20,14 @@ RuinsOfAlph_Lab_EventScript_Scientist1::
 	goto_if_unset FLAG_PJR_RELIC_CELEBI, RuinsOfAlph_Lab_EventScript_HintCelebi
 	goto_if_unset FLAG_PJR_RELIC_SUICUNE, RuinsOfAlph_Lab_EventScript_HintSuicune
 	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, RuinsOfAlph_Lab_EventScript_HintAlphoracle
-	@ PRU: after ALPHORACLE, guide by actual crest/Ho-Oh capture flags.
+	@ Existing Ho-Oh owners already completed the old ending on a prior build.
 	goto_if_set FLAG_PJR_RELIC_HO_OH, RuinsOfAlph_Lab_EventScript_RelicsFullyComplete
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, RuinsOfAlph_Lab_EventScript_RelicNeedsCrest
-	msgbox RuinsOfAlph_Lab_Text_RelicsComplete, MSGBOX_DEFAULT
+	msgbox RuinsOfAlph_Lab_Text_MtSilverSummit, MSGBOX_DEFAULT
 	release
 	end
 
-RuinsOfAlph_Lab_EventScript_RelicNeedsCrest::
-	msgbox RuinsOfAlph_Lab_Text_AlphoracleCaughtNeedsCrest, MSGBOX_DEFAULT
+RuinsOfAlph_Lab_EventScript_NeedElite20::
+	msgbox RuinsOfAlph_Lab_Text_NeedElite20, MSGBOX_DEFAULT
 	release
 	end
 
@@ -262,15 +261,13 @@ RuinsOfAlph_Lab_EventScript_RelicAlphoracle::
 
 RuinsOfAlph_Lab_EventScript_RelicAlphoracleCaught::
 	setflag FLAG_PJR_RELIC_ALPHORACLE
-	goto_if_set FLAG_PJR_GOT_RAINBOW_CREST, RuinsOfAlph_Lab_EventScript_UnlockRelicHoOh
-	msgbox RuinsOfAlph_Lab_Text_AlphoracleCaughtNeedsCrest, MSGBOX_DEFAULT
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_Lab_EventScript_UnlockRelicHoOh
+	msgbox RuinsOfAlph_Lab_Text_NeedElite20, MSGBOX_DEFAULT
 	release
 	end
 
 RuinsOfAlph_Lab_EventScript_UnlockRelicHoOh::
-	setvar VAR_COMPLETED_HO_OH, 4
-	clearflag FLAG_HIDE_HO_OH
-	msgbox RuinsOfAlph_Lab_Text_AlphoracleCaught, MSGBOX_DEFAULT
+	msgbox RuinsOfAlph_Lab_Text_MtSilverSummit, MSGBOX_DEFAULT
 	release
 	end
 
@@ -350,30 +347,28 @@ RuinsOfAlph_Lab_Text_RelicDecline:
 	.string "The signal will remain stable.\n"
 	.string "Come back when you are ready.$"
 
-RuinsOfAlph_Lab_Text_AlphoracleCaughtNeedsCrest:
-	.string "ALPHORACLE accepts your bond.\p"
-	.string "The FIRST VOICE is awake, but the\n"
-	.string "final rainbow remains sealed.\p"
-	.string "A champion waits on MT. SILVER.$"
-
-RuinsOfAlph_Lab_Text_AlphoracleCaught:
-	.string "ALPHORACLE accepts your bond.\p"
-	.string "The ANCIENT RAINBOW CREST answers\n"
-	.string "the awakened network.\p"
-	.string "A final resonance answers from\n"
-	.string "the TIN TOWER roof...$"
-
 RuinsOfAlph_Lab_Text_RelicsComplete:
-	.string "All six RELICS and the FIRST VOICE\n"
-	.string "are recorded.\p"
-	.string "The CREST is reacting!\p"
-	.string "Seek the ULTIMATE RELIC at\n"
-	.string "the top of TIN TOWER.$"
+	.string "All seven RELICS recorded.\p"
+	.string "Defeat PROF. OAK in the\n"
+	.string "ELITE 20, then return here.$"
+
+RuinsOfAlph_Lab_Text_NeedElite20:
+	.string "Your research is remarkable.\p"
+	.string "First, prove yourself against\n"
+	.string "the ELITE 20 and PROF. OAK.\p"
+	.string "Return here afterward; then\n"
+	.string "I'll guide you there.$"
+
+RuinsOfAlph_Lab_Text_MtSilverSummit:
+	.string "The seven RELICS are united,\n"
+	.string "and OAK has been defeated!\p"
+	.string "The resonance points to the\n"
+	.string "summit of MT. SILVER.\p"
+	.string "Seek the ULTIMATE ANCIENT\n"
+	.string "RELIC POKeMON.$"
 
 RuinsOfAlph_Lab_Text_RelicsFullyComplete:
 	.string "All seven signals are recorded.\p"
-	.string "Even HO-OH has answered the\n"
-	.string "ANCIENT RAINBOW CREST!\p"
 	.string "The RELIC network is stable.\n"
 	.string "Our research can begin anew.$"
 

@@ -275,6 +275,11 @@ const u16 gMonPalette_NidogodJJ[] = INCBIN_U16("graphics/pokemon/nidoking/nidogo
 // Distinct TRE variant 907 (Nidoking-X), reserved for Blue's Elite 20 team.
 const u32 gMonFrontPic_NidokingXBlue[] = INCBIN_U32("graphics/pokemon/nidoking/tre_x_blue/front.4bpp.smol");
 const u16 gMonPalette_NidokingXBlue[] = INCBIN_U16("graphics/pokemon/nidoking/tre_x_blue/front.gbapal");
+// Job 18 artwork is reserved exclusively for the non-catchable Tin Tower boss.
+const u32 gMonFrontPic_AncientGuardianDragonite[] = INCBIN_U32("graphics/pokemon/ancient_guardian_dragonite/front.4bpp.smol");
+const u32 gMonBackPic_AncientGuardianDragonite[] = INCBIN_U32("graphics/pokemon/ancient_guardian_dragonite/back.4bpp.smol");
+const u16 gMonPalette_AncientGuardianDragonite[] = INCBIN_U16("graphics/pokemon/ancient_guardian_dragonite/front.gbapal");
+const u8 gMonIcon_AncientGuardianDragonite[] = INCBIN_U8("graphics/pokemon/ancient_guardian_dragonite/icon.4bpp");
 const u32 gMonFrontPic_VictreebelReduxJJ[] = INCBIN_U32("graphics/pokemon/victreebel/redux/front.4bpp.smol");
 const u32 gMonBackPic_VictreebelReduxJJ[] = INCBIN_U32("graphics/pokemon/victreebel/redux/back.4bpp.smol");
 const u16 gMonPalette_VictreebelReduxJJ[] = INCBIN_U16("graphics/pokemon/victreebel/redux/front.gbapal");

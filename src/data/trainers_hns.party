@@ -21250,3 +21250,23 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 - Megahorn
 - Protect
+
+=== TRAINER_PRU_ANCIENT_GUARDIAN_DRAGONITE ===
+Name: GUARDIAN
+Class: Pkmn Trainer 1 Hns
+Pic: Professor Oak Frlg
+Gender: Male
+Music: Hg Champion
+Double Battle: No
+AI: Smart Trainer / Prediction
+
+Ancient Guardian Dragonite @ Weakness Policy
+Level: 60
+Ability: Multiscale
+Nature: Adamant
+EVs: 252 HP / 252 Atk / 0 Def / 0 SpA / 0 SpD / 4 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Dragon Dance
+- Dual Wingbeat
+- Dragon Claw
+- Roost

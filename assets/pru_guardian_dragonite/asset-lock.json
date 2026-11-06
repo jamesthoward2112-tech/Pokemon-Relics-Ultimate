@@ -1,0 +1,10 @@
+{
+  "design": "Elite Redux Mega Dragonite (blue-crystal), not Mega Dragonite Y",
+  "exclusive_use": "Ancient Guardian Dragonite at Tin Tower only",
+  "source": "user-approved PRU attachment, PRU_Ancient_Guardian_Dragonite_Elite_Redux_Mega_assets.zip",
+  "sha256": {
+    "front.png": "b35cd8dcb12cae133beb608144902172262fda90110e28b45008fbe2bbf84589",
+    "back.png": "8b68818cd56def13e61beb9703db428151ad52fd4734098ca34a5ce35c560cd0",
+    "icon.png": "332ab7c028bb6b51c84e282ebc39d16ccd82cad367e1156a83a1fd16253656c8"
+  }
+}

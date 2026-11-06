@@ -69,12 +69,12 @@ lugia = read("data/maps/WhirlIslands_LugiaChamber_hns/scripts.inc")
 assert "goto_if_set FLAG_CAUGHT_LUGIA, WhirlIslands_LugiaChamber_MapScript_LugiaCaught" in lugia
 assert re.search(r"WhirlIslands_LugiaChamber_MapScript_LugiaPostStoryGone::[\s\S]*?setvar VAR_COMPLETED_LUGIA, 4", lugia)
 hooh = read("data/maps/TinTower_RoofDay_hns/scripts.inc")
-assert "goto_if_set FLAG_CAUGHT_HO_OH, TinTower_RoofDay_MapScript_HoohCaught" in hooh
-assert "TinTower_RoofDay_EventScript_HoOhRetry::" not in hooh
-assert "TinTower_RoofDay_EventScript_HoOhPostgame::" not in hooh
+assert "goto_if_set FLAG_PJR_RELIC_HO_OH, TinTower_RoofDay_EventScript_GuardianLegacyDone" in hooh
+assert "FLAG_PRU_TIN_GUARDIAN_DEFEATED" in hooh
+assert "TRAINER_PRU_ANCIENT_GUARDIAN_DRAGONITE" in hooh
 assert "BattleSetup_StartLegendaryBattle" not in hooh
 assert "seteventmon SPECIES_HO_OH" not in hooh
-assert "TinTower_RoofDay_EventScript_HoOhStoryFarewell::" in hooh
+assert "FLAG_CAUGHT_HO_OH" not in hooh
 assert "setvar VAR_COMPLETED_HO_OH, 3" in hooh
 for path in ("data/maps/NavelRock_Summit_Frlg/scripts.inc", "data/maps/NavelRock_Top/scripts.inc"):
     navel = read(path)
@@ -83,6 +83,7 @@ for path in ("data/maps/NavelRock_Summit_Frlg/scripts.inc", "data/maps/NavelRock
 oak = read("data/maps/MtSilver_SummitDay_hns/scripts.inc")
 assert "seteventmon SPECIES_RELIC_HO_OH, 100" in oak
 assert "setflag FLAG_PJR_RELIC_HO_OH" in oak
+assert "trainerbattle" not in oak.split("MtSilver_SummitDay_EventScript_RelicOak::", 1)[1].split("MtSilver_SummitDay_Text_OakObsessed:", 1)[0].lower()
 ilex = read("data/maps/IlexForest_hns/scripts.inc")
 assert "seteventmon SPECIES_CELEBI, 40" not in ilex
 assert "goto IlexForest_hns_RelicCelebi_Unavailable" in ilex.split("IlexForest_EventScript_SecondCelebi::",1)[1][:120]

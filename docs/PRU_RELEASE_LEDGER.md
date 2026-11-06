@@ -1,3 +1,13 @@
+## 6 November 2026 — Job 18 storyline, Golden Ho-Oh and Ancient Guardian Dragonite (source checkpoint; build/release blocked)
+
+- **Branch / source commit:** `feat/pru-job18-20261106`; local commit `dc80f1b913043ddcc8697edc08b75b96e1f78ae1`, parent `f49e12909af107a9023d2f9ffc4ffa956d8b99b4` (accepted Job 17 baseline).
+- **Implemented:** revised Oak/RELICs progression, Mt. Silver summit Golden Ho-Oh capture and persistent finale trigger, Tin Tower Guardian Dragonite ceremony and exact trainer roster, approved blue-crystal Elite Redux art, and text/asset/story regression checks. Updated the Job 16 finale assertion to verify the new once-only capture flag. Full summary: `docs/CHANGELOG_JOB18.md`.
+- **Source regressions PASS:** Job 18 story and sprite-lock checks; Golden Ho-Oh/Phoenix Soul source assertions; Job 16 cinematic, Job 17 custom credits, Ground immunity/shortcut sign and Job 11 text-page checks; `git diff --check`.
+- **ROM build NOT RUN successfully:** `make hns -j2 -O` was attempted. This workspace lacks `arm-none-eabi-gcc`, `pkg-config` and `png.h` (`libpng-dev`), and stopped before the ROM build.
+- **GitHub publication BLOCKED:** `git push -u origin feat/pru-job18-20261106` failed because no GitHub username/credential is available to Git in this workspace. No GitHub commit, Actions run, ROM release, or release asset was created. The branch is included in the clean-build and prerelease conditions so it will build/publish once pushed.
+- **Save / emulator status NOT COMPLETED:** no pre-Guardian `.sav` has been generated or tested. Existing QA saves are not valid substitutes. No user or playtester save was modified. mGBA gameplay checks and save/reload remain pending.
+- **Known limitation / next action:** publish branch `feat/pru-job18-20261106` using an authenticated GitHub session; then inspect the hosted compile/test run. Create the dedicated Tin Tower pre-battle save in a real mGBA session, test save-close-reload, attach it to the Job 18 test release, and record its exact asset URL and ROM checksum. Do not mark Job 18 complete until these are verified.
+
 ## 3 November 2026 — Job 5 Indigo tutors and Scary Face Fear (ROM built; Alph ladder mGBA-tested)
 
 - **Branch / source commit:** `feat/pru-relic-hunt-20261101`; `6325f44fca3b1d9db9119878c7d907fd17433b83`. Feature implementation `afbf21db8c1f98ab6bd884b9ac1180ef64ec7ba9`; tutor regression correction `dadaef823eba6778d23f5301ac3ddfad05273bf2`; final assembly correction `6325f44fca3b1d9db9119878c7d907fd17433b83`.
@@ -203,3 +213,11 @@ only for features the player actually tested. Never call 401214913d player-confi
 - **Verification:** Actions run [41828335441](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/41828335441) passed exact build-538 Eeveelution asset checks, calf import checks, Box 3 save validation, full source regressions, battle-engine tests, clean build, compiled-sprite check, 32 MiB ROM verification, and release publication.
 - **Release:** [pru-build-e1346f10bf](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-build-e1346f10bf). [Pru.gba](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-e1346f10bf/Pru.gba), 33,554,432 bytes, SHA-256 `020f2f35ad5057ebf5367f96230d64d35c8f33e1d889e9b74aafd28cff0ea07c`. [Pru.sav](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-build-e1346f10bf/Pru.sav), 131,072 bytes, SHA-256 `d71a68d383115012231c2b77e7260019bfa81a75ee5c416960109fbc479446bc`.
 - **Gameplay appearance:** no screenshot of this newly published ROM in Pizza Boy has been captured; the player should confirm the restored #538 appearance and new calf sprites in-game. Automated checks verify exact art assets and palettes, not rendered gameplay screens.
+
+
+## 6 November 2026 — Job 18 test ROM (published; dedicated save pending)
+
+- **Branch:** `feat/pru-job18-20261106`, based on accepted Job 17 commit `f49e12909af107a9023d2f9ffc4ffa956d8b99b4`. Release source commit: `40490e61023667726d039f2b1c731baa8b85328b`.
+- **Validation:** GitHub Actions run [42274347783](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/42274347783) passed source regressions, Golden Reign/Phoenix Soul battle-engine tests, clean production build, compiled sprite checks, exact 32 MiB ROM verification, and mGBA boot with the existing inspection save. This did not exercise Job 18 story paths interactively.
+- **ROM:** [Job 18 Test Release](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-job18-test-40490e6102); [direct GBA download](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-job18-test-40490e6102/Pokemon-Relics-Ultimate-40490e6102.gba). Size 33,554,432 bytes; SHA-256 `87be3adf60608fcd452dc567198703f225d3cd8e250b36065773807c77ca03d2`.
+- **Outstanding:** `PRU_Job18_Before_Ancient_Guardian.sav` was not produced. No existing QA save was relabeled as this file. The release notes explicitly disclose this limitation. Full in-game story/cinematic and save-close-reload testing remains outstanding.

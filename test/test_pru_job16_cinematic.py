@@ -22,7 +22,8 @@ finale = event[start:end]
 assert finale.count("msgbox PRU_Elite20_Text_GoldenSky") == 1
 assert finale.index("msgbox PRU_Elite20_Text_GoldenSky") < finale.index("special GameClear")
 assert finale.count("setflag FLAG_PRU_E20_CREDITS_PENDING") == 1
-assert finale.count("setflag FLAG_PRU_E20_CREDITS_SHOWN") == 1
+assert finale.count("setflag FLAG_PRU_HOOH_FINALE_COMPLETE") == 1
+assert "goto_if_set FLAG_PRU_HOOH_FINALE_COMPLETE" in finale
 assert "SPECIES_RELIC_HO_OH" not in finale
 assert "seteventmon" not in finale
 assert "showmonpic" not in finale

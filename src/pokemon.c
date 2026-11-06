@@ -9650,6 +9650,7 @@ bool32 SpeciesHasGenderDifferences(u16 species)
     return FALSE;
 }
 
+#if P_PRU_DYNAMIC_FORM_CHANGES
 static struct PartyState *GetBattlerPartyStateByPokemon(struct Pokemon *partyMon)
 {
     if (gBattleStruct == NULL)
@@ -9666,6 +9667,7 @@ static struct PartyState *GetBattlerPartyStateByPokemon(struct Pokemon *partyMon
     }
     return NULL;
 }
+#endif
 
 bool32 TryFormChange(struct Pokemon *mon, enum FormChanges method)
 {

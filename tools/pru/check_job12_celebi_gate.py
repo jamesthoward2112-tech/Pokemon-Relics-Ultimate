@@ -27,7 +27,7 @@ actor = block(ilex, "IlexForest_hns_RelicCelebi::", "IlexForest_hns_RelicCelebi_
 old = block(ilex, "IlexForest_EventScript_Celebi_Event::", "IlexForest_EventScript_SecondCelebi::")
 second = block(ilex, "IlexForest_EventScript_SecondCelebi::", "IlexForest_EventScript_Sign::")
 battle = block(lab, "RuinsOfAlph_Lab_EventScript_RelicCelebi::", "RuinsOfAlph_Lab_EventScript_RelicSuicune::")
-scientist = block(lab, "RuinsOfAlph_Lab_EventScript_Scientist1::", "RuinsOfAlph_Lab_EventScript_RelicNeedsCrest::")
+scientist = block(lab, "RuinsOfAlph_Lab_EventScript_Scientist1::", "RuinsOfAlph_Lab_EventScript_IntroduceRelics::")
 
 for flag in flags:
     assert f"goto_if_unset {flag}," in trans, flag

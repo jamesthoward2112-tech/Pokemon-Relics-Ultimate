@@ -1044,10 +1044,10 @@ EcruteakCity_Theater_Text_ZukiDone:
 	.string "Please take it.$"
 
 EcruteakCity_Theater_Text_GirlHooh:
-	.string "Big sisters! I just saw the\n"
-	.string "big shadow of a POKéMON over\l"
-	.string "the TIN TOWER!\p"
-	.string "It could be...$"
+	.string "Big sisters! I saw a huge\n"
+	.string "blue-crystal winged POKéMON\l"
+	.string "above the TIN TOWER!\p"
+	.string "Could it be the guardian?$"
 
 EcruteakCity_Theater_Text_GirlLugia:
 	.string "Big sisters! I just saw the\n"
@@ -1057,8 +1057,9 @@ EcruteakCity_Theater_Text_GirlLugia:
 
 EcruteakCity_Theater_Text_ZukiHooh:
 	.string "ZUKI: {PLAYER}!\n"
-	.string "We'll be at the TIN TOWER.\n"
-	.string "See you there!$"
+	.string "We'll perform our ceremony\n"
+	.string "at the TIN TOWER summit.\p"
+	.string "The guardian is waiting.$"
 
 EcruteakCity_Theater_Text_ZukiLugia:
 	.string "ZUKI: {PLAYER}!\n"

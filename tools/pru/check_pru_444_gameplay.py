@@ -51,6 +51,13 @@ for entry in visual_forms["forms"]:
         approved_e20_form_slots.add((trainer_base + suffix, entry["form"]))
 assert len(visual_forms["forms"]) == 15, "E20 custom art manifest changed; re-audit approved visuals"
 
+# Tin Tower's non-catchable ceremony boss uses a dedicated visual form that
+# resolves to Dragonite's existing National Dex entry. It is not a roster or
+# wild-encounter addition, and only this exact trainer can use it.
+approved_guardian_slots = {
+    ("TRAINER_PRU_ANCIENT_GUARDIAN_DRAGONITE", "Ancient Guardian Dragonite"),
+}
+
 errors = []
 trainer_count = 0
 pokemon_count = 0
@@ -68,7 +75,9 @@ for section in re.split(r"(?=^=== TRAINER_[^\n]+ ===\s*$)", party, flags=re.M):
         species = name.split(" @ ", 1)[0].strip()
         species = re.sub(r" \([FM]\)$", "", species)
         pokemon_count += 1
-        if species not in allowed_names and name_aliases.get(species) not in allowed_names and (trainer, species) not in approved_e20_form_slots:
+        if (species not in allowed_names and name_aliases.get(species) not in allowed_names
+                and (trainer, species) not in approved_e20_form_slots
+                and (trainer, species) not in approved_guardian_slots):
             errors.append(f"{trainer}: forbidden trainer Pokémon {species}")
 assert trainer_count >= 650 and pokemon_count >= 1800, (
     "Trainer file was unexpectedly truncated or audit skipped trainer data"
@@ -122,7 +131,7 @@ if errors:
     for problem in errors[:120]:
         print("  " + problem)
     raise SystemExit(1)
-print(f"PASS: {trainer_count} HNS trainers / {pokemon_count} legal Pokémon (including exact approved E20 trainer-only forms)")
+print(f"PASS: {trainer_count} HNS trainers / {pokemon_count} legal Pokémon (including approved trainer-only visual forms)")
 print(f"PASS: {len(wild_maps)} HNS wild maps / {wild_slots} legal wild slots")
 print(f"PASS: {event_scripts} HNS map scripts with no unapproved out-of-dex species constants")
 print("PASS: evolution targets remain confined to the approved 450")

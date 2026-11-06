@@ -3582,10 +3582,10 @@
 #define FLAG_PRU_RELIC_OAK_EPILOGUE_COMPLETE                    0x94C
 #define FLAG_PRU_RAYQUAZA_CAUGHT                                0x94D
 #define FLAG_PRU_HIDE_RAYQUAZA                                  0x94E
-#define FLAG_UNUSED_0x94F                                       0
-#define FLAG_UNUSED_0x950                                       0
-#define FLAG_UNUSED_0x951                                       0
-#define FLAG_UNUSED_0x952                                       0
+#define FLAG_PRU_HOOH_FINALE_COMPLETE                          0x94F
+#define FLAG_PRU_TIN_GUARDIAN_DEFEATED                         0x950
+#define FLAG_HIDE_TIN_TOWER_GUARDIAN                           0x951
+#define FLAG_HIDE_MT_SILVER_GOLDEN_HO_OH                       0x952
 #define FLAG_UNUSED_0x953                                       0
 #define FLAG_UNUSED_0x954                                       0
 #define FLAG_UNUSED_0x955                                       0
