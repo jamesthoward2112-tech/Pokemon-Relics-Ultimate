@@ -1050,9 +1050,9 @@ PRU_Elite20_CinematicPrelude::
 	return
 
 PRU_Elite20_Text_CinematicPrelude:
-	.string "The sky glows with ancient\\n"
-	.string "GOLDEN wings...\\p"
-	.string "The RELICS have awakened.\\n"
+	.string "The sky glows with ancient\n"
+	.string "GOLDEN wings...\p"
+	.string "The RELICS have awakened.\n"
 	.string "Your journey is not over!$"
 
 PRU_Elite20_Text_FinalCelebration:
