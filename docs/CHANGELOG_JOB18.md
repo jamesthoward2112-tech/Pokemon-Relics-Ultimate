@@ -18,5 +18,9 @@
 
 - Source regressions: `check_job18_story.py`, `check_golden_hooh.py`, and `check_job18_assets.py` pass.
 - `git diff --check` passes.
-- Local ROM build is unavailable because this environment lacks `arm-none-eabi-gcc`, `pkg-config`, and libpng headers. The canonical hosted build is running; it has passed setup, source regressions, art installation, Dragonite asset checks, and the sprite audits. Hosted compilation and mGBA boot are pending.
-- The genuine pre-Dragonite `.sav`, mGBA save/reload test, compiled ROM, hosted emulator results, commit SHA, and release URLs will be recorded after the clean build/save validation completes. No test save or ROM is claimed in this source-only checkpoint.
+- GitHub Actions run [42274347783](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/actions/runs/42274347783) passed source regressions, Golden Reign/Phoenix Soul battle-engine tests, clean build, compiled sprite checks, exact 32 MiB ROM verification, and mGBA boot with the existing inspection save.
+- ROM size: 33,554,432 bytes. SHA-256: `87be3adf60608fcd452dc567198703f225d3cd8e250b36065773807c77ca03d2`.
+- Release: [Pokémon Relics Ultimate — Job 18 Test Release](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/tag/pru-job18-test-40490e6102). [Download the ROM](https://github.com/jamesthoward2112-tech/Pokemon-Relics-Ultimate/releases/download/pru-job18-test-40490e6102/Pokemon-Relics-Ultimate-40490e6102.gba).
+- The genuine pre-Dragonite `.sav` and mGBA save/close/reload test remain unavailable. Existing sprite QA saves do not satisfy this requirement and were excluded from the Job 18 release.
+- The mGBA check covers ROM boot using the existing inspection save; it does not validate the Dragonite ceremony, Golden Ho-Oh finale, save persistence, or dialogue visually. Player gameplay testing remains outstanding.
+- Source commit in the release: `40490e61023667726d039f2b1c731baa8b85328b`.
