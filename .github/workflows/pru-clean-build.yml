@@ -319,7 +319,7 @@ jobs:
           capture_mgba() {
             local image="$1" log="$2" startup_image="$3"
             xvfb-run -a -s '-screen 0 1280x960x24' bash -euo pipefail -c '
-              mgba-qt pokehns.gba >"$2" 2>&1 &
+              QT_OPENGL=software LIBGL_ALWAYS_SOFTWARE=1 mgba-qt pokehns.gba >"$2" 2>&1 &
               emulator_pid=$!
               trap "kill $emulator_pid >/dev/null 2>&1 || true; wait $emulator_pid >/dev/null 2>&1 || true" EXIT
               for attempt in $(seq 1 30); do
@@ -330,10 +330,10 @@ jobs:
               test -n "${window_id:-}"
               xdotool windowfocus "$window_id"
               sleep 5
-              import -window root "$3"
+              import -window "$window_id" "$3"
               xdotool key Return
               sleep 8
-              import -window root "$1"
+              import -window "$window_id" "$1"
             ' _ "$image" "$log" "$startup_image"
           }
           capture_mgba PRU-QA/video-review/mgba/pre-guardian-save.png PRU-QA/video-review/mgba/mgba-first-load.log PRU-QA/video-review/mgba/startup-first-load.png
@@ -353,10 +353,11 @@ jobs:
           from PIL import Image
           for filename in ('pre-guardian-save.png', 'pre-guardian-save-reloaded.png'):
               image = Image.open('PRU-QA/video-review/mgba/' + filename).convert('RGB')
-              colors = image.getcolors(maxcolors=image.width * image.height)
+              game_screen = image.crop((0, 20, image.width, image.height))
+              colors = game_screen.getcolors(maxcolors=game_screen.width * game_screen.height)
               assert image.width >= 240 and image.height >= 160
-              assert colors and len(colors) > 32
-              print(f'mGBA loaded and rendered {filename}: {image.width}x{image.height}, {len(colors)} colors')
+              assert colors and len(colors) > 32, f'mGBA game screen stayed blank for {filename}'
+              print(f'mGBA rendered the game screen for {filename}: {game_screen.width}x{game_screen.height}, {len(colors)} colors')
           PY
       - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4
