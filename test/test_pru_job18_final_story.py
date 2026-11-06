@@ -84,7 +84,7 @@ def test_tin_tower_uses_noncatchable_trainer_only_guardian():
     events = json.loads(read("data/maps/TinTower_RoofDay_hns/map.json"))
     gfx = [obj["graphics_id"] for obj in events["object_events"] if obj.get("local_id") == "LOCALID_HO_OH"]
     assert gfx == ["OBJ_EVENT_GFX_MON_BASE+SPECIES_DRAGONITE"]
-    assert "seteventmon SPECIES_DRAGONITE_RELIC, 60, ITEM_WEAKNESS_POLICY" in script
+    assert "seteventmon SPECIES_DRAGONITE_GUARDIAN, 60, ITEM_WEAKNESS_POLICY" in script
     assert "setflag FLAG_NO_WILD_CATCHING" in script
     assert "clearflag FLAG_NO_WILD_CATCHING" in script
     assert "B_OUTCOME_WON, TinTower_RoofDay_EventScript_GuardianDefeated" in script
@@ -96,7 +96,7 @@ def test_tin_tower_uses_noncatchable_trainer_only_guardian():
 
     pokemon = read("src/pokemon.c")
     eventmon = pokemon.split("void CreateEnemyEventMon(void)", 1)[1].split("static u16 CalculateBoxMonChecksum", 1)[0]
-    guardian = eventmon.split("if (species == SPECIES_DRAGONITE_RELIC && level == 60)", 1)[1].split("if (itemId)", 1)[0]
+    guardian = eventmon.split("if (species == SPECIES_DRAGONITE_GUARDIAN && level == 60)", 1)[1].split("if (itemId)", 1)[0]
     for text in (
         "NATURE_ADAMANT", "u8 abilityNum = 2", "MAX_PER_STAT_IVS", "MON_DATA_HP_EV",
         "MON_DATA_ATK_EV", "MON_DATA_SPEED_EV", "MOVE_DRAGON_DANCE", "MOVE_DUAL_WINGBEAT",
@@ -124,11 +124,14 @@ def test_exact_guardian_assets_and_exclusive_visual_identity():
         assert art.read_bytes() == asset.read_bytes()
 
     species = read("src/data/pokemon/species_info/pjr_families.h")
-    block = species.split("PJR_E4_VISUAL_FORM(SPECIES_DRAGONITE_RELIC", 1)[1].split(");", 1)[0]
+    block = species.split("PJR_E4_VISUAL_FORM(SPECIES_DRAGONITE_GUARDIAN", 1)[1].split(");", 1)[0]
     assert "gMonFrontPic_DragoniteGuardian" in block
     assert "gMonBackPic_DragoniteGuardian" in block
     assert "gMonIcon_DragoniteGuardian" in block
     assert "NATIONAL_DEX_DRAGONITE" in block
+    relic = species.split("PJR_E4_VISUAL_FORM(SPECIES_DRAGONITE_RELIC", 1)[1].split(");", 1)[0]
+    assert "gMonFrontPic_Dragonite," in relic and "gMonBackPic_Dragonite," in relic
+    assert "SPECIES_DRAGONITE_GUARDIAN" not in read("src/data/pokemon/pru_dex_order.h")
     assert "SPECIES_DRAGONITE_RELIC" not in "\n".join(
         p.read_text(errors="ignore") for p in (ROOT / "data/trainers").glob("*.inc")
     ) if (ROOT / "data/trainers").exists() else True
@@ -137,7 +140,8 @@ def test_exact_guardian_assets_and_exclusive_visual_identity():
 def test_new_dialogue_pages_fit_gba_text_windows():
     assert_dialogue_fits(
         "data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc",
-        ["PRU_Elite20_Text_OakRelics", "PRU_Elite20_Text_GoldenSky"],
+        ["PRU_Elite20_Text_OakRelics", "PRU_Elite20_Text_GoldenSky",
+         "PRU_Elite20_Text_RelicsAlreadyFound", "PRU_Elite20_Text_RepeatReveal"],
     )
     assert_dialogue_fits(
         "data/maps/RuinsOfAlph_Lab_hns/scripts.inc",
