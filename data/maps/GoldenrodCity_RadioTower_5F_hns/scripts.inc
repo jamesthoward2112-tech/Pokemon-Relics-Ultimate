@@ -59,29 +59,16 @@ GoldenrodCity_RadioTower_5F_EventScript_Director::
 	release
 	end
 
+@ Preserve Rocket state completion for existing saves without old Wing gifts.
 GoldenrodCity_RadioTower_5F_EventScript_ChooseWing::
-	msgbox GoldenrodCity_RadioTower_5F_Text_ChooseWing, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, GoldenrodCity_RadioTower_5F_EventScript_ChooseSilverWing
-	setvar VAR_LUGIA_OR_HOOH, 2
-	return
-
 GoldenrodCity_RadioTower_5F_EventScript_ChooseSilverWing::
 	setvar VAR_LUGIA_OR_HOOH, 1
 	return
 
 GoldenrodCity_RadioTower_5F_EventScript_RecoverMissedWing::
-	msgbox GoldenrodCity_RadioTower_5F_Text_DirectorForgotWing, MSGBOX_DEFAULT
-	call GoldenrodCity_RadioTower_5F_EventScript_ChooseWing
-	goto_if_eq VAR_LUGIA_OR_HOOH, 1, GoldenrodCity_RadioTower_5F_EventScript_RecoverSilverWing
-	giveitem ITEM_RAINBOW_WING
-	msgbox GoldenrodCity_RadioTower_5F_Text_RecoveredRainbowWing, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
 GoldenrodCity_RadioTower_5F_EventScript_RecoverSilverWing::
-	giveitem ITEM_SILVER_WING
-	msgbox GoldenrodCity_RadioTower_5F_Text_RecoveredSilverWing, MSGBOX_DEFAULT
+	setvar VAR_LUGIA_OR_HOOH, 1
+	msgbox GoldenrodCity_RadioTower_5F_Text_AlphSignal, MSGBOX_DEFAULT
 	closemessage
 	release
 	end
@@ -204,8 +191,7 @@ GoldenrodCity_RadioTower_5F_EventScript_WingTop::
 	turnobject OBJ_EVENT_ID_PLAYER, DIR_EAST
 	msgbox GoldenrodCity_RadioTower_5F_Text_DirectorThanks, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_LUGIA_OR_HOOH, 1,  GoldenrodCity_RadioTower_5F_EventScript_GiveTidalWing
-	call_if_eq VAR_LUGIA_OR_HOOH, 2, GoldenrodCity_RadioTower_5F_EventScript_GiveClearWing
+	msgbox GoldenrodCity_RadioTower_5F_Text_AlphSignal, MSGBOX_DEFAULT
 	applymovement LOCALID_DIRECTOR_STUDIO, GoldenrodCity_RadioTower_5F_Movement_LeaveTop
 	waitmovement 0
 	goto GoldenrodCity_RadioTower_5F_Fakeout
@@ -218,8 +204,7 @@ GoldenrodCity_RadioTower_5F_EventScript_WingMid::
 	turnobject OBJ_EVENT_ID_PLAYER, DIR_EAST
 	msgbox GoldenrodCity_RadioTower_5F_Text_DirectorThanks, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_LUGIA_OR_HOOH, 1,  GoldenrodCity_RadioTower_5F_EventScript_GiveTidalWing
-	call_if_eq VAR_LUGIA_OR_HOOH, 2, GoldenrodCity_RadioTower_5F_EventScript_GiveClearWing
+	msgbox GoldenrodCity_RadioTower_5F_Text_AlphSignal, MSGBOX_DEFAULT
 	applymovement LOCALID_DIRECTOR_STUDIO, GoldenrodCity_RadioTower_5F_Movement_LeaveMid
 	waitmovement 0
 	goto GoldenrodCity_RadioTower_5F_Fakeout
@@ -232,23 +217,16 @@ GoldenrodCity_RadioTower_5F_EventScript_WingBot::
 	turnobject OBJ_EVENT_ID_PLAYER, DIR_EAST
 	msgbox GoldenrodCity_RadioTower_5F_Text_DirectorThanks, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_LUGIA_OR_HOOH, 1,  GoldenrodCity_RadioTower_5F_EventScript_GiveTidalWing
-	call_if_eq VAR_LUGIA_OR_HOOH, 2, GoldenrodCity_RadioTower_5F_EventScript_GiveClearWing
+	msgbox GoldenrodCity_RadioTower_5F_Text_AlphSignal, MSGBOX_DEFAULT
 	applymovement LOCALID_DIRECTOR_STUDIO, GoldenrodCity_RadioTower_5F_Movement_LeaveBot
 	waitmovement 0
 	goto GoldenrodCity_RadioTower_5F_Fakeout
 	end
 
+@ Legacy aliases retained for old event references, but no item awards.
 GoldenrodCity_RadioTower_5F_EventScript_GiveTidalWing::
-	giveitem ITEM_SILVER_WING
-	msgbox GoldenrodCity_RadioTower_5F_Text_DirectorTidalWingExplanation, MSGBOX_DEFAULT
-	closemessage
-	release
-	return
-
 GoldenrodCity_RadioTower_5F_EventScript_GiveClearWing::
-	giveitem ITEM_RAINBOW_WING
-	msgbox GoldenrodCity_RadioTower_5F_Text_DirectorClearWingExplanation, MSGBOX_DEFAULT
+	msgbox GoldenrodCity_RadioTower_5F_Text_AlphSignal, MSGBOX_DEFAULT
 	closemessage
 	release
 	return
@@ -425,38 +403,23 @@ GoldenrodCity_RadioTower_5F_Text_DirectorTidalWingExplanation:
 
 GoldenrodCity_RadioTower_5F_Text_DirectorLegendary:
 	.string "DIRECTOR: One more thing...\p"
-	.string "This old WING began vibrating\n"
-	.string "during ROCKET's broadcast.\p"
-	.string "ECRUTEAK's legends and ALPH may\n"
-	.string "be part of the same story.$"
+	.string "Our instruments picked up a\n"
+	.string "strange signal from ALPH.\p"
+	.string "The ancient ruins may hold\n"
+	.string "the next clue.$"
 
 GoldenrodCity_RadioTower_5F_Text_DirectorFakeout:
-	.string "Are you expecting something?\n"
-	.string "This is what they call FAKE OUT.\p"
-	.string "I really must go back to my OFFICE\n"
-	.string "this time. See ya!$"
+	.string "I really must go back to my\n"
+	.string "OFFICE this time. See ya!$"
 
 GoldenrodCity_RadioTower_5F_Text_DirectorForgotWing:
-	.string "DIRECTOR: {PLAYER}! Wait!\p"
-	.string "I just realized I never gave you\n"
-	.string "your reward for saving us.\p"
-	.string "Let's fix that right now.$"
-
 GoldenrodCity_RadioTower_5F_Text_ChooseWing:
-	.string "The SILVER WING is tied to LUGIA\n"
-	.string "at the WHIRL ISLANDS.\p"
-	.string "Would you like the SILVER WING?\p"
-	.string "Choose NO for the RAINBOW WING.$"
-
 GoldenrodCity_RadioTower_5F_Text_RecoveredSilverWing:
-	.string "DIRECTOR: There you are!\p"
-	.string "That SILVER WING may lead you to\n"
-	.string "LUGIA at the WHIRL ISLANDS.$"
-
 GoldenrodCity_RadioTower_5F_Text_RecoveredRainbowWing:
-	.string "DIRECTOR: There you are!\p"
-	.string "The RAINBOW WING holds a trace\n"
-	.string "of Tin Tower's ancient guardian.$"
+GoldenrodCity_RadioTower_5F_Text_AlphSignal:
+	.string "DIRECTOR: Thank you again!\p"
+	.string "Our research points towards\n"
+	.string "the RUINS OF ALPH.$"
 
 GoldenrodCity_RadioTower_5F_Text_DirectorIntro:
 	.string "DIRECTOR: Hello, {PLAYER}!\p"

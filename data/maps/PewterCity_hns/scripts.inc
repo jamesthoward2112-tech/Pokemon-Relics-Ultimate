@@ -17,37 +17,16 @@ PewterCity_EventScript_BugCatcher::
 PewterCity_EventScript_Gramps::
 	lock
 	faceplayer
-	goto_if_eq VAR_LUGIA_OR_HOOH, 1, PewterCity_EventScript_GrampsRainbowWing
-	goto_if_eq VAR_LUGIA_OR_HOOH, 2, PewterCity_EventScript_GrampsSilverWing
+	msgbox PewterCity_Text_Gramps, MSGBOX_DEFAULT
+	closemessage
+	release
 	end
 
+@ Obsolete wing entry points: do not grant items or fabricate legendary flags.
 PewterCity_EventScript_GrampsRainbowWing::
-	checkitem ITEM_RAINBOW_WING
-	goto_if_eq VAR_RESULT, TRUE, PewterCity_EventScript_GrampsDone
-	msgbox PewterCity_Text_Gramps, MSGBOX_DEFAULT
-	setvar VAR_COMPLETED_HO_OH, 4
-	giveitem ITEM_RAINBOW_WING
-	setflag FLAG_HIDE_TINTOWER_GUARD
-	closemessage
-	release
-	end
-
 PewterCity_EventScript_GrampsSilverWing::
-	checkitem ITEM_SILVER_WING
-	goto_if_eq VAR_RESULT, TRUE, PewterCity_EventScript_GrampsDone
-	msgbox PewterCity_Text_Gramps, MSGBOX_DEFAULT
-	setvar VAR_COMPLETED_LUGIA, 4
-	giveitem ITEM_SILVER_WING
-	setflag FLAG_HIDE_WHIRL_ISLANDS_TENTACRUEL
-	closemessage
-	release
-	end
-
 PewterCity_EventScript_GrampsDone::
-	msgbox PewterCity_Text_Gramps_GotSilverWing, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
+	goto PewterCity_EventScript_Gramps
 
 PewterCity_EventScript_Bugcatcher::
 	msgbox PewterCity_Text_BugCatcher, MSGBOX_NPC
@@ -73,8 +52,8 @@ PewterCity_Text_Gramps:
 	.string "young, I went to JOHTO to train.\p"
 	.string "You remind me so much of what I was like\n"
 	.string "as a young man.\p"
-	.string "Here. I want you to have this item I\n"
-	.string "found in JOHTO.$"
+	.string "The RUINS OF ALPH hold secrets.\n"
+	.string "I hope you uncover them.$"
 
 PewterCity_Text_Gramps_GotSilverWing:
 	.string "Going to new, unknown places and seeing\n"

@@ -56,11 +56,15 @@ EcruteakBellchimeTrail_Movement_CameraPanUp::
 EcruteakBellchimeTrail_EventScript_RelicShortcut::
 	@ PRU is a fresh standalone story. Never backfill or create mythical
 	@ catches from old VAR_COMPLETED_HO_OH / defeated-Red flags.
-	@ The actual seven captured RELICS and real Crest must unlock the roof.
+	@ Access follows completed Elite 20 and the seven RELICS, never a relic item.
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
+	goto_if_unset FLAG_PJR_RELIC_RAIKOU, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
+	goto_if_unset FLAG_PJR_RELIC_ENTEI, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
+	goto_if_unset FLAG_PJR_RELIC_LUGIA, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
+	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
+	goto_if_unset FLAG_PJR_RELIC_CELEBI, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
+	goto_if_unset FLAG_PJR_RELIC_SUICUNE, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
 	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	checkitem ITEM_ANCIENT_RAINBOW_CREST
-	goto_if_eq VAR_RESULT, FALSE, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
 	goto EcruteakBellchimeTrail_EventScript_RelicShortcutReady
 
 EcruteakBellchimeTrail_EventScript_RelicShortcutReady::
@@ -74,11 +78,11 @@ EcruteakBellchimeTrail_EventScript_RelicShortcutDormant::
 	end
 
 EcruteakBellchimeTrail_Text_RelicShortcutReady:
-	.string "The ANCIENT RAINBOW CREST glows.\p"
-	.string "A hidden passage opens toward the\n"
-	.string "roof of TIN TOWER.$"
+	.string "The seven RELICS resonate.\p"
+	.string "A passage opens to the\n"
+	.string "TIN TOWER roof.$"
 
 EcruteakBellchimeTrail_Text_RelicShortcutDormantMsg:
 	.string "The ancient statue is silent.\p"
-	.string "The FIRST VOICE and RED's CREST\n"
-	.string "must awaken its passage.$"
+	.string "Complete the ELITE 20 and\n"
+	.string "gather all seven RELICS.$"

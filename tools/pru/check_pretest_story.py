@@ -57,13 +57,11 @@ flags = (
 positions = [alph.index("goto_if_unset " + flag + ",") for flag in flags]
 assert positions == sorted(positions), "R-E-L-I-C-S order changed"
 assert "goto_if_set FLAG_PJR_RELIC_HO_OH, RuinsOfAlph_Lab_EventScript_RelicsFullyComplete" in alph
-assert "goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, RuinsOfAlph_Lab_EventScript_RelicNeedsCrest" in alph
+assert "goto_if_unset FLAG_PRU_ELITE18_CLEARED, RuinsOfAlph_Lab_EventScript_RelicNeedsElite20" in alph
 assert "RuinsOfAlph_Lab_Text_RelicsFullyComplete:" in alph
-assert "the TIN TOWER roof" in alph
-assert "FLAG_PJR_GOT_RAINBOW_CREST" in crest
-assert "goto_if_eq VAR_RESULT, FALSE, MtSilver_SummitDay_EventScript_CrestFullBag" in crest
-assert "goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_ContinueClear" in crest
-assert "MtSilver_SummitDay_EventScript_CheckPendingCrest::" in crest
+assert "MT. SILVER's summit" in alph
+assert "giveitem ITEM_ANCIENT_RAINBOW_CREST" not in crest
+assert "FLAG_PJR_GOT_RAINBOW_CREST" not in crest
 assert "MtSilver_SummitDay_EventScript_RedBattleNormal::" in crest
 trail = (map_dir / "BellchimeTrail_hns" / "scripts.inc").read_text()
 assert "EcruteakBellchimeTrail_EventScript_RelicShortcut::" in trail
@@ -107,8 +105,7 @@ for permanent in ("FLAG_CAUGHT_MEW", "FLAG_CAUGHT_ENTEI", "FLAG_CAUGHT_RAIKOU",
 
 # For transparent QA: unresolved previously inherited PJR event problems.
 warnings = []
-if "giveitem ITEM_ANCIENT_RAINBOW_CREST\n\tsetflag FLAG_PJR_GOT_RAINBOW_CREST" in crest:
-    warnings.append("Red's Ancient Rainbow Crest handoff does not check bag-full outcome.")
+# Rainbow Crest rewards are no longer part of the final PRU storyline.
 
 # Machine-scan EVERY HNS map dialogue file for dead Kanto-first or sequel phrases.
 candidates = {

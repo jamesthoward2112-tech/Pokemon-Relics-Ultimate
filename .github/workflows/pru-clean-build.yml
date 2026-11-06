@@ -184,6 +184,7 @@ jobs:
           python3 tools/pru/check_job9_trainer_forfeit.py
           python3 tools/pru/check_golden_hooh.py
           python3 test/test_pru_job18_final_story.py
+          python3 test/test_pru_final_polish_names_items.py
           python3 test/test_pru_e20_finale_story.py
           python3 - <<'PY'
           import os, subprocess, sys

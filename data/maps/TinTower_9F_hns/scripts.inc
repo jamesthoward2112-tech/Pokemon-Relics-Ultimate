@@ -12,7 +12,7 @@ TinTower_9F_OnTransition::
 
 TinTower_9F_EventScript_SyncFinalRocketState::
 	setvar VAR_TEMP_0, 0
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, TinTower_9F_EventScript_HideFinalRocket
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, TinTower_9F_EventScript_HideFinalRocket
 	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, TinTower_9F_EventScript_HideFinalRocket
 	goto_if_set FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED, TinTower_9F_EventScript_HideFinalRocket
 	setvar VAR_TEMP_0, 1
@@ -25,7 +25,7 @@ TinTower_9F_EventScript_HideFinalRocket::
 	return
 
 TinTower_9F_EventScript_JessieJamesTrigger::
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, TinTower_9F_EventScript_NoFinalRocket
+	goto_if_unset FLAG_PRU_ELITE18_CLEARED, TinTower_9F_EventScript_NoFinalRocket
 	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, TinTower_9F_EventScript_NoFinalRocket
 	goto_if_set FLAG_PJR_JESSIE_JAMES_FINAL_DEFEATED, TinTower_9F_EventScript_NoFinalRocket
 	lockall
