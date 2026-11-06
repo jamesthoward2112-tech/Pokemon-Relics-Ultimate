@@ -20,10 +20,13 @@ def donor_palette(name):
         src = im.getpalette()[:48]
     return [tuple(round(v * 31 / 255) for v in src[i:i + 3]) for i in range(0, 48, 3)]
 
-# Khang's indexed icon uses the standard PRU icon palette selected by its
-# SpeciesInfo; it must not borrow the unrelated Articuno-P custom palette.
+# New user-approved Khang and Nolax icons use distinct RGB555 palettes
+# at indexes 18 and 19, never Articuno's 11 or the PC-reserved 15.
 assert "{ sPRUArticunoPIconPalette, POKE_ICON_BASE_PAL_TAG + 11 }" in code
-assert not re.search(r"if \(species == SPECIES_KHANG\)", code)
+assert re.search(r"if \(species == SPECIES_KHANG\)\s*return 18;", code)
+assert re.search(r"if \(species == SPECIES_NOLAX\)\s*return 19;", code)
+assert palette("sPRUKhangIconPalette") == donor_palette("khang")
+assert palette("sPRUNolaxIconPalette") == donor_palette("nolax")
 assert "gMonIcon_Khang" in species
 assert re.search(r"gMonIcon_Khang,[\s\S]*?P_GBA_STYLE_SPECIES_ICONS \? 1 : 2\)", species)
 
