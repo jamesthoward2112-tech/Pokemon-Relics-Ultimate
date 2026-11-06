@@ -72,3 +72,7 @@
 - Corrected the test save's SaveBlock2 and SaveBlock1 checksums and its party, flag, variable and bag offsets against the compiled ROM header after a startup corruption warning was reported. The build now checks mGBA screenshots for the warning and requires a rendered game viewport; the earlier screenshot check captured a blank emulator window. CI now forces mGBA's software display renderer to avoid that blank OpenGL output.
 
 **QA limit:** sector and Pokémon checksums, event flags, location and party contents are verified by `tools/pru/check_job18_test_save.py`. The hosted mGBA viewport/load check is separate from hands-on gameplay testing; the ceremony battle and Golden Ho-Oh ending still need gameplay QA.
+
+## Job 18 Test Fix
+- Keep the Ancient Guardian hidden while Tin Tower loads; reveal it only when the Kimono Girls' ceremony begins.
+- Arm the pre-ceremony test save at the event trigger with Elite 20 and all seven RELICS completed.

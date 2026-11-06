@@ -7,7 +7,8 @@ TinTower_RoofDay_OnTransition:
 	call_if_unset FLAG_DAY_POKEMON, TinTower_RoofDay_EventScript_SetDay
 	call TinTower_RoofDay_EventScript_SyncGuardianState
 	goto_if_set FLAG_PRU_GUARDIAN_DRAGONITE_COMPLETE, TinTower_RoofDay_MapScript_GuardianResolved
-	goto_if_eq VAR_COMPLETED_HO_OH, 2, TinTower_RoofDay_MapScript_HoohStory
+	@ Keep the hidden Guardian off the map until the ceremony calls it.
+	goto_if_eq VAR_COMPLETED_HO_OH, 2, TinTower_RoofDay_MapScript_GuardianReady
 	goto_if_eq VAR_COMPLETED_HO_OH, 3, TinTower_RoofDay_MapScript_HoohPostStoryGone
 	goto_if_eq VAR_COMPLETED_HO_OH, 4, TinTower_RoofDay_MapScript_HoohPostStoryEncounter
 	end
@@ -43,6 +44,10 @@ TinTower_RoofDay_EventScript_SetDay::
 
 TinTower_RoofDay_MapScript_HoohStory::
 	clearflag FLAG_HIDE_HO_OH
+	end
+
+TinTower_RoofDay_MapScript_GuardianReady::
+	setflag FLAG_HIDE_HO_OH
 	end
 
 TinTower_RoofDay_MapScript_HoohPostStoryGone::
@@ -158,6 +163,7 @@ TinTower_RoofDay_EventScript_TalkToKimono::
 	waitmovement 0
 	playse SE_M_PETAL_DANCE
 	waitse
+	clearflag FLAG_HIDE_HO_OH
 	setvar VAR_TEMP_1, 1
 	special SpawnCameraObject
 	setvar VAR_0x8004, 3  @ num loops

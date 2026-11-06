@@ -55,7 +55,7 @@ sb1 = b"".join(rows[i][:DATA_SIZE] for i in range(1, 4)) + rows[4][:sizes[4]]
 groups = json.loads((ROOT / "data/maps/map_groups.json").read_text())
 map_group = list(groups).index("gMapGroup_Dungeons_Hns")
 map_num = groups["gMapGroup_Dungeons_Hns"].index("TinTower_RoofDay_hns")
-assert struct.unpack_from("<bbbxhh", sb1, 0x04) == (map_group, map_num, -1, 10, 13)
+assert struct.unpack_from("<bbbxhh", sb1, 0x04) == (map_group, map_num, -1, 9, 13)
 assert struct.unpack_from("<H", sb1, 0)[0] == 6, "SaveBlock1 version is not current"
 assert sb1[PARTY_COUNT_OFFSET] == 6
 
@@ -67,7 +67,7 @@ assert flag(0x89F) and flag(0x941), "Champion and Elite 20 prerequisites missing
 assert all(flag(value) for value in range(0x8CB, 0x8D2)), "one or more RELICS missing"
 assert not any(flag(value) for value in (0x94F, 0x950, 0x8D4, 0x23C)), "Guardian/Ho-Oh event already resolved"
 assert not flag(0x07E) and flag(0x03D), "Kimono Girls/legacy Ho-Oh visibility flags incorrect"
-assert struct.unpack_from("<H", sb1, SAVEBLOCK1_VARS_OFFSET + (0x405E - 0x4000) * 2)[0] == 0
+assert struct.unpack_from("<H", sb1, SAVEBLOCK1_VARS_OFFSET + (0x405E - 0x4000) * 2)[0] == 2
 
 species_ids = range(1578, 1584)
 for i, expected_species in enumerate(species_ids):
@@ -89,5 +89,5 @@ medicine = 0x564 + (236 + 60 + 39 + 160 + 66) * 4
 healing = [struct.unpack_from("<HH", sb1, medicine + 4 * i) for i in range(4)]
 assert healing == [(30, 20), (33, 10), (31, 5), (34, 5)], healing
 print(f"PASS: valid 128 KiB dual-slot save; latest counter {counter}; all sector and Pokémon checksums")
-print("PASS: Tin Tower (10,13), Champion + Elite 20 + seven RELICS; Dragonite/Ho-Oh/finale flags unresolved")
+print("PASS: Tin Tower (9,13), ceremony trigger armed (VAR_COMPLETED_HO_OH=2), Dragonite/Ho-Oh finale unresolved")
 print("PASS: six healthy level-60 party members and 40 healing items")

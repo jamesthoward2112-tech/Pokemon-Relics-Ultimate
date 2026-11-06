@@ -141,6 +141,8 @@ jobs:
         run: python3 tools/pru/check_sprite_qa_save.py assets/test_saves/Pru.sav
       - name: Validate the dedicated Job 18 pre-Guardian save
         run: python3 tools/pru/check_job18_test_save.py assets/test_saves/PRU_Job18_Before_Ancient_Guardian.sav
+      - name: Check armed Tin Tower Guardian ceremony trigger
+        run: python3 tools/pru/check_job18_guardian_trigger.py
       - name: Run source regression tests
         if: "${{ github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
         run: |
