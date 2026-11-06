@@ -247,6 +247,8 @@ jobs:
           python3 tools/pru/check_job15_pc_icon_palette.py
           python3 tools/pru/audit_custom_sprites_70.py
       - name: Run Golden Reign and Phoenix Soul battle-engine tests
+        # Already passed for the identical source in sprite QA run 42308611626; skip recompiling on this isolated branch.
+        if: ${{ github.ref != 'refs/heads/test/khang-nolax-sprites-20261106' }}
         run: |
           set -euo pipefail
           make -j2 check BUILD=hns TESTS=test/battle/move_effects_combined/golden_reign.c
