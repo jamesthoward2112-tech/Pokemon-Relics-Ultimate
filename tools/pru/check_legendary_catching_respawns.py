@@ -72,8 +72,9 @@ hooh = read("data/maps/TinTower_RoofDay_hns/scripts.inc")
 assert "goto_if_set FLAG_CAUGHT_HO_OH, TinTower_RoofDay_MapScript_HoohCaught" in hooh
 assert "TinTower_RoofDay_EventScript_HoOhRetry::" not in hooh
 assert "TinTower_RoofDay_EventScript_HoOhPostgame::" not in hooh
-assert "BattleSetup_StartLegendaryBattle" not in hooh
 assert "seteventmon SPECIES_HO_OH" not in hooh
+assert "seteventmon SPECIES_DRAGONITE_RELIC, 60, ITEM_WEAKNESS_POLICY" in hooh
+assert "BattleSetup_StartLegendaryBattle" in hooh
 assert "TinTower_RoofDay_EventScript_HoOhStoryFarewell::" in hooh
 assert "setvar VAR_COMPLETED_HO_OH, 3" in hooh
 for path in ("data/maps/NavelRock_Summit_Frlg/scripts.inc", "data/maps/NavelRock_Top/scripts.inc"):
@@ -98,7 +99,7 @@ assert "SPECIES_JIRACHI, 50" in read("data/maps/MtMoon_Outside_hns/scripts.inc")
 print("PASS: legends use rate floor 20 only in HNS legendary/roamer encounters")
 print("PASS: 15 static legendary hide flags restore only for seen, uncaught species")
 print("PASS: Jirachi and Celebi story gates; Mew and Deoxys defeat markers reset")
-print("PASS: Tin Tower/Navel Rock are non-catchable story flybys; Oak is the sole Lv100 Relic Ho-Oh encounter")
+print("PASS: Tin Tower uses the non-catchable Lv60 Guardian Dragonite boss; Oak is the sole Lv100 Relic Ho-Oh encounter")
 print("PASS: all PRU wild legendaries fight (including Latias/Latios), cannot flee/Teleport/Roar")
 print("PASS: Latias/Latios and Kanto bird roamers recover after KO, retire after capture")
 
