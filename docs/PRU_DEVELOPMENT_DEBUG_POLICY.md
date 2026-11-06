@@ -15,3 +15,12 @@
 When the creator explicitly asks to prepare **Master Alpha**, change `DEBUG_OVERWORLD_MENU` to `FALSE`, verify the master source and all published GBA binaries have **no functional debug access**, and run the complete regression, gameplay and emulator checks. A separate `make hns RELEASE=1` build also disables debug by design, but **do not** treat that alone as evidence that Master Alpha has been approved.
 
 This instruction supersedes the previous request to keep debug disabled during the interim PRU development period.
+
+## E20 fast battle testing (development builds)
+
+- `DEBUG_BATTLE_MENU` is `DISABLED_ON_RELEASE` (enabled in ordinary `make hns` development builds).
+- At the normal Fight/Bag/Pokémon/Run battle-action selection, **press START**, select **Win Encounter**, and confirm with A to immediately resolve the active battle as a victory. Repeat for subsequent Elite 20 battles.
+- In a debug-enabled battle, **SELECT** toggles HP bars/numbers instead. In release builds, original START-to-toggle-HP behaviour remains unchanged.
+- START inside move selection retains its existing Z-Move/Mega/gimmick behaviour. This shortcut is on the outer action menu, not the move list.
+- The existing trainer-battle Quit/Forfeit restriction is not changed: this is an intentional development-only victory shortcut.
+- The battle shortcut must also be removed/disabled in **Master Alpha**. `RELEASE=1` automatically disables it; final Alpha must explicitly verify both overworld and battle debug are unavailable.

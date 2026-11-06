@@ -401,14 +401,16 @@ static void HandleInputChooseAction(enum BattlerId battler)
             }
         }
     }
-    else if (JOY_NEW(START_BUTTON))
+    else if (DEBUG_BATTLE_MENU == TRUE && JOY_NEW(START_BUTTON))
     {
-        SwapHpBarsWithHpText();
-    }
-    else if (DEBUG_BATTLE_MENU == TRUE && JOY_NEW(SELECT_BUTTON))
-    {
+        // PRU playtest shortcut: START opens Win Encounter for fast E20 testing.
         BtlController_EmitTwoReturnValues(battler, B_COMM_TO_ENGINE, B_ACTION_DEBUG, 0);
         BtlController_Complete(battler);
+    }
+    else if (JOY_NEW(START_BUTTON) || (DEBUG_BATTLE_MENU == TRUE && JOY_NEW(SELECT_BUTTON)))
+    {
+        // Keep the usual START HP toggle in non-debug ROMs, SELECT in debug ROMs.
+        SwapHpBarsWithHpText();
     }
     else if (B_LAST_USED_BALL == TRUE && B_LAST_USED_BALL_CYCLE == FALSE
              && JOY_NEW(B_LAST_USED_BALL_BUTTON) && CanThrowLastUsedBall())

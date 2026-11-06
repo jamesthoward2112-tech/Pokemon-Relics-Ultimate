@@ -328,7 +328,7 @@ static const struct ListMenuItem sMainListItems[] =
     {COMPOUND_STRING("AI Info"),      LIST_ITEM_AI_INFO},
     {COMPOUND_STRING("AI Party"),     LIST_ITEM_AI_PARTY},
     {COMPOUND_STRING("Various"),      LIST_ITEM_VARIOUS},
-    {COMPOUND_STRING("Instant Win"),  LIST_ITEM_INSTANT_WIN},
+    {COMPOUND_STRING("Win Encounter"), LIST_ITEM_INSTANT_WIN},
 };
 
 static const struct ListMenuItem sStatsListItems[] =

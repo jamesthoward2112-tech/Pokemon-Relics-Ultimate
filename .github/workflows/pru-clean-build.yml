@@ -184,6 +184,7 @@ jobs:
           python3 test/test_pru_job16_cinematic.py
           python3 test/test_pru_job17_custom_credits.py
           python3 test/test_pru_development_debug.py
+          python3 test/test_pru_battle_win_encounter.py
           python3 tools/pru/check_dark_void_i_unown.py
           python3 test/test_pru_mystery_egg_seller.py
           python3 test/test_pru_ecruteak_rock_shop.py
