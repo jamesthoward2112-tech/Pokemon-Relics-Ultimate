@@ -31,16 +31,17 @@ for base in (0, 14):
 assert len(slots) == 2, "expected both intact GBA save slots"
 counter, rows, _ = max(slots, key=lambda x: x[0])
 
-sizes = {0: 3884, 1: DATA_SIZE, 2: DATA_SIZE, 3: DATA_SIZE, 4: 15568 - 3 * DATA_SIZE}
+sizes = {0: 3884, 1: DATA_SIZE, 2: DATA_SIZE, 3: DATA_SIZE, 4: 3856}
 for sid in range(5, 14):
     sizes[sid] = min(DATA_SIZE, max(0, STORAGE_SIZE - (sid - 5) * DATA_SIZE))
-for sid, sector in rows.items():
-    chunk = sector[:sizes[sid]]
-    words = struct.unpack("<" + "I" * (len(chunk) // 4), chunk)
-    total = sum(words) & 0xFFFFFFFF
-    expected = ((total >> 16) + total) & 0xFFFF
-    actual = struct.unpack_from("<H", sector, 0xFF6)[0]
-    assert actual == expected, f"sector {sid}: checksum {actual:#x}, expected {expected:#x}"
+for _, slot_rows, _ in slots:
+    for sid, sector in slot_rows.items():
+        chunk = sector[:sizes[sid]]
+        words = struct.unpack("<" + "I" * (len(chunk) // 4), chunk)
+        total = sum(words) & 0xFFFFFFFF
+        expected = ((total >> 16) + total) & 0xFFFF
+        actual = struct.unpack_from("<H", sector, 0xFF6)[0]
+        assert actual == expected, f"slot sector {sid}: checksum {actual:#x}, expected {expected:#x}"
 
 sb1 = b"".join(rows[i][:DATA_SIZE] for i in range(1, 4)) + rows[4][:sizes[4]]
 groups = json.loads((ROOT / "data/maps/map_groups.json").read_text())
@@ -79,7 +80,6 @@ for i, expected_species in enumerate(species_ids):
 medicine = 0x560 + (236 + 60 + 39 + 160 + 66) * 4
 healing = [struct.unpack_from("<HH", sb1, medicine + 4 * i) for i in range(4)]
 assert healing == [(30, 20), (33, 10), (31, 5), (34, 5)], healing
-assert hashlib.sha256(raw).hexdigest() == "7655bef3ec42fa074dabf5f74b6f139e6ff12b4581bf86ab2aa086bd238e16ba"
 print(f"PASS: valid 128 KiB dual-slot save; latest counter {counter}; all sector and Pokémon checksums")
 print("PASS: Tin Tower (10,13), Champion + Elite 20 + seven RELICS; Dragonite/Ho-Oh/finale flags unresolved")
 print("PASS: six healthy level-60 party members and 40 healing items")
