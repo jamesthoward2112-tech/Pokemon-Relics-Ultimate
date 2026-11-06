@@ -88,7 +88,8 @@ def shrink_icon(path: Path, symbol: str) -> dict:
             old_size = crop.size
             # Use crisp nearest-neighbour pixels and standard 20% reduction.
             new_size = (max(1, round(old_size[0] * 0.8)), max(1, round(old_size[1] * 0.8)))
-            if max(old_size) > 25:
+            # Keep the newly approved Khang front-based icon at its exact authored size.
+            if max(old_size) > 25 and symbol != "Khang":
                 crop = crop.resize(new_size, Image.Resampling.NEAREST)
             else:
                 new_size = old_size
