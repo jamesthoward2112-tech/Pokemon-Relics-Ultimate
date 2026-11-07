@@ -1098,17 +1098,13 @@ static void SpriteCB_CreditsRelicHoOh(struct Sprite *sprite)
         return;
     }
 
-    // Golden Ho-Oh flies across the sky: visual only, never a capture event.
-    sprite->x -= 2;
-    sprite->data[0] += 3;
-    sprite->y2 = Sin(sprite->data[0], 3);
-    if (sprite->x < -32)
-    {
-        sprite->x = DISPLAY_WIDTH + 32;
-        sprite->data[1]++;
-        if (sprite->data[1] >= 3)
-            sprite->invisible = TRUE;
-    }
+    // Keep Golden Ho-Oh centred just above the water during the final credits.
+    // Its dedicated 3-frame wing animation continues independently: no drift,
+    // horizontal flyby, bobbing, repeat flyby or disappearance after laps.
+    sprite->x = DISPLAY_WIDTH / 2;
+    sprite->y = 34;
+    sprite->x2 = 0;
+    sprite->y2 = 0;
 }
 
 #define TIMER_STOP  0x7FFF
@@ -1279,7 +1275,7 @@ static bool8 LoadBikeScene(u8 scene, u8 taskId)
         {
             LoadCompressedSpriteSheet(gSpriteSheet_CreditsRelicHoOh);
             LoadSpritePalettes(gSpritePalettes_CreditsRelicHoOh);
-            spriteId = CreateCreditsRelicHoOhSprite(DISPLAY_WIDTH + 32, 46);
+            spriteId = CreateCreditsRelicHoOhSprite(DISPLAY_WIDTH / 2, 34);
             gSprites[spriteId].callback = SpriteCB_CreditsRelicHoOh;
             gTasks[taskId].tPlayerSpriteId = spriteId;
             gTasks[taskId].tRivalSpriteId = 0;
