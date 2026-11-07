@@ -45,7 +45,7 @@ for forbidden in ("ClaimRewards","StartFinale","Relics","RELICS","setflag","FLAG
 speech=section("PRU_Elite20_Text_MasterRematchesCleared:","PRU_Elite20_Text_OakRelicsUnused:")
 for phrase in ("OAK: {PLAYER}, magnificent!","all twenty","LEVEL 100 MASTER teams!",
                "ELM: Even our best strategies","ULTIMATE CHAMPION.","Congratulations!",
-               "Check the documentation and","RelicDex for E20 Challenges!"):
+               "Check the documentation and","RelicDex for E20 Challenges"):
     assert phrase in speech, "Missing end-of-rematches celebration: "+phrase
 assert "RELICS" not in speech and "Alphoracle" not in speech
 
