@@ -8817,14 +8817,14 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .speciesName = _("Ho-Oh"),
         .cryId = CRY_HO_OH,
         .natDexNum = NATIONAL_DEX_HO_OH,
-        .categoryName = _("Rainbow"),
+        .categoryName = _("Relic"),
         .height = 38,
         .weight = 1990,
         .description = COMPOUND_STRING(
-            "Its feathers--which glow in seven colors\n"
-            "depending on the angle at which they are\n"
-            "struck by light--are thought to bring joy.\n"
-            "It is said to live at the foot of a rainbow."),
+            "At Mt. Silver, Professor Oak\n"
+            "summoned this ancient golden Ho-Oh.\n"
+            "Its radiant wings carry a sacred\n"
+            "flame that promises rebirth."),
         .pokemonScale = 256,
         .pokemonOffset = 0,
         .trainerScale = 610,
