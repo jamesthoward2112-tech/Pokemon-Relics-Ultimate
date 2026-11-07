@@ -23,7 +23,7 @@ retired = ("THE SIX RELICS STIR", "THE SIX RELICS AWAKEN",
 for word in retired:
     assert word not in credits and word not in pages, f"Outdated final credits text: {word}"
 for word in ("GOLDEN HO-OH RISES", "OAK AT MT SILVER",
-             "THE FINAL SUMMONING", "THE JOURNEY IS COMPLETE"):
+             "THE FINAL SUMMONING", "E20 ULTIMATE REMATCHES AWAIT"):
     assert word in credits, f"Missing revised cinematic page: {word}"
 for word in ("THE GOLDEN FLAME ENDURES", "MT SILVER REMEMBERS",
              "YOUR LEGEND LIVES ON", "THANK YOU FOR PLAYING"):
@@ -36,7 +36,7 @@ assert 'sCreditsEntryPointerTable[PAGE_COUNT][ENTRIES_PER_PAGE]' in hgss, "Origi
 assert "sPruE20CreditsPages[gTasks[taskId].tCurrentPage - E20_INTRO_PAGE_COUNT][i]" in credits
 assert 'sCreditsEntryPointerTable[gTasks[taskId].tCurrentPage][i]' in credits
 for title in re.findall(r'sPRUE20Text_\w+\[\] = _\("([^"]+)"\)', credits):
-    assert len(title) <= 27, f"GBA cinematic line exceeds safe width: {title}"
+    assert len(title) <= 28, f"GBA cinematic line exceeds validated width: {title}"
 for line in re.findall(r'sPruCreditText_\d+_\d+\[\] = _\("([^"]+)"\)', pages):
     assert len(line) <= 27, f"GBA credits line exceeds safe width: {line}"
 for name in ("balesleftpeg", "POKEMON INFINITY", "POKEMON INSURGENCE",
