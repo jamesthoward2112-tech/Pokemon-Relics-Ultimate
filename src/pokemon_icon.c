@@ -142,6 +142,23 @@ static const u16 sPRUAncientGuardianDragoniteIconPalette[16] =
     RGB(20, 24, 31), RGB(13, 21, 19), RGB(12, 12, 11), RGB(8, 8, 8),
 };
 
+// Khang's icon uses its own sprite's indexed colours, not Mega Kangaskhan art.
+static const u16 sPRUKhangIconPalette[16] =
+{
+    RGB(12, 19, 16), RGB(2, 1, 2), RGB(6, 4, 4), RGB(10, 5, 4),
+    RGB(14, 7, 5), RGB(19, 10, 6), RGB(23, 13, 7), RGB(26, 17, 10),
+    RGB(9, 8, 8), RGB(14, 12, 12), RGB(18, 16, 14), RGB(22, 19, 14),
+    RGB(29, 25, 19), RGB(30, 29, 24), RGB(21, 4, 5), RGB(30, 30, 29),
+};
+
+static const u16 sPRUNolaxIconPalette[16] =
+{
+    RGB(12, 19, 16), RGB(14, 14, 14), RGB(23, 23, 23), RGB(31, 31, 31),
+    RGB(8, 13, 18), RGB(12, 18, 20), RGB(20, 24, 31), RGB(29, 14, 19),
+    RGB(26, 12, 8), RGB(23, 20, 11), RGB(30, 28, 5), RGB(30, 30, 21),
+    RGB(26, 26, 13), RGB(30, 18, 5), RGB(12, 12, 11), RGB(8, 8, 8),
+};
+
 const struct SpritePalette gMonIconPaletteTable[] =
 {
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
@@ -162,6 +179,8 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUMewduoIconPalette, POKE_ICON_BASE_PAL_TAG + 15 },
     { sPRUGemlinOriginalIconPalette, POKE_ICON_BASE_PAL_TAG + 16 },
     { sPRUAncientGuardianDragoniteIconPalette, POKE_ICON_BASE_PAL_TAG + 17 },
+    { sPRUKhangIconPalette, POKE_ICON_BASE_PAL_TAG + 18 },
+    { sPRUNolaxIconPalette, POKE_ICON_BASE_PAL_TAG + 19 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -271,6 +290,10 @@ static const u16 sSpriteImageSizes[3][4] =
 // Swamplith party icon selects its bespoke ninth palette when rendered.
 static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
 {
+    if (species == SPECIES_KHANG)
+        return 18;
+    if (species == SPECIES_NOLAX)
+        return 19;
     if (species == SPECIES_GEMLIN)
         return 16; // Exact pre-PoryPal Gemlin purple/blue indexed artwork.
     if (species == SPECIES_SWAMPLITH)

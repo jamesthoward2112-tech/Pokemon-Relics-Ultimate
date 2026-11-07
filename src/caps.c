@@ -16,30 +16,32 @@ static u8 GetCurrentBadgeCount(void)
     return badgeCount;
 }
 
+// Challenge level caps are indexed by completed Johto badges and protect the
+// next leader's ace. Hard mode stays four levels below that ace.
 static const u8 sLevelCapTable_Normal[] =
 {
-    [0] = 11,  // no badges
-    [1] = 16,  // badge 1
-    [2] = 21,  // badge 2
-    [3] = 25,  // badge 3
-    [4] = 31,  // badge 4
-    [5] = 36,  // badge 5
-    [6] = 38,  // badge 6
-    [7] = 45,  // badge 7
-    [8] = 56,  // badge 8
+    [0] = 16, // Falkner
+    [1] = 22, // Bugsy
+    [2] = 27, // Whitney
+    [3] = 33, // Morty
+    [4] = 39, // Chuck
+    [5] = 43, // Jasmine
+    [6] = 38, // Pryce
+    [7] = 52, // Clair
+    [8] = 56, // Eight badges; preserved pre-League cap
 };
 
 static const u8 sLevelCapTable_Hard[] =
 {
-    [0] = 8,
-    [1] = 15,
-    [2] = 20,
-    [3] = 23,
-    [4] = 29,
-    [5] = 33,
-    [6] = 37,
-    [7] = 42,
-    [8] = 54,
+    [0] = 12, // Falkner
+    [1] = 18, // Bugsy
+    [2] = 23, // Whitney
+    [3] = 29, // Morty
+    [4] = 35, // Chuck
+    [5] = 39, // Jasmine
+    [6] = 34, // Pryce
+    [7] = 48, // Clair
+    [8] = 54, // Eight badges; preserved pre-League cap
 };
 
 // Post-league caps, matching HnS: beating the Johto Elite Four raises the cap to

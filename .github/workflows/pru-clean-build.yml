@@ -247,6 +247,11 @@ jobs:
           python3 tools/pru/check_job14_baby_sprites.py
           python3 tools/pru/check_job15_pc_icon_palette.py
           python3 tools/pru/audit_custom_sprites_70.py
+      - name: Audit Johto leader caps and exercise Nuzlocke cap selection
+        run: |
+          set -euo pipefail
+          python3 tools/pru/check_johto_level_caps.py
+          make -j2 check BUILD=hns TESTS=test/pru/level_caps.c
       - name: Run Golden Reign and Phoenix Soul battle-engine tests
         run: |
           set -euo pipefail
