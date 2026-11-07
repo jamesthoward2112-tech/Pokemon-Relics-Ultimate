@@ -48,7 +48,10 @@ expected_sha256 = {
 }
 for relative_path, expected_hash in expected_sha256.items():
     asset = ROOT / "graphics/pokemon/prl_authoritative" / relative_path
-    assert hashlib.sha256(asset.read_bytes()).hexdigest() == expected_hash, relative_path
+    payload = asset.read_bytes()
+    if asset.suffix == ".pal":
+        payload = payload.replace(b"\r\n", b"\n")
+    assert hashlib.sha256(payload).hexdigest() == expected_hash, relative_path
 
 # Alphoracle's approved icon silhouette must remain intact but its pixels
 # are reindexed to the shared palette #2; PC tag #14 is reserved for its
