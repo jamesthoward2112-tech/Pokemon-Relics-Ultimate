@@ -8821,10 +8821,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 38,
         .weight = 1990,
         .description = COMPOUND_STRING(
-            "At Mt. Silver, Professor Oak\n"
-            "summoned this ancient golden Ho-Oh.\n"
-            "Its radiant wings carry a sacred\n"
-            "flame that promises rebirth."),
+            "Summoned atop Mt. Silver by\n"
+            "Professor Oak, this golden relic\n"
+            "answers only the worthiest Trainer.\n"
+            "Its sacred flames promise rebirth.",)
         .pokemonScale = 256,
         .pokemonOffset = 0,
         .trainerScale = 610,
