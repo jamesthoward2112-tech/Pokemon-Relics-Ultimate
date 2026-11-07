@@ -64,6 +64,8 @@ relic_bio = gold_bio(golden, "[SPECIES_RELIC_HO_OH] =")
 assert normal_bio == relic_bio, "Ho-Oh summary and Relic form must use the same lore"
 assert "Professor Oak" in "".join(normal_bio) and "Mt. Silver" in "".join(normal_bio)
 assert "rainbow" not in "".join(normal_bio).lower()
+assert "answers only the worthiest Trainer." in "".join(normal_bio)
+assert "Its sacred flames promise rebirth." in "".join(normal_bio)
 
 # Dedicated leftward flyby uses a three-pose 64x64 4bpp GBA sheet, not
 # the static Ho-Oh battle sprite. 64 OBJ tiles per pose, animated 0-64-128-64.
@@ -74,8 +76,12 @@ assert '.size = 0x1800, .tag = TAG_RELIC_HO_OH' in art
 anim = art.split("static const union AnimCmd sAnim_CreditsRelicHoOh[]", 1)[1].split("};", 1)[0]
 assert [int(i) for i in re.findall(r"ANIMCMD_FRAME\((\d+),", anim)] == [0, 64, 128, 64]
 assert "ANIMCMD_JUMP(0)" in anim
-assert "CreateCreditsRelicHoOhSprite(DISPLAY_WIDTH + 32, 46)" in credits
-assert "sprite->x -= 2;" in credits, "Preserve credits-only leftward flight"
+assert "CreateCreditsRelicHoOhSprite(DISPLAY_WIDTH / 2, 34)" in credits
+assert "sprite->x = DISPLAY_WIDTH / 2;" in credits
+assert "sprite->y = 34;" in credits
+assert "sprite->x -= 2;" not in credits
+assert "sprite->y2 = Sin(" not in credits
+assert "sprite->data[1] >= 3" not in credits
 assert "seteventmon SPECIES_RELIC_HO_OH, 100" in mt_silver
 assert "FLAG_PRU_E20_CREDITS_PENDING" in mt_silver
 
@@ -135,4 +141,4 @@ assert all(max(frame) < 16 and frame.count(0) > 0 and frame.count(0) < 3750 for 
 assert len(set(frames)) == 3, "Flying frames must be different poses"
 
 print("PASS: four revised final intro pages, 19 complete credit pages, dual-form Golden Ho-Oh lore")
-print("PASS: three distinct GBA flight poses, 16-color indexed sheet, 0-64-128-64 animation, credits flyby preserved")
+print("PASS: three distinct GBA flight poses, 16-color indexed sheet, fixed x120/y34 above water, 0-64-128-64 animation")
