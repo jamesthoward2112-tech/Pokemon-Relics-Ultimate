@@ -336,10 +336,10 @@ jobs:
               test -n "${window_id:-}"
               xdotool windowfocus "$window_id"
               sleep 5
-              import -window "$window_id" "$3"
+              import -window root "$3"
               xdotool key Return
               sleep 8
-              import -window "$window_id" "$1"
+              import -window root "$1"
             ' _ "$image" "$log" "$startup_image"
           }
           capture_mgba PRU-QA/video-review/mgba/pre-guardian-save.png PRU-QA/video-review/mgba/mgba-first-load.log PRU-QA/video-review/mgba/startup-first-load.png
