@@ -1,5 +1,4 @@
 """Regression tests for the final PRU named-trainer and legend-item cleanup."""
-
 from pathlib import Path
 import re
 import unittest
@@ -34,6 +33,21 @@ class FinalPolishTests(unittest.TestCase):
         self.assertIn(("Prof. Oak", "Pkmn Trainer 1 Hns"), e18)
         self.assertIn(("Prof. Elm", "Pkmn Trainer 1 Hns"), e18)
 
+    def test_tintower_shortcut_always_warps_and_uses_sign_message(self):
+        trail = read("data/maps/BellchimeTrail_hns/scripts.inc")
+        shortcut = trail.split(
+            "EcruteakBellchimeTrail_EventScript_RelicShortcut::", 1
+        )[1].split("EcruteakBellchimeTrail_Text_RelicShortcutReady:", 1)[0]
+        self.assertNotIn("goto_if_unset", shortcut)
+        self.assertNotIn("goto_if_set", shortcut)
+        self.assertIn(
+            "msgbox EcruteakBellchimeTrail_Text_RelicShortcutReady, MSGBOX_SIGN",
+            shortcut,
+        )
+        self.assertIn("warp MAP_TIN_TOWER_ROOF_DAY_HNS, 10, 13", shortcut)
+        self.assertIn("waitstate", shortcut)
+        self.assertNotIn("RelicShortcutDormant", trail)
+
     def test_obsolete_items_cannot_gate_new_finale(self):
         trail = read("data/maps/BellchimeTrail_hns/scripts.inc")
         summit = read("data/maps/MtSilver_SummitDay_hns/scripts.inc")
@@ -41,14 +55,6 @@ class FinalPolishTests(unittest.TestCase):
         goldenrod = read("data/maps/GoldenrodCity_RadioTower_5F_hns/scripts.inc")
         pewter = read("data/maps/PewterCity_hns/scripts.inc")
 
-        for flag in (
-            "FLAG_PRU_ELITE18_CLEARED",
-            "FLAG_PJR_RELIC_RAIKOU", "FLAG_PJR_RELIC_ENTEI",
-            "FLAG_PJR_RELIC_LUGIA", "FLAG_PJR_RELIC_UNOWN_I",
-            "FLAG_PJR_RELIC_CELEBI", "FLAG_PJR_RELIC_SUICUNE",
-            "FLAG_PJR_RELIC_ALPHORACLE",
-        ):
-            self.assertIn("goto_if_unset " + flag, trail)
         self.assertNotIn("ITEM_ANCIENT_RAINBOW_CREST", trail)
         self.assertNotIn("FLAG_PJR_GOT_RAINBOW_CREST", trail)
         self.assertNotIn("giveitem ITEM_ANCIENT_RAINBOW_CREST", summit)
