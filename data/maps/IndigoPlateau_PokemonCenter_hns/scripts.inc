@@ -1048,7 +1048,7 @@ PRU_Elite20_ContinueAfterReveal::
 
 PRU_Elite20_MasterRematchesCleared::
 	@ All twenty LV100 pairs defeated AFTER the story's first E20 clear.
-	@ Never repeat the RELICS reveal or hand out one-time rewards here.
+	@ No first-clear story or one-time rewards after MASTER victories.
 	special HealPlayerParty
 	msgbox PRU_Elite20_Text_MasterRematchesCleared, MSGBOX_DEFAULT
 	release
