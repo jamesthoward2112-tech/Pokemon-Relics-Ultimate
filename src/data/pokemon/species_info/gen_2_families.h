@@ -8821,10 +8821,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 38,
         .weight = 1990,
         .description = COMPOUND_STRING(
-            "Its feathers--which glow in seven colors\n"
-            "depending on the angle at which they are\n"
-            "struck by light--are thought to bring joy.\n"
-            "It is said to live at the foot of a rainbow."),
+            "An ancient golden Ho-Oh that answers\\n"
+            "only a Trainer proven worthy by the\\n"
+            "seven RELICS. Its radiant wings are\\n"
+            "said to herald rebirth and new hope."),
         .pokemonScale = 256,
         .pokemonOffset = 0,
         .trainerScale = 610,
