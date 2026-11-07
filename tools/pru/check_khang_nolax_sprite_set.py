@@ -14,7 +14,12 @@ for species in ('khang','nolax'):
     assert max(im.getdata())<=15, (species,asset,'invalid 4bpp index')
     assert len(im.getcolors())<=16, (species,asset,'too many colours')
     if asset=='icon':
-      assert list(im.crop((0,0,32,32)).getdata())==list(im.crop((0,32,32,64)).getdata())
+      # Original PRU icons have two DIFFERENT 32x32 animation frames.
+      # Do not duplicate a frame or shrink the original animation.
+      import subprocess, io
+      legacy_path=f'graphics/pokemon/prl_authoritative/{species}/icon.png'
+      old=Image.open(io.BytesIO(subprocess.check_output(['git','show','e5d16771:'+legacy_path],cwd=root)))
+      assert im.tobytes()==old.tobytes(),(species,'icon animation differs from original')
   p=(d/'normal.pal').read_text().splitlines()
   assert p[0]=='JASC-PAL' and p[2]=='16' and len(p)==19
   assert ('SPECIES_'+species.upper()) in s
