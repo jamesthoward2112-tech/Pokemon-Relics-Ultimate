@@ -678,7 +678,7 @@ PJR_FINAL_SPECIES(SPECIES_GHOULBAT, 95, 110, 90, 80, 95, 130, TYPE_GHOST, TYPE_F
         "Summoned atop Mt. Silver by\n"
         "Professor Oak, this golden relic\n"
         "answers only the worthiest Trainer.\n"
-        "Its sacred flames promise rebirth.",)
+        "Its sacred flames promise rebirth."),
     .pokemonScale = 256, .pokemonOffset = 0, .trainerScale = 610, .trainerOffset = 17,
     .frontPic = gMonFrontPic_HoOhRelic, .frontPicSize = MON_COORDS_SIZE(64, 64), .frontPicYOffset = 0,
     .frontAnimFrames = sAnims_SingleFramePlaceHolder, .frontAnimId = ANIM_GROW_VIBRATE,
