@@ -177,15 +177,15 @@ static const u16 sPruDexSpecies[PRU_DEX_COUNT] =
     SPECIES_DITTO, // 166 Ditto
     SPECIES_EEVEE, // 167 Eevee
     SPECIES_EEVEEON, // 168 Eeveeon
-    SPECIES_NIMBEON, // 169 Nimbeon
+    SPECIES_NIMBEON, // 169 Aereon
     SPECIES_CHAMPEON, // 170 Champeon
-    SPECIES_LEPIDEON, // 171 Lepideon
-    SPECIES_SPHYNXEON, // 172 Sphynxeon
-    SPECIES_GUARDEON, // 173 Guardeon
-    SPECIES_OBSIDEON, // 174 Obsideon
+    SPECIES_LEPIDEON, // 171 Moffeon
+    SPECIES_SPHYNXEON, // 172 Eartheon
+    SPECIES_GUARDEON, // 173 Galveon
+    SPECIES_OBSIDEON, // 174 Pebleon
     SPECIES_TOXEON, // 175 Toxeon
-    SPECIES_OMEON, // 176 Omeon
-    SPECIES_DRAKEON, // 177 Drakeon
+    SPECIES_OMEON, // 176 Obliveon
+    SPECIES_DRAKEON, // 177 Mytheon
     SPECIES_VAPOREON, // 178 Vaporeon
     SPECIES_JOLTEON, // 179 Jolteon
     SPECIES_FLAREON, // 180 Flareon
