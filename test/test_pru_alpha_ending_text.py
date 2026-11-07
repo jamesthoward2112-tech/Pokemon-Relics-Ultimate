@@ -65,12 +65,70 @@ assert normal_bio == relic_bio, "Ho-Oh summary and Relic form must use the same 
 assert "Professor Oak" in "".join(normal_bio) and "Mt. Silver" in "".join(normal_bio)
 assert "rainbow" not in "".join(normal_bio).lower()
 
-# The existing flying animation is intentionally unchanged until resource review.
-assert 'gMonFrontPic_HoOhRelic' in art
-assert 'sAnim_CreditsRelicHoOh[] = { ANIMCMD_FRAME(0, 24)' in art
+# Dedicated leftward flyby uses a three-pose 64x64 4bpp GBA sheet, not
+# the static Ho-Oh battle sprite. 64 OBJ tiles per pose, animated 0-64-128-64.
+assert 'gMonFrontPic_HoOhRelic' not in art, "Credits still reference static battle Ho-Oh"
+assert 'relic_ho_oh_flight.4bpp.smol' in art
+assert 'relic_ho_oh_flight.gbapal' in art
+assert '.size = 0x1800, .tag = TAG_RELIC_HO_OH' in art
+anim = art.split("static const union AnimCmd sAnim_CreditsRelicHoOh[]", 1)[1].split("};", 1)[0]
+assert [int(i) for i in re.findall(r"ANIMCMD_FRAME\\((\\d+),", anim)] == [0, 64, 128, 64]
+assert "ANIMCMD_JUMP(0)" in anim
 assert "CreateCreditsRelicHoOhSprite(DISPLAY_WIDTH + 32, 46)" in credits
+assert "sprite->x -= 2;" in credits, "Preserve credits-only leftward flight"
 assert "seteventmon SPECIES_RELIC_HO_OH, 100" in mt_silver
 assert "FLAG_PRU_E20_CREDITS_PENDING" in mt_silver
 
+# Validate the source PNG without requiring an imaging library in CI. The
+# converter creates a 3 x 0x800-byte sprite sheet from this 64x192 source.
+import struct
+import zlib
+
+flight = (root / "graphics/intro/scene_2/relic_ho_oh_flight.png").read_bytes()
+assert flight.startswith(b"\\x89PNG\\r\\n\\x1a\\n")
+width, height, depth, mode = struct.unpack(">IIBB", flight[16:26])
+assert (width, height, depth, mode) == (64, 192, 8, 3)
+pos = 8
+palette_size = None
+compressed = b""
+while pos < len(flight):
+    size = struct.unpack_from(">I", flight, pos)[0]
+    kind = flight[pos + 4:pos + 8]
+    chunk = flight[pos + 8:pos + 8 + size]
+    if kind == b"PLTE":
+        palette_size = len(chunk) // 3
+    if kind == b"IDAT":
+        compressed += chunk
+    pos += size + 12
+assert palette_size == 16, f"4bpp flight must have exactly 16 palette entries, got {palette_size}"
+raw = zlib.decompress(compressed)
+assert len(raw) == height * (width + 1)
+rows = []
+last = bytearray(width)
+for y in range(height):
+    rowstart = y * (width + 1)
+    filt = raw[rowstart]
+    src = raw[rowstart + 1:rowstart + width + 1]
+    assert filt in range(5)
+    out = bytearray(width)
+    for x, v in enumerate(src):
+        left = out[x-1] if x else 0
+        up = last[x]
+        above_left = last[x-1] if x else 0
+        if filt == 0: delta = 0
+        elif filt == 1: delta = left
+        elif filt == 2: delta = up
+        elif filt == 3: delta = (left + up) // 2
+        else:
+            prediction = left + up - above_left
+            distances = (abs(prediction-left), abs(prediction-up), abs(prediction-above_left))
+            delta = (left,up,above_left)[distances.index(min(distances))]
+        out[x] = (v + delta) & 255
+    rows.append(bytes(out))
+    last = out
+frames = [b"".join(rows[i*64:(i+1)*64]) for i in range(3)]
+assert all(max(frame) < 16 and frame.count(0) > 0 and frame.count(0) < 3750 for frame in frames)
+assert len(set(frames)) == 3, "Flying frames must be different poses"
+
 print("PASS: four revised final intro pages, 19 complete credit pages, dual-form Golden Ho-Oh lore")
-print("PASS: ending graphics unchanged awaiting dedicated flying asset; encounters/flags untouched")
+print("PASS: three distinct GBA flight poses, 16-color indexed sheet, 0-64-128-64 animation, credits flyby preserved")
