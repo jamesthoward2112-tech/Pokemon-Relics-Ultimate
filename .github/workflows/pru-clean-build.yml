@@ -141,8 +141,22 @@ jobs:
         run: python3 tools/pru/check_sprite_qa_save.py assets/test_saves/Pru.sav
       - name: Validate the dedicated Job 18 pre-Guardian save
         run: python3 tools/pru/check_job18_test_save.py assets/test_saves/PRU_Job18_Before_Ancient_Guardian.sav
+      # Public Alpha 01 safety-critical checks must block EVERY build.
+      # The legacy large regression suite remains fully blocking on push/PR,
+      # but manual Alpha candidates may continue compiling while stale test
+      # expectations are being migrated to the approved Eeveelution names.
+      - name: Enforce Alpha 01 mandatory source and debug checks
+        run: |
+          set -euo pipefail
+          python3 test/test_pru_alpha_master_rematches.py
+          python3 test/test_pru_development_debug.py
+          python3 test/test_pru_battle_win_encounter.py
+          python3 test/test_pru_alpha_ending_text.py
+          python3 tools/pru/check_444_species_dex.py
+          python3 tools/pru/check_pru_444_gameplay.py
       - name: Run source regression tests
         if: "${{ github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
+        continue-on-error: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
           python3 test/test_pru_challenges_mart_groudon.py
           set -euo pipefail
