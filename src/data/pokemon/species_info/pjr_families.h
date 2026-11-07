@@ -675,10 +675,10 @@ PJR_FINAL_SPECIES(SPECIES_GHOULBAT, 95, 110, 90, 80, 95, 130, TYPE_GHOST, TYPE_F
     .speciesName = _("Ho-Oh"), .cryId = CRY_HO_OH, .natDexNum = NATIONAL_DEX_HO_OH,
     .categoryName = _("Relic"), .height = 38, .weight = 1990,
     .description = COMPOUND_STRING(
-        "At Mt. Silver, Professor Oak\n"
-        "summoned this ancient golden Ho-Oh.\n"
-        "Its radiant wings carry a sacred\n"
-        "flame that promises rebirth."),
+        "Summoned atop Mt. Silver by\n"
+        "Professor Oak, this golden relic\n"
+        "answers only the worthiest Trainer.\n"
+        "Its sacred flames promise rebirth.",)
     .pokemonScale = 256, .pokemonOffset = 0, .trainerScale = 610, .trainerOffset = 17,
     .frontPic = gMonFrontPic_HoOhRelic, .frontPicSize = MON_COORDS_SIZE(64, 64), .frontPicYOffset = 0,
     .frontAnimFrames = sAnims_SingleFramePlaceHolder, .frontAnimId = ANIM_GROW_VIBRATE,
