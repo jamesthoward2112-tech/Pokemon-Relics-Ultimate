@@ -106,7 +106,7 @@ for species, public_name in public_names.items():
         block = pru_species.split(f"[{species}] =", 1)[1].split("\n},", 1)[0]
         assert f'.speciesName = _("{public_name}")' in block, (species, public_name)
     elif species == "SPECIES_DRAKEON":
-        block = pjr_species.split(f"PJR_RED_SPECIES({species},", 1)[1].split("),", 1)[0]
+        block = pjr_species.split(f"PJR_FINAL_SPECIES({species},", 1)[1].split("),", 1)[0]
         assert f'"{public_name}"' in block, (species, public_name)
     else:
         block = pjr_species.split(f"[{species}] =", 1)[1].split("\n},", 1)[0]
