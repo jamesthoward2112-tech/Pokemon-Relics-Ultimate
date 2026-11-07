@@ -738,12 +738,12 @@ PJR_RED_SPECIES(SPECIES_FORTOTOISE, 95, 80, 155, 100, 105, 50, TYPE_WATER, TYPE_
     gMonFrontPic_Fortotoise, gMonBackPic_Fortotoise, gMonPalette_Fortotoise, gMonShinyPalette_Fortotoise, gMonIcon_Fortotoise,
     sFortotoiseLevelUpLearnset, sBlastoiseTeachableLearnset, 600, 0, 5, 3),
 
-PJR_RED_SPECIES(SPECIES_KHANG, 105, 105, 95, 50, 90, 110, TYPE_NORMAL, TYPE_NORMAL,
+PJR_RED_SPECIES(SPECIES_KHANG, 105, 105, 95, 50, 90, 110, TYPE_NORMAL, TYPE_FIGHTING,
     ABILITY_PARENTAL_BOND, "Khang", CRY_KANGASKHAN, NATIONAL_DEX_KANGASKHAN, BODY_COLOR_BROWN,
     gMonFrontPic_Khang, gMonBackPic_Khang, gMonPalette_Khang, gMonShinyPalette_Khang, gMonIcon_Khang,
     sKhangLevelUpLearnset, sKangaskhanTeachableLearnset, 600, 0, 6, P_GBA_STYLE_SPECIES_ICONS ? 1 : 2),
 
-PJR_RED_SPECIES(SPECIES_NOLAX, 100, 130, 80, 45, 90, 130, TYPE_NORMAL, TYPE_NORMAL,
+PJR_RED_SPECIES(SPECIES_NOLAX, 100, 130, 80, 45, 90, 130, TYPE_NORMAL, TYPE_DARK,
     ABILITY_INSOMNIA, "Nolax", CRY_SNORLAX, NATIONAL_DEX_SNORLAX, BODY_COLOR_BLUE,
     gMonFrontPic_Nolax, gMonBackPic_Nolax, gMonPalette_Nolax, gMonShinyPalette_Nolax, gMonIcon_Nolax,
     sNolaxLevelUpLearnset, sNolaxTeachableLearnset, 280, 0, 8, 3),

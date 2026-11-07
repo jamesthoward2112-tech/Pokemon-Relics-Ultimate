@@ -3116,9 +3116,29 @@ static const u8 *BattleStringGetTrainerName(u8 *text, u8 multiplayerId, enum Bat
         return BattleStringGetOpponentName(text, multiplayerId, battler);
 }
 
+// The Elite 20 uses personal names, not the underlying battle classes.
+// Preserve those classes in trainer data: they control music, AI, and rewards.
+static const u8 sText_PRUNameOnlyClass[] = _("");
+
+static bool8 IsPRUFinaleTrainer(u16 trainerId)
+{
+#if IS_HNS
+    return (trainerId >= TRAINER_PRU_E18_01_A_HNS && trainerId <= TRAINER_PRU_E18_18_B_MASTER_HNS)
+        || (trainerId >= TRAINER_PRU_E20_JASMINE_HNS && trainerId <= TRAINER_PRU_E20_GIOVANNI_MASTER_HNS);
+#else
+    return FALSE;
+#endif
+}
+
 static const u8 *BattleStringGetOpponentClassByTrainerId(u16 trainerId)
 {
     const u8 *toCpy;
+
+    // Make this a display-only exception, not a global trainer-class change.
+    if (IsPRUFinaleTrainer(trainerId) && !(gBattleTypeFlags &
+        (BATTLE_TYPE_SECRET_BASE | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_TRAINER_TOWER |
+         BATTLE_TYPE_TRAINER_HILL | BATTLE_TYPE_EREADER_TRAINER)))
+        return sText_PRUNameOnlyClass;
 
     if (gBattleTypeFlags & BATTLE_TYPE_SECRET_BASE)
         toCpy = gTrainerClasses[GetSecretBaseTrainerClass()].name;
@@ -3658,8 +3678,10 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst, u32 dstSize)
                         textStart[classLength] = classString[classLength];
                         classLength++;
                     }
-                    textStart[classLength] = CHAR_SPACE;
-                    textStart += 1 + classLength;
+                    // A blank class means the trainer's name must start at column 0.
+                    textStart += classLength;
+                    if (classLength != 0)
+                        *textStart++ = CHAR_SPACE;
                     nameString = BattleStringGetTrainerName(textStart, multiplayerId, gBattlerAttacker);
                     if (nameString != textStart)
                     {

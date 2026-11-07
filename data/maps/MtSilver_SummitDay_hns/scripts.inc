@@ -30,10 +30,7 @@ MtSilver_SummitDay_EventScript_SetDay::
 MtSilver_SummitDay_EventScript_Red::
 	lock
 	faceplayer
-	@ A full-bag Crest can be collected on a later conversation, without
-	@ preventing ordinary Red rematches once the Crest is received.
-	goto_if_unset FLAG_DEFEATED_RED, MtSilver_SummitDay_EventScript_RedBattleNormal
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_CheckPendingCrest
+	@ Red's rematch does not award or require an obsolete Rainbow Crest.
 MtSilver_SummitDay_EventScript_RedBattleNormal::
 	msgbox MtSilver_SummitDay_Text_Red, MSGBOX_DEFAULT
 	closemessage
@@ -62,84 +59,37 @@ MtSilver_SummitDay_EventScript_RedOnDefeat::
 	fadescreenspeed FADE_TO_BLACK, 24
 	setflag FLAG_DEFEATED_RED
 	setflag FLAG_PJR_RED_DEFEATED
-	goto_if_set FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_AfterCrest
-	call MtSilver_SummitDay_EventScript_AwardCrest
-MtSilver_SummitDay_EventScript_AfterCrest:
-	@ Only unlock the Relic form after the actual Crest has been granted.
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_ContinueClear
-	call_if_set FLAG_PJR_RELIC_ALPHORACLE, MtSilver_SummitDay_EventScript_UnlockRelicHoOh
-MtSilver_SummitDay_EventScript_ContinueClear::
 	setflag FLAG_END_NUZLOCKE
-	goto_if_set FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_RedVictoryComplete
-	@ Keep the defeated Red available only if a full bag blocked the Crest.
-	@ His saved defeat flag routes this conversation to item recovery, not battle.
-	clearflag FLAG_HIDE_MTSILVER_RED
-	MtSilver_SummitDay_EventScript_RedVictoryComplete:
-	@ Red keeps the Crest but does not start the game's full credits.
 	fadescreen FADE_FROM_BLACK
 	releaseall
 	end
 
-@ Both initial reward and a subsequent safe retry use the same one-time
-@ Crest handoff.  A full bag MUST NOT mark the Crest as received.
-MtSilver_SummitDay_EventScript_AwardCrest::
-	giveitem ITEM_ANCIENT_RAINBOW_CREST
-	goto_if_eq VAR_RESULT, FALSE, MtSilver_SummitDay_EventScript_CrestFullBag
-	setflag FLAG_PJR_GOT_RAINBOW_CREST
-	msgbox MtSilver_SummitDay_Text_Crest, MSGBOX_DEFAULT
-	return
+@ Compatibility labels for historic event references; no item is given.
+MtSilver_SummitDay_EventScript_AfterCrest:
+MtSilver_SummitDay_EventScript_ContinueClear::
+MtSilver_SummitDay_EventScript_RedVictoryComplete:
+	fadescreen FADE_FROM_BLACK
+	releaseall
+	end
 
+MtSilver_SummitDay_EventScript_AwardCrest::
 MtSilver_SummitDay_EventScript_CrestFullBag::
-	msgbox MtSilver_SummitDay_Text_CrestFullBag, MSGBOX_DEFAULT
+MtSilver_SummitDay_EventScript_RedCrestStillPending::
 	return
 
 MtSilver_SummitDay_EventScript_CheckPendingCrest::
-	goto_if_set FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_RedBattleNormal
-	msgbox MtSilver_SummitDay_Text_CrestPending, MSGBOX_DEFAULT
-	call MtSilver_SummitDay_EventScript_AwardCrest
-	call_if_set FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_UnlockRelicHoOh
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_RedCrestStillPending
-	setflag FLAG_HIDE_MTSILVER_RED
-	removeobject LOCALID_MTSILVER_RED
-	release
-	end
-
-MtSilver_SummitDay_EventScript_RedCrestStillPending::
-	release
-	end
-
-MtSilver_SummitDay_Text_CrestPending:
-	.string "RED left something behind.\p"
-	.string "Make room for the CREST\n"
-	.string "if your bag is full.$"
-
-MtSilver_SummitDay_Text_CrestFullBag:
-	.string "There is no room for the\n"
-	.string "ANCIENT RAINBOW CREST!\p"
-	.string "Return with bag space.\n"
-	.string "The CREST is still here.$"
+	goto MtSilver_SummitDay_EventScript_RedBattleNormal
 
 MtSilver_SummitDay_Text_Red:
 	.string ".........................\n"
 	.string ".........................$"
 
+@ Historic shortcut must not unlock Golden Ho-Oh outside the RELICS quest.
 MtSilver_SummitDay_EventScript_UnlockRelicHoOh::
-	setvar VAR_COMPLETED_HO_OH, 4
-	clearflag FLAG_HIDE_HO_OH
 	return
 
 MtSilver_SummitDay_Text_RedBeaten:
 	.string "...!$"
-
-MtSilver_SummitDay_Text_Crest:
-	.string "RED leaves behind the ANCIENT\n"
-	.string "RAINBOW CREST.\p"
-	.string "Its light stirs an ancient\n"
-	.string "resonance far above the clouds.\p"
-	.string "RED: The mountain has heard you.\n"
-	.string "Follow the researcher's guidance.$"
-
-
 
 @ Endgame epilogue: the professors' E20 invitation pays off on Mt Silver.
 @ Use only established quest flags. The original Tin Tower route is retained

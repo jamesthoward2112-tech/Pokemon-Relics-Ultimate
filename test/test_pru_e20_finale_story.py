@@ -27,20 +27,21 @@ class E20FinaleStoryTests(unittest.TestCase):
         self.assertEqual(len(oak),1)
         self.assertEqual(oak[0]["graphics_id"],"OBJ_EVENT_GFX_PROF_OAK_HNS")
         self.assertIn("goto_if_set FLAG_PJR_RELIC_HO_OH",source("data/maps/TinTower_RoofDay_hns/scripts.inc"))
-    def test_red_cannot_repeat_battle_but_bag_full_crest_remains_recoverable(self):
+    def test_red_cannot_repeat_battle_and_no_crest_reward_remains(self):
         s=source("data/maps/MtSilver_SummitDay_hns/scripts.inc")
         defeated=s.split("MtSilver_SummitDay_EventScript_RedOnDefeat::",1)[1].split("MtSilver_SummitDay_EventScript_AwardCrest::",1)[0]
         sync=s.split("MtSilver_SummitDay_EventScript_SyncOakDone::",1)[1].split("MtSilver_SummitDay_EventScript_RelicOak::",1)[0]
         epilogue=s.split("MtSilver_SummitDay_EventScript_OakEpilogue::",1)[1].split("MtSilver_SummitDay_EventScript_OakNeedRequirements::",1)[0]
         pending=s.split("MtSilver_SummitDay_EventScript_CheckPendingCrest::",1)[1].split("MtSilver_SummitDay_EventScript_RedCrestStillPending::",1)[0]
         self.assertIn("setflag FLAG_HIDE_MTSILVER_RED",defeated)
-        self.assertIn("goto_if_set FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_RedVictoryComplete",defeated)
-        self.assertLess(defeated.index("goto_if_set FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_RedVictoryComplete"), defeated.index("clearflag FLAG_HIDE_MTSILVER_RED"))
+        self.assertIn("setflag FLAG_DEFEATED_RED",defeated)
+        self.assertIn("setflag FLAG_PJR_RED_DEFEATED",defeated)
+        self.assertNotIn("FLAG_PJR_GOT_RAINBOW_CREST",s)
+        self.assertNotIn("giveitem ITEM_RAINBOW_CREST",s)
         self.assertIn("goto_if_set FLAG_DEFEATED_RED, MtSilver_SummitDay_EventScript_SyncOakReturn",sync)
         self.assertIn("goto_if_set FLAG_DEFEATED_RED, MtSilver_SummitDay_EventScript_OakEpilogueDone",epilogue)
-        self.assertIn("setflag FLAG_HIDE_MTSILVER_RED",pending)
-        self.assertIn("removeobject LOCALID_MTSILVER_RED",pending)
-        self.assertIn("goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, MtSilver_SummitDay_EventScript_RedCrestStillPending",pending)
+        self.assertIn("goto MtSilver_SummitDay_EventScript_RedBattleNormal",pending)
+        self.assertNotIn("FLAG_PJR_GOT_RAINBOW_CREST",pending)
     def test_existing_rewards_and_old_saves(self):
         s=source("data/maps/IndigoPlateau_PokemonCenter_hns/scripts.inc")
         self.assertIn("giveitem ITEM_MASTER_BALL, 6",s)

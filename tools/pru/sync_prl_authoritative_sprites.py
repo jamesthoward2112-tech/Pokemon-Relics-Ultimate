@@ -32,7 +32,8 @@ REQUIRED = {"noxichu", "edensaur", "charaxis", "fortotoise", "khang", "nolax", "
 # Donphalanx is intentionally backed by Great Tusk's exact sprites: the pinned
 # PRL species data uses GreatTusk symbols, NOT the older donphalanx art folder.
 # Do not overwrite approved Feralodon, Donphalanx or Tourmaline-Skarmet art on repeat builds.
-PRU_VISUAL_OVERRIDES = {"faeranium", "feralodon", "donphalanx", "skarmet", "pyroclast"}
+PRU_VISUAL_OVERRIDES = {"faeranium", "feralodon", "donphalanx", "skarmet", "pyroclast", "khang", "nolax"}
+REPO_ASSET_OVERRIDES = {"khang", "nolax"}
 PYROCLAST_ELITE_REDUX_SHA256 = "cc3193a3668381c6d83c0642e0ead50cbfae0553081f770e1ce316fdbf842773"
 NORMALIZED_EEVEE_ICONS = {
     "champeon", "lepideon", "guardeon", "obsideon", "toxeon",
@@ -91,6 +92,15 @@ def main():
     for symbol, slug, assets, missing in results:
         if assets is None:
             failures.append({"species": slug, "missing": missing})
+            continue
+        if slug in REPO_ASSET_OVERRIDES:
+            manifest.append({
+                "species": slug, "symbols": symbol, "source_commit": "PRU-approved-repository-assets",
+                "asset_sha256": {
+                    name: hashlib.sha256((Path("graphics/pokemon/prl_authoritative") / slug / name).read_bytes()).hexdigest()
+                    for name in FILES
+                }
+            })
             continue
         # No sprite recolouring: RelicDex/PRL share Valkiri's indexed art.
         # The renderer uses the same front/back pixel indices with two palettes.

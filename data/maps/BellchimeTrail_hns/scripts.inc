@@ -54,31 +54,11 @@ EcruteakBellchimeTrail_Movement_CameraPanUp::
 
 
 EcruteakBellchimeTrail_EventScript_RelicShortcut::
-	@ PRU is a fresh standalone story. Never backfill or create mythical
-	@ catches from old VAR_COMPLETED_HO_OH / defeated-Red flags.
-	@ The actual seven captured RELICS and real Crest must unlock the roof.
-	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	checkitem ITEM_ANCIENT_RAINBOW_CREST
-	goto_if_eq VAR_RESULT, FALSE, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	goto EcruteakBellchimeTrail_EventScript_RelicShortcutReady
-
-EcruteakBellchimeTrail_EventScript_RelicShortcutReady::
-	msgbox EcruteakBellchimeTrail_Text_RelicShortcutReady, MSGBOX_DEFAULT
+	msgbox EcruteakBellchimeTrail_Text_RelicShortcutReady, MSGBOX_SIGN
 	warp MAP_TIN_TOWER_ROOF_DAY_HNS, 10, 13
 	waitstate
 	end
 
-EcruteakBellchimeTrail_EventScript_RelicShortcutDormant::
-	msgbox EcruteakBellchimeTrail_Text_RelicShortcutDormantMsg, MSGBOX_DEFAULT
-	end
-
 EcruteakBellchimeTrail_Text_RelicShortcutReady:
-	.string "The ANCIENT RAINBOW CREST glows.\p"
-	.string "A hidden passage opens toward the\n"
-	.string "roof of TIN TOWER.$"
-
-EcruteakBellchimeTrail_Text_RelicShortcutDormantMsg:
-	.string "The ancient statue is silent.\p"
-	.string "The FIRST VOICE and RED's CREST\n"
-	.string "must awaken its passage.$"
+	.string "A hidden passage leads straight to\n"
+	.string "the roof of TIN TOWER.$"

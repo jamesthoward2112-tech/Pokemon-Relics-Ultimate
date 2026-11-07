@@ -1,3 +1,10 @@
+# PR75 follow-up — Khang, Nolax and first-gym level cap
+
+- Imported the approved Khang and Nolax front/back artwork and palettes from `07729bb2`; rebuilt Khang's party icon from its matching sprite so it no longer uses Mega Kangaskhan-like artwork. Added palette routing for both party icons.
+- Khang is now Normal/Fighting and Nolax is now Normal/Dark. Their stats, abilities, moves and all other battle data remain unchanged.
+- Fixed Normal/Hard caps before Falkner from 11/8 to 16/12 and audited the entire Johto progression. Normal caps match the next Gym leader's ace levels (16, 22, 27, 33, 39, 43, 38, 52); Hard caps are four levels lower. Post-eighth-badge caps are unchanged.
+- Preserved PR75's Tin Tower shortcut, which already warps directly to the roof without progression flags.
+
 # Pokeemerald-Expansion Changelogs
 
 ## 1.10.x

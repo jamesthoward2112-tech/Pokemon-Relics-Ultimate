@@ -2,7 +2,7 @@ name: PRU canonical clean build
 
 on:
   push:
-    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105, fix/pru-job13-fortotoise-icon-20261105, fix/pru-job14-baby-sprites-20261105, fix/pru-job15-pc-icon-palette-collisions-20261105, feat/pru-job16-golden-hooh-cinematic-20261106, feat/pru-job17-custom-credits-20261106, feat/pru-job18-final-story-dragonite-20261106]
+    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105, fix/pru-job13-fortotoise-icon-20261105, fix/pru-job14-baby-sprites-20261105, fix/pru-job15-pc-icon-palette-collisions-20261105, feat/pru-job16-golden-hooh-cinematic-20261106, feat/pru-job17-custom-credits-20261106, feat/pru-job18-final-story-dragonite-20261106, fix/pru-finale-names-item-cleanup-20261106]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -186,6 +186,7 @@ jobs:
           python3 tools/pru/check_job9_trainer_forfeit.py
           python3 tools/pru/check_golden_hooh.py
           python3 test/test_pru_job18_final_story.py
+          python3 test/test_pru_final_polish_names_items.py
           python3 test/test_pru_e20_finale_story.py
           python3 - <<'PY'
           import os, subprocess, sys
@@ -248,6 +249,11 @@ jobs:
           python3 tools/pru/check_job14_baby_sprites.py
           python3 tools/pru/check_job15_pc_icon_palette.py
           python3 tools/pru/audit_custom_sprites_70.py
+      - name: Audit Johto leader caps and exercise Nuzlocke cap selection
+        run: |
+          set -euo pipefail
+          python3 tools/pru/check_johto_level_caps.py
+          make -j2 check BUILD=hns TESTS=test/pru/level_caps.c
       - name: Run Golden Reign and Phoenix Soul battle-engine tests
         run: |
           set -euo pipefail
@@ -379,7 +385,7 @@ jobs:
             PRU-QA/video-review/mgba/
           if-no-files-found: warn
       - name: Publish compiled raw GBA to GitHub prerelease
-        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' || github.ref == 'refs/heads/fix/pru-job11-text-20261105' || github.ref == 'refs/heads/fix/pru-job12-celebi-20261105' || github.ref == 'refs/heads/fix/pru-job13-fortotoise-icon-20261105' || github.ref == 'refs/heads/fix/pru-job14-baby-sprites-20261105' || github.ref == 'refs/heads/fix/pru-job15-pc-icon-palette-collisions-20261105' || github.ref == 'refs/heads/feat/pru-job16-golden-hooh-cinematic-20261106' || github.ref == 'refs/heads/feat/pru-job17-custom-credits-20261106' || github.ref == 'refs/heads/feat/pru-job18-final-story-dragonite-20261106')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
+        if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' || github.ref == 'refs/heads/fix/pru-job11-text-20261105' || github.ref == 'refs/heads/fix/pru-job12-celebi-20261105' || github.ref == 'refs/heads/fix/pru-job13-fortotoise-icon-20261105' || github.ref == 'refs/heads/fix/pru-job14-baby-sprites-20261105' || github.ref == 'refs/heads/fix/pru-job15-pc-icon-palette-collisions-20261105' || github.ref == 'refs/heads/feat/pru-job16-golden-hooh-cinematic-20261106' || github.ref == 'refs/heads/feat/pru-job17-custom-credits-20261106' || github.ref == 'refs/heads/feat/pru-job18-final-story-dragonite-20261106' || github.ref == 'refs/heads/fix/pru-finale-names-item-cleanup-20261106')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -399,6 +405,9 @@ jobs:
           if test "$GITHUB_REF" = "refs/heads/feat/pru-job18-final-story-dragonite-20261106"; then
             file="Pokemon-Relics-Ultimate-Job18-${GITHUB_SHA:0:10}.gba"
             release_title="Pokémon Relics Ultimate — Job 18 Test Release"
+          elif test "$GITHUB_REF" = "refs/heads/fix/pru-finale-names-item-cleanup-20261106"; then
+            file="Pokemon-Relics-Ultimate-PR75-${GITHUB_SHA:0:10}.gba"
+            release_title="Pokémon Relics Ultimate — PR75 Test Build"
           else
             file="Pokemon-Relics-Ultimate-${GITHUB_SHA:0:10}.gba"
             release_title="Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}"

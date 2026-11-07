@@ -14,36 +14,30 @@ wired = {
 assert wired == statues, (wired, statues)
 
 shortcut = (maps / "BellchimeTrail_hns" / "scripts.inc").read_text()
-# PRU fresh-save rules: only real Alphoracle capture and Crest possession
-# unlock the roof. Earlier PJR compatibility tests incorrectly demanded that
-# entering this reachable shortcut should fabricate those story flags.
-assert "goto_if_unset FLAG_PJR_RELIC_ALPHORACLE" in shortcut
-assert "goto_if_unset FLAG_PJR_GOT_RAINBOW_CREST" in shortcut
-assert "checkitem ITEM_ANCIENT_RAINBOW_CREST" in shortcut
+# Finale access requires cleared Elite 20 and seven recorded RELICS.
+# Legacy Wing/Crest items and flags must not gate new or existing saves.
+for flag in (
+    "FLAG_PRU_ELITE18_CLEARED",
+    "FLAG_PJR_RELIC_RAIKOU", "FLAG_PJR_RELIC_ENTEI",
+    "FLAG_PJR_RELIC_LUGIA", "FLAG_PJR_RELIC_UNOWN_I",
+    "FLAG_PJR_RELIC_CELEBI", "FLAG_PJR_RELIC_SUICUNE",
+    "FLAG_PJR_RELIC_ALPHORACLE",
+):
+    assert f"goto_if_unset {flag}" in shortcut, flag
+assert "FLAG_PJR_GOT_RAINBOW_CREST" not in shortcut
+assert "ITEM_ANCIENT_RAINBOW_CREST" not in shortcut
 assert "setflag FLAG_PJR_RELIC_ALPHORACLE" not in shortcut
-assert "setflag FLAG_PJR_GOT_RAINBOW_CREST" not in shortcut
 assert "EcruteakBellchimeTrail_EventScript_RelicShortcutBackfill" not in shortcut
 assert "warp MAP_TIN_TOWER_ROOF_DAY_HNS, 10, 13" in shortcut
 
-for suffix in ("RoofDay", "RoofNight"):
-    map_data = json.loads((maps / f"TinTower_{suffix}_hns" / "map.json").read_text())
-    npcs = [obj for obj in map_data["object_events"] if obj.get("local_id") in
-            ("LOCALID_TINTOWER8F_JESSIE", "LOCALID_TINTOWER8F_JAMES")]
-    assert len(npcs) == 2, suffix
-    assert all(obj["y"] == 11 for obj in npcs), suffix
-    assert any(o.get("script") == "TinTower_RoofDay_EventScript_HoOh"
-               for o in map_data["object_events"]), suffix
-    scripts = (maps / f"TinTower_{suffix}_hns" / "scripts.inc").read_text()
-    assert "MAP_SCRIPT_ON_FRAME_TABLE, TinTower_RoofDay_OnFrame" in scripts
-
+# Job 18 now stages the Ancient Guardian Dragonite on the day roof;
+# the old automatic Rocket/Ho-Oh roof ambush checks are obsolete.
 roof = (maps / "TinTower_RoofDay_hns" / "scripts.inc").read_text()
-assert "map_script_2 VAR_TEMP_0, 1, TinTower_8F_EventScript_JessieJamesBattle" in roof
-party = (root / "src" / "data" / "trainers_hns.party").read_text().split(
-    "=== TRAINER_JESSIE_JAMES_TINTOWER_HNS ===", 1)[1].split("===", 1)[0]
-assert "Ghoulbat @ Life Orb" in party
-assert "Meowth @" not in party
-assert "Pikachu @ Light Ball" in party
-print("PASS: both statues retain access conditional on authentic Alphoracle/Crest; Rocket ambush and Ho-Oh retained")
+assert "TinTower_RoofDay_EventScript_SyncGuardianState" in roof
+assert "SPECIES_DRAGONITE_GUARDIAN" in roof
+assert "FLAG_PRU_GUARDIAN_DRAGONITE_COMPLETE" in roof
+assert "seteventmon SPECIES_RELIC_HO_OH" not in roof
+print("PASS: Tin Tower shortcut requires seven RELICS + Elite 20; Guardian scene preserved")
 
 generic = (maps / "RuinsOfAlph_PuzzleAndRewardChambers_hns" / "scripts.inc").read_text()
 assert "specialvar VAR_RESULT, IsPjrTinTowerEntranceStatue" in generic
