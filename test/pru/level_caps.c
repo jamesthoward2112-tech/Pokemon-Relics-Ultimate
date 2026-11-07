@@ -4,8 +4,8 @@
 #include "nuzlocke.h"
 #include "test/battle.h"
 
-static const u8 sExpectedNormalCaps[8] = {16, 22, 27, 33, 39, 43, 38, 52};
-static const u8 sExpectedHardCaps[8] = {12, 18, 23, 29, 35, 39, 34, 48};
+static const u8 sExpectedNormalCaps[9] = {16, 22, 27, 33, 39, 43, 43, 52, 56};
+static const u8 sExpectedHardCaps[9] = {12, 18, 23, 29, 35, 39, 39, 48, 54};
 
 TEST("PRU Normal and Hard level caps follow the Johto badge count")
 {
@@ -26,6 +26,7 @@ TEST("PRU Normal and Hard level caps follow the Johto badge count")
     FlagClear(FLAG_IS_CHAMPION);
     FlagClear(FLAG_IS_KANTO_CHAMPION);
 
+    // Include all eight-badge state as well as the eight pre-leader caps.
     for (completedBadges = 0; completedBadges < ARRAY_COUNT(sExpectedNormalCaps); completedBadges++)
     {
         for (i = 0; i < completedBadges; i++)
@@ -39,6 +40,19 @@ TEST("PRU Normal and Hard level caps follow the Johto badge count")
         for (i = 0; i < completedBadges; i++)
             FlagClear(FLAG_BADGE01_GET + i);
     }
+
+    // Alternative Chuck/Jasmine/Pryce order: six badges with Jasmine
+    // still unbeaten must not lower the cap compared with five badges.
+    FlagSet(FLAG_BADGE01_GET + 0);
+    FlagSet(FLAG_BADGE01_GET + 1);
+    FlagSet(FLAG_BADGE01_GET + 2);
+    FlagSet(FLAG_BADGE01_GET + 3);
+    FlagSet(FLAG_BADGE01_GET + 4);
+    FlagSet(FLAG_BADGE01_GET + 6);
+    gSaveBlock3Ptr->challengeSettings.tx_Challenges_LevelCap = 1;
+    EXPECT_EQ(GetCurrentLevelCap(), 43);
+    gSaveBlock3Ptr->challengeSettings.tx_Challenges_LevelCap = 2;
+    EXPECT_EQ(GetCurrentLevelCap(), 39);
 
     for (i = 0; i < NUM_BADGES; i++)
     {
