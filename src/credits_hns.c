@@ -166,32 +166,38 @@ static const u8 sTheEnd_LetterMap_D[] =
     1, 0x86, 0x87,
 };
 
+// Final Golden Ho-Oh credits play after the Mt Silver encounter. They must
+// celebrate the completed story, not advertise unfinished RELICS or an
+// Alphoracle encounter that the player has already resolved. Keep exactly
+// four introduction pages, preserving timing and credit-screen layout.
 static const u8 sPRUE20Text_Title[] = _("POKEMON RELICS ULTIMATE");
 static const u8 sPRUE20Text_Champion[] = _("ELITE 20 CHAMPION");
-static const u8 sPRUE20Text_Kanto[] = _("KANTO AND JOHTO");
-static const u8 sPRUE20Text_Journey[] = _("YOUR JOURNEY CONTINUES");
-static const u8 sPRUE20Text_Relics[] = _("THE GOLDEN RELIC HO-OH");
+static const u8 sPRUE20Text_Regions[] = _("JOHTO AND KANTO");
+static const u8 sPRUE20Text_Journey[] = _("A JOURNEY REMEMBERED");
+static const u8 sPRUE20Text_HoOh[] = _("GOLDEN HO-OH RISES");
 static const u8 sPRUE20Text_Flight[] = _("ANCIENT WINGS CROSS THE SKY");
-static const u8 sPRUE20Text_Awaken[] = _("THE SIX RELICS STIR");
-static const u8 sPRUE20Text_Beasts[] = _("RAIKOU / ENTEI / LUGIA");
-static const u8 sPRUE20Text_Spirits[] = _("I-UNOWN / CELEBI / SUICUNE");
-static const u8 sPRUE20Text_Oracle[] = _("ALPHORACLE AWAITS");
+static const u8 sPRUE20Text_FinalSummon[] = _("THE FINAL SUMMONING");
+static const u8 sPRUE20Text_Oak[] = _("OAK AT MT SILVER");
+static const u8 sPRUE20Text_Reborn[] = _("A LEGEND IS REBORN");
+static const u8 sPRUE20Text_Complete[] = _("THE JOURNEY IS COMPLETE");
+static const u8 sPRUE20Text_Thanks[] = _("THANK YOU FOR PLAYING");
 #include "data/credits_hns.h"
 static const struct CreditsEntry sE20Title = {0, TRUE, sPRUE20Text_Title};
 static const struct CreditsEntry sE20Champion = {0, TRUE, sPRUE20Text_Champion};
-static const struct CreditsEntry sE20Kanto = {0, TRUE, sPRUE20Text_Kanto};
+static const struct CreditsEntry sE20Regions = {0, TRUE, sPRUE20Text_Regions};
 static const struct CreditsEntry sE20Journey = {0, FALSE, sPRUE20Text_Journey};
-static const struct CreditsEntry sE20Relics = {0, TRUE, sPRUE20Text_Relics};
+static const struct CreditsEntry sE20HoOh = {0, TRUE, sPRUE20Text_HoOh};
 static const struct CreditsEntry sE20Flight = {0, FALSE, sPRUE20Text_Flight};
-static const struct CreditsEntry sE20Awaken = {0, TRUE, sPRUE20Text_Awaken};
-static const struct CreditsEntry sE20Beasts = {0, FALSE, sPRUE20Text_Beasts};
-static const struct CreditsEntry sE20Spirits = {0, FALSE, sPRUE20Text_Spirits};
-static const struct CreditsEntry sE20Oracle = {0, TRUE, sPRUE20Text_Oracle};
+static const struct CreditsEntry sE20FinalSummon = {0, TRUE, sPRUE20Text_FinalSummon};
+static const struct CreditsEntry sE20Oak = {0, FALSE, sPRUE20Text_Oak};
+static const struct CreditsEntry sE20Reborn = {0, FALSE, sPRUE20Text_Reborn};
+static const struct CreditsEntry sE20Complete = {0, TRUE, sPRUE20Text_Complete};
+static const struct CreditsEntry sE20Thanks = {0, FALSE, sPRUE20Text_Thanks};
 static const struct CreditsEntry *const sElite20CreditsIntroPages[][ENTRIES_PER_PAGE] = {
- { &sE20Title, &sE20Champion, &sE20Kanto, &sE20Journey, &sCreditsEntry_EmptyString },
- { &sE20Relics, &sE20Flight, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
- { &sE20Awaken, &sE20Beasts, &sE20Spirits, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
- { &sE20Oracle, &sE20Journey, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
+ { &sE20Title, &sE20Champion, &sE20Regions, &sE20Journey, &sCreditsEntry_EmptyString },
+ { &sE20HoOh, &sE20Flight, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
+ { &sE20FinalSummon, &sE20Oak, &sE20Reborn, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
+ { &sE20Complete, &sE20Thanks, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
 };
 #define E20_INTRO_PAGE_COUNT ARRAY_COUNT(sElite20CreditsIntroPages)
 #include "data/credits_pru.h"
