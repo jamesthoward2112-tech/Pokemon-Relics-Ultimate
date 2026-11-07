@@ -78,27 +78,28 @@ def install_last_wish():
                     if isinstance(n, ast.Assign)
                     and any(isinstance(t, ast.Name) and t.id == "BLOBS"
                             for t in n.targets))
-    # The original donor pinned commit was replaced by the author.
-    # Recover the exact verified donor sources from the successful
-    # 8 Oct 2026 PRL GitHub Actions export artifact, still retained.
-    with tempfile.TemporaryDirectory() as temp:
-        subprocess.run(["gh", "run", "download", "37778386335",
-                        "--repo", PRL_REPO, "--name", "PRL-Original-Intro-Donors",
-                        "--dir", temp], check=True)
-        outer = Path(temp) / "Hoenns_Last_Wish_Opening_Scenes_0_to_3.zip"
-        assert outer.is_file(), f"Missing original donor nested archive: {outer}"
-        with zipfile.ZipFile(outer) as archive:
-            prefix = "Hoenns_Last_Wish_Opening_Scenes_0_to_3/graphics/intro/scene_0/"
-            dest = Path("graphics/intro/prl_hwl")
-            dest.mkdir(parents=True, exist_ok=True)
-            for name, sha in expected.items():
-                content = archive.read(prefix + name)
-                digest = hashlib.sha1(
-                    b"blob " + str(len(content)).encode() + b"\0" + content
-                ).hexdigest()
-                assert digest == sha, f"Donor original hash mismatch: {name}"
-                (dest / name).write_bytes(content)
-                print("ARCHIVED_DONOR_VERIFIED", name, digest)
+    # The original public donor commit was later replaced by its author.
+    # GitHub Actions' historical donor artifact eventually expired. Bundle
+    # only the 23 original approved scene-0 files, each independently checked
+    # against the original git-blob SHA recorded in the pinned PRL helper.
+    # This keeps native PRU builds reproducible without remote artifacts.
+    donor_archive = Path("assets/pru_title/approved_last_wish_scene0.zip")
+    assert donor_archive.is_file(), f"Missing pinned intro donor asset pack: {donor_archive}"
+    assert hashlib.sha256(donor_archive.read_bytes()).hexdigest() == (
+        "d1c41eafada1fe949b8fa955485201b05e8a71d07214d7f7e06bde6af5c59829"
+    ), "Approved intro donor archive checksum mismatch"
+    with zipfile.ZipFile(donor_archive) as archive:
+        assert set(archive.namelist()) == set(expected), "Unexpected Last Wish donor files"
+        dest = Path("graphics/intro/prl_hwl")
+        dest.mkdir(parents=True, exist_ok=True)
+        for name, sha in expected.items():
+            content = archive.read(name)
+            digest = hashlib.sha1(
+                b"blob " + str(len(content)).encode() + b"\0" + content
+            ).hexdigest()
+            assert digest == sha, f"Donor original hash mismatch: {name}"
+            (dest / name).write_bytes(content)
+            print("ARCHIVED_DONOR_VERIFIED", name, digest)
     assert len(expected) >= 20
     for art in ("celebi.png", "jirachi.png", "bg00.png", "moon.png"):
         assert Path("graphics/intro/prl_hwl", art).is_file()
