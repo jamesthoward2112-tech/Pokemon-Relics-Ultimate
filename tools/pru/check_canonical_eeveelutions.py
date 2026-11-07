@@ -102,17 +102,16 @@ pru_species = read("src/data/pokemon/species_info/pru_custom.h")
 expert = read("data/maps/EcruteakCity_RockShop_hns/scripts.inc")
 dex_order = read("src/data/pokemon/pru_dex_order.h")
 for species, public_name in public_names.items():
-    species_constant = species.removeprefix("SPECIES_")
     if species in ("SPECIES_NIMBEON", "SPECIES_EEVEEON"):
-        block = pru_species.split(f"[{species}] =", 1)[1].split("\\n},", 1)[0]
+        block = pru_species.split(f"[{species}] =", 1)[1].split("\n},", 1)[0]
         assert f'.speciesName = _("{public_name}")' in block, (species, public_name)
     elif species == "SPECIES_DRAKEON":
         block = pjr_species.split(f"PJR_RED_SPECIES({species},", 1)[1].split("),", 1)[0]
         assert f'"{public_name}"' in block, (species, public_name)
     else:
-        block = pjr_species.split(f"[{species}] =", 1)[1].split("\\n},", 1)[0]
+        block = pjr_species.split(f"[{species}] =", 1)[1].split("\n},", 1)[0]
         assert f'.speciesName = _("{public_name}")' in block, (species, public_name)
-    dex_line = re.search(rf"^\\s*{species},\\s*//\\s*\\d{{3}}\\s+(.+)$", dex_order, re.M)
+    dex_line = re.search(rf"^\s*{species},\s*//\s*\d{{3}}\s+(.+)$", dex_order, re.M)
     assert dex_line and dex_line.group(1) == public_name, (species, "Dex display label")
     assert public_name.upper() in expert, (species, "Ecruteak Eeveelution Expert")
 # Khang / Nolax typings were already present on PR75; prevent future regressions.
