@@ -8824,7 +8824,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
             "Summoned atop Mt. Silver by\n"
             "Professor Oak, this golden relic\n"
             "answers only the worthiest Trainer.\n"
-            "Its sacred flames promise rebirth.",)
+            "Its sacred flames promise rebirth."),
         .pokemonScale = 256,
         .pokemonOffset = 0,
         .trainerScale = 610,
