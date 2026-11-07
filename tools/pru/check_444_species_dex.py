@@ -74,8 +74,8 @@ listed = [(m.group(1), int(m.group(2))) for m in
 assert listed == list(zip(ids, range(1, 451))), "Engine HNS summary numbering differs from the canonical list"
 assert "SPECIES_LUVDISC" not in ids and ids.count("SPECIES_SYLVEON") == 1
 assert names[166:187] == [
-    "Eevee", "Eeveeon", "Nimbeon", "Champeon", "Lepideon", "Sphynxeon",
-    "Guardeon", "Obsideon", "Toxeon", "Omeon", "Drakeon", "Vaporeon",
+    "Eevee", "Eeveeon", "Aereon", "Champeon", "Moffeon", "Eartheon",
+    "Galveon", "Pebleon", "Toxeon", "Obliveon", "Mytheon", "Vaporeon",
     "Jolteon", "Flareon", "Espeon", "Umbreon", "Leafeon", "Glaceon",
     "Sylveon", "Porygon", "Porygon2",
 ]
