@@ -1522,7 +1522,7 @@ PRU_Elite20_Text_MasterRematchesCleared:
 	.string "ULTIMATE CHAMPION.\p"
 	.string "Congratulations!\p"
 	.string "Check the documentation and\n"
-	.string "RelicDex for E20 Challenges!$"
+	.string "RelicDex for E20 Challenges$"
 
 PRU_Elite20_Text_OakRelicsUnused:
 	.string "We've also prepared a prize\n"
