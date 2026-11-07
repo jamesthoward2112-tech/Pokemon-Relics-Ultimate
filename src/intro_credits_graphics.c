@@ -506,8 +506,20 @@ static const union AnimCmd *const sAnims_Bicycle[] =
 };
 
 #if IS_HNS
-static const union AnimCmd sAnim_CreditsRelicHoOh[] = { ANIMCMD_FRAME(0, 24), ANIMCMD_JUMP(0) };
-static const union AnimCmd *const sAnims_CreditsRelicHoOh[] = { sAnim_CreditsRelicHoOh, sAnim_CreditsRelicHoOh, sAnim_CreditsRelicHoOh, sAnim_CreditsRelicHoOh };
+// Flight above the E20 finale credits: raised -> mid -> down -> mid.
+// Offset units are 8x8 OBJ tiles (64 tiles per 64x64 frame).
+static const union AnimCmd sAnim_CreditsRelicHoOh[] =
+{
+    ANIMCMD_FRAME(0, 10),
+    ANIMCMD_FRAME(64, 10),
+    ANIMCMD_FRAME(128, 12),
+    ANIMCMD_FRAME(64, 10),
+    ANIMCMD_JUMP(0)
+};
+static const union AnimCmd *const sAnims_CreditsRelicHoOh[] =
+{
+    sAnim_CreditsRelicHoOh,
+};
 static const struct SpriteTemplate sSpriteTemplate_CreditsRelicHoOh = { .tileTag = TAG_RELIC_HO_OH, .paletteTag = TAG_RELIC_HO_OH, .oam = &sOamData_Player, .anims = sAnims_CreditsRelicHoOh, .callback = SpriteCB_Player };
 static const struct SpriteTemplate sSpriteTemplate_Suicune =
 {
@@ -723,10 +735,20 @@ const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalMay[] =
 };
 
 #if IS_HNS
-extern const u32 gMonFrontPic_HoOhRelic[];
-extern const u16 gMonPalette_HoOhRelic[];
-const struct CompressedSpriteSheet gSpriteSheet_CreditsRelicHoOh[] = { { .data = gMonFrontPic_HoOhRelic, .size = 0x800, .tag = TAG_RELIC_HO_OH }, {} };
-const struct SpritePalette gSpritePalettes_CreditsRelicHoOh[] = { { .data = gMonPalette_HoOhRelic, .tag = TAG_RELIC_HO_OH }, { .data = sMayCredits_Pal, .tag = TAG_MAY }, {} };
+// Three user-approved GBA 4bpp flying poses. This is credits-only art;
+// standard/Relic Ho-Oh battle, party and Pokédex graphics remain untouched.
+// Each 64x64 pose takes 64 OBJ tiles (0x800 bytes), 3 frames = 0x1800 bytes.
+static const u32 sCreditsRelicHoOhFlight_Gfx[] = INCBIN_U32("graphics/intro/scene_2/relic_ho_oh_flight.4bpp.smol");
+static const u16 sCreditsRelicHoOhFlight_Pal[] = INCBIN_U16("graphics/intro/scene_2/relic_ho_oh_flight.gbapal");
+const struct CompressedSpriteSheet gSpriteSheet_CreditsRelicHoOh[] = {
+    { .data = sCreditsRelicHoOhFlight_Gfx, .size = 0x1800, .tag = TAG_RELIC_HO_OH },
+    {}
+};
+const struct SpritePalette gSpritePalettes_CreditsRelicHoOh[] = {
+    { .data = sCreditsRelicHoOhFlight_Pal, .tag = TAG_RELIC_HO_OH },
+    { .data = sMayCredits_Pal, .tag = TAG_MAY },
+    {}
+};
 const struct CompressedSpriteSheet gSpriteSheet_CreditsSuicune[] =
 {
     {
