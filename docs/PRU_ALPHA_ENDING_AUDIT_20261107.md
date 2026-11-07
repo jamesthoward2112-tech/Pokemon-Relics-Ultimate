@@ -44,4 +44,4 @@ Candidate asset specification, subject to resource selection:
 - Public RelicDex still contains an older 444-entry list and must be synced to the in-game 450 before beta.
 - Sprite/artwork donor rights and detailed attribution should be reviewed before public distribution.
 
-**Status:** text source prepared and regression-tested when tools permit; flying art pending resource review and approval.
+**Status (7 Nov 2026):** revised text and both Golden Ho-Oh bios committed; `test/test_pru_alpha_ending_text.py`, `test/test_pru_job16_cinematic.py`, and `test/test_pru_job17_custom_credits.py` all passed against the source branch on the connected test machine. The new regression is included in the CI workflow. No new ROM has been compiled from these changes. Flying art is pending the user's supplied resources and approval. Tracked as GitHub Issue #79.
