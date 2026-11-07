@@ -365,6 +365,14 @@ jobs:
               assert colors and len(colors) > 32, f'mGBA game screen stayed blank for {filename}'
               print(f'mGBA rendered the game screen for {filename}: {game_screen.width}x{game_screen.height}, {len(colors)} colors')
           PY
+      - name: Preserve mGBA startup diagnostics even when validation fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: PRU-mGBA-startup-diagnostics-${{ github.sha }}
+          path: PRU-QA/video-review/mgba/**
+          if-no-files-found: warn
+          retention-days: 7
       - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4
         with:
