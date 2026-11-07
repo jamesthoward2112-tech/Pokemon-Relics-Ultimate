@@ -20,8 +20,8 @@ assert species.count("SPECIES_SYLVEON") == 1
 assert "SPECIES_LUVDISC" not in species
 names = [row["Name"] for row in rows]
 assert names[166:187] == [
-    "Eevee", "Eeveeon", "Nimbeon", "Champeon", "Lepideon", "Sphynxeon",
-    "Guardeon", "Obsideon", "Toxeon", "Omeon", "Drakeon", "Vaporeon",
+    "Eevee", "Eeveeon", "Aereon", "Champeon", "Moffeon", "Eartheon",
+    "Galveon", "Pebleon", "Toxeon", "Obliveon", "Mytheon", "Vaporeon",
     "Jolteon", "Flareon", "Espeon", "Umbreon", "Leafeon", "Glaceon",
     "Sylveon", "Porygon", "Porygon2",
 ]
