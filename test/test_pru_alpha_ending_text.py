@@ -77,11 +77,12 @@ anim = art.split("static const union AnimCmd sAnim_CreditsRelicHoOh[]", 1)[1].sp
 assert [int(i) for i in re.findall(r"ANIMCMD_FRAME\((\d+),", anim)] == [0, 64, 128, 64]
 assert "ANIMCMD_JUMP(0)" in anim
 assert "CreateCreditsRelicHoOhSprite(DISPLAY_WIDTH / 2, 34)" in credits
-assert "sprite->x = DISPLAY_WIDTH / 2;" in credits
-assert "sprite->y = 34;" in credits
-assert "sprite->x -= 2;" not in credits
-assert "sprite->y2 = Sin(" not in credits
-assert "sprite->data[1] >= 3" not in credits
+flight_cb = credits.split("static void SpriteCB_CreditsRelicHoOh(struct Sprite *sprite)", 1)[1].split("\n}\n", 1)[0]
+assert "sprite->x = DISPLAY_WIDTH / 2;" in flight_cb
+assert "sprite->y = 34;" in flight_cb
+assert "sprite->x -= 2;" not in flight_cb
+assert "sprite->y2 = Sin(" not in flight_cb
+assert "sprite->data[1] >= 3" not in flight_cb
 assert "seteventmon SPECIES_RELIC_HO_OH, 100" in mt_silver
 assert "FLAG_PRU_E20_CREDITS_PENDING" in mt_silver
 
