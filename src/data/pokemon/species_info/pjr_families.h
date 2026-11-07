@@ -675,9 +675,9 @@ PJR_FINAL_SPECIES(SPECIES_GHOULBAT, 95, 110, 90, 80, 95, 130, TYPE_GHOST, TYPE_F
     .speciesName = _("Ho-Oh"), .cryId = CRY_HO_OH, .natDexNum = NATIONAL_DEX_HO_OH,
     .categoryName = _("Relic"), .height = 38, .weight = 1990,
     .description = COMPOUND_STRING(
-        "An ancient golden Ho-Oh that answers\\n"
-        "only a Trainer proven worthy by the\\n"
-        "seven RELICS. Its radiant wings are\\n"
+        "An ancient golden Ho-Oh that answers\n"
+        "only a Trainer proven worthy by the\n"
+        "seven RELICS. Its radiant wings are\n"
         "said to herald rebirth and new hope."),
     .pokemonScale = 256, .pokemonOffset = 0, .trainerScale = 610, .trainerOffset = 17,
     .frontPic = gMonFrontPic_HoOhRelic, .frontPicSize = MON_COORDS_SIZE(64, 64), .frontPicYOffset = 0,
