@@ -143,20 +143,20 @@ EcruteakCity_RockShop_Text_ExpertClassic:
 
 EcruteakCity_RockShop_Text_ExpertRelic:
     .string "ANCIENT STONE: EEVEEON\n"
-    .string "SHINY STONE: NIMBEON\p"
-    .string "DUSK STONE: OMEON\n"
+    .string "SHINY STONE: AEREON\p"
+    .string "DUSK STONE: OBLIVEON\n"
     .string "ANCIENT STONE is sold here.\p"
     .string "SHINY and DUSK STONES\n"
     .string "unlock after the FOG BADGE.$"
 
 EcruteakCity_RockShop_Text_ExpertUnusual:
     .string "EXPERT BELT: CHAMPEON\n"
-    .string "SILVER POWDER: LEPIDEON\p"
-    .string "SOFT SAND: SPHYNXEON\n"
-    .string "METAL COAT: GUARDEON\p"
-    .string "HARD STONE: OBSIDEON\n"
+    .string "SILVER POWDER: MOFFEON\p"
+    .string "SOFT SAND: EARTHEON\n"
+    .string "METAL COAT: GALVEON\p"
+    .string "HARD STONE: PEBLEON\n"
     .string "POISON BARB: TOXEON\p"
-    .string "DRAGON FANG: DRAKEON\n"
+    .string "DRAGON FANG: MYTHEON\n"
     .string "Use the matching item on EEVEE.\p"
     .string "These seven items aren't\n"
     .string "stocked in this Rock Shop.$"
