@@ -83,6 +83,44 @@ assert "{EVO_ITEM, ITEM_MOON_STONE, SPECIES_NOXICHU}" in source
 assert "{EVO_ITEM, ITEM_THUNDER_STONE, SPECIES_RAICHU" in source
 assert "{EVO_ITEM, ITEM_ANCIENT_STONE, SPECIES_CHARAXIS" in source
 
+# Keep public names separate from stable internal species constants, evolutions and sprites.
+# PRU's selected Infinity-era artwork remains unchanged (these are DISPLAY names only).
+public_names = {
+    "SPECIES_NIMBEON": "Aereon",
+    "SPECIES_TOXEON": "Toxeon",
+    "SPECIES_OMEON": "Obliveon",
+    "SPECIES_OBSIDEON": "Pebleon",
+    "SPECIES_EEVEEON": "Eeveeon",
+    "SPECIES_SPHYNXEON": "Eartheon",
+    "SPECIES_CHAMPEON": "Champeon",
+    "SPECIES_GUARDEON": "Galveon",
+    "SPECIES_LEPIDEON": "Moffeon",
+    "SPECIES_DRAKEON": "Mytheon",
+}
+pjr_species = read("src/data/pokemon/species_info/pjr_families.h")
+pru_species = read("src/data/pokemon/species_info/pru_custom.h")
+expert = read("data/maps/EcruteakCity_RockShop_hns/scripts.inc")
+dex_order = read("src/data/pokemon/pru_dex_order.h")
+for species, public_name in public_names.items():
+    species_constant = species.removeprefix("SPECIES_")
+    if species in ("SPECIES_NIMBEON", "SPECIES_EEVEEON"):
+        block = pru_species.split(f"[{species}] =", 1)[1].split("\\n},", 1)[0]
+        assert f'.speciesName = _("{public_name}")' in block, (species, public_name)
+    elif species == "SPECIES_DRAKEON":
+        block = pjr_species.split(f"PJR_RED_SPECIES({species},", 1)[1].split("),", 1)[0]
+        assert f'"{public_name}"' in block, (species, public_name)
+    else:
+        block = pjr_species.split(f"[{species}] =", 1)[1].split("\\n},", 1)[0]
+        assert f'.speciesName = _("{public_name}")' in block, (species, public_name)
+    dex_line = re.search(rf"^\\s*{species},\\s*//\\s*\\d{{3}}\\s+(.+)$", dex_order, re.M)
+    assert dex_line and dex_line.group(1) == public_name, (species, "Dex display label")
+    assert public_name.upper() in expert, (species, "Ecruteak Eeveelution Expert")
+# Khang / Nolax typings were already present on PR75; prevent future regressions.
+assert "PJR_RED_SPECIES(SPECIES_KHANG, 105, 105, 95, 50, 90, 110, TYPE_NORMAL, TYPE_FIGHTING," in pjr_species
+assert "PJR_RED_SPECIES(SPECIES_NOLAX, 100, 130, 80, 45, 90, 130, TYPE_NORMAL, TYPE_DARK," in pjr_species
+print("PASS: all ten public Eeveelution display names, Dex order and Expert dialogue agree")
+print("PASS: Khang Normal/Fighting and Nolax Normal/Dark retained")
+
 print("PASS: all 450 canonical evolution targets are whitelisted in 6 active evolution modes")
 print("PASS: all 18 approved Eeveelutions use exactly one direct-use item")
 print("PASS: all seven alternate-item catalysts retain their original held effects and non-PRU behavior")
