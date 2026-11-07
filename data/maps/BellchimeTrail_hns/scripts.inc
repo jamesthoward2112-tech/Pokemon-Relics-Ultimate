@@ -54,35 +54,11 @@ EcruteakBellchimeTrail_Movement_CameraPanUp::
 
 
 EcruteakBellchimeTrail_EventScript_RelicShortcut::
-	@ PRU is a fresh standalone story. Never backfill or create mythical
-	@ catches from old VAR_COMPLETED_HO_OH / defeated-Red flags.
-	@ Access follows completed Elite 20 and the seven RELICS, never a relic item.
-	goto_if_unset FLAG_PRU_ELITE18_CLEARED, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	goto_if_unset FLAG_PJR_RELIC_RAIKOU, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	goto_if_unset FLAG_PJR_RELIC_ENTEI, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	goto_if_unset FLAG_PJR_RELIC_LUGIA, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	goto_if_unset FLAG_PJR_RELIC_UNOWN_I, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	goto_if_unset FLAG_PJR_RELIC_CELEBI, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	goto_if_unset FLAG_PJR_RELIC_SUICUNE, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	goto_if_unset FLAG_PJR_RELIC_ALPHORACLE, EcruteakBellchimeTrail_EventScript_RelicShortcutDormant
-	goto EcruteakBellchimeTrail_EventScript_RelicShortcutReady
-
-EcruteakBellchimeTrail_EventScript_RelicShortcutReady::
-	msgbox EcruteakBellchimeTrail_Text_RelicShortcutReady, MSGBOX_DEFAULT
+	msgbox EcruteakBellchimeTrail_Text_RelicShortcutReady, MSGBOX_SIGN
 	warp MAP_TIN_TOWER_ROOF_DAY_HNS, 10, 13
 	waitstate
 	end
 
-EcruteakBellchimeTrail_EventScript_RelicShortcutDormant::
-	msgbox EcruteakBellchimeTrail_Text_RelicShortcutDormantMsg, MSGBOX_DEFAULT
-	end
-
 EcruteakBellchimeTrail_Text_RelicShortcutReady:
-	.string "The seven RELICS resonate.\p"
-	.string "A passage opens to the\n"
-	.string "TIN TOWER roof.$"
-
-EcruteakBellchimeTrail_Text_RelicShortcutDormantMsg:
-	.string "The ancient statue is silent.\p"
-	.string "Complete the ELITE 20 and\n"
-	.string "gather all seven RELICS.$"
+	.string "A hidden passage leads straight to\n"
+	.string "the roof of TIN TOWER.$"
