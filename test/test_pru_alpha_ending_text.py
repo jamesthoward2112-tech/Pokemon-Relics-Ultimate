@@ -72,7 +72,7 @@ assert 'relic_ho_oh_flight.4bpp.smol' in art
 assert 'relic_ho_oh_flight.gbapal' in art
 assert '.size = 0x1800, .tag = TAG_RELIC_HO_OH' in art
 anim = art.split("static const union AnimCmd sAnim_CreditsRelicHoOh[]", 1)[1].split("};", 1)[0]
-assert [int(i) for i in re.findall(r"ANIMCMD_FRAME\\((\\d+),", anim)] == [0, 64, 128, 64]
+assert [int(i) for i in re.findall(r"ANIMCMD_FRAME\((\d+),", anim)] == [0, 64, 128, 64]
 assert "ANIMCMD_JUMP(0)" in anim
 assert "CreateCreditsRelicHoOhSprite(DISPLAY_WIDTH + 32, 46)" in credits
 assert "sprite->x -= 2;" in credits, "Preserve credits-only leftward flight"
@@ -85,7 +85,7 @@ import struct
 import zlib
 
 flight = (root / "graphics/intro/scene_2/relic_ho_oh_flight.png").read_bytes()
-assert flight.startswith(b"\\x89PNG\\r\\n\\x1a\\n")
+assert flight.startswith(b"\x89PNG\r\n\x1a\n")
 width, height, depth, mode = struct.unpack(">IIBB", flight[16:26])
 assert (width, height, depth, mode) == (64, 192, 8, 3)
 pos = 8
