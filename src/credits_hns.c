@@ -169,13 +169,13 @@ static const u8 sTheEnd_LetterMap_D[] =
 static const u8 sPRUE20Text_Title[] = _("POKEMON RELICS ULTIMATE");
 static const u8 sPRUE20Text_Champion[] = _("ELITE 20 CHAMPION");
 static const u8 sPRUE20Text_Kanto[] = _("KANTO AND JOHTO");
-static const u8 sPRUE20Text_Journey[] = _("YOUR JOURNEY CONTINUES");
-static const u8 sPRUE20Text_Relics[] = _("THE GOLDEN RELIC HO-OH");
-static const u8 sPRUE20Text_Flight[] = _("ANCIENT WINGS CROSS THE SKY");
-static const u8 sPRUE20Text_Awaken[] = _("THE SIX RELICS STIR");
-static const u8 sPRUE20Text_Beasts[] = _("RAIKOU / ENTEI / LUGIA");
-static const u8 sPRUE20Text_Spirits[] = _("I-UNOWN / CELEBI / SUICUNE");
-static const u8 sPRUE20Text_Oracle[] = _("ALPHORACLE AWAITS");
+static const u8 sPRUE20Text_Journey[] = _("THE JOURNEY REACHES ITS END");
+static const u8 sPRUE20Text_Relics[] = _("SEVEN RELICS UNITED");
+static const u8 sPRUE20Text_Flight[] = _("GOLDEN HO-OH TAKES FLIGHT");
+static const u8 sPRUE20Text_Awaken[] = _("AT THE MT SILVER SUMMIT");
+static const u8 sPRUE20Text_Beasts[] = _("PROF OAK KEEPS HIS PROMISE");
+static const u8 sPRUE20Text_Spirits[] = _("THE ULTIMATE RELIC ANSWERS");
+static const u8 sPRUE20Text_Oracle[] = _("AN ANCIENT LEGEND REBORN");
 #include "data/credits_hns.h"
 static const struct CreditsEntry sE20Title = {0, TRUE, sPRUE20Text_Title};
 static const struct CreditsEntry sE20Champion = {0, TRUE, sPRUE20Text_Champion};
@@ -187,11 +187,13 @@ static const struct CreditsEntry sE20Awaken = {0, TRUE, sPRUE20Text_Awaken};
 static const struct CreditsEntry sE20Beasts = {0, FALSE, sPRUE20Text_Beasts};
 static const struct CreditsEntry sE20Spirits = {0, FALSE, sPRUE20Text_Spirits};
 static const struct CreditsEntry sE20Oracle = {0, TRUE, sPRUE20Text_Oracle};
+static const u8 sPRUE20Text_Thanks[] = _("THANK YOU FOR PLAYING");
+static const struct CreditsEntry sE20Thanks = {0, FALSE, sPRUE20Text_Thanks};
 static const struct CreditsEntry *const sElite20CreditsIntroPages[][ENTRIES_PER_PAGE] = {
  { &sE20Title, &sE20Champion, &sE20Kanto, &sE20Journey, &sCreditsEntry_EmptyString },
  { &sE20Relics, &sE20Flight, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
  { &sE20Awaken, &sE20Beasts, &sE20Spirits, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
- { &sE20Oracle, &sE20Journey, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
+ { &sE20Oracle, &sE20Thanks, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString }
 };
 #define E20_INTRO_PAGE_COUNT ARRAY_COUNT(sElite20CreditsIntroPages)
 #include "data/credits_pru.h"
