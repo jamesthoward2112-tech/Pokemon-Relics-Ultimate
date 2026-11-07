@@ -167,15 +167,15 @@ PRU_No,Name,Species_Key,Species_Constant,Category,Type_Source,Source_Tier,Notes
 166,Ditto,ditto,SPECIES_DITTO,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
 167,Eevee,eevee,SPECIES_EEVEE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,Only original Gen I–III evolutions and PRU custom Eeveelutions; excluded later standard Eeveelutions.
 168,Eeveeon,eeveeon,SPECIES_EEVEEON,PRU custom / exception,MON_TYPES(TYPE_NORMAL),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-169,Nimbeon,nimbeon,SPECIES_NIMBEON,PRU custom / exception,MON_TYPES(TYPE_FLYING),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+169,Aereon,nimbeon,SPECIES_NIMBEON,PRU custom / exception,MON_TYPES(TYPE_FLYING),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
 170,Champeon,champeon,SPECIES_CHAMPEON,PRU custom / exception,MON_TYPES(TYPE_FIGHTING),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-171,Lepideon,lepideon,SPECIES_LEPIDEON,PRU custom / exception,MON_TYPES(TYPE_BUG),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-172,Sphynxeon,sphynxeon,SPECIES_SPHYNXEON,PRU custom / exception,MON_TYPES(TYPE_GROUND),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-173,Guardeon,guardeon,SPECIES_GUARDEON,PRU custom / exception,MON_TYPES(TYPE_STEEL),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-174,Obsideon,obsideon,SPECIES_OBSIDEON,PRU custom / exception,MON_TYPES(TYPE_ROCK),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+171,Moffeon,lepideon,SPECIES_LEPIDEON,PRU custom / exception,MON_TYPES(TYPE_BUG),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+172,Eartheon,sphynxeon,SPECIES_SPHYNXEON,PRU custom / exception,MON_TYPES(TYPE_GROUND),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+173,Galveon,guardeon,SPECIES_GUARDEON,PRU custom / exception,MON_TYPES(TYPE_STEEL),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+174,Pebleon,obsideon,SPECIES_OBSIDEON,PRU custom / exception,MON_TYPES(TYPE_ROCK),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
 175,Toxeon,toxeon,SPECIES_TOXEON,PRU custom / exception,MON_TYPES(TYPE_PSYCHIC),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-176,Omeon,omeon,SPECIES_OMEON,PRU custom / exception,MON_TYPES(TYPE_GHOST),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-177,Drakeon,drakeon,SPECIES_DRAKEON,PRU custom / exception,MON_TYPES(TYPE_DRAGON),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+176,Obliveon,omeon,SPECIES_OMEON,PRU custom / exception,MON_TYPES(TYPE_GHOST),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+177,Mytheon,drakeon,SPECIES_DRAKEON,PRU custom / exception,MON_TYPES(TYPE_DRAGON),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
 178,Vaporeon,vaporeon,SPECIES_VAPOREON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
 179,Jolteon,jolteon,SPECIES_JOLTEON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Kanto,
 180,Flareon,flareon,SPECIES_FLAREON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PRL-Kanto,
