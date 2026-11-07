@@ -2,16 +2,16 @@
 #define GUARD_CONFIG_DEBUG_H
 
 // Overworld Debug
-// PRU playtest policy: ON for development builds; OFF automatically with RELEASE=1.
-// Keep development debug enabled until the Master Alpha build is explicitly approved.
-#define DEBUG_OVERWORLD_MENU            DISABLED_ON_RELEASE // Enables an overworld debug menu to change flags, variables, giving pokemon and more, accessed by holding R and pressing START while in the overworld by default.
+// PRU public Alpha onward: disable cheats in ALL builds (not only RELEASE=1).
+// R+START must never open the overworld debug menu in playable distributions.
+#define DEBUG_OVERWORLD_MENU            FALSE // Enables an overworld debug menu to change flags, variables, giving pokemon and more, accessed by holding R and pressing START while in the overworld by default.
 #define DEBUG_OVERWORLD_HELD_KEYS       (R_BUTTON)          // The keys required to be held to open the debug menu.
 #define DEBUG_OVERWORLD_TRIGGER_EVENT   pressedStartButton  // The event that opens the menu when holding the key(s) defined in DEBUG_OVERWORLD_HELD_KEYS.
 #define DEBUG_OVERWORLD_IN_MENU         FALSE               // Replaces the overworld debug menu button combination with a start menu entry (above Pokédex).
 
 // Battle Debug Menu
-// PRU playtests: START opens the Win Encounter battle debug menu; RELEASE=1 disables it.
-#define DEBUG_BATTLE_MENU               DISABLED_ON_RELEASE // Enabled in development ROMs; open with START during battle action selection.
+// START must not open the battle "Win Encounter" shortcut in any build.
+#define DEBUG_BATTLE_MENU               FALSE // Enabled in development ROMs; open with START during battle action selection.
 #define DEBUG_AI_DELAY_TIMER            FALSE   // If set to TRUE, displays the number of frames it takes for the AI to choose a move. Replaces the "What will PKMN do" text. Useful for devs or anyone who modifies the AI code and wants to see if it doesn't take too long to run.
 
 // Pokémon Debug
