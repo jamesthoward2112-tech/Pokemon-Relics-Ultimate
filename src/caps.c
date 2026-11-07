@@ -16,8 +16,11 @@ static u8 GetCurrentBadgeCount(void)
     return badgeCount;
 }
 
-// Challenge level caps are indexed by completed Johto badges and protect the
-// next leader's ace. Hard mode stays four levels below that ace.
+// Challenge level caps are indexed by completed Johto badges. Johto's
+// Chuck/Jasmine/Pryce gyms can be challenged in different orders, so caps
+// must never DECREASE when another badge is earned. Hard mode starts four
+// levels below each leader's ace, but maintains the prior cap if a later
+// leader's ace is lower (Pryce follows Jasmine in the legacy badge order).
 static const u8 sLevelCapTable_Normal[] =
 {
     [0] = 16, // Falkner
@@ -26,7 +29,7 @@ static const u8 sLevelCapTable_Normal[] =
     [3] = 33, // Morty
     [4] = 39, // Chuck
     [5] = 43, // Jasmine
-    [6] = 38, // Pryce
+    [6] = 43, // Pryce's ace is 38; retain Jasmine's Lv43 ceiling
     [7] = 52, // Clair
     [8] = 56, // Eight badges; preserved pre-League cap
 };
@@ -39,7 +42,7 @@ static const u8 sLevelCapTable_Hard[] =
     [3] = 29, // Morty
     [4] = 35, // Chuck
     [5] = 39, // Jasmine
-    [6] = 34, // Pryce
+    [6] = 39, // Pryce's ace is 38; retain prior Hard Lv39 ceiling
     [7] = 48, // Clair
     [8] = 54, // Eight badges; preserved pre-League cap
 };
