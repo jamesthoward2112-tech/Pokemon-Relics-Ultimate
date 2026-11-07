@@ -87,7 +87,7 @@ import zlib
 flight = (root / "graphics/intro/scene_2/relic_ho_oh_flight.png").read_bytes()
 assert flight.startswith(b"\x89PNG\r\n\x1a\n")
 width, height, depth, mode = struct.unpack(">IIBB", flight[16:26])
-assert (width, height, depth, mode) == (64, 192, 8, 3)
+assert (width, height, depth, mode) == (64, 192, 4, 3)
 pos = 8
 palette_size = None
 compressed = b""
@@ -102,15 +102,16 @@ while pos < len(flight):
     pos += size + 12
 assert palette_size == 16, f"4bpp flight must have exactly 16 palette entries, got {palette_size}"
 raw = zlib.decompress(compressed)
-assert len(raw) == height * (width + 1)
+stride = width // 2  # PNG stores two 4-bit palette indices per byte
+assert len(raw) == height * (stride + 1)
 rows = []
-last = bytearray(width)
+last = bytearray(stride)
 for y in range(height):
-    rowstart = y * (width + 1)
+    rowstart = y * (stride + 1)
     filt = raw[rowstart]
-    src = raw[rowstart + 1:rowstart + width + 1]
+    src = raw[rowstart + 1:rowstart + stride + 1]
     assert filt in range(5)
-    out = bytearray(width)
+    out = bytearray(stride)
     for x, v in enumerate(src):
         left = out[x-1] if x else 0
         up = last[x]
@@ -126,7 +127,10 @@ for y in range(height):
         out[x] = (v + delta) & 255
     rows.append(bytes(out))
     last = out
-frames = [b"".join(rows[i*64:(i+1)*64]) for i in range(3)]
+frames = [
+    bytes(color for row in rows[i*64:(i+1)*64] for byte in row for color in (byte >> 4, byte & 15))
+    for i in range(3)
+]
 assert all(max(frame) < 16 and frame.count(0) > 0 and frame.count(0) < 3750 for frame in frames)
 assert len(set(frames)) == 3, "Flying frames must be different poses"
 
