@@ -8821,9 +8821,9 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 38,
         .weight = 1990,
         .description = COMPOUND_STRING(
-            "An ancient golden Ho-Oh that answers\\n"
-            "only a Trainer proven worthy by the\\n"
-            "seven RELICS. Its radiant wings are\\n"
+            "An ancient golden Ho-Oh that answers\n"
+            "only a Trainer proven worthy by the\n"
+            "seven RELICS. Its radiant wings are\n"
             "said to herald rebirth and new hope."),
         .pokemonScale = 256,
         .pokemonOffset = 0,
