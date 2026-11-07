@@ -179,7 +179,7 @@ static const u8 sPRUE20Text_Flight[] = _("ANCIENT WINGS CROSS THE SKY");
 static const u8 sPRUE20Text_FinalSummon[] = _("THE FINAL SUMMONING");
 static const u8 sPRUE20Text_Oak[] = _("OAK AT MT SILVER");
 static const u8 sPRUE20Text_Reborn[] = _("A LEGEND IS REBORN");
-static const u8 sPRUE20Text_Complete[] = _("THE JOURNEY IS COMPLETE");
+static const u8 sPRUE20Text_Complete[] = _("E20 ULTIMATE REMATCHES AWAIT");
 static const u8 sPRUE20Text_Thanks[] = _("THANK YOU FOR PLAYING");
 #include "data/credits_hns.h"
 static const struct CreditsEntry sE20Title = {0, TRUE, sPRUE20Text_Title};
