@@ -69,8 +69,18 @@ for species in expected:
     require(species in dex, f"{species} must be in the approved PRU Dex")
 
 guide = scripts.split("EcruteakCity_RockShop_Text_ExpertGreeting:", 1)[1].split("EcruteakCity_RockShop_Text_Collector:",1)[0]
+# The engine identifiers remain stable for saves/evolution code, while the
+# Expert's player-facing dialogue must use the approved renamed Eeveelutions.
+display_names = {
+    "NIMBEON": "AEREON", "OMEON": "OBLIVEON",
+    "OBSIDEON": "PEBLEON", "SPHYNXEON": "EARTHEON",
+    "GUARDEON": "GALVEON", "LEPIDEON": "MOFFEON",
+    "DRAKEON": "MYTHEON",
+}
 for species, item in expected.items():
-    require(species.removeprefix("SPECIES_") in guide, f"Guide is missing {species}")
+    identifier = species.removeprefix("SPECIES_")
+    display = display_names.get(identifier, identifier)
+    require(display in guide, f"Guide is missing player-facing name {display}")
     require(item.removeprefix("ITEM_").replace("_", " ") in guide, f"Guide is missing {item}")
 require("SYLVEON" in guide and "DAWN STONE" in guide, "Guide must describe Sylveon's Dawn Stone evolution")
 require("DAWN STONE is sold here after the\\n" in guide and "FOG BADGE" in guide,

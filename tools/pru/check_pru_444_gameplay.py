@@ -33,6 +33,16 @@ name_aliases = {
     "Nidoran M": "Nidoran♂",
     "Nidoran F": "Nidoran♀",
     "Dragonite Relic": "Dragonite",  # Trainer form uses standard art; Guardian is separate.
+    # Source/party data uses immutable internal species identifiers. These
+    # seven display names were approved for the player-facing PRU Pokédex;
+    # trainer party text deliberately retains the original symbol spelling.
+    "Nimbeon": "Aereon",
+    "Omeon": "Obliveon",
+    "Obsideon": "Pebleon",
+    "Sphynxeon": "Eartheon",
+    "Guardeon": "Galveon",
+    "Lepideon": "Moffeon",
+    "Drakeon": "Mytheon",
 }
 # These forms share a canonical Pokédex species and do not add entries.
 form_pattern = re.compile(r"SPECIES_UNOWN_[A-Z_]+|SPECIES_CASTFORM_(NORMAL|SUNNY|RAINY|SNOWY)|SPECIES_DEOXYS_(NORMAL|ATTACK|DEFENSE|SPEED)")

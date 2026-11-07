@@ -1008,6 +1008,10 @@ PRU_Elite18_Gauntlet::
 	call PRU_Elite18_Round_18
 	call PRU_Elite18_Round_19
 	call PRU_Elite18_Round_20
+	@ The clear flag is already set when the LV100 MASTER gauntlet starts.
+	@ Check it BEFORE setting it for a first clear so the rematch gets its
+	@ own congratulations instead of repeating Oak's RELICS revelation.
+	goto_if_set FLAG_PRU_ELITE18_CLEARED, PRU_Elite20_MasterRematchesCleared
 	setflag FLAG_PRU_ELITE18_CLEARED
 	special HealPlayerParty
 	msgbox PRU_Elite18_Text_Cleared, MSGBOX_DEFAULT
@@ -1039,6 +1043,14 @@ PRU_Elite20_RepeatReveal::
 PRU_Elite20_ContinueAfterReveal::
 	call PRU_Elite20_ClaimRewards
 	call PRU_Elite20_StartFinale
+	release
+	end
+
+PRU_Elite20_MasterRematchesCleared::
+	@ All twenty LV100 pairs defeated AFTER the story's first E20 clear.
+	@ No first-clear story or one-time rewards after MASTER victories.
+	special HealPlayerParty
+	msgbox PRU_Elite20_Text_MasterRematchesCleared, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1499,6 +1511,18 @@ PRU_Elite20_Text_RepeatReveal:
 	.string "RELICS discovery. I keep thinking\p"
 	.string "about the Ultimate Ancient Relic.\n"
 	.string "Its power must be extraordinary...$"
+
+PRU_Elite20_Text_MasterRematchesCleared:
+	.string "OAK: {PLAYER}, magnificent!\p"
+	.string "You defeated all twenty\n"
+	.string "LEVEL 100 MASTER teams!\p"
+	.string "ELM: Even our best strategies\n"
+	.string "couldn't stand against you!\p"
+	.string "OAK: You've earned the title\n"
+	.string "ULTIMATE CHAMPION.\p"
+	.string "Congratulations!\p"
+	.string "Check the documentation and\n"
+	.string "RelicDex for E20 Challenges$"
 
 PRU_Elite20_Text_OakRelicsUnused:
 	.string "We've also prepared a prize\n"

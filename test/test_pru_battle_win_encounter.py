@@ -1,4 +1,4 @@
-"""PRU development-only E20 Win Encounter shortcut, with release safety and existing controls preserved."""
+"""PRU alpha: battle Win Encounter shortcut is compiled out, normal controls preserved."""
 from pathlib import Path
 import re
 
@@ -9,8 +9,8 @@ debug_menu = Path("src/battle_debug.c").read_text()
 battle = Path("src/battle_main.c").read_text()
 ci = Path(".github/workflows/pru-clean-build.yml").read_text()
 
-assert re.search(r"^#define\s+DEBUG_BATTLE_MENU\s+DISABLED_ON_RELEASE\b", cfg, re.M)
-assert re.search(r"^#define\s+DEBUG_OVERWORLD_MENU\s+DISABLED_ON_RELEASE\b", cfg, re.M)
+assert re.search(r"^#define\s+DEBUG_BATTLE_MENU\s+FALSE\b", cfg, re.M)
+assert re.search(r"^#define\s+DEBUG_OVERWORLD_MENU\s+FALSE\b", cfg, re.M)
 assert "#define DISABLED_ON_RELEASE FALSE" in globals
 assert "#define DISABLED_ON_RELEASE TRUE" in globals
 
@@ -33,4 +33,4 @@ assert "gBattleStruct->gimmick.playerSelect ^= 1;" in controller
 
 assert "python3 test/test_pru_battle_win_encounter.py" in ci
 assert "make hns -j2 -O" in ci
-print("PRU_BATTLE_WIN_ENCOUNTER_PASS: START battle debug for development, SELECT HP view, release-safe")
+print("PRU_ALPHA_BATTLE_DEBUG_PASS: Win Encounter entry exists only in unreachable debug code; disabled in every alpha build")

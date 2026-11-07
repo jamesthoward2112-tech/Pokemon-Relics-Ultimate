@@ -19,12 +19,13 @@ class PRUChallengeMartGroudonTests(unittest.TestCase):
         for tab in ("TAB_NUZLOCKE", "TAB_RANDOMIZER", "TAB_DIFFICULTY", "TAB_CHALLENGES"):
             self.assertIn(tab, source("src/challenge_menu.c"))
 
-    def test_debug_enabled_for_playtesting_but_disabled_for_release(self):
+    def test_alpha_debug_menus_disabled_regardless_of_release_flag(self):
         cfg = source("include/config/debug.h")
         release = source("include/constants/global.h")
-        # Development ROMs use battle/overworld debug until Master Alpha.
+        # The public Alpha must never expose game-breaking cheat menus,
+        # even when built without the RELEASE=1 compiler option.
         for setting in ("DEBUG_OVERWORLD_MENU", "DEBUG_BATTLE_MENU"):
-            self.assertRegex(cfg, r"#define\s+" + setting + r"\s+DISABLED_ON_RELEASE")
+            self.assertRegex(cfg, r"#define\s+" + setting + r"\s+FALSE\b")
         self.assertRegex(cfg, r"#define\s+DEBUG_POKEMON_SPRITE_VISUALIZER\s+FALSE")
         self.assertIn("#define DISABLED_ON_RELEASE FALSE", release)
         self.assertIn("#define DISABLED_ON_RELEASE TRUE", release)
