@@ -314,7 +314,7 @@
     .growthRate = GROWTH_MEDIUM_FAST, .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
     .abilities = { ABILITY_AERILATE, ABILITY_AERILATE, ABILITY_GALE_WINGS },
     .bodyColor = BODY_COLOR_BLUE,
-    .speciesName = _("Nimbeon"), .cryId = CRY_EEVEE, .natDexNum = NATIONAL_DEX_EEVEE,
+    .speciesName = _("Aereon"), .cryId = CRY_EEVEE, .natDexNum = NATIONAL_DEX_EEVEE,
     .categoryName = _("Cloud"), .height = 13, .weight = 140,
     .description = COMPOUND_STRING("It dances lightly upon the wind."),
     .pokemonScale = 256, .pokemonOffset = 0, .trainerScale = 256, .trainerOffset = 0,
