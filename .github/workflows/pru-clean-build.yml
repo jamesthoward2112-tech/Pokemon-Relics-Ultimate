@@ -195,6 +195,7 @@ jobs:
           PY
           python3 test/test_pru_job16_cinematic.py
           python3 test/test_pru_job17_custom_credits.py
+          python3 test/test_pru_alpha_ending_text.py
           python3 test/test_pru_development_debug.py
           python3 test/test_pru_battle_win_encounter.py
           python3 test/test_pru_frytning_levitate.py
