@@ -99,17 +99,17 @@ MtSilver_PokemonCenter_EventScript_Zachariah::
 	end
 
 MtSilver_PokemonCenter_Text_ZachariahIntro:
-	.string "I'm Zachariah, PRU's first\\n"
-	.string "playtester!\\p"
-	.string "This is the team that carried\\n"
-	.string "me through to the end.\\p"
+	.string "I'm Zachariah, PRU's first\n"
+	.string "playtester!\p"
+	.string "This is the team that carried\n"
+	.string "me through to the end.\p"
 	.string "Let's see how strong you are!$"
 
 MtSilver_PokemonCenter_Text_ZachariahDefeat:
-	.string "You beat my final team!\\n"
+	.string "You beat my final team!\n"
 	.string "What an incredible battle!$"
 
 MtSilver_PokemonCenter_Text_ZachariahAfter:
-	.string "From the first playtest to\\n"
-	.string "Mt. Silver... what a journey!\\p"
+	.string "From the first playtest to\n"
+	.string "Mt. Silver... what a journey!\p"
 	.string "Thank you for the challenge!$"
