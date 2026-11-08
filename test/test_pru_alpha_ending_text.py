@@ -31,7 +31,7 @@ for word in ("THE GOLDEN FLAME ENDURES", "MT SILVER REMEMBERS",
 
 intro = credits.split("static const struct CreditsEntry *const sElite20CreditsIntroPages", 1)[1].split("};", 1)[0]
 assert intro.count(" { &sE20") == 4, "The four final intro pages must be preserved"
-assert len(re.findall(r'^    \{ &sPruCreditEntry_', pages, re.M)) == 19, "All 19 attribution pages must remain"
+assert len(re.findall(r'^    \{ &sPruCreditEntry_', pages, re.M)) == 20, "Keep all 19 attribution pages plus Zachariah tribute"
 assert 'sCreditsEntryPointerTable[PAGE_COUNT][ENTRIES_PER_PAGE]' in hgss, "Original League credits missing"
 assert "sPruE20CreditsPages[gTasks[taskId].tCurrentPage - E20_INTRO_PAGE_COUNT][i]" in credits
 assert 'sCreditsEntryPointerTable[gTasks[taskId].tCurrentPage][i]' in credits

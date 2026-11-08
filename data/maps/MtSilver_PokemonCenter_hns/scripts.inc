@@ -90,3 +90,26 @@ MtSilver_PokemonCenter_Text_Prompt:
 MtSilver_PokemonCenter_Text_Meara3:
 	.string "Ready to search for more artifacts?$"
 
+
+@ Optional final-team challenge: available after reaching Mt Silver.
+@ The existing early Route 30 Youngster Mikey and all story bosses are unchanged.
+MtSilver_PokemonCenter_EventScript_Zachariah::
+	trainerbattle_single TRAINER_PRU_ZACHARIAH_MT_SILVER_HNS, MtSilver_PokemonCenter_Text_ZachariahIntro, MtSilver_PokemonCenter_Text_ZachariahDefeat
+	msgbox MtSilver_PokemonCenter_Text_ZachariahAfter, MSGBOX_AUTOCLOSE
+	end
+
+MtSilver_PokemonCenter_Text_ZachariahIntro:
+	.string "I'm Zachariah, PRU's first\\n"
+	.string "playtester!\\p"
+	.string "This is the team that carried\\n"
+	.string "me through to the end.\\p"
+	.string "Let's see how strong you are!$"
+
+MtSilver_PokemonCenter_Text_ZachariahDefeat:
+	.string "You beat my final team!\\n"
+	.string "What an incredible battle!$"
+
+MtSilver_PokemonCenter_Text_ZachariahAfter:
+	.string "From the first playtest to\\n"
+	.string "Mt. Silver... what a journey!\\p"
+	.string "Thank you for the challenge!$"

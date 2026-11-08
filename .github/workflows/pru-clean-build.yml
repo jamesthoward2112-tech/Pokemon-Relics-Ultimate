@@ -156,6 +156,7 @@ jobs:
           python3 tools/pru/check_noibat_noivern_name_case.py
           python3 tools/pru/check_pikachu_ancient_stone.py
           python3 tools/pru/check_zachariah_tribute.py
+          python3 tools/pru/check_zachariah_final_team.py
           python3 test/test_pru_alpha_ending_text.py
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_pru_444_gameplay.py
@@ -399,6 +400,21 @@ jobs:
           path: PRU-QA/video-review/mgba/**
           if-no-files-found: warn
           retention-days: 7
+      - name: Stage named Alpha 02 GBA
+        run: |
+          set -euo pipefail
+          cp pokehns.gba "Pokemon Relic Ultimate - Alpha 02.gba"
+          sha256sum "Pokemon Relic Ultimate - Alpha 02.gba" > "Pokemon Relic Ultimate - Alpha 02.sha256"
+          test "$(stat -c%s "Pokemon Relic Ultimate - Alpha 02.gba")" -eq 33554432
+      - name: Upload named Alpha 02 GBA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PRU-Alpha-02-${{ github.sha }}
+          path: |
+            Pokemon Relic Ultimate - Alpha 02.gba
+            Pokemon Relic Ultimate - Alpha 02.sha256
+          if-no-files-found: error
+          retention-days: 90
       - name: Upload direct GBA test artifact after successful source build
         uses: actions/upload-artifact@v4
         with:
@@ -408,6 +424,7 @@ jobs:
             pru-rom.sha256
           if-no-files-found: error
       - name: Publish compiled raw GBA to GitHub prerelease
+        continue-on-error: ${{ github.ref == 'refs/heads/fix/pru-alpha-82-83-build-20261108' }}
         if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/fix/pru-indigo-tutors-20261027' || github.ref == 'refs/heads/fix/pru-a4d-mewduo-merge' || github.ref == 'refs/heads/fix/pru-challenges-mart-groudon-20261030' || github.ref == 'refs/heads/feat/pru-locked-gmax-charaxis-polish-20261031' || github.ref == 'refs/heads/feat/pru-relic-hunt-20261101' || github.ref == 'refs/heads/fix/pru-job11-text-20261105' || github.ref == 'refs/heads/fix/pru-job12-celebi-20261105' || github.ref == 'refs/heads/fix/pru-job13-fortotoise-icon-20261105' || github.ref == 'refs/heads/fix/pru-job14-baby-sprites-20261105' || github.ref == 'refs/heads/fix/pru-job15-pc-icon-palette-collisions-20261105' || github.ref == 'refs/heads/feat/pru-job16-golden-hooh-cinematic-20261106' || github.ref == 'refs/heads/feat/pru-job17-custom-credits-20261106' || github.ref == 'refs/heads/feat/pru-job18-final-story-dragonite-20261106' || github.ref == 'refs/heads/fix/pru-finale-names-item-cleanup-20261106' || github.ref == 'refs/heads/fix/pru-alpha-82-83-build-20261108')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'fix/pru-tutors-e4-from-pr54' || github.event.pull_request.head.ref == 'workmode/pru-playable-rom-20261027' || github.event.pull_request.head.ref == 'fix/pru-indigo-tutors-20261027' || github.event.pull_request.head.ref == 'fix/pru-challenges-mart-groudon-20261030'))
         shell: bash
         env:
@@ -431,6 +448,9 @@ jobs:
           elif test "$GITHUB_REF" = "refs/heads/fix/pru-finale-names-item-cleanup-20261106"; then
             file="Pokemon-Relics-Ultimate-PR75-${GITHUB_SHA:0:10}.gba"
             release_title="Pokémon Relics Ultimate — PR75 Test Build"
+          elif test "$GITHUB_REF" = "refs/heads/fix/pru-alpha-82-83-build-20261108"; then
+            file="Pokemon Relic Ultimate - Alpha 02.gba"
+            release_title="Pokemon Relic Ultimate - Alpha 02"
           else
             file="Pokemon-Relics-Ultimate-${GITHUB_SHA:0:10}.gba"
             release_title="Pokémon Relics Ultimate — build ${GITHUB_SHA:0:10}"
