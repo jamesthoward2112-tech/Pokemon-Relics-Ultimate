@@ -56,7 +56,7 @@ assert re.search(r"EVO_ITEM,\s*ITEM_ANCIENT_STONE,\s*SPECIES_CHARAXIS,\s*CONDITI
 gardevoir = mon_block(gen3, "GARDEVOIR")
 assert re.search(r"EVO_ITEM,\s*ITEM_ANCIENT_STONE,\s*SPECIES_VALKYVOIR,\s*CONDITIONS\(\{IF_MIN_LEVEL,\s*45\}\)", gardevoir)
 pikachu = mon_block(gen1, "PIKACHU")
-assert re.search(r"EVO_ITEM,\s*ITEM_MOON_STONE,\s*SPECIES_NOXICHU", pikachu)
+assert re.search(r"EVO_ITEM,\s*ITEM_ANCIENT_STONE,\s*SPECIES_NOXICHU", pikachu)
 
 # PRU must not expose alternate-generation or out-of-roster branches.
 roster = read("src/data/pokemon/pru_dex_order.h")

@@ -79,7 +79,7 @@ for item, _ in routes[11:]:
     assert ".holdEffect =" in row, f"{item} lost its original held-item effect"
 
 # Noxichu and the established relic split must not be affected by the Eevee simplification.
-assert "{EVO_ITEM, ITEM_MOON_STONE, SPECIES_NOXICHU}" in source
+assert "{EVO_ITEM, ITEM_ANCIENT_STONE, SPECIES_NOXICHU}" in source
 assert "{EVO_ITEM, ITEM_THUNDER_STONE, SPECIES_RAICHU" in source
 assert "{EVO_ITEM, ITEM_ANCIENT_STONE, SPECIES_CHARAXIS" in source
 

@@ -28,7 +28,7 @@ assert "giveitem ITEM_ANCIENT_STONE, 5" in finale
 
 lines = re.findall(r'static const u8 sPruCreditText_\d+_\d+\[\] = _\("([^"]+)"\);', pru)
 page_count = len(re.findall(r'^    \{ &sPruCreditEntry_', pru, re.MULTILINE))
-assert page_count == 19, f"Expected 19 unique credit pages: {page_count}"
+assert page_count == 20, f"Expected 20 unique credit pages: {page_count}"
 assert len(lines) >= 70, f"Only {len(lines)} credit lines"
 assert all(len(line) <= 27 for line in lines), "Text may overflow the 240-pixel GBA display"
 for text in ("balesleftpeg", "CHATGPT", "CLAUDE", "GEMINI", "POKEEMERALD-EXPANSION",

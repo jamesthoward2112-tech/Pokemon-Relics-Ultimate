@@ -44,8 +44,8 @@ assert "GetMonData(mon, MON_DATA_LEVEL) >= params[i].arg1" in engine
 pokedex = read("src/pokedex_plus_hgss.c")
 assert "case IF_MIN_LEVEL:" in pokedex
 assert 'COMPOUND_STRING("Lv ")' in pokedex
-# Pikachu has a separate Moon Stone route, not subject to the Relic Lv45 restriction.
-assert "{EVO_ITEM, ITEM_MOON_STONE, SPECIES_NOXICHU}" in read(base / "gen_1_families.h")
+# Pikachu has a distinct Ancient Stone route with no Lv45 restriction.
+assert "{EVO_ITEM, ITEM_ANCIENT_STONE, SPECIES_NOXICHU}" in read(base / "gen_1_families.h")
 assert "{EVO_ITEM, ITEM_THUNDER_STONE, SPECIES_RAICHU" in read(base / "gen_1_families.h")
 # Excluded or independent species are not ordinary stone evolutions.
 assert "SPECIES_COELOSSUS" not in read(base / "gen_3_families.h")
@@ -79,4 +79,4 @@ print("PASS: 27 canonical level-45 Ancient Stone Relic evolutions, Eevee/Frytnin
 print("      legacy catalysts off Mart shelves, Moon/Ancient Stones available,")
 print("      free Egg/Tutor eligibility gates removed, 92 TMs and 8 HMs show number and move.")
 print("PASS: Charizard -> Charaxis and 26 other canonical Lv45 Ancient Stone evolutions.")
-print("PASS: Pikachu -> Noxichu by Moon Stone; separate Coelossus and removed Sudowarden.")
+print("PASS: Pikachu -> Noxichu by Ancient Stone; separate Coelossus and removed Sudowarden.")
