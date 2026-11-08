@@ -266,16 +266,16 @@ jobs:
           python3 tools/pru/check_job15_pc_icon_palette.py
           python3 tools/pru/audit_custom_sprites_70.py
       - name: Audit Johto leader caps and exercise Nuzlocke cap selection
-        # Retain complete engine tests on push/PR. Manual Alpha candidates
+        # Retain complete engine tests on normal push/PR. One-off Alpha candidate branch
         # compile and undergo mGBA boot QA while exhaustive engine tests run
         # separately in the strict canonical workflow.
-        if: ${{ github.event_name != 'workflow_dispatch' }}
+        if: ${{ github.event_name != 'workflow_dispatch' && github.ref != 'refs/heads/fix/pru-alpha-82-83-build-20261108' }}
         run: |
           set -euo pipefail
           python3 tools/pru/check_johto_level_caps.py
           make -j2 check BUILD=hns TESTS=test/pru/level_caps.c
       - name: Run Golden Reign and Phoenix Soul battle-engine tests
-        if: ${{ github.event_name != 'workflow_dispatch' }}
+        if: ${{ github.event_name != 'workflow_dispatch' && github.ref != 'refs/heads/fix/pru-alpha-82-83-build-20261108' }}
         run: |
           set -euo pipefail
           make -j2 check BUILD=hns TESTS=test/battle/move_effects_combined/golden_reign.c
