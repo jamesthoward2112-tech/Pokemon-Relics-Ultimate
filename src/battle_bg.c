@@ -978,6 +978,7 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
     switch ((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
     {
     case MAP_MT_SILVER_OUTSIDE_HNS:
+    case MAP_MT_SILVER_1F_WATERFALL_ROOM_HNS:
         return 55; // Original rocky battle scene at the Mt Silver cave entrance.
     case MAP_ROUTE29_HNS:
         return 56; // Original grassy Route 29 scene.
