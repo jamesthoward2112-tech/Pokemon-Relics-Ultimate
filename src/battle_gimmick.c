@@ -394,7 +394,9 @@ void CreateIndicatorSprite(enum BattlerId battler)
     gBattleStruct->gimmick.indicatorSpriteId[battler] = spriteId;
     gSprites[spriteId].tBattler = battler;
     gSprites[spriteId].tPosX = x;
-    gSprites[spriteId].invisible = FALSE;
+    // Do not display the uninitialised 8x8 tile during battle entry.
+    // UpdateIndicatorVisibilityAndType shows a valid gimmick icon when needed.
+    gSprites[spriteId].invisible = TRUE;
 }
 
 #undef tBattler
