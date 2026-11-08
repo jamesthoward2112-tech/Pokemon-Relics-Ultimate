@@ -169,6 +169,13 @@ static const struct CreditsEntry sPruCreditEntry_18_1 = {0, FALSE, sPruCreditTex
 static const u8 sPruCreditText_18_2[] = _("ELITE 20 CHAMPION");
 static const struct CreditsEntry sPruCreditEntry_18_2 = {0, FALSE, sPruCreditText_18_2};
 
+static const u8 sPruCreditText_19_0[] = _("FIRST PLAYTESTER");
+static const struct CreditsEntry sPruCreditEntry_19_0 = {0, TRUE, sPruCreditText_19_0};
+static const u8 sPruCreditText_19_1[] = _("ZACHARIAH SULLIVAN");
+static const struct CreditsEntry sPruCreditEntry_19_1 = {0, FALSE, sPruCreditText_19_1};
+static const u8 sPruCreditText_19_2[] = _("THANK YOU FOR TESTING PRU!");
+static const struct CreditsEntry sPruCreditEntry_19_2 = {0, FALSE, sPruCreditText_19_2};
+
 static const struct CreditsEntry *const sPruE20CreditsPages[][ENTRIES_PER_PAGE] =
 {
     { &sPruCreditEntry_0_0, &sPruCreditEntry_0_1, &sPruCreditEntry_0_2, &sPruCreditEntry_0_3, &sCreditsEntry_EmptyString },
@@ -185,6 +192,7 @@ static const struct CreditsEntry *const sPruE20CreditsPages[][ENTRIES_PER_PAGE] 
     { &sPruCreditEntry_11_0, &sPruCreditEntry_11_1, &sPruCreditEntry_11_2, &sPruCreditEntry_11_3, &sPruCreditEntry_11_4 },
     { &sPruCreditEntry_12_0, &sPruCreditEntry_12_1, &sPruCreditEntry_12_2, &sPruCreditEntry_12_3, &sPruCreditEntry_12_4 },
     { &sPruCreditEntry_13_0, &sPruCreditEntry_13_1, &sPruCreditEntry_13_2, &sPruCreditEntry_13_3, &sCreditsEntry_EmptyString },
+    { &sPruCreditEntry_19_0, &sPruCreditEntry_19_1, &sPruCreditEntry_19_2, &sCreditsEntry_EmptyString, &sCreditsEntry_EmptyString },
     { &sPruCreditEntry_14_0, &sPruCreditEntry_14_1, &sPruCreditEntry_14_2, &sPruCreditEntry_14_3, &sCreditsEntry_EmptyString },
     { &sPruCreditEntry_15_0, &sPruCreditEntry_15_1, &sPruCreditEntry_15_2, &sPruCreditEntry_15_3, &sCreditsEntry_EmptyString },
     { &sPruCreditEntry_16_0, &sPruCreditEntry_16_1, &sPruCreditEntry_16_2, &sPruCreditEntry_16_3, &sCreditsEntry_EmptyString },
