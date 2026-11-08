@@ -154,6 +154,7 @@ jobs:
           python3 tools/pru/check_battle_indicator_entry.py
           python3 tools/pru/check_dexnav_approach.py
           python3 tools/pru/check_noibat_noivern_name_case.py
+          python3 tools/pru/check_pikachu_ancient_stone.py
           python3 test/test_pru_alpha_ending_text.py
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_pru_444_gameplay.py

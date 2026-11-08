@@ -105,7 +105,7 @@ require(len(stone_custom) == 27, f"Expected 27 canonical Lv45 Ancient Stone rout
 for x in stone_custom:
     require(x["base"] in canonical, f"{x['base']} Ancient Stone source not in 444")
 for source, target, item in [
-    ("PIKACHU", "NOXICHU", "ITEM_MOON_STONE"),
+    ("PIKACHU", "NOXICHU", "ITEM_ANCIENT_STONE"),
     ("PIKACHU", "RAICHU", "ITEM_THUNDER_STONE"),
     ("WEEZING", "FRYTNING", "ITEM_THUNDER_STONE"),
     ("EEVEE", "EEVEEON", "ITEM_ANCIENT_STONE"),
@@ -171,7 +171,7 @@ summary += [
     "",
     "## Approved split families and independent encounters",
     "",
-    "- **Pikachu:** Thunder Stone → Raichu; Moon Stone → Noxichu. No Lv45 gate on Noxichu.",
+    "- **Pikachu:** Thunder Stone → Raichu; Ancient Stone → Noxichu. No Lv45 gate on Noxichu.",
     "- **Kanto Relic forms:** Venusaur → Edensaur, Charizard → Charaxis, "
       "Blastoise → Fortotoise, Kangaskhan → Khang, Snorlax → Nolax at Lv45+ using Ancient Stone.",
     "- **Weezing:** Ancient Stone at Lv45+ → Cheauking; Thunder Stone → Frytning.",
