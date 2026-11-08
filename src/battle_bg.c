@@ -34,6 +34,19 @@
 #include "data/battle_environment.h"
 #include "data/pru_rhythm_bg_table.h"
 
+// Dedicated original art for the two November 2026 location-based beta tests.
+extern const u32 gPruTestMtSilverTiles[];
+extern const u32 gPruTestMtSilverMap[];
+extern const u16 gPruTestMtSilverPal[];
+extern const u32 gPruTestRoute29Tiles[];
+extern const u32 gPruTestRoute29Map[];
+extern const u16 gPruTestRoute29Pal[];
+static const struct PruRhythmBattleBg sPruOriginalTestBattleBgs[2] = {
+    {gPruTestMtSilverTiles, gPruTestMtSilverMap, gPruTestMtSilverPal},
+    {gPruTestRoute29Tiles, gPruTestRoute29Map, gPruTestRoute29Pal},
+};
+
+
 // .rodata
 
 static const struct OamData sVsLetter_V_OamData =
@@ -964,6 +977,10 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
     // and Lavender Spirit Tower keeps the graveyard on every floor.
     switch ((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
     {
+    case MAP_MT_SILVER_OUTSIDE_HNS:
+        return 55; // Original rocky battle scene at the Mt Silver cave entrance.
+    case MAP_ROUTE29_HNS:
+        return 56; // Original grassy Route 29 scene.
     case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS:
         return 48; // Rhythm's sea cave and waves, for Archie and Kyogre.
     case MAP_MT_SILVER_1F_MOLTRES_ROOM_HNS:
@@ -1128,6 +1145,15 @@ static void LoadBattleEnvironmentGfx(u16 environment)
     const void *tileset, *tilemap, *palette;
 
     u8 pruRhythmBg = GetPruRhythmBattleBgIndex(environment);
+    if (pruRhythmBg == 55 || pruRhythmBg == 56)
+    {
+        // Two standalone original scenes, never index beyond Rhythm's 55 entries.
+        const struct PruRhythmBattleBg *bg = &sPruOriginalTestBattleBgs[pruRhythmBg - 55];
+        DecompressDataWithHeaderVram(bg->tiles, (void *)BG_CHAR_ADDR(2));
+        DecompressDataWithHeaderVram(bg->tilemap, (void *)BG_SCREEN_ADDR(26));
+        LoadPalette(bg->palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+        return;
+    }
     if (pruRhythmBg != 0xFF)
     {
         // Transfer one complete image; never mix separate donor entry panels.

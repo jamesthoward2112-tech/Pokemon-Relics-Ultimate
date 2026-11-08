@@ -2287,3 +2287,4 @@ const u32 gGhostFrontPic[] = INCBIN_U32("graphics/pokemon/ghost/front.4bpp.smol"
 
 // PRU: 55 Pokémon Rhythm battle environments, optimized for GBA BG3 VRAM.
 #include "data/pru_rhythm_gfx.h"
+#include "data/pru_original_test_bgs.h"
