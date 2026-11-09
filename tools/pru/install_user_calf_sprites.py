@@ -44,12 +44,12 @@ def remap_back(back: Image.Image, old_palette: list[tuple[int, int, int]], new_p
     return out
 
 
-def make_icon(front: Image.Image, front_palette: list[tuple[int, int, int]], icon_palette: list[tuple[int, int, int]]) -> Image.Image:
+def make_icon(front: Image.Image, front_palette: list[tuple[int, int, int]], icon_palette: list[tuple[int, int, int]], max_size: int = 30) -> Image.Image:
     """Build a faithful two-frame icon from the approved new front artwork."""
     bbox = front.getbbox()
     assert bbox is not None
     crop = front.crop(bbox)
-    scale = min(30 / crop.width, 30 / crop.height)
+    scale = min(max_size / crop.width, max_size / crop.height)
     size = (max(1, round(crop.width * scale)), max(1, round(crop.height * scale)))
     crop = crop.resize(size, Image.Resampling.NEAREST)
     mapped = Image.new("P", crop.size, 0)
@@ -101,7 +101,7 @@ def install(name: str) -> dict:
 
     icon_id = ICON_PALETTE_IDS[name]
     icon_colors = jasc(GFX / "icon_palettes" / f"pal{icon_id}.pal")
-    icon = make_icon(front, front_palette, icon_colors)
+    icon = make_icon(front, front_palette, icon_colors, max_size=24 if name == "mootiny" else 30)
     save_indexed(dest / "icon.png", icon, icon_colors)
     return {
         "species": name,
