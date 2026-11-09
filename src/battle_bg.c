@@ -953,7 +953,8 @@ static const u8 sPruRhythmIce[] = {3, 13, 14, 23, 24};
 static const u8 sPruRhythmUrban[] = {8, 10, 11, 12, 17, 22, 26, 28, 31, 41, 44, 46, 49, 51};
 static const u8 sPruRhythmVolcano[] = {16, 25, 54};
 static const u8 sPruRhythmBurial[] = {18, 19, 27, 29, 38, 44};
-static const u8 sPruElite20RhythmScenes[20] = {35, 48, 46, 34, 39, 19, 16, 45, 14, 8, 18, 38, 30, 42, 49, 54, 41, 36, 13, 0};
+// Original PRU scenes only; reserve Golden Ho-Oh index 62.
+static const u8 sPruElite20RhythmScenes[20] = {58, 63, 63, 57, 57, 59, 60, 59, 63, 66, 57, 58, 61, 65, 58, 61, 66, 63, 61, 61};
 
 static u8 GetPruElite20RhythmBgIndex(void)
 {
@@ -1002,6 +1003,24 @@ static u8 GetPruNewAreaBackgroundIndex(void)
 {
     switch ((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
     {
+    // Johto/Kanto Gyms and Saffron Dojo use contextual original PRU scenery.
+    case MAP_VIOLET_CITY_GYM_HNS: return 58; // Original PRU terrain match
+    case MAP_AZALEA_TOWN_GYM_HNS: return 57; // Original PRU terrain match
+    case MAP_GOLDENROD_CITY_GYM_HNS: return 58; // Original PRU terrain match
+    case MAP_ECRUTEAK_CITY_GYM_HNS: return 57; // Original PRU terrain match
+    case MAP_CIANWOOD_GYM_HNS: return 64; // Original PRU terrain match
+    case MAP_OLIVINE_CITY_GYM_HNS: return 66; // Original PRU terrain match
+    case MAP_MAHOGANY_TOWN_GYM_HNS: return 59; // Original PRU terrain match
+    case MAP_BLACKTHORN_CITY_GYM_HNS: return 59; // Original PRU terrain match
+    case MAP_PEWTER_CITY_GYM_HNS: return 63; // Original PRU terrain match
+    case MAP_CERULEAN_CITY_GYM_HNS: return 64; // Original PRU terrain match
+    case MAP_VERMILION_CITY_GYM_HNS: return 66; // Original PRU terrain match
+    case MAP_CELADON_CITY_GYM_HNS: return 57; // Original PRU terrain match
+    case MAP_FUCHSIA_CITY_GYM_HNS: return 57; // Original PRU terrain match
+    case MAP_SAFFRON_CITY_GYM_HNS: return 58; // Original PRU terrain match
+    case MAP_VIRIDIAN_CITY_GYM_HNS: return 61; // Original PRU terrain match
+    case MAP_SAFFRON_CITY_FIGHTING_DOJO_HNS: return 63; // Original PRU terrain match
+    case MAP_SAFFRON_CITY_FIGHTING_DOJO_VIP_HNS: return 63; // Original PRU terrain match
     case MAP_AKALA_CAVE_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_AKALA_FOREST_HNS: return 56; // general outdoor grass
     case MAP_AKALA_ISLE_HNS: return 56; // general outdoor grass
@@ -1157,7 +1176,7 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_SAFFRON_CITY_HNS: return 58; // town/city MAPSEC_SAFFRON_CITY
     case MAP_SEAFOAM_ISLANDS_1F_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_SEAFOAM_ISLANDS_B1F_HNS: return 63; // unclassified underground; general limestone cave
-    case MAP_SEAFOAM_ISLANDS_GYM_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_SEAFOAM_ISLANDS_GYM_HNS: return 60; // Original PRU terrain match
     case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_SINJOH_RUINS_HNS: return 56; // town/city MAPSEC_SINJOH_RUINS
     case MAP_SLOWPOKE_WELL_B1F_HNS: return 63; // cave/interior system MAPSEC_SLOWPOKE_WELL
@@ -1276,74 +1295,74 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         // progression scripts, so route by the actual battle rather than room.
         case TRAINER_WILL_1_HNS:
         case TRAINER_WILL_2_HNS:
-        case TRAINER_WILL_POSTOBC_HNS: return 19; // Psychic Arena.
+        case TRAINER_WILL_POSTOBC_HNS: return 59; // PRU original area theme
         case TRAINER_KOGA_1_HNS:
         case TRAINER_KOGA_2_HNS:
-        case TRAINER_KOGA_POSTOBC_HNS: return 39; // Shadowy Jungle.
+        case TRAINER_KOGA_POSTOBC_HNS: return 57; // PRU original area theme
         case TRAINER_BRUNO_1_HNS:
         case TRAINER_BRUNO_2_HNS:
         case TRAINER_BRUNO_POSTOBC_HNS:
-        case TRAINER_PRU_KANTO_E4_BRUNO_HNS: return 8; // Fighting Stadium.
+        case TRAINER_PRU_KANTO_E4_BRUNO_HNS: return 63; // PRU original area theme
         case TRAINER_KAREN_1_HNS:
         case TRAINER_KAREN_2_HNS:
-        case TRAINER_KAREN_POSTOBC_HNS: return 38; // Dark Arena.
+        case TRAINER_KAREN_POSTOBC_HNS: return 57; // PRU original area theme
         case TRAINER_LANCE_1_HNS:
         case TRAINER_LANCE_2_HNS:
         case TRAINER_LANCE_3_HNS:
         case TRAINER_LANCE_POSTOBC_HNS:
-        case TRAINER_PRU_KANTO_E4_LANCE_HNS: return 30; // Mountain Bridge.
-        case TRAINER_PRU_KANTO_E4_LORELEI_HNS: return 14; // Snow Pass.
-        case TRAINER_PRU_KANTO_E4_AGATHA_HNS: return 18; // Graveyard.
+        case TRAINER_PRU_KANTO_E4_LANCE_HNS: return 61; // PRU original area theme
+        case TRAINER_PRU_KANTO_E4_LORELEI_HNS: return 59; // PRU original area theme
+        case TRAINER_PRU_KANTO_E4_AGATHA_HNS: return 58; // PRU original area theme
         case TRAINER_PRU_KANTO_E4_RED_HNS:
-        case TRAINER_RED_POSTOBC_HNS: return 13; // Mt. Silver Snowy Forest.
+        case TRAINER_RED_POSTOBC_HNS: return 61; // PRU original area theme
         case TRAINER_FALKNER_1_HNS:
         case TRAINER_FALKNER_2_HNS:
-        case TRAINER_FALKNER_POSTOBC_HNS: return 0;
+        case TRAINER_FALKNER_POSTOBC_HNS: return 58; // PRU original area theme
         case TRAINER_BUGSY_1_HNS:
         case TRAINER_BUGSY_2_HNS:
-        case TRAINER_BUGSY_POSTOBC_HNS: return 43;
+        case TRAINER_BUGSY_POSTOBC_HNS: return 57; // PRU original area theme
         case TRAINER_WHITNEY_1_HNS:
         case TRAINER_WHITNEY_2_HNS:
-        case TRAINER_WHITNEY_POSTOBC_HNS: return 8;
+        case TRAINER_WHITNEY_POSTOBC_HNS: return 58; // PRU original area theme
         case TRAINER_MORTY_1_HNS:
         case TRAINER_MORTY_2_HNS:
-        case TRAINER_MORTY_POSTOBC_HNS: return 44;
+        case TRAINER_MORTY_POSTOBC_HNS: return 57; // PRU original area theme
         case TRAINER_CHUCK_1_HNS:
         case TRAINER_CHUCK_2_HNS:
         case TRAINER_CHUCK_1_2_HNS:
         case TRAINER_CHUCK_1_3_HNS:
-        case TRAINER_CHUCK_POSTOBC_HNS: return 45;
+        case TRAINER_CHUCK_POSTOBC_HNS: return 64; // PRU original area theme
         case TRAINER_JASMINE_1_HNS:
         case TRAINER_JASMINE_2_HNS:
         case TRAINER_JASMINE_1_2_HNS:
         case TRAINER_JASMINE_1_3_HNS:
-        case TRAINER_JASMINE_POSTOBC_HNS: return 30;
+        case TRAINER_JASMINE_POSTOBC_HNS: return 66; // PRU original area theme
         case TRAINER_PRYCE_1_HNS:
         case TRAINER_PRYCE_2_HNS:
         case TRAINER_PRYCE_1_2_HNS:
         case TRAINER_PRYCE_1_3_HNS:
-        case TRAINER_PRYCE_POSTOBC_HNS: return 14;
+        case TRAINER_PRYCE_POSTOBC_HNS: return 59; // PRU original area theme
         case TRAINER_CLAIR_1_HNS:
         case TRAINER_CLAIR_2_HNS:
         case TRAINER_CLAIR_3_HNS:
-        case TRAINER_CLAIR_POSTOBC_HNS: return 41;
+        case TRAINER_CLAIR_POSTOBC_HNS: return 59; // PRU original area theme
         case TRAINER_BROCK_HNS:
-        case TRAINER_BROCK_POSTOBC_HNS: return 35;
+        case TRAINER_BROCK_POSTOBC_HNS: return 63; // PRU original area theme
         case TRAINER_MISTY_HNS:
-        case TRAINER_MISTY_POSTOBC_HNS: return 48;
+        case TRAINER_MISTY_POSTOBC_HNS: return 64; // PRU original area theme
         case TRAINER_LTSURGE_HNS:
-        case TRAINER_LTSURGE_POSTOBC_HNS: return 46;
+        case TRAINER_LTSURGE_POSTOBC_HNS: return 66; // PRU original area theme
         case TRAINER_ERIKA_HNS:
-        case TRAINER_ERIKA_POSTOBC_HNS: return 9;
+        case TRAINER_ERIKA_POSTOBC_HNS: return 57; // PRU original area theme
         case TRAINER_JANINE_HNS:
-        case TRAINER_JANINE_POSTOBC_HNS: return 31;
+        case TRAINER_JANINE_POSTOBC_HNS: return 57; // PRU original area theme
         case TRAINER_SABRINA_HNS:
-        case TRAINER_SABRINA_POSTOBC_HNS: return 19;
+        case TRAINER_SABRINA_POSTOBC_HNS: return 58; // PRU original area theme
         case TRAINER_BLAINE_HNS:
-        case TRAINER_BLAINE_POSTOBC_HNS: return 16;
+        case TRAINER_BLAINE_POSTOBC_HNS: return 60; // PRU original area theme
         case TRAINER_BLUE_HNS:
         case TRAINER_BLUE_2_HNS:
-        case TRAINER_BLUE_POSTOBC_HNS: return 51;
+        case TRAINER_BLUE_POSTOBC_HNS: return 61; // PRU original area theme
         default: break;
         }
     }
@@ -1423,7 +1442,7 @@ static void LoadBattleEnvironmentGfx(u16 environment)
     u8 pruRhythmBg = GetPruRhythmBattleBgIndex(environment);
     if (pruRhythmBg >= 55 && pruRhythmBg < 67)
     {
-        // Eight original PRU scenes selected independently of the 55 legacy slots.
+        // Twelve original PRU scenes selected independently of the 55 legacy slots.
         const struct PruRhythmBattleBg *bg = &sPruOriginalTestBattleBgs[pruRhythmBg - 55];
         DecompressDataWithHeaderVram(bg->tiles, (void *)BG_CHAR_ADDR(2));
         DecompressDataWithHeaderVram(bg->tilemap, (void *)BG_SCREEN_ADDR(26));
