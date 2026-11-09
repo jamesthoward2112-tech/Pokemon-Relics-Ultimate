@@ -7,6 +7,7 @@ GET requests to SpriteCook; it does not generate assets or spend credits.
 from __future__ import annotations
 
 import io
+import json
 import os
 import re
 from pathlib import Path
@@ -75,16 +76,45 @@ def download(url: str, key: str):
 
 
 def save_original(payload: bytes, target: Path):
-    """Copy original PNG bytes exactly; transcode other image formats losslessly."""
+    """Write only if content changed; preserve original PNG bytes exactly."""
     try:
         with Image.open(io.BytesIO(payload)) as image:
             image.load()
             if image.format == "PNG":
-                target.write_bytes(payload)
+                actual_bytes = payload
             else:
-                image.convert("RGBA").save(target, "PNG")
+                temp = io.BytesIO()
+                image.convert("RGBA").save(temp, "PNG")
+                actual_bytes = temp.getvalue()
     except (UnidentifiedImageError, OSError, ValueError) as exc:
         raise ValueError("Asset is not a supported image") from exc
+    if target.exists() and target.read_bytes() == actual_bytes:
+        return False
+    target.write_bytes(actual_bytes)
+    return True
+
+def write_manifest():
+    entries = []
+    for path in sorted(DEST.glob("*.png")):
+        with Image.open(path) as im:
+            im.load()
+            rgba = im.convert("RGBA")
+            alpha_min, alpha_max = rgba.getchannel("A").getextrema()
+            entries.append({
+                "file": path.name,
+                "width": im.width,
+                "height": im.height,
+                "fits_64x64": im.width <= 64 and im.height <= 64,
+                "transparent_pixels": alpha_min < 255,
+                "opaque_pixels": alpha_max == 255,
+                "unique_colors": len(rgba.getcolors(maxcolors=65536) or []),
+            })
+    (DEST / "manifest.json").write_text(
+        json.dumps({"count": len(entries), "assets": entries}, indent=2) + "\n",
+        encoding="utf-8"
+    )
+    print(f"Manifest updated: {len(entries)} imported images")
+
 
 
 def main():
@@ -108,10 +138,6 @@ def main():
             skipped += 1
             continue
         target = DEST / f"{asset_id}.png"
-        if target.exists():
-            skipped += 1
-            continue
-
         try:
             detail = get_json(
                 f"{API}/v1/api/assets/{quote(asset_id, safe='')}", key
@@ -120,14 +146,18 @@ def main():
             if not image_url:
                 image_url = f"{API}/v1/assets/{quote(asset_id, safe='')}/content/pixel"
             blob = download(image_url, key)
-            save_original(blob, target)
-            saved += 1
-            print(f"Saved {target}")
+            changed = save_original(blob, target)
+            if changed:
+                saved += 1
+                print(f"Saved/updated {target}")
+            else:
+                skipped += 1
         except (requests.RequestException, ValueError) as exc:
             failed += 1
             print(f"Could not sync asset {asset_id}: {type(exc).__name__}: {exc}")
 
-    print(f"SpriteCook sync: {saved} saved, {skipped} skipped, {failed} failed")
+    write_manifest()
+    print(f"SpriteCook sync: {saved} saved/updated, {skipped} unchanged, {failed} failed")
     if failed:
         raise SystemExit("Some assets could not be synced; check API output format")
 
