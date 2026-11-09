@@ -1032,10 +1032,10 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_DIGLETTS_CAVE_ENTRANCE_NORTH_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
     case MAP_DIGLETTS_CAVE_ENTRANCE_SOUTH_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
     case MAP_DIGLETTS_CAVE_TUNNEL_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
-    case MAP_DRAGONS_DEN_CAVERN_HNS: return 63; // cave/interior system MAPSEC_DRAGONS_DEN
-    case MAP_DRAGONS_DEN_ENTRANCE_HNS: return 63; // cave/interior system MAPSEC_DRAGONS_DEN
-    case MAP_DRAGONS_DEN_SHRINE_HNS: return 63; // cave/interior system MAPSEC_DRAGONS_DEN
-    case MAP_DRAGONS_DEN_STORM_SHRINE_HNS: return 63; // cave/interior system MAPSEC_DRAGONS_DEN
+    case MAP_DRAGONS_DEN_CAVERN_HNS: return 59; // cave/interior system MAPSEC_DRAGONS_DEN
+    case MAP_DRAGONS_DEN_ENTRANCE_HNS: return 59; // cave/interior system MAPSEC_DRAGONS_DEN
+    case MAP_DRAGONS_DEN_SHRINE_HNS: return 59; // cave/interior system MAPSEC_DRAGONS_DEN
+    case MAP_DRAGONS_DEN_STORM_SHRINE_HNS: return 59; // cave/interior system MAPSEC_DRAGONS_DEN
     case MAP_ECRUTEAK_CITY_HNS: return 58; // town/city MAPSEC_ECRUTEAK_CITY
     case MAP_EMBEDDED_TOWER_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_FUCHSIA_CITY_HNS: return 57; // town/city MAPSEC_FUCHSIA_CITY
@@ -1116,8 +1116,8 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_ROUTE35_HNS: return 56; // route 35 terrain
     case MAP_ROUTE36_HNS: return 58; // route 36 terrain
     case MAP_ROUTE37_HNS: return 57; // route 37 terrain
-    case MAP_ROUTE38_HNS: return 66; // route 38 terrain
-    case MAP_ROUTE39_HNS: return 66; // route 39 terrain
+    case MAP_ROUTE38_HNS: return 56; // route 38 terrain
+    case MAP_ROUTE39_HNS: return 56; // route 39 terrain
     case MAP_ROUTE3_HNS: return 56; // route 3 terrain
     case MAP_ROUTE40_HNS: return 64; // route 40 terrain / local WEATHER_RAIN
     case MAP_ROUTE41_HNS: return 64; // route 41 terrain / local WEATHER_RAIN_THUNDERSTORM
@@ -1193,13 +1193,13 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_VIOLET_CITY_HNS: return 56; // town/city MAPSEC_VIOLET_CITY
     case MAP_VIRIDIAN_CITY_HNS: return 56; // town/city MAPSEC_VIRIDIAN_CITY
     case MAP_VIRIDIAN_FOREST_HNS: return 57; // forest
-    case MAP_WHIRL_ISLANDS_1F_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
-    case MAP_WHIRL_ISLANDS_B1F_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
-    case MAP_WHIRL_ISLANDS_B1F_INNER_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
-    case MAP_WHIRL_ISLANDS_B2F_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
-    case MAP_WHIRL_ISLANDS_B3F_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
-    case MAP_WHIRL_ISLANDS_DESCENT_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
-    case MAP_WHIRL_ISLANDS_LUGIA_CHAMBER_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_1F_HNS: return 59; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_B1F_HNS: return 59; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_B1F_INNER_HNS: return 59; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_B2F_HNS: return 59; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_B3F_HNS: return 59; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_DESCENT_HNS: return 59; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_LUGIA_CHAMBER_HNS: return 59; // cave/interior system MAPSEC_WHIRL_ISLANDS
     default: return 0xFF;
     }
 }
