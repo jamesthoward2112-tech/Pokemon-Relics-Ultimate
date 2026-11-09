@@ -5,4 +5,3 @@
 #include "data/tilesets/graphics.h"
 #include "data/tilesets/metatiles.h"
 #include "data/tilesets/headers.h"
-#include "data/tilesets/pru_spirit_tower.h"

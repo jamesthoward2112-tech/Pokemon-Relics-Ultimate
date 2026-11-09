@@ -33,8 +33,6 @@ SaffronCity_Gym_EventScript_Jared::
 SaffronCity_Gym_EventScript_Sabrina::
 	lock
 	faceplayer
-	@ Only enable recovery once Blue has been defeated and the physical case stolen.
-	goto_if_set FLAG_PRU_HEIST_STARTED, SaffronCity_Gym_EventScript_PRUHeistSabrina
 	goto_if_set FLAG_DEFEATED_SAFFRON_GYM, SaffronCity_Gym_EventScript_Sabrina_Defeated
 	msgbox SaffronCity_Gym_Text_SabrinaIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_SABRINA_HNS, SaffronCity_Gym_Text_SabrinaWinLoss
@@ -47,7 +45,6 @@ SaffronCity_Gym_EventScript_Sabrina::
 	msgbox SaffronCity_Gym_Text_Sabrina_ExplainTM, MSGBOX_DEFAULT
 	setflag FLAG_BADGE13_GET
 	setflag FLAG_DEFEATED_SAFFRON_GYM
-	call SaffronCity_Gym_EventScript_PRUReward
 	addvar VAR_NUM_BADGES, 1
 	setvar VAR_0x8008, 13
 	call Common_EventScript_SetGymTrainers_hns
@@ -57,7 +54,6 @@ SaffronCity_Gym_EventScript_Sabrina::
 	end
 
 SaffronCity_Gym_EventScript_Sabrina_Defeated::
-	call SaffronCity_Gym_EventScript_PRUReward
 	msgbox SaffronCity_Gym_Text_SabrinaPostBattle, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -204,61 +200,3 @@ SaffronCity_Gym_Text_GymStatuePlayerWon::
     .string "LEADER: SABRINA\p"
     .string "WINNING TRAINERS:\n"
 	.string "BLUE, RED, {PLAYER}$"
-
-@ PRU first-clear Gym bonus. Never consume the reward flag while the BAG is full.
-@ Old saves with the badge can reclaim by speaking to the leader (or BLUE's Gym Guide).
-SaffronCity_Gym_EventScript_PRUReward::
-	goto_if_set FLAG_PRU_KANTO_GYM_REWARD_SABRINA, SaffronCity_Gym_EventScript_PRURewardDone
-	msgbox SaffronCity_Gym_Text_PRURewardIntro, MSGBOX_DEFAULT
-	giveitem ITEM_CHOICE_SPECS
-	goto_if_eq VAR_RESULT, FALSE, SaffronCity_Gym_EventScript_PRURewardBagFull
-	addmoney 10000
-	setflag FLAG_PRU_KANTO_GYM_REWARD_SABRINA
-	msgbox SaffronCity_Gym_Text_PRURewardMoney, MSGBOX_DEFAULT
-SaffronCity_Gym_EventScript_PRURewardDone:
-	return
-SaffronCity_Gym_EventScript_PRURewardBagFull:
-	msgbox SaffronCity_Gym_Text_PRURewardBagFull, MSGBOX_DEFAULT
-	return
-
-SaffronCity_Gym_Text_PRURewardIntro:
-	.string "Your bonus prize for defeating\n"
-	.string "the GYM LEADER!$"
-
-SaffronCity_Gym_Text_PRURewardMoney:
-	.string "You also received 10,000 in\n"
-	.string "GYM prize money!$"
-
-SaffronCity_Gym_Text_PRURewardBagFull:
-	.string "Your BAG is full! Make some room\n"
-	.string "and come back for your prize.$"
-
-@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
-SaffronCity_Gym_EventScript_PRUHeistSabrina::
-	goto_if_set FLAG_PRU_HEIST_SABRINA, SaffronCity_Gym_EventScript_PRUHeistSabrinaDone
-	msgbox SaffronCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_SABRINA_HNS, SaffronCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_SABRINA
-	msgbox SaffronCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-SaffronCity_Gym_EventScript_PRUHeistSabrinaDone::
-	msgbox SaffronCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-SaffronCity_Gym_Text_PRUHeistChallenge:
-	.string "SABRINA: TEAM ROCKET took your\n"
-	.string "BADGE CASE? Let's win it back!$"
-
-SaffronCity_Gym_Text_PRUHeistWon:
-	.string "SABRINA: You've earned this\n"
-	.string "BADGE back. Nicely done!$"
-
-SaffronCity_Gym_Text_PRUHeistAlready:
-	.string "SABRINA: One step closer\n"
-	.string "to stopping TEAM ROCKET!$"
-

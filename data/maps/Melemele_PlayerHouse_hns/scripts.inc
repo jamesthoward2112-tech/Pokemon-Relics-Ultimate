@@ -120,7 +120,7 @@ Alola_Melemele_SamsonOakVilla_Dialogue_28:
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_23
 
 Alola_Melemele_SamsonOakVilla_Dialogue_31:
-	getcaughtmon SPECIES_PERSIAN
+	getcaughtmon SPECIES_MEOWTH_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_44
 Alola_Melemele_SamsonOakVilla_Dialogue_43:
@@ -129,7 +129,7 @@ Alola_Melemele_SamsonOakVilla_Dialogue_43:
 	end
 
 Alola_Melemele_SamsonOakVilla_Dialogue_32:
-	getcaughtmon SPECIES_MAROGHOST
+	getcaughtmon SPECIES_MAROWAK_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_47
 Alola_Melemele_SamsonOakVilla_Dialogue_46:
@@ -138,7 +138,7 @@ Alola_Melemele_SamsonOakVilla_Dialogue_46:
 	end
 
 Alola_Melemele_SamsonOakVilla_Dialogue_33:
-	getcaughtmon SPECIES_NINETALES
+	getcaughtmon SPECIES_VULPIX_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_50
 Alola_Melemele_SamsonOakVilla_Dialogue_49:
@@ -147,7 +147,7 @@ Alola_Melemele_SamsonOakVilla_Dialogue_49:
 	end
 
 Alola_Melemele_SamsonOakVilla_Dialogue_34:
-	getcaughtmon SPECIES_RAICHU
+	getcaughtmon SPECIES_RAICHU_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_68
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_46
@@ -164,25 +164,25 @@ Alola_Melemele_SamsonOakVilla_Dialogue_40:
 	end
 
 Alola_Melemele_SamsonOakVilla_Dialogue_44:
-	getcaughtmon SPECIES_PERSIAN
+	getcaughtmon SPECIES_PERSIAN_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_58
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_43
 
 Alola_Melemele_SamsonOakVilla_Dialogue_47:
-	getcaughtmon SPECIES_DUGTRIO
+	getcaughtmon SPECIES_DIGLETT_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_60
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_46
 
 Alola_Melemele_SamsonOakVilla_Dialogue_50:
-	getcaughtmon SPECIES_NINETALES
+	getcaughtmon SPECIES_NINETALES_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_62
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_49
 
 Alola_Melemele_SamsonOakVilla_Dialogue_53:
-	getcaughtmon SPECIES_GOLEM
+	getcaughtmon SPECIES_GEODUDE_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_64
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_52
@@ -206,31 +206,31 @@ Alola_Melemele_SamsonOakVilla_Dialogue_55:
 	end
 
 Alola_Melemele_SamsonOakVilla_Dialogue_58:
-	getcaughtmon SPECIES_RATICATE
+	getcaughtmon SPECIES_RATTATA_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_66
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_43
 
 Alola_Melemele_SamsonOakVilla_Dialogue_60:
-	getcaughtmon SPECIES_DUGTRIO
+	getcaughtmon SPECIES_DUGTRIO_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_34
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_46
 
 Alola_Melemele_SamsonOakVilla_Dialogue_62:
-	getcaughtmon SPECIES_SANDSLASH
+	getcaughtmon SPECIES_SANDSHREW_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_70
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_49
 
 Alola_Melemele_SamsonOakVilla_Dialogue_64:
-	getcaughtmon SPECIES_GOLEM
+	getcaughtmon SPECIES_GRAVELER_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_72
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_52
 
 Alola_Melemele_SamsonOakVilla_Dialogue_66:
-	getcaughtmon SPECIES_RATICATE
+	getcaughtmon SPECIES_RATICATE_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_74
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_43
@@ -242,13 +242,13 @@ Alola_Melemele_SamsonOakVilla_Dialogue_68:
 	end
 
 Alola_Melemele_SamsonOakVilla_Dialogue_70:
-	getcaughtmon SPECIES_SANDSLASH
+	getcaughtmon SPECIES_SANDSLASH_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_79
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_49
 
 Alola_Melemele_SamsonOakVilla_Dialogue_72:
-	getcaughtmon SPECIES_GOLEM
+	getcaughtmon SPECIES_GOLEM_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_81
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_52
@@ -277,13 +277,13 @@ Alola_Melemele_SamsonOakVilla_Dialogue_76:
 	end
 
 Alola_Melemele_SamsonOakVilla_Dialogue_79:
-	getcaughtmon SPECIES_MUK
+	getcaughtmon SPECIES_GRIMER_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_93
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_49
 
 Alola_Melemele_SamsonOakVilla_Dialogue_81:
-	getcaughtmon SPECIES_EXEGGUTOR
+	getcaughtmon SPECIES_EXEGGUTOR_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_95
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_52
@@ -322,7 +322,7 @@ Alola_Melemele_SamsonOakVilla_Dialogue_105:
 	end
 
 Alola_Melemele_SamsonOakVilla_Dialogue_93:
-	getcaughtmon SPECIES_MUK
+	getcaughtmon SPECIES_MUK_ALOLA
 	compare VAR_RESULT, 1
 	goto_if_eq Alola_Melemele_SamsonOakVilla_Dialogue_113
 	goto Alola_Melemele_SamsonOakVilla_Dialogue_49

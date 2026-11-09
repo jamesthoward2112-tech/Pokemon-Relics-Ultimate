@@ -11,8 +11,6 @@ PewterCity_Gym_EventScript_Jerry::
 PewterCity_Gym_EventScript_Brock::
 	lock
 	faceplayer
-	@ Only enable recovery once Blue has been defeated and the physical case stolen.
-	goto_if_set FLAG_PRU_HEIST_STARTED, PewterCity_Gym_EventScript_PRUHeistBrock
 	goto_if_set FLAG_DEFEATED_PEWTER_GYM, PewterCity_Gym_EventScript_Brock_Defeated
 	msgbox PewterCity_Gym_Text_Brock_Intro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_BROCK_HNS, PewterCity_Gym_Text_Brock_WinLoss
@@ -24,7 +22,6 @@ PewterCity_Gym_EventScript_Brock::
 	msgbox PewterCity_Gym_Text_Brock_ExplainTM, MSGBOX_DEFAULT
 	setflag FLAG_BADGE09_GET
 	setflag FLAG_DEFEATED_PEWTER_GYM
-	call PewterCity_Gym_EventScript_PRUReward
 	addvar VAR_NUM_BADGES, 1
 	setvar VAR_0x8008, 9
 	call Common_EventScript_SetGymTrainers_hns
@@ -34,7 +31,6 @@ PewterCity_Gym_EventScript_Brock::
 	end
 
 PewterCity_Gym_EventScript_Brock_Defeated::
-	call PewterCity_Gym_EventScript_PRUReward
 	goto_if_unset FLAG_HIDE_DOJO_BROCK, PewterCity_Gym_EventScript_Brock_Trade
 	msgbox PewterCity_Gym_Text_Brock_FightDone, MSGBOX_DEFAULT
 	closemessage
@@ -193,61 +189,3 @@ PewterCity_Gym_Text_BrockNotRequestedMon:
 PewterCity_Gym_Text_BrockTradeCompleted:
 	.string "BROCK: How's WOODY doing?\n"
 	.string "BONSLY are tougher than they look!$"
-
-@ PRU first-clear Gym bonus. Never consume the reward flag while the BAG is full.
-@ Old saves with the badge can reclaim by speaking to the leader (or BLUE's Gym Guide).
-PewterCity_Gym_EventScript_PRUReward::
-	goto_if_set FLAG_PRU_KANTO_GYM_REWARD_BROCK, PewterCity_Gym_EventScript_PRURewardDone
-	msgbox PewterCity_Gym_Text_PRURewardIntro, MSGBOX_DEFAULT
-	giveitem ITEM_ROCKY_HELMET
-	goto_if_eq VAR_RESULT, FALSE, PewterCity_Gym_EventScript_PRURewardBagFull
-	addmoney 10000
-	setflag FLAG_PRU_KANTO_GYM_REWARD_BROCK
-	msgbox PewterCity_Gym_Text_PRURewardMoney, MSGBOX_DEFAULT
-PewterCity_Gym_EventScript_PRURewardDone:
-	return
-PewterCity_Gym_EventScript_PRURewardBagFull:
-	msgbox PewterCity_Gym_Text_PRURewardBagFull, MSGBOX_DEFAULT
-	return
-
-PewterCity_Gym_Text_PRURewardIntro:
-	.string "Your bonus prize for defeating\n"
-	.string "the GYM LEADER!$"
-
-PewterCity_Gym_Text_PRURewardMoney:
-	.string "You also received 10,000 in\n"
-	.string "GYM prize money!$"
-
-PewterCity_Gym_Text_PRURewardBagFull:
-	.string "Your BAG is full! Make some room\n"
-	.string "and come back for your prize.$"
-
-@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
-PewterCity_Gym_EventScript_PRUHeistBrock::
-	goto_if_set FLAG_PRU_HEIST_BROCK, PewterCity_Gym_EventScript_PRUHeistBrockDone
-	msgbox PewterCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_BROCK_HNS, PewterCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_BROCK
-	msgbox PewterCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-PewterCity_Gym_EventScript_PRUHeistBrockDone::
-	msgbox PewterCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-PewterCity_Gym_Text_PRUHeistChallenge:
-	.string "BROCK: TEAM ROCKET took your\n"
-	.string "BADGE CASE? Let's win it back!$"
-
-PewterCity_Gym_Text_PRUHeistWon:
-	.string "BROCK: You've earned this\n"
-	.string "BADGE back. Nicely done!$"
-
-PewterCity_Gym_Text_PRUHeistAlready:
-	.string "BROCK: One step closer\n"
-	.string "to stopping TEAM ROCKET!$"
-

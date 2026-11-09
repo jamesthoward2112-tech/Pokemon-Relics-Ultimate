@@ -1709,19 +1709,6 @@ const struct Tileset gTileset_BlackthornGym_Hns =
     .callback = InitTilesetAnim_BlackthornGym,
 };
 
-// Preserve the Seafoam cave's original blocks and animation, but keep its
-// blue pool palette separate from the red magma in Blackthorn Gym.
-const struct Tileset gTileset_PruSeafoamBlue_Hns =
-{
-    .isCompressed = TRUE,
-    .isSecondary = TRUE,
-    .tiles = gTilesetTiles_BlackthornGym_Hns,
-    .palettes = gTilesetPalettes_PruSeafoamBlue_Hns,
-    .metatiles = gMetatiles_BlackthornGym_Hns,
-    .metatileAttributes = gMetatileAttributes_BlackthornGym_Hns,
-    .callback = InitTilesetAnim_BlackthornGym,
-};
-
 const struct Tileset gTileset_BurnedTower_Hns =
 {
     .isCompressed = TRUE,
@@ -2129,6 +2116,29 @@ const struct Tileset gTileset_JohtoBikeShop_Hns =
     .callback = NULL,
 };
 
+
+/* PJR: Azul Agua / Water Blue donor tilesets for the Ecruteak Rock Shop. */
+const struct Tileset gTileset_AzulAguaBuilding_Hns =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_AzulAguaBuilding_Hns,
+    .palettes = (const u16 (*)[16])gTilesetPalettes_AzulAguaBuilding_Hns,
+    .metatiles = gMetatiles_AzulAguaBuilding_Hns,
+    .metatileAttributes = gMetatileAttributes_AzulAguaBuilding_Hns,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_AzulAguaRockShop_Hns =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_AzulAguaRockShop_Hns,
+    .palettes = (const u16 (*)[16])gTilesetPalettes_AzulAguaRockShop_Hns,
+    .metatiles = gMetatiles_AzulAguaRockShop_Hns,
+    .metatileAttributes = gMetatileAttributes_AzulAguaRockShop_Hns,
+    .callback = NULL,
+};
 
 const struct Tileset gTileset_JohtoMart_Hns =
 {

@@ -251,8 +251,6 @@ VermilionCity_Gym_EventScript_Horton::
 VermilionCity_Gym_EventScript_Surge::
 	lock
 	faceplayer
-	@ Only enable recovery once Blue has been defeated and the physical case stolen.
-	goto_if_set FLAG_PRU_HEIST_STARTED, VermilionCity_Gym_EventScript_PRUHeistSurge
 	goto_if_set FLAG_DEFEATED_VERMILION_GYM, VermilionCity_Gym_EventScript_Surge_Defeated
 	msgbox VermilionGym_Text_LtSurgeIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_LTSURGE_HNS, VermilionGym_Text_LtSurgeWinLoss
@@ -262,7 +260,6 @@ VermilionCity_Gym_EventScript_Surge::
 	msgbox VermilionGym_Text_ThunderBadgeInfo, MSGBOX_DEFAULT
 	setflag FLAG_BADGE11_GET
 	setflag FLAG_DEFEATED_VERMILION_GYM
-	call VermilionCity_Gym_EventScript_PRUReward
 	addvar VAR_NUM_BADGES, 1
 	setvar VAR_0x8008, 11
 	call Common_EventScript_SetGymTrainers_hns
@@ -286,7 +283,6 @@ VermilionCity_Gym_EventScript_GiveTM::
 	return
 
 VermilionCity_Gym_EventScript_Surge_Defeated::
-	call VermilionCity_Gym_EventScript_PRUReward
 	msgbox VermilionGym_Text_LtSurgePostBattle, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -437,61 +433,4 @@ VermilionCity_Gym_Text_OnlyTrashLocksWereReset::
     .string "There's only trash here.\p"
     .string "Hey!\n"
     .string "The electric locks were reset!$"
-
-@ PRU first-clear Gym bonus. Never consume the reward flag while the BAG is full.
-@ Old saves with the badge can reclaim by speaking to the leader (or BLUE's Gym Guide).
-VermilionCity_Gym_EventScript_PRUReward::
-	goto_if_set FLAG_PRU_KANTO_GYM_REWARD_SURGE, VermilionCity_Gym_EventScript_PRURewardDone
-	msgbox VermilionCity_Gym_Text_PRURewardIntro, MSGBOX_DEFAULT
-	giveitem ITEM_AIR_BALLOON
-	goto_if_eq VAR_RESULT, FALSE, VermilionCity_Gym_EventScript_PRURewardBagFull
-	addmoney 10000
-	setflag FLAG_PRU_KANTO_GYM_REWARD_SURGE
-	msgbox VermilionCity_Gym_Text_PRURewardMoney, MSGBOX_DEFAULT
-VermilionCity_Gym_EventScript_PRURewardDone:
-	return
-VermilionCity_Gym_EventScript_PRURewardBagFull:
-	msgbox VermilionCity_Gym_Text_PRURewardBagFull, MSGBOX_DEFAULT
-	return
-
-VermilionCity_Gym_Text_PRURewardIntro:
-	.string "Your bonus prize for defeating\n"
-	.string "the GYM LEADER!$"
-
-VermilionCity_Gym_Text_PRURewardMoney:
-	.string "You also received 10,000 in\n"
-	.string "GYM prize money!$"
-
-VermilionCity_Gym_Text_PRURewardBagFull:
-	.string "Your BAG is full! Make some room\n"
-	.string "and come back for your prize.$"
-
-@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
-VermilionCity_Gym_EventScript_PRUHeistSurge::
-	goto_if_set FLAG_PRU_HEIST_SURGE, VermilionCity_Gym_EventScript_PRUHeistSurgeDone
-	msgbox VermilionCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_SURGE_HNS, VermilionCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_SURGE
-	msgbox VermilionCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-VermilionCity_Gym_EventScript_PRUHeistSurgeDone::
-	msgbox VermilionCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-VermilionCity_Gym_Text_PRUHeistChallenge:
-	.string "SURGE: TEAM ROCKET took your\n"
-	.string "BADGE CASE? Let's win it back!$"
-
-VermilionCity_Gym_Text_PRUHeistWon:
-	.string "SURGE: You've earned this\n"
-	.string "BADGE back. Nicely done!$"
-
-VermilionCity_Gym_Text_PRUHeistAlready:
-	.string "SURGE: One step closer\n"
-	.string "to stopping TEAM ROCKET!$"
 

@@ -2,10 +2,10 @@
   "id": "MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS",
   "name": "SeafoamIslands_SecretCave_hns",
   "layout": "LAYOUT_SEAFOAM_ISLANDS_SECRET_CAVE_HNS",
-  "music": "MUS_ABNORMAL_WEATHER",
+  "music": "MUS_MT_CHIMNEY",
   "region_map_section": "MAPSEC_SEAFOAM_ISLANDS",
   "requires_flash": false,
-  "weather": "WEATHER_RAIN",
+  "weather": "WEATHER_FOG_HORIZONTAL",
   "map_type": "MAP_TYPE_UNDERGROUND",
   "allow_cycling": false,
   "allow_escaping": true,
@@ -15,32 +15,18 @@
   "connections": 0,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_PRU_SHINY_PRIMAL_KYOGRE_HNS",
+      "graphics_id": "OBJ_EVENT_GFX_MON_BASE+SPECIES_GROUDON",
       "x": 16,
       "y": 11,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SeafoamIslands_SecretCave_EventScript_Kyogre",
-      "flag": "FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE",
-      "local_id": "LOCALID_PRU_KYOGRE"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_ARCHIE",
-      "x": 16,
-      "y": 12,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "4",
-      "script": "SeafoamIslands_SecretCave_EventScript_Archie",
-      "flag": "FLAG_PRU_ARCHIE_KYOGRE_DEFEATED",
-      "local_id": "LOCALID_PRU_ARCHIE"
+      "script": "SeafoamIslands_SecretCave_EventScript_Groudon",
+      "flag": "FLAG_HIDE_GROUDON",
+      "localid": "LOCALID_SEAFOAMGROUDON"
     }
   ],
   "warp_events": [

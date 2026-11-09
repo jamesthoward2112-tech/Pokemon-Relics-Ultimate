@@ -4240,28 +4240,6 @@ static const struct SpriteFrameImage sPicTable_James_hns[] = {
     overworld_frame(gObjectEventPic_James_hns, 2, 4, 8),
 };
 
-static const struct SpriteFrameImage sPicTable_PruMeowthBalloon_hns[] = {
-    obj_frame_tiles(gObjectEventPic_PruMeowthBalloon_hns),
-};
-
-// The supplied Primal overworld sheets are six 64x64 frames each.
-static const struct SpriteFrameImage sPicTable_PruShinyPrimalKyogre_hns[] = {
-    overworld_frame(gObjectEventPic_PruShinyPrimalKyogre_hns, 8, 8, 0),
-    overworld_frame(gObjectEventPic_PruShinyPrimalKyogre_hns, 8, 8, 1),
-    overworld_frame(gObjectEventPic_PruShinyPrimalKyogre_hns, 8, 8, 2),
-    overworld_frame(gObjectEventPic_PruShinyPrimalKyogre_hns, 8, 8, 3),
-    overworld_frame(gObjectEventPic_PruShinyPrimalKyogre_hns, 8, 8, 4),
-    overworld_frame(gObjectEventPic_PruShinyPrimalKyogre_hns, 8, 8, 5),
-};
-static const struct SpriteFrameImage sPicTable_PruShinyPrimalGroudon_hns[] = {
-    overworld_frame(gObjectEventPic_PruShinyPrimalGroudon_hns, 8, 8, 0),
-    overworld_frame(gObjectEventPic_PruShinyPrimalGroudon_hns, 8, 8, 1),
-    overworld_frame(gObjectEventPic_PruShinyPrimalGroudon_hns, 8, 8, 2),
-    overworld_frame(gObjectEventPic_PruShinyPrimalGroudon_hns, 8, 8, 3),
-    overworld_frame(gObjectEventPic_PruShinyPrimalGroudon_hns, 8, 8, 4),
-    overworld_frame(gObjectEventPic_PruShinyPrimalGroudon_hns, 8, 8, 5),
-};
-
 static const struct SpriteFrameImage sPicTable_Bill_hns[] = {
     overworld_frame(gObjectEventPic_Bill_hns, 2, 4, 0),
     overworld_frame(gObjectEventPic_Bill_hns, 2, 4, 1),

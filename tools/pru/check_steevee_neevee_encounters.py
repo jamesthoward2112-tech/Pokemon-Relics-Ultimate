@@ -25,13 +25,6 @@ party = read("src/data/trainers_hns.party")
 opponents = read("include/constants/opponents_hns.h")
 battle = read("src/battle_setup.c")
 transition = read("src/battle_transition.c")
-# Keep the full pair name visible for every Steevee/Neevee encounter.
-assert len(trainerIds := re.findall(r"^=== (TRAINER_STEEVE_NEEVEE_[A-Z0-9_]+) ===$", party, re.M)) == 8
-for trainer_id in trainerIds:
-    assert f"=== {trainer_id} ===\nName: STEEVEE & NEEVEE\n" in party, trainer_id
-assert re.search(r"^#define TRAINER_NAME_LENGTH 16$", read("include/constants/global.h"), re.M)
-assert re.search(r"^\s*\[TRANSITION_TYPE_NORMAL\]\s*=\s*\{B_TRANSITION_WHITE_BARS_FADE,\s*B_TRANSITION_WHITE_BARS_FADE\}", battle, re.M)
-
 for area,(alias,coords,levels,original) in slots.items():
     entry = json.loads(read(f"data/maps/{area}_hns/map.json"))
     script = read(f"data/maps/{area}_hns/scripts.inc")
@@ -60,7 +53,6 @@ for area,(alias,coords,levels,original) in slots.items():
         assert event["graphics_id"]=="OBJ_EVENT_GFX_TWIN_HNS",(area,name)
         assert event["flag"]=="0",(area,name)
         assert event["trainer_type"]=="TRAINER_TYPE_NORMAL",(area,name)
-        assert event["trainer_sight_or_berry_tree_id"] == "6", (area,name,"must spot player from 6 tiles")
         assert f"{label}::" in script
         section=script.split(f"{label}::",1)[1].split("\n\tend",1)[0]
         assert f"trainerbattle_double {alias}," in section,(area,name)
@@ -72,7 +64,7 @@ assert "return B_TRANSITION_EEVEE_TWINS;" in battle
 assert "Task_PRL_EeveeTwins" in transition
 for ext in ("4bpp", "bin", "gbapal"):
     assert f'graphics/battle_transitions/prl/eevee_twins.{ext}' in transition
-assert "tools/pru/install_prl_duo_assets.py" in read(".github/workflows/pru-clean-build.yml")
+assert "tools/pru/install_prl_duo_assets.py" in read(".github/workflows/pru-valkiri-final-build.yml")
 assert team_levels(party,"TRAINER_ANN_AND_ANNE_HNS")==[30,30]  # original donor data retained
 
 # Dragon's Den adds a fifth visit with its own trainer flag (679), rather than
@@ -81,19 +73,12 @@ den_map = json.loads(read("data/maps/DragonsDen_Cavern_hns/map.json"))
 den_script = read("data/maps/DragonsDen_Cavern_hns/scripts.inc")
 den_id = "TRAINER_STEEVE_NEEVEE_DRAGONS_DEN_HNS"
 assert f"#define {den_id}     679" in opponents
-assert "#define TRAINER_PRU_ARCHIE_KYOGRE_HNS            680" in opponents
-assert "#define TRAINER_PRU_MAXIE_GROUDON_HNS            681" in opponents
-# The original 682 ceiling is an old hardcoded fixture. PRU appends save-safe
-# Kanto duo battles without moving any existing trainer IDs.
-count = re.search(r"#define TRAINERS_COUNT_HNS\s+(\d+)", opponents)
-assert count and int(count.group(1)) >= 683
-assert "#define TRAINER_STEEVE_NEEVEE_CELADON_HNS       682" in opponents
-assert team_levels(party, "TRAINER_STEEVE_NEEVEE_CELADON_HNS") == [63,63,64,64,65,66]
+assert "#define TRAINERS_COUNT_HNS                       680" in opponents
 assert "case TRAINER_STEEVE_NEEVEE_DRAGONS_DEN_HNS:" in battle
 assert team_levels(party, den_id) == [53,51,50,50,52,52]
 den_team = party.split(f"=== {den_id} ===",1)[1]
 assert "Drakeon @ Sitrus Berry" in den_team
-assert "Name: STEEVEE & NEEVEE" in den_team
+assert "Name: STEEVEE" in den_team
 for name, xy in (("Steevee",(7,31)),("Neevee",(7,32))):
     label = f"DragonsDen_Cavern_EventScript_{name}"
     actors = [o for o in den_map["object_events"] if o["script"] == label]
@@ -101,7 +86,6 @@ for name, xy in (("Steevee",(7,31)),("Neevee",(7,32))):
     assert (actors[0]["x"],actors[0]["y"]) == xy
     assert actors[0]["graphics_id"] == "OBJ_EVENT_GFX_TWIN_HNS"
     assert actors[0]["trainer_type"] == "TRAINER_TYPE_NORMAL"
-    assert actors[0]["trainer_sight_or_berry_tree_id"] == "6", (name,"Dragons Den sight must be 6 tiles")
     assert f"trainerbattle_double {den_id}," in den_script.split(label+"::",1)[1].split("\n\tend",1)[0]
 assert "DragonsDen_Cavern_EventScript_TwinLea" not in read("data/maps/DragonsDen_Cavern_hns/map.json")
 assert "DragonsDen_Cavern_EventScript_TwinPia" not in read("data/maps/DragonsDen_Cavern_hns/map.json")

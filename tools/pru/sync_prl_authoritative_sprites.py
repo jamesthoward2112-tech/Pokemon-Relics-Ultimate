@@ -32,13 +32,10 @@ REQUIRED = {"noxichu", "edensaur", "charaxis", "fortotoise", "khang", "nolax", "
 # Donphalanx is intentionally backed by Great Tusk's exact sprites: the pinned
 # PRL species data uses GreatTusk symbols, NOT the older donphalanx art folder.
 # Do not overwrite approved Feralodon, Donphalanx or Tourmaline-Skarmet art on repeat builds.
-PRU_VISUAL_OVERRIDES = {"feralodon", "donphalanx", "skarmet", "pyroclast"}
-PYROCLAST_ELITE_REDUX_SHA256 = "cc3193a3668381c6d83c0642e0ead50cbfae0553081f770e1ce316fdbf842773"
+PRU_VISUAL_OVERRIDES = {"feralodon", "donphalanx", "skarmet"}
 NORMALIZED_EEVEE_ICONS = {
     "champeon", "lepideon", "guardeon", "obsideon", "toxeon",
     "sphynxeon", "omeon", "drakeon", "eeveeon", "nimbeon",
-    "astrachi",  # Locally corrected 32x64 icon + dedicated icon palette #10.
-    "swamplith", # Green-detail PRU icon palette #8; PRL 4bpp donor tiles use a mismatched index order.
 }
 NOXICHU_BLOBS = {
     "front.png": "7e866622e368249babadc1382dea74902ddba960",
@@ -111,13 +108,6 @@ def main():
                 )
             dest = Path("graphics/pokemon/prl_authoritative") / slug / filename
             dest.parent.mkdir(parents=True, exist_ok=True)
-            if slug == "pyroclast" and filename == "front.png":
-                # Never overwrite the approved original Elite Redux
-                # TYPHLOSION_MEGA sprite with PRL's different front art.
-                assert dest.is_file() and hashlib.sha256(dest.read_bytes()).hexdigest() == PYROCLAST_ELITE_REDUX_SHA256, (
-                    "Pyroclast exact Elite Redux front missing or modified"
-                )
-                continue
             if not dest.exists() or dest.read_bytes() != contents:
                 dest.write_bytes(contents)
         for key, source in list(headers.items()):
@@ -140,10 +130,7 @@ def main():
             headers[key] = source
         manifest.append({
             "species": slug, "symbols": symbol, "source_commit": PRL_SHA,
-            "asset_sha256": {
-                name: hashlib.sha256((Path("graphics/pokemon/prl_authoritative") / slug / name).read_bytes()).hexdigest()
-                for name in assets
-            }
+            "asset_sha256": {name: hashlib.sha256(val).hexdigest() for name, val in assets.items()}
         })
     assert not (REQUIRED & {f["species"] for f in failures}), (
         "Missing required approved PRL art: " + str(failures)

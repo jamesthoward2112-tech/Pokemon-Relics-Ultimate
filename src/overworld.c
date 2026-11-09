@@ -85,8 +85,6 @@
 #include "constants/vars_hns.h"
 #include "nuzlocke.h"
 #include "pokemon_storage_system.h"
-#include "pokemon.h"
-#include "pokedex.h"
 
 STATIC_ASSERT((B_FLAG_FOLLOWERS_DISABLED == 0 || OW_FOLLOWERS_ENABLED), FollowersFlagAssignedWithoutEnablingThem);
 
@@ -912,108 +910,6 @@ bool8 SetDiveWarpDive(u16 x, u16 y)
     return SetDiveWarp(CONNECTION_DIVE, x, y);
 }
 
-// PRU: A defeated (but uncaught) stationary legendary becomes available
-// again on the next map entry. The original HNS scripts set their hide flags
-// after both a knockout and a capture, so Pokédex caught data—not that flag—
-// must decide whether the encounter is permanently complete. No new save
-// flags are required; this also repairs existing saves after a knockout.
-static bool32 PruLegendarySeenButUncaught(u16 species)
-{
-    enum NationalDexOrder dexNum = SpeciesToNationalPokedexNum(species);
-    return GetSetPokedexFlag(dexNum, FLAG_GET_SEEN)
-        && !GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT);
-}
-
-static void RestorePruDefeatedLegendariesOnMapEntry(void)
-{
-    static const struct
-    {
-        u16 species;
-        u16 hideFlag;
-    } sLegendaryHideFlags[] =
-    {
-        { SPECIES_HO_OH,     FLAG_HIDE_HO_OH },
-        { SPECIES_LUGIA,     FLAG_HIDE_LUGIA },
-        { SPECIES_ARTICUNO,  FLAG_HIDE_ARTICUNO },
-        { SPECIES_ZAPDOS,    FLAG_HIDE_ZAPDOS },
-        { SPECIES_MOLTRES,   FLAG_HIDE_MOLTRES },
-        { SPECIES_MEWTWO,    FLAG_HIDE_MEWTWO },
-        { SPECIES_GROUDON,   FLAG_HIDE_GROUDON },
-        { SPECIES_KYOGRE,    FLAG_HIDE_KYOGRE },
-        { SPECIES_RAYQUAZA,  FLAG_HIDE_RAYQUAZA },
-        { SPECIES_LATIAS,    FLAG_HIDE_LATIAS },
-        { SPECIES_LATIOS,    FLAG_HIDE_LATIOS },
-        { SPECIES_REGICE,    FLAG_HIDE_SINJOHRUINS_REGICE },
-        { SPECIES_REGIROCK,  FLAG_HIDE_SINJOHRUINS_REGIROCK },
-        { SPECIES_REGISTEEL, FLAG_HIDE_SINJOHRUINS_REGISTEEL },
-        { SPECIES_MEW,       FLAG_HIDE_MEW },
-    };
-    u32 i;
-
-    if (!IS_HNS)
-        return;
-
-    // Initialize old/new saves when the player first enters a Kanto route.
-    // Keep the three stationary duplicates hidden after roaming unlock.
-    EnsurePruKantoBirdRoamers();
-    RestorePruDefeatedRoamers();
-
-    for (i = 0; i < ARRAY_COUNT(sLegendaryHideFlags); i++)
-    {
-        u16 species = sLegendaryHideFlags[i].species;
-        if (FlagGet(FLAG_PRU_KANTO_BIRDS_UNLOCKED)
-            && (species == SPECIES_ARTICUNO || species == SPECIES_ZAPDOS || species == SPECIES_MOLTRES))
-        {
-            FlagSet(sLegendaryHideFlags[i].hideFlag);
-            continue;
-        }
-        if (PruLegendarySeenButUncaught(species))
-            FlagClear(sLegendaryHideFlags[i].hideFlag);
-    }
-
-    // Astrachi's three saved flags are new. Hide it on older saves until the
-    // stone has explicitly summoned it; after a knockout restore it only on
-    // map re-entry. Astrachi presently shares Jirachi's National Dex number,
-    // so the ordinary Pokédex-based legendary retry check is not sufficient.
-    if (!FlagGet(FLAG_SUMMONED_MTMOON_ASTRACHI)
-        || FlagGet(FLAG_CAUGHT_MTMOON_ASTRACHI))
-        FlagSet(FLAG_HIDE_MTMOON_ASTRACHI);
-    else
-        FlagClear(FLAG_HIDE_MTMOON_ASTRACHI);
-
-    // Mt. Moon's Jirachi may only return after the White Rock summoning.
-    if (FlagGet(FLAG_SUMMONED_MTMOON_JIRACHI)
-        && PruLegendarySeenButUncaught(SPECIES_JIRACHI))
-        FlagClear(FLAG_HIDE_MTMOON_JIRACHI);
-
-    // Suicune's Route 25 story advances to stage 8 after either an
-    // unsuccessful knockout or a capture; only uncaught Suicune returns.
-    if (VarGet(VAR_SUICUNE_ENCOUNTERS) >= 8
-        && PruLegendarySeenButUncaught(SPECIES_SUICUNE))
-        FlagClear(FLAG_HIDE_ROUTE25_SUICUNE);
-
-    // The Ilex Forest shrine is story-gated. Never spawn Celebi before it
-    // has been summoned, even if the player has seen one elsewhere.
-    if (VarGet(VAR_AZALEA_TOWN_STATE) >= 10
-        && PruLegendarySeenButUncaught(SPECIES_CELEBI))
-    {
-        FlagClear(FLAG_HIDE_CELEBI);
-    }
-
-    // These two maps additionally persist a "defeated" flag which their
-    // transition scripts check before showing the encounter. Reset only
-    // when re-entering their actual islands, and never after a capture.
-    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_FARAWAY_ISLAND_INTERIOR_HNS)
-        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_FARAWAY_ISLAND_INTERIOR_HNS)
-        && PruLegendarySeenButUncaught(SPECIES_MEW))
-        FlagClear(FLAG_DEFEATED_MEW);
-
-    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_BIRTH_ISLAND_EXTERIOR_HNS)
-        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_BIRTH_ISLAND_EXTERIOR_HNS)
-        && PruLegendarySeenButUncaught(SPECIES_DEOXYS))
-        FlagClear(FLAG_DEFEATED_DEOXYS);
-}
-
 void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
 {
     SetWarpDestination(mapGroup, mapNum, WARP_ID_NONE, -1, -1);
@@ -1042,7 +938,6 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     ChooseAmbientCrySpecies();
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
-    RestorePruDefeatedLegendariesOnMapEntry();
     RunOnTransitionMapScript();
     InitMap();
     CopySecondaryTilesetToVramUsingHeap(gMapHeader.mapLayout);
@@ -1053,7 +948,6 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     InitSecondaryTilesetAnimation();
     UpdateLocationHistoryForRoamer();
     MoveAllRoamers();
-    ApplyPruKantoBirdWeather();
     TryShowRoamerFlash();
     DoCurrentWeather();
     ResetFieldTasksArgs();
@@ -1114,11 +1008,9 @@ static void LoadMapFromWarp(bool32 a1)
         FlagClear(FLAG_SYS_USE_FLASH);
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
-    RestorePruDefeatedLegendariesOnMapEntry();
     RunOnTransitionMapScript();
     UpdateLocationHistoryForRoamer();
     MoveAllRoamersToOtherLocationSets();
-    ApplyPruKantoBirdWeather();
     gChainFishingDexNavStreak = 0;
     if ((gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR_HNS))
         InitBattlePyramidMap(FALSE);

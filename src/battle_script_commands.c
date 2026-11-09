@@ -2193,10 +2193,7 @@ static void Cmd_waitmessage(void)
         else
         {
             u16 toWait = cmd->time;
-            // PRU secondary hazard announcements must remain readable even
-            // when ordinary text waits are skipped by the battle-speed option.
-            bool8 preserveHazardText = toWait == B_WAIT_TIME_PRU_HAZARD_MESSAGE;
-            if (gTestRunnerHeadless || (!preserveHazardText && !gSaveBlock3Ptr->challengeSettings.fastBattle))
+            if (gTestRunnerHeadless || !gSaveBlock3Ptr->challengeSettings.fastBattle)
                 gPauseCounterBattle = toWait;
             if (++gPauseCounterBattle >= toWait)
             {
@@ -5378,10 +5375,7 @@ static void Cmd_switchindataupdate(void)
     gBattleMons[battler].types[0] = GetSpeciesType(gBattleMons[battler].species, 0);
     gBattleMons[battler].types[1] = GetSpeciesType(gBattleMons[battler].species, 1);
     gBattleMons[battler].types[2] = TYPE_MYSTERY;
-    // Source the actual Pokemon's special ability on every switch-in.
-    // Species-only lookup overwrote the Power Plant Electrode's Levitate
-    // with Static/Soundproof, allowing Siege Tusk to hit through immunity.
-    gBattleMons[battler].ability = GetMonAbility(&GetSideParty(side)[gBattlerPartyIndexes[battler]]);
+    gBattleMons[battler].ability = GetAbilityBySpecies(gBattleMons[battler].species, gBattleMons[battler].abilityNum);
     #if TESTING
     if (gTestRunnerEnabled)
     {
@@ -11007,15 +11001,6 @@ static u32 ComputeCaptureOdds(u32 wildMonBattler, u32 playerBattler)
     else
         catchRate = gSpeciesInfo[battleMon->species].catchRate;
 
-    // PRU: Legends/mythicals should still need weakening and status, but the
-    // original catch rate of 3 makes even a sleeping 1-HP encounter tedious.
-    // Clamp the base rate only for HNS legendary and roamer battles. This
-    // preserves the chosen Ball's bonus, HP/status multipliers and all other
-    // game modes, while avoiding any guaranteed catches.
-    if (IS_HNS && (gBattleTypeFlags & (BATTLE_TYPE_LEGENDARY | BATTLE_TYPE_ROAMER))
-        && catchRate < 20)
-        catchRate = 20;
-
     catchRate += ball.flatBonus;
     if (catchRate <= 0)
         catchRate = 1;
@@ -13665,12 +13650,7 @@ void BS_JumpIfRoarFails(void)
 {
     NATIVE_ARGS(const u8 *jumpInstr);
 
-    // No forced Roar/Whirlwind battle termination for wild legendaries.
-    // Neither side can phase out the encounter: catch, faint or player Run.
-    if (IsPruLegendaryWildBattler(gBattlerAttacker)
-     || IsPruLegendaryWildBattler(gBattlerTarget))
-        gBattlescriptCurrInstr = cmd->jumpInstr;
-    else if (WILD_DOUBLE_BATTLE
+    if (WILD_DOUBLE_BATTLE
         && IsOnPlayerSide(gBattlerAttacker)
         && !IsOnPlayerSide(gBattlerTarget)
         && IS_WHOLE_SIDE_ALIVE(gBattlerTarget))

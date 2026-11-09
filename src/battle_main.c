@@ -635,20 +635,6 @@ static void CB2_InitBattleInternal(void)
     if (TestRunner_Battle_GetForcedEnvironment())
         gBattleEnvironment = TestRunner_Battle_GetForcedEnvironment() - 1;
 
-    if (IsPruCrystalBattleBgActive())
-    {
-        // The standard intro uses HBlank DMA to give the top and bottom
-        // halves of BG3 opposite horizontal offsets. That tears a complete
-        // Crystal Redux background into strips; show the already loaded
-        // scene in one piece instead. Trainer/platform sprite animations
-        // run independently and are left untouched.
-        ScanlineEffect_Stop();
-        gBattle_WIN0V = WIN_RANGE(0, DISPLAY_HEIGHT);
-        SetGpuReg(REG_OFFSET_WIN0V, gBattle_WIN0V);
-        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR);
-        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
-    }
-
     InitBattleBgsVideo();
     LoadBattleTextboxAndBackground();
     ResetSpriteData();
@@ -3686,13 +3672,7 @@ static void DoBattleIntro(void)
                 gBattleMons[battler].types[0] = GetSpeciesType(gBattleMons[battler].species, 0);
                 gBattleMons[battler].types[1] = GetSpeciesType(gBattleMons[battler].species, 1);
                 gBattleMons[battler].types[2] = TYPE_MYSTERY;
-                // Resolve the real party member's ability at battle entry.
-                // A species-only lookup silently replaces the marked shiny
-                // Power Plant Electrode's Levitate with Static/Soundproof.
-                // Apply the same per-mon source as the switch-in path so
-                // Ground-type Siege Tusk cannot bypass Levitate on turn one.
-                enum BattleSide side = GetBattlerSide(battler);
-                gBattleMons[battler].ability = GetMonAbility(&GetSideParty(side)[gBattlerPartyIndexes[battler]]);
+                gBattleMons[battler].ability = GetAbilityBySpecies(gBattleMons[battler].species, gBattleMons[battler].abilityNum);
                 gBattleStruct->battlerState[battler].hpOnSwitchout = gBattleMons[battler].hp;
                 memset(&gBattleMons[battler].volatiles, 0, sizeof(struct Volatiles));
                 for (i = 0; i < NUM_BATTLE_STATS; i++)
@@ -4281,14 +4261,6 @@ u8 IsRunningFromBattleImpossible(enum BattlerId battler)
 {
     enum HoldEffect holdEffect;
     u32 i;
-
-    // Prevent wild legendary Teleport from bypassing its catch/faint battle.
-    // Only the legendary opponent is restricted, never the player.
-    if (IsPruLegendaryWildBattler(battler))
-    {
-        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_CANT_ESCAPE;
-        return BATTLE_RUN_FORBIDDEN;
-    }
 
     if (FlagGet(B_FLAG_NO_RUNNING))
     {
@@ -6155,12 +6127,10 @@ static void ReturnFromBattleToOverworld(void)
         ZeroEnemyPartyMons();
 
 #ifndef BUGFIX
-        if ((!IS_HNS && (gBattleOutcome & B_OUTCOME_WON)) || gBattleOutcome == B_OUTCOME_CAUGHT)
+        if ((gBattleOutcome & B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT)
 #else
-        if ((!IS_HNS && gBattleOutcome == B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT)
-#endif
-            // PRU HNS: a knockout revives the roamer on a new route.
-            // Only a capture retires it permanently.
+        if ((gBattleOutcome == B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT) // Bug: When Roar is used by roamer, gBattleOutcome is B_OUTCOME_PLAYER_TELEPORTED (5).
+#endif                                                                               // & with B_OUTCOME_WON (1) will return TRUE and deactivates the roamer.
             SetRoamerInactive(gEncounteredRoamerIndex);
     }
 

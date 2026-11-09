@@ -3747,15 +3747,6 @@ static u16 CalculateBoxMonChecksumReencrypt(struct BoxPokemon *boxMon)
     return checksum;
 }
 
-// Special once-per-save Power Plant boss. A fateful shiny Electrode marker
-// travels with the captured Pokémon through party, PC and saving.
-static bool32 IsPruChargedElectrode(struct Pokemon *mon)
-{
-    return GetMonData(mon, MON_DATA_SPECIES) == SPECIES_ELECTRODE
-        && GetMonData(mon, MON_DATA_MODERN_FATEFUL_ENCOUNTER)
-        && GetMonData(mon, MON_DATA_IS_SHINY);
-}
-
 void CalculateMonStats(struct Pokemon *mon)
 {
     s32 oldMaxHP = GetMonData(mon, MON_DATA_MAX_HP);
@@ -3766,28 +3757,6 @@ void CalculateMonStats(struct Pokemon *mon)
     s32 newMaxHP;
 
     u8 nature = GetMonData(mon, MON_DATA_HIDDEN_NATURE);
-
-    // Keep the unique boss stats even after catching or withdrawing from PC.
-    // Other (including random shiny) Electrode are completely unchanged.
-    static const u16 sPruChargedElectrodeBaseStats[NUM_STATS] = {
-        [STAT_HP] = 100,
-        [STAT_ATK] = 100,
-        [STAT_DEF] = 115,
-        [STAT_SPATK] = 150,
-        [STAT_SPDEF] = 125,
-        [STAT_SPEED] = 175,
-    };
-    bool32 isPruChargedElectrode = IsPruChargedElectrode(mon);
-
-    // Save compatibility: previously caught Power Plant Electrode keep their
-    // original first three moves but receive Kaboom in the original fourth slot.
-    // Do not overwrite a player-customised fourth move.
-    if (isPruChargedElectrode
-        && GetMonData(mon, MON_DATA_MOVE1) == MOVE_THUNDERBOLT
-        && GetMonData(mon, MON_DATA_MOVE2) == MOVE_VOLT_SWITCH
-        && (GetMonData(mon, MON_DATA_MOVE4) == MOVE_ELECTRO_BALL
-         || GetMonData(mon, MON_DATA_MOVE4) == MOVE_KABLOW))
-        SetMonMoveSlot(mon, MOVE_KABOOM, 3);
 
     if (FlagGet(FLAG_LIMIT_TO_50) == TRUE && level != 50)
         level = 50;
@@ -3816,7 +3785,7 @@ void CalculateMonStats(struct Pokemon *mon)
         if (i == STAT_HP)
             continue;
 
-        u32 baseStat = equalizedBst ? equalizedBst : (isPruChargedElectrode ? sPruChargedElectrodeBaseStats[i] : GetSpeciesBaseStat(species, i));
+        u32 baseStat = equalizedBst ? equalizedBst : GetSpeciesBaseStat(species, i);
         s32 n = (((2 * baseStat + iv[i] + ev[i] / 4) * level) / 100) + 5;
         n = ModifyStatByNature(nature, n, i);
         if (B_FRIENDSHIP_BOOST == TRUE)
@@ -3835,7 +3804,7 @@ void CalculateMonStats(struct Pokemon *mon)
     }
     else
     {
-        s32 n = 2 * (equalizedBst ? equalizedBst : (isPruChargedElectrode ? sPruChargedElectrodeBaseStats[STAT_HP] : GetSpeciesBaseHP(species))) + iv[STAT_HP];
+        s32 n = 2 * (equalizedBst ? equalizedBst : GetSpeciesBaseHP(species)) + iv[STAT_HP];
         newMaxHP = (((n + ev[STAT_HP] / 4) * level) / 100) + level + 10;
     }
 
@@ -5672,9 +5641,6 @@ enum Ability GetAbilityBySpecies(u16 species, u8 abilityNum)
 
 enum Ability GetMonAbility(struct Pokemon *mon)
 {
-    if (IsPruChargedElectrode(mon))
-        return ABILITY_LEVITATE;
-
     u16 species = GetMonData(mon, MON_DATA_SPECIES);
     u8 abilityNum = GetMonData(mon, MON_DATA_ABILITY_NUM);
     return GetAbilityBySpecies(species, abilityNum);
@@ -6064,8 +6030,7 @@ void PokemonToBattleMon(struct Pokemon *src, struct BattlePokemon *dst)
     dst->types[1] = GetSpeciesType(dst->species, 1);
     dst->types[2] = TYPE_MYSTERY;
     dst->isShiny = IsMonShiny(src);
-    // Preserve individual event ability overrides (e.g. shiny boss Electrode).
-    dst->ability = GetMonAbility(src);
+    dst->ability = GetAbilityBySpecies(dst->species, dst->abilityNum);
     GetMonData(src, MON_DATA_NICKNAME, nickname);
     StringCopy_Nickname(dst->nickname, nickname);
     GetMonData(src, MON_DATA_OT_NAME, dst->otName);
@@ -8129,9 +8094,7 @@ u8 GetLevelUpMovesBySpecies(u16 species, u16 *moves)
 
 u16 SpeciesToPokedexNum(u16 species)
 {
-    // PRU's 444 original entries remain unchanged; approved additions 445-447
-    // are appended, while 448-450 are held for later side quests.
-    // The inherited Johto
+    // PRU has 444 approved, individually numbered Pokémon. The inherited Johto
     // regional Dex returns 0 for many Hoenn species; the inherited National Dex
     // reuses the base number for genuine Relic evolutions. Neither is the PRU Dex.
     if (IS_HNS)
@@ -8150,7 +8113,7 @@ u16 SpeciesToPokedexNum(u16 species)
         }
 
         // Non-canonical battle-only forms retain their base Pokémon's number;
-        // they must NOT create an extra numbered PRU entry.
+        // they must NOT create a new entry among the 444 approved species.
         baseSpecies = NationalPokedexNumToSpecies(gSpeciesInfo[originalSpecies].natDexNum);
         if (baseSpecies != SPECIES_NONE)
         {

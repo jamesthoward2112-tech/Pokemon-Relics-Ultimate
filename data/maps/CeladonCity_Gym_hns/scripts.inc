@@ -5,18 +5,7 @@ CeladonCity_Gym_hns_MapScripts::
 CeladonCity_Gym_EventScript_Erika::
 	lock
 	faceplayer
-	@ Only enable recovery once Blue has been defeated and the physical case stolen.
-	goto_if_set FLAG_PRU_HEIST_STARTED, CeladonCity_Gym_EventScript_PRUHeistErika
 	goto_if_set FLAG_DEFEATED_CELADON_GYM, CeladonCity_Gym_EventScript_Erika_Defeated
-	@ The twins must be beaten before Erika can be challenged, even if avoided.
-	checktrainerflag TRAINER_STEEVE_NEEVEE_CELADON_HNS
-	goto_if TRUE, CeladonCity_Gym_EventScript_ErikaReady
-	msgbox CeladonCity_Gym_Text_SteeveeNeeveeGate, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-CeladonCity_Gym_EventScript_ErikaReady::
 	msgbox CeladonCity_Gym_Text_ErikaBeforeBattle, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_ERIKA_HNS, CeladonCity_Gym_Text_ErikaBeaten
 	message CeladonCity_Gym_Text_PlayerReceivedRainbowBadge
@@ -27,7 +16,6 @@ CeladonCity_Gym_EventScript_ErikaReady::
 	msgbox CeladonCity_Gym_Text_Erika_ExplainTM, MSGBOX_DEFAULT
 	setflag FLAG_BADGE12_GET
 	setflag FLAG_DEFEATED_CELADON_GYM
-	call CeladonCity_Gym_EventScript_PRUReward
 	addvar VAR_NUM_BADGES, 1
 	setvar VAR_0x8008, 12
 	call Common_EventScript_SetGymTrainers_hns
@@ -37,7 +25,6 @@ CeladonCity_Gym_EventScript_ErikaReady::
 	end
 
 CeladonCity_Gym_EventScript_Erika_Defeated::
-	call CeladonCity_Gym_EventScript_PRUReward
 	msgbox CeladonCity_Gym_Text_ErikaAfterBattle, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -145,48 +132,35 @@ CeladonCity_Gym_Text_BeautyJuliaAfter:
 	.string "How do I go about becoming\n"
 	.string "ladylike like ERIKA?$"
 
-@ Unique Celadon trainer ID ensures past Jo & Zoe wins do not skip this battle.
-@ Steevee and Neevee share one defeat flag from either overworld NPC.
-CeladonCity_Gym_EventScript_Steevee::
-	trainerbattle_double TRAINER_STEEVE_NEEVEE_CELADON_HNS, CeladonCity_Gym_Text_SteeveeSeen, CeladonCity_Gym_Text_SteeveeNeeveeBeaten, Route104_Text_GinaNotEnoughMons
-	msgbox CeladonCity_Gym_Text_SteeveeAfter, MSGBOX_AUTOCLOSE
+CeladonCity_Gym_EventScript_Jo::
+	trainerbattle_double TRAINER_JO_AND_ZOE_HNS, CeladonCity_Gym_Text_TwinsJoAndZoe1Seen, CeladonCity_Gym_Text_TwinsJoAndZoe1Beaten, Route104_Text_GinaNotEnoughMons
+	special GetPlayerBigGuyGirlString
+	msgbox CeladonCity_Gym_Text_TwinsJoAndZoe1After, MSGBOX_AUTOCLOSE
 	end
 
-CeladonCity_Gym_EventScript_Neevee::
-	trainerbattle_double TRAINER_STEEVE_NEEVEE_CELADON_HNS, CeladonCity_Gym_Text_NeeveeSeen, CeladonCity_Gym_Text_SteeveeNeeveeBeaten, Route104_Text_GinaNotEnoughMons
-	msgbox CeladonCity_Gym_Text_NeeveeAfter, MSGBOX_AUTOCLOSE
+CeladonCity_Gym_EventScript_Zoe::
+	trainerbattle_double TRAINER_JO_AND_ZOE_HNS, CeladonCity_Gym_Text_TwinsJoAndZoe2Seen, CeladonCity_Gym_Text_TwinsJoAndZoe2Beaten, Route104_Text_GinaNotEnoughMons
+	msgbox CeladonCity_Gym_Text_TwinsJoAndZoe2After, MSGBOX_AUTOCLOSE
 	end
 
-CeladonCity_Gym_Text_SteeveeSeen:
-	.string "STEEVEE: Surprise! It's us!\p"
-	.string "NEEVEE: ERIKA has been teaching\n"
-	.string "us some clever tricks!\p"
-	.string "STEEVEE: Beat us before you\n"
-	.string "challenge her!$"
+CeladonCity_Gym_Text_TwinsJoAndZoe1Seen:
+	.string "We'll show you POKéMON moves that\n"
+	.string "ERIKA taught us!$"
 
-CeladonCity_Gym_Text_NeeveeSeen:
-	.string "NEEVEE: Remember us?\p"
-	.string "STEEVEE: Our partners have grown\n"
-	.string "since JOHTO!\p"
-	.string "NEEVEE: Let's battle together!$"
+CeladonCity_Gym_Text_TwinsJoAndZoe1Beaten:
+	.string "Oh… We lost…$"
 
-CeladonCity_Gym_Text_SteeveeNeeveeBeaten:
-	.string "STEEVEE: You got us again!\p"
-	.string "NEEVEE: ERIKA will be impressed!$"
+CeladonCity_Gym_Text_TwinsJoAndZoe1After:
+	.string "ERIKA will get you back for us!$"
 
-CeladonCity_Gym_Text_SteeveeAfter:
-	.string "STEEVEE: We trained with ERIKA\n"
-	.string "to sharpen our teamwork!$"
+CeladonCity_Gym_Text_TwinsJoAndZoe2Seen:
+	.string "We're going to protect ERIKA!$"
 
-CeladonCity_Gym_Text_NeeveeAfter:
-	.string "NEEVEE: We'll keep working on\n"
-	.string "our EEVEE evolutions!$"
+CeladonCity_Gym_Text_TwinsJoAndZoe2Beaten:
+	.string "We couldn't win…$"
 
-CeladonCity_Gym_Text_SteeveeNeeveeGate:
-	.string "ERIKA: My visiting friends,\n"
-	.string "STEEVEE and NEEVEE, wish to\l"
-	.string "test my challengers first.\p"
-	.string "Please battle them before me.$"
+CeladonCity_Gym_Text_TwinsJoAndZoe2After:
+	.string "ERIKA is much, much stronger!$"
 
 CeladonCity_Gym_EventScript_GymStatue::
 	lockall
@@ -211,61 +185,3 @@ CeladonCity_Gym_Text_GymStatuePlayerWon::
     .string "LEADER: ERIKA\p"
     .string "WINNING TRAINERS:\n"
 	.string "BLUE, RED, {PLAYER}$"
-
-@ PRU first-clear Gym bonus. Never consume the reward flag while the BAG is full.
-@ Old saves with the badge can reclaim by speaking to the leader (or BLUE's Gym Guide).
-CeladonCity_Gym_EventScript_PRUReward::
-	goto_if_set FLAG_PRU_KANTO_GYM_REWARD_ERIKA, CeladonCity_Gym_EventScript_PRURewardDone
-	msgbox CeladonCity_Gym_Text_PRURewardIntro, MSGBOX_DEFAULT
-	giveitem ITEM_BIG_ROOT
-	goto_if_eq VAR_RESULT, FALSE, CeladonCity_Gym_EventScript_PRURewardBagFull
-	addmoney 10000
-	setflag FLAG_PRU_KANTO_GYM_REWARD_ERIKA
-	msgbox CeladonCity_Gym_Text_PRURewardMoney, MSGBOX_DEFAULT
-CeladonCity_Gym_EventScript_PRURewardDone:
-	return
-CeladonCity_Gym_EventScript_PRURewardBagFull:
-	msgbox CeladonCity_Gym_Text_PRURewardBagFull, MSGBOX_DEFAULT
-	return
-
-CeladonCity_Gym_Text_PRURewardIntro:
-	.string "Your bonus prize for defeating\n"
-	.string "the GYM LEADER!$"
-
-CeladonCity_Gym_Text_PRURewardMoney:
-	.string "You also received 10,000 in\n"
-	.string "GYM prize money!$"
-
-CeladonCity_Gym_Text_PRURewardBagFull:
-	.string "Your BAG is full! Make some room\n"
-	.string "and come back for your prize.$"
-
-@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
-CeladonCity_Gym_EventScript_PRUHeistErika::
-	goto_if_set FLAG_PRU_HEIST_ERIKA, CeladonCity_Gym_EventScript_PRUHeistErikaDone
-	msgbox CeladonCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_ERIKA_HNS, CeladonCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_ERIKA
-	msgbox CeladonCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-CeladonCity_Gym_EventScript_PRUHeistErikaDone::
-	msgbox CeladonCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-CeladonCity_Gym_Text_PRUHeistChallenge:
-	.string "ERIKA: TEAM ROCKET took your\n"
-	.string "BADGE CASE? Let's win it back!$"
-
-CeladonCity_Gym_Text_PRUHeistWon:
-	.string "ERIKA: You've earned this\n"
-	.string "BADGE back. Nicely done!$"
-
-CeladonCity_Gym_Text_PRUHeistAlready:
-	.string "ERIKA: One step closer\n"
-	.string "to stopping TEAM ROCKET!$"
-

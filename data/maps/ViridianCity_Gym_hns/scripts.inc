@@ -4,7 +4,6 @@ ViridianCity_Gym_hns_MapScripts::
 
 @ Repair old saves where the Dojo invitation left a second Blue in the gym.
 ViridianCity_Gym_OnTransition::
-	call ViridianCity_Gym_EventScript_PRUHeistSync
 	goto_if_unset FLAG_DEFEATED_VIRIDIAN_GYM, ViridianCity_Gym_BlueNotDefeated
 	setflag FLAG_HIDE_CINNABAR_BLUE
 	goto_if_set FLAG_HIDE_DOJO_BLUE, ViridianCity_Gym_OnTransition_End
@@ -34,7 +33,6 @@ ViridianCity_Gym_EventScript_Blue::
 	msgbox ViridianCity_Gym_Text_LeaderBlue_ExplainTM, MSGBOX_DEFAULT
 	setflag FLAG_BADGE16_GET
 	setflag FLAG_DEFEATED_VIRIDIAN_GYM
-	call ViridianCity_Gym_EventScript_PRUReward
 	setflag FLAG_HIDE_CINNABAR_BLUE
 	addvar VAR_NUM_BADGES, 1
 	setvar VAR_0x8008, 16
@@ -57,7 +55,6 @@ ViridianCity_Gym_EventScript_BlueNotReady::
 	end
 
 ViridianCity_Gym_EventScript_BlueGotoDojo::
-	call ViridianCity_Gym_EventScript_PRUReward
 	msgbox ViridianCity_Gym_Text_BlueGotoDojo, MSGBOX_DEFAULT
 	closemessage
 	fadescreenswapbuffers FADE_TO_BLACK
@@ -132,12 +129,7 @@ ViridianCity_Gym_EventScript_GymGuy::
 	end
 
 ViridianCity_Gym_EventScript_GymGuyAfter::
-	lock
-	faceplayer
-	call ViridianCity_Gym_EventScript_PRUReward
-	msgbox ViridianCity_Gym_Text_Guide_Win, MSGBOX_DEFAULT
-	closemessage
-	release
+	msgbox ViridianCity_Gym_Text_Guide_Win, MSGBOX_NPC
 	end
 
 ViridianCity_Gym_Text_Guide:
@@ -182,95 +174,3 @@ ViridianCity_Gym_Text_GymStatuePlayerWon::
     .string "WINNING TRAINERS:\n"
 	.string "BLUE, RED, {PLAYER}$"
 
-@ PRU first-clear Gym bonus. Do not consume reward flag with a full BAG.
-@ Previously defeated leaders can still award the bonus on return.
-ViridianCity_Gym_EventScript_PRUReward::
-	goto_if_set FLAG_PRU_KANTO_GYM_REWARD_BLUE, ViridianCity_Gym_EventScript_PRURewardDone
-	msgbox ViridianCity_Gym_Text_PRURewardIntro, MSGBOX_DEFAULT
-	giveitem ITEM_CHOICE_BAND
-	goto_if_eq VAR_RESULT, FALSE, ViridianCity_Gym_EventScript_PRURewardBagFull
-	addmoney 10000
-	setflag FLAG_PRU_KANTO_GYM_REWARD_BLUE
-	msgbox ViridianCity_Gym_Text_PRURewardMoney, MSGBOX_DEFAULT
-ViridianCity_Gym_EventScript_PRURewardDone:
-	return
-ViridianCity_Gym_EventScript_PRURewardBagFull:
-	msgbox ViridianCity_Gym_Text_PRURewardBagFull, MSGBOX_DEFAULT
-	return
-
-ViridianCity_Gym_Text_PRURewardIntro:
-	.string "Your bonus prize for defeating\n"
-	.string "the GYM LEADER!$"
-
-ViridianCity_Gym_Text_PRURewardMoney:
-	.string "You also received 10,000 in\n"
-	.string "GYM prize money!$"
-
-ViridianCity_Gym_Text_PRURewardBagFull:
-	.string "Your BAG is full! Make some room\n"
-	.string "and come back for your prize.$"
-
-
-@ Giovanni is an additional late-game recovery boss; BLUE's Gym battle
-@ and the Route 22 father/son cutscene are never replaced.
-ViridianCity_Gym_EventScript_PRUHeistSync::
-	setflag FLAG_PRU_HIDE_HEIST_GIOVANNI
-	goto_if_unset FLAG_PRU_HEIST_STARTED, ViridianCity_Gym_EventScript_PRUHeistSyncDone
-	goto_if_set FLAG_PRU_HEIST_GIOVANNI, ViridianCity_Gym_EventScript_PRUHeistSyncDone
-	goto_if_unset FLAG_PRU_HEIST_BROCK, ViridianCity_Gym_EventScript_PRUHeistSyncDone
-	goto_if_unset FLAG_PRU_HEIST_MISTY, ViridianCity_Gym_EventScript_PRUHeistSyncDone
-	goto_if_unset FLAG_PRU_HEIST_SURGE, ViridianCity_Gym_EventScript_PRUHeistSyncDone
-	goto_if_unset FLAG_PRU_HEIST_ERIKA, ViridianCity_Gym_EventScript_PRUHeistSyncDone
-	goto_if_unset FLAG_PRU_HEIST_JANINE, ViridianCity_Gym_EventScript_PRUHeistSyncDone
-	goto_if_unset FLAG_PRU_HEIST_SABRINA, ViridianCity_Gym_EventScript_PRUHeistSyncDone
-	goto_if_unset FLAG_PRU_HEIST_BLAINE, ViridianCity_Gym_EventScript_PRUHeistSyncDone
-	clearflag FLAG_PRU_HIDE_HEIST_GIOVANNI
-ViridianCity_Gym_EventScript_PRUHeistSyncDone::
-	return
-
-ViridianCity_Gym_EventScript_PRUHeistGiovanni::
-	lock
-	faceplayer
-	goto_if_unset FLAG_PRU_HEIST_STARTED, ViridianCity_Gym_EventScript_PRUHeistNotReady
-	goto_if_set FLAG_PRU_HEIST_GIOVANNI, ViridianCity_Gym_EventScript_PRUHeistNotReady
-	goto_if_unset FLAG_PRU_HEIST_BROCK, ViridianCity_Gym_EventScript_PRUHeistNotReady
-	goto_if_unset FLAG_PRU_HEIST_MISTY, ViridianCity_Gym_EventScript_PRUHeistNotReady
-	goto_if_unset FLAG_PRU_HEIST_SURGE, ViridianCity_Gym_EventScript_PRUHeistNotReady
-	goto_if_unset FLAG_PRU_HEIST_ERIKA, ViridianCity_Gym_EventScript_PRUHeistNotReady
-	goto_if_unset FLAG_PRU_HEIST_JANINE, ViridianCity_Gym_EventScript_PRUHeistNotReady
-	goto_if_unset FLAG_PRU_HEIST_SABRINA, ViridianCity_Gym_EventScript_PRUHeistNotReady
-	goto_if_unset FLAG_PRU_HEIST_BLAINE, ViridianCity_Gym_EventScript_PRUHeistNotReady
-	msgbox ViridianCity_Gym_Text_PRUHeistGiovanniIntro, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_GIOVANNI_HNS, ViridianCity_Gym_Text_PRUHeistGiovanniWin
-	setflag FLAG_PRU_HEIST_GIOVANNI
-	setflag FLAG_PRU_HIDE_HEIST_GIOVANNI
-	msgbox ViridianCity_Gym_Text_PRUHeistGiovanniAfter, MSGBOX_DEFAULT
-	closemessage
-	removeobject 3
-	release
-	end
-
-ViridianCity_Gym_EventScript_PRUHeistNotReady::
-	msgbox ViridianCity_Gym_Text_PRUHeistNotReady, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-ViridianCity_Gym_Text_PRUHeistGiovanniIntro:
-	.string "GIOVANNI: You recovered seven\n"
-	.string "stolen KANTO BADGES.\p"
-	.string "Then face TEAM ROCKET's former\n"
-	.string "leader for the last one!$"
-
-ViridianCity_Gym_Text_PRUHeistGiovanniWin:
-	.string "GIOVANNI: Even I cannot\n"
-	.string "overcome your strength.$"
-
-ViridianCity_Gym_Text_PRUHeistGiovanniAfter:
-	.string "The final KANTO BADGE is back.\p"
-	.string "TEAM ROCKET awaits you near\n"
-	.string "INDIGO PLATEAU.$"
-
-ViridianCity_Gym_Text_PRUHeistNotReady:
-	.string "GIOVANNI: Come back after all\n"
-	.string "seven KANTO GYM rematches.$"

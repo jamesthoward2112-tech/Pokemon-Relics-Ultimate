@@ -2165,7 +2165,7 @@ const u16 gTilesetPalettes_GameCorner[][16] =
     INCBIN_U16("data/tilesets/secondary/game_corner_frlg/palettes/15.gbapal"),
 };
 
-const u32 gTilesetTiles_PewterGym[] = INCBIN_U32("data/tilesets/secondary/pewter_gym_frlg/tiles.4bpp.fastSmol");
+const u32 gTilesetTiles_PewterGym[] = INCBIN_U32("data/tilesets/secondary/azul_agua_rock_shop_hns/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_PewterGym[][16] =
 {
@@ -3362,25 +3362,6 @@ const u16 gTilesetPalettes_BlackthornGym_Hns[][16] =
     INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/12.gbapal"),
 };
 
-// Only the Seafoam Kyogre chamber uses this palette substitution. Index 12
-// holds Blackthorn's red magma; the cave instead renders it as blue water.
-const u16 gTilesetPalettes_PruSeafoamBlue_Hns[][16] =
-{
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/00.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/01.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/02.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/03.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/04.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/05.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/06.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/07.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/08.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/09.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/10.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/11.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/blackthorn_gym_hns/palettes/pru_seafoam_blue_12.gbapal"),
-};
-
 const u32 gTilesetTiles_BurnedTower_Hns[] = INCBIN_U32("data/tilesets/secondary/burned_tower_hns/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_BurnedTower_Hns[][16] =
@@ -4111,6 +4092,20 @@ const u16 gTilesetPalettes_JohtoBikeShop_Hns[][16] =
     INCBIN_U16("data/tilesets/secondary/johto_bike_shop_hns/palettes/15.gbapal"),
 };
 
+
+/* PJR: Azul Agua / Water Blue Beta 1.4 ML donor wrappers.
+ * The exact donor palette banks are kept as contiguous GBA palette binaries.
+ * FireRed-compatible source tile indices are reused so the donor map remains valid.
+ */
+const u32 gTilesetTiles_AzulAguaBuilding_Hns[] =
+    INCBIN_U32("data/tilesets/primary/azul_agua_building_hns/tiles.4bpp.fastSmol");
+const u16 gTilesetPalettes_AzulAguaBuilding_Hns[] =
+    INCBIN_U16("data/tilesets/primary/azul_agua_building_hns/palettes.gbapal");
+
+const u32 gTilesetTiles_AzulAguaRockShop_Hns[] =
+    INCBIN_U32("data/tilesets/secondary/pewter_gym_frlg/tiles.4bpp.fastSmol");
+const u16 gTilesetPalettes_AzulAguaRockShop_Hns[] =
+    INCBIN_U16("data/tilesets/secondary/azul_agua_rock_shop_hns/palettes.gbapal");
 
 const u32 gTilesetTiles_JohtoMart_Hns[] = INCBIN_U32("data/tilesets/secondary/johto_mart_hns/tiles.4bpp.fastSmol");
 

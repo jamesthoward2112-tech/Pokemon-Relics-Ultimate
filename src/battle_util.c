@@ -53,7 +53,6 @@
 #include "constants/trainers.h"
 #include "constants/opponents_hns.h"
 #include "constants/weather.h"
-#include "constants/maps.h"
 #include "randomizer.h"
 #include "constants/pokemon.h"
 
@@ -686,16 +685,7 @@ void HandleAction_Run(void)
         }
         else
         {
-            // PRU: ALL wild legendaries/mythicals, including Latias/Latios
-            // and the Kanto birds, must battle rather than select Run.
-            // Safeguard still applies if any alternate AI path sends Run.
-            if (IsPruLegendaryWildBattler(gBattlerAttacker))
-            {
-                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_ATTACKER_CANT_ESCAPE;
-                gBattlescriptCurrInstr = BattleScript_PrintFailedToRunString;
-                gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
-            }
-            else if (GetBattlerHoldEffect(gBattlerAttacker) != HOLD_EFFECT_CAN_ALWAYS_RUN
+            if (GetBattlerHoldEffect(gBattlerAttacker) != HOLD_EFFECT_CAN_ALWAYS_RUN
              && GetBattlerAbility(gBattlerAttacker) != ABILITY_RUN_AWAY
              && !CanBattlerEscape(gBattlerAttacker))
             {
@@ -2992,12 +2982,6 @@ bool32 TryFieldEffects(enum FieldEffectCases caseId)
         }
         else if (B_OVERWORLD_FOG >= GEN_8
               && (GetCurrentWeather() == WEATHER_FOG_HORIZONTAL || GetCurrentWeather() == WEATHER_FOG_DIAGONAL)
-              // The spectral tower summons Eerie Fog, not default Misty Terrain.
-              && !(IS_HNS
-                   && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_LAVENDER_SPIRIT_TOWER_5F_HNS)
-                   && (gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_5F_HNS)
-                    || gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_6F_HNS)
-                    || gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_7F_HNS)))
               && !(gFieldStatuses & STATUS_FIELD_MISTY_TERRAIN))
         {
             gFieldStatuses = STATUS_FIELD_MISTY_TERRAIN;
@@ -3008,25 +2992,6 @@ bool32 TryFieldEffects(enum FieldEffectCases caseId)
         }
         break;
     case FIELD_EFFECT_OVERWORLD_WEATHER:
-        // The three scripted Lavender memorial encounters take place inside
-        // the isolated, seven-floor spirit tower. They use the exact native
-        // eight-turn PRL Eerie Fog battle setting, never generic fog terrain.
-        // Scope by HNS map to avoid changing normal Kanto weather or trainers.
-        if (IS_HNS
-         && !(gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED))
-         && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_LAVENDER_SPIRIT_TOWER_5F_HNS)
-         && (gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_5F_HNS)
-          || gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_6F_HNS)
-          || gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVENDER_SPIRIT_TOWER_7F_HNS))
-         && TryChangeBattleWeather(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT),
-                                   BATTLE_WEATHER_FOG, ABILITY_NONE))
-        {
-            gBattleCommunication[MULTISTRING_CHOOSER] = WEATHER_FOG_DIAGONAL;
-            gBattleScripting.animArg1 = B_ANIM_FOG_CONTINUES;
-            BattleScriptPushCursorAndCallback(BattleScript_OverworldWeatherStarts);
-            effect = TRUE;
-            break;
-        }
         // The five pre-League Kimono Girls' Ghost battles are an Eerie Fog
         // ritual. Previously all five simply knew the move, so the AI could
         // choose not to use it at all. Start native PRL Eerie Fog before the
@@ -5274,33 +5239,8 @@ u32 IsAbilityPreventingEscape(enum BattlerId battler)
     return 0;
 }
 
-// All PRU wild legendary/mythical encounters are fought, never lost to
-// Roaming AI, Run Away, Smoke Ball or Teleport. The player may still run;
-// normal trainer, link and Safari battle behaviour must be unaffected.
-bool32 IsPruLegendaryWildBattler(enum BattlerId battler)
-{
-    u16 species;
-
-    if (!IS_HNS || IsOnPlayerSide(battler)
-     || (gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_LINK
-                          | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_RECORDED
-                          | BATTLE_TYPE_SAFARI)))
-        return FALSE;
-
-    species = gBattleMons[battler].species;
-    if (species == SPECIES_NONE)
-        return FALSE;
-
-    return (gBattleTypeFlags & (BATTLE_TYPE_ROAMER | BATTLE_TYPE_LEGENDARY))
-        || gSpeciesInfo[species].isSubLegendary
-        || gSpeciesInfo[species].isRestrictedLegendary
-        || gSpeciesInfo[species].isMythical;
-}
-
 bool32 CanBattlerEscape(enum BattlerId battler) // no ability check
 {
-    if (IsPruLegendaryWildBattler(battler))
-        return FALSE;
     if (gBattleStruct->battlerState[battler].commanderSpecies != SPECIES_NONE)
         return FALSE;
     else if (GetConfig(B_GHOSTS_ESCAPE) >= GEN_6 && IS_BATTLER_OF_TYPE(battler, TYPE_GHOST))
@@ -9652,16 +9592,12 @@ void TryRestoreHeldItems(void)
         {
             u16 lostItem = gBattleStruct->itemLost[B_SIDE_PLAYER][i].originalItem;
 
-            // PRU: every equipped one-use item, including berries, returns
-            // after battle. This only restores the item held at battle start;
-            // it never creates a new item if that slot began empty.
-            // The other ROM variants retain vanilla Gen 9 berry consumption.
-            if (!IS_HNS && GetItemPocket(lostItem) == POCKET_BERRIES
-                && GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) != lostItem)
+            // Check if the lost item is a berry and the mon is not holding it
+            if (GetItemPocket(lostItem) == POCKET_BERRIES && GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) != lostItem)
                 lostItem = ITEM_NONE;
 
-            if ((lostItem != ITEM_NONE || returnNPCItems)
-                && (IS_HNS || GetItemPocket(lostItem) != POCKET_BERRIES))
+            // Check if the lost item should be restored
+            if ((lostItem != ITEM_NONE || returnNPCItems) && GetItemPocket(lostItem) != POCKET_BERRIES)
                 SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &lostItem);
         }
     }

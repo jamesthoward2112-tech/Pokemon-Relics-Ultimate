@@ -104,7 +104,7 @@ EWRAM_DATA static u8 sNoOfPossibleTrainerRetScripts = 0;
 // Otherwise, the second transition is used.
 static const u8 sBattleTransitionTable_Wild[][2] =
 {
-    [TRANSITION_TYPE_NORMAL] = {B_TRANSITION_WHITE_BARS_FADE, B_TRANSITION_WHITE_BARS_FADE},
+    [TRANSITION_TYPE_NORMAL] = {B_TRANSITION_SLICE,          B_TRANSITION_WHITE_BARS_FADE},
     [TRANSITION_TYPE_CAVE]   = {B_TRANSITION_CLOCKWISE_WIPE, B_TRANSITION_GRID_SQUARES},
     [TRANSITION_TYPE_FLASH]  = {B_TRANSITION_BLUR,           B_TRANSITION_GRID_SQUARES},
     [TRANSITION_TYPE_WATER]  = {B_TRANSITION_WAVE,           B_TRANSITION_RIPPLE},
@@ -465,10 +465,8 @@ void BattleSetup_StartRoamerBattle(void)
         song = MUS_HG_VS_ENTEI;
     else if (species == SPECIES_RAIKOU)
         song = MUS_HG_VS_RAIKOU;
-    else if (species == SPECIES_SUICUNE)
-        song = MUS_HG_VS_SUICUNE;
-    // Use the normal legendary theme for Kanto birds and the Lati duo,
-    // rather than the Johto Suicune-specific music.
+    else
+        song = MUS_HG_VS_SUICUNE; 
 #endif
     CreateBattleStartTask(GetWildBattleTransition(), song);
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
@@ -1150,18 +1148,12 @@ enum BattleTransition GetTrainerBattleTransition(void)
     case TRAINER_GRUNT_10_HNS:
     case TRAINER_GRUNT_9_HNS:
     case TRAINER_JESSIE_JAMES_TINTOWER_HNS:
-    case TRAINER_JESSIE_JAMES_POWERPLANT_HNS:
-    case TRAINER_JESSIE_JAMES_GAMECORNER_HNS:
-    case TRAINER_JESSIE_JAMES_KANTO_FINALE_HNS:
         return B_TRANSITION_JESSIE_JAMES;
     case TRAINER_STEEVE_NEEVEE_ROUTE3_HNS:
     case TRAINER_STEEVE_NEEVEE_SS_ANNE_HNS:
     case TRAINER_STEEVE_NEEVEE_TOWER_HNS:
     case TRAINER_STEEVE_NEEVEE_ROUTE23_HNS:
     case TRAINER_STEEVE_NEEVEE_DRAGONS_DEN_HNS:
-    case TRAINER_STEEVE_NEEVEE_CELADON_HNS:
-    case TRAINER_STEEVE_NEEVEE_SEAFOAM_HNS:
-    case TRAINER_STEEVE_NEEVEE_KANTO_FINALE_HNS:
         return B_TRANSITION_EEVEE_TWINS;
     }
 #endif

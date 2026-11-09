@@ -182,8 +182,6 @@ CeruleanGym_Text_Note:
 CeruleanCity_Gym_EventScript_Misty::
 	lock
 	faceplayer
-	@ Only enable recovery once Blue has been defeated and the physical case stolen.
-	goto_if_set FLAG_PRU_HEIST_STARTED, CeruleanCity_Gym_EventScript_PRUHeistMisty
 	goto_if_set FLAG_DEFEATED_CERULEAN_GYM, CeruleanCity_Gym_EventScript_Misty_Defeated
 	msgbox CeruleanGym_Text_MistyIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_MISTY_HNS, CeruleanGym_Text_MistyWinLoss
@@ -192,7 +190,6 @@ CeruleanCity_Gym_EventScript_Misty::
 	call Common_EventScript_PlayGymBadgeFanfare
 	setflag FLAG_BADGE10_GET
 	setflag FLAG_DEFEATED_CERULEAN_GYM
-	call CeruleanCity_Gym_EventScript_PRUReward
 	addvar VAR_NUM_BADGES, 1
 	setvar VAR_0x8008, 10
 	call Common_EventScript_SetGymTrainers_hns
@@ -211,7 +208,6 @@ CeruleanCity_Gym_SetSuicuneScene::
 	return
 
 CeruleanCity_Gym_EventScript_Misty_Defeated::
-	call CeruleanCity_Gym_EventScript_PRUReward
 	msgbox CeruleanGym_Text_MistyFightDone, MSGBOX_DEFAULT
 	closemessage
 	release
@@ -331,61 +327,3 @@ CeruleanGym_Text_Misty_ExplainTM:
 	.string "It's the WATER PULSE TM.\p"
 	.string "It causes damage and sometimes\n"
 	.string "causes confusion as well!$"
-
-@ PRU first-clear Gym bonus. Never consume the reward flag while the BAG is full.
-@ Old saves with the badge can reclaim by speaking to the leader (or BLUE's Gym Guide).
-CeruleanCity_Gym_EventScript_PRUReward::
-	goto_if_set FLAG_PRU_KANTO_GYM_REWARD_MISTY, CeruleanCity_Gym_EventScript_PRURewardDone
-	msgbox CeruleanCity_Gym_Text_PRURewardIntro, MSGBOX_DEFAULT
-	giveitem ITEM_LEFTOVERS
-	goto_if_eq VAR_RESULT, FALSE, CeruleanCity_Gym_EventScript_PRURewardBagFull
-	addmoney 10000
-	setflag FLAG_PRU_KANTO_GYM_REWARD_MISTY
-	msgbox CeruleanCity_Gym_Text_PRURewardMoney, MSGBOX_DEFAULT
-CeruleanCity_Gym_EventScript_PRURewardDone:
-	return
-CeruleanCity_Gym_EventScript_PRURewardBagFull:
-	msgbox CeruleanCity_Gym_Text_PRURewardBagFull, MSGBOX_DEFAULT
-	return
-
-CeruleanCity_Gym_Text_PRURewardIntro:
-	.string "Your bonus prize for defeating\n"
-	.string "the GYM LEADER!$"
-
-CeruleanCity_Gym_Text_PRURewardMoney:
-	.string "You also received 10,000 in\n"
-	.string "GYM prize money!$"
-
-CeruleanCity_Gym_Text_PRURewardBagFull:
-	.string "Your BAG is full! Make some room\n"
-	.string "and come back for your prize.$"
-
-@ One-time Badge Heist recovery rematch. Never award ordinary badge or TM again.
-CeruleanCity_Gym_EventScript_PRUHeistMisty::
-	goto_if_set FLAG_PRU_HEIST_MISTY, CeruleanCity_Gym_EventScript_PRUHeistMistyDone
-	msgbox CeruleanCity_Gym_Text_PRUHeistChallenge, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PRU_HEIST_MISTY_HNS, CeruleanCity_Gym_Text_PRUHeistWon
-	setflag FLAG_PRU_HEIST_MISTY
-	msgbox CeruleanCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-CeruleanCity_Gym_EventScript_PRUHeistMistyDone::
-	msgbox CeruleanCity_Gym_Text_PRUHeistAlready, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
-
-CeruleanCity_Gym_Text_PRUHeistChallenge:
-	.string "MISTY: TEAM ROCKET took your\n"
-	.string "BADGE CASE? Let's win it back!$"
-
-CeruleanCity_Gym_Text_PRUHeistWon:
-	.string "MISTY: You've earned this\n"
-	.string "BADGE back. Nicely done!$"
-
-CeruleanCity_Gym_Text_PRUHeistAlready:
-	.string "MISTY: One step closer\n"
-	.string "to stopping TEAM ROCKET!$"
-

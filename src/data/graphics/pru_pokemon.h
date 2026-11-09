@@ -28,7 +28,7 @@ const u32 gMonFrontPic_Swamplith[] = INCBIN_U32("graphics/pokemon/prl_authoritat
 const u16 gMonPalette_Swamplith[] = INCBIN_U16("graphics/pokemon/prl_authoritative/swamplith/normal.gbapal");
 const u32 gMonBackPic_Swamplith[] = INCBIN_U32("graphics/pokemon/prl_authoritative/swamplith/back.4bpp.smol");
 const u16 gMonShinyPalette_Swamplith[] = INCBIN_U16("graphics/pokemon/prl_authoritative/swamplith/shiny.gbapal");
-const u8 gMonIcon_Swamplith[] = INCBIN_U8("graphics/pokemon/swamplith/icon.4bpp");
+const u8 gMonIcon_Swamplith[] = INCBIN_U8("graphics/pokemon/prl_authoritative/swamplith/icon.4bpp");
 
 const u32 gMonFrontPic_Skulberus[] = INCBIN_U32("graphics/pokemon/prl_authoritative/skulberus/front.4bpp.smol");
 const u16 gMonPalette_Skulberus[] = INCBIN_U16("graphics/pokemon/prl_authoritative/skulberus/normal.gbapal");
@@ -76,8 +76,7 @@ const u32 gMonFrontPic_Astrachi[] = INCBIN_U32("graphics/pokemon/prl_authoritati
 const u16 gMonPalette_Astrachi[] = INCBIN_U16("graphics/pokemon/prl_authoritative/astrachi/normal.gbapal");
 const u32 gMonBackPic_Astrachi[] = INCBIN_U32("graphics/pokemon/prl_authoritative/astrachi/back.4bpp.smol");
 const u16 gMonShinyPalette_Astrachi[] = INCBIN_U16("graphics/pokemon/prl_authoritative/astrachi/shiny.gbapal");
-// Native 32x64 4bpp two-frame party icon; NOT the PRL unnormalized import.
-const u8 gMonIcon_Astrachi[] = INCBIN_U8("graphics/pokemon/astrachi/icon.4bpp");
+const u8 gMonIcon_Astrachi[] = INCBIN_U8("graphics/pokemon/prl_authoritative/astrachi/icon.4bpp");
 
 const u32 gMonFrontPic_Eeveeon[] = INCBIN_U32("graphics/pokemon/prl_authoritative/eeveeon/front.4bpp.smol");
 const u16 gMonPalette_Eeveeon[] = INCBIN_U16("graphics/pokemon/prl_authoritative/eeveeon/normal.gbapal");
@@ -115,8 +114,3 @@ const u32 gMonBackPic_Mewsion[] = INCBIN_U32("graphics/pokemon/mewsion/back.4bpp
 const u16 gMonShinyPalette_Mewsion[] = INCBIN_U16("graphics/pokemon/mewsion/shiny.gbapal");
 const u8 gMonIcon_Mewsion[] = INCBIN_U8("graphics/pokemon/mewsion/icon.4bpp");
 
-
-// Claude-created Astrachi overworld, adapted from the owner's 22 Oct 2026 strips.
-const u32 gObjectEventPic_Astrachi[] = INCBIN_COMP("graphics/pokemon/astrachi/overworld.4bpp");
-const u16 gOverworldPalette_Astrachi[] = INCBIN_U16("graphics/pokemon/astrachi/overworld_normal.gbapal");
-const u16 gShinyOverworldPalette_Astrachi[] = INCBIN_U16("graphics/pokemon/astrachi/overworld_shiny.gbapal");

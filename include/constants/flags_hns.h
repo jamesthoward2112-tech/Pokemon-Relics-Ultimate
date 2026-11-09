@@ -482,42 +482,6 @@
 #define FLAG_ROCKETHIDEOUT_SWITCH                   0x1DF
 #define FLAG_ROUTE25_GOT_NUGGET                     0x1E0
 #define FLAG_SUMMONED_MTMOON_JIRACHI                0x1E1
-// New, unused save bits: separate Astrachi encounter from Jirachi and its shared Dex index.
-#define FLAG_HIDE_MTMOON_ASTRACHI                    0x4E0
-#define FLAG_SUMMONED_MTMOON_ASTRACHI                0x4E1
-#define FLAG_CAUGHT_MTMOON_ASTRACHI                  0x4E2
-// PRU: persistent Kanto roaming legendary-bird unlock and individual initializations.
-#define FLAG_PRU_KANTO_BIRDS_UNLOCKED                 0x4E3
-#define FLAG_PRU_ARTICUNO_ROAMER_INITIALIZED          0x4E4
-#define FLAG_PRU_ZAPDOS_ROAMER_INITIALIZED            0x4E5
-#define FLAG_PRU_MOLTRES_ROAMER_INITIALIZED           0x4E6
-// Special Level 80 shiny Electrode on Route 10: only its capture persists.
-#define FLAG_PRU_POWER_PLANT_ELECTRODE_CAUGHT         0x4E7
-#define FLAG_PRU_ARCHIE_KYOGRE_DEFEATED              0x4E8
-#define FLAG_PRU_MAXIE_GROUDON_DEFEATED              0x4E9
-#define FLAG_PRU_KYOGRE_CAUGHT                      0x4EA
-#define FLAG_PRU_GROUDON_CAUGHT                     0x4EB
-#define FLAG_PRU_OAK_AURORA_TICKET_RECEIVED          0x4EC
-// Append-only Kanto Great Badge Heist flags. These never alter real badge
-// flags or the existing Machine Part / Rocket storyline on older saves.
-#define FLAG_PRU_HEIST_STARTED                         0x4ED
-#define FLAG_PRU_HEIST_COMPLETED                       0x4EE
-#define FLAG_PRU_HEIST_BROCK                           0x4EF
-#define FLAG_PRU_HEIST_MISTY                           0x4F0
-#define FLAG_PRU_HEIST_SURGE                           0x4F1
-#define FLAG_PRU_HEIST_ERIKA                           0x4F2
-#define FLAG_PRU_HEIST_JANINE                          0x4F3
-#define FLAG_PRU_HEIST_SABRINA                         0x4F4
-#define FLAG_PRU_HEIST_BLAINE                          0x4F5
-#define FLAG_PRU_HEIST_GIOVANNI                        0x4F6
-#define FLAG_PRU_JESSIE_JAMES_POWERPLANT               0x4F7
-#define FLAG_PRU_JESSIE_JAMES_GAMECORNER               0x4F8
-#define FLAG_PRU_JESSIE_JAMES_INDIGO                   0x4F9
-#define FLAG_PRU_HIDE_ROCKET_HEIST_GATE                0x4FA
-#define FLAG_PRU_HIDE_ROCKET_HEIST_INDIGO              0x4FB
-#define FLAG_PRU_HIDE_HEIST_GIOVANNI                   0x4FC
-#define FLAG_PRU_HIDE_MEOWTH_BALLOON                   0x4FD
-#define FLAG_PRU_HIDE_KYOGRE_BEFORE_ARCHIE             0x4FE // Hidden until Archie loses; re-entry checks catch flag.
 #define FLAG_COMPLETED_AERODACTYL_PUZZLE            0x1E2
 #define FLAG_COMPLETED_HOOH_PUZZLE                  0x1E3
 #define FLAG_COMPLETED_KABUTO_PUZZLE                0x1E4
@@ -1363,15 +1327,6 @@
 #define FLAG_PJR_GOT_RAINBOW_CREST                  (SYS_FLAGS + 0x73)
 #define FLAG_PJR_RELIC_HO_OH                        (SYS_FLAGS + 0x74)
 #define FLAG_PJR_GYM_REWARD_CLAIR_TM                (SYS_FLAGS + 0x75)
-// PRU Kanto Gym bonuses: permanent vacant HnS system flag slots 0x76-0x7D.
-#define FLAG_PRU_KANTO_GYM_REWARD_BROCK         (SYS_FLAGS + 0x76)
-#define FLAG_PRU_KANTO_GYM_REWARD_MISTY         (SYS_FLAGS + 0x77)
-#define FLAG_PRU_KANTO_GYM_REWARD_SURGE         (SYS_FLAGS + 0x78)
-#define FLAG_PRU_KANTO_GYM_REWARD_ERIKA         (SYS_FLAGS + 0x79)
-#define FLAG_PRU_KANTO_GYM_REWARD_JANINE        (SYS_FLAGS + 0x7A)
-#define FLAG_PRU_KANTO_GYM_REWARD_SABRINA       (SYS_FLAGS + 0x7B)
-#define FLAG_PRU_KANTO_GYM_REWARD_BLAINE        (SYS_FLAGS + 0x7C)
-#define FLAG_PRU_KANTO_GYM_REWARD_BLUE          (SYS_FLAGS + 0x7D)
 
 // Visited / World Map flags
 #define FLAG_VISITED_NEWBARK_TOWN                   (SYS_FLAGS + 0x90)
@@ -3556,12 +3511,11 @@
 #define FLAG_UNUSED_0x938                                       0
 #define FLAG_UNUSED_0x939                                       0
 #define FLAG_UNUSED_0x93A                                       0
-// Reserved save-safe PRU Lavender Cubone memorial stages. Never renumber.
-#define FLAG_PRU_CUBONE_MAROGHOST_RESOLVED                     0x93B
-#define FLAG_PRU_CUBONE_OSTEODIAN_RESOLVED                     0x93C
-#define FLAG_PRU_CUBONE_MIMIKYU_CAUGHT                         0x93D
-#define FLAG_PRU_CUBONE_MEMORIAL_REWARDED                      0x93E
-#define FLAG_PRU_CUBONE_MIMIKYU_RESOLVED                       0x93F // KO or catch; saved permanently
+#define FLAG_UNUSED_0x93B                                       0
+#define FLAG_UNUSED_0x93C                                       0
+#define FLAG_UNUSED_0x93D                                       0
+#define FLAG_UNUSED_0x93E                                       0
+#define FLAG_UNUSED_0x93F                                       0
 #define FLAG_UNUSED_0x940                                       0
 #define FLAG_UNUSED_0x941                                       0
 #define FLAG_UNUSED_0x942                                       0

@@ -61,46 +61,6 @@ static const u16 sPRUSkarmetIconPalette[16] =
     RGB(29, 27, 31), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
 };
 
-// Astrachi party icon uses 16 indexed colours (index zero transparent).
-// This palette is derived from the approved PRL icon, not a shared Jirachi
-// palette: using iconPalIndex=0 previously caused the neon/garbled display.
-// Palette #10 is mapped via GetPruCustomIconPaletteIndex without changing
-// the 3-bit iconPalIndex field in SpeciesInfo or any saved game.
-static const u16 sPRUAstrachiIconPalette[16] =
-{
-    RGB(0, 0, 0), RGB(13, 11, 6), RGB(31, 30, 27), RGB(29, 27, 22),
-    RGB(29, 25, 16), RGB(26, 25, 23), RGB(25, 22, 16), RGB(19, 17, 14),
-    RGB(16, 13, 10), RGB(14, 11, 7), RGB(10, 10, 14), RGB(8, 8, 11),
-    RGB(6, 7, 7), RGB(5, 6, 13), RGB(4, 5, 8), RGB(3, 4, 6),
-};
-
-// Exact 16-entry indexed PNG icon palette for approved TRE Articuno-P.
-static const u16 sPRUArticunoPIconPalette[16] =
-{
-    RGB(12, 19, 16), RGB(15, 15, 15), RGB(23, 23, 22), RGB(31, 31, 31),
-    RGB(14, 14, 25), RGB(20, 21, 30), RGB(22, 16, 11), RGB(29, 24, 17),
-    RGB(24, 21, 5), RGB(30, 30, 5), RGB(30, 12, 10), RGB(18, 15, 25),
-    RGB(24, 20, 25), RGB(23, 5, 19), RGB(12, 12, 11), RGB(8, 8, 8)
-};
-
-// Exact 16-entry indexed PNG icon palette for approved TRE Zapdos-P.
-static const u16 sPRUZapdosPIconPalette[16] =
-{
-    RGB(12, 19, 16), RGB(16, 16, 14), RGB(23, 23, 23), RGB(31, 31, 31),
-    RGB(23, 20, 8), RGB(30, 30, 5), RGB(26, 12, 8), RGB(30, 18, 5),
-    RGB(17, 15, 31), RGB(12, 9, 25), RGB(29, 14, 19), RGB(31, 22, 20),
-    RGB(20, 24, 31), RGB(13, 21, 19), RGB(12, 12, 11), RGB(8, 8, 8)
-};
-
-// Exact 16-entry indexed PNG icon palette for approved TRE Moltres-P.
-static const u16 sPRUMoltresPIconPalette[16] =
-{
-    RGB(12, 19, 16), RGB(16, 16, 14), RGB(23, 23, 23), RGB(31, 31, 31),
-    RGB(23, 20, 8), RGB(30, 30, 5), RGB(26, 12, 8), RGB(30, 18, 5),
-    RGB(17, 15, 31), RGB(12, 9, 25), RGB(29, 14, 19), RGB(31, 22, 20),
-    RGB(20, 24, 31), RGB(13, 21, 19), RGB(12, 12, 11), RGB(8, 8, 8)
-};
-
 const struct SpritePalette gMonIconPaletteTable[] =
 {
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
@@ -113,10 +73,6 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRLEeveeonIconPalette, POKE_ICON_BASE_PAL_TAG + 7 },
     { sPRUSwamplithIconPalette, POKE_ICON_BASE_PAL_TAG + 8 },
     { sPRUSkarmetIconPalette, POKE_ICON_BASE_PAL_TAG + 9 },
-    { sPRUAstrachiIconPalette, POKE_ICON_BASE_PAL_TAG + 10 },
-    { sPRUArticunoPIconPalette, POKE_ICON_BASE_PAL_TAG + 11 },
-    { sPRUZapdosPIconPalette, POKE_ICON_BASE_PAL_TAG + 12 },
-    { sPRUMoltresPIconPalette, POKE_ICON_BASE_PAL_TAG + 13 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -230,14 +186,6 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 8;
     if (species == SPECIES_SKARMET)
         return 9;
-    if (species == SPECIES_ASTRACHI)
-        return 10;
-    if (species == SPECIES_ARTICUNO)
-        return 11;
-    if (species == SPECIES_ZAPDOS)
-        return 12;
-    if (species == SPECIES_MOLTRES)
-        return 13;
     return original;
 }
 
@@ -355,16 +303,6 @@ void LoadMonIconPalettes(void)
 {
     u8 i;
     for (i = 0; i < ARRAY_COUNT(gMonIconPaletteTable); i++)
-        LoadSpritePalette(&gMonIconPaletteTable[i]);
-}
-
-// Storage PC has additional sprite palettes (cursor, portrait, items, etc.).
-// Reserve the six ubiquitous icon palettes, then load bespoke ones only when
-// the relevant species is actually on screen.
-void LoadMonIconBasePalettes(void)
-{
-    u8 i;
-    for (i = 0; i < 6; i++)
         LoadSpritePalette(&gMonIconPaletteTable[i]);
 }
 

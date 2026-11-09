@@ -244,9 +244,9 @@ FuchsiaCity_SafariZoneEntrance_UpgradeGuy1::
 	showmoneybox 0, 0
 	msgbox FuchsiaCity_SafariZoneEntrance_Text_Level1, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, FuchsiaCity_SafariZoneEntrance_UpgradeGuyDecline
-	checkmoney 20000
+	checkmoney 200000
 	goto_if_eq VAR_RESULT, FALSE, FuchsiaCity_SafariZoneEntrance_UpgradeGuyNotEnoughMoney
-	removemoney 20000
+	removemoney 200000
 	updatemoneybox 0
 	playse SE_SHOP
 	waitse
@@ -259,9 +259,9 @@ FuchsiaCity_SafariZoneEntrance_UpgradeGuy2::
 	showmoneybox 0, 0
 	msgbox FuchsiaCity_SafariZoneEntrance_Text_Level2, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, FuchsiaCity_SafariZoneEntrance_UpgradeGuyDecline
-	checkmoney 30000
+	checkmoney 300000
 	goto_if_eq VAR_RESULT, FALSE, FuchsiaCity_SafariZoneEntrance_UpgradeGuyNotEnoughMoney
-	removemoney 30000
+	removemoney 300000
 	updatemoneybox 0
 	playse SE_SHOP
 	waitse
@@ -274,9 +274,9 @@ FuchsiaCity_SafariZoneEntrance_UpgradeGuy3::
 	showmoneybox 0, 0
 	msgbox FuchsiaCity_SafariZoneEntrance_Text_Level3, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, FALSE, FuchsiaCity_SafariZoneEntrance_UpgradeGuyDecline
-	checkmoney 40000
+	checkmoney 400000
 	goto_if_eq VAR_RESULT, FALSE, FuchsiaCity_SafariZoneEntrance_UpgradeGuyNotEnoughMoney
-	removemoney 40000
+	removemoney 400000
 	updatemoneybox 0
 	playse SE_SHOP
 	waitse
@@ -304,17 +304,17 @@ FuchsiaCity_SafariZoneEntrance_Text_Steven:
 FuchsiaCity_SafariZoneEntrance_Text_Level1:
 	.string "Hello {PLAYER}, would you\n"
 	.string "like to increase your SAFARI LEVEL\l"
-	.string "to 2? It will cost you ¥20,000.$"
+	.string "to 2? It will cost you ¥200,000.$"
 
 FuchsiaCity_SafariZoneEntrance_Text_Level2:
 	.string "Hello {PLAYER}, would you\n"
 	.string "like to increase your SAFARI LEVEL\l"
-	.string "to 3? It will cost you ¥30,000.$"
+	.string "to 3? It will cost you ¥300,000.$"
 
 FuchsiaCity_SafariZoneEntrance_Text_Level3:
 	.string "Hello {PLAYER}, would you\n"
 	.string "like to increase your SAFARI LEVEL\l"
-	.string "to 4? It will cost you ¥40,000.$"
+	.string "to 4? It will cost you ¥400,000.$"
 
 FuchsiaCity_SafariZoneEntrance_Text_UpgradeGuyDeclined:
 	.string "Oh, that's too bad, then...$"

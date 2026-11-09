@@ -972,8 +972,6 @@ enum __attribute__((packed)) Move
     MOVE_SPARKLINGSKY,
     MOVE_SUPER_GLITCH,
     MOVE_TERROR_WAVE,
-    // Appended to keep all existing move IDs and save data stable.
-    MOVE_KABOOM,
 
     MOVES_COUNT,
 
