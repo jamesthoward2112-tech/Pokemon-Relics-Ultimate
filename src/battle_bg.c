@@ -978,6 +978,379 @@ static u8 GetPruElite20RhythmBgIndex(void)
     return 0xFF;
 }
 
+
+// First-pass original PRU background pack. Each scene ID is 0..112;
+// 64+scene IDs are reserved above the old Rhythm indices (0..54).
+static u8 GetPruFullPackLocationScene(u16 environment)
+{
+    u32 map = (gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum;
+    if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    {
+        u8 e20 = GetPruElite20RhythmBgIndex();
+        if (e20 != 0xFF)
+            return 88 + (e20 % 12); // E20 grand and elite-specific arenas.
+        switch (TRAINER_BATTLE_PARAM.opponentA)
+        {
+        case TRAINER_FALKNER_1_HNS:
+        case TRAINER_FALKNER_2_HNS:
+        case TRAINER_FALKNER_POSTOBC_HNS:
+            return 72;
+        case TRAINER_BUGSY_1_HNS:
+        case TRAINER_BUGSY_2_HNS:
+        case TRAINER_BUGSY_POSTOBC_HNS:
+            return 73;
+        case TRAINER_WHITNEY_1_HNS:
+        case TRAINER_WHITNEY_2_HNS:
+        case TRAINER_WHITNEY_POSTOBC_HNS:
+            return 74;
+        case TRAINER_MORTY_1_HNS:
+        case TRAINER_MORTY_2_HNS:
+        case TRAINER_MORTY_POSTOBC_HNS:
+            return 75;
+        case TRAINER_CHUCK_1_2_HNS:
+        case TRAINER_CHUCK_1_3_HNS:
+        case TRAINER_CHUCK_1_HNS:
+        case TRAINER_CHUCK_2_HNS:
+        case TRAINER_CHUCK_POSTOBC_HNS:
+            return 76;
+        case TRAINER_JASMINE_1_2_HNS:
+        case TRAINER_JASMINE_1_3_HNS:
+        case TRAINER_JASMINE_1_HNS:
+        case TRAINER_JASMINE_2_HNS:
+        case TRAINER_JASMINE_POSTOBC_HNS:
+            return 77;
+        case TRAINER_PRYCE_1_2_HNS:
+        case TRAINER_PRYCE_1_3_HNS:
+        case TRAINER_PRYCE_1_HNS:
+        case TRAINER_PRYCE_2_HNS:
+        case TRAINER_PRYCE_POSTOBC_HNS:
+            return 78;
+        case TRAINER_CLAIR_1_HNS:
+        case TRAINER_CLAIR_2_HNS:
+        case TRAINER_CLAIR_3_HNS:
+        case TRAINER_CLAIR_POSTOBC_HNS:
+            return 79;
+        case TRAINER_BROCK_HNS:
+        case TRAINER_BROCK_POSTOBC_HNS:
+            return 80;
+        case TRAINER_MISTY_HNS:
+        case TRAINER_MISTY_POSTOBC_HNS:
+            return 81;
+        case TRAINER_LTSURGE_HNS:
+        case TRAINER_LTSURGE_POSTOBC_HNS:
+            return 82;
+        case TRAINER_ERIKA_HNS:
+        case TRAINER_ERIKA_POSTOBC_HNS:
+            return 83;
+        case TRAINER_JANINE_HNS:
+        case TRAINER_JANINE_POSTOBC_HNS:
+            return 84;
+        case TRAINER_SABRINA_HNS:
+        case TRAINER_SABRINA_POSTOBC_HNS:
+            return 85;
+        case TRAINER_BLAINE_HNS:
+        case TRAINER_BLAINE_POSTOBC_HNS:
+            return 86;
+        case TRAINER_BLUE_2_HNS:
+        case TRAINER_BLUE_HNS:
+        case TRAINER_BLUE_POSTOBC_HNS:
+            return 87;
+        case TRAINER_WILL_1_HNS:
+        case TRAINER_WILL_2_HNS:
+        case TRAINER_WILL_POSTOBC_HNS:
+            return 88;
+        case TRAINER_KOGA_1_HNS:
+        case TRAINER_KOGA_2_HNS:
+        case TRAINER_KOGA_POSTOBC_HNS:
+            return 89;
+        case TRAINER_BRUNO_1_HNS:
+        case TRAINER_BRUNO_2_HNS:
+        case TRAINER_BRUNO_POSTOBC_HNS:
+        case TRAINER_PRU_KANTO_E4_BRUNO_HNS:
+            return 90;
+        case TRAINER_KAREN_1_HNS:
+        case TRAINER_KAREN_2_HNS:
+        case TRAINER_KAREN_POSTOBC_HNS:
+            return 91;
+        case TRAINER_LANCE_1_HNS:
+        case TRAINER_LANCE_2_HNS:
+        case TRAINER_LANCE_3_HNS:
+        case TRAINER_LANCE_POSTOBC_HNS:
+        case TRAINER_PRU_KANTO_E4_LANCE_HNS:
+            return 92;
+        case TRAINER_PRU_KANTO_E4_LORELEI_HNS:
+            return 93;
+        case TRAINER_PRU_KANTO_E4_AGATHA_HNS:
+            return 94;
+        case TRAINER_PRU_KANTO_E4_RED_HNS:
+        case TRAINER_RED_HNS:
+        case TRAINER_RED_POSTOBC_HNS:
+            return 95;
+        default: break;
+        }
+    }
+
+    // Summit Red battles stay snowbound; Oak's Golden Ho-Oh encounter uses
+    // a distinctive golden relic stage only during a non-trainer battle.
+    if (map == MAP_MT_SILVER_SUMMIT_DAY_HNS || map == MAP_MT_SILVER_SUMMIT_NIGHT_HNS)
+        return (gBattleTypeFlags & BATTLE_TYPE_TRAINER) ? 95 : 108;
+
+    // Any Surf/water encounter in a route is sea/shore, not a grassy path.
+    if (environment == BATTLE_ENVIRONMENT_WATER
+     || environment == BATTLE_ENVIRONMENT_UNDERWATER)
+        return 64;
+    if (environment == BATTLE_ENVIRONMENT_POND)
+        return 69;
+    switch (map)
+    {
+    case MAP_ROUTE29_HNS:
+        return 0;
+    case MAP_ROUTE30_HNS:
+    case MAP_ROUTE30_HOUSE_HNS:
+    case MAP_ROUTE30_MR_POKEMONS_HOUSE_HNS:
+        return 1;
+    case MAP_ROUTE31_HNS:
+        return 2;
+    case MAP_ROUTE32_HNS:
+    case MAP_ROUTE32_POKEMON_CENTER_HNS:
+        return 3;
+    case MAP_ROUTE33_HNS:
+        return 4;
+    case MAP_ROUTE34_DAY_CARE_HNS:
+    case MAP_ROUTE34_HNS:
+        return 5;
+    case MAP_ROUTE35_HNS:
+        return 6;
+    case MAP_ROUTE36_HNS:
+        return 7;
+    case MAP_ROUTE37_HNS:
+        return 8;
+    case MAP_ROUTE38_HNS:
+        return 9;
+    case MAP_ROUTE39_BARN_HNS:
+    case MAP_ROUTE39_FARM_HOUSE_HNS:
+    case MAP_ROUTE39_HNS:
+        return 10;
+    case MAP_ROUTE40_HNS:
+        return 11;
+    case MAP_ROUTE41_HNS:
+        return 12;
+    case MAP_ROUTE42_HNS:
+        return 13;
+    case MAP_ROUTE43_HNS:
+        return 14;
+    case MAP_ROUTE44_HNS:
+        return 15;
+    case MAP_ROUTE45_GROUDON_CAVE_HNS:
+    case MAP_ROUTE45_HNS:
+        return 16;
+    case MAP_ROUTE46_HNS:
+        return 17;
+    case MAP_ROUTE26_HNS:
+    case MAP_ROUTE26_HOUSE1_HNS:
+    case MAP_ROUTE26_HOUSE2_HNS:
+        return 18;
+    case MAP_ROUTE27_HNS:
+    case MAP_ROUTE27_HOUSE_HNS:
+        return 19;
+    case MAP_ROUTE28_HNS:
+    case MAP_ROUTE28_HOUSE_HNS:
+        return 20;
+    case MAP_ROUTE1_HNS:
+        return 21;
+    case MAP_ROUTE2_HNS:
+    case MAP_ROUTE2_HOUSE_HNS:
+        return 22;
+    case MAP_ROUTE3_HNS:
+        return 23;
+    case MAP_ROUTE24_HNS:
+        return 24;
+    case MAP_ROUTE25_BILLS_HOUSE_HNS:
+    case MAP_ROUTE25_HNS:
+        return 25;
+    case MAP_NEW_BARK_TOWN_HNS:
+        return 26;
+    case MAP_CHERRYGROVE_CITY_HNS:
+        return 27;
+    case MAP_VIOLET_CITY_HNS:
+        return 28;
+    case MAP_AZALEA_TOWN_HNS:
+        return 29;
+    case MAP_GOLDENROD_CITY_HNS:
+        return 30;
+    case MAP_ECRUTEAK_CITY_HNS:
+        return 31;
+    case MAP_OLIVINE_CITY_HNS:
+        return 32;
+    case MAP_CIANWOOD_CITY_HNS:
+        return 33;
+    case MAP_BLACKTHORN_CITY_HNS:
+        return 35;
+    case MAP_PALLET_TOWN_HNS:
+        return 36;
+    case MAP_VIRIDIAN_CITY_HNS:
+        return 37;
+    case MAP_PEWTER_CITY_HNS:
+        return 38;
+    case MAP_CERULEAN_CITY_HNS:
+        return 39;
+    case MAP_VERMILION_CITY_HNS:
+        return 40;
+    case MAP_LAVENDER_TOWN_HNS:
+        return 41;
+    case MAP_CELADON_CITY_HNS:
+        return 42;
+    case MAP_SAFFRON_CITY_HNS:
+        return 43;
+    case MAP_FUCHSIA_CITY_HNS:
+        return 44;
+    case MAP_CINNABAR_ISLAND_HNS:
+        return 45;
+    case MAP_GATE_AZALEA_TOWN_ILEX_FOREST_HNS:
+    case MAP_GATE_ILEX_FOREST_ROUTE34_HNS:
+    case MAP_ILEX_FOREST_HNS:
+        return 46;
+    case MAP_RUINS_OF_ALPH_OUTSIDE_HNS:
+        return 47;
+    case MAP_UNION_CAVE_1F_HNS:
+    case MAP_UNION_CAVE_B1F_HNS:
+    case MAP_UNION_CAVE_B2F_HNS:
+        return 48;
+    case MAP_SLOWPOKE_WELL_B1F_HNS:
+    case MAP_SLOWPOKE_WELL_B2F_HNS:
+        return 49;
+    case MAP_DARK_CAVE_NORTH_SIDE_HNS:
+    case MAP_DARK_CAVE_SOUTH_SIDE_HNS:
+        return 50;
+    case MAP_MT_MORTAR_1F_NORTH_HNS:
+    case MAP_MT_MORTAR_1F_SOUTH_HNS:
+    case MAP_MT_MORTAR_2F_HNS:
+        return 51;
+    case MAP_BURNED_TOWER_1F_HNS:
+    case MAP_BURNED_TOWER_B1F_HNS:
+        return 52;
+    case MAP_TIN_TOWER_1F_HNS:
+    case MAP_TIN_TOWER_2F_HNS:
+    case MAP_TIN_TOWER_3F_HNS:
+    case MAP_TIN_TOWER_4F_HNS:
+    case MAP_TIN_TOWER_5F_HNS:
+    case MAP_TIN_TOWER_6F_HNS:
+    case MAP_TIN_TOWER_7F_HNS:
+    case MAP_TIN_TOWER_8F_HNS:
+    case MAP_TIN_TOWER_9F_HNS:
+        return 53;
+    case MAP_WHIRL_ISLANDS_B1F_HNS:
+    case MAP_WHIRL_ISLANDS_B1F_INNER_HNS:
+        return 54;
+    case MAP_ICE_PATH_1F_HNS:
+    case MAP_ICE_PATH_B1F_HNS:
+    case MAP_ICE_PATH_B2F_HNS:
+    case MAP_ICE_PATH_B3F_HNS:
+    case MAP_ICE_PATH_B4F_HNS:
+        return 55;
+    case MAP_MT_SILVER_1F_ITEM_ROOM_HNS:
+    case MAP_MT_SILVER_1F_MOLTRES_ROOM_HNS:
+    case MAP_MT_SILVER_1F_WATERFALL_ROOM_HNS:
+    case MAP_MT_SILVER_MOUNTAIN_SIDE_HNS:
+    case MAP_MT_SILVER_OUTSIDE_HNS:
+    case MAP_MT_SILVER_POKEMON_CENTER_HNS:
+    case MAP_MT_SILVER_SNOW_HNS:
+        return 56;
+    case MAP_MT_SILVER_2F_HNS:
+    case MAP_MT_SILVER_3F_HNS:
+        return 57;
+    case MAP_VICTORY_ROAD_1F:
+    case MAP_VICTORY_ROAD_1F_FRLG:
+    case MAP_VICTORY_ROAD_2F:
+    case MAP_VICTORY_ROAD_3F:
+    case MAP_VICTORY_ROAD_B1F:
+    case MAP_VICTORY_ROAD_B2F:
+    case MAP_VICTORY_ROAD_KANTO_1F_HNS:
+    case MAP_VICTORY_ROAD_KANTO_B1F_HNS:
+    case MAP_VICTORY_ROAD_KANTO_B2F_HNS:
+        return 58;
+    case MAP_CERULEAN_CAVE_1F:
+    case MAP_CERULEAN_CAVE_1F_HNS:
+    case MAP_CERULEAN_CAVE_2F:
+    case MAP_CERULEAN_CAVE_B1F:
+    case MAP_CERULEAN_CAVE_B1F_HNS:
+    case MAP_CERULEAN_CAVE_B2F_HNS:
+        return 59;
+    case MAP_ROCK_TUNNEL_1F:
+    case MAP_ROCK_TUNNEL_1F_HNS:
+    case MAP_ROCK_TUNNEL_B1F:
+    case MAP_ROCK_TUNNEL_B1F_HNS:
+        return 60;
+    case MAP_SEAFOAM_ISLANDS_1F:
+    case MAP_SEAFOAM_ISLANDS_1F_HNS:
+    case MAP_SEAFOAM_ISLANDS_B1F:
+    case MAP_SEAFOAM_ISLANDS_B1F_HNS:
+    case MAP_SEAFOAM_ISLANDS_B2F:
+    case MAP_SEAFOAM_ISLANDS_B3F:
+    case MAP_SEAFOAM_ISLANDS_B4F:
+    case MAP_SEAFOAM_ISLANDS_GYM_HNS:
+    case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS:
+        return 61;
+    case MAP_POWER_PLANT:
+    case MAP_ROUTE10_POWER_PLANT_BACK_ROOM_HNS:
+    case MAP_ROUTE10_POWER_PLANT_ENTRANCE_HNS:
+        return 62;
+    case MAP_LAVENDER_SPIRIT_TOWER_1F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_2F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_3F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_4F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_5F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_6F_HNS:
+    case MAP_LAVENDER_SPIRIT_TOWER_7F_HNS:
+    case MAP_POKEMON_TOWER_1F:
+    case MAP_POKEMON_TOWER_2F:
+    case MAP_POKEMON_TOWER_3F:
+    case MAP_POKEMON_TOWER_4F:
+    case MAP_POKEMON_TOWER_5F:
+    case MAP_POKEMON_TOWER_6F:
+    case MAP_POKEMON_TOWER_7F:
+        return 63;
+    case MAP_LAKE_OF_RAGE_HNS:
+    case MAP_LAKE_OF_RAGE_HOUSE1_HNS:
+    case MAP_LAKE_OF_RAGE_HOUSE2_HNS:
+    case MAP_LAKE_OF_RAGE_LOW_TIDE_HNS:
+        return 68;
+    case MAP_DRAGONS_DEN_CAVERN_HNS:
+    case MAP_DRAGONS_DEN_ENTRANCE_HNS:
+    case MAP_DRAGONS_DEN_SHRINE_HNS:
+    case MAP_DRAGONS_DEN_STORM_SHRINE_HNS:
+        return 79;
+        return 95;
+    case MAP_SAFFRON_CITY_DOJO:
+    case MAP_SAFFRON_CITY_FIGHTING_DOJO_HNS:
+    case MAP_SAFFRON_CITY_FIGHTING_DOJO_VIP_HNS:
+        return 99;
+    case MAP_MT_MORTAR_B1F_HNS:
+        return 101;
+    case MAP_WHIRL_ISLANDS_1F_HNS:
+    case MAP_WHIRL_ISLANDS_B2F_HNS:
+    case MAP_WHIRL_ISLANDS_B3F_HNS:
+    case MAP_WHIRL_ISLANDS_DESCENT_HNS:
+    case MAP_WHIRL_ISLANDS_LUGIA_CHAMBER_HNS:
+        return 103;
+    case MAP_TIN_TOWER_ROOF_DAY_HNS:
+    case MAP_TIN_TOWER_ROOF_NIGHT_HNS:
+        return 107;
+    case MAP_GATE_RUINS_OF_ALPH_ROUTE32_HNS:
+    case MAP_GATE_RUINS_OF_ALPH_ROUTE36_HNS:
+    case MAP_RUINS_OF_ALPH_B1F_HNS:
+    case MAP_RUINS_OF_ALPH_LAB_HNS:
+    case MAP_RUINS_OF_ALPH_PUZZLE_AND_REWARD_CHAMBERS_HNS:
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM1_HNS:
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM2_HNS:
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM3_HNS:
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM4_HNS:
+        return 112;
+    default: break;
+    }
+    return 0xFF;
+}
+
 static u8 GetPruRhythmBattleBgIndex(u16 environment)
 {
 #if IS_HNS
@@ -989,6 +1362,12 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
     if (TestRunner_Battle_GetForcedEnvironment()
      || (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER)))
         return 0xFF;
+
+    {
+        u8 fullScene = GetPruFullPackLocationScene(environment);
+        if (fullScene != 0xFF)
+            return 64 + fullScene;
+    }
 
     // Fixed story scenery: Kyogre meets the crashing sea, Groudon the lava,
     // and Lavender Spirit Tower keeps the graveyard on every floor.
@@ -1175,6 +1554,14 @@ static void LoadBattleEnvironmentGfx(u16 environment)
     const void *tileset, *tilemap, *palette;
 
     u8 pruRhythmBg = GetPruRhythmBattleBgIndex(environment);
+    if (pruRhythmBg >= 64 && pruRhythmBg < 177)
+    {
+        const struct PruRhythmBattleBg *bg = &sPruFullBattleBgs[pruRhythmBg - 64];
+        DecompressDataWithHeaderVram(bg->tiles, (void *)BG_CHAR_ADDR(2));
+        DecompressDataWithHeaderVram(bg->tilemap, (void *)BG_SCREEN_ADDR(26));
+        LoadPalette(bg->palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
+        return;
+    }
     if (pruRhythmBg >= 55 && pruRhythmBg < 61)
     {
         // Two standalone original scenes, never index beyond Rhythm's 55 entries.
@@ -1190,7 +1577,7 @@ static void LoadBattleEnvironmentGfx(u16 environment)
         const struct PruRhythmBattleBg *bg = &sPruRhythmBattleBgs[pruRhythmBg];
         DecompressDataWithHeaderVram(bg->tiles, (void *)BG_CHAR_ADDR(2));
         DecompressDataWithHeaderVram(bg->tilemap, (void *)BG_SCREEN_ADDR(26));
-        LoadPalette(bg->palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+        LoadPalette(bg->palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
         return;
     }
 
@@ -1718,7 +2105,9 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 3:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 61)
+            if (pruBg >= 64 && pruBg < 177)
+                DecompressDataWithHeaderVram(sPruFullBattleBgs[pruBg - 64].tiles, (void *)BG_CHAR_ADDR(2));
+            else if (pruBg >= 55 && pruBg < 61)
                 DecompressDataWithHeaderVram(sPruOriginalTestBattleBgs[pruBg - 55].tiles, (void *)BG_CHAR_ADDR(2));
             else if (pruBg != 0xFF && pruBg < 55)
                 DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tiles, (void *)BG_CHAR_ADDR(2));
@@ -1729,7 +2118,9 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 4:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 61)
+            if (pruBg >= 64 && pruBg < 177)
+                DecompressDataWithHeaderVram(sPruFullBattleBgs[pruBg - 64].tilemap, (void *)BG_SCREEN_ADDR(26));
+            else if (pruBg >= 55 && pruBg < 61)
                 DecompressDataWithHeaderVram(sPruOriginalTestBattleBgs[pruBg - 55].tilemap, (void *)BG_SCREEN_ADDR(26));
             else if (pruBg != 0xFF && pruBg < 55)
                 DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tilemap, (void *)BG_SCREEN_ADDR(26));
@@ -1740,10 +2131,12 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 5:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 61)
+            if (pruBg >= 64 && pruBg < 177)
+                LoadPalette(sPruFullBattleBgs[pruBg - 64].palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
+            else if (pruBg >= 55 && pruBg < 61)
                 LoadPalette(sPruOriginalTestBattleBgs[pruBg - 55].palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
             else if (pruBg != 0xFF && pruBg < 55)
-                LoadPalette(sPruRhythmBattleBgs[pruBg].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+                LoadPalette(sPruRhythmBattleBgs[pruBg].palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
             else
                 LoadPalette(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
         }

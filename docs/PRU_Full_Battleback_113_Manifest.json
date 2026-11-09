@@ -1,0 +1,1705 @@
+{
+  "total": 113,
+  "visual_status": "first-pass custom environment pack; in-game location checks needed",
+  "platform_center_px": [
+    185,
+    65
+  ],
+  "records": [
+    {
+      "id": "PRU-BG-001",
+      "category": "Routes and outdoor",
+      "title": "Route 29 \u2014 New Bark grasslands",
+      "state": "existing tested",
+      "priority": "P0",
+      "index": 0,
+      "tiles": 443,
+      "sha256": "e7f67c4357c09d013b91e03ffaabc8b8d304936142e1b2415722fbb4d25f45a0",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-002",
+      "category": "Routes and outdoor",
+      "title": "Route 30 \u2014 winding wooded path",
+      "state": "planned",
+      "priority": "P1",
+      "index": 1,
+      "tiles": 485,
+      "sha256": "eacdd16372cfc854693ad9a0b3f3308739753517445395ecd2c2ac4534e2bea9",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-003",
+      "category": "Routes and outdoor",
+      "title": "Route 31 \u2014 Violet approach",
+      "state": "planned",
+      "priority": "P1",
+      "index": 2,
+      "tiles": 443,
+      "sha256": "e4b34bd30f9e6e7a03b16a9702b43f807fa04108cdd17e2d89421b8d0cb8ae73",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-004",
+      "category": "Routes and outdoor",
+      "title": "Route 32 \u2014 southern coast grass",
+      "state": "planned",
+      "priority": "P1",
+      "index": 3,
+      "tiles": 443,
+      "sha256": "b1c609a0c1511dd591c131fed1b7b5646081e9a3d9b59e89aefaac7f19aa05a6",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-005",
+      "category": "Routes and outdoor",
+      "title": "Route 33 \u2014 rain-soaked forest",
+      "state": "planned",
+      "priority": "P1",
+      "index": 4,
+      "tiles": 487,
+      "sha256": "ac407944becb881004e2045d133f973c48cf8d9486abcea93ad1071a569fff71",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-006",
+      "category": "Routes and outdoor",
+      "title": "Route 34 \u2014 southern meadows",
+      "state": "planned",
+      "priority": "P1",
+      "index": 5,
+      "tiles": 443,
+      "sha256": "54a1b9e71e6029075415c3b7666d2f293de7647e9b62614e86483c407bfe2cec",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-007",
+      "category": "Routes and outdoor",
+      "title": "Route 35 \u2014 National Park approach",
+      "state": "planned",
+      "priority": "P1",
+      "index": 6,
+      "tiles": 488,
+      "sha256": "0eee3368c564b202023ec45dca8b2d3747e337c75af1084cd10fc82681e38bc3",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-008",
+      "category": "Routes and outdoor",
+      "title": "Route 36 \u2014 ancient crossroads",
+      "state": "planned",
+      "priority": "P1",
+      "index": 7,
+      "tiles": 476,
+      "sha256": "132079710dcbb0d56f9d86762397ddec9ef2358859ad263917b1306b0f27af14",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-009",
+      "category": "Routes and outdoor",
+      "title": "Route 37 \u2014 autumn trees",
+      "state": "planned",
+      "priority": "P1",
+      "index": 8,
+      "tiles": 443,
+      "sha256": "ec9ec90c5ebc749b2a79f3ac4794543f8eb17cbc0d5c278913fedde2edccf549",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-010",
+      "category": "Routes and outdoor",
+      "title": "Route 38 \u2014 grazing pasture",
+      "state": "planned",
+      "priority": "P1",
+      "index": 9,
+      "tiles": 443,
+      "sha256": "8520e97a8f4d01b687218909caedf9aaea5fe2aed20862bf729d6881bd651a73",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-011",
+      "category": "Routes and outdoor",
+      "title": "Route 39 \u2014 lighthouse farmland",
+      "state": "planned",
+      "priority": "P1",
+      "index": 10,
+      "tiles": 443,
+      "sha256": "e1542029b3c12234bd6d3e8f289e7402987ffa6f3b3d4bf77f5a1decf86e07cb",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-012",
+      "category": "Routes and outdoor",
+      "title": "Route 40 \u2014 western sea cliff",
+      "state": "planned",
+      "priority": "P1",
+      "index": 11,
+      "tiles": 446,
+      "sha256": "e118c59cef71ae6c9fd998284e1d888e451e0474f5eb6e53b94a921d0cb1280a",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-013",
+      "category": "Routes and outdoor",
+      "title": "Route 41 \u2014 Whirl Islands coast",
+      "state": "planned",
+      "priority": "P1",
+      "index": 12,
+      "tiles": 443,
+      "sha256": "aa00c012e17946b23d08ec6e189b1cc718d4cf5d5635dea61d739628db70ca10",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-014",
+      "category": "Routes and outdoor",
+      "title": "Route 42 \u2014 Mt Mortar lakeside",
+      "state": "planned",
+      "priority": "P1",
+      "index": 13,
+      "tiles": 446,
+      "sha256": "8a98e4611bfdc83389d5ce7361f7c015cc6a48c813ce5b66de340b6de85e86a3",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-015",
+      "category": "Routes and outdoor",
+      "title": "Route 43 \u2014 Lake of Rage road",
+      "state": "planned",
+      "priority": "P1",
+      "index": 14,
+      "tiles": 443,
+      "sha256": "fe430cce0c77a2dc873448f82e8cec68644ab75c6bf626f372967fec4070b47c",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-016",
+      "category": "Routes and outdoor",
+      "title": "Route 44 \u2014 rocky river pass",
+      "state": "planned",
+      "priority": "P1",
+      "index": 15,
+      "tiles": 446,
+      "sha256": "fd5a3558a72bb7ae40c44ec7a37268c683191e6289e304e395889589f1bfc882",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-017",
+      "category": "Routes and outdoor",
+      "title": "Route 45 \u2014 Blackthorn cliffs",
+      "state": "planned",
+      "priority": "P1",
+      "index": 16,
+      "tiles": 446,
+      "sha256": "5da4e4bd069fc1bb979a42b50467ba286af749e1ce83e11272cfacb38df5ee9e",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-018",
+      "category": "Routes and outdoor",
+      "title": "Route 46 \u2014 mountain foothills",
+      "state": "planned",
+      "priority": "P1",
+      "index": 17,
+      "tiles": 446,
+      "sha256": "709a5951fd13e37cdb058fc19c24407ab7f4d6379b7a6d24e599e225b705e202",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-019",
+      "category": "Routes and outdoor",
+      "title": "Route 26 \u2014 Indigo ascent",
+      "state": "planned",
+      "priority": "P1",
+      "index": 18,
+      "tiles": 446,
+      "sha256": "c8dba5b1c6c6269b94f12e13d0d014597aae863f178a2cb847deeec6f42b2dff",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-020",
+      "category": "Routes and outdoor",
+      "title": "Route 27 \u2014 Tohjo Falls valley",
+      "state": "planned",
+      "priority": "P1",
+      "index": 19,
+      "tiles": 443,
+      "sha256": "5f4fbbfb172a51fc18080b28ddbeda261c5bb35583bced13194c48a0d3d9a590",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-021",
+      "category": "Routes and outdoor",
+      "title": "Route 28 \u2014 Mt Silver lower path",
+      "state": "planned",
+      "priority": "P1",
+      "index": 20,
+      "tiles": 446,
+      "sha256": "860de5a57709d1258ea8948c66f01743909bad70c74af3cea337618c02e722b0",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-022",
+      "category": "Routes and outdoor",
+      "title": "Kanto Route 1 \u2014 Pallet woodland",
+      "state": "planned",
+      "priority": "P1",
+      "index": 21,
+      "tiles": 488,
+      "sha256": "081875d55f1a022059f46a7b813ae38bf8bd6066150a1d8acb1ef2c0f8ed108f",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-023",
+      "category": "Routes and outdoor",
+      "title": "Kanto Route 2 \u2014 Viridian forest edge",
+      "state": "planned",
+      "priority": "P1",
+      "index": 22,
+      "tiles": 489,
+      "sha256": "9581998714cfd5e820ec514130bf18ef7e8c8ed8c07ff305a2894b59826b2d6c",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-024",
+      "category": "Routes and outdoor",
+      "title": "Kanto Route 3 \u2014 Moon Mountain pass",
+      "state": "planned",
+      "priority": "P1",
+      "index": 23,
+      "tiles": 446,
+      "sha256": "23a127c2315d601ccab0cc7bbb589d9cf3c437a19b1bda3ef1f8f99ede04c1f1",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-025",
+      "category": "Routes and outdoor",
+      "title": "Kanto Route 24 \u2014 Nugget Bridge",
+      "state": "planned",
+      "priority": "P1",
+      "index": 24,
+      "tiles": 450,
+      "sha256": "ddbf22f2b2c5d5224353234c6a1470d0c33c3465a3b3365e6ec25450c9a08f59",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-026",
+      "category": "Routes and outdoor",
+      "title": "Kanto Route 25 \u2014 northern cape",
+      "state": "planned",
+      "priority": "P1",
+      "index": 25,
+      "tiles": 443,
+      "sha256": "79454147b7a6c2bf131c7e14d3fd67d0a29957d587002a8f587a3aa785e4ab7c",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-027",
+      "category": "Towns and cities",
+      "title": "New Bark \u2014 village edge",
+      "state": "planned",
+      "priority": "P2",
+      "index": 26,
+      "tiles": 438,
+      "sha256": "ecf0fa86112c30f837a48b1bb68587a31b37c03e1abf8fcea01ef478a61774d0",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-028",
+      "category": "Towns and cities",
+      "title": "Cherrygrove \u2014 seaside gardens",
+      "state": "planned",
+      "priority": "P2",
+      "index": 27,
+      "tiles": 441,
+      "sha256": "02e5aab0a0503c487d014e954cf18fc8cfe3bbcfb2efbd2a116ba62ad18db94f",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-029",
+      "category": "Towns and cities",
+      "title": "Violet \u2014 Sprout Tower skyline",
+      "state": "planned",
+      "priority": "P2",
+      "index": 28,
+      "tiles": 480,
+      "sha256": "6df869f4fb2805c996493ad1d7ed8f4d42d9c7d7a04cd3a7273978c1b0d2ddbf",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-030",
+      "category": "Towns and cities",
+      "title": "Azalea \u2014 timber village",
+      "state": "planned",
+      "priority": "P2",
+      "index": 29,
+      "tiles": 486,
+      "sha256": "0fe415d056e6b9c64b12206e5cc1aada342117ddf10c11476f04fb770b6340ce",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-031",
+      "category": "Towns and cities",
+      "title": "Goldenrod \u2014 city plaza",
+      "state": "planned",
+      "priority": "P2",
+      "index": 30,
+      "tiles": 440,
+      "sha256": "eb40767bb504ac58962b034fce655ed9a45820649b11bff5cdaac7d607166e6a",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-032",
+      "category": "Towns and cities",
+      "title": "Ecruteak \u2014 autumn shrine street",
+      "state": "planned",
+      "priority": "P2",
+      "index": 31,
+      "tiles": 484,
+      "sha256": "f34f024462abd24d56f97cc5ecfd7f1b40cad261d151a69180428d567ca3f44a",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-033",
+      "category": "Towns and cities",
+      "title": "Olivine \u2014 harbourfront",
+      "state": "planned",
+      "priority": "P2",
+      "index": 32,
+      "tiles": 459,
+      "sha256": "1162516eeb84217f0972b5414d1ee0fe4b92ea30e102b0356906213257e632ce",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-034",
+      "category": "Towns and cities",
+      "title": "Cianwood \u2014 island coast",
+      "state": "planned",
+      "priority": "P2",
+      "index": 33,
+      "tiles": 441,
+      "sha256": "1ea2c0572d0c6d2e72aa5d906d0ea7caaa895e180e6b688fd131a3852d26d06d",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-035",
+      "category": "Towns and cities",
+      "title": "Mahogany \u2014 mountain village",
+      "state": "planned",
+      "priority": "P2",
+      "index": 34,
+      "tiles": 480,
+      "sha256": "d026c646b9686377e6aaa32a0db638b073a4a6d165f07d64b4507d3b16dbd5d3",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-036",
+      "category": "Towns and cities",
+      "title": "Blackthorn \u2014 Dragon Den approach",
+      "state": "planned",
+      "priority": "P2",
+      "index": 35,
+      "tiles": 487,
+      "sha256": "309b40c4d3370f4b9572e55881a5cda8df39bd685895b654630606e47b393ddd",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-037",
+      "category": "Towns and cities",
+      "title": "Pallet \u2014 Professor Oak hometown",
+      "state": "planned",
+      "priority": "P2",
+      "index": 36,
+      "tiles": 445,
+      "sha256": "2b15e2570dfa69b69fa9cf69545cd05cbc6c58799640764142afc42d917908d5",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-038",
+      "category": "Towns and cities",
+      "title": "Viridian \u2014 forest district",
+      "state": "planned",
+      "priority": "P2",
+      "index": 37,
+      "tiles": 483,
+      "sha256": "94dd0cfff4a80c9b1226e1bcde06e522fc7beeb05862be5bc8070e413ca21068",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-039",
+      "category": "Towns and cities",
+      "title": "Pewter \u2014 stone town",
+      "state": "planned",
+      "priority": "P2",
+      "index": 38,
+      "tiles": 478,
+      "sha256": "afc0dfd2ae4aaad965ca468cd584ec90efb94ba62341d36066c347b3161ebaf3",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-040",
+      "category": "Towns and cities",
+      "title": "Cerulean \u2014 canal waterside",
+      "state": "planned",
+      "priority": "P2",
+      "index": 39,
+      "tiles": 435,
+      "sha256": "afa40e1cdfa8dfe4c459a5d6f2acaf948525cc206ff1114ca9467ca5ed5b521a",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-041",
+      "category": "Towns and cities",
+      "title": "Vermilion \u2014 port docks",
+      "state": "planned",
+      "priority": "P2",
+      "index": 40,
+      "tiles": 460,
+      "sha256": "67f93be7b6255dac05513a206b868741da375d4bdcf5a62bd9abcf5a8435fe70",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-042",
+      "category": "Towns and cities",
+      "title": "Lavender \u2014 misty tower street",
+      "state": "planned",
+      "priority": "P2",
+      "index": 41,
+      "tiles": 483,
+      "sha256": "12b216d4aca60db9f1ea417f3ba685ab989ee68724f148fc1ad99b68928ca3a8",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-043",
+      "category": "Towns and cities",
+      "title": "Celadon \u2014 garden rooftop",
+      "state": "planned",
+      "priority": "P2",
+      "index": 42,
+      "tiles": 442,
+      "sha256": "a283e9d92895ee58ab7ffb8e2aaca304078f5b2c5a7885bba7f51719b75f5ccb",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-044",
+      "category": "Towns and cities",
+      "title": "Saffron \u2014 metropolitan plaza",
+      "state": "planned",
+      "priority": "P2",
+      "index": 43,
+      "tiles": 444,
+      "sha256": "c9fc4d67cd152460a5537d79a06ff4563d2e015888098752f2028eac0160f288",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-045",
+      "category": "Towns and cities",
+      "title": "Fuchsia \u2014 Safari crossroads",
+      "state": "planned",
+      "priority": "P2",
+      "index": 44,
+      "tiles": 438,
+      "sha256": "b78c50bd48586d82b25dc46a364a3c9b1555f5fe09304644b52da8a9df21acc9",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-046",
+      "category": "Towns and cities",
+      "title": "Cinnabar \u2014 volcanic harbour",
+      "state": "planned",
+      "priority": "P2",
+      "index": 45,
+      "tiles": 460,
+      "sha256": "65ca936d720b24367a4de3d0710e30311ceadf0caefa8575252d7c141303690b",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-047",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Ilex Forest \u2014 shrine clearing",
+      "state": "batch01 converted",
+      "priority": "P0",
+      "index": 46,
+      "tiles": 488,
+      "sha256": "bfc12f8476bb8ee3b20f5c3e7fbdbdcc99575f57815c416c560b41341e824d8a",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-048",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Ruins of Alph \u2014 outdoor meadow",
+      "state": "batch01 converted",
+      "priority": "P0",
+      "index": 47,
+      "tiles": 481,
+      "sha256": "df80d0c1c9cd8470e084ab11c4a5826db59a8cda093138419e29f53e16288b3d",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-049",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Union Cave \u2014 mossy tunnels",
+      "state": "planned",
+      "priority": "P2",
+      "index": 48,
+      "tiles": 446,
+      "sha256": "4ad611cdc93882a7deb0c61a46a9dc50c62126692d9bdadb7fca1b2627f44c65",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-050",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Slowpoke Well \u2014 damp cavern",
+      "state": "planned",
+      "priority": "P2",
+      "index": 49,
+      "tiles": 446,
+      "sha256": "3b283178ab00e757dd81994f194ef65a1fb80740f9744100cf67d75e7d720832",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-051",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Dark Cave \u2014 deep shadowed tunnel",
+      "state": "planned",
+      "priority": "P2",
+      "index": 50,
+      "tiles": 446,
+      "sha256": "d3f01c4238ee858c9213814db8cee1ea97619e50ab1e33d5a2563ea40a61c1d1",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-052",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Mt Mortar \u2014 rugged interior",
+      "state": "planned",
+      "priority": "P2",
+      "index": 51,
+      "tiles": 485,
+      "sha256": "0e786ad37fab3d0930b75273f9fcd8548adfdd0fbf840966d158bb226692e70b",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-053",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Burned Tower \u2014 charred timbers",
+      "state": "planned",
+      "priority": "P2",
+      "index": 52,
+      "tiles": 487,
+      "sha256": "796e7591d5518d3343dfd0c116ac4371f04a4896d76a73d2f1eddbb738ac1d56",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-054",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Tin Tower \u2014 ancient timber chamber",
+      "state": "planned",
+      "priority": "P2",
+      "index": 53,
+      "tiles": 488,
+      "sha256": "6c355be326a060430ebeca227ae90913df211c5ae7af567208808b37d341340a",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-055",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Whirl Islands \u2014 flooded caves",
+      "state": "planned",
+      "priority": "P2",
+      "index": 54,
+      "tiles": 487,
+      "sha256": "bd55686ec35a9daaeefdd5c39ed3308689a30302d75f514418605adfcdcfbca1",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-056",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Ice Path \u2014 blue crystal chamber",
+      "state": "batch01 converted",
+      "priority": "P0",
+      "index": 55,
+      "tiles": 487,
+      "sha256": "39063e193dc3870bf3dc6107f8c7a095ec1a40ab61932545f410b088d7b8a74c",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-057",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Mt Silver \u2014 first cave",
+      "state": "existing tested",
+      "priority": "P0",
+      "index": 56,
+      "tiles": 446,
+      "sha256": "22213abcbf316f0806ea1333692672d69dc18e3b65727da18e1b0d310bf8f7fb",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-058",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Mt Silver \u2014 deep cave",
+      "state": "planned",
+      "priority": "P2",
+      "index": 57,
+      "tiles": 446,
+      "sha256": "48468543bf9022af64b0a7761847edb83a85c35521634402845056db0e919f18",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-059",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Victory Road \u2014 Indigo corridor",
+      "state": "planned",
+      "priority": "P2",
+      "index": 58,
+      "tiles": 446,
+      "sha256": "0d6768988bdf936455958e6ce6ce67644f825f35c87df0804595e68853d4e624",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-060",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Cerulean Cave \u2014 luminous depths",
+      "state": "planned",
+      "priority": "P2",
+      "index": 59,
+      "tiles": 488,
+      "sha256": "55a91e04150a2528f5bcfc0f8ffe33b892012241c0fc1ce544e256f96185d7f4",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-061",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Rock Tunnel \u2014 lantern-lit passage",
+      "state": "planned",
+      "priority": "P2",
+      "index": 60,
+      "tiles": 446,
+      "sha256": "df7bee3c83e2b509ebc2f4e5685a24dce3c14752ca4e8a56a2022d45125b7218",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-062",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Seafoam Islands \u2014 frozen cavern",
+      "state": "planned",
+      "priority": "P2",
+      "index": 61,
+      "tiles": 484,
+      "sha256": "d263d3f9d9f18cd4a5c72c876b3a18d43a91e22f8e73a8c6aa64ac458d5b369d",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-063",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Power Plant \u2014 relic generator hall",
+      "state": "planned",
+      "priority": "P2",
+      "index": 62,
+      "tiles": 447,
+      "sha256": "eb380514bcf9cca75f847189d4e55312ecd8e5cc013ab5212b310e66d8278fab",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-064",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Pok\u00e9mon Tower \u2014 spectral floors",
+      "state": "planned",
+      "priority": "P2",
+      "index": 63,
+      "tiles": 487,
+      "sha256": "583fd75e975bf0ca655600eb6e3200c86ad33259d2be039f2b6b65c76e25ca8e",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-065",
+      "category": "Water and coast",
+      "title": "Open ocean \u2014 surf battle",
+      "state": "planned",
+      "priority": "P2",
+      "index": 64,
+      "tiles": 339,
+      "sha256": "052bc4a95b6b67d0daee8f29b5a2171b260c4021de6cf9a96efbd6b920673683",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-066",
+      "category": "Water and coast",
+      "title": "Shoreline \u2014 sand and surf",
+      "state": "planned",
+      "priority": "P2",
+      "index": 65,
+      "tiles": 360,
+      "sha256": "122bcf4a09202e257d4890aab7b7f340e1322024789af565ba6bc36f6d0a5cf5",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-067",
+      "category": "Water and coast",
+      "title": "Whirlpool \u2014 stormy water",
+      "state": "planned",
+      "priority": "P2",
+      "index": 66,
+      "tiles": 371,
+      "sha256": "862d67e8bcb9d4a2b6526bbfc64871b333e873629e0a8b0e262671d09ac851ab",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-068",
+      "category": "Water and coast",
+      "title": "Waterfall \u2014 river basin",
+      "state": "planned",
+      "priority": "P2",
+      "index": 67,
+      "tiles": 354,
+      "sha256": "476d46b65534723c7aa0fcfaf3ab61305a0646fb97a8cf23db25561e593b4794",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-069",
+      "category": "Water and coast",
+      "title": "Lake of Rage \u2014 red sky",
+      "state": "planned",
+      "priority": "P2",
+      "index": 68,
+      "tiles": 335,
+      "sha256": "a8376a180aff0fff7c2eac0a8711c8e6a6850342496ce825716681cef6f31d57",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-070",
+      "category": "Water and coast",
+      "title": "Pond \u2014 lily pads",
+      "state": "planned",
+      "priority": "P2",
+      "index": 69,
+      "tiles": 336,
+      "sha256": "2ea056dd0dca08b0e20e2f70953770dbdc260ee3d5186d3ed032ec525f8419f0",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-071",
+      "category": "Water and coast",
+      "title": "Bridge \u2014 suspended pathway",
+      "state": "planned",
+      "priority": "P2",
+      "index": 70,
+      "tiles": 337,
+      "sha256": "d5ce078898991a664ac7c212b45ab00da234b3c672974f02ef271b8255ceed03",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-072",
+      "category": "Water and coast",
+      "title": "Island reef \u2014 warm shallows",
+      "state": "planned",
+      "priority": "P2",
+      "index": 71,
+      "tiles": 360,
+      "sha256": "6cf9af5b84d766da2a4ea987de54d5f9083a594cf585ec1c8b51bc8dd4496c7e",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-073",
+      "category": "Gym Leader arenas",
+      "title": "Falkner \u2014 wind and sky",
+      "state": "planned",
+      "priority": "P1",
+      "index": 72,
+      "tiles": 294,
+      "sha256": "c78c4d6acadf5b74fd2cdf71507d96a6be2d42c18e4530ef865e7130c5ff9db8",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-074",
+      "category": "Gym Leader arenas",
+      "title": "Bugsy \u2014 woodland gym",
+      "state": "planned",
+      "priority": "P1",
+      "index": 73,
+      "tiles": 298,
+      "sha256": "45e3c11c5d55798dd1458eb9ed31019a6839c066f432851f334830684703a32c",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-075",
+      "category": "Gym Leader arenas",
+      "title": "Whitney \u2014 Goldenrod arena",
+      "state": "planned",
+      "priority": "P1",
+      "index": 74,
+      "tiles": 295,
+      "sha256": "a937be09c0f6491f8314218cb96d515a48822160f14f1c6f2499f462ee808ec0",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-076",
+      "category": "Gym Leader arenas",
+      "title": "Morty \u2014 spiritual sanctum",
+      "state": "planned",
+      "priority": "P1",
+      "index": 75,
+      "tiles": 291,
+      "sha256": "1d0bd51a6d4bedab8612e08f9c4cb1cada4c418a790b08215f088c91fe4866f0",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-077",
+      "category": "Gym Leader arenas",
+      "title": "Chuck \u2014 fighting dojo",
+      "state": "planned",
+      "priority": "P1",
+      "index": 76,
+      "tiles": 293,
+      "sha256": "5bbca8925dd3b32df0a75672e3fe3867604d8581536099c0cf8013cfa9a6452d",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-078",
+      "category": "Gym Leader arenas",
+      "title": "Jasmine \u2014 steel foundry",
+      "state": "planned",
+      "priority": "P1",
+      "index": 77,
+      "tiles": 301,
+      "sha256": "ffa51622491c7f90363863eff49703b482added9a94861e35a0b08c928926342",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-079",
+      "category": "Gym Leader arenas",
+      "title": "Pryce \u2014 frozen arena",
+      "state": "planned",
+      "priority": "P1",
+      "index": 78,
+      "tiles": 294,
+      "sha256": "e3a52399edcf7dbefac7eab6ac6324eeef454304a28bb60f8f8b8da8b6bfd27b",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-080",
+      "category": "Gym Leader arenas",
+      "title": "Clair \u2014 dragon cave",
+      "state": "planned",
+      "priority": "P1",
+      "index": 79,
+      "tiles": 295,
+      "sha256": "3c747d53cba00a8a2830d6cd56162d22cb509b983a14838da5fe0e5f7288f44e",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-081",
+      "category": "Gym Leader arenas",
+      "title": "Brock \u2014 stone gym",
+      "state": "planned",
+      "priority": "P1",
+      "index": 80,
+      "tiles": 290,
+      "sha256": "a1414b67e64a1a629458cc4135462969b2e4b18a61eced573beee0c69f92cd71",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-082",
+      "category": "Gym Leader arenas",
+      "title": "Misty \u2014 Cerulean pool",
+      "state": "planned",
+      "priority": "P1",
+      "index": 81,
+      "tiles": 301,
+      "sha256": "85442d637239080e8fddd55ce0d582a86b216e915efab07d38575ad4a03cf47e",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-083",
+      "category": "Gym Leader arenas",
+      "title": "Lt Surge \u2014 electric generator",
+      "state": "planned",
+      "priority": "P1",
+      "index": 82,
+      "tiles": 293,
+      "sha256": "d225ff102970963020f4bb7455907442fec6363cb53a6895b472885fb3312da8",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-084",
+      "category": "Gym Leader arenas",
+      "title": "Erika \u2014 flower garden",
+      "state": "planned",
+      "priority": "P1",
+      "index": 83,
+      "tiles": 294,
+      "sha256": "70f27e7cb946b64a90c07bb7542ee8567ec1a9ddb6df683daef5576581b0edf1",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-085",
+      "category": "Gym Leader arenas",
+      "title": "Janine \u2014 ninja maze",
+      "state": "planned",
+      "priority": "P1",
+      "index": 84,
+      "tiles": 294,
+      "sha256": "f150fb6e6dcc6d90ec8b074c8a8d2cf6d9835275fe0e015a7872a44a73d6d445",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-086",
+      "category": "Gym Leader arenas",
+      "title": "Sabrina \u2014 psychic chamber",
+      "state": "planned",
+      "priority": "P1",
+      "index": 85,
+      "tiles": 290,
+      "sha256": "a58a841305aec4836e977059124c8095b8263ea4a1f629a525e0e297061c6470",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-087",
+      "category": "Gym Leader arenas",
+      "title": "Blaine \u2014 volcanic challenge",
+      "state": "planned",
+      "priority": "P1",
+      "index": 86,
+      "tiles": 297,
+      "sha256": "c8518863fd8aefa6466a86e979109fb05f923b5c10175123ff1d424de4dee16a",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-088",
+      "category": "Gym Leader arenas",
+      "title": "Blue \u2014 Viridian ultimate gym",
+      "state": "planned",
+      "priority": "P1",
+      "index": 87,
+      "tiles": 293,
+      "sha256": "654723e41cba34e573b4a18593023b7335ab67b152a6ad39b6eb7c7374420873",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-089",
+      "category": "Elite and E20",
+      "title": "Will \u2014 psychic chess hall",
+      "state": "planned",
+      "priority": "P2",
+      "index": 88,
+      "tiles": 308,
+      "sha256": "ef86b45836144fbc9725cd419b0b66efc1da1a3ac75eb2a32f223ee8dac02593",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-090",
+      "category": "Elite and E20",
+      "title": "Koga \u2014 toxic ninja hall",
+      "state": "planned",
+      "priority": "P2",
+      "index": 89,
+      "tiles": 317,
+      "sha256": "771b15e1b828a6f319c2adff72798f8f99586c886591b555eeed8923cc00963a",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-091",
+      "category": "Elite and E20",
+      "title": "Bruno \u2014 martial stone ring",
+      "state": "planned",
+      "priority": "P2",
+      "index": 90,
+      "tiles": 308,
+      "sha256": "0a7456e7689cfe2b0d4453c7ad9e7fd7cf538733e92b04f3f5302e85afa6c4bc",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-092",
+      "category": "Elite and E20",
+      "title": "Karen \u2014 moonlit dark arena",
+      "state": "planned",
+      "priority": "P2",
+      "index": 91,
+      "tiles": 310,
+      "sha256": "38724a9a71f64258d3c57aa3ce71075b0f819add817f9b66796067ae5dc57a62",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-093",
+      "category": "Elite and E20",
+      "title": "Lance \u2014 dragon championship",
+      "state": "planned",
+      "priority": "P2",
+      "index": 92,
+      "tiles": 306,
+      "sha256": "096e98273933f26a22ce03a079b63bc4f5769ba27045687900c5fbb4af220b80",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-094",
+      "category": "Elite and E20",
+      "title": "Lorelei \u2014 cold blue vault",
+      "state": "planned",
+      "priority": "P2",
+      "index": 93,
+      "tiles": 318,
+      "sha256": "f79b5708da8a1ed8c728106a3258b23d2171dbcfa2c14eb36319458d2f4cdbaa",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-095",
+      "category": "Elite and E20",
+      "title": "Agatha \u2014 haunted hall",
+      "state": "planned",
+      "priority": "P2",
+      "index": 94,
+      "tiles": 313,
+      "sha256": "5fa94d05ded38a3b1a7b024b98bd43f13c732d5f6f3a0c5c6234c604e8c09de6",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-096",
+      "category": "Elite and E20",
+      "title": "Red \u2014 silent summit",
+      "state": "planned",
+      "priority": "P2",
+      "index": 95,
+      "tiles": 307,
+      "sha256": "d0f6727ec83dc84e99fe535e1fa538da746e4aeebbdc7e5d9c6d197c62937f7d",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-097",
+      "category": "Elite and E20",
+      "title": "Oak and Elm \u2014 professor laboratory",
+      "state": "planned",
+      "priority": "P2",
+      "index": 96,
+      "tiles": 304,
+      "sha256": "1dd8067344fac9515b7b28015bf9d4ee3c73f485876a89e4dde88d49e8ca1c6c",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-098",
+      "category": "Elite and E20",
+      "title": "Jessie and James \u2014 Rocket duo",
+      "state": "planned",
+      "priority": "P2",
+      "index": 97,
+      "tiles": 317,
+      "sha256": "52d7374fe5f44176d8d9798d81ae750997731efc01b90f74405041c6c9a9da76",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-099",
+      "category": "Elite and E20",
+      "title": "Steevee and Neevee \u2014 Eeveelution stage",
+      "state": "planned",
+      "priority": "P2",
+      "index": 98,
+      "tiles": 313,
+      "sha256": "0d399dce1c63056e1f1a0a07528ba127ed4f4d9ea4f25381839ef739cacfe374",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-100",
+      "category": "Elite and E20",
+      "title": "Elite 20 \u2014 ancient champions chamber",
+      "state": "planned",
+      "priority": "P2",
+      "index": 99,
+      "tiles": 311,
+      "sha256": "f438186197244d399b4c069b525bdbe3766b837785390317816e95822d07a0eb",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-101",
+      "category": "Relics and legendary encounters",
+      "title": "Raikou \u2014 Power Plant podium",
+      "state": "planned",
+      "priority": "P1",
+      "index": 100,
+      "tiles": 483,
+      "sha256": "fce139c92401182a9d89ec94f47d3756f371d4261d0c61a868cdaa8935f20a8d",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-102",
+      "category": "Relics and legendary encounters",
+      "title": "Entei \u2014 Mt Mortar volcanic relic",
+      "state": "batch01 converted",
+      "priority": "P0",
+      "index": 101,
+      "tiles": 485,
+      "sha256": "f144f0235d109c02830ceee26e21f173869549bbafc23fe3d72d1e2b1dc1fc91",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-103",
+      "category": "Relics and legendary encounters",
+      "title": "Suicune \u2014 sacred waters",
+      "state": "planned",
+      "priority": "P1",
+      "index": 102,
+      "tiles": 486,
+      "sha256": "75774efcb918743314cf19596bb0a50130fbef6ea022de50c8cc749f60d02d23",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-104",
+      "category": "Relics and legendary encounters",
+      "title": "Lugia \u2014 deepest Whirl chamber",
+      "state": "planned",
+      "priority": "P1",
+      "index": 103,
+      "tiles": 486,
+      "sha256": "3f96a941bc877ac76a880d74b4f26c308478d2bbd5f759d25b4f0d117196107c",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-105",
+      "category": "Relics and legendary encounters",
+      "title": "Celebi \u2014 Ilex Forest shrine",
+      "state": "planned",
+      "priority": "P1",
+      "index": 104,
+      "tiles": 486,
+      "sha256": "4457adb44a91fcab8ea2090db82ebca6b32dca35691a1d1408aadbe3c5a68b42",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-106",
+      "category": "Relics and legendary encounters",
+      "title": "I-Unown \u2014 Alph Eye chamber",
+      "state": "planned",
+      "priority": "P1",
+      "index": 105,
+      "tiles": 480,
+      "sha256": "d0156e691f6f50e5048434bb0fccecccf23d81a3ef8de79eadd0c84411ef1f72",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-107",
+      "category": "Relics and legendary encounters",
+      "title": "Alphoracle \u2014 Alph ritual hall",
+      "state": "planned",
+      "priority": "P1",
+      "index": 106,
+      "tiles": 472,
+      "sha256": "5bcfc827499a77c757fda0a499e176f49a0587ef0a80585740bace695d549cce",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-108",
+      "category": "Relics and legendary encounters",
+      "title": "Ancient Guardian Dragonite \u2014 Tin Tower roof",
+      "state": "planned",
+      "priority": "P1",
+      "index": 107,
+      "tiles": 341,
+      "sha256": "1d3a4ebe686a03c11c6f11317a299cd2aa45531e3b44517c03a9fcfcbd85add6",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-109",
+      "category": "Relics and legendary encounters",
+      "title": "Golden Ho-Oh \u2014 Mt Silver finale",
+      "state": "planned",
+      "priority": "P1",
+      "index": 108,
+      "tiles": 278,
+      "sha256": "329a2602fb6e70b7ca47fa9411daa12883ae2bdd12b6bceec11ebd22f6161b9a",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-110",
+      "category": "Relics and legendary encounters",
+      "title": "Armoured Mewtwo \u2014 Giovanni laboratory",
+      "state": "planned",
+      "priority": "P1",
+      "index": 109,
+      "tiles": 485,
+      "sha256": "0fe21a429f6b7761aba3ec64a862652f03cbec88f9d005d10767e91d0ceb86f2",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-111",
+      "category": "Relics and legendary encounters",
+      "title": "Primal Groudon \u2014 magma temple",
+      "state": "planned",
+      "priority": "P1",
+      "index": 110,
+      "tiles": 484,
+      "sha256": "77625524d88949d5eb7a58a089288618c7efa0156a5399691294966153689eb1",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-112",
+      "category": "Relics and legendary encounters",
+      "title": "Primal Kyogre \u2014 ocean throne",
+      "state": "planned",
+      "priority": "P1",
+      "index": 111,
+      "tiles": 487,
+      "sha256": "01af199f656df128aaafb48ab8c87e34811412bbe951312a03dbb1d5af58c2f6",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    },
+    {
+      "id": "PRU-BG-113",
+      "category": "Caves, forests, towers and dungeons",
+      "title": "Ruins of Alph Inside \u2014 ancient Unown relic temple",
+      "state": "first pass generated",
+      "priority": "P0",
+      "index": 112,
+      "tiles": 485,
+      "sha256": "97175eef253e039c3f34f9705807d3af27cea2de7c9c563bda13485f030b457f",
+      "standing_platform_center": [
+        185,
+        65
+      ],
+      "artwork_origin": "original PRU artwork remix / procedural location motifs"
+    }
+  ]
+}
