@@ -1,0 +1,473 @@
+{
+  "count": 52,
+  "assets": [
+    {
+      "file": "0239ab26-c000-4b36-88be-a5b006c8e90f.png",
+      "width": 126,
+      "height": 126,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 8195
+    },
+    {
+      "file": "0afac828-936d-4b36-a25a-d62607c3200c.png",
+      "width": 246,
+      "height": 246,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 3388
+    },
+    {
+      "file": "1281c559-4ccd-49ec-a5ed-294bde9c4e4b.png",
+      "width": 82,
+      "height": 82,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 1094
+    },
+    {
+      "file": "1545b7f9-9b08-4f38-9690-ae6e02d6e47d.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 27
+    },
+    {
+      "file": "19334459-4403-4c6c-af9e-061502d1fd9f.png",
+      "width": 88,
+      "height": 88,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 1040
+    },
+    {
+      "file": "1d64c493-3ad7-4bd8-9780-597e2146df21.png",
+      "width": 148,
+      "height": 148,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 2715
+    },
+    {
+      "file": "21ae56cc-d3b2-4d6c-ba0c-28cd4838f1cb.png",
+      "width": 82,
+      "height": 82,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 1003
+    },
+    {
+      "file": "220b8ead-cdf5-4756-b3c3-5f9c19db71ed.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
+    },
+    {
+      "file": "279dd2d2-feea-4764-96fd-37d68b12e47c.png",
+      "width": 190,
+      "height": 190,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 3037
+    },
+    {
+      "file": "298bae98-0e10-413e-b9c7-e9aa5b89277d.png",
+      "width": 176,
+      "height": 176,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 3482
+    },
+    {
+      "file": "3b471764-4dcc-4ae2-9720-524be0b9f053.png",
+      "width": 96,
+      "height": 96,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 2000
+    },
+    {
+      "file": "3f28c628-669f-475b-8490-9275c3e2d04a.png",
+      "width": 72,
+      "height": 72,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 1022
+    },
+    {
+      "file": "3fe3cc58-eb5b-4370-989d-084041d04be6.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
+    },
+    {
+      "file": "4935bc7e-5d66-4f86-8fd4-656a2f3ca374.png",
+      "width": 180,
+      "height": 180,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 1976
+    },
+    {
+      "file": "4a2a0120-ce90-4994-864e-b7dc084e5654.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 16
+    },
+    {
+      "file": "4cf6e23a-7cde-4d91-8341-c5724d125183.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 16
+    },
+    {
+      "file": "5629a47f-0bf6-4e03-b1a6-32359cc87c18.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 16
+    },
+    {
+      "file": "5e291255-e919-4015-bf3e-ab1e6d7a3516.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
+    },
+    {
+      "file": "5ff8bb68-ea62-4555-9b72-afac5afcd406.png",
+      "width": 74,
+      "height": 74,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 836
+    },
+    {
+      "file": "606d9dba-ede3-482b-b755-3ef17ce4f00a.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
+    },
+    {
+      "file": "62c3e44e-334d-428d-af43-b52457c4ca67.png",
+      "width": 184,
+      "height": 184,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 3105
+    },
+    {
+      "file": "63532024-1cc7-4768-ad97-ee706c6eb2b9.png",
+      "width": 168,
+      "height": 168,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 8076
+    },
+    {
+      "file": "675e77b2-2d90-48a3-8eb0-d260dda34903.png",
+      "width": 132,
+      "height": 132,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 1520
+    },
+    {
+      "file": "6b82507a-c882-4a3b-9fd7-5f72b0b7a348.png",
+      "width": 84,
+      "height": 84,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 1195
+    },
+    {
+      "file": "6c833396-6ccb-4d4e-8d2b-16cb24de841c.png",
+      "width": 78,
+      "height": 78,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 967
+    },
+    {
+      "file": "6e2fc6e7-85cf-4aea-837c-fbc6e501ad39.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 13
+    },
+    {
+      "file": "74dda45e-dd99-48a6-a527-fa7acad41729.png",
+      "width": 150,
+      "height": 150,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 2985
+    },
+    {
+      "file": "76ac2a77-49c5-4bed-881c-346bc023f439.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
+    },
+    {
+      "file": "7c11e8b7-07fb-4c20-870b-cbb0aef7f563.png",
+      "width": 154,
+      "height": 154,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 2944
+    },
+    {
+      "file": "7eaf5073-d5d2-451c-9705-824ce585f1e5.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 16
+    },
+    {
+      "file": "97ddcc2d-ddea-404d-b011-985f30fd7c68.png",
+      "width": 66,
+      "height": 66,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 713
+    },
+    {
+      "file": "98acb949-d1d9-42d9-8ac5-d7762e0200ba.png",
+      "width": 58,
+      "height": 58,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
+    },
+    {
+      "file": "9afa274e-4445-421c-8178-3c64e027572d.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 14
+    },
+    {
+      "file": "9c42c1a6-afed-4181-b8cf-b59cf02fc7f3.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 14
+    },
+    {
+      "file": "a24e04b8-06c8-409f-a481-8602ae27c8d9.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
+    },
+    {
+      "file": "a8d5d96c-00f1-47ad-b124-2781d8feb14f.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
+    },
+    {
+      "file": "aa804519-2443-4a43-b980-29dfaa720e09.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 30
+    },
+    {
+      "file": "ad94b00b-1921-400d-b159-d3e73b06280d.png",
+      "width": 180,
+      "height": 180,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 5671
+    },
+    {
+      "file": "ba3cc3b6-e7ca-4f4e-801c-5ddf5f88bc87.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
+    },
+    {
+      "file": "bf3598d6-da84-449e-b521-8e83e5f492cb.png",
+      "width": 1376,
+      "height": 768,
+      "fits_64x64": false,
+      "transparent_pixels": false,
+      "opaque_pixels": true,
+      "unique_colors": 0
+    },
+    {
+      "file": "ce988d0c-42ec-45c2-95db-03fc6bdf6d84.png",
+      "width": 188,
+      "height": 188,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 10284
+    },
+    {
+      "file": "ceaf2296-2f6e-4949-8f6e-8f2044145464.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 14
+    },
+    {
+      "file": "d06a321b-9f85-4405-9d28-11f6c08301ca.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
+    },
+    {
+      "file": "d06ad830-3506-48bc-9dce-e348d7fedf42.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 22
+    },
+    {
+      "file": "d387c199-2371-445f-a3f0-2ca43e662547.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 16
+    },
+    {
+      "file": "e069e378-f02b-4a8f-b8b1-79d58766db05.png",
+      "width": 158,
+      "height": 158,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 4699
+    },
+    {
+      "file": "e2180daa-840f-4ac6-b434-f2254fb87c25.png",
+      "width": 158,
+      "height": 158,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 4500
+    },
+    {
+      "file": "e244bd2e-e15c-4ce1-bb94-d479c9d81bd8.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 15
+    },
+    {
+      "file": "e338ff31-041f-41e2-b8f3-5fe89e729c4b.png",
+      "width": 174,
+      "height": 174,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 3254
+    },
+    {
+      "file": "e61f1c1d-490c-4d7b-8f7b-2f9454095757.png",
+      "width": 76,
+      "height": 76,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 852
+    },
+    {
+      "file": "f00ad40c-2275-4f9c-9516-68d54e5438f8.png",
+      "width": 186,
+      "height": 186,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 4968
+    },
+    {
+      "file": "f583abdf-1d83-44e4-b758-9d635f420a98.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 16
+    }
+  ]
+}
