@@ -1,0 +1,113 @@
+﻿id,category,title,state,priority
+PRU-BG-001,Routes and outdoor,Route 29 — New Bark grasslands,existing tested,P0
+PRU-BG-002,Routes and outdoor,Route 30 — winding wooded path,planned,P1
+PRU-BG-003,Routes and outdoor,Route 31 — Violet approach,planned,P1
+PRU-BG-004,Routes and outdoor,Route 32 — southern coast grass,planned,P1
+PRU-BG-005,Routes and outdoor,Route 33 — rain-soaked forest,planned,P1
+PRU-BG-006,Routes and outdoor,Route 34 — southern meadows,planned,P1
+PRU-BG-007,Routes and outdoor,Route 35 — National Park approach,planned,P1
+PRU-BG-008,Routes and outdoor,Route 36 — ancient crossroads,planned,P1
+PRU-BG-009,Routes and outdoor,Route 37 — autumn trees,planned,P1
+PRU-BG-010,Routes and outdoor,Route 38 — grazing pasture,planned,P1
+PRU-BG-011,Routes and outdoor,Route 39 — lighthouse farmland,planned,P1
+PRU-BG-012,Routes and outdoor,Route 40 — western sea cliff,planned,P1
+PRU-BG-013,Routes and outdoor,Route 41 — Whirl Islands coast,planned,P1
+PRU-BG-014,Routes and outdoor,Route 42 — Mt Mortar lakeside,planned,P1
+PRU-BG-015,Routes and outdoor,Route 43 — Lake of Rage road,planned,P1
+PRU-BG-016,Routes and outdoor,Route 44 — rocky river pass,planned,P1
+PRU-BG-017,Routes and outdoor,Route 45 — Blackthorn cliffs,planned,P1
+PRU-BG-018,Routes and outdoor,Route 46 — mountain foothills,planned,P1
+PRU-BG-019,Routes and outdoor,Route 26 — Indigo ascent,planned,P1
+PRU-BG-020,Routes and outdoor,Route 27 — Tohjo Falls valley,planned,P1
+PRU-BG-021,Routes and outdoor,Route 28 — Mt Silver lower path,planned,P1
+PRU-BG-022,Routes and outdoor,Kanto Route 1 — Pallet woodland,planned,P1
+PRU-BG-023,Routes and outdoor,Kanto Route 2 — Viridian forest edge,planned,P1
+PRU-BG-024,Routes and outdoor,Kanto Route 3 — Moon Mountain pass,planned,P1
+PRU-BG-025,Routes and outdoor,Kanto Route 24 — Nugget Bridge,planned,P1
+PRU-BG-026,Routes and outdoor,Kanto Route 25 — northern cape,planned,P1
+PRU-BG-027,Towns and cities,New Bark — village edge,planned,P2
+PRU-BG-028,Towns and cities,Cherrygrove — seaside gardens,planned,P2
+PRU-BG-029,Towns and cities,Violet — Sprout Tower skyline,planned,P2
+PRU-BG-030,Towns and cities,Azalea — timber village,planned,P2
+PRU-BG-031,Towns and cities,Goldenrod — city plaza,planned,P2
+PRU-BG-032,Towns and cities,Ecruteak — autumn shrine street,planned,P2
+PRU-BG-033,Towns and cities,Olivine — harbourfront,planned,P2
+PRU-BG-034,Towns and cities,Cianwood — island coast,planned,P2
+PRU-BG-035,Towns and cities,Mahogany — mountain village,planned,P2
+PRU-BG-036,Towns and cities,Blackthorn — Dragon Den approach,planned,P2
+PRU-BG-037,Towns and cities,Pallet — Professor Oak hometown,planned,P2
+PRU-BG-038,Towns and cities,Viridian — forest district,planned,P2
+PRU-BG-039,Towns and cities,Pewter — stone town,planned,P2
+PRU-BG-040,Towns and cities,Cerulean — canal waterside,planned,P2
+PRU-BG-041,Towns and cities,Vermilion — port docks,planned,P2
+PRU-BG-042,Towns and cities,Lavender — misty tower street,planned,P2
+PRU-BG-043,Towns and cities,Celadon — garden rooftop,planned,P2
+PRU-BG-044,Towns and cities,Saffron — metropolitan plaza,planned,P2
+PRU-BG-045,Towns and cities,Fuchsia — Safari crossroads,planned,P2
+PRU-BG-046,Towns and cities,Cinnabar — volcanic harbour,planned,P2
+PRU-BG-047,"Caves, forests, towers and dungeons",Ilex Forest — shrine clearing,batch01 converted,P0
+PRU-BG-048,"Caves, forests, towers and dungeons",Ruins of Alph — outdoor meadow,batch01 converted,P0
+PRU-BG-049,"Caves, forests, towers and dungeons",Union Cave — mossy tunnels,planned,P2
+PRU-BG-050,"Caves, forests, towers and dungeons",Slowpoke Well — damp cavern,planned,P2
+PRU-BG-051,"Caves, forests, towers and dungeons",Dark Cave — deep shadowed tunnel,planned,P2
+PRU-BG-052,"Caves, forests, towers and dungeons",Mt Mortar — rugged interior,planned,P2
+PRU-BG-053,"Caves, forests, towers and dungeons",Burned Tower — charred timbers,planned,P2
+PRU-BG-054,"Caves, forests, towers and dungeons",Tin Tower — ancient timber chamber,planned,P2
+PRU-BG-055,"Caves, forests, towers and dungeons",Whirl Islands — flooded caves,planned,P2
+PRU-BG-056,"Caves, forests, towers and dungeons",Ice Path — blue crystal chamber,batch01 converted,P0
+PRU-BG-057,"Caves, forests, towers and dungeons",Mt Silver — first cave,existing tested,P0
+PRU-BG-058,"Caves, forests, towers and dungeons",Mt Silver — deep cave,planned,P2
+PRU-BG-059,"Caves, forests, towers and dungeons",Victory Road — Indigo corridor,planned,P2
+PRU-BG-060,"Caves, forests, towers and dungeons",Cerulean Cave — luminous depths,planned,P2
+PRU-BG-061,"Caves, forests, towers and dungeons",Rock Tunnel — lantern-lit passage,planned,P2
+PRU-BG-062,"Caves, forests, towers and dungeons",Seafoam Islands — frozen cavern,planned,P2
+PRU-BG-063,"Caves, forests, towers and dungeons",Power Plant — relic generator hall,planned,P2
+PRU-BG-064,"Caves, forests, towers and dungeons",Pokémon Tower — spectral floors,planned,P2
+PRU-BG-065,Water and coast,Open ocean — surf battle,planned,P2
+PRU-BG-066,Water and coast,Shoreline — sand and surf,planned,P2
+PRU-BG-067,Water and coast,Whirlpool — stormy water,planned,P2
+PRU-BG-068,Water and coast,Waterfall — river basin,planned,P2
+PRU-BG-069,Water and coast,Lake of Rage — red sky,planned,P2
+PRU-BG-070,Water and coast,Pond — lily pads,planned,P2
+PRU-BG-071,Water and coast,Bridge — suspended pathway,planned,P2
+PRU-BG-072,Water and coast,Island reef — warm shallows,planned,P2
+PRU-BG-073,Gym Leader arenas,Falkner — wind and sky,planned,P1
+PRU-BG-074,Gym Leader arenas,Bugsy — woodland gym,planned,P1
+PRU-BG-075,Gym Leader arenas,Whitney — Goldenrod arena,planned,P1
+PRU-BG-076,Gym Leader arenas,Morty — spiritual sanctum,planned,P1
+PRU-BG-077,Gym Leader arenas,Chuck — fighting dojo,planned,P1
+PRU-BG-078,Gym Leader arenas,Jasmine — steel foundry,planned,P1
+PRU-BG-079,Gym Leader arenas,Pryce — frozen arena,planned,P1
+PRU-BG-080,Gym Leader arenas,Clair — dragon cave,planned,P1
+PRU-BG-081,Gym Leader arenas,Brock — stone gym,planned,P1
+PRU-BG-082,Gym Leader arenas,Misty — Cerulean pool,planned,P1
+PRU-BG-083,Gym Leader arenas,Lt Surge — electric generator,planned,P1
+PRU-BG-084,Gym Leader arenas,Erika — flower garden,planned,P1
+PRU-BG-085,Gym Leader arenas,Janine — ninja maze,planned,P1
+PRU-BG-086,Gym Leader arenas,Sabrina — psychic chamber,planned,P1
+PRU-BG-087,Gym Leader arenas,Blaine — volcanic challenge,planned,P1
+PRU-BG-088,Gym Leader arenas,Blue — Viridian ultimate gym,planned,P1
+PRU-BG-089,Elite and E20,Will — psychic chess hall,planned,P2
+PRU-BG-090,Elite and E20,Koga — toxic ninja hall,planned,P2
+PRU-BG-091,Elite and E20,Bruno — martial stone ring,planned,P2
+PRU-BG-092,Elite and E20,Karen — moonlit dark arena,planned,P2
+PRU-BG-093,Elite and E20,Lance — dragon championship,planned,P2
+PRU-BG-094,Elite and E20,Lorelei — cold blue vault,planned,P2
+PRU-BG-095,Elite and E20,Agatha — haunted hall,planned,P2
+PRU-BG-096,Elite and E20,Red — silent summit,planned,P2
+PRU-BG-097,Elite and E20,Oak and Elm — professor laboratory,planned,P2
+PRU-BG-098,Elite and E20,Jessie and James — Rocket duo,planned,P2
+PRU-BG-099,Elite and E20,Steevee and Neevee — Eeveelution stage,planned,P2
+PRU-BG-100,Elite and E20,Elite 20 — ancient champions chamber,planned,P2
+PRU-BG-101,Relics and legendary encounters,Raikou — Power Plant podium,planned,P1
+PRU-BG-102,Relics and legendary encounters,Entei — Mt Mortar volcanic relic,batch01 converted,P0
+PRU-BG-103,Relics and legendary encounters,Suicune — sacred waters,planned,P1
+PRU-BG-104,Relics and legendary encounters,Lugia — deepest Whirl chamber,planned,P1
+PRU-BG-105,Relics and legendary encounters,Celebi — Ilex Forest shrine,planned,P1
+PRU-BG-106,Relics and legendary encounters,I-Unown — Alph Eye chamber,planned,P1
+PRU-BG-107,Relics and legendary encounters,Alphoracle — Alph ritual hall,planned,P1
+PRU-BG-108,Relics and legendary encounters,Ancient Guardian Dragonite — Tin Tower roof,planned,P1
+PRU-BG-109,Relics and legendary encounters,Golden Ho-Oh — Mt Silver finale,planned,P1
+PRU-BG-110,Relics and legendary encounters,Armoured Mewtwo — Giovanni laboratory,planned,P1
+PRU-BG-111,Relics and legendary encounters,Primal Groudon — magma temple,planned,P1
+PRU-BG-112,Relics and legendary encounters,Primal Kyogre — ocean throne,planned,P1

@@ -1,0 +1,89 @@
+{
+  "batch": "PRU Original Battle Background Pack \u2014 Batch 01",
+  "rules": {
+    "gba_bg3": true,
+    "opponent_platform_up_px": 5
+  },
+  "scenes": [
+    {
+      "src": "misty_shrine_forest_battle_arena.png",
+      "title": "Ilex Forest \u2014 Shrine Clearing",
+      "location": [
+        "MAP_ILEX_FOREST_HNS"
+      ],
+      "type": "wild/trainer",
+      "slug": "ilex_forest",
+      "tile_count": 500,
+      "raw_tile_bytes": 16000,
+      "lz_tile_bytes": 14404,
+      "lz_map_bytes": 1304,
+      "palette_bank_ids": [
+        12,
+        13,
+        14
+      ],
+      "opponent_standing_patch_shift_px": -5
+    },
+    {
+      "src": "ancient_ruins_meadow_battle_arena.png",
+      "title": "Ruins of Alph \u2014 Outside Meadow",
+      "location": [
+        "MAP_RUINS_OF_ALPH_OUTSIDE_HNS"
+      ],
+      "type": "wild/trainer",
+      "slug": "ruins_alph_outside",
+      "tile_count": 500,
+      "raw_tile_bytes": 16000,
+      "lz_tile_bytes": 11756,
+      "lz_map_bytes": 1296,
+      "palette_bank_ids": [
+        12,
+        13,
+        14
+      ],
+      "opponent_standing_patch_shift_px": -5
+    },
+    {
+      "src": "glowing_crystal_cavern_battle_arena.png",
+      "title": "Ice Path \u2014 Blue Crystal Cavern",
+      "location": [
+        "MAP_ICE_PATH_1F_HNS",
+        "MAP_ICE_PATH_B1F_HNS",
+        "MAP_ICE_PATH_B2F_HNS",
+        "MAP_ICE_PATH_B3F_HNS",
+        "MAP_ICE_PATH_B4F_HNS"
+      ],
+      "type": "wild/trainer",
+      "slug": "ice_path",
+      "tile_count": 500,
+      "raw_tile_bytes": 16000,
+      "lz_tile_bytes": 12604,
+      "lz_map_bytes": 1312,
+      "palette_bank_ids": [
+        12,
+        13,
+        14
+      ],
+      "opponent_standing_patch_shift_px": -5
+    },
+    {
+      "src": "volcanic_relic_temple_arena.png",
+      "title": "Mt Mortar B1F \u2014 Entei Relic Chamber",
+      "location": [
+        "MAP_MT_MORTAR_B1F_HNS"
+      ],
+      "type": "wild/trainer; provisional for Entei",
+      "slug": "entei_mortar",
+      "tile_count": 500,
+      "raw_tile_bytes": 16000,
+      "lz_tile_bytes": 12948,
+      "lz_map_bytes": 1304,
+      "palette_bank_ids": [
+        12,
+        13,
+        14
+      ],
+      "opponent_standing_patch_shift_px": -5
+    }
+  ]
+}

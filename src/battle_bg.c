@@ -41,9 +41,26 @@ extern const u16 gPruTestMtSilverPal[];
 extern const u32 gPruTestRoute29Tiles[];
 extern const u32 gPruTestRoute29Map[];
 extern const u16 gPruTestRoute29Pal[];
-static const struct PruRhythmBattleBg sPruOriginalTestBattleBgs[2] = {
+// Original PRU art; retain the two proven scenes and introduce Batch 01.
+extern const u32 gPruBatch1IlexTiles[];
+extern const u32 gPruBatch1IlexMap[];
+extern const u16 gPruBatch1IlexPal[];
+extern const u32 gPruBatch1RuinsTiles[];
+extern const u32 gPruBatch1RuinsMap[];
+extern const u16 gPruBatch1RuinsPal[];
+extern const u32 gPruBatch1IcePathTiles[];
+extern const u32 gPruBatch1IcePathMap[];
+extern const u16 gPruBatch1IcePathPal[];
+extern const u32 gPruBatch1EnteiMortarTiles[];
+extern const u32 gPruBatch1EnteiMortarMap[];
+extern const u16 gPruBatch1EnteiMortarPal[];
+static const struct PruRhythmBattleBg sPruOriginalTestBattleBgs[6] = {
     {gPruTestMtSilverTiles, gPruTestMtSilverMap, gPruTestMtSilverPal},
     {gPruTestRoute29Tiles, gPruTestRoute29Map, gPruTestRoute29Pal},
+    {gPruBatch1IlexTiles, gPruBatch1IlexMap, gPruBatch1IlexPal},
+    {gPruBatch1RuinsTiles, gPruBatch1RuinsMap, gPruBatch1RuinsPal},
+    {gPruBatch1IcePathTiles, gPruBatch1IcePathMap, gPruBatch1IcePathPal},
+    {gPruBatch1EnteiMortarTiles, gPruBatch1EnteiMortarMap, gPruBatch1EnteiMortarPal},
 };
 
 
@@ -982,6 +999,18 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         return 55; // Original rocky battle scene at the Mt Silver cave entrance.
     case MAP_ROUTE29_HNS:
         return 56; // Original grassy Route 29 scene.
+    case MAP_ILEX_FOREST_HNS:
+        return 57; // Original misty forest and shrine clearing.
+    case MAP_RUINS_OF_ALPH_OUTSIDE_HNS:
+        return 58; // Original ruins meadow with stone archway.
+    case MAP_ICE_PATH_1F_HNS:
+    case MAP_ICE_PATH_B1F_HNS:
+    case MAP_ICE_PATH_B2F_HNS:
+    case MAP_ICE_PATH_B3F_HNS:
+    case MAP_ICE_PATH_B4F_HNS:
+        return 59; // Original blue crystal ice chamber.
+    case MAP_MT_MORTAR_B1F_HNS:
+        return 60; // Original volcanic relic chamber (Entei region).
     case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS:
         return 48; // Rhythm's sea cave and waves, for Archie and Kyogre.
     case MAP_MT_SILVER_1F_MOLTRES_ROOM_HNS:
@@ -1146,7 +1175,7 @@ static void LoadBattleEnvironmentGfx(u16 environment)
     const void *tileset, *tilemap, *palette;
 
     u8 pruRhythmBg = GetPruRhythmBattleBgIndex(environment);
-    if (pruRhythmBg == 55 || pruRhythmBg == 56)
+    if (pruRhythmBg >= 55 && pruRhythmBg < 61)
     {
         // Two standalone original scenes, never index beyond Rhythm's 55 entries.
         const struct PruRhythmBattleBg *bg = &sPruOriginalTestBattleBgs[pruRhythmBg - 55];
@@ -1689,7 +1718,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 3:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg == 55 || pruBg == 56)
+            if (pruBg >= 55 && pruBg < 61)
                 DecompressDataWithHeaderVram(sPruOriginalTestBattleBgs[pruBg - 55].tiles, (void *)BG_CHAR_ADDR(2));
             else if (pruBg != 0xFF && pruBg < 55)
                 DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tiles, (void *)BG_CHAR_ADDR(2));
@@ -1700,7 +1729,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 4:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg == 55 || pruBg == 56)
+            if (pruBg >= 55 && pruBg < 61)
                 DecompressDataWithHeaderVram(sPruOriginalTestBattleBgs[pruBg - 55].tilemap, (void *)BG_SCREEN_ADDR(26));
             else if (pruBg != 0xFF && pruBg < 55)
                 DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tilemap, (void *)BG_SCREEN_ADDR(26));
@@ -1711,7 +1740,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 5:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg == 55 || pruBg == 56)
+            if (pruBg >= 55 && pruBg < 61)
                 LoadPalette(sPruOriginalTestBattleBgs[pruBg - 55].palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
             else if (pruBg != 0xFF && pruBg < 55)
                 LoadPalette(sPruRhythmBattleBgs[pruBg].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
