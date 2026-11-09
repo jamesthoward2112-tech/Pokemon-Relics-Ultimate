@@ -66,7 +66,37 @@ extern const u16 gPru50RiverPal[];
 extern const u32 gPru50CoastTiles[];
 extern const u32 gPru50CoastMap[];
 extern const u16 gPru50CoastPal[];
-static const struct PruRhythmBattleBg sPruOriginalTestBattleBgs[12] = {
+extern const u32 gPru22Bg0Tiles[];
+extern const u32 gPru22Bg0Map[];
+extern const u16 gPru22Bg0Pal[];
+extern const u32 gPru22Bg1Tiles[];
+extern const u32 gPru22Bg1Map[];
+extern const u16 gPru22Bg1Pal[];
+extern const u32 gPru22Bg2Tiles[];
+extern const u32 gPru22Bg2Map[];
+extern const u16 gPru22Bg2Pal[];
+extern const u32 gPru22Bg3Tiles[];
+extern const u32 gPru22Bg3Map[];
+extern const u16 gPru22Bg3Pal[];
+extern const u32 gPru22Bg4Tiles[];
+extern const u32 gPru22Bg4Map[];
+extern const u16 gPru22Bg4Pal[];
+extern const u32 gPru22Bg5Tiles[];
+extern const u32 gPru22Bg5Map[];
+extern const u16 gPru22Bg5Pal[];
+extern const u32 gPru22Bg6Tiles[];
+extern const u32 gPru22Bg6Map[];
+extern const u16 gPru22Bg6Pal[];
+extern const u32 gPru22Bg7Tiles[];
+extern const u32 gPru22Bg7Map[];
+extern const u16 gPru22Bg7Pal[];
+extern const u32 gPru22Bg8Tiles[];
+extern const u32 gPru22Bg8Map[];
+extern const u16 gPru22Bg8Pal[];
+extern const u32 gPru22Bg9Tiles[];
+extern const u32 gPru22Bg9Map[];
+extern const u16 gPru22Bg9Pal[];
+static const struct PruRhythmBattleBg sPruOriginalTestBattleBgs[22] = {
     {gPruTestMtSilverTiles, gPruTestMtSilverMap, gPruTestMtSilverPal},
     {gPruTestRoute29Tiles, gPruTestRoute29Map, gPruTestRoute29Pal},
     {gPruBatch1IlexTiles, gPruBatch1IlexMap, gPruBatch1IlexPal},
@@ -79,6 +109,16 @@ static const struct PruRhythmBattleBg sPruOriginalTestBattleBgs[12] = {
     {gPru50RainTiles, gPru50RainMap, gPru50RainPal}, // Lake of Rage / heavy rain / wetlands
     {gPru50RiverTiles, gPru50RiverMap, gPru50RiverPal}, // Wooded rivers and Johto 30-32 paths
     {gPru50CoastTiles, gPru50CoastMap, gPru50CoastPal}, // Olivine / coastal routes / Cianwood
+    {gPru22Bg0Tiles, gPru22Bg0Map, gPru22Bg0Pal}, // twilight_woodland
+    {gPru22Bg1Tiles, gPru22Bg1Map, gPru22Bg1Pal}, // winter_pines
+    {gPru22Bg2Tiles, gPru22Bg2Map, gPru22Bg2Pal}, // burning_crags
+    {gPru22Bg3Tiles, gPru22Bg3Map, gPru22Bg3Pal}, // market_square
+    {gPru22Bg4Tiles, gPru22Bg4Map, gPru22Bg4Pal}, // dark_stone_cavern
+    {gPru22Bg5Tiles, gPru22Bg5Map, gPru22Bg5Pal}, // ochre_forest
+    {gPru22Bg6Tiles, gPru22Bg6Map, gPru22Bg6Pal}, // redwood_copse
+    {gPru22Bg7Tiles, gPru22Bg7Map, gPru22Bg7Pal}, // lantern_crypt
+    {gPru22Bg8Tiles, gPru22Bg8Map, gPru22Bg8Pal}, // stone_arena
+    {gPru22Bg9Tiles, gPru22Bg9Map, gPru22Bg9Pal}, // rolling_hills
 };
 
 
@@ -954,7 +994,7 @@ static const u8 sPruRhythmUrban[] = {8, 10, 11, 12, 17, 22, 26, 28, 31, 41, 44, 
 static const u8 sPruRhythmVolcano[] = {16, 25, 54};
 static const u8 sPruRhythmBurial[] = {18, 19, 27, 29, 38, 44};
 // Original PRU scenes only; reserve Golden Ho-Oh index 62.
-static const u8 sPruElite20RhythmScenes[20] = {58, 63, 63, 57, 57, 59, 60, 59, 63, 66, 57, 58, 61, 65, 58, 61, 66, 63, 61, 61};
+static const u8 sPruElite20RhythmScenes[20] = {74, 75, 71, 73, 67, 68, 69, 59, 75, 66, 57, 58, 61, 76, 70, 69, 74, 75, 61, 61};
 
 static u8 GetPruElite20RhythmBgIndex(void)
 {
@@ -1004,21 +1044,21 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     switch ((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
     {
     // Johto/Kanto Gyms and Saffron Dojo use contextual original PRU scenery.
-    case MAP_VIOLET_CITY_GYM_HNS: return 58; // Original PRU terrain match
-    case MAP_AZALEA_TOWN_GYM_HNS: return 57; // Original PRU terrain match
-    case MAP_GOLDENROD_CITY_GYM_HNS: return 58; // Original PRU terrain match
-    case MAP_ECRUTEAK_CITY_GYM_HNS: return 57; // Original PRU terrain match
-    case MAP_CIANWOOD_GYM_HNS: return 64; // Original PRU terrain match
-    case MAP_OLIVINE_CITY_GYM_HNS: return 66; // Original PRU terrain match
-    case MAP_MAHOGANY_TOWN_GYM_HNS: return 59; // Original PRU terrain match
-    case MAP_BLACKTHORN_CITY_GYM_HNS: return 59; // Original PRU terrain match
-    case MAP_PEWTER_CITY_GYM_HNS: return 63; // Original PRU terrain match
-    case MAP_CERULEAN_CITY_GYM_HNS: return 64; // Original PRU terrain match
-    case MAP_VERMILION_CITY_GYM_HNS: return 66; // Original PRU terrain match
-    case MAP_CELADON_CITY_GYM_HNS: return 57; // Original PRU terrain match
-    case MAP_FUCHSIA_CITY_GYM_HNS: return 57; // Original PRU terrain match
-    case MAP_SAFFRON_CITY_GYM_HNS: return 58; // Original PRU terrain match
-    case MAP_VIRIDIAN_CITY_GYM_HNS: return 61; // Original PRU terrain match
+    case MAP_VIOLET_CITY_GYM_HNS: return 76; // 22 scene expanded art (weather/location audited)
+    case MAP_AZALEA_TOWN_GYM_HNS: return 57; // 22 scene expanded art (weather/location audited)
+    case MAP_GOLDENROD_CITY_GYM_HNS: return 70; // 22 scene expanded art (weather/location audited)
+    case MAP_ECRUTEAK_CITY_GYM_HNS: return 74; // 22 scene expanded art (weather/location audited)
+    case MAP_CIANWOOD_GYM_HNS: return 75; // 22 scene expanded art (weather/location audited)
+    case MAP_OLIVINE_CITY_GYM_HNS: return 66; // 22 scene expanded art (weather/location audited)
+    case MAP_MAHOGANY_TOWN_GYM_HNS: return 68; // 22 scene expanded art (weather/location audited)
+    case MAP_BLACKTHORN_CITY_GYM_HNS: return 59; // 22 scene expanded art (weather/location audited)
+    case MAP_PEWTER_CITY_GYM_HNS: return 71; // 22 scene expanded art (weather/location audited)
+    case MAP_CERULEAN_CITY_GYM_HNS: return 64; // 22 scene expanded art (weather/location audited)
+    case MAP_VERMILION_CITY_GYM_HNS: return 58; // 22 scene expanded art (weather/location audited)
+    case MAP_CELADON_CITY_GYM_HNS: return 73; // 22 scene expanded art (weather/location audited)
+    case MAP_FUCHSIA_CITY_GYM_HNS: return 67; // 22 scene expanded art (weather/location audited)
+    case MAP_SAFFRON_CITY_GYM_HNS: return 58; // 22 scene expanded art (weather/location audited)
+    case MAP_VIRIDIAN_CITY_GYM_HNS: return 61; // 22 scene expanded art (weather/location audited)
     case MAP_SAFFRON_CITY_FIGHTING_DOJO_HNS: return 63; // Original PRU terrain match
     case MAP_SAFFRON_CITY_FIGHTING_DOJO_VIP_HNS: return 63; // Original PRU terrain match
     case MAP_AKALA_CAVE_HNS: return 63; // unclassified underground; general limestone cave
@@ -1031,23 +1071,23 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_BELLCHIME_TRAIL_HNS: return 56; // general outdoor grass
     case MAP_BIRTH_ISLAND_EXTERIOR_HNS: return 56; // general outdoor grass
     case MAP_BLACKTHORN_CITY_HNS: return 61; // town/city MAPSEC_BLACKTHORN_CITY
-    case MAP_BURNED_TOWER_1F_HNS: return 58; // cave/interior system MAPSEC_BURNED_TOWER
-    case MAP_BURNED_TOWER_B1F_HNS: return 58; // cave/interior system MAPSEC_BURNED_TOWER
+    case MAP_BURNED_TOWER_1F_HNS: return 74; // 22 scene expanded art (weather/location audited)
+    case MAP_BURNED_TOWER_B1F_HNS: return 74; // 22 scene expanded art (weather/location audited)
     case MAP_CELADON_CITY_APARTMENTS_ROOF_DAY_HNS: return 57; // town/city MAPSEC_CELADON_CITY
     case MAP_CELADON_CITY_APARTMENTS_ROOF_NIGHT_HNS: return 57; // town/city MAPSEC_CELADON_CITY
     case MAP_CELADON_CITY_DEPARTMENT_STORE_ROOF_DAY_HNS: return 56; // general outdoor grass
     case MAP_CELADON_CITY_DEPARTMENT_STORE_ROOF_NIGHT_HNS: return 56; // general outdoor grass
     case MAP_CELADON_CITY_HNS: return 57; // town/city MAPSEC_CELADON_CITY
-    case MAP_CERULEAN_CAVE_1F_HNS: return 63; // cave/interior system MAPSEC_CERULEAN_CAVE
-    case MAP_CERULEAN_CAVE_B1F_HNS: return 63; // cave/interior system MAPSEC_CERULEAN_CAVE
-    case MAP_CERULEAN_CAVE_B2F_HNS: return 63; // cave/interior system MAPSEC_CERULEAN_CAVE
+    case MAP_CERULEAN_CAVE_1F_HNS: return 71; // 22 scene expanded art (weather/location audited)
+    case MAP_CERULEAN_CAVE_B1F_HNS: return 71; // 22 scene expanded art (weather/location audited)
+    case MAP_CERULEAN_CAVE_B2F_HNS: return 71; // 22 scene expanded art (weather/location audited)
     case MAP_CERULEAN_CITY_HNS: return 56; // town/city MAPSEC_CERULEAN_CITY
     case MAP_CHERRYGROVE_CITY_HNS: return 56; // town/city MAPSEC_CHERRYGROVE_CITY
     case MAP_CIANWOOD_CITY_HNS: return 64; // town/city MAPSEC_CIANWOOD_CITY / local WEATHER_RAIN
     case MAP_CLIFF_EDGE_CAVE_HNS: return 63; // cave/interior system MAPSEC_CLIFF_CAVE
     case MAP_CLIFF_EDGE_GATE_HNS: return 63; // cave/interior system MAPSEC_CLIFF_CAVE
-    case MAP_DARK_CAVE_NORTH_SIDE_HNS: return 63; // cave/interior system MAPSEC_DARK_CAVE
-    case MAP_DARK_CAVE_SOUTH_SIDE_HNS: return 63; // cave/interior system MAPSEC_DARK_CAVE
+    case MAP_DARK_CAVE_NORTH_SIDE_HNS: return 71; // 22 scene expanded art (weather/location audited)
+    case MAP_DARK_CAVE_SOUTH_SIDE_HNS: return 71; // 22 scene expanded art (weather/location audited)
     case MAP_DIGLETTS_CAVE_ENTRANCE_NORTH_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
     case MAP_DIGLETTS_CAVE_ENTRANCE_SOUTH_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
     case MAP_DIGLETTS_CAVE_TUNNEL_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
@@ -1055,7 +1095,7 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_DRAGONS_DEN_ENTRANCE_HNS: return 59; // cave/interior system MAPSEC_DRAGONS_DEN
     case MAP_DRAGONS_DEN_SHRINE_HNS: return 59; // cave/interior system MAPSEC_DRAGONS_DEN
     case MAP_DRAGONS_DEN_STORM_SHRINE_HNS: return 59; // cave/interior system MAPSEC_DRAGONS_DEN
-    case MAP_ECRUTEAK_CITY_HNS: return 58; // town/city MAPSEC_ECRUTEAK_CITY
+    case MAP_ECRUTEAK_CITY_HNS: return 73; // 22 scene expanded art (weather/location audited)
     case MAP_EMBEDDED_TOWER_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_FUCHSIA_CITY_HNS: return 57; // town/city MAPSEC_FUCHSIA_CITY
     case MAP_FUCHSIA_CITY_SAFARI_ZONE_BRUSH_HNS: return 56; // general outdoor grass
@@ -1063,7 +1103,7 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_FUCHSIA_CITY_SAFARI_ZONE_MOUNTAIN_HNS: return 56; // general outdoor grass
     case MAP_GOLDENROD_CITY_DEPARTMENT_STORE_7FNIGHT_HNS: return 58; // town/city MAPSEC_GOLDENROD_CITY
     case MAP_GOLDENROD_CITY_DEPARTMENT_STORE_7F_HNS: return 58; // town/city MAPSEC_GOLDENROD_CITY
-    case MAP_GOLDENROD_CITY_HNS: return 58; // town/city MAPSEC_GOLDENROD_CITY
+    case MAP_GOLDENROD_CITY_HNS: return 70; // 22 scene expanded art (weather/location audited)
     case MAP_ICE_PATH_1F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
     case MAP_ICE_PATH_B1F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
     case MAP_ICE_PATH_B2F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
@@ -1133,8 +1173,8 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_ROUTE33_HNS: return 56; // route 33 terrain
     case MAP_ROUTE34_HNS: return 56; // route 34 terrain
     case MAP_ROUTE35_HNS: return 56; // route 35 terrain
-    case MAP_ROUTE36_HNS: return 58; // route 36 terrain
-    case MAP_ROUTE37_HNS: return 57; // route 37 terrain
+    case MAP_ROUTE36_HNS: return 72; // 22 scene expanded art (weather/location audited)
+    case MAP_ROUTE37_HNS: return 72; // 22 scene expanded art (weather/location audited)
     case MAP_ROUTE38_HNS: return 56; // route 38 terrain
     case MAP_ROUTE39_HNS: return 56; // route 39 terrain
     case MAP_ROUTE3_HNS: return 56; // route 3 terrain
@@ -1142,7 +1182,7 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_ROUTE41_HNS: return 64; // route 41 terrain / local WEATHER_RAIN_THUNDERSTORM
     case MAP_ROUTE42_HNS: return 61; // route 42 terrain
     case MAP_ROUTE43_HNS: return 64; // route 43 terrain
-    case MAP_ROUTE44_HNS: return 59; // route 44 terrain
+    case MAP_ROUTE44_HNS: return 68; // 22 scene expanded art (weather/location audited)
     case MAP_ROUTE45_GROUDON_CAVE_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_ROUTE45_HNS: return 61; // route 45 terrain
     case MAP_ROUTE46_HNS: return 61; // route 46 terrain
@@ -1176,7 +1216,7 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_SAFFRON_CITY_HNS: return 58; // town/city MAPSEC_SAFFRON_CITY
     case MAP_SEAFOAM_ISLANDS_1F_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_SEAFOAM_ISLANDS_B1F_HNS: return 63; // unclassified underground; general limestone cave
-    case MAP_SEAFOAM_ISLANDS_GYM_HNS: return 60; // Original PRU terrain match
+    case MAP_SEAFOAM_ISLANDS_GYM_HNS: return 69; // 22 scene expanded art (weather/location audited)
     case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_SINJOH_RUINS_HNS: return 56; // town/city MAPSEC_SINJOH_RUINS
     case MAP_SLOWPOKE_WELL_B1F_HNS: return 63; // cave/interior system MAPSEC_SLOWPOKE_WELL
@@ -1211,7 +1251,7 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_VICTORY_ROAD_KANTO_B2F_HNS: return 63; // cave/interior system MAPSEC_VICTORY_ROAD_HNS
     case MAP_VIOLET_CITY_HNS: return 56; // town/city MAPSEC_VIOLET_CITY
     case MAP_VIRIDIAN_CITY_HNS: return 56; // town/city MAPSEC_VIRIDIAN_CITY
-    case MAP_VIRIDIAN_FOREST_HNS: return 57; // forest
+    case MAP_VIRIDIAN_FOREST_HNS: return 67; // 22 scene expanded art (weather/location audited)
     case MAP_WHIRL_ISLANDS_1F_HNS: return 59; // cave/interior system MAPSEC_WHIRL_ISLANDS
     case MAP_WHIRL_ISLANDS_B1F_HNS: return 59; // cave/interior system MAPSEC_WHIRL_ISLANDS
     case MAP_WHIRL_ISLANDS_B1F_INNER_HNS: return 59; // cave/interior system MAPSEC_WHIRL_ISLANDS
@@ -1295,74 +1335,74 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         // progression scripts, so route by the actual battle rather than room.
         case TRAINER_WILL_1_HNS:
         case TRAINER_WILL_2_HNS:
-        case TRAINER_WILL_POSTOBC_HNS: return 59; // PRU original area theme
+        case TRAINER_WILL_POSTOBC_HNS: return 74; // PRU expanded, CC0 art or approved original
         case TRAINER_KOGA_1_HNS:
         case TRAINER_KOGA_2_HNS:
-        case TRAINER_KOGA_POSTOBC_HNS: return 57; // PRU original area theme
+        case TRAINER_KOGA_POSTOBC_HNS: return 67; // PRU expanded, CC0 art or approved original
         case TRAINER_BRUNO_1_HNS:
         case TRAINER_BRUNO_2_HNS:
         case TRAINER_BRUNO_POSTOBC_HNS:
-        case TRAINER_PRU_KANTO_E4_BRUNO_HNS: return 63; // PRU original area theme
+        case TRAINER_PRU_KANTO_E4_BRUNO_HNS: return 75; // PRU expanded, CC0 art or approved original
         case TRAINER_KAREN_1_HNS:
         case TRAINER_KAREN_2_HNS:
-        case TRAINER_KAREN_POSTOBC_HNS: return 57; // PRU original area theme
+        case TRAINER_KAREN_POSTOBC_HNS: return 74; // PRU expanded, CC0 art or approved original
         case TRAINER_LANCE_1_HNS:
         case TRAINER_LANCE_2_HNS:
         case TRAINER_LANCE_3_HNS:
         case TRAINER_LANCE_POSTOBC_HNS:
         case TRAINER_PRU_KANTO_E4_LANCE_HNS: return 61; // PRU original area theme
-        case TRAINER_PRU_KANTO_E4_LORELEI_HNS: return 59; // PRU original area theme
-        case TRAINER_PRU_KANTO_E4_AGATHA_HNS: return 58; // PRU original area theme
+        case TRAINER_PRU_KANTO_E4_LORELEI_HNS: return 68; // PRU expanded, CC0 art or approved original
+        case TRAINER_PRU_KANTO_E4_AGATHA_HNS: return 74; // PRU expanded, CC0 art or approved original
         case TRAINER_PRU_KANTO_E4_RED_HNS:
         case TRAINER_RED_POSTOBC_HNS: return 61; // PRU original area theme
         case TRAINER_FALKNER_1_HNS:
         case TRAINER_FALKNER_2_HNS:
-        case TRAINER_FALKNER_POSTOBC_HNS: return 58; // PRU original area theme
+        case TRAINER_FALKNER_POSTOBC_HNS: return 76; // PRU expanded, CC0 art or approved original
         case TRAINER_BUGSY_1_HNS:
         case TRAINER_BUGSY_2_HNS:
-        case TRAINER_BUGSY_POSTOBC_HNS: return 57; // PRU original area theme
+        case TRAINER_BUGSY_POSTOBC_HNS: return 57; // PRU expanded, CC0 art or approved original
         case TRAINER_WHITNEY_1_HNS:
         case TRAINER_WHITNEY_2_HNS:
-        case TRAINER_WHITNEY_POSTOBC_HNS: return 58; // PRU original area theme
+        case TRAINER_WHITNEY_POSTOBC_HNS: return 70; // PRU expanded, CC0 art or approved original
         case TRAINER_MORTY_1_HNS:
         case TRAINER_MORTY_2_HNS:
-        case TRAINER_MORTY_POSTOBC_HNS: return 57; // PRU original area theme
+        case TRAINER_MORTY_POSTOBC_HNS: return 74; // PRU expanded, CC0 art or approved original
         case TRAINER_CHUCK_1_HNS:
         case TRAINER_CHUCK_2_HNS:
         case TRAINER_CHUCK_1_2_HNS:
         case TRAINER_CHUCK_1_3_HNS:
-        case TRAINER_CHUCK_POSTOBC_HNS: return 64; // PRU original area theme
+        case TRAINER_CHUCK_POSTOBC_HNS: return 75; // PRU expanded, CC0 art or approved original
         case TRAINER_JASMINE_1_HNS:
         case TRAINER_JASMINE_2_HNS:
         case TRAINER_JASMINE_1_2_HNS:
         case TRAINER_JASMINE_1_3_HNS:
-        case TRAINER_JASMINE_POSTOBC_HNS: return 66; // PRU original area theme
+        case TRAINER_JASMINE_POSTOBC_HNS: return 66; // PRU expanded, CC0 art or approved original
         case TRAINER_PRYCE_1_HNS:
         case TRAINER_PRYCE_2_HNS:
         case TRAINER_PRYCE_1_2_HNS:
         case TRAINER_PRYCE_1_3_HNS:
-        case TRAINER_PRYCE_POSTOBC_HNS: return 59; // PRU original area theme
+        case TRAINER_PRYCE_POSTOBC_HNS: return 68; // PRU expanded, CC0 art or approved original
         case TRAINER_CLAIR_1_HNS:
         case TRAINER_CLAIR_2_HNS:
         case TRAINER_CLAIR_3_HNS:
-        case TRAINER_CLAIR_POSTOBC_HNS: return 59; // PRU original area theme
+        case TRAINER_CLAIR_POSTOBC_HNS: return 59; // PRU expanded, CC0 art or approved original
         case TRAINER_BROCK_HNS:
-        case TRAINER_BROCK_POSTOBC_HNS: return 63; // PRU original area theme
+        case TRAINER_BROCK_POSTOBC_HNS: return 71; // PRU expanded, CC0 art or approved original
         case TRAINER_MISTY_HNS:
-        case TRAINER_MISTY_POSTOBC_HNS: return 64; // PRU original area theme
+        case TRAINER_MISTY_POSTOBC_HNS: return 64; // PRU expanded, CC0 art or approved original
         case TRAINER_LTSURGE_HNS:
-        case TRAINER_LTSURGE_POSTOBC_HNS: return 66; // PRU original area theme
+        case TRAINER_LTSURGE_POSTOBC_HNS: return 58; // PRU expanded, CC0 art or approved original
         case TRAINER_ERIKA_HNS:
-        case TRAINER_ERIKA_POSTOBC_HNS: return 57; // PRU original area theme
+        case TRAINER_ERIKA_POSTOBC_HNS: return 73; // PRU expanded, CC0 art or approved original
         case TRAINER_JANINE_HNS:
-        case TRAINER_JANINE_POSTOBC_HNS: return 57; // PRU original area theme
+        case TRAINER_JANINE_POSTOBC_HNS: return 67; // PRU expanded, CC0 art or approved original
         case TRAINER_SABRINA_HNS:
-        case TRAINER_SABRINA_POSTOBC_HNS: return 58; // PRU original area theme
+        case TRAINER_SABRINA_POSTOBC_HNS: return 58; // PRU expanded, CC0 art or approved original
         case TRAINER_BLAINE_HNS:
-        case TRAINER_BLAINE_POSTOBC_HNS: return 60; // PRU original area theme
+        case TRAINER_BLAINE_POSTOBC_HNS: return 69; // PRU expanded, CC0 art or approved original
         case TRAINER_BLUE_HNS:
         case TRAINER_BLUE_2_HNS:
-        case TRAINER_BLUE_POSTOBC_HNS: return 61; // PRU original area theme
+        case TRAINER_BLUE_POSTOBC_HNS: return 61; // PRU expanded, CC0 art or approved original
         default: break;
         }
     }
@@ -1440,9 +1480,9 @@ static void LoadBattleEnvironmentGfx(u16 environment)
     const void *tileset, *tilemap, *palette;
 
     u8 pruRhythmBg = GetPruRhythmBattleBgIndex(environment);
-    if (pruRhythmBg >= 55 && pruRhythmBg < 67)
+    if (pruRhythmBg >= 55 && pruRhythmBg < 77)
     {
-        // Twelve original PRU scenes selected independently of the 55 legacy slots.
+        // Twenty-two individually illustrated scenes: twelve approved PRU originals and ten CC0 artist scenes.
         const struct PruRhythmBattleBg *bg = &sPruOriginalTestBattleBgs[pruRhythmBg - 55];
         DecompressDataWithHeaderVram(bg->tiles, (void *)BG_CHAR_ADDR(2));
         DecompressDataWithHeaderVram(bg->tilemap, (void *)BG_SCREEN_ADDR(26));
@@ -1983,7 +2023,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 3:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 67)
+            if (pruBg >= 55 && pruBg < 77)
                 DecompressDataWithHeaderVram(sPruOriginalTestBattleBgs[pruBg - 55].tiles, (void *)BG_CHAR_ADDR(2));
             else if (pruBg != 0xFF && pruBg < 55)
                 DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tiles, (void *)BG_CHAR_ADDR(2));
@@ -1994,7 +2034,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 4:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 67)
+            if (pruBg >= 55 && pruBg < 77)
                 DecompressDataWithHeaderVram(sPruOriginalTestBattleBgs[pruBg - 55].tilemap, (void *)BG_SCREEN_ADDR(26));
             else if (pruBg != 0xFF && pruBg < 55)
                 DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tilemap, (void *)BG_SCREEN_ADDR(26));
@@ -2005,7 +2045,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 5:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 67)
+            if (pruBg >= 55 && pruBg < 77)
                 LoadPalette(sPruOriginalTestBattleBgs[pruBg - 55].palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
             else if (pruBg != 0xFF && pruBg < 55)
                 LoadPalette(sPruRhythmBattleBgs[pruBg].palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
