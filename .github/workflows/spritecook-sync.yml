@@ -1,6 +1,10 @@
 name: Sync SpriteCook originals
 
 on:
+  push:
+    paths:
+      - "tools/spritecook/**"
+      - ".github/workflows/spritecook-sync.yml"
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
