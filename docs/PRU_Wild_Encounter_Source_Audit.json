@@ -1,0 +1,6 @@
+{
+  "top_level_keys": [
+    "wild_encounter_groups"
+  ],
+  "notes": "Keep species matched to habitat via terrain; map actual encounter tables in next revision."
+}

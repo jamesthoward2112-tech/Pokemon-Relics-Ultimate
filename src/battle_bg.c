@@ -54,7 +54,19 @@ extern const u16 gPruBatch1IcePathPal[];
 extern const u32 gPruBatch1EnteiMortarTiles[];
 extern const u32 gPruBatch1EnteiMortarMap[];
 extern const u16 gPruBatch1EnteiMortarPal[];
-static const struct PruRhythmBattleBg sPruOriginalTestBattleBgs[8] = {
+extern const u32 gPru50CaveTiles[];
+extern const u32 gPru50CaveMap[];
+extern const u16 gPru50CavePal[];
+extern const u32 gPru50RainTiles[];
+extern const u32 gPru50RainMap[];
+extern const u16 gPru50RainPal[];
+extern const u32 gPru50RiverTiles[];
+extern const u32 gPru50RiverMap[];
+extern const u16 gPru50RiverPal[];
+extern const u32 gPru50CoastTiles[];
+extern const u32 gPru50CoastMap[];
+extern const u16 gPru50CoastPal[];
+static const struct PruRhythmBattleBg sPruOriginalTestBattleBgs[12] = {
     {gPruTestMtSilverTiles, gPruTestMtSilverMap, gPruTestMtSilverPal},
     {gPruTestRoute29Tiles, gPruTestRoute29Map, gPruTestRoute29Pal},
     {gPruBatch1IlexTiles, gPruBatch1IlexMap, gPruBatch1IlexPal},
@@ -63,6 +75,10 @@ static const struct PruRhythmBattleBg sPruOriginalTestBattleBgs[8] = {
     {gPruBatch1EnteiMortarTiles, gPruBatch1EnteiMortarMap, gPruBatch1EnteiMortarPal},
     {gPruCleanSilverTiles, gPruCleanSilverMap, gPruCleanSilverPal},
     {gPruCleanHoOhTiles, gPruCleanHoOhMap, gPruCleanHoOhPal},
+    {gPru50CaveTiles, gPru50CaveMap, gPru50CavePal}, // Limestone cave / Union Cave / Dark Cave / Kanto underground
+    {gPru50RainTiles, gPru50RainMap, gPru50RainPal}, // Lake of Rage / heavy rain / wetlands
+    {gPru50RiverTiles, gPru50RiverMap, gPru50RiverPal}, // Wooded rivers and Johto 30-32 paths
+    {gPru50CoastTiles, gPru50CoastMap, gPru50CoastPal}, // Olivine / coastal routes / Cianwood
 };
 
 
@@ -980,6 +996,214 @@ static u8 GetPruElite20RhythmBgIndex(void)
     return 0xFF;
 }
 
+// Area selection derived from PRU map.json: location, weather and cave families.
+// One coherent background per multi-floor cave system; never shift/stretch bottom tiles.
+static u8 GetPruNewAreaBackgroundIndex(void)
+{
+    switch ((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
+    {
+    case MAP_AKALA_CAVE_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_AKALA_FOREST_HNS: return 56; // general outdoor grass
+    case MAP_AKALA_ISLE_HNS: return 56; // general outdoor grass
+    case MAP_ALOLA_WATER_HNS: return 56; // general outdoor grass
+    case MAP_AZALEA_TOWN_HNS: return 57; // town/city MAPSEC_AZALEA_TOWN
+    case MAP_BATTLE_FRONTIER_OUTSIDE_EAST_HNS: return 56; // general outdoor grass
+    case MAP_BATTLE_FRONTIER_OUTSIDE_WEST_HNS: return 56; // general outdoor grass
+    case MAP_BELLCHIME_TRAIL_HNS: return 56; // general outdoor grass
+    case MAP_BIRTH_ISLAND_EXTERIOR_HNS: return 56; // general outdoor grass
+    case MAP_BLACKTHORN_CITY_HNS: return 61; // town/city MAPSEC_BLACKTHORN_CITY
+    case MAP_BURNED_TOWER_1F_HNS: return 58; // cave/interior system MAPSEC_BURNED_TOWER
+    case MAP_BURNED_TOWER_B1F_HNS: return 58; // cave/interior system MAPSEC_BURNED_TOWER
+    case MAP_CELADON_CITY_APARTMENTS_ROOF_DAY_HNS: return 57; // town/city MAPSEC_CELADON_CITY
+    case MAP_CELADON_CITY_APARTMENTS_ROOF_NIGHT_HNS: return 57; // town/city MAPSEC_CELADON_CITY
+    case MAP_CELADON_CITY_DEPARTMENT_STORE_ROOF_DAY_HNS: return 56; // general outdoor grass
+    case MAP_CELADON_CITY_DEPARTMENT_STORE_ROOF_NIGHT_HNS: return 56; // general outdoor grass
+    case MAP_CELADON_CITY_HNS: return 57; // town/city MAPSEC_CELADON_CITY
+    case MAP_CERULEAN_CAVE_1F_HNS: return 63; // cave/interior system MAPSEC_CERULEAN_CAVE
+    case MAP_CERULEAN_CAVE_B1F_HNS: return 63; // cave/interior system MAPSEC_CERULEAN_CAVE
+    case MAP_CERULEAN_CAVE_B2F_HNS: return 63; // cave/interior system MAPSEC_CERULEAN_CAVE
+    case MAP_CERULEAN_CITY_HNS: return 56; // town/city MAPSEC_CERULEAN_CITY
+    case MAP_CHERRYGROVE_CITY_HNS: return 56; // town/city MAPSEC_CHERRYGROVE_CITY
+    case MAP_CIANWOOD_CITY_HNS: return 64; // town/city MAPSEC_CIANWOOD_CITY / local WEATHER_RAIN
+    case MAP_CLIFF_EDGE_CAVE_HNS: return 63; // cave/interior system MAPSEC_CLIFF_CAVE
+    case MAP_CLIFF_EDGE_GATE_HNS: return 63; // cave/interior system MAPSEC_CLIFF_CAVE
+    case MAP_DARK_CAVE_NORTH_SIDE_HNS: return 63; // cave/interior system MAPSEC_DARK_CAVE
+    case MAP_DARK_CAVE_SOUTH_SIDE_HNS: return 63; // cave/interior system MAPSEC_DARK_CAVE
+    case MAP_DIGLETTS_CAVE_ENTRANCE_NORTH_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
+    case MAP_DIGLETTS_CAVE_ENTRANCE_SOUTH_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
+    case MAP_DIGLETTS_CAVE_TUNNEL_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
+    case MAP_DRAGONS_DEN_CAVERN_HNS: return 63; // cave/interior system MAPSEC_DRAGONS_DEN
+    case MAP_DRAGONS_DEN_ENTRANCE_HNS: return 63; // cave/interior system MAPSEC_DRAGONS_DEN
+    case MAP_DRAGONS_DEN_SHRINE_HNS: return 63; // cave/interior system MAPSEC_DRAGONS_DEN
+    case MAP_DRAGONS_DEN_STORM_SHRINE_HNS: return 63; // cave/interior system MAPSEC_DRAGONS_DEN
+    case MAP_ECRUTEAK_CITY_HNS: return 58; // town/city MAPSEC_ECRUTEAK_CITY
+    case MAP_EMBEDDED_TOWER_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_FUCHSIA_CITY_HNS: return 57; // town/city MAPSEC_FUCHSIA_CITY
+    case MAP_FUCHSIA_CITY_SAFARI_ZONE_BRUSH_HNS: return 56; // general outdoor grass
+    case MAP_FUCHSIA_CITY_SAFARI_ZONE_CAVE_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_FUCHSIA_CITY_SAFARI_ZONE_MOUNTAIN_HNS: return 56; // general outdoor grass
+    case MAP_GOLDENROD_CITY_DEPARTMENT_STORE_7FNIGHT_HNS: return 58; // town/city MAPSEC_GOLDENROD_CITY
+    case MAP_GOLDENROD_CITY_DEPARTMENT_STORE_7F_HNS: return 58; // town/city MAPSEC_GOLDENROD_CITY
+    case MAP_GOLDENROD_CITY_HNS: return 58; // town/city MAPSEC_GOLDENROD_CITY
+    case MAP_ICE_PATH_1F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
+    case MAP_ICE_PATH_B1F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
+    case MAP_ICE_PATH_B2F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
+    case MAP_ICE_PATH_B3F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
+    case MAP_ICE_PATH_B4F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
+    case MAP_ILEX_FOREST_HNS: return 56; // general outdoor grass
+    case MAP_INDIGO_PLATEAU_HNS: return 56; // town/city MAPSEC_INDIGO_PLATEAU
+    case MAP_LAKE_OF_RAGE_HNS: return 64; // lake of rage / storm / local WEATHER_RAIN_THUNDERSTORM
+    case MAP_LAKE_OF_RAGE_LOW_TIDE_HNS: return 64; // lake of rage / storm
+    case MAP_LAVENDER_TOWN_HNS: return 58; // town/city MAPSEC_LAVENDER_TOWN
+    case MAP_MAHOGANYTOWN_HNS: return 56; // town/city MAPSEC_MAHOGANY_TOWN
+    case MAP_MELEMELE_ISLE_HNS: return 56; // general outdoor grass
+    case MAP_MT_MOON_CAVE_HNS: return 63; // cave/interior system MAPSEC_MT_MOON
+    case MAP_MT_MOON_OUTSIDE_HNS: return 56; // general outdoor grass
+    case MAP_MT_MORTAR_1F_NORTH_HNS: return 60; // cave/interior system MAPSEC_MT_MORTAR
+    case MAP_MT_MORTAR_1F_SOUTH_HNS: return 60; // cave/interior system MAPSEC_MT_MORTAR
+    case MAP_MT_MORTAR_2F_HNS: return 60; // cave/interior system MAPSEC_MT_MORTAR
+    case MAP_MT_MORTAR_B1F_HNS: return 60; // cave/interior system MAPSEC_MT_MORTAR
+    case MAP_MT_SILVER_1F_ITEM_ROOM_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
+    case MAP_MT_SILVER_1F_MOLTRES_ROOM_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
+    case MAP_MT_SILVER_1F_WATERFALL_ROOM_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
+    case MAP_MT_SILVER_2F_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
+    case MAP_MT_SILVER_3F_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
+    case MAP_MT_SILVER_MOUNTAIN_SIDE_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
+    case MAP_MT_SILVER_OUTSIDE_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
+    case MAP_MT_SILVER_POKEMON_CENTER_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
+    case MAP_MT_SILVER_SNOW_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
+    case MAP_NATIONAL_PARK_BUG_CONTEST_HNS: return 56; // general outdoor grass
+    case MAP_NATIONAL_PARK_NORMAL_HNS: return 56; // general outdoor grass
+    case MAP_NEWSINJOH_HOTSPRINGS_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_NEW_BARK_TOWN_HNS: return 56; // town/city MAPSEC_NEW_BARK_TOWN
+    case MAP_NEW_SINJOH_HNS: return 56; // town/city MAPSEC_NEW_SINJOH
+    case MAP_OLIVINE_CITY_HNS: return 64; // town/city MAPSEC_OLIVINE_CITY / local WEATHER_RAIN
+    case MAP_PALLET_TOWN_HNS: return 56; // town/city MAPSEC_PALLET_TOWN
+    case MAP_PEWTER_CITY_HNS: return 61; // town/city MAPSEC_PEWTER_CITY
+    case MAP_PONI_CAVE_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_PONI_ISLE_HNS: return 56; // general outdoor grass
+    case MAP_ROCK_TUNNEL_1F_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_ROCK_TUNNEL_B1F_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_ROUTE10_HNS: return 61; // route 10 terrain
+    case MAP_ROUTE11_HNS: return 66; // route 11 terrain
+    case MAP_ROUTE12_HNS: return 66; // route 12 terrain
+    case MAP_ROUTE13_HNS: return 66; // route 13 terrain
+    case MAP_ROUTE14_HNS: return 66; // route 14 terrain
+    case MAP_ROUTE15_HNS: return 56; // route 15 terrain
+    case MAP_ROUTE16_HNS: return 56; // route 16 terrain
+    case MAP_ROUTE17_HNS: return 64; // route 17 terrain / local WEATHER_RAIN
+    case MAP_ROUTE18_HNS: return 66; // route 18 terrain
+    case MAP_ROUTE19_CAVE_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_ROUTE19_HNS: return 66; // route 19 terrain
+    case MAP_ROUTE1_HNS: return 56; // route 1 terrain
+    case MAP_ROUTE20_HNS: return 66; // route 20 terrain
+    case MAP_ROUTE21_HNS: return 66; // route 21 terrain
+    case MAP_ROUTE22_HNS: return 56; // route 22 terrain
+    case MAP_ROUTE23_HNS: return 56; // general outdoor grass
+    case MAP_ROUTE24_HNS: return 65; // route 24 terrain
+    case MAP_ROUTE25_HNS: return 65; // route 25 terrain
+    case MAP_ROUTE26NORTH_HNS: return 56; // route 26 terrain
+    case MAP_ROUTE26_HNS: return 56; // route 26 terrain
+    case MAP_ROUTE27_HNS: return 56; // route 27 terrain
+    case MAP_ROUTE28_HNS: return 56; // route 28 terrain
+    case MAP_ROUTE29_HNS: return 56; // route 29 terrain
+    case MAP_ROUTE2_HNS: return 57; // route 2 terrain
+    case MAP_ROUTE30_HNS: return 65; // route 30 terrain
+    case MAP_ROUTE31_HNS: return 65; // route 31 terrain
+    case MAP_ROUTE32_HNS: return 65; // route 32 terrain
+    case MAP_ROUTE33_HNS: return 56; // route 33 terrain
+    case MAP_ROUTE34_HNS: return 56; // route 34 terrain
+    case MAP_ROUTE35_HNS: return 56; // route 35 terrain
+    case MAP_ROUTE36_HNS: return 58; // route 36 terrain
+    case MAP_ROUTE37_HNS: return 57; // route 37 terrain
+    case MAP_ROUTE38_HNS: return 66; // route 38 terrain
+    case MAP_ROUTE39_HNS: return 66; // route 39 terrain
+    case MAP_ROUTE3_HNS: return 56; // route 3 terrain
+    case MAP_ROUTE40_HNS: return 64; // route 40 terrain / local WEATHER_RAIN
+    case MAP_ROUTE41_HNS: return 64; // route 41 terrain / local WEATHER_RAIN_THUNDERSTORM
+    case MAP_ROUTE42_HNS: return 61; // route 42 terrain
+    case MAP_ROUTE43_HNS: return 64; // route 43 terrain
+    case MAP_ROUTE44_HNS: return 59; // route 44 terrain
+    case MAP_ROUTE45_GROUDON_CAVE_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_ROUTE45_HNS: return 61; // route 45 terrain
+    case MAP_ROUTE46_HNS: return 61; // route 46 terrain
+    case MAP_ROUTE47_HNS: return 61; // route 47 terrain
+    case MAP_ROUTE48_HNS: return 61; // route 48 terrain
+    case MAP_ROUTE49_HNS: return 56; // route 49 terrain
+    case MAP_ROUTE4_HNS: return 56; // route 4 terrain
+    case MAP_ROUTE50_HNS: return 56; // route 50 terrain
+    case MAP_ROUTE5_HNS: return 56; // route 5 terrain
+    case MAP_ROUTE6_HNS: return 56; // route 6 terrain
+    case MAP_ROUTE7_HNS: return 56; // route 7 terrain
+    case MAP_ROUTE8_HNS: return 56; // route 8 terrain
+    case MAP_ROUTE9_HNS: return 65; // route 9 terrain
+    case MAP_RUINS_OF_ALPH_B1F_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
+    case MAP_RUINS_OF_ALPH_LAB_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
+    case MAP_RUINS_OF_ALPH_OUTSIDE_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
+    case MAP_RUINS_OF_ALPH_PUZZLE_AND_REWARD_CHAMBERS_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM1_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM2_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM3_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM4_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
+    case MAP_SAFARI_ZONE1_HNS: return 56; // general outdoor grass
+    case MAP_SAFARI_ZONE2_HNS: return 56; // general outdoor grass
+    case MAP_SAFARI_ZONE3_HNS: return 56; // general outdoor grass
+    case MAP_SAFARI_ZONE_ENTERANCE_HNS: return 56; // general outdoor grass
+    case MAP_SAFARI_ZONE_GATE_HNS: return 56; // town/city MAPSEC_SAFARI_ZONE_GATE
+    case MAP_SAFARI_ZONE_LOW_LEFT_HNS: return 56; // general outdoor grass
+    case MAP_SAFARI_ZONE_LOW_MID_HNS: return 56; // general outdoor grass
+    case MAP_SAFARI_ZONE_TOP_LEFT_HNS: return 56; // general outdoor grass
+    case MAP_SAFARI_ZONE_TOP_MID_HNS: return 56; // general outdoor grass
+    case MAP_SAFFRON_CITY_HNS: return 58; // town/city MAPSEC_SAFFRON_CITY
+    case MAP_SEAFOAM_ISLANDS_1F_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_SEAFOAM_ISLANDS_B1F_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_SEAFOAM_ISLANDS_GYM_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_SINJOH_RUINS_HNS: return 56; // town/city MAPSEC_SINJOH_RUINS
+    case MAP_SLOWPOKE_WELL_B1F_HNS: return 63; // cave/interior system MAPSEC_SLOWPOKE_WELL
+    case MAP_SLOWPOKE_WELL_B2F_HNS: return 63; // cave/interior system MAPSEC_SLOWPOKE_WELL
+    case MAP_SNOWSWEPT_CAVERN_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_SOUTHERN_ISLAND_EXTERIOR_HNS: return 56; // general outdoor grass
+    case MAP_SOUTHERN_ISLAND_INTERIOR_HNS: return 56; // general outdoor grass
+    case MAP_TIN_TOWER_1F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_TIN_TOWER_2F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_TIN_TOWER_3F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_TIN_TOWER_4F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_TIN_TOWER_5F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_TIN_TOWER_6F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_TIN_TOWER_7F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_TIN_TOWER_8F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_TIN_TOWER_9F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_TIN_TOWER_ROOF_DAY_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_TIN_TOWER_ROOF_NIGHT_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_TOHJO_FALLS_CAVERN_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_TOHJO_FALLS_GIOVANNI_ROOM_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_TRAINER_HILL_COURTYARD_HNS: return 56; // general outdoor grass
+    case MAP_ULAULA_ISLE_HNS: return 56; // general outdoor grass
+    case MAP_ULA_ULA_CAVE_2_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_ULA_ULA_CAVE_HNS: return 63; // unclassified underground; general limestone cave
+    case MAP_ULA_ULA_FOREST_HNS: return 56; // general outdoor grass
+    case MAP_UNION_CAVE_1F_HNS: return 63; // cave/interior system MAPSEC_UNION_CAVE
+    case MAP_UNION_CAVE_B1F_HNS: return 63; // cave/interior system MAPSEC_UNION_CAVE
+    case MAP_UNION_CAVE_B2F_HNS: return 63; // cave/interior system MAPSEC_UNION_CAVE
+    case MAP_VERMILION_CITY_HNS: return 66; // town/city MAPSEC_VERMILION_CITY
+    case MAP_VICTORY_ROAD_KANTO_1F_HNS: return 63; // cave/interior system MAPSEC_VICTORY_ROAD_HNS
+    case MAP_VICTORY_ROAD_KANTO_B1F_HNS: return 63; // cave/interior system MAPSEC_VICTORY_ROAD_HNS
+    case MAP_VICTORY_ROAD_KANTO_B2F_HNS: return 63; // cave/interior system MAPSEC_VICTORY_ROAD_HNS
+    case MAP_VIOLET_CITY_HNS: return 56; // town/city MAPSEC_VIOLET_CITY
+    case MAP_VIRIDIAN_CITY_HNS: return 56; // town/city MAPSEC_VIRIDIAN_CITY
+    case MAP_VIRIDIAN_FOREST_HNS: return 57; // forest
+    case MAP_WHIRL_ISLANDS_1F_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_B1F_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_B1F_INNER_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_B2F_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_B3F_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_DESCENT_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    case MAP_WHIRL_ISLANDS_LUGIA_CHAMBER_HNS: return 63; // cave/interior system MAPSEC_WHIRL_ISLANDS
+    default: return 0xFF;
+    }
+}
+
 static u8 GetPruRhythmBattleBgIndex(u16 environment)
 {
 #if IS_HNS
@@ -1124,6 +1348,15 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         }
     }
 
+
+    // Actual PRU terrain and map weather take priority over random donor-slot choices.
+    // E20 and Gym trainer-specific selections above remain authoritative.
+    {
+        u8 mapped = GetPruNewAreaBackgroundIndex();
+        if (mapped != 0xFF)
+            return mapped;
+    }
+
     // Wild and regular trainer fights use scenery appropriate to the map.
     // Stable map-based variety through 55 shared slots of original PRU art.
     switch (environment)
@@ -1188,7 +1421,7 @@ static void LoadBattleEnvironmentGfx(u16 environment)
     const void *tileset, *tilemap, *palette;
 
     u8 pruRhythmBg = GetPruRhythmBattleBgIndex(environment);
-    if (pruRhythmBg >= 55 && pruRhythmBg < 63)
+    if (pruRhythmBg >= 55 && pruRhythmBg < 67)
     {
         // Eight original PRU scenes selected independently of the 55 legacy slots.
         const struct PruRhythmBattleBg *bg = &sPruOriginalTestBattleBgs[pruRhythmBg - 55];
@@ -1731,7 +1964,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 3:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 63)
+            if (pruBg >= 55 && pruBg < 67)
                 DecompressDataWithHeaderVram(sPruOriginalTestBattleBgs[pruBg - 55].tiles, (void *)BG_CHAR_ADDR(2));
             else if (pruBg != 0xFF && pruBg < 55)
                 DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tiles, (void *)BG_CHAR_ADDR(2));
@@ -1742,7 +1975,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 4:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 63)
+            if (pruBg >= 55 && pruBg < 67)
                 DecompressDataWithHeaderVram(sPruOriginalTestBattleBgs[pruBg - 55].tilemap, (void *)BG_SCREEN_ADDR(26));
             else if (pruBg != 0xFF && pruBg < 55)
                 DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tilemap, (void *)BG_SCREEN_ADDR(26));
@@ -1753,7 +1986,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 5:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 63)
+            if (pruBg >= 55 && pruBg < 67)
                 LoadPalette(sPruOriginalTestBattleBgs[pruBg - 55].palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
             else if (pruBg != 0xFF && pruBg < 55)
                 LoadPalette(sPruRhythmBattleBgs[pruBg].palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
