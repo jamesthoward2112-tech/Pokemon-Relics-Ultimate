@@ -54,13 +54,15 @@ extern const u16 gPruBatch1IcePathPal[];
 extern const u32 gPruBatch1EnteiMortarTiles[];
 extern const u32 gPruBatch1EnteiMortarMap[];
 extern const u16 gPruBatch1EnteiMortarPal[];
-static const struct PruRhythmBattleBg sPruOriginalTestBattleBgs[6] = {
+static const struct PruRhythmBattleBg sPruOriginalTestBattleBgs[8] = {
     {gPruTestMtSilverTiles, gPruTestMtSilverMap, gPruTestMtSilverPal},
     {gPruTestRoute29Tiles, gPruTestRoute29Map, gPruTestRoute29Pal},
     {gPruBatch1IlexTiles, gPruBatch1IlexMap, gPruBatch1IlexPal},
     {gPruBatch1RuinsTiles, gPruBatch1RuinsMap, gPruBatch1RuinsPal},
     {gPruBatch1IcePathTiles, gPruBatch1IcePathMap, gPruBatch1IcePathPal},
     {gPruBatch1EnteiMortarTiles, gPruBatch1EnteiMortarMap, gPruBatch1EnteiMortarPal},
+    {gPruCleanSilverTiles, gPruCleanSilverMap, gPruCleanSilverPal},
+    {gPruCleanHoOhTiles, gPruCleanHoOhMap, gPruCleanHoOhPal},
 };
 
 
@@ -990,13 +992,24 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
      || (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER)))
         return 0xFF;
 
-    // Fixed story scenery: Kyogre meets the crashing sea, Groudon the lava,
-    // and Lavender Spirit Tower keeps the graveyard on every floor.
+    // Golden Ho-Oh is the only non-trainer Mt Silver summit encounter.
+    // Trainer battles (including Red) retain the separate rocky Mt Silver scene.
+    if (((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
+          == MAP_MT_SILVER_SUMMIT_DAY_HNS
+     || ((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
+          == MAP_MT_SILVER_SUMMIT_NIGHT_HNS)
+        return (gBattleTypeFlags & BATTLE_TYPE_TRAINER) ? 61 : 62;
+
+    // Approved location-specific PRU scenes, then a shared natural biomes fallback.
+
     switch ((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
     {
     case MAP_MT_SILVER_OUTSIDE_HNS:
     case MAP_MT_SILVER_1F_WATERFALL_ROOM_HNS:
-        return 55; // Original rocky battle scene at the Mt Silver cave entrance.
+    case MAP_MT_SILVER_2F_HNS:
+    case MAP_MT_SILVER_3F_HNS:
+    case MAP_MT_SILVER_SNOW_HNS:
+        return 61; // User-approved redrawn rocky Mt Silver stage.
     case MAP_ROUTE29_HNS:
         return 56; // Original grassy Route 29 scene.
     case MAP_ILEX_FOREST_HNS:
@@ -1012,9 +1025,9 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
     case MAP_MT_MORTAR_B1F_HNS:
         return 60; // Original volcanic relic chamber (Entei region).
     case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS:
-        return 48; // Rhythm's sea cave and waves, for Archie and Kyogre.
+        return 48; // PRU shared icy-water environment, for Archie and Kyogre.
     case MAP_MT_SILVER_1F_MOLTRES_ROOM_HNS:
-        return 16; // Rhythm's magma chamber, for Groudon.
+        return 16; // PRU original volcanic environment, for Groudon.
     case MAP_LAVENDER_SPIRIT_TOWER_1F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_2F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_3F_HNS:
@@ -1022,7 +1035,7 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
     case MAP_LAVENDER_SPIRIT_TOWER_5F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_6F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_7F_HNS:
-        return 44; // Rhythm's moonlit ghostly stone circle.
+        return 44; // PRU original ancient ruins environment.
     }
 
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
@@ -1112,7 +1125,7 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
     }
 
     // Wild and regular trainer fights use scenery appropriate to the map.
-    // Stable map-based variety makes all 55 donor entries accessible.
+    // Stable map-based variety through 55 shared slots of original PRU art.
     switch (environment)
     {
     case BATTLE_ENVIRONMENT_WATER:
@@ -1175,9 +1188,9 @@ static void LoadBattleEnvironmentGfx(u16 environment)
     const void *tileset, *tilemap, *palette;
 
     u8 pruRhythmBg = GetPruRhythmBattleBgIndex(environment);
-    if (pruRhythmBg >= 55 && pruRhythmBg < 61)
+    if (pruRhythmBg >= 55 && pruRhythmBg < 63)
     {
-        // Two standalone original scenes, never index beyond Rhythm's 55 entries.
+        // Eight original PRU scenes selected independently of the 55 legacy slots.
         const struct PruRhythmBattleBg *bg = &sPruOriginalTestBattleBgs[pruRhythmBg - 55];
         DecompressDataWithHeaderVram(bg->tiles, (void *)BG_CHAR_ADDR(2));
         DecompressDataWithHeaderVram(bg->tilemap, (void *)BG_SCREEN_ADDR(26));
@@ -1190,7 +1203,7 @@ static void LoadBattleEnvironmentGfx(u16 environment)
         const struct PruRhythmBattleBg *bg = &sPruRhythmBattleBgs[pruRhythmBg];
         DecompressDataWithHeaderVram(bg->tiles, (void *)BG_CHAR_ADDR(2));
         DecompressDataWithHeaderVram(bg->tilemap, (void *)BG_SCREEN_ADDR(26));
-        LoadPalette(bg->palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+        LoadPalette(bg->palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
         return;
     }
 
@@ -1718,7 +1731,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 3:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 61)
+            if (pruBg >= 55 && pruBg < 63)
                 DecompressDataWithHeaderVram(sPruOriginalTestBattleBgs[pruBg - 55].tiles, (void *)BG_CHAR_ADDR(2));
             else if (pruBg != 0xFF && pruBg < 55)
                 DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tiles, (void *)BG_CHAR_ADDR(2));
@@ -1729,7 +1742,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 4:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 61)
+            if (pruBg >= 55 && pruBg < 63)
                 DecompressDataWithHeaderVram(sPruOriginalTestBattleBgs[pruBg - 55].tilemap, (void *)BG_SCREEN_ADDR(26));
             else if (pruBg != 0xFF && pruBg < 55)
                 DecompressDataWithHeaderVram(sPruRhythmBattleBgs[pruBg].tilemap, (void *)BG_SCREEN_ADDR(26));
@@ -1740,10 +1753,10 @@ bool8 LoadChosenBattleElement(u8 caseId)
     case 5:
         {
             u8 pruBg = GetPruRhythmBattleBgIndex(GetBattleEnvironmentOverride());
-            if (pruBg >= 55 && pruBg < 61)
+            if (pruBg >= 55 && pruBg < 63)
                 LoadPalette(sPruOriginalTestBattleBgs[pruBg - 55].palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
             else if (pruBg != 0xFF && pruBg < 55)
-                LoadPalette(sPruRhythmBattleBgs[pruBg].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+                LoadPalette(sPruRhythmBattleBgs[pruBg].palette, BG_PLTT_ID(12), 3 * PLTT_SIZE_4BPP);
             else
                 LoadPalette(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
         }
