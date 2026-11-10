@@ -108,13 +108,6 @@ def main():
                 )
             dest = Path("graphics/pokemon/prl_authoritative") / slug / filename
             dest.parent.mkdir(parents=True, exist_ok=True)
-            # Mootiny is now approved locally using the player's own SpriteCook
-            # 64x64 artwork scaled to 58x58 and a matching GBA 15-colour palette.
-            # Never let the pinned PRL donor restore its outdated front/palettes.
-            # Keep donor back.png and icon.png until their art is explicitly updated.
-            if slug == "mootiny" and filename in ("front.png", "normal.pal", "shiny.pal"):
-                assert dest.is_file(), f"Missing approved Mootiny asset: {dest}"
-                continue
             if not dest.exists() or dest.read_bytes() != contents:
                 dest.write_bytes(contents)
         for key, source in list(headers.items()):

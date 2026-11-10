@@ -61,33 +61,6 @@ static const u16 sPRUSkarmetIconPalette[16] =
     RGB(29, 27, 31), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
 };
 
-// Dedicated palettes for TRE P-form roaming bird party icons. The clean-build
-// importer replaces these 16-slot placeholders with exact indexed PNG colours.
-// They occupy extra runtime icon palette slots, not SpeciesInfo's 3-bit field.
-static const u16 sPRUArticunoPIconPalette[16] =
-{
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-};
-
-static const u16 sPRUZapdosPIconPalette[16] =
-{
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-};
-
-static const u16 sPRUMoltresPIconPalette[16] =
-{
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-};
-
 const struct SpritePalette gMonIconPaletteTable[] =
 {
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
@@ -100,9 +73,6 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRLEeveeonIconPalette, POKE_ICON_BASE_PAL_TAG + 7 },
     { sPRUSwamplithIconPalette, POKE_ICON_BASE_PAL_TAG + 8 },
     { sPRUSkarmetIconPalette, POKE_ICON_BASE_PAL_TAG + 9 },
-    { sPRUArticunoPIconPalette, POKE_ICON_BASE_PAL_TAG + 10 },
-    { sPRUZapdosPIconPalette, POKE_ICON_BASE_PAL_TAG + 11 },
-    { sPRUMoltresPIconPalette, POKE_ICON_BASE_PAL_TAG + 12 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -216,12 +186,6 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
         return 8;
     if (species == SPECIES_SKARMET)
         return 9;
-    if (species == SPECIES_ARTICUNO)
-        return 10;
-    if (species == SPECIES_ZAPDOS)
-        return 11;
-    if (species == SPECIES_MOLTRES)
-        return 12;
     return original;
 }
 
