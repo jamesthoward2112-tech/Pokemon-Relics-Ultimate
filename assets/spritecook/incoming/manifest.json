@@ -1,5 +1,5 @@
 {
-  "count": 64,
+  "count": 69,
   "assets": [
     {
       "file": "01d1200e-5838-4f67-a2a9-b34735db5e3e.png",
@@ -200,6 +200,15 @@
       "unique_colors": 16
     },
     {
+      "file": "50c4694e-384f-40d2-98c1-521bdc7417b6.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 25
+    },
+    {
       "file": "5629a47f-0bf6-4e03-b1a6-32359cc87c18.png",
       "width": 64,
       "height": 64,
@@ -207,6 +216,15 @@
       "transparent_pixels": true,
       "opaque_pixels": true,
       "unique_colors": 16
+    },
+    {
+      "file": "59a0c204-46c1-40b7-91dc-33598fb94321.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 31
     },
     {
       "file": "5e291255-e919-4015-bf3e-ab1e6d7a3516.png",
@@ -252,6 +270,15 @@
       "transparent_pixels": true,
       "opaque_pixels": true,
       "unique_colors": 8076
+    },
+    {
+      "file": "64b0175a-0e94-4d3f-9397-49da0a72a531.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 27
     },
     {
       "file": "675e77b2-2d90-48a3-8eb0-d260dda34903.png",
@@ -387,6 +414,24 @@
       "transparent_pixels": true,
       "opaque_pixels": true,
       "unique_colors": 14
+    },
+    {
+      "file": "9e531750-e235-4504-b4b5-f5d9900f386d.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 33
+    },
+    {
+      "file": "a191e13e-50af-41c2-814d-87c997e46e43.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 23
     },
     {
       "file": "a24e04b8-06c8-409f-a481-8602ae27c8d9.png",
