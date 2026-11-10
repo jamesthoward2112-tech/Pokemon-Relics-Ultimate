@@ -1051,14 +1051,14 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_CIANWOOD_GYM_HNS: return 75; // 22 scene expanded art (weather/location audited)
     case MAP_OLIVINE_CITY_GYM_HNS: return 66; // 22 scene expanded art (weather/location audited)
     case MAP_MAHOGANY_TOWN_GYM_HNS: return 68; // 22 scene expanded art (weather/location audited)
-    case MAP_BLACKTHORN_CITY_GYM_HNS: return 59; // 22 scene expanded art (weather/location audited)
+    case MAP_BLACKTHORN_CITY_GYM_HNS: return 71; // dragon cave theme, not Ice Path
     case MAP_PEWTER_CITY_GYM_HNS: return 75; // 22 scene expanded art (weather/location audited)
     case MAP_CERULEAN_CITY_GYM_HNS: return 64; // 22 scene expanded art (weather/location audited)
     case MAP_VERMILION_CITY_GYM_HNS: return 75; // 22 scene expanded art (weather/location audited)
     case MAP_CELADON_CITY_GYM_HNS: return 57; // 22 scene expanded art (weather/location audited)
     case MAP_FUCHSIA_CITY_GYM_HNS: return 67; // 22 scene expanded art (weather/location audited)
-    case MAP_SAFFRON_CITY_GYM_HNS: return 58; // 22 scene expanded art (weather/location audited)
-    case MAP_VIRIDIAN_CITY_GYM_HNS: return 61; // 22 scene expanded art (weather/location audited)
+    case MAP_SAFFRON_CITY_GYM_HNS: return 74; // psychic interior, not an outdoor ruins meadow
+    case MAP_VIRIDIAN_CITY_GYM_HNS: return 75; // indoor gym arena, not Mt Silver snowy outdoor
     case MAP_SAFFRON_CITY_FIGHTING_DOJO_HNS: return 75; // Original PRU terrain match
     case MAP_SAFFRON_CITY_FIGHTING_DOJO_VIP_HNS: return 75; // Original PRU terrain match
     case MAP_AKALA_CAVE_HNS: return 63; // unclassified underground; general limestone cave
@@ -1091,18 +1091,18 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_DIGLETTS_CAVE_ENTRANCE_NORTH_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
     case MAP_DIGLETTS_CAVE_ENTRANCE_SOUTH_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
     case MAP_DIGLETTS_CAVE_TUNNEL_HNS: return 63; // cave/interior system MAPSEC_DIGLETTS_CAVE
-    case MAP_DRAGONS_DEN_CAVERN_HNS: return 59; // cave/interior system MAPSEC_DRAGONS_DEN
-    case MAP_DRAGONS_DEN_ENTRANCE_HNS: return 59; // cave/interior system MAPSEC_DRAGONS_DEN
-    case MAP_DRAGONS_DEN_SHRINE_HNS: return 59; // cave/interior system MAPSEC_DRAGONS_DEN
-    case MAP_DRAGONS_DEN_STORM_SHRINE_HNS: return 59; // cave/interior system MAPSEC_DRAGONS_DEN
+    case MAP_DRAGONS_DEN_CAVERN_HNS: return 71; // dark stone cavern, not Ice Path crystal chamber
+    case MAP_DRAGONS_DEN_ENTRANCE_HNS: return 71; // dark stone cavern, not Ice Path crystal chamber
+    case MAP_DRAGONS_DEN_SHRINE_HNS: return 71; // dark stone cavern, not Ice Path crystal chamber
+    case MAP_DRAGONS_DEN_STORM_SHRINE_HNS: return 71; // dark stone cavern, not Ice Path crystal chamber
     case MAP_ECRUTEAK_CITY_HNS: return 73; // 22 scene expanded art (weather/location audited)
     case MAP_EMBEDDED_TOWER_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_FUCHSIA_CITY_HNS: return 57; // town/city MAPSEC_FUCHSIA_CITY
     case MAP_FUCHSIA_CITY_SAFARI_ZONE_BRUSH_HNS: return 56; // general outdoor grass
     case MAP_FUCHSIA_CITY_SAFARI_ZONE_CAVE_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_FUCHSIA_CITY_SAFARI_ZONE_MOUNTAIN_HNS: return 56; // general outdoor grass
-    case MAP_GOLDENROD_CITY_DEPARTMENT_STORE_7FNIGHT_HNS: return 58; // town/city MAPSEC_GOLDENROD_CITY
-    case MAP_GOLDENROD_CITY_DEPARTMENT_STORE_7F_HNS: return 58; // town/city MAPSEC_GOLDENROD_CITY
+    case MAP_GOLDENROD_CITY_DEPARTMENT_STORE_7FNIGHT_HNS: return 70; // city rooftop market scenery, not exterior Ruins
+    case MAP_GOLDENROD_CITY_DEPARTMENT_STORE_7F_HNS: return 70; // city rooftop market scenery, not exterior Ruins
     case MAP_GOLDENROD_CITY_HNS: return 70; // 22 scene expanded art (weather/location audited)
     case MAP_ICE_PATH_1F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
     case MAP_ICE_PATH_B1F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
@@ -1113,7 +1113,7 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_INDIGO_PLATEAU_HNS: return 56; // town/city MAPSEC_INDIGO_PLATEAU
     case MAP_LAKE_OF_RAGE_HNS: return 64; // lake of rage / storm / local WEATHER_RAIN_THUNDERSTORM
     case MAP_LAKE_OF_RAGE_LOW_TIDE_HNS: return 64; // lake of rage / storm
-    case MAP_LAVENDER_TOWN_HNS: return 58; // town/city MAPSEC_LAVENDER_TOWN
+    case MAP_LAVENDER_TOWN_HNS: return 70; // town square, not exterior Ruins
     case MAP_MAHOGANYTOWN_HNS: return 56; // town/city MAPSEC_MAHOGANY_TOWN
     case MAP_MELEMELE_ISLE_HNS: return 56; // general outdoor grass
     case MAP_MT_MOON_CAVE_HNS: return 63; // cave/interior system MAPSEC_MT_MOON
@@ -1122,14 +1122,14 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_MT_MORTAR_1F_SOUTH_HNS: return 60; // cave/interior system MAPSEC_MT_MORTAR
     case MAP_MT_MORTAR_2F_HNS: return 60; // cave/interior system MAPSEC_MT_MORTAR
     case MAP_MT_MORTAR_B1F_HNS: return 60; // cave/interior system MAPSEC_MT_MORTAR
-    case MAP_MT_SILVER_1F_ITEM_ROOM_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
-    case MAP_MT_SILVER_1F_MOLTRES_ROOM_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
-    case MAP_MT_SILVER_1F_WATERFALL_ROOM_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
-    case MAP_MT_SILVER_2F_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
-    case MAP_MT_SILVER_3F_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
+    case MAP_MT_SILVER_1F_ITEM_ROOM_HNS: return 71; // interior stone cavern; snow/rock summit remains outdoor scene 61
+    case MAP_MT_SILVER_1F_MOLTRES_ROOM_HNS: return 71; // interior rocky chamber; special Groudon battle override remains authoritative
+    case MAP_MT_SILVER_1F_WATERFALL_ROOM_HNS: return 71; // interior stone cavern; snow/rock summit remains outdoor scene 61
+    case MAP_MT_SILVER_2F_HNS: return 71; // interior stone cavern; snow/rock summit remains outdoor scene 61
+    case MAP_MT_SILVER_3F_HNS: return 71; // interior stone cavern; snow/rock summit remains outdoor scene 61
     case MAP_MT_SILVER_MOUNTAIN_SIDE_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
     case MAP_MT_SILVER_OUTSIDE_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
-    case MAP_MT_SILVER_POKEMON_CENTER_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
+    case MAP_MT_SILVER_POKEMON_CENTER_HNS: return 75; // building interior; stone arena instead of snowy mountain
     case MAP_MT_SILVER_SNOW_HNS: return 61; // cave/interior system MAPSEC_MT_SILVER
     case MAP_NATIONAL_PARK_BUG_CONTEST_HNS: return 56; // general outdoor grass
     case MAP_NATIONAL_PARK_NORMAL_HNS: return 56; // general outdoor grass
@@ -1197,14 +1197,14 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_ROUTE7_HNS: return 56; // route 7 terrain
     case MAP_ROUTE8_HNS: return 56; // route 8 terrain
     case MAP_ROUTE9_HNS: return 65; // route 9 terrain
-    case MAP_RUINS_OF_ALPH_B1F_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
-    case MAP_RUINS_OF_ALPH_LAB_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
+    case MAP_RUINS_OF_ALPH_B1F_HNS: return 74; // indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)
+    case MAP_RUINS_OF_ALPH_LAB_HNS: return 74; // indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)
     case MAP_RUINS_OF_ALPH_OUTSIDE_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
-    case MAP_RUINS_OF_ALPH_PUZZLE_AND_REWARD_CHAMBERS_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
-    case MAP_RUINS_OF_ALPH_WORDS_ROOM1_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
-    case MAP_RUINS_OF_ALPH_WORDS_ROOM2_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
-    case MAP_RUINS_OF_ALPH_WORDS_ROOM3_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
-    case MAP_RUINS_OF_ALPH_WORDS_ROOM4_HNS: return 58; // cave/interior system MAPSEC_RUINS_OF_ALPH
+    case MAP_RUINS_OF_ALPH_PUZZLE_AND_REWARD_CHAMBERS_HNS: return 74; // indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM1_HNS: return 74; // indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM2_HNS: return 74; // indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM3_HNS: return 74; // indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)
+    case MAP_RUINS_OF_ALPH_WORDS_ROOM4_HNS: return 74; // indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)
     case MAP_SAFARI_ZONE1_HNS: return 56; // general outdoor grass
     case MAP_SAFARI_ZONE2_HNS: return 56; // general outdoor grass
     case MAP_SAFARI_ZONE3_HNS: return 56; // general outdoor grass
@@ -1219,7 +1219,7 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_SEAFOAM_ISLANDS_B1F_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_SEAFOAM_ISLANDS_GYM_HNS: return 69; // 22 scene expanded art (weather/location audited)
     case MAP_SEAFOAM_ISLANDS_SECRET_CAVE_HNS: return 63; // unclassified underground; general limestone cave
-    case MAP_SINJOH_RUINS_HNS: return 56; // town/city MAPSEC_SINJOH_RUINS
+    case MAP_SINJOH_RUINS_HNS: return 74; // ancient shrine interior
     case MAP_SLOWPOKE_WELL_B1F_HNS: return 63; // cave/interior system MAPSEC_SLOWPOKE_WELL
     case MAP_SLOWPOKE_WELL_B2F_HNS: return 63; // cave/interior system MAPSEC_SLOWPOKE_WELL
     case MAP_SPROUT_TOWER_1F_HNS:
@@ -1227,18 +1227,18 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_SPROUT_TOWER_3F_HNS: return 57; // Spiritual forest/shrine scene shared by all three timber-tower floors.
     case MAP_SNOWSWEPT_CAVERN_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_SOUTHERN_ISLAND_EXTERIOR_HNS: return 56; // general outdoor grass
-    case MAP_SOUTHERN_ISLAND_INTERIOR_HNS: return 56; // general outdoor grass
-    case MAP_TIN_TOWER_1F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
-    case MAP_TIN_TOWER_2F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
-    case MAP_TIN_TOWER_3F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
-    case MAP_TIN_TOWER_4F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
-    case MAP_TIN_TOWER_5F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
-    case MAP_TIN_TOWER_6F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
-    case MAP_TIN_TOWER_7F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
-    case MAP_TIN_TOWER_8F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
-    case MAP_TIN_TOWER_9F_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
-    case MAP_TIN_TOWER_ROOF_DAY_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
-    case MAP_TIN_TOWER_ROOF_NIGHT_HNS: return 58; // cave/interior system MAPSEC_TIN_TOWER
+    case MAP_SOUTHERN_ISLAND_INTERIOR_HNS: return 74; // temple interior, not route grass
+    case MAP_TIN_TOWER_1F_HNS: return 74; // indoor ancient timber tower; lantern crypt
+    case MAP_TIN_TOWER_2F_HNS: return 74; // indoor ancient timber tower; lantern crypt
+    case MAP_TIN_TOWER_3F_HNS: return 74; // indoor ancient timber tower; lantern crypt
+    case MAP_TIN_TOWER_4F_HNS: return 74; // indoor ancient timber tower; lantern crypt
+    case MAP_TIN_TOWER_5F_HNS: return 74; // indoor ancient timber tower; lantern crypt
+    case MAP_TIN_TOWER_6F_HNS: return 74; // indoor ancient timber tower; lantern crypt
+    case MAP_TIN_TOWER_7F_HNS: return 74; // indoor ancient timber tower; lantern crypt
+    case MAP_TIN_TOWER_8F_HNS: return 74; // indoor ancient timber tower; lantern crypt
+    case MAP_TIN_TOWER_9F_HNS: return 74; // indoor ancient timber tower; lantern crypt
+    case MAP_TIN_TOWER_ROOF_DAY_HNS: return 76; // open-air tower roof; outdoor rolling-hills sky
+    case MAP_TIN_TOWER_ROOF_NIGHT_HNS: return 76; // open-air tower roof; outdoor rolling-hills sky
     case MAP_TOHJO_FALLS_CAVERN_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_TOHJO_FALLS_GIOVANNI_ROOM_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_TRAINER_HILL_COURTYARD_HNS: return 56; // general outdoor grass
@@ -1292,11 +1292,12 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
     switch ((gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum)
     {
     case MAP_MT_SILVER_OUTSIDE_HNS:
+    case MAP_MT_SILVER_SNOW_HNS:
+        return 61; // User-approved rocky snow scene ONLY for Mt Silver outside.
     case MAP_MT_SILVER_1F_WATERFALL_ROOM_HNS:
     case MAP_MT_SILVER_2F_HNS:
     case MAP_MT_SILVER_3F_HNS:
-    case MAP_MT_SILVER_SNOW_HNS:
-        return 61; // User-approved redrawn rocky Mt Silver stage.
+        return 71; // 22-scene dark stone cavern for actual Mt Silver interiors.
     case MAP_ROUTE29_HNS:
         return 56; // Original grassy Route 29 scene.
     case MAP_ILEX_FOREST_HNS:
@@ -1339,7 +1340,7 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         // progression scripts, so route by the actual battle rather than room.
         case TRAINER_WILL_1_HNS:
         case TRAINER_WILL_2_HNS:
-        case TRAINER_WILL_POSTOBC_HNS: return 58; // PRU expanded, CC0 art or approved original
+        case TRAINER_WILL_POSTOBC_HNS: return 74; // PRU expanded, CC0 art or approved original
         case TRAINER_KOGA_1_HNS:
         case TRAINER_KOGA_2_HNS:
         case TRAINER_KOGA_POSTOBC_HNS: return 67; // PRU expanded, CC0 art or approved original
@@ -1389,7 +1390,7 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         case TRAINER_CLAIR_1_HNS:
         case TRAINER_CLAIR_2_HNS:
         case TRAINER_CLAIR_3_HNS:
-        case TRAINER_CLAIR_POSTOBC_HNS: return 59; // PRU expanded, CC0 art or approved original
+        case TRAINER_CLAIR_POSTOBC_HNS: return 71; // PRU expanded, CC0 art or approved original
         case TRAINER_BROCK_HNS:
         case TRAINER_BROCK_POSTOBC_HNS: return 75; // PRU expanded, CC0 art or approved original
         case TRAINER_MISTY_HNS:
@@ -1401,7 +1402,7 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         case TRAINER_JANINE_HNS:
         case TRAINER_JANINE_POSTOBC_HNS: return 67; // PRU expanded, CC0 art or approved original
         case TRAINER_SABRINA_HNS:
-        case TRAINER_SABRINA_POSTOBC_HNS: return 58; // PRU expanded, CC0 art or approved original
+        case TRAINER_SABRINA_POSTOBC_HNS: return 74; // PRU expanded, CC0 art or approved original
         case TRAINER_BLAINE_HNS:
         case TRAINER_BLAINE_POSTOBC_HNS: return 69; // PRU expanded, CC0 art or approved original
         case TRAINER_BLUE_HNS:

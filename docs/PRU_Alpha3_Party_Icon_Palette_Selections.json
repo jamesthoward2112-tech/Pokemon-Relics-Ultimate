@@ -1,0 +1,28 @@
+{
+  "method": "reindexed existing 32x64 two-frame party silhouettes to vanilla 0..5 OBJ palettes, no new tags",
+  "palette_choices": {
+    "eeveeon": 2,
+    "nimbeon": 3,
+    "champeon": 0,
+    "lepideon": 2,
+    "sphynxeon": 5,
+    "guardeon": 3,
+    "obsideon": 2,
+    "toxeon": 4,
+    "omeon": 2,
+    "drakeon": 4,
+    "mootiny": 2,
+    "cheauking": 1,
+    "gemigoyle": 2,
+    "heracurion": 3,
+    "kablowfish": 4,
+    "jollibird": 0
+  },
+  "stays_unchanged": [
+    "species IDs",
+    "front art",
+    "back art except Astrachi",
+    "species names",
+    "world data"
+  ]
+}

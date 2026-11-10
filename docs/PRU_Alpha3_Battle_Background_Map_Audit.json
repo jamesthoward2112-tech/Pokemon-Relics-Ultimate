@@ -1,0 +1,334 @@
+{
+  "changed_count": 36,
+  "changed_map_assignments": [
+    {
+      "map": "RUINS_OF_ALPH_B1F",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)"
+    },
+    {
+      "map": "RUINS_OF_ALPH_LAB",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)"
+    },
+    {
+      "map": "RUINS_OF_ALPH_PUZZLE_AND_REWARD_CHAMBERS",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)"
+    },
+    {
+      "map": "RUINS_OF_ALPH_WORDS_ROOM1",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)"
+    },
+    {
+      "map": "RUINS_OF_ALPH_WORDS_ROOM2",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)"
+    },
+    {
+      "map": "RUINS_OF_ALPH_WORDS_ROOM3",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)"
+    },
+    {
+      "map": "RUINS_OF_ALPH_WORDS_ROOM4",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor stone ruins and lantern-crypt scenery; outside remains original meadow (58)"
+    },
+    {
+      "map": "TIN_TOWER_1F",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor ancient timber tower; lantern crypt"
+    },
+    {
+      "map": "TIN_TOWER_2F",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor ancient timber tower; lantern crypt"
+    },
+    {
+      "map": "TIN_TOWER_3F",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor ancient timber tower; lantern crypt"
+    },
+    {
+      "map": "TIN_TOWER_4F",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor ancient timber tower; lantern crypt"
+    },
+    {
+      "map": "TIN_TOWER_5F",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor ancient timber tower; lantern crypt"
+    },
+    {
+      "map": "TIN_TOWER_6F",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor ancient timber tower; lantern crypt"
+    },
+    {
+      "map": "TIN_TOWER_7F",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor ancient timber tower; lantern crypt"
+    },
+    {
+      "map": "TIN_TOWER_8F",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor ancient timber tower; lantern crypt"
+    },
+    {
+      "map": "TIN_TOWER_9F",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "indoor ancient timber tower; lantern crypt"
+    },
+    {
+      "map": "TIN_TOWER_ROOF_DAY",
+      "before": 58,
+      "after": 76,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "rolling_hills",
+      "reason": "open-air tower roof; outdoor rolling-hills sky"
+    },
+    {
+      "map": "TIN_TOWER_ROOF_NIGHT",
+      "before": 58,
+      "after": 76,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "rolling_hills",
+      "reason": "open-air tower roof; outdoor rolling-hills sky"
+    },
+    {
+      "map": "MT_SILVER_1F_ITEM_ROOM",
+      "before": 61,
+      "after": 71,
+      "before_scene": "Mt Silver snowy cliffs",
+      "after_scene": "dark_stone_cavern",
+      "reason": "interior stone cavern; snow/rock summit remains outdoor scene 61"
+    },
+    {
+      "map": "MT_SILVER_1F_WATERFALL_ROOM",
+      "before": 61,
+      "after": 71,
+      "before_scene": "Mt Silver snowy cliffs",
+      "after_scene": "dark_stone_cavern",
+      "reason": "interior stone cavern; snow/rock summit remains outdoor scene 61"
+    },
+    {
+      "map": "MT_SILVER_2F",
+      "before": 61,
+      "after": 71,
+      "before_scene": "Mt Silver snowy cliffs",
+      "after_scene": "dark_stone_cavern",
+      "reason": "interior stone cavern; snow/rock summit remains outdoor scene 61"
+    },
+    {
+      "map": "MT_SILVER_3F",
+      "before": 61,
+      "after": 71,
+      "before_scene": "Mt Silver snowy cliffs",
+      "after_scene": "dark_stone_cavern",
+      "reason": "interior stone cavern; snow/rock summit remains outdoor scene 61"
+    },
+    {
+      "map": "MT_SILVER_1F_MOLTRES_ROOM",
+      "before": 61,
+      "after": 71,
+      "before_scene": "Mt Silver snowy cliffs",
+      "after_scene": "dark_stone_cavern",
+      "reason": "interior rocky chamber; special Groudon battle override remains authoritative"
+    },
+    {
+      "map": "MT_SILVER_POKEMON_CENTER",
+      "before": 61,
+      "after": 75,
+      "before_scene": "Mt Silver snowy cliffs",
+      "after_scene": "stone_arena",
+      "reason": "building interior; stone arena instead of snowy mountain"
+    },
+    {
+      "map": "SAFFRON_CITY_GYM",
+      "before": 58,
+      "after": 74,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "psychic interior, not an outdoor ruins meadow"
+    },
+    {
+      "map": "GOLDENROD_CITY_DEPARTMENT_STORE_7F",
+      "before": 58,
+      "after": 70,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "market_square",
+      "reason": "city rooftop market scenery, not exterior Ruins"
+    },
+    {
+      "map": "GOLDENROD_CITY_DEPARTMENT_STORE_7FNIGHT",
+      "before": 58,
+      "after": 70,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "market_square",
+      "reason": "city rooftop market scenery, not exterior Ruins"
+    },
+    {
+      "map": "LAVENDER_TOWN",
+      "before": 58,
+      "after": 70,
+      "before_scene": "Ruins of Alph outdoor meadow",
+      "after_scene": "market_square",
+      "reason": "town square, not exterior Ruins"
+    },
+    {
+      "map": "SINJOH_RUINS",
+      "before": 56,
+      "after": 74,
+      "before_scene": "Route 29 meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "ancient shrine interior"
+    },
+    {
+      "map": "SOUTHERN_ISLAND_INTERIOR",
+      "before": 56,
+      "after": 74,
+      "before_scene": "Route 29 meadow",
+      "after_scene": "lantern_crypt",
+      "reason": "temple interior, not route grass"
+    },
+    {
+      "map": "DRAGONS_DEN_CAVERN",
+      "before": 59,
+      "after": 71,
+      "before_scene": "Ice Path crystal interior",
+      "after_scene": "dark_stone_cavern",
+      "reason": "dark stone cavern, not Ice Path crystal chamber"
+    },
+    {
+      "map": "DRAGONS_DEN_ENTRANCE",
+      "before": 59,
+      "after": 71,
+      "before_scene": "Ice Path crystal interior",
+      "after_scene": "dark_stone_cavern",
+      "reason": "dark stone cavern, not Ice Path crystal chamber"
+    },
+    {
+      "map": "DRAGONS_DEN_SHRINE",
+      "before": 59,
+      "after": 71,
+      "before_scene": "Ice Path crystal interior",
+      "after_scene": "dark_stone_cavern",
+      "reason": "dark stone cavern, not Ice Path crystal chamber"
+    },
+    {
+      "map": "DRAGONS_DEN_STORM_SHRINE",
+      "before": 59,
+      "after": 71,
+      "before_scene": "Ice Path crystal interior",
+      "after_scene": "dark_stone_cavern",
+      "reason": "dark stone cavern, not Ice Path crystal chamber"
+    },
+    {
+      "map": "BLACKTHORN_CITY_GYM",
+      "before": 59,
+      "after": 71,
+      "before_scene": "Ice Path crystal interior",
+      "after_scene": "dark_stone_cavern",
+      "reason": "dragon cave theme, not Ice Path"
+    },
+    {
+      "map": "VIRIDIAN_CITY_GYM",
+      "before": 61,
+      "after": 75,
+      "before_scene": "Mt Silver snowy cliffs",
+      "after_scene": "stone_arena",
+      "reason": "indoor gym arena, not Mt Silver snowy outdoor"
+    }
+  ],
+  "total_location_mappings": 217,
+  "palette_table": {
+    "55": "Mt Silver rocky original",
+    "56": "Route 29 meadow",
+    "57": "Ilex grove",
+    "58": "Ruins of Alph outdoor meadow",
+    "59": "Ice Path crystal interior",
+    "60": "Entei / Mt Mortar cavern",
+    "61": "Mt Silver snowy cliffs",
+    "62": "Golden Ho-Oh cinematic",
+    "63": "limestone cave",
+    "64": "Lake of Rage rain",
+    "65": "river paths",
+    "66": "coastline",
+    "67": "twilight_woodland",
+    "68": "winter_pines",
+    "69": "burning_crags",
+    "70": "market_square",
+    "71": "dark_stone_cavern",
+    "72": "ochre_forest",
+    "73": "redwood_copse",
+    "74": "lantern_crypt",
+    "75": "stone_arena",
+    "76": "rolling_hills"
+  },
+  "ruins_outside": 58,
+  "ruins_interiors": {
+    "RUINS_OF_ALPH_B1F": 74,
+    "RUINS_OF_ALPH_LAB": 74,
+    "RUINS_OF_ALPH_PUZZLE_AND_REWARD_CHAMBERS": 74,
+    "RUINS_OF_ALPH_WORDS_ROOM1": 74,
+    "RUINS_OF_ALPH_WORDS_ROOM2": 74,
+    "RUINS_OF_ALPH_WORDS_ROOM3": 74,
+    "RUINS_OF_ALPH_WORDS_ROOM4": 74
+  },
+  "checks": {
+    "ruins_inside_vs_outside": true,
+    "tin_tower_inside_vs_roof": true,
+    "mount_silver_cavern_vs_outside": true,
+    "background_index_bounds": true
+  }
+}

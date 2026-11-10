@@ -290,6 +290,23 @@ static const u16 sSpriteImageSizes[3][4] =
 // Swamplith party icon selects its bespoke ninth palette when rendered.
 static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
 {
+    // Alpha 3: use six GBA-safe shared PC palette slots (no slot 20+ collision).
+    if (species == SPECIES_EEVEEON) return 2;
+    if (species == SPECIES_NIMBEON) return 3;
+    if (species == SPECIES_CHAMPEON) return 0;
+    if (species == SPECIES_LEPIDEON) return 2;
+    if (species == SPECIES_SPHYNXEON) return 5;
+    if (species == SPECIES_GUARDEON) return 3;
+    if (species == SPECIES_OBSIDEON) return 2;
+    if (species == SPECIES_TOXEON) return 4;
+    if (species == SPECIES_OMEON) return 2;
+    if (species == SPECIES_DRAKEON) return 4;
+    if (species == SPECIES_MOOTINY) return 2;
+    if (species == SPECIES_CHEAUKING) return 1;
+    if (species == SPECIES_GEMIGOYLE) return 2;
+    if (species == SPECIES_HERACURION) return 3;
+    if (species == SPECIES_KABLOWFISH) return 4;
+    if (species == SPECIES_JOLLIBIRD) return 0;
     if (species == SPECIES_KHANG)
         return 18;
     if (species == SPECIES_NOLAX)
