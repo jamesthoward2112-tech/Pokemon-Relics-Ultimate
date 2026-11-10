@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 # Each build is independent: never supersede a queued ROM build.
-# Pull requests compile for review but only main publishes a direct ROM release.
+# Only manually dispatched main builds publish a direct ROM prerelease.
 concurrency:
   group: pru-clean-build-${{ github.run_id }}
   cancel-in-progress: false
