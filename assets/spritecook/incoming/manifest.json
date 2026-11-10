@@ -1,6 +1,15 @@
 {
-  "count": 52,
+  "count": 64,
   "assets": [
+    {
+      "file": "01d1200e-5838-4f67-a2a9-b34735db5e3e.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 23
+    },
     {
       "file": "0239ab26-c000-4b36-88be-a5b006c8e90f.png",
       "width": 126,
@@ -18,6 +27,15 @@
       "transparent_pixels": true,
       "opaque_pixels": true,
       "unique_colors": 3388
+    },
+    {
+      "file": "0ceedbc1-63b0-41d7-a90c-38fc8c4f2ba7.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 18
     },
     {
       "file": "1281c559-4ccd-49ec-a5ed-294bde9c4e4b.png",
@@ -74,6 +92,15 @@
       "unique_colors": 17
     },
     {
+      "file": "24ab9ec1-3b3e-4316-ac71-cf2f19f6269d.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
+    },
+    {
       "file": "279dd2d2-feea-4764-96fd-37d68b12e47c.png",
       "width": 190,
       "height": 190,
@@ -90,6 +117,24 @@
       "transparent_pixels": true,
       "opaque_pixels": true,
       "unique_colors": 3482
+    },
+    {
+      "file": "2ace4a7e-c06b-408b-9704-ce42a11d02a3.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 19
+    },
+    {
+      "file": "33ae8ecf-fd9a-43c1-a94b-92190b35583a.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 20
     },
     {
       "file": "3b471764-4dcc-4ae2-9720-524be0b9f053.png",
@@ -117,6 +162,15 @@
       "transparent_pixels": true,
       "opaque_pixels": true,
       "unique_colors": 17
+    },
+    {
+      "file": "471a7a3e-b1c8-4718-aca4-faa561bc5d32.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 24
     },
     {
       "file": "4935bc7e-5d66-4f86-8fd4-656a2f3ca374.png",
@@ -236,6 +290,15 @@
       "unique_colors": 13
     },
     {
+      "file": "6fd34880-7181-4f34-992a-898d452d8867.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 16
+    },
+    {
       "file": "74dda45e-dd99-48a6-a527-fa7acad41729.png",
       "width": 150,
       "height": 150,
@@ -254,6 +317,15 @@
       "unique_colors": 17
     },
     {
+      "file": "7bd2bd7d-f263-4cfa-8791-01a51d5a6c8d.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 23
+    },
+    {
       "file": "7c11e8b7-07fb-4c20-870b-cbb0aef7f563.png",
       "width": 154,
       "height": 154,
@@ -270,6 +342,15 @@
       "transparent_pixels": true,
       "opaque_pixels": true,
       "unique_colors": 16
+    },
+    {
+      "file": "94e21ec6-6a02-4d7c-8847-3a2587d93e06.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 19
     },
     {
       "file": "97ddcc2d-ddea-404d-b011-985f30fd7c68.png",
@@ -344,6 +425,15 @@
       "unique_colors": 5671
     },
     {
+      "file": "b2edb53b-d3e5-48aa-99c4-98cc7fd2eaf8.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 20
+    },
+    {
       "file": "ba3cc3b6-e7ca-4f4e-801c-5ddf5f88bc87.png",
       "width": 64,
       "height": 64,
@@ -351,6 +441,15 @@
       "transparent_pixels": true,
       "opaque_pixels": true,
       "unique_colors": 17
+    },
+    {
+      "file": "beb15e64-6c88-46ee-b332-999c7a5de541.png",
+      "width": 90,
+      "height": 90,
+      "fits_64x64": false,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 1055
     },
     {
       "file": "bf3598d6-da84-449e-b521-8e83e5f492cb.png",
@@ -450,6 +549,15 @@
       "transparent_pixels": true,
       "opaque_pixels": true,
       "unique_colors": 852
+    },
+    {
+      "file": "eee1ca0f-2555-43d6-a5c5-25c60935a753.png",
+      "width": 64,
+      "height": 64,
+      "fits_64x64": true,
+      "transparent_pixels": true,
+      "opaque_pixels": true,
+      "unique_colors": 17
     },
     {
       "file": "f00ad40c-2275-4f9c-9516-68d54e5438f8.png",
