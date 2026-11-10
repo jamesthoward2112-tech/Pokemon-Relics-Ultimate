@@ -2,12 +2,8 @@ name: Sync SpriteCook originals
 
 # Artwork can be imported immediately on demand, or once each morning.
 # Avoid 96 scheduled runs/day when no sprites have changed.
+# Disabled automatic SpriteCook sync; manually run only if needed.
 on:
-  push:
-    paths:
-      - "tools/spritecook/**"
-  schedule:
-    - cron: "0 6 * * *"
   workflow_dispatch:
 
 permissions:
