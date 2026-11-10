@@ -1052,15 +1052,15 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_OLIVINE_CITY_GYM_HNS: return 66; // 22 scene expanded art (weather/location audited)
     case MAP_MAHOGANY_TOWN_GYM_HNS: return 68; // 22 scene expanded art (weather/location audited)
     case MAP_BLACKTHORN_CITY_GYM_HNS: return 59; // 22 scene expanded art (weather/location audited)
-    case MAP_PEWTER_CITY_GYM_HNS: return 71; // 22 scene expanded art (weather/location audited)
+    case MAP_PEWTER_CITY_GYM_HNS: return 75; // 22 scene expanded art (weather/location audited)
     case MAP_CERULEAN_CITY_GYM_HNS: return 64; // 22 scene expanded art (weather/location audited)
-    case MAP_VERMILION_CITY_GYM_HNS: return 58; // 22 scene expanded art (weather/location audited)
-    case MAP_CELADON_CITY_GYM_HNS: return 73; // 22 scene expanded art (weather/location audited)
+    case MAP_VERMILION_CITY_GYM_HNS: return 75; // 22 scene expanded art (weather/location audited)
+    case MAP_CELADON_CITY_GYM_HNS: return 57; // 22 scene expanded art (weather/location audited)
     case MAP_FUCHSIA_CITY_GYM_HNS: return 67; // 22 scene expanded art (weather/location audited)
     case MAP_SAFFRON_CITY_GYM_HNS: return 58; // 22 scene expanded art (weather/location audited)
     case MAP_VIRIDIAN_CITY_GYM_HNS: return 61; // 22 scene expanded art (weather/location audited)
-    case MAP_SAFFRON_CITY_FIGHTING_DOJO_HNS: return 63; // Original PRU terrain match
-    case MAP_SAFFRON_CITY_FIGHTING_DOJO_VIP_HNS: return 63; // Original PRU terrain match
+    case MAP_SAFFRON_CITY_FIGHTING_DOJO_HNS: return 75; // Original PRU terrain match
+    case MAP_SAFFRON_CITY_FIGHTING_DOJO_VIP_HNS: return 75; // Original PRU terrain match
     case MAP_AKALA_CAVE_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_AKALA_FOREST_HNS: return 56; // general outdoor grass
     case MAP_AKALA_ISLE_HNS: return 56; // general outdoor grass
@@ -1083,7 +1083,7 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_CERULEAN_CAVE_B2F_HNS: return 71; // 22 scene expanded art (weather/location audited)
     case MAP_CERULEAN_CITY_HNS: return 56; // town/city MAPSEC_CERULEAN_CITY
     case MAP_CHERRYGROVE_CITY_HNS: return 56; // town/city MAPSEC_CHERRYGROVE_CITY
-    case MAP_CIANWOOD_CITY_HNS: return 64; // town/city MAPSEC_CIANWOOD_CITY / local WEATHER_RAIN
+    case MAP_CIANWOOD_CITY_HNS: return 66; // town/city MAPSEC_CIANWOOD_CITY / local WEATHER_RAIN
     case MAP_CLIFF_EDGE_CAVE_HNS: return 63; // cave/interior system MAPSEC_CLIFF_CAVE
     case MAP_CLIFF_EDGE_GATE_HNS: return 63; // cave/interior system MAPSEC_CLIFF_CAVE
     case MAP_DARK_CAVE_NORTH_SIDE_HNS: return 71; // 22 scene expanded art (weather/location audited)
@@ -1109,7 +1109,7 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_ICE_PATH_B2F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
     case MAP_ICE_PATH_B3F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
     case MAP_ICE_PATH_B4F_HNS: return 59; // cave/interior system MAPSEC_ICE_PATH
-    case MAP_ILEX_FOREST_HNS: return 56; // general outdoor grass
+    case MAP_ILEX_FOREST_HNS: return 57; // general outdoor grass
     case MAP_INDIGO_PLATEAU_HNS: return 56; // town/city MAPSEC_INDIGO_PLATEAU
     case MAP_LAKE_OF_RAGE_HNS: return 64; // lake of rage / storm / local WEATHER_RAIN_THUNDERSTORM
     case MAP_LAKE_OF_RAGE_LOW_TIDE_HNS: return 64; // lake of rage / storm
@@ -1136,7 +1136,8 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_NEWSINJOH_HOTSPRINGS_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_NEW_BARK_TOWN_HNS: return 56; // town/city MAPSEC_NEW_BARK_TOWN
     case MAP_NEW_SINJOH_HNS: return 56; // town/city MAPSEC_NEW_SINJOH
-    case MAP_OLIVINE_CITY_HNS: return 64; // town/city MAPSEC_OLIVINE_CITY / local WEATHER_RAIN
+    case MAP_OLIVINE_CITY_HNS: return 66; // town/city MAPSEC_OLIVINE_CITY / local WEATHER_RAIN
+    case MAP_OLIVINE_CITY_PORT_OUTSIDE_HNS: return 66; // Harbour frontage: approved coastal lighthouse scene.
     case MAP_PALLET_TOWN_HNS: return 56; // town/city MAPSEC_PALLET_TOWN
     case MAP_PEWTER_CITY_HNS: return 61; // town/city MAPSEC_PEWTER_CITY
     case MAP_PONI_CAVE_HNS: return 63; // unclassified underground; general limestone cave
@@ -1182,15 +1183,15 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_ROUTE41_HNS: return 64; // route 41 terrain / local WEATHER_RAIN_THUNDERSTORM
     case MAP_ROUTE42_HNS: return 61; // route 42 terrain
     case MAP_ROUTE43_HNS: return 64; // route 43 terrain
-    case MAP_ROUTE44_HNS: return 68; // 22 scene expanded art (weather/location audited)
+    case MAP_ROUTE44_HNS: return 65; // 22 scene expanded art (weather/location audited)
     case MAP_ROUTE45_GROUDON_CAVE_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_ROUTE45_HNS: return 61; // route 45 terrain
     case MAP_ROUTE46_HNS: return 61; // route 46 terrain
     case MAP_ROUTE47_HNS: return 61; // route 47 terrain
     case MAP_ROUTE48_HNS: return 61; // route 48 terrain
-    case MAP_ROUTE49_HNS: return 56; // route 49 terrain
+    case MAP_ROUTE49_HNS: return 68; // route 49 terrain
     case MAP_ROUTE4_HNS: return 56; // route 4 terrain
-    case MAP_ROUTE50_HNS: return 56; // route 50 terrain
+    case MAP_ROUTE50_HNS: return 68; // route 50 terrain
     case MAP_ROUTE5_HNS: return 56; // route 5 terrain
     case MAP_ROUTE6_HNS: return 56; // route 6 terrain
     case MAP_ROUTE7_HNS: return 56; // route 7 terrain
@@ -1221,6 +1222,9 @@ static u8 GetPruNewAreaBackgroundIndex(void)
     case MAP_SINJOH_RUINS_HNS: return 56; // town/city MAPSEC_SINJOH_RUINS
     case MAP_SLOWPOKE_WELL_B1F_HNS: return 63; // cave/interior system MAPSEC_SLOWPOKE_WELL
     case MAP_SLOWPOKE_WELL_B2F_HNS: return 63; // cave/interior system MAPSEC_SLOWPOKE_WELL
+    case MAP_SPROUT_TOWER_1F_HNS:
+    case MAP_SPROUT_TOWER_2F_HNS:
+    case MAP_SPROUT_TOWER_3F_HNS: return 57; // Spiritual forest/shrine scene shared by all three timber-tower floors.
     case MAP_SNOWSWEPT_CAVERN_HNS: return 63; // unclassified underground; general limestone cave
     case MAP_SOUTHERN_ISLAND_EXTERIOR_HNS: return 56; // general outdoor grass
     case MAP_SOUTHERN_ISLAND_INTERIOR_HNS: return 56; // general outdoor grass
@@ -1318,7 +1322,7 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
     case MAP_LAVENDER_SPIRIT_TOWER_5F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_6F_HNS:
     case MAP_LAVENDER_SPIRIT_TOWER_7F_HNS:
-        return 44; // PRU original ancient ruins environment.
+        return 74; // Haunted Lantern Crypt: consistent across all seven ghost-story floors.
     }
 
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
@@ -1335,7 +1339,7 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         // progression scripts, so route by the actual battle rather than room.
         case TRAINER_WILL_1_HNS:
         case TRAINER_WILL_2_HNS:
-        case TRAINER_WILL_POSTOBC_HNS: return 74; // PRU expanded, CC0 art or approved original
+        case TRAINER_WILL_POSTOBC_HNS: return 58; // PRU expanded, CC0 art or approved original
         case TRAINER_KOGA_1_HNS:
         case TRAINER_KOGA_2_HNS:
         case TRAINER_KOGA_POSTOBC_HNS: return 67; // PRU expanded, CC0 art or approved original
@@ -1345,7 +1349,7 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         case TRAINER_PRU_KANTO_E4_BRUNO_HNS: return 75; // PRU expanded, CC0 art or approved original
         case TRAINER_KAREN_1_HNS:
         case TRAINER_KAREN_2_HNS:
-        case TRAINER_KAREN_POSTOBC_HNS: return 74; // PRU expanded, CC0 art or approved original
+        case TRAINER_KAREN_POSTOBC_HNS: return 67; // PRU expanded, CC0 art or approved original
         case TRAINER_LANCE_1_HNS:
         case TRAINER_LANCE_2_HNS:
         case TRAINER_LANCE_3_HNS:
@@ -1387,13 +1391,13 @@ static u8 GetPruRhythmBattleBgIndex(u16 environment)
         case TRAINER_CLAIR_3_HNS:
         case TRAINER_CLAIR_POSTOBC_HNS: return 59; // PRU expanded, CC0 art or approved original
         case TRAINER_BROCK_HNS:
-        case TRAINER_BROCK_POSTOBC_HNS: return 71; // PRU expanded, CC0 art or approved original
+        case TRAINER_BROCK_POSTOBC_HNS: return 75; // PRU expanded, CC0 art or approved original
         case TRAINER_MISTY_HNS:
         case TRAINER_MISTY_POSTOBC_HNS: return 64; // PRU expanded, CC0 art or approved original
         case TRAINER_LTSURGE_HNS:
-        case TRAINER_LTSURGE_POSTOBC_HNS: return 58; // PRU expanded, CC0 art or approved original
+        case TRAINER_LTSURGE_POSTOBC_HNS: return 75; // PRU expanded, CC0 art or approved original
         case TRAINER_ERIKA_HNS:
-        case TRAINER_ERIKA_POSTOBC_HNS: return 73; // PRU expanded, CC0 art or approved original
+        case TRAINER_ERIKA_POSTOBC_HNS: return 57; // PRU expanded, CC0 art or approved original
         case TRAINER_JANINE_HNS:
         case TRAINER_JANINE_POSTOBC_HNS: return 67; // PRU expanded, CC0 art or approved original
         case TRAINER_SABRINA_HNS:
