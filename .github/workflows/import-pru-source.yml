@@ -3,10 +3,8 @@ name: Import canonical PRU source
 # Runs once after this workflow is introduced. The same workflow is
 # manually rerunnable. New source is copied from the reviewed, existing
 # public PRU branch; unreviewed Library material is NOT uploaded here.
+# One-off source imports must be explicitly requested, not retried on edits.
 on:
-  push:
-    paths:
-      - .github/workflows/import-pru-source.yml
   workflow_dispatch:
 
 permissions:
