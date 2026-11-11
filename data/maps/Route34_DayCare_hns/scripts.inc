@@ -93,7 +93,7 @@ Route34_DayCare_EventScript_MysteryEggDecline::
 Route34_DayCare_Text_MysteryEggOffer:
 	.string "I sell MYSTERY EGGS!\p"
 	.string "For ¥5,000, your EGG could hold\n"
-	.string "a STARTER or a RELIC baby!\p"
+	.string "one of NINE classic STARTERS!\p"
 	.string "Would you like one?$"
 
 Route34_DayCare_Text_MysteryEggReceived:
