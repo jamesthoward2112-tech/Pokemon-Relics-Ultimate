@@ -297,29 +297,29 @@ Route34_EventScript_PRUNurseryRhymes::
 	end
 
 Route34_Text_PRUNurseryRhymesIntro:
-	.string "I collect strange little\\n"
-	.string "nursery rhymes.\\p"
+	.string "I collect strange little\n"
+	.string "nursery rhymes.\p"
 	.string "These four are my favourites!$"
 
 Route34_Text_PRUNurseryRhymesBug:
-	.string "BABY BUG:\\n"
+	.string "BABY BUG:\n"
 	.string "GUTS / BUG / BABY / PLAY$"
 
 Route34_Text_PRUNurseryRhymesBird:
-	.string "BABY BIRD:\\n"
-	.string "STURDY / FLYING\\n"
+	.string "BABY BIRD:\n"
+	.string "STURDY / FLYING\n"
 	.string "SILVER / SHINE$"
 
 Route34_Text_PRUNurseryRhymesCalf:
-	.string "BABY CALF:\\n"
-	.string "THICK FAT / NORMAL\\n"
+	.string "BABY CALF:\n"
+	.string "THICK FAT / NORMAL\n"
 	.string "CUTE / SLEEP$"
 
 Route34_Text_PRUNurseryRhymesGem:
-	.string "BABY GEM:\\n"
-	.string "KEEN EYE / GHOST\\n"
+	.string "BABY GEM:\n"
+	.string "KEEN EYE / GHOST\n"
 	.string "MYSTERY / SHINE$"
 
 Route34_Text_PRUNurseryRhymesOutro:
-	.string "No idea who made them up...\\n"
+	.string "No idea who made them up...\n"
 	.string "But I can't forget them!$"
