@@ -1747,10 +1747,10 @@ static const u16 sOddEggSpecies[12] = {
     SPECIES_SMOOCHUM,    // 5
     SPECIES_ELEKID,      // 6
     SPECIES_MAGBY,       // 7
-    SPECIES_MANTYKE,     // 8
-    SPECIES_BONSLY,      // 9
-    SPECIES_HAPPINY,     // 10
-    SPECIES_MIME_JR,     // 11
+    SPECIES_SCARABUB,     // 8
+    SPECIES_SKARMET,      // 9
+    SPECIES_MOOTINY,     // 10
+    SPECIES_GEMLIN,     // 11
 };
 
 static const u8 sOddEggShinyNameList[][PLAYER_NAME_LENGTH + 1] = {
