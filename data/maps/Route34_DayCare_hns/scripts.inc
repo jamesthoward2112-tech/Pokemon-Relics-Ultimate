@@ -121,7 +121,6 @@ Route34_DayCare_Text_MysteryEggDecline:
 Route34_DayCare_EventScript_Clerk::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_ODD_EGG, Route34_DayCare_EventScript_ClerkAfter
 	msgbox Route34_DayCare_Text_ClerkBefore, MSGBOX_DEFAULT
 	specialvar VAR_0x8004, GetMaxPartySize @ tx_randomizer_and_challenges
 	getpartysize
@@ -142,63 +141,84 @@ Route34_DayCare_EventScript_Clerk::
 	case 5, Route34_DayCare_EventScript_GiveSmoochum
 	case 6, Route34_DayCare_EventScript_GiveElekid
 	case 7, Route34_DayCare_EventScript_GiveMagby
-	case 8, Route34_DayCare_EventScript_GiveMantyke
-	case 9, Route34_DayCare_EventScript_GiveBonsly
-	case 10, Route34_DayCare_EventScript_GiveHappiny
-	case 11, Route34_DayCare_EventScript_GiveMimeJr
+	case 8, Route34_DayCare_EventScript_GiveScarabub
+	case 9, Route34_DayCare_EventScript_GiveSkarmet
+	case 10, Route34_DayCare_EventScript_GiveMootiny
+	case 11, Route34_DayCare_EventScript_GiveGemlin
 	closemessage
 	release
 	end
 
 Route34_DayCare_EventScript_GivePichu::
+	goto_if_set FLAG_RECEIVED_ODD_EGG, Route34_DayCare_EventScript_ClerkAfter
 	giveoddegg 1
 	goto Route34_DayCare_EventScript_Clerk_GaveEgg
 
 Route34_DayCare_EventScript_GiveCleffa::
+	goto_if_set FLAG_RECEIVED_ODD_EGG, Route34_DayCare_EventScript_ClerkAfter
 	giveoddegg 2
 	goto Route34_DayCare_EventScript_Clerk_GaveEgg
 
 Route34_DayCare_EventScript_GiveIgglybuff::
+	goto_if_set FLAG_RECEIVED_ODD_EGG, Route34_DayCare_EventScript_ClerkAfter
 	giveoddegg 3
 	goto Route34_DayCare_EventScript_Clerk_GaveEgg
 
 Route34_DayCare_EventScript_GiveTyrogue::
+	goto_if_set FLAG_RECEIVED_ODD_EGG, Route34_DayCare_EventScript_ClerkAfter
 	giveoddegg 4
 	goto Route34_DayCare_EventScript_Clerk_GaveEgg
 
 Route34_DayCare_EventScript_GiveSmoochum::
+	goto_if_set FLAG_RECEIVED_ODD_EGG, Route34_DayCare_EventScript_ClerkAfter
 	giveoddegg 5
 	goto Route34_DayCare_EventScript_Clerk_GaveEgg
 
 Route34_DayCare_EventScript_GiveElekid::
+	goto_if_set FLAG_RECEIVED_ODD_EGG, Route34_DayCare_EventScript_ClerkAfter
 	giveoddegg 6
 	goto Route34_DayCare_EventScript_Clerk_GaveEgg
 
 Route34_DayCare_EventScript_GiveMagby::
+	goto_if_set FLAG_RECEIVED_ODD_EGG, Route34_DayCare_EventScript_ClerkAfter
 	giveoddegg 7
 	goto Route34_DayCare_EventScript_Clerk_GaveEgg
 
-Route34_DayCare_EventScript_GiveMantyke::
+Route34_DayCare_EventScript_GiveScarabub::
+	goto_if_set FLAG_PRU_SECRET_EGG_SCARABUB, Route34_DayCare_EventScript_ClerkAfter
 	giveoddegg 8
-	goto Route34_DayCare_EventScript_Clerk_GaveEgg
+	setflag FLAG_PRU_SECRET_EGG_SCARABUB
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
 
-Route34_DayCare_EventScript_GiveBonsly::
+Route34_DayCare_EventScript_GiveSkarmet::
+	goto_if_set FLAG_PRU_SECRET_EGG_SKARMET, Route34_DayCare_EventScript_ClerkAfter
 	giveoddegg 9
-	goto Route34_DayCare_EventScript_Clerk_GaveEgg
+	setflag FLAG_PRU_SECRET_EGG_SKARMET
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
 
-Route34_DayCare_EventScript_GiveHappiny::
+Route34_DayCare_EventScript_GiveMootiny::
+	goto_if_set FLAG_PRU_SECRET_EGG_MOOTINY, Route34_DayCare_EventScript_ClerkAfter
 	giveoddegg 10
-	goto Route34_DayCare_EventScript_Clerk_GaveEgg
+	setflag FLAG_PRU_SECRET_EGG_MOOTINY
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
 
-Route34_DayCare_EventScript_GiveMimeJr::
+Route34_DayCare_EventScript_GiveGemlin::
+	goto_if_set FLAG_PRU_SECRET_EGG_GEMLIN, Route34_DayCare_EventScript_ClerkAfter
 	giveoddegg 11
-	goto Route34_DayCare_EventScript_Clerk_GaveEgg
+	setflag FLAG_PRU_SECRET_EGG_GEMLIN
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
 
 Route34_DayCare_EventScript_Clerk_GaveEgg::
+	setflag FLAG_RECEIVED_ODD_EGG
+	goto Route34_DayCare_EventScript_Clerk_ReceiveEgg
+
+Route34_DayCare_EventScript_Clerk_GaveCustomEgg::
+	goto Route34_DayCare_EventScript_Clerk_ReceiveEgg
+
+Route34_DayCare_EventScript_Clerk_ReceiveEgg::
 	msgbox Route34_DayCare_Text_TakeCare, MSGBOX_DEFAULT
 	closemessage
 	delay 30
-	setflag FLAG_RECEIVED_ODD_EGG
 	playfanfare MUS_RG_OBTAIN_KEY_ITEM
 	message Route34_DayCare_Text_ReceivedOddEgg
 	waitfanfare
@@ -225,12 +245,11 @@ Route34_DayCare_EventScript_ClerkAfter::
 	end
 
 Route34_DayCare_Text_ClerkBefore:
-	.string "I'm the DAY-CARE couple's son.\p"
-	.string "An ODD EGG was found with a TRAINER's\n"
-	.string "POKéMON, but they didn't want it...\p"
-	.string "I'd offer it to you...\n"
-	.string "But how can I know you'll take good\l"
-	.string "care of it?$"
+	.string "I'm the DAY-CARE couple's son.\\p"
+	.string "We've been finding rather\\n"
+	.string "unusual ODD EGGS lately.\\p"
+	.string "I can entrust one to you if you\\n"
+	.string "know the right four words!$"
 
 Route34_DayCare_Text_ClerkNoRoom:
 	.string "It looks like you can't carry another\n"
@@ -255,10 +274,10 @@ Route34_DayCare_Text_TakeCare:
 	.string "for the job. Take good care of it!$"
 
 Route34_DayCare_Text_ClerkAfter:
-	.string "We see a lot of those eggs around\n"
-	.string "here.\p"
-	.string "Something was different about that\n"
-	.string "one, though.$"
+	.string "That answer has already earned\\n"
+	.string "you an ODD EGG.\\p"
+	.string "Perhaps another set of words\\n"
+	.string "will lead you to a new one!$"
 
 Route34_DayCare_EventScript_Ditto::
 	lock
