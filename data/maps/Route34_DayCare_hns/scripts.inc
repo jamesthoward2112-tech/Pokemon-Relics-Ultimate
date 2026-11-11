@@ -245,10 +245,10 @@ Route34_DayCare_EventScript_ClerkAfter::
 	end
 
 Route34_DayCare_Text_ClerkBefore:
-	.string "I'm the DAY-CARE couple's son.\\p"
-	.string "We've been finding rather\\n"
-	.string "unusual ODD EGGS lately.\\p"
-	.string "I can entrust one to you if you\\n"
+	.string "I'm the DAY-CARE couple's son.\p"
+	.string "We've been finding rather\n"
+	.string "unusual ODD EGGS lately.\p"
+	.string "I can entrust one to you if you\n"
 	.string "know the right four words!$"
 
 Route34_DayCare_Text_ClerkNoRoom:
@@ -274,9 +274,9 @@ Route34_DayCare_Text_TakeCare:
 	.string "for the job. Take good care of it!$"
 
 Route34_DayCare_Text_ClerkAfter:
-	.string "That answer has already earned\\n"
-	.string "you an ODD EGG.\\p"
-	.string "Perhaps another set of words\\n"
+	.string "That answer has already earned\n"
+	.string "you an ODD EGG.\p"
+	.string "Perhaps another set of words\n"
 	.string "will lead you to a new one!$"
 
 Route34_DayCare_EventScript_Ditto::
