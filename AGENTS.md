@@ -1,84 +1,58 @@
-# AGENTS.md — Pokémon Johto Relics
+# AGENTS.md — Pokémon Relics Ultimate (PRU)
 
-This file defines the default working rules for AI-assisted development of **Pokémon Johto Relics (PJR)**.
+This repository is **Pokémon Relics Ultimate (PRU)**. It is not the older Pokémon Johto Relics (PJR) repository.
 
-## Repository / branch
+## Repository and safe starting point
 
-- Repository: `jamesthoward2112-tech/Pokemon-Johto-Relics`
-- Active development branch: `pjr-rebuild`
-- Do not silently switch to `master`, `1.3-shop-ui`, an old checkout, an old ROM, or an earlier rescue state.
-- Always read the live `pjr-rebuild` HEAD before editing. GitHub HEAD and GitHub Actions are the source of truth, not chat/session state.
+- Repository: `jamesthoward2112-tech/Pokemon-Relics-Ultimate`
+- Default branch: `main`; current development often lives on unmerged feature/repair/Work Mode branches.
+- At the start of each task, inspect the requested branch, its live GitHub HEAD, current PRs and local working-tree status. Do not assume `main` is the most playable or complete build.
+- Preserve the latest *verified* working PRU base and all user-approved fixes. Verify its SHA and contents before rebasing, merging or copying source.
+- Never switch to `Pokemon-Johto-Relics`, `pjr-rebuild`, or an older ROM to satisfy a PRU request.
+- Multiple worktrees/sessions may be active. Do not reset, clean, delete, amend, force-push, or move another session's branch or worktree. Do not interrupt an ongoing build.
+- In particular, do not remove a branch just because a newer PR exists: check ancestry, divergent commits, unique files, open PRs, uncommitted work and live build dependencies first.
 
-## Crash-resistant execution rule
+## Crash-resistant work
 
-The priority is to make useful work survive an interrupted ChatGPT/agent session.
+Keep useful work recoverable if a Work Mode session stops.
 
-For every implementation task:
+1. Inspect only enough context to identify the correct branch and affected files.
+2. Implement small, coherent changes on an isolated task branch/worktree.
+3. Run relevant source checks, then commit and push to **that task's approved PRU branch** regularly.
+4. Verify the pushed SHA; inspect GitHub Actions for that SHA.
+5. Fix any reproducible test/build failures and repeat the check; do not describe an unverified ROM as playable.
+6. Preserve unrelated staged, unstaged and untracked work.
+7. When time or Work Mode credits are limited, save progress before starting the next large change.
 
-1. Inspect only what is needed to locate the requested change.
-2. Make a **small real implementation batch** as soon as practical.
-3. As soon as that batch is internally coherent, **commit and push it to `pjr-rebuild` immediately**.
-4. Verify the pushed commit SHA.
-5. Build/check the real GitHub Actions run for that SHA.
-6. If it fails, inspect the actual error, fix that error, commit/push the fix, and rebuild.
-7. Repeat **FIX → COMMIT/PUSH → BUILD → INSPECT** until the requested batch is successful.
-8. Do not hold a large amount of completed work only inside a chat or temporary workspace waiting for the whole job to finish.
+Do not automatically merge into `main`, close PRs, delete branches or publish a release as a side effect of a routine code change.
 
-A session crash must never require rediscovering or recreating already completed work if that work could have been committed.
+## Current PRU project decisions
 
-## Keep passes short
+The following are approved gameplay directions; check the active task and tests to learn which are already implemented.
 
-- Prefer one to three closely related implementation jobs per batch.
-- Do not perform a broad project audit unless the user explicitly asks for one.
-- Do not repeatedly re-check completed systems merely because a new run has started.
-- Preserve working features unless the current task explicitly changes them.
-- When a task is large, checkpoint working subsets to GitHub before continuing.
+- Keep the Pokémon Relics Ultimate **PRU** title screen and branding. PJR title artwork is not a replacement.
+- Pokémon Rhythm backgrounds are the approved active battle-background style. Retain provenance and source artwork; do not silently revert to Crystal Redux art.
+- The Johto Elite Four and later Kanto Elite Four rematch use the original five functional League-room actors, with championship progression selecting the battle.
+- After the Kanto championship, the Elite Four entrance is permanently sealed while Indigo Plateau's Pokémon Center, healing, mart and tutors remain accessible.
+- Elite challenge rounds and leader rematches belong in the Saffron VIP Dojo, not Indigo Plateau's Pokémon Center. The current expansion target is 20 Elite challenges.
+- Approved Indigo Plateau tutor organization is a neat line on the lower-left floor facing upward toward the mart. Do not remove tutors without preserving every move service.
+- Preserve the Rocket badge-heist progression, Jessie/James/Meowth interception, RELICS encounters, custom Pokémon, moves, abilities, sprites and all working quality-of-life changes.
+- Preserve intentionally chosen Johto starters: Scarabub → Heracross → Heracurion, Skarmet → Skarmory → Skarmadon, and Mootiny → Miltank → Miltitan. Silver receives the mapped unchosen baby starter.
+- Red's established team is Edensaur, Charaxis, Fortotoise, Khang, Nolax and Noxichu. Jessie and James keep Pikachu where scripted; Noxichu is reserved for Red.
+- Avoid frustrating puzzle redesigns; the project favors streamlined progression.
 
-## Asset / Library discipline
+## Assets and external searches
 
-Repeated broad Library searches are a known source of wasted time and fragile sessions.
+- Reuse approved assets already in PRU before searching archives, ROM donors or the ChatGPT Library again.
+- Record reusable donor attribution and exact asset paths in project documentation.
+- Do not overwrite existing approved Pokémon graphics globally for one trainer-specific encounter.
+- Keep source assets needed by clean GitHub Actions builds; do not rely on ignored local/generated files.
 
-- Search for an external asset only when the repository does not already contain the required asset.
-- Reuse exact asset locations discovered earlier in the same task.
-- Do not repeatedly list the same Library folders with slightly different queries.
-- Once an asset has been imported into the repository, treat the repository copy as canonical for future builds.
-- When a reusable external asset location is discovered, record it in the repository documentation or the commit message so a later session does not have to rediscover it.
-- Prefer targeted filename/folder searches over recursive exploratory searches.
-- Never redo an asset search just to “double check” if the asset has already been positively identified.
+## Build, QA and handoff
 
-## PJR project invariants
-
-- PJR is a sequel to Project Kanto Relics and Project Hoenn Relics.
-- Core PJR work must not regress already working QoL or completed fixes.
-- Followers are intentionally removed.
-- Starter line is Scarabub → Heracross → Heracurion, Skarmet → Skarmory → Skarmadon, and Mootiny → Miltank → Miltitan.
-- Silver receives the mapped unchosen baby starter, not a vanilla Johto starter.
-- Jessie and James are recurring Team Rocket agents; their late-game Pikachu must remain Pikachu because Noxichu is reserved for Red.
-- Red's exclusive PKR team is Edensaur, Charaxis, Fortotoise, Khang, Nolax, and Noxichu.
-- RELICS/postgame content and custom species/assets already implemented must be preserved unless the user explicitly requests a change.
-- Avoid frustrating puzzle redesigns; this project intentionally favors streamlined progression.
-
-## Build
-
-The upstream project documentation specifies:
-
-```sh
-make hns
-```
-
-and the resulting base build ROM is `pokehns.gba`. When GitHub Actions has a project-specific build/package workflow, use that workflow as the authoritative build result and artifact source.
-
-## Reporting a run
-
-A status report must distinguish between:
-
-- edits only present in the current workspace,
-- committed/pushed changes,
-- a GitHub Actions run that is queued or running,
-- a failed build,
-- a successful build,
-- and an artifact that actually exists.
-
-Never describe work as continuing in the background unless GitHub/automation state actually shows that it is running.
-
-For implementation requests, do not stop at an audit or plan when the requested code change can be made. The normal terminal result is a pushed implementation plus a verified build/artifact, or a clearly identified external blocker.
+- The HNS build command is `make hns` and its ROM is `pokehns.gba`.
+- Run the relevant source regression tests and a clean build. Use mGBA runtime checks for scripted events, trainers and actors where required.
+- A successful source test is not proof that a full story progression or new ROM was tested.
+- The requested playable release is a **directly downloadable `.gba`**, not a ZIP-only handoff.
+- Report separately: local-only edits; committed/pushed changes; GitHub Actions state; tests run; build result; and an actual available ROM/download link.
+- Do not describe work as continuing in the background without evidence from the active session, GitHub or automation.
