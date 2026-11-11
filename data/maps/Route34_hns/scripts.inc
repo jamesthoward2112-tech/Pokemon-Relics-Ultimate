@@ -281,3 +281,45 @@ Route34_Text_CooltrainerKate_After:
 Route34_Text_Sign_DayCare:
 	.string "DAY-CARE\p"
 	.string "LET US RAISE YOUR POKéMON FOR YOU!$"
+
+@ PRU: Optional nursery rhyme clue giver. No mention of the Day-Care passwords.
+@ Four baby Pokémon wander around this NPC to give a purely visual hint.
+Route34_EventScript_PRUNurseryRhymes::
+	lock
+	faceplayer
+	msgbox Route34_Text_PRUNurseryRhymesIntro, MSGBOX_DEFAULT
+	msgbox Route34_Text_PRUNurseryRhymesBug, MSGBOX_DEFAULT
+	msgbox Route34_Text_PRUNurseryRhymesBird, MSGBOX_DEFAULT
+	msgbox Route34_Text_PRUNurseryRhymesCalf, MSGBOX_DEFAULT
+	msgbox Route34_Text_PRUNurseryRhymesGem, MSGBOX_DEFAULT
+	msgbox Route34_Text_PRUNurseryRhymesOutro, MSGBOX_DEFAULT
+	release
+	end
+
+Route34_Text_PRUNurseryRhymesIntro:
+	.string "I collect strange little\\n"
+	.string "nursery rhymes.\\p"
+	.string "These four are my favourites!$"
+
+Route34_Text_PRUNurseryRhymesBug:
+	.string "BABY BUG:\\n"
+	.string "GUTS / BUG / BABY / PLAY$"
+
+Route34_Text_PRUNurseryRhymesBird:
+	.string "BABY BIRD:\\n"
+	.string "STURDY / FLYING\\n"
+	.string "SILVER / SHINE$"
+
+Route34_Text_PRUNurseryRhymesCalf:
+	.string "BABY CALF:\\n"
+	.string "THICK FAT / NORMAL\\n"
+	.string "CUTE / SLEEP$"
+
+Route34_Text_PRUNurseryRhymesGem:
+	.string "BABY GEM:\\n"
+	.string "KEEN EYE / GHOST\\n"
+	.string "MYSTERY / SHINE$"
+
+Route34_Text_PRUNurseryRhymesOutro:
+	.string "No idea who made them up...\\n"
+	.string "But I can't forget them!$"
