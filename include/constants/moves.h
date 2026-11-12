@@ -973,6 +973,9 @@ enum __attribute__((packed)) Move
     MOVE_SUPER_GLITCH,
     MOVE_TERROR_WAVE,
 
+    // Noxichu signature; append-only to preserve existing move IDs.
+    MOVE_ECLIPSE_BOLT,
+
     MOVES_COUNT,
 
     // Z Moves
