@@ -24189,4 +24189,21 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_ShadowBall,
     },
 
+    // Noxichu signature: amplified electric discharge with a paralysis chance.
+    [MOVE_ECLIPSE_BOLT] =
+    {
+        .name = COMPOUND_STRING("ECLIPSE BOLT"),
+        .description = COMPOUND_STRING("Relic-charged lightning\nthat may paralyze the foe."),
+        .effect = EFFECT_HIT,
+        .power = 95,
+        .type = TYPE_ELECTRIC,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({ .moveEffect = MOVE_EFFECT_PARALYSIS, .chance = 20, }),
+        .battleAnimScript = gBattleAnimMove_FusionBolt,
+    },
+
 };
