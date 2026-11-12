@@ -1032,10 +1032,12 @@ void MainCB2_Intro(void)
         gIntroFrameCounter++;
 }
 
+void CB2_InitPRUHwlScene0(void);
+
 static void MainCB2_EndIntro(void)
 {
     if (!UpdatePaletteFade())
-        SetMainCallback2(CB2_InitTitleScreen);
+        SetMainCallback2(CB2_InitPRUHwlScene0);
 }
 
 static void LoadCopyrightGraphics(u16 tilesetAddress, u16 tilemapAddress, u16 paletteOffset)
@@ -1055,7 +1057,7 @@ static u8 SetUpCopyrightScreen(void)
 #if IS_FRLG
     return SetUpCopyrightScreenFrlg();
 #elif IS_HNS
-    return SetUpCopyrightScreenHns();
+    // PRU test: use the native copyright/startup below.
 #endif
 
     switch (gMain.state)
@@ -1109,13 +1111,8 @@ static u8 SetUpCopyrightScreen(void)
     case COPYRIGHT_START_INTRO:
         if (UpdatePaletteFade())
             break;
-#if EXPANSION_INTRO == TRUE
-        SetMainCallback2(CB2_ExpansionIntro);
-        CreateTask(Task_HandleExpansionIntro, 0);
-#else
-        CreateTask(Task_Scene1_Load, 0);
-        SetMainCallback2(MainCB2_Intro);
-#endif
+        // PRU: Last Wish plays straight after short copyright startup.
+        SetMainCallback2(CB2_InitPRUHwlScene0);
         if (gMultibootProgramStruct.gcmb_field_2 != 0)
         {
             if (gMultibootProgramStruct.gcmb_field_2 == 2)

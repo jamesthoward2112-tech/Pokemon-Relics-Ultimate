@@ -360,6 +360,7 @@ enum __attribute__((packed)) Ability
     ABILITY_GOLDEN_SOVEREIGN,
     // Final Golden Ho-Oh signature; append only to preserve every legacy ID.
     ABILITY_PHOENIX_SOUL,
+    ABILITY_RELIC_OVERDRIVE, // Alpha 5 append-only
     ABILITIES_COUNT,
 };
 

@@ -3541,11 +3541,11 @@
 #define FLAG_UNUSED_0x918                                       0
 #define FLAG_UNUSED_0x919                                       0
 #define FLAG_UNUSED_0x91A                                       0
-#define FLAG_UNUSED_0x91B                                       0
-#define FLAG_UNUSED_0x91C                                       0
-#define FLAG_UNUSED_0x91D                                       0
-#define FLAG_UNUSED_0x91E                                       0
-#define FLAG_UNUSED_0x91F                                       0
+#define FLAG_PRU_SECRET_EGG_SCARABUB                               0x91B // Persistent one-time Route 34 Odd Egg
+#define FLAG_PRU_SECRET_EGG_SKARMET                               0x91C // Persistent one-time Route 34 Odd Egg
+#define FLAG_PRU_SECRET_EGG_MOOTINY                               0x91D // Persistent one-time Route 34 Odd Egg
+#define FLAG_PRU_SECRET_EGG_GEMLIN                               0x91E // Persistent one-time Route 34 Odd Egg
+#define FLAG_PRU_SECRET_EGG_KAN                                   0x91F // persistent save-safe one-time Kan egg
 #define FLAG_UNUSED_0x920                                       0
 #define FLAG_UNUSED_0x923                                       0
 #define FLAG_UNUSED_0x924                                       0

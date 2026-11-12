@@ -4679,6 +4679,68 @@ void EnterCode(void)
     DoNamingScreen(NAMING_SCREEN_CODE, gStringVar2, 0, 0, 0, 0, CB2_ReturnToFieldContinueScript);
 }
 
+// PRU Alpha 4.2: one typed word instead of the inaccessible 4-word Easy Chat.
+// The original seven Odd Eggs still use their previous indexes 1-7, and the
+// four separately flagged custom babies still use indexes 8-11.
+// The naming screen stores its response in gStringVar2 (cancel/empty -> 0).
+static const u8 sPruOddEggCodePichu[] = _("PICHU");
+static const u8 sPruOddEggCodeCleffa[] = _("CLEFFA");
+static const u8 sPruOddEggCodeIgglybuff[] = _("IGGLYBUFF");
+static const u8 sPruOddEggCodeTyrogue[] = _("TYROGUE");
+static const u8 sPruOddEggCodeSmoochum[] = _("SMOOCHUM");
+static const u8 sPruOddEggCodeElekid[] = _("ELEKID");
+static const u8 sPruOddEggCodeMagby[] = _("MAGBY");
+static const u8 sPruOddEggCodeScarabub[] = _("BEETLE");
+static const u8 sPruOddEggCodeSkarmet[] = _("FEATHER");
+static const u8 sPruOddEggCodeMootiny[] = _("MILK");
+static const u8 sPruOddEggCodeGemlin[] = _("CRYSTAL");
+static const u8 sPruOddEggCodeKan[] = _("JOEY");
+
+static const u8 *const sPruOddEggCodes[] =
+{
+    sPruOddEggCodePichu,
+    sPruOddEggCodeCleffa,
+    sPruOddEggCodeIgglybuff,
+    sPruOddEggCodeTyrogue,
+    sPruOddEggCodeSmoochum,
+    sPruOddEggCodeElekid,
+    sPruOddEggCodeMagby,
+    sPruOddEggCodeScarabub,
+    sPruOddEggCodeSkarmet,
+    sPruOddEggCodeMootiny,
+    sPruOddEggCodeGemlin,
+    sPruOddEggCodeKan,
+};
+
+static bool8 PruOddEggPasswordMatches(const u8 *typed, const u8 *secret)
+{
+    u8 i;
+    for (i = 0; i < CODE_NAME_LENGTH; i++)
+    {
+        u8 c = typed[i];
+        if (c == EOS || secret[i] == EOS)
+            return c == secret[i];
+
+        // Both upper/lower-case naming-screen keyboard pages are accepted.
+        if (c >= CHAR_a && c <= CHAR_z)
+            c = CHAR_A + (c - CHAR_a);
+        if (c != secret[i])
+            return FALSE;
+    }
+    return typed[i] == EOS && secret[i] == EOS;
+}
+
+u16 PruCheckOddEggSingleCode(void)
+{
+    u8 i;
+    for (i = 0; i < ARRAY_COUNT(sPruOddEggCodes); i++)
+    {
+        if (PruOddEggPasswordMatches(gStringVar2, sPruOddEggCodes[i]))
+            return i + 1;
+    }
+    return 0;
+}
+
 void GetCodeFeedback(void)
 {
     static const u8 sText_SampleCode[] = _("SampleCode");

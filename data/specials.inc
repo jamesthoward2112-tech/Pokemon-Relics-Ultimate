@@ -719,3 +719,4 @@ gSpecials::
 	def_special PruIsJirachiCaught
 	def_special PruPrepareChargedElectrode
 	def_special PruBuyDaycareMysteryEgg
+	def_special PruCheckOddEggSingleCode

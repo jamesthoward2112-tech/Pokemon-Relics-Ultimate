@@ -137,242 +137,242 @@ PRU_No,Name,Species_Key,Species_Constant,Category,Type_Source,Source_Tier,Notes
 136,Chansey,chansey,SPECIES_CHANSEY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
 137,Blissey,blissey,SPECIES_BLISSEY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
 138,Tangela,tangela,SPECIES_TANGELA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PRL-Kanto,
-139,Kangaskhan,kangaskhan,SPECIES_KANGASKHAN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
-140,Khang,khang,SPECIES_KHANG,PRU custom / exception,MON_TYPES(TYPE_NORMAL),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-141,Horsea,horsea,SPECIES_HORSEA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
-142,Seadra,seadra,SPECIES_SEADRA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
-143,Kingdra,kingdra,SPECIES_KINGDRA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_DRAGON)",PRL-Kanto,
-144,Goldeen,goldeen,SPECIES_GOLDEEN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
-145,Seaking,seaking,SPECIES_SEAKING,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
-146,Staryu,staryu,SPECIES_STARYU,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
-147,Starmie,starmie,SPECIES_STARMIE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_PSYCHIC)",PRL-Kanto,
-148,Mr. Mime,mr-mime,SPECIES_MR_MIME,Standard Kanto–Johto–Hoenn,,Kanto–Hoenn original species (verify source record),
-149,Scyther,scyther,SPECIES_SCYTHER,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PRL-Kanto,
-150,Scizor,scizor,SPECIES_SCIZOR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_STEEL)",PRL-Kanto,
-151,Smoochum,smoochum,SPECIES_SMOOCHUM,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ICE, TYPE_PSYCHIC)",PRL-Kanto,
-152,Jynx,jynx,SPECIES_JYNX,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ICE, TYPE_PSYCHIC)",PRL-Kanto,
-153,Mystynx,mystynx,SPECIES_MYSTYNX,PRU custom / exception,"MON_TYPES(TYPE_ICE, TYPE_FAIRY)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-154,Elekid,elekid,SPECIES_ELEKID,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Kanto,
-155,Electabuzz,electabuzz,SPECIES_ELECTABUZZ,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Kanto,
-156,Electivire,electivire,SPECIES_ELECTIVIRE,Approved 450 expansion,MON_TYPES(TYPE_ELECTRIC),PRU roster expansion,Approved by project owner as #450.
-157,Magby,magby,SPECIES_MAGBY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PRL-Kanto,
-158,Magmar,magmar,SPECIES_MAGMAR,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PRL-Kanto,
-159,Magmortar,magmortar,SPECIES_MAGMORTAR,Approved 450 expansion,MON_TYPES(TYPE_FIRE),PRU roster expansion,Approved by project owner as #449.
-160,Pinsir,pinsir,SPECIES_PINSIR,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Kanto,
-161,Pinsirex,pinsirex,SPECIES_PINSIREX,PRU custom / exception,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-162,Tauros,tauros,SPECIES_TAUROS,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
-163,Magikarp,magikarp,SPECIES_MAGIKARP,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
-164,Gyarados,gyarados,SPECIES_GYARADOS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FLYING)",PRL-Kanto,
-165,Lapras,lapras,SPECIES_LAPRAS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_ICE)",PRL-Kanto,
-166,Ditto,ditto,SPECIES_DITTO,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
-167,Eevee,eevee,SPECIES_EEVEE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,Only original Gen I–III evolutions and PRU custom Eeveelutions; excluded later standard Eeveelutions.
-168,Eeveeon,eeveeon,SPECIES_EEVEEON,PRU custom / exception,MON_TYPES(TYPE_NORMAL),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-169,Aereon,nimbeon,SPECIES_NIMBEON,PRU custom / exception,MON_TYPES(TYPE_FLYING),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-170,Champeon,champeon,SPECIES_CHAMPEON,PRU custom / exception,MON_TYPES(TYPE_FIGHTING),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-171,Moffeon,lepideon,SPECIES_LEPIDEON,PRU custom / exception,MON_TYPES(TYPE_BUG),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-172,Eartheon,sphynxeon,SPECIES_SPHYNXEON,PRU custom / exception,MON_TYPES(TYPE_GROUND),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-173,Galveon,guardeon,SPECIES_GUARDEON,PRU custom / exception,MON_TYPES(TYPE_STEEL),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-174,Pebleon,obsideon,SPECIES_OBSIDEON,PRU custom / exception,MON_TYPES(TYPE_ROCK),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-175,Toxeon,toxeon,SPECIES_TOXEON,PRU custom / exception,MON_TYPES(TYPE_PSYCHIC),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-176,Obliveon,omeon,SPECIES_OMEON,PRU custom / exception,MON_TYPES(TYPE_GHOST),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-177,Mytheon,drakeon,SPECIES_DRAKEON,PRU custom / exception,MON_TYPES(TYPE_DRAGON),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-178,Vaporeon,vaporeon,SPECIES_VAPOREON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
-179,Jolteon,jolteon,SPECIES_JOLTEON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Kanto,
-180,Flareon,flareon,SPECIES_FLAREON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PRL-Kanto,
-181,Espeon,espeon,SPECIES_ESPEON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_PSYCHIC),PRL-Kanto,
-182,Umbreon,umbreon,SPECIES_UMBREON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_DARK),PRL-Kanto,
-183,Leafeon,leafeon,SPECIES_LEAFEON,Approved 450 expansion,MON_TYPES(TYPE_GRASS),Gen4 cross-evolution,Append-only Eevee evolution; Leaf Stone or approved forest route.
-184,Glaceon,glaceon,SPECIES_GLACEON,Approved 450 expansion,MON_TYPES(TYPE_ICE),Gen4 cross-evolution,Append-only Eevee evolution; Ice Stone or approved cold route.
-185,Sylveon,sylveon,SPECIES_SYLVEON,Approved 450 expansion,MON_TYPES(TYPE_FAIRY),Eevee family,Evolves from Eevee with Dawn Stone; Rock Shop stock after Fog Badge.
-186,Porygon,porygon,SPECIES_PORYGON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
-187,Porygon2,porygon2,SPECIES_PORYGON2,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
-188,Omanyte,omanyte,SPECIES_OMANYTE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_WATER)",PRL-Kanto,
-189,Omastar,omastar,SPECIES_OMASTAR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_WATER)",PRL-Kanto,
-190,Kabuto,kabuto,SPECIES_KABUTO,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_WATER)",PRL-Kanto,
-191,Kabutops,kabutops,SPECIES_KABUTOPS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_WATER)",PRL-Kanto,
-192,Aerodactyl,aerodactyl,SPECIES_AERODACTYL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_FLYING)",PRL-Kanto,
-193,Snorlax,snorlax,SPECIES_SNORLAX,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
-194,Nolax,nolax,SPECIES_NOLAX,PRU custom / exception,MON_TYPES(TYPE_NORMAL),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-195,Dratini,dratini,SPECIES_DRATINI,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_DRAGON),PRL-Kanto,
-196,Dragonair,dragonair,SPECIES_DRAGONAIR,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_DRAGON),PRL-Kanto,
-197,Dragonite,dragonite,SPECIES_DRAGONITE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DRAGON, TYPE_FLYING)",PRL-Kanto,
-198,Chikorita,chikorita,SPECIES_CHIKORITA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PJR-Johto,
-199,Bayleef,bayleef,SPECIES_BAYLEEF,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PJR-Johto,
-200,Meganium,meganium,SPECIES_MEGANIUM,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PJR-Johto,
-201,Faeranium,faeranium,SPECIES_FAERANIUM,PRU custom / exception,"MON_TYPES(TYPE_GRASS, TYPE_FAIRY)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-202,Cyndaquil,cyndaquil,SPECIES_CYNDAQUIL,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PJR-Johto,
-203,Quilava,quilava,SPECIES_QUILAVA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PJR-Johto,
-204,Typhlosion,typhlosion,SPECIES_TYPHLOSION,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PJR-Johto,
-205,Pyroclast,pyroclast,SPECIES_PYROCLAST,PRU custom / exception,"MON_TYPES(TYPE_FIRE, TYPE_GHOST)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-206,Totodile,totodile,SPECIES_TOTODILE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PJR-Johto,
-207,Croconaw,croconaw,SPECIES_CROCONAW,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PJR-Johto,
-208,Feraligatr,feraligatr,SPECIES_FERALIGATR,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PJR-Johto,
-209,Feralodon,feralodon,SPECIES_FERALODON,PRU custom / exception,"MON_TYPES(TYPE_WATER, TYPE_DRAGON)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-210,Sentret,sentret,SPECIES_SENTRET,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
-211,Furret,furret,SPECIES_FURRET,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
-212,Hoothoot,hoothoot,SPECIES_HOOTHOOT,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_FLYING)",PJR-Johto,
-213,Noctowl,noctowl,SPECIES_NOCTOWL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_FLYING)",PJR-Johto,
-214,Grimfowl,grimfowl,SPECIES_GRIMFOWL,PRU custom / exception,"MON_TYPES(TYPE_DARK, TYPE_FLYING)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-215,Ledyba,ledyba,SPECIES_LEDYBA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PJR-Johto,
-216,Ledian,ledian,SPECIES_LEDIAN,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PJR-Johto,
-217,Spinarak,spinarak,SPECIES_SPINARAK,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_POISON)",PJR-Johto,
-218,Ariados,ariados,SPECIES_ARIADOS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_POISON)",PJR-Johto,
-219,Chinchou,chinchou,SPECIES_CHINCHOU,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_ELECTRIC)",PJR-Johto,
-220,Lanturn,lanturn,SPECIES_LANTURN,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_ELECTRIC)",PJR-Johto,
-221,Togepi,togepi,SPECIES_TOGEPI,Standard Kanto–Johto–Hoenn,MON_TYPES(TOGEPI_FAMILY_TYPE1),PJR-Johto,
-222,Togetic,togetic,SPECIES_TOGETIC,Standard Kanto–Johto–Hoenn,"MON_TYPES(TOGEPI_FAMILY_TYPE1, TYPE_FLYING)",PJR-Johto,
-223,Natu,natu,SPECIES_NATU,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_PSYCHIC, TYPE_FLYING)",PJR-Johto,
-224,Xatu,xatu,SPECIES_XATU,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_PSYCHIC, TYPE_FLYING)",PJR-Johto,
-225,Mareep,mareep,SPECIES_MAREEP,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PJR-Johto,
-226,Flaaffy,flaaffy,SPECIES_FLAAFFY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PJR-Johto,
-227,Ampharos,ampharos,SPECIES_AMPHAROS,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PJR-Johto,
-228,Azurill,azurill,SPECIES_AZURILL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_FAIRY),",PJR-Johto,
-229,Marill,marill,SPECIES_MARILL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FAIRY),",PJR-Johto,
-230,Azumarill,azumarill,SPECIES_AZUMARILL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FAIRY),",PJR-Johto,
-231,Sudowoodo,sudowoodo,SPECIES_SUDOWOODO,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ROCK),PJR-Johto,Sudowarden deleted from canon; no new numbered evolution.
-232,Hoppip,hoppip,SPECIES_HOPPIP,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_FLYING)",PJR-Johto,
-233,Skiploom,skiploom,SPECIES_SKIPLOOM,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_FLYING)",PJR-Johto,
-234,Jumpluff,jumpluff,SPECIES_JUMPLUFF,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_FLYING)",PJR-Johto,
-235,Aipom,aipom,SPECIES_AIPOM,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
-236,Sunkern,sunkern,SPECIES_SUNKERN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PJR-Johto,
-237,Sunflora,sunflora,SPECIES_SUNFLORA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PJR-Johto,
-238,Sunflorid,sunflorid,SPECIES_SUNFLORID,PRU custom / exception,"MON_TYPES(TYPE_GRASS, TYPE_FIRE)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-239,Yanma,yanma,SPECIES_YANMA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PJR-Johto,
-240,Wooper,wooper,SPECIES_WOOPER,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GROUND)",PJR-Johto,Normal and Paldean Wooper share this number; distinct form screens.
-241,Quagsire,quagsire,SPECIES_QUAGSIRE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GROUND)",PJR-Johto,
-242,Clodsire,clodsire,SPECIES_CLODSIRE,PRU custom / exception,"MON_TYPES(TYPE_POISON, TYPE_GROUND)",PJR-Johto,Paldean Wooper form (same Wooper Dex number) evolves at Lv20; RR move/ability override. RR art and ROM encounter verification pending.
-243,Murkrow,murkrow,SPECIES_MURKROW,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DARK, TYPE_FLYING)",PJR-Johto,
-244,Misdreavus,misdreavus,SPECIES_MISDREAVUS,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GHOST),PJR-Johto,
-245,Unown,unown,SPECIES_UNOWN,Standard Kanto–Johto–Hoenn,,Kanto–Hoenn original species (verify source record),Includes I-Unown / Eye RELICS encounter as form; does not get a standalone number.
-246,Wynaut,wynaut,SPECIES_WYNAUT,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_PSYCHIC),PJR-Johto,
-247,Wobbuffet,wobbuffet,SPECIES_WOBBUFFET,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_PSYCHIC),PJR-Johto,
-248,Girafarig,girafarig,SPECIES_GIRAFARIG,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_PSYCHIC)",PJR-Johto,
-249,Pineco,pineco,SPECIES_PINECO,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PJR-Johto,
-250,Forretress,forretress,SPECIES_FORRETRESS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_STEEL)",PJR-Johto,
-251,Dunsparce,dunsparce,SPECIES_DUNSPARCE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
-252,Gligar,gligar,SPECIES_GLIGAR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GROUND, TYPE_FLYING)",PJR-Johto,
-253,Snubbull,snubbull,SPECIES_SNUBBULL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FAIRY),",PJR-Johto,
-254,Granbull,granbull,SPECIES_GRANBULL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FAIRY),",PJR-Johto,
-255,Qwilfish,qwilfish,SPECIES_QWILFISH,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_POISON)",PJR-Johto,
-256,Kablowfish,kablowfish,SPECIES_KABLOWFISH,PRU custom / exception,"MON_TYPES(TYPE_WATER, TYPE_STEEL)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-257,Shuckle,shuckle,SPECIES_SHUCKLE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_ROCK)",PJR-Johto,
-258,Shuckolosse,shuckolosse,SPECIES_SHUCKOLOSSE,PRU custom / exception,"MON_TYPES(TYPE_BUG, TYPE_ROCK)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-259,Scarabub,scarabub,SPECIES_SCARABUB,PRU custom / exception,MON_TYPES(TYPE_BUG),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-260,Heracross,heracross,SPECIES_HERACROSS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FIGHTING)",PJR-Johto,
-261,Heracurion,heracurion,SPECIES_HERACURION,PRU custom / exception,"MON_TYPES(TYPE_BUG, TYPE_FIGHTING)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-262,Sneasel,sneasel,SPECIES_SNEASEL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DARK, TYPE_ICE)",PJR-Johto,
-263,Teddiursa,teddiursa,SPECIES_TEDDIURSA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
-264,Ursaring,ursaring,SPECIES_URSARING,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
-265,Slugma,slugma,SPECIES_SLUGMA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PJR-Johto,
-266,Magcargo,magcargo,SPECIES_MAGCARGO,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIRE, TYPE_ROCK)",PJR-Johto,
-267,Swinub,swinub,SPECIES_SWINUB,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ICE, TYPE_GROUND)",PJR-Johto,
-268,Piloswine,piloswine,SPECIES_PILOSWINE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ICE, TYPE_GROUND)",PJR-Johto,
-269,Corsola,corsola,SPECIES_CORSOLA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_ROCK)",PJR-Johto,
-270,Remoraid,remoraid,SPECIES_REMORAID,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PJR-Johto,
-271,Octillery,octillery,SPECIES_OCTILLERY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PJR-Johto,
-272,Delibird,delibird,SPECIES_DELIBIRD,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ICE, TYPE_FLYING)",PJR-Johto,
-273,Jollibird,jollibird,SPECIES_JOLLIBIRD,PRU custom / exception,"MON_TYPES(TYPE_ICE, TYPE_FAIRY)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-274,Mantine,mantine,SPECIES_MANTINE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FLYING)",PJR-Johto,
-275,Skarmet,skarmet,SPECIES_SKARMET,PRU custom / exception,"MON_TYPES(TYPE_STEEL, TYPE_FLYING)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-276,Skarmory,skarmory,SPECIES_SKARMORY,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_STEEL, TYPE_FLYING)",PJR-Johto,
-277,Skarmadon,skarmadon,SPECIES_SKARMADON,PRU custom / exception,"MON_TYPES(TYPE_STEEL, TYPE_FLYING)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-278,Houndour,houndour,SPECIES_HOUNDOUR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DARK, TYPE_FIRE)",PJR-Johto,
-279,Houndoom,houndoom,SPECIES_HOUNDOOM,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DARK, TYPE_FIRE)",PJR-Johto,
-280,Phanpy,phanpy,SPECIES_PHANPY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GROUND),PJR-Johto,
-281,Donphan,donphan,SPECIES_DONPHAN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GROUND),PJR-Johto,
-282,Donphalanx,donphalanx,SPECIES_DONPHALANX,PRU custom / exception,"MON_TYPES(TYPE_GROUND, TYPE_DARK)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-283,Stantler,stantler,SPECIES_STANTLER,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
-284,Smeargle,smeargle,SPECIES_SMEARGLE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
-285,Mootiny,mootiny,SPECIES_MOOTINY,PRU custom / exception,MON_TYPES(TYPE_NORMAL),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-286,Miltank,miltank,SPECIES_MILTANK,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
-287,Miltitan,miltitan,SPECIES_MILTITAN,PRU custom / exception,"MON_TYPES(TYPE_NORMAL, TYPE_FAIRY)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-288,Larvitar,larvitar,SPECIES_LARVITAR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_GROUND)",PJR-Johto,
-289,Pupitar,pupitar,SPECIES_PUPITAR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_GROUND)",PJR-Johto,
-290,Tyranitar,tyranitar,SPECIES_TYRANITAR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_DARK)",PJR-Johto,
-291,Treecko,treecko,SPECIES_TREECKO,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PRL-Hoenn,
-292,Grovyle,grovyle,SPECIES_GROVYLE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PRL-Hoenn,
-293,Sceptile,sceptile,SPECIES_SCEPTILE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PRL-Hoenn,
-294,Sceptitan,sceptitan,SPECIES_SCEPTITAN,PRU custom / exception,"MON_TYPES(TYPE_GRASS, TYPE_DRAGON)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-295,Torchic,torchic,SPECIES_TORCHIC,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PRL-Hoenn,
-296,Combusken,combusken,SPECIES_COMBUSKEN,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIRE, TYPE_FIGHTING)",PRL-Hoenn,
-297,Blaziken,blaziken,SPECIES_BLAZIKEN,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIRE, TYPE_FIGHTING)",PRL-Hoenn,
-298,Solaziken,solaziken,SPECIES_SOLAZIKEN,PRU custom / exception,"MON_TYPES(TYPE_FIRE, TYPE_PSYCHIC)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-299,Mudkip,mudkip,SPECIES_MUDKIP,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Hoenn,
-300,Marshtomp,marshtomp,SPECIES_MARSHTOMP,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GROUND)",PRL-Hoenn,
-301,Swampert,swampert,SPECIES_SWAMPERT,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GROUND)",PRL-Hoenn,
-302,Swamplith,swamplith,SPECIES_SWAMPLITH,PRU custom / exception,"MON_TYPES(TYPE_WATER, TYPE_GROUND)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-303,Poochyena,poochyena,SPECIES_POOCHYENA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_DARK),PRL-Hoenn,
-304,Mightyena,mightyena,SPECIES_MIGHTYENA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_DARK),PRL-Hoenn,
-305,Skulberus,skulberus,SPECIES_SKULBERUS,PRU custom / exception,MON_TYPES(TYPE_DARK),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-306,Zigzagoon,zigzagoon,SPECIES_ZIGZAGOON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
-307,Linoone,linoone,SPECIES_LINOONE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
-308,Wurmple,wurmple,SPECIES_WURMPLE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Hoenn,
-309,Silcoon,silcoon,SPECIES_SILCOON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Hoenn,
-310,Beautifly,beautifly,SPECIES_BEAUTIFLY,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PRL-Hoenn,
-311,Cascoon,cascoon,SPECIES_CASCOON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Hoenn,
-312,Dustox,dustox,SPECIES_DUSTOX,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_POISON)",PRL-Hoenn,
-313,Lotad,lotad,SPECIES_LOTAD,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GRASS)",PRL-Hoenn,
-314,Lombre,lombre,SPECIES_LOMBRE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GRASS)",PRL-Hoenn,
-315,Ludicolo,ludicolo,SPECIES_LUDICOLO,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GRASS)",PRL-Hoenn,
-316,Seedot,seedot,SPECIES_SEEDOT,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PRL-Hoenn,
-317,Nuzleaf,nuzleaf,SPECIES_NUZLEAF,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_DARK)",PRL-Hoenn,
-318,Shiftry,shiftry,SPECIES_SHIFTRY,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_DARK)",PRL-Hoenn,
-319,Taillow,taillow,SPECIES_TAILLOW,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_FLYING)",PRL-Hoenn,
-320,Swellow,swellow,SPECIES_SWELLOW,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_FLYING)",PRL-Hoenn,
-321,Wingull,wingull,SPECIES_WINGULL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FLYING)",PRL-Hoenn,
-322,Pelipper,pelipper,SPECIES_PELIPPER,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FLYING)",PRL-Hoenn,
-323,Ralts,ralts,SPECIES_RALTS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_PSYCHIC, RALTS_FAMILY_TYPE2)",PRL-Hoenn,
-324,Kirlia,kirlia,SPECIES_KIRLIA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_PSYCHIC, RALTS_FAMILY_TYPE2)",PRL-Hoenn,
-325,Gardevoir,gardevoir,SPECIES_GARDEVOIR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_PSYCHIC, RALTS_FAMILY_TYPE2)",PRL-Hoenn,
-326,Valkiri,valkyvoir,SPECIES_VALKYVOIR,PRU custom / exception,"MON_TYPES(TYPE_PSYCHIC, TYPE_FAIRY)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-327,Surskit,surskit,SPECIES_SURSKIT,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_WATER)",PRL-Hoenn,
-328,Masquerain,masquerain,SPECIES_MASQUERAIN,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PRL-Hoenn,
-329,Shroomish,shroomish,SPECIES_SHROOMISH,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PRL-Hoenn,
-330,Breloom,breloom,SPECIES_BRELOOM,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_FIGHTING)",PRL-Hoenn,
-331,Slakoth,slakoth,SPECIES_SLAKOTH,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
-332,Vigoroth,vigoroth,SPECIES_VIGOROTH,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
-333,Slaking,slaking,SPECIES_SLAKING,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
-334,Nincada,nincada,SPECIES_NINCADA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_GROUND)",PRL-Hoenn,
-335,Ninjask,ninjask,SPECIES_NINJASK,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PRL-Hoenn,
-336,Shedinja,shedinja,SPECIES_SHEDINJA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_GHOST)",PRL-Hoenn,
-337,Whismur,whismur,SPECIES_WHISMUR,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
-338,Loudred,loudred,SPECIES_LOUDRED,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
-339,Exploud,exploud,SPECIES_EXPLOUD,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
-340,Makuhita,makuhita,SPECIES_MAKUHITA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIGHTING),PRL-Hoenn,
-341,Hariyama,hariyama,SPECIES_HARIYAMA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIGHTING),PRL-Hoenn,
-342,Nosepass,nosepass,SPECIES_NOSEPASS,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ROCK),PRL-Hoenn,
-343,Skitty,skitty,SPECIES_SKITTY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
-344,Delcatty,delcatty,SPECIES_DELCATTY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
-345,Gemlin,gemlin,SPECIES_GEMLIN,PRU custom / exception,"MON_TYPES(TYPE_DARK, TYPE_GHOST)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-346,Sableye,sableye,SPECIES_SABLEYE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DARK, TYPE_GHOST)",PRL-Hoenn,
-347,Gemigoyle,gemigoyle,SPECIES_GEMIGOYLE,PRU custom / exception,"MON_TYPES(TYPE_GHOST, TYPE_ROCK)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-348,Mawile,mawile,SPECIES_MAWILE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_STEEL, TYPE_FAIRY),",PRL-Hoenn,
-349,Mawyrm,mawyrm,SPECIES_MAWYRM,PRU custom / exception,"MON_TYPES(TYPE_STEEL, TYPE_DRAGON)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-350,Aron,aron,SPECIES_ARON,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_STEEL, TYPE_ROCK)",PRL-Hoenn,
-351,Lairon,lairon,SPECIES_LAIRON,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_STEEL, TYPE_ROCK)",PRL-Hoenn,
-352,Aggron,aggron,SPECIES_AGGRON,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_STEEL, TYPE_ROCK)",PRL-Hoenn,
-353,Meditite,meditite,SPECIES_MEDITITE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIGHTING, TYPE_PSYCHIC)",PRL-Hoenn,
-354,Medicham,medicham,SPECIES_MEDICHAM,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIGHTING, TYPE_PSYCHIC)",PRL-Hoenn,
-355,Electrike,electrike,SPECIES_ELECTRIKE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Hoenn,
-356,Manectric,manectric,SPECIES_MANECTRIC,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Hoenn,
-357,Plusle,plusle,SPECIES_PLUSLE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Hoenn,
-358,Minun,minun,SPECIES_MINUN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Hoenn,
-359,Volbeat,volbeat,SPECIES_VOLBEAT,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Hoenn,
-360,Illumise,illumise,SPECIES_ILLUMISE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Hoenn,
-361,Roselia,roselia,SPECIES_ROSELIA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_POISON)",PRL-Hoenn,
-362,Gulpin,gulpin,SPECIES_GULPIN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_POISON),PRL-Hoenn,
-363,Swalot,swalot,SPECIES_SWALOT,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_POISON),PRL-Hoenn,
-364,Carvanha,carvanha,SPECIES_CARVANHA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_DARK)",PRL-Hoenn,
-365,Sharpedo,sharpedo,SPECIES_SHARPEDO,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_DARK)",PRL-Hoenn,
-366,Wailmer,wailmer,SPECIES_WAILMER,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Hoenn,
-367,Wailord,wailord,SPECIES_WAILORD,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Hoenn,
-368,Numel,numel,SPECIES_NUMEL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIRE, TYPE_GROUND)",PRL-Hoenn,
-369,Camerupt,camerupt,SPECIES_CAMERUPT,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIRE, TYPE_GROUND)",PRL-Hoenn,
-370,Torkoal,torkoal,SPECIES_TORKOAL,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PRL-Hoenn,
-371,Torkaldera,torkaldera,SPECIES_TORKALDERA,PRU custom / exception,"MON_TYPES(TYPE_FIRE, TYPE_ROCK)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
-372,Spoink,spoink,SPECIES_SPOINK,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_PSYCHIC),PRL-Hoenn,
-373,Grumpig,grumpig,SPECIES_GRUMPIG,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_PSYCHIC),PRL-Hoenn,
-374,Spinda,spinda,SPECIES_SPINDA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+139,Kan,kan,SPECIES_KAN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+140,Kangaskhan,kangaskhan,SPECIES_KANGASKHAN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
+141,Khang,khang,SPECIES_KHANG,PRU custom / exception,MON_TYPES(TYPE_NORMAL),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+142,Horsea,horsea,SPECIES_HORSEA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
+143,Seadra,seadra,SPECIES_SEADRA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
+144,Kingdra,kingdra,SPECIES_KINGDRA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_DRAGON)",PRL-Kanto,
+145,Goldeen,goldeen,SPECIES_GOLDEEN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
+146,Seaking,seaking,SPECIES_SEAKING,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
+147,Staryu,staryu,SPECIES_STARYU,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
+148,Starmie,starmie,SPECIES_STARMIE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_PSYCHIC)",PRL-Kanto,
+149,Mr. Mime,mr-mime,SPECIES_MR_MIME,Standard Kanto–Johto–Hoenn,,Kanto–Hoenn original species (verify source record),
+150,Scyther,scyther,SPECIES_SCYTHER,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PRL-Kanto,
+151,Scizor,scizor,SPECIES_SCIZOR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_STEEL)",PRL-Kanto,
+152,Smoochum,smoochum,SPECIES_SMOOCHUM,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ICE, TYPE_PSYCHIC)",PRL-Kanto,
+153,Jynx,jynx,SPECIES_JYNX,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ICE, TYPE_PSYCHIC)",PRL-Kanto,
+154,Mystynx,mystynx,SPECIES_MYSTYNX,PRU custom / exception,"MON_TYPES(TYPE_ICE, TYPE_FAIRY)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+155,Elekid,elekid,SPECIES_ELEKID,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Kanto,
+156,Electabuzz,electabuzz,SPECIES_ELECTABUZZ,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Kanto,
+157,Electivire,electivire,SPECIES_ELECTIVIRE,Approved 450 expansion,MON_TYPES(TYPE_ELECTRIC),PRU roster expansion,Approved by project owner as #450.
+158,Magby,magby,SPECIES_MAGBY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PRL-Kanto,
+159,Magmar,magmar,SPECIES_MAGMAR,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PRL-Kanto,
+160,Magmortar,magmortar,SPECIES_MAGMORTAR,Approved 450 expansion,MON_TYPES(TYPE_FIRE),PRU roster expansion,Approved by project owner as #449.
+161,Pinsir,pinsir,SPECIES_PINSIR,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Kanto,
+162,Pinsirex,pinsirex,SPECIES_PINSIREX,PRU custom / exception,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+163,Tauros,tauros,SPECIES_TAUROS,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
+164,Magikarp,magikarp,SPECIES_MAGIKARP,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
+165,Gyarados,gyarados,SPECIES_GYARADOS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FLYING)",PRL-Kanto,
+166,Lapras,lapras,SPECIES_LAPRAS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_ICE)",PRL-Kanto,
+167,Ditto,ditto,SPECIES_DITTO,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
+168,Eevee,eevee,SPECIES_EEVEE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,Only original Gen I–III evolutions and PRU custom Eeveelutions; excluded later standard Eeveelutions.
+169,Eeveeon,eeveeon,SPECIES_EEVEEON,PRU custom / exception,MON_TYPES(TYPE_NORMAL),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+170,Aereon,nimbeon,SPECIES_NIMBEON,PRU custom / exception,MON_TYPES(TYPE_FLYING),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+171,Champeon,champeon,SPECIES_CHAMPEON,PRU custom / exception,MON_TYPES(TYPE_FIGHTING),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+172,Moffeon,lepideon,SPECIES_LEPIDEON,PRU custom / exception,MON_TYPES(TYPE_BUG),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+173,Eartheon,sphynxeon,SPECIES_SPHYNXEON,PRU custom / exception,MON_TYPES(TYPE_GROUND),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+174,Galveon,guardeon,SPECIES_GUARDEON,PRU custom / exception,MON_TYPES(TYPE_STEEL),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+175,Pebleon,obsideon,SPECIES_OBSIDEON,PRU custom / exception,MON_TYPES(TYPE_ROCK),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+176,Toxeon,toxeon,SPECIES_TOXEON,PRU custom / exception,MON_TYPES(TYPE_PSYCHIC),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+177,Obliveon,omeon,SPECIES_OMEON,PRU custom / exception,MON_TYPES(TYPE_GHOST),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+178,Mytheon,drakeon,SPECIES_DRAKEON,PRU custom / exception,MON_TYPES(TYPE_DRAGON),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+179,Vaporeon,vaporeon,SPECIES_VAPOREON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Kanto,
+180,Jolteon,jolteon,SPECIES_JOLTEON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Kanto,
+181,Flareon,flareon,SPECIES_FLAREON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PRL-Kanto,
+182,Espeon,espeon,SPECIES_ESPEON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_PSYCHIC),PRL-Kanto,
+183,Umbreon,umbreon,SPECIES_UMBREON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_DARK),PRL-Kanto,
+184,Leafeon,leafeon,SPECIES_LEAFEON,Approved 450 expansion,MON_TYPES(TYPE_GRASS),Gen4 cross-evolution,Append-only Eevee evolution; Leaf Stone or approved forest route.
+185,Glaceon,glaceon,SPECIES_GLACEON,Approved 450 expansion,MON_TYPES(TYPE_ICE),Gen4 cross-evolution,Append-only Eevee evolution; Ice Stone or approved cold route.
+186,Sylveon,sylveon,SPECIES_SYLVEON,Approved 450 expansion,MON_TYPES(TYPE_FAIRY),Eevee family,Evolves from Eevee with Dawn Stone; Rock Shop stock after Fog Badge.
+187,Porygon,porygon,SPECIES_PORYGON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
+188,Porygon2,porygon2,SPECIES_PORYGON2,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
+189,Omanyte,omanyte,SPECIES_OMANYTE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_WATER)",PRL-Kanto,
+190,Omastar,omastar,SPECIES_OMASTAR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_WATER)",PRL-Kanto,
+191,Kabuto,kabuto,SPECIES_KABUTO,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_WATER)",PRL-Kanto,
+192,Kabutops,kabutops,SPECIES_KABUTOPS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_WATER)",PRL-Kanto,
+193,Aerodactyl,aerodactyl,SPECIES_AERODACTYL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_FLYING)",PRL-Kanto,
+194,Snorlax,snorlax,SPECIES_SNORLAX,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Kanto,
+195,Nolax,nolax,SPECIES_NOLAX,PRU custom / exception,MON_TYPES(TYPE_NORMAL),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+196,Dratini,dratini,SPECIES_DRATINI,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_DRAGON),PRL-Kanto,
+197,Dragonair,dragonair,SPECIES_DRAGONAIR,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_DRAGON),PRL-Kanto,
+198,Dragonite,dragonite,SPECIES_DRAGONITE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DRAGON, TYPE_FLYING)",PRL-Kanto,
+199,Chikorita,chikorita,SPECIES_CHIKORITA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PJR-Johto,
+200,Bayleef,bayleef,SPECIES_BAYLEEF,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PJR-Johto,
+201,Meganium,meganium,SPECIES_MEGANIUM,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PJR-Johto,
+202,Faeranium,faeranium,SPECIES_FAERANIUM,PRU custom / exception,"MON_TYPES(TYPE_GRASS, TYPE_FAIRY)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+203,Cyndaquil,cyndaquil,SPECIES_CYNDAQUIL,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PJR-Johto,
+204,Quilava,quilava,SPECIES_QUILAVA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PJR-Johto,
+205,Typhlosion,typhlosion,SPECIES_TYPHLOSION,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PJR-Johto,
+206,Pyroclast,pyroclast,SPECIES_PYROCLAST,PRU custom / exception,"MON_TYPES(TYPE_FIRE, TYPE_GHOST)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+207,Totodile,totodile,SPECIES_TOTODILE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PJR-Johto,
+208,Croconaw,croconaw,SPECIES_CROCONAW,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PJR-Johto,
+209,Feraligatr,feraligatr,SPECIES_FERALIGATR,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PJR-Johto,
+210,Feralodon,feralodon,SPECIES_FERALODON,PRU custom / exception,"MON_TYPES(TYPE_WATER, TYPE_DRAGON)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+211,Sentret,sentret,SPECIES_SENTRET,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
+212,Furret,furret,SPECIES_FURRET,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
+213,Hoothoot,hoothoot,SPECIES_HOOTHOOT,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_FLYING)",PJR-Johto,
+214,Noctowl,noctowl,SPECIES_NOCTOWL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_FLYING)",PJR-Johto,
+215,Grimfowl,grimfowl,SPECIES_GRIMFOWL,PRU custom / exception,"MON_TYPES(TYPE_DARK, TYPE_FLYING)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+216,Ledyba,ledyba,SPECIES_LEDYBA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PJR-Johto,
+217,Ledian,ledian,SPECIES_LEDIAN,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PJR-Johto,
+218,Spinarak,spinarak,SPECIES_SPINARAK,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_POISON)",PJR-Johto,
+219,Ariados,ariados,SPECIES_ARIADOS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_POISON)",PJR-Johto,
+220,Chinchou,chinchou,SPECIES_CHINCHOU,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_ELECTRIC)",PJR-Johto,
+221,Lanturn,lanturn,SPECIES_LANTURN,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_ELECTRIC)",PJR-Johto,
+222,Togepi,togepi,SPECIES_TOGEPI,Standard Kanto–Johto–Hoenn,MON_TYPES(TOGEPI_FAMILY_TYPE1),PJR-Johto,
+223,Togetic,togetic,SPECIES_TOGETIC,Standard Kanto–Johto–Hoenn,"MON_TYPES(TOGEPI_FAMILY_TYPE1, TYPE_FLYING)",PJR-Johto,
+224,Natu,natu,SPECIES_NATU,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_PSYCHIC, TYPE_FLYING)",PJR-Johto,
+225,Xatu,xatu,SPECIES_XATU,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_PSYCHIC, TYPE_FLYING)",PJR-Johto,
+226,Mareep,mareep,SPECIES_MAREEP,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PJR-Johto,
+227,Flaaffy,flaaffy,SPECIES_FLAAFFY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PJR-Johto,
+228,Ampharos,ampharos,SPECIES_AMPHAROS,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PJR-Johto,
+229,Azurill,azurill,SPECIES_AZURILL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_FAIRY),",PJR-Johto,
+230,Marill,marill,SPECIES_MARILL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FAIRY),",PJR-Johto,
+231,Azumarill,azumarill,SPECIES_AZUMARILL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FAIRY),",PJR-Johto,
+232,Sudowoodo,sudowoodo,SPECIES_SUDOWOODO,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ROCK),PJR-Johto,Sudowarden deleted from canon; no new numbered evolution.
+233,Hoppip,hoppip,SPECIES_HOPPIP,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_FLYING)",PJR-Johto,
+234,Skiploom,skiploom,SPECIES_SKIPLOOM,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_FLYING)",PJR-Johto,
+235,Jumpluff,jumpluff,SPECIES_JUMPLUFF,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_FLYING)",PJR-Johto,
+236,Aipom,aipom,SPECIES_AIPOM,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
+237,Sunkern,sunkern,SPECIES_SUNKERN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PJR-Johto,
+238,Sunflora,sunflora,SPECIES_SUNFLORA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PJR-Johto,
+239,Sunflorid,sunflorid,SPECIES_SUNFLORID,PRU custom / exception,"MON_TYPES(TYPE_GRASS, TYPE_FIRE)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+240,Yanma,yanma,SPECIES_YANMA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PJR-Johto,
+241,Wooper,wooper,SPECIES_WOOPER,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GROUND)",PJR-Johto,Normal and Paldean Wooper share this number; distinct form screens.
+242,Quagsire,quagsire,SPECIES_QUAGSIRE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GROUND)",PJR-Johto,
+243,Clodsire,clodsire,SPECIES_CLODSIRE,PRU custom / exception,"MON_TYPES(TYPE_POISON, TYPE_GROUND)",PJR-Johto,Paldean Wooper form (same Wooper Dex number) evolves at Lv20; RR move/ability override. RR art and ROM encounter verification pending.
+244,Murkrow,murkrow,SPECIES_MURKROW,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DARK, TYPE_FLYING)",PJR-Johto,
+245,Misdreavus,misdreavus,SPECIES_MISDREAVUS,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GHOST),PJR-Johto,
+246,Unown,unown,SPECIES_UNOWN,Standard Kanto–Johto–Hoenn,,Kanto–Hoenn original species (verify source record),Includes I-Unown / Eye RELICS encounter as form; does not get a standalone number.
+247,Wynaut,wynaut,SPECIES_WYNAUT,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_PSYCHIC),PJR-Johto,
+248,Wobbuffet,wobbuffet,SPECIES_WOBBUFFET,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_PSYCHIC),PJR-Johto,
+249,Girafarig,girafarig,SPECIES_GIRAFARIG,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_PSYCHIC)",PJR-Johto,
+250,Pineco,pineco,SPECIES_PINECO,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PJR-Johto,
+251,Forretress,forretress,SPECIES_FORRETRESS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_STEEL)",PJR-Johto,
+252,Dunsparce,dunsparce,SPECIES_DUNSPARCE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
+253,Gligar,gligar,SPECIES_GLIGAR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GROUND, TYPE_FLYING)",PJR-Johto,
+254,Snubbull,snubbull,SPECIES_SNUBBULL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FAIRY),",PJR-Johto,
+255,Granbull,granbull,SPECIES_GRANBULL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FAIRY),",PJR-Johto,
+256,Qwilfish,qwilfish,SPECIES_QWILFISH,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_POISON)",PJR-Johto,
+257,Kablowfish,kablowfish,SPECIES_KABLOWFISH,PRU custom / exception,"MON_TYPES(TYPE_WATER, TYPE_STEEL)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+258,Shuckle,shuckle,SPECIES_SHUCKLE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_ROCK)",PJR-Johto,
+259,Shuckolosse,shuckolosse,SPECIES_SHUCKOLOSSE,PRU custom / exception,"MON_TYPES(TYPE_BUG, TYPE_ROCK)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+260,Scarabub,scarabub,SPECIES_SCARABUB,PRU custom / exception,MON_TYPES(TYPE_BUG),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+261,Heracross,heracross,SPECIES_HERACROSS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FIGHTING)",PJR-Johto,
+262,Heracurion,heracurion,SPECIES_HERACURION,PRU custom / exception,"MON_TYPES(TYPE_BUG, TYPE_FIGHTING)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+263,Sneasel,sneasel,SPECIES_SNEASEL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DARK, TYPE_ICE)",PJR-Johto,
+264,Teddiursa,teddiursa,SPECIES_TEDDIURSA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
+265,Ursaring,ursaring,SPECIES_URSARING,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
+266,Slugma,slugma,SPECIES_SLUGMA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PJR-Johto,
+267,Magcargo,magcargo,SPECIES_MAGCARGO,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIRE, TYPE_ROCK)",PJR-Johto,
+268,Swinub,swinub,SPECIES_SWINUB,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ICE, TYPE_GROUND)",PJR-Johto,
+269,Piloswine,piloswine,SPECIES_PILOSWINE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ICE, TYPE_GROUND)",PJR-Johto,
+270,Corsola,corsola,SPECIES_CORSOLA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_ROCK)",PJR-Johto,
+271,Remoraid,remoraid,SPECIES_REMORAID,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PJR-Johto,
+272,Octillery,octillery,SPECIES_OCTILLERY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PJR-Johto,
+273,Delibird,delibird,SPECIES_DELIBIRD,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ICE, TYPE_FLYING)",PJR-Johto,
+274,Jollibird,jollibird,SPECIES_JOLLIBIRD,PRU custom / exception,"MON_TYPES(TYPE_ICE, TYPE_FAIRY)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+275,Mantine,mantine,SPECIES_MANTINE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FLYING)",PJR-Johto,
+276,Skarmet,skarmet,SPECIES_SKARMET,PRU custom / exception,"MON_TYPES(TYPE_STEEL, TYPE_FLYING)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+277,Skarmory,skarmory,SPECIES_SKARMORY,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_STEEL, TYPE_FLYING)",PJR-Johto,
+278,Skarmadon,skarmadon,SPECIES_SKARMADON,PRU custom / exception,"MON_TYPES(TYPE_STEEL, TYPE_FLYING)",PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+279,Houndour,houndour,SPECIES_HOUNDOUR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DARK, TYPE_FIRE)",PJR-Johto,
+280,Houndoom,houndoom,SPECIES_HOUNDOOM,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DARK, TYPE_FIRE)",PJR-Johto,
+281,Phanpy,phanpy,SPECIES_PHANPY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GROUND),PJR-Johto,
+282,Donphan,donphan,SPECIES_DONPHAN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GROUND),PJR-Johto,
+283,Donphalanx,donphalanx,SPECIES_DONPHALANX,PRU custom / exception,"MON_TYPES(TYPE_GROUND, TYPE_DARK)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+284,Stantler,stantler,SPECIES_STANTLER,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
+285,Smeargle,smeargle,SPECIES_SMEARGLE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
+286,Mootiny,mootiny,SPECIES_MOOTINY,PRU custom / exception,MON_TYPES(TYPE_NORMAL),PJR-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+287,Miltank,miltank,SPECIES_MILTANK,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PJR-Johto,
+288,Miltitan,miltitan,SPECIES_MILTITAN,PRU custom / exception,"MON_TYPES(TYPE_NORMAL, TYPE_FAIRY)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+289,Larvitar,larvitar,SPECIES_LARVITAR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_GROUND)",PJR-Johto,
+290,Pupitar,pupitar,SPECIES_PUPITAR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_GROUND)",PJR-Johto,
+291,Tyranitar,tyranitar,SPECIES_TYRANITAR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_ROCK, TYPE_DARK)",PJR-Johto,
+292,Treecko,treecko,SPECIES_TREECKO,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PRL-Hoenn,
+293,Grovyle,grovyle,SPECIES_GROVYLE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PRL-Hoenn,
+294,Sceptile,sceptile,SPECIES_SCEPTILE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PRL-Hoenn,
+295,Sceptitan,sceptitan,SPECIES_SCEPTITAN,PRU custom / exception,"MON_TYPES(TYPE_GRASS, TYPE_DRAGON)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+296,Torchic,torchic,SPECIES_TORCHIC,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PRL-Hoenn,
+297,Combusken,combusken,SPECIES_COMBUSKEN,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIRE, TYPE_FIGHTING)",PRL-Hoenn,
+298,Blaziken,blaziken,SPECIES_BLAZIKEN,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIRE, TYPE_FIGHTING)",PRL-Hoenn,
+299,Solaziken,solaziken,SPECIES_SOLAZIKEN,PRU custom / exception,"MON_TYPES(TYPE_FIRE, TYPE_PSYCHIC)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+300,Mudkip,mudkip,SPECIES_MUDKIP,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Hoenn,
+301,Marshtomp,marshtomp,SPECIES_MARSHTOMP,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GROUND)",PRL-Hoenn,
+302,Swampert,swampert,SPECIES_SWAMPERT,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GROUND)",PRL-Hoenn,
+303,Swamplith,swamplith,SPECIES_SWAMPLITH,PRU custom / exception,"MON_TYPES(TYPE_WATER, TYPE_GROUND)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+304,Poochyena,poochyena,SPECIES_POOCHYENA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_DARK),PRL-Hoenn,
+305,Mightyena,mightyena,SPECIES_MIGHTYENA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_DARK),PRL-Hoenn,
+306,Skulberus,skulberus,SPECIES_SKULBERUS,PRU custom / exception,MON_TYPES(TYPE_DARK),PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+307,Zigzagoon,zigzagoon,SPECIES_ZIGZAGOON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+308,Linoone,linoone,SPECIES_LINOONE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+309,Wurmple,wurmple,SPECIES_WURMPLE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Hoenn,
+310,Silcoon,silcoon,SPECIES_SILCOON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Hoenn,
+311,Beautifly,beautifly,SPECIES_BEAUTIFLY,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PRL-Hoenn,
+312,Cascoon,cascoon,SPECIES_CASCOON,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Hoenn,
+313,Dustox,dustox,SPECIES_DUSTOX,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_POISON)",PRL-Hoenn,
+314,Lotad,lotad,SPECIES_LOTAD,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GRASS)",PRL-Hoenn,
+315,Lombre,lombre,SPECIES_LOMBRE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GRASS)",PRL-Hoenn,
+316,Ludicolo,ludicolo,SPECIES_LUDICOLO,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_GRASS)",PRL-Hoenn,
+317,Seedot,seedot,SPECIES_SEEDOT,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PRL-Hoenn,
+318,Nuzleaf,nuzleaf,SPECIES_NUZLEAF,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_DARK)",PRL-Hoenn,
+319,Shiftry,shiftry,SPECIES_SHIFTRY,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_DARK)",PRL-Hoenn,
+320,Taillow,taillow,SPECIES_TAILLOW,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_FLYING)",PRL-Hoenn,
+321,Swellow,swellow,SPECIES_SWELLOW,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_NORMAL, TYPE_FLYING)",PRL-Hoenn,
+322,Wingull,wingull,SPECIES_WINGULL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FLYING)",PRL-Hoenn,
+323,Pelipper,pelipper,SPECIES_PELIPPER,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_FLYING)",PRL-Hoenn,
+324,Ralts,ralts,SPECIES_RALTS,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_PSYCHIC, RALTS_FAMILY_TYPE2)",PRL-Hoenn,
+325,Kirlia,kirlia,SPECIES_KIRLIA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_PSYCHIC, RALTS_FAMILY_TYPE2)",PRL-Hoenn,
+326,Gardevoir,gardevoir,SPECIES_GARDEVOIR,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_PSYCHIC, RALTS_FAMILY_TYPE2)",PRL-Hoenn,
+327,Valkiri,valkyvoir,SPECIES_VALKYVOIR,PRU custom / exception,"MON_TYPES(TYPE_PSYCHIC, TYPE_FAIRY)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+328,Surskit,surskit,SPECIES_SURSKIT,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_WATER)",PRL-Hoenn,
+329,Masquerain,masquerain,SPECIES_MASQUERAIN,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PRL-Hoenn,
+330,Shroomish,shroomish,SPECIES_SHROOMISH,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GRASS),PRL-Hoenn,
+331,Breloom,breloom,SPECIES_BRELOOM,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_FIGHTING)",PRL-Hoenn,
+332,Slakoth,slakoth,SPECIES_SLAKOTH,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+333,Vigoroth,vigoroth,SPECIES_VIGOROTH,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+334,Slaking,slaking,SPECIES_SLAKING,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+335,Nincada,nincada,SPECIES_NINCADA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_GROUND)",PRL-Hoenn,
+336,Ninjask,ninjask,SPECIES_NINJASK,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_FLYING)",PRL-Hoenn,
+337,Shedinja,shedinja,SPECIES_SHEDINJA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_BUG, TYPE_GHOST)",PRL-Hoenn,
+338,Whismur,whismur,SPECIES_WHISMUR,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+339,Loudred,loudred,SPECIES_LOUDRED,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+340,Exploud,exploud,SPECIES_EXPLOUD,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+341,Makuhita,makuhita,SPECIES_MAKUHITA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIGHTING),PRL-Hoenn,
+342,Hariyama,hariyama,SPECIES_HARIYAMA,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIGHTING),PRL-Hoenn,
+343,Nosepass,nosepass,SPECIES_NOSEPASS,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ROCK),PRL-Hoenn,
+344,Skitty,skitty,SPECIES_SKITTY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+345,Delcatty,delcatty,SPECIES_DELCATTY,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_NORMAL),PRL-Hoenn,
+346,Gemlin,gemlin,SPECIES_GEMLIN,PRU custom / exception,"MON_TYPES(TYPE_DARK, TYPE_GHOST)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+347,Sableye,sableye,SPECIES_SABLEYE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_DARK, TYPE_GHOST)",PRL-Hoenn,
+348,Gemigoyle,gemigoyle,SPECIES_GEMIGOYLE,PRU custom / exception,"MON_TYPES(TYPE_GHOST, TYPE_ROCK)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+349,Mawile,mawile,SPECIES_MAWILE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_STEEL, TYPE_FAIRY),",PRL-Hoenn,
+350,Mawyrm,mawyrm,SPECIES_MAWYRM,PRU custom / exception,"MON_TYPES(TYPE_STEEL, TYPE_DRAGON)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+351,Aron,aron,SPECIES_ARON,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_STEEL, TYPE_ROCK)",PRL-Hoenn,
+352,Lairon,lairon,SPECIES_LAIRON,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_STEEL, TYPE_ROCK)",PRL-Hoenn,
+353,Aggron,aggron,SPECIES_AGGRON,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_STEEL, TYPE_ROCK)",PRL-Hoenn,
+354,Meditite,meditite,SPECIES_MEDITITE,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIGHTING, TYPE_PSYCHIC)",PRL-Hoenn,
+355,Medicham,medicham,SPECIES_MEDICHAM,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIGHTING, TYPE_PSYCHIC)",PRL-Hoenn,
+356,Electrike,electrike,SPECIES_ELECTRIKE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Hoenn,
+357,Manectric,manectric,SPECIES_MANECTRIC,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Hoenn,
+358,Plusle,plusle,SPECIES_PLUSLE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Hoenn,
+359,Minun,minun,SPECIES_MINUN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_ELECTRIC),PRL-Hoenn,
+360,Volbeat,volbeat,SPECIES_VOLBEAT,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Hoenn,
+361,Illumise,illumise,SPECIES_ILLUMISE,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_BUG),PRL-Hoenn,
+362,Roselia,roselia,SPECIES_ROSELIA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GRASS, TYPE_POISON)",PRL-Hoenn,
+363,Gulpin,gulpin,SPECIES_GULPIN,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_POISON),PRL-Hoenn,
+364,Swalot,swalot,SPECIES_SWALOT,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_POISON),PRL-Hoenn,
+365,Carvanha,carvanha,SPECIES_CARVANHA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_DARK)",PRL-Hoenn,
+366,Sharpedo,sharpedo,SPECIES_SHARPEDO,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_WATER, TYPE_DARK)",PRL-Hoenn,
+367,Wailmer,wailmer,SPECIES_WAILMER,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Hoenn,
+368,Wailord,wailord,SPECIES_WAILORD,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_WATER),PRL-Hoenn,
+369,Numel,numel,SPECIES_NUMEL,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIRE, TYPE_GROUND)",PRL-Hoenn,
+370,Camerupt,camerupt,SPECIES_CAMERUPT,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_FIRE, TYPE_GROUND)",PRL-Hoenn,
+371,Torkoal,torkoal,SPECIES_TORKOAL,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_FIRE),PRL-Hoenn,
+372,Torkaldera,torkaldera,SPECIES_TORKALDERA,PRU custom / exception,"MON_TYPES(TYPE_FIRE, TYPE_ROCK)",PRL-custom,Distinct PRU custom Pokémon; family integrated (source import/ROM QA pending).
+373,Spoink,spoink,SPECIES_SPOINK,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_PSYCHIC),PRL-Hoenn,
+374,Grumpig,grumpig,SPECIES_GRUMPIG,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_PSYCHIC),PRL-Hoenn,
 375,Trapinch,trapinch,SPECIES_TRAPINCH,Standard Kanto–Johto–Hoenn,MON_TYPES(TYPE_GROUND),PRL-Hoenn,
 376,Vibrava,vibrava,SPECIES_VIBRAVA,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GROUND, TYPE_DRAGON)",PRL-Hoenn,
 377,Flygon,flygon,SPECIES_FLYGON,Standard Kanto–Johto–Hoenn,"MON_TYPES(TYPE_GROUND, TYPE_DRAGON)",PRL-Hoenn,

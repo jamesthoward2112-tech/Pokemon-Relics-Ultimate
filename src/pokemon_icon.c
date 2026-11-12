@@ -77,28 +77,28 @@ static const u16 sPRUAstrachiIconPalette[16] =
 // Exact 16-entry indexed PNG icon palette for approved TRE Articuno-P.
 static const u16 sPRUArticunoPIconPalette[16] =
 {
-    RGB(12, 19, 16), RGB(15, 15, 15), RGB(23, 23, 22), RGB(31, 31, 31),
-    RGB(14, 14, 25), RGB(20, 21, 30), RGB(22, 16, 11), RGB(29, 24, 17),
-    RGB(24, 21, 5), RGB(30, 30, 5), RGB(30, 12, 10), RGB(18, 15, 25),
-    RGB(24, 20, 25), RGB(23, 5, 19), RGB(12, 12, 11), RGB(8, 8, 8)
+    RGB(0, 0, 0), RGB(8, 8, 8), RGB(15, 19, 9), RGB(12, 12, 11),
+    RGB(19, 25, 9), RGB(31, 31, 31), RGB(18, 30, 9), RGB(29, 14, 19),
+    RGB(30, 28, 5), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)
 };
 
 // Exact 16-entry indexed PNG icon palette for approved TRE Zapdos-P.
 static const u16 sPRUZapdosPIconPalette[16] =
 {
-    RGB(12, 19, 16), RGB(16, 16, 14), RGB(23, 23, 23), RGB(31, 31, 31),
-    RGB(23, 20, 8), RGB(30, 30, 5), RGB(26, 12, 8), RGB(30, 18, 5),
-    RGB(17, 15, 31), RGB(12, 9, 25), RGB(29, 14, 19), RGB(31, 22, 20),
-    RGB(20, 24, 31), RGB(13, 21, 19), RGB(12, 12, 11), RGB(8, 8, 8)
+    RGB(0, 0, 0), RGB(31, 31, 31), RGB(23, 20, 8), RGB(8, 8, 8),
+    RGB(30, 30, 5), RGB(31, 22, 20), RGB(29, 14, 19), RGB(26, 12, 8),
+    RGB(30, 18, 5), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)
 };
 
 // Exact 16-entry indexed PNG icon palette for approved TRE Moltres-P.
 static const u16 sPRUMoltresPIconPalette[16] =
 {
-    RGB(12, 19, 16), RGB(16, 16, 14), RGB(23, 23, 23), RGB(31, 31, 31),
-    RGB(23, 20, 8), RGB(30, 30, 5), RGB(26, 12, 8), RGB(30, 18, 5),
-    RGB(17, 15, 31), RGB(12, 9, 25), RGB(29, 14, 19), RGB(31, 22, 20),
-    RGB(20, 24, 31), RGB(13, 21, 19), RGB(12, 12, 11), RGB(8, 8, 8)
+    RGB(0, 0, 0), RGB(8, 8, 8), RGB(29, 14, 19), RGB(18, 30, 9),
+    RGB(19, 25, 9), RGB(12, 12, 11), RGB(15, 19, 9), RGB(31, 31, 31),
+    RGB(30, 30, 21), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)
 };
 
 // Approved PRL Alphoracle palette (original 32x64 indexed sprite).
@@ -145,10 +145,10 @@ static const u16 sPRUAncientGuardianDragoniteIconPalette[16] =
 // Khang's icon uses its own sprite's indexed colours, not Mega Kangaskhan art.
 static const u16 sPRUKhangIconPalette[16] =
 {
-    RGB(12, 19, 16), RGB(2, 1, 2), RGB(6, 4, 4), RGB(10, 5, 4),
-    RGB(14, 7, 5), RGB(19, 10, 6), RGB(23, 13, 7), RGB(26, 17, 10),
-    RGB(9, 8, 8), RGB(14, 12, 12), RGB(18, 16, 14), RGB(22, 19, 14),
-    RGB(29, 25, 19), RGB(30, 29, 24), RGB(21, 4, 5), RGB(30, 30, 29),
+    RGB(12, 19, 16), RGB(15, 15, 15), RGB(23, 23, 22), RGB(31, 31, 31),
+    RGB(14, 14, 25), RGB(20, 21, 30), RGB(22, 16, 11), RGB(29, 24, 17),
+    RGB(24, 21, 5), RGB(30, 30, 5), RGB(30, 12, 10), RGB(18, 15, 25),
+    RGB(24, 20, 25), RGB(23, 5, 19), RGB(12, 12, 11), RGB(8, 8, 8),
 };
 
 static const u16 sPRUNolaxIconPalette[16] =

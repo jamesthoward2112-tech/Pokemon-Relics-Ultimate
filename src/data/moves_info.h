@@ -24419,5 +24419,21 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_MakeItRain,
     },
 
+
+    [MOVE_ECLIPSE_BOLT] =
+    {
+        .name = COMPOUND_STRING("ECLIPSE BOLT"),
+        .description = COMPOUND_STRING("A dark-charged electric bolt\nthat may paralyze the foe."),
+        .effect = EFFECT_HIT,
+        .power = 95,
+        .type = TYPE_ELECTRIC,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({ .moveEffect = MOVE_EFFECT_PARALYSIS, .chance = 20, }),
+        .battleAnimScript = gBattleAnimMove_FusionBolt,
+    },
+
 };
 

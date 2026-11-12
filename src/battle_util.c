@@ -7318,6 +7318,10 @@ static inline u32 CalcAttackStat(struct BattleContext *ctx)
                 modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));
         }
         break;
+    case ABILITY_RELIC_OVERDRIVE:
+        if (moveType == TYPE_ELECTRIC || moveType == TYPE_DARK)
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1.2));
+        break;
     case ABILITY_DRAGONS_MAW:
         if (moveType == TYPE_DRAGON)
             modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));

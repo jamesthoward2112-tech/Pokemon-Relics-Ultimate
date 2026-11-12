@@ -254,8 +254,16 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         return TRUE;
 
 #if IS_HNS
-    if (input->pressedRButton && TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE | PLAYER_AVATAR_FLAG_ACRO_BIKE))
+    if (input->pressedRButton)
     {
+        if (!TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE | PLAYER_AVATAR_FLAG_ACRO_BIKE))
+        {
+            // On foot: repeat the species registered inside DexNav.
+            if (TryStartDexNavSearch())
+                return TRUE;
+        }
+        else
+        {
         if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_MACH_BIKE)
         {
             gPlayerAvatar.flags &= ~PLAYER_AVATAR_FLAG_MACH_BIKE;
@@ -269,6 +277,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
             SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_MACH_BIKE);
         }
         PlaySE(SE_BIKE_BELL);
+        }
     }
 #else
     if (input->pressedRButton && TryStartDexNavSearch())

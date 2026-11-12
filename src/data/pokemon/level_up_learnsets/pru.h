@@ -392,3 +392,23 @@ static const struct LevelUpMove sValkiriLevelUpLearnset[] =
     LEVEL_UP_MOVE(60, MOVE_DREAM_EATER),
     LEVEL_UP_END
 };
+
+// Kan: new baby Kangaskhan, ordinary evolution at Level 20.
+static const struct LevelUpMove sKanLevelUpLearnset[] =
+{
+    LEVEL_UP_MOVE( 1, MOVE_SCRATCH),
+    LEVEL_UP_MOVE( 1, MOVE_TAIL_WHIP),
+    LEVEL_UP_MOVE( 5, MOVE_FAKE_OUT),
+    LEVEL_UP_MOVE( 8, MOVE_BABY_DOLL_EYES),
+    LEVEL_UP_MOVE(11, MOVE_HELPING_HAND),
+    LEVEL_UP_MOVE(14, MOVE_BITE),
+    LEVEL_UP_MOVE(17, MOVE_HEADBUTT),
+    LEVEL_UP_MOVE(20, MOVE_COMET_PUNCH),
+    LEVEL_UP_MOVE(24, MOVE_STOMP),
+    LEVEL_UP_MOVE(28, MOVE_ENDURE),
+    LEVEL_UP_MOVE(32, MOVE_CRUNCH),
+    LEVEL_UP_MOVE(36, MOVE_DIZZY_PUNCH),
+    LEVEL_UP_MOVE(40, MOVE_MEGA_PUNCH),
+    LEVEL_UP_MOVE(45, MOVE_REVERSAL),
+    LEVEL_UP_END
+};

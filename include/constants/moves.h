@@ -993,6 +993,7 @@ enum __attribute__((packed)) Move
 
     // Exclusive Golden Ho-Oh signature; append only to preserve all move IDs.
     MOVE_GOLDEN_REIGN,
+    MOVE_ECLIPSE_BOLT, // Alpha 5 append-only, no evolution auto-learn
 
     MOVES_COUNT,
 

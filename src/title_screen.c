@@ -756,7 +756,7 @@ static void CB2_InitPruTitleScreen(void)
         break;
     case 1:
         DmaCopy16(3, sPruTitleBitmap, (void *)VRAM, sizeof(sPruTitleBitmap));
-        LoadPruTitlePaletteBrightened();
+        LoadPalette(sPruTitlePalette, BG_PLTT_ID(0), sizeof(sPruTitlePalette));
         LoadCompressedSpriteSheet(&sSpriteSheet_PressStart[0]);
         LoadSpritePalette(&sSpritePalette_PressStart[0]);
         CreatePressStartBanner(START_BANNER_X, 138);
@@ -775,6 +775,7 @@ static void CB2_InitPruTitleScreen(void)
         EnableInterrupts(INTR_FLAG_VBLANK);
         m4aSongNumStart(MUS_HG_TITLE, FlagGet(FLAG_SYS_GBS_ENABLED));
         SetVBlankCallback(VBlankCB);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
         SetMainCallback2(MainCB2);
         gMain.state++;
         break;

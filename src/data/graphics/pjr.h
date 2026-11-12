@@ -300,3 +300,10 @@ const u32 gMonBackPic_Pinsirex[] = INCBIN_U32("graphics/pokemon/prl_authoritativ
 const u16 gMonPalette_Pinsirex[] = INCBIN_U16("graphics/pokemon/prl_authoritative/pinsirex/normal.gbapal");
 const u16 gMonShinyPalette_Pinsirex[] = INCBIN_U16("graphics/pokemon/prl_authoritative/pinsirex/shiny.gbapal");
 const u8 gMonIcon_Pinsirex[] = INCBIN_U8("graphics/pokemon/prl_authoritative/pinsirex/icon.4bpp");
+
+// Kan: source graphics in graphics/pokemon/kan/. Generated .4bpp.smol files are build outputs.
+const u32 gMonFrontPic_Kan[] = INCBIN_U32("graphics/pokemon/kan/front.4bpp.smol");
+const u32 gMonBackPic_Kan[] = INCBIN_U32("graphics/pokemon/kan/back.4bpp.smol");
+const u16 gMonPalette_Kan[] = INCBIN_U16("graphics/pokemon/kan/normal.gbapal");
+const u16 gMonShinyPalette_Kan[] = INCBIN_U16("graphics/pokemon/kan/shiny.gbapal");
+const u8 gMonIcon_Kan[] = INCBIN_U8("graphics/pokemon/kan/icon.4bpp");

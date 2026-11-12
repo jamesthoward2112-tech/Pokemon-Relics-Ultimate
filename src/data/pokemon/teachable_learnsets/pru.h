@@ -336,3 +336,21 @@ static const u16 sMewsionTeachableLearnset[] =
     MOVE_THUNDERBOLT, MOVE_TORMENT, MOVE_TOXIC, MOVE_WATER_PULSE,
     MOVE_WATERFALL, MOVE_UNAVAILABLE,
 };
+
+// Kan: compact baby-compatible TM/tutor set, not Kangaskhan's full TM compatibility.
+static const u16 sKanTeachableLearnset[] =
+{
+    MOVE_ATTRACT,
+    MOVE_COUNTER,
+    MOVE_DOUBLE_TEAM,
+    MOVE_ENDURE,
+    MOVE_FACADE,
+    MOVE_HELPING_HAND,
+    MOVE_PROTECT,
+    MOVE_REST,
+    MOVE_RETURN,
+    MOVE_SLEEP_TALK,
+    MOVE_SUBSTITUTE,
+    MOVE_SWAGGER,
+    MOVE_UNAVAILABLE,
+};

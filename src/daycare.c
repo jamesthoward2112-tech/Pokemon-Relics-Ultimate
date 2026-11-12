@@ -1212,9 +1212,9 @@ void GiveEggFromDaycare(void)
 }
 
 #if IS_HNS
-// PRU Day-Care Mystery Egg pool: all nine Kanto/Johto/Hoenn starter
-// species plus the four approved Relic babies. One uniformly chosen
-// species per paid Egg. Preserve the existing Odd Egg and daycare breeding.
+// PRU paid Mystery Egg pool: only the nine regular Kanto/Johto/Hoenn
+// starter species. The four Relic babies have their own secret Odd Eggs.
+// Each paid Egg selects uniformly; ordinary breeding and gifts are unchanged.
 #define PRU_MYSTERY_EGG_PRICE 5000
 
 static const u16 sPruMysteryEggSpecies[] =
@@ -1231,15 +1231,10 @@ static const u16 sPruMysteryEggSpecies[] =
     SPECIES_TREECKO,
     SPECIES_TORCHIC,
     SPECIES_MUDKIP,
-    // Relic babies
-    SPECIES_SCARABUB, // Also called Herabub by the user
-    SPECIES_SKARMET,
-    SPECIES_MOOTINY,
-    SPECIES_GEMLIN,
 };
 
 // Random() returns all 2^16 values. Reject the short tail so each of the
-// 13 approved species has exactly the same probability.
+// nine approved starters has exactly the same probability.
 static u16 GetUniformPruMysteryEggIndex(void)
 {
     const u32 poolSize = ARRAY_COUNT(sPruMysteryEggSpecies);

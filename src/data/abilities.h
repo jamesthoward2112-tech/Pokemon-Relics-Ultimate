@@ -2579,5 +2579,12 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .breakable = TRUE,
     },
 
+    [ABILITY_RELIC_OVERDRIVE] =
+    {
+        .name = _("RELIC OVERDRIVE"),
+        .description = COMPOUND_STRING("Boosts Electric- and Dark-type\nattack power by 20%."),
+        .aiRating = 8,
+        .breakable = TRUE,
+    },
 };
 

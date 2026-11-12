@@ -334,6 +334,7 @@
 #define SPECIES_SPOINK                                  325
 #define SPECIES_GRUMPIG                                 326
 #define SPECIES_SPINDA                                  327
+
 #define SPECIES_TRAPINCH                                328
 #define SPECIES_VIBRAVA                                 329
 #define SPECIES_FLYGON                                  330
@@ -1781,7 +1782,8 @@
 // from the 450-species PRU Pokédex and randomizer pool.
 #define SPECIES_DRAGONITE_GUARDIAN                      1645
 
-#define NUM_SPECIES (SPECIES_DRAGONITE_GUARDIAN + 1)
+#define SPECIES_KAN 1646 // append-only; keep all existing saved species IDs
+#define NUM_SPECIES (SPECIES_KAN + 1)
 
 #define SPECIES_SHINY_TAG 5000
 
