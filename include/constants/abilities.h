@@ -351,6 +351,8 @@ enum __attribute__((packed)) Ability
     ABILITY_THERMAL_WINGS,
     ABILITY_CITADEL_SHELL,
     ABILITY_STYGIAN_RUSH,
+    // Noxichu signature; append-only so existing save ability IDs remain stable.
+    ABILITY_RELIC_OVERDRIVE,
     ABILITIES_COUNT_PJR,
     ABILITIES_COUNT = ABILITIES_COUNT_PJR,
 };
