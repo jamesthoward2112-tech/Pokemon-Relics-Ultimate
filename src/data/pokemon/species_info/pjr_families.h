@@ -747,8 +747,8 @@ PJR_RED_SPECIES(SPECIES_NOLAX, 100, 130, 80, 45, 90, 130, TYPE_NORMAL, TYPE_NORM
     gMonFrontPic_Nolax, gMonBackPic_Nolax, gMonPalette_Nolax, gMonShinyPalette_Nolax, gMonIcon_Nolax,
     sNolaxLevelUpLearnset, sSnorlaxTeachableLearnset, 0, 8, 3),
 
-PJR_RED_SPECIES(SPECIES_NOXICHU, 70, 110, 70, 110, 80, 125, TYPE_ELECTRIC, TYPE_DARK,
-    ABILITY_INFILTRATOR, "Noxichu", CRY_PIKACHU, NATIONAL_DEX_PIKACHU, BODY_COLOR_YELLOW,
+PJR_RED_SPECIES(SPECIES_NOXICHU, 80, 115, 75, 115, 85, 130, TYPE_ELECTRIC, TYPE_DARK,
+    ABILITY_RELIC_OVERDRIVE, "Noxichu", CRY_PIKACHU, NATIONAL_DEX_PIKACHU, BODY_COLOR_YELLOW,
     gMonFrontPic_Noxichu, gMonBackPic_Noxichu, gMonPalette_Noxichu, gMonShinyPalette_Noxichu, gMonIcon_Noxichu,
     sNoxichuLevelUpLearnset, sPikachuTeachableLearnset, 0, 20, 6),
 
