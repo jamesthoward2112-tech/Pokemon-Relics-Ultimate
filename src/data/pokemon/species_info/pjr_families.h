@@ -704,7 +704,7 @@ PJR_FINAL_SPECIES(SPECIES_GHOULBAT, 95, 110, 90, 80, 95, 130, TYPE_GHOST, TYPE_F
 PJR_RED_SPECIES(SPECIES_EDENSAUR, 95, 80, 110, 135, 105, 55, TYPE_GRASS, TYPE_POISON,
     ABILITY_GRASSY_SURGE, "Edensaur", CRY_VENUSAUR, NATIONAL_DEX_VENUSAUR, BODY_COLOR_GREEN,
     gMonFrontPic_Edensaur, gMonBackPic_Edensaur, gMonPalette_Edensaur, gMonShinyPalette_Edensaur, gMonIcon_Edensaur,
-    sEdensaurLevelUpLearnset, sVenusaurTeachableLearnset, 0, 7, P_GBA_STYLE_SPECIES_ICONS ? 1 : 4, "Ancient Bloom", 21, 1450, "Ancient roots spread beneath its\nflower. Soil touched by them\nbursts into sudden greenery."),
+    sEdensaurLevelUpLearnset, sVenusaurTeachableLearnset, 0, 7, P_GBA_STYLE_SPECIES_ICONS ? 1 : 4, "Bloom Relic", 21, 1450, "Ancient roots spread beneath its\nflower. Soil touched by them\nbursts into sudden greenery."),
 
 PJR_RED_SPECIES(SPECIES_CHARAXIS, 80, 120, 85, 90, 80, 125, TYPE_FIRE, TYPE_FLYING,
     ABILITY_GALE_WINGS, "Charaxis", CRY_CHARIZARD, NATIONAL_DEX_CHARIZARD, BODY_COLOR_RED,
