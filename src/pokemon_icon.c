@@ -168,6 +168,23 @@ static const u16 sPRUNolaxIconPalette[16] =
     RGB(26, 26, 13), RGB(30, 18, 5), RGB(12, 12, 11), RGB(8, 8, 8),
 };
 
+// Exact indexed icon palettes from the approved Alpha sprite packs.
+static const u16 sPRUEdensaurIconPalette[16] =
+{
+    RGB(12, 19, 16), RGB(16, 16, 14), RGB(23, 23, 23), RGB(31, 31, 31),
+    RGB(23, 20, 8), RGB(30, 30, 5), RGB(26, 12, 8), RGB(30, 18, 5),
+    RGB(17, 15, 31), RGB(12, 9, 25), RGB(29, 14, 19), RGB(31, 22, 20),
+    RGB(20, 24, 31), RGB(13, 21, 19), RGB(12, 12, 11), RGB(8, 8, 8),
+};
+
+static const u16 sPRUFeralodonIconPalette[16] =
+{
+    RGB(0, 0, 0), RGB(2, 2, 2), RGB(9, 9, 16), RGB(6, 16, 24),
+    RGB(11, 21, 28), RGB(16, 25, 31), RGB(16, 25, 31), RGB(14, 3, 5),
+    RGB(21, 4, 6), RGB(28, 7, 8), RGB(31, 14, 15), RGB(23, 17, 11),
+    RGB(30, 26, 19), RGB(31, 30, 25), RGB(31, 31, 31), RGB(26, 8, 3),
+};
+
 const struct SpritePalette gMonIconPaletteTable[] =
 {
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
@@ -191,6 +208,8 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUKhangIconPalette, POKE_ICON_BASE_PAL_TAG + 18 },
     { sPRUNolaxIconPalette, POKE_ICON_BASE_PAL_TAG + 19 },
     { sPRUKanIconPalette, POKE_ICON_BASE_PAL_TAG + 20 },
+    { sPRUEdensaurIconPalette, POKE_ICON_BASE_PAL_TAG + 21 },
+    { sPRUFeralodonIconPalette, POKE_ICON_BASE_PAL_TAG + 22 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -317,6 +336,10 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
     if (species == SPECIES_HERACURION) return 3;
     if (species == SPECIES_KABLOWFISH) return 4;
     if (species == SPECIES_JOLLIBIRD) return 0;
+    if (species == SPECIES_EDENSAUR)
+        return 21;
+    if (species == SPECIES_FERALODON)
+        return 22;
     if (species == SPECIES_KAN)
         return 20;
     if (species == SPECIES_KHANG)
