@@ -6822,6 +6822,11 @@ static inline u32 CalcMoveBasePowerAfterModifiers(struct BattleContext *ctx)
     // attacker's abilities
     switch (ctx->abilityAtk)
     {
+    case ABILITY_RELIC_OVERDRIVE:
+        // Noxichu's unique ability: an extra 20% damage for both of its STAB types.
+        if (moveType == TYPE_ELECTRIC || moveType == TYPE_DARK)
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1.2));
+        break;
     case ABILITY_TECHNICIAN:
         if (basePower <= 60)
            modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));
