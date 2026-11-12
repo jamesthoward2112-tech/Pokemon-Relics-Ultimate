@@ -3,7 +3,6 @@
 
 static const struct LevelUpMove sNoxichuLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 0, MOVE_BITE),
-    LEVEL_UP_MOVE( 0, MOVE_ECLIPSE_BOLT),
     LEVEL_UP_MOVE(24, MOVE_SNARL),
     LEVEL_UP_MOVE(28, MOVE_ELECTROWEB),
     LEVEL_UP_MOVE(32, MOVE_THUNDERBOLT),
