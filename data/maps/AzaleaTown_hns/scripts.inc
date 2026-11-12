@@ -470,11 +470,11 @@ AzaleaTown_EventScript_PJRGiftCyndaquilMon::
 	end
 
 AzaleaTown_EventScript_PJRGiftCyndaquil_Text_Clue:
-	.string "I'm one of ELM's aides.\p"
-	.string "Wild CYNDAQUIL have been\n"
-	.string "spotted near ROUTE 30.\p"
-	.string "This one is my partner.\n"
-	.string "Catch one of your own!$"
+	.string "I raised my CYNDAQUIL from\n"
+	.string "an ODD EGG from the DAY-CARE\n"
+	.string "on ROUTE 34.\p"
+	.string "The password for its EGG is\n"
+	.string "CYNDAQUIL!$"
 
 AzaleaTown_EventScript_PJRGiftCyndaquil_Text_Mon:
 	.string "CYNDAQUIL seems happy to\n"

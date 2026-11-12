@@ -3546,15 +3546,15 @@
 #define FLAG_PRU_SECRET_EGG_MOOTINY                               0x91D // Persistent one-time Route 34 Odd Egg
 #define FLAG_PRU_SECRET_EGG_GEMLIN                               0x91E // Persistent one-time Route 34 Odd Egg
 #define FLAG_PRU_SECRET_EGG_KAN                                   0x91F // persistent save-safe one-time Kan egg
-#define FLAG_UNUSED_0x920                                       0
-#define FLAG_UNUSED_0x923                                       0
-#define FLAG_UNUSED_0x924                                       0
-#define FLAG_UNUSED_0x925                                       0
-#define FLAG_UNUSED_0x926                                       0
-#define FLAG_UNUSED_0x927                                       0
-#define FLAG_UNUSED_0x928                                       0
-#define FLAG_UNUSED_0x929                                       0
-#define FLAG_UNUSED_0x933                                       0
+#define FLAG_PRU_STARTER_EGG_CHIKORITA    0x920 // Persistent one-time Odd Egg
+#define FLAG_PRU_STARTER_EGG_CYNDAQUIL    0x923 // Persistent one-time Odd Egg
+#define FLAG_PRU_STARTER_EGG_TOTODILE     0x924 // Persistent one-time Odd Egg
+#define FLAG_PRU_STARTER_EGG_BULBASAUR    0x925 // Persistent one-time Odd Egg
+#define FLAG_PRU_STARTER_EGG_CHARMANDER   0x926 // Persistent one-time Odd Egg
+#define FLAG_PRU_STARTER_EGG_SQUIRTLE     0x927 // Persistent one-time Odd Egg
+#define FLAG_PRU_STARTER_EGG_TREECKO      0x928 // Persistent one-time Odd Egg
+#define FLAG_PRU_STARTER_EGG_TORCHIC      0x929 // Persistent one-time Odd Egg
+#define FLAG_PRU_STARTER_EGG_MUDKIP       0x933 // Persistent one-time Odd Egg
 #define FLAG_UNUSED_0x935                                       0
 #define FLAG_UNUSED_0x936                                       0
 #define FLAG_UNUSED_0x937                                       0

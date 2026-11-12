@@ -498,11 +498,11 @@ GoldenrodCity_EventScript_PJRGiftTotodileMon::
 	end
 
 GoldenrodCity_EventScript_PJRGiftTotodile_Text_Clue:
-	.string "I'm one of ELM's aides.\p"
-	.string "Wild TOTODILE have been\n"
-	.string "spotted near SLOWPOKE WELL.\p"
-	.string "This one is my partner.\n"
-	.string "Catch one of your own!$"
+	.string "I raised my TOTODILE from\n"
+	.string "an ODD EGG from the DAY-CARE\n"
+	.string "on ROUTE 34.\p"
+	.string "The password for its EGG is\n"
+	.string "TOTODILE!$"
 
 GoldenrodCity_EventScript_PJRGiftTotodile_Text_Mon:
 	.string "TOTODILE seems happy to\n"

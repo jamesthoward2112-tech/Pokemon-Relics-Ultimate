@@ -147,6 +147,15 @@ Route34_DayCare_EventScript_Clerk::
 	case 10, Route34_DayCare_EventScript_GiveMootiny
 	case 11, Route34_DayCare_EventScript_GiveGemlin
 	case 12, Route34_DayCare_EventScript_GiveKan
+	case 13, Route34_DayCare_EventScript_GiveChikorita
+	case 14, Route34_DayCare_EventScript_GiveCyndaquil
+	case 15, Route34_DayCare_EventScript_GiveTotodile
+	case 16, Route34_DayCare_EventScript_GiveBulbasaur
+	case 17, Route34_DayCare_EventScript_GiveCharmander
+	case 18, Route34_DayCare_EventScript_GiveSquirtle
+	case 19, Route34_DayCare_EventScript_GiveTreecko
+	case 20, Route34_DayCare_EventScript_GiveTorchic
+	case 21, Route34_DayCare_EventScript_GiveMudkip
 	closemessage
 	release
 	end
@@ -216,6 +225,60 @@ Route34_DayCare_EventScript_GiveKan::
 	setflag FLAG_PRU_SECRET_EGG_KAN
 	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
 
+Route34_DayCare_EventScript_GiveChikorita::
+	goto_if_set FLAG_PRU_STARTER_EGG_CHIKORITA, Route34_DayCare_EventScript_ClerkAfter
+	giveoddegg 13
+	setflag FLAG_PRU_STARTER_EGG_CHIKORITA
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
+
+Route34_DayCare_EventScript_GiveCyndaquil::
+	goto_if_set FLAG_PRU_STARTER_EGG_CYNDAQUIL, Route34_DayCare_EventScript_ClerkAfter
+	giveoddegg 14
+	setflag FLAG_PRU_STARTER_EGG_CYNDAQUIL
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
+
+Route34_DayCare_EventScript_GiveTotodile::
+	goto_if_set FLAG_PRU_STARTER_EGG_TOTODILE, Route34_DayCare_EventScript_ClerkAfter
+	giveoddegg 15
+	setflag FLAG_PRU_STARTER_EGG_TOTODILE
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
+
+Route34_DayCare_EventScript_GiveBulbasaur::
+	goto_if_set FLAG_PRU_STARTER_EGG_BULBASAUR, Route34_DayCare_EventScript_ClerkAfter
+	giveoddegg 16
+	setflag FLAG_PRU_STARTER_EGG_BULBASAUR
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
+
+Route34_DayCare_EventScript_GiveCharmander::
+	goto_if_set FLAG_PRU_STARTER_EGG_CHARMANDER, Route34_DayCare_EventScript_ClerkAfter
+	giveoddegg 17
+	setflag FLAG_PRU_STARTER_EGG_CHARMANDER
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
+
+Route34_DayCare_EventScript_GiveSquirtle::
+	goto_if_set FLAG_PRU_STARTER_EGG_SQUIRTLE, Route34_DayCare_EventScript_ClerkAfter
+	giveoddegg 18
+	setflag FLAG_PRU_STARTER_EGG_SQUIRTLE
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
+
+Route34_DayCare_EventScript_GiveTreecko::
+	goto_if_set FLAG_PRU_STARTER_EGG_TREECKO, Route34_DayCare_EventScript_ClerkAfter
+	giveoddegg 19
+	setflag FLAG_PRU_STARTER_EGG_TREECKO
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
+
+Route34_DayCare_EventScript_GiveTorchic::
+	goto_if_set FLAG_PRU_STARTER_EGG_TORCHIC, Route34_DayCare_EventScript_ClerkAfter
+	giveoddegg 20
+	setflag FLAG_PRU_STARTER_EGG_TORCHIC
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
+
+Route34_DayCare_EventScript_GiveMudkip::
+	goto_if_set FLAG_PRU_STARTER_EGG_MUDKIP, Route34_DayCare_EventScript_ClerkAfter
+	giveoddegg 21
+	setflag FLAG_PRU_STARTER_EGG_MUDKIP
+	goto Route34_DayCare_EventScript_Clerk_GaveCustomEgg
+
 Route34_DayCare_EventScript_Clerk_GaveEgg::
 	setflag FLAG_RECEIVED_ODD_EGG
 	goto Route34_DayCare_EventScript_Clerk_ReceiveEgg
@@ -256,8 +319,8 @@ Route34_DayCare_Text_ClerkBefore:
 	.string "I'm the DAY-CARE couple's son.\p"
 	.string "We've found unusual ODD EGGS.\p"
 	.string "Enter ONE secret word.\n"
-	.string "The BABY EXPERT outside knows\n"
-	.string "four special clues!$"
+	.string "Ask the BABY EXPERT for clues.\p"
+	.string "For a STARTER, enter its NAME!$"
 
 Route34_DayCare_Text_ClerkNoRoom:
 	.string "It looks like you can't carry another\n"
@@ -269,8 +332,8 @@ Route34_DayCare_Text_ClerkQuestion:
 
 Route34_DayCare_Text_Rejection:
 	.string "Sorry, I don't know that word.\p"
-	.string "Ask the BABY EXPERT outside\n"
-	.string "for a clue, then try again!$"
+	.string "Ask the BABY EXPERT for clues,\n"
+	.string "or enter a STARTER name!$"
 
 Route34_DayCare_Text_ReceivedOddEgg:
 	.string "{PLAYER} Received the ODD EGG.$"

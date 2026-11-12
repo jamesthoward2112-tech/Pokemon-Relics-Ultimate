@@ -1738,7 +1738,7 @@ bool8 ScrCmd_removegenericmon(struct ScriptContext *ctx)
     return FALSE;
 }
 
-static const u16 sOddEggSpecies[13] = {
+static const u16 sOddEggSpecies[] = {
     SPECIES_NONE,        // [0] unused
     SPECIES_PICHU,       // 1
     SPECIES_CLEFFA,      // 2
@@ -1752,6 +1752,15 @@ static const u16 sOddEggSpecies[13] = {
     SPECIES_MOOTINY,     // 10
     SPECIES_GEMLIN,     // 11
     SPECIES_KAN,        // 12
+    SPECIES_CHIKORITA, // 13
+    SPECIES_CYNDAQUIL, // 14
+    SPECIES_TOTODILE, // 15
+    SPECIES_BULBASAUR, // 16
+    SPECIES_CHARMANDER, // 17
+    SPECIES_SQUIRTLE, // 18
+    SPECIES_TREECKO, // 19
+    SPECIES_TORCHIC, // 20
+    SPECIES_MUDKIP, // 21
 };
 
 static const u8 sOddEggShinyNameList[][PLAYER_NAME_LENGTH + 1] = {

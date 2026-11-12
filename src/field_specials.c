@@ -4695,6 +4695,15 @@ static const u8 sPruOddEggCodeSkarmet[] = _("FEATHER");
 static const u8 sPruOddEggCodeMootiny[] = _("MILK");
 static const u8 sPruOddEggCodeGemlin[] = _("CRYSTAL");
 static const u8 sPruOddEggCodeKan[] = _("JOEY");
+static const u8 sPruOddEggCodeChikorita[] = _("CHIKORITA");
+static const u8 sPruOddEggCodeCyndaquil[] = _("CYNDAQUIL");
+static const u8 sPruOddEggCodeTotodile[] = _("TOTODILE");
+static const u8 sPruOddEggCodeBulbasaur[] = _("BULBASAUR");
+static const u8 sPruOddEggCodeCharmander[] = _("CHARMANDER");
+static const u8 sPruOddEggCodeSquirtle[] = _("SQUIRTLE");
+static const u8 sPruOddEggCodeTreecko[] = _("TREECKO");
+static const u8 sPruOddEggCodeTorchic[] = _("TORCHIC");
+static const u8 sPruOddEggCodeMudkip[] = _("MUDKIP");
 
 static const u8 *const sPruOddEggCodes[] =
 {
@@ -4710,6 +4719,15 @@ static const u8 *const sPruOddEggCodes[] =
     sPruOddEggCodeMootiny,
     sPruOddEggCodeGemlin,
     sPruOddEggCodeKan,
+    sPruOddEggCodeChikorita,
+    sPruOddEggCodeCyndaquil,
+    sPruOddEggCodeTotodile,
+    sPruOddEggCodeBulbasaur,
+    sPruOddEggCodeCharmander,
+    sPruOddEggCodeSquirtle,
+    sPruOddEggCodeTreecko,
+    sPruOddEggCodeTorchic,
+    sPruOddEggCodeMudkip,
 };
 
 static bool8 PruOddEggPasswordMatches(const u8 *typed, const u8 *secret)
