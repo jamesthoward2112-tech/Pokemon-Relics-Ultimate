@@ -254,6 +254,8 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         return TRUE;
 
 #if IS_HNS
+    // PRU: R repeats the registered DexNav search while on foot. Riding keeps
+    // the existing Mach/Acro bike toggle, which must not start a wild search.
     if (input->pressedRButton && TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE | PLAYER_AVATAR_FLAG_ACRO_BIKE))
     {
         if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_MACH_BIKE)
@@ -269,6 +271,11 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
             SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_MACH_BIKE);
         }
         PlaySE(SE_BIKE_BELL);
+        return TRUE;
+    }
+    else if (input->pressedRButton && TryStartDexNavSearch())
+    {
+        return TRUE;
     }
 #else
     if (input->pressedRButton && TryStartDexNavSearch())
