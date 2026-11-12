@@ -451,7 +451,7 @@
     .backPicSize = MON_COORDS_SIZE(64, 64), .backPicYOffset = 7,
     .backAnimId = BACK_ANIM_H_SLIDE,
     .palette = gMonPalette_Kan, .shinyPalette = gMonShinyPalette_Kan,
-    .iconSprite = gMonIcon_Kan, .iconPalIndex = 2, // verify in game with shared icon palette
+    .iconSprite = gMonIcon_Kan, .iconPalIndex = 2, // dedicated Kan palette selected in pokemon_icon.c
     .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
     .levelUpLearnset = sKanLevelUpLearnset,
     .teachableLearnset = sKanTeachableLearnset,

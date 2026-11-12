@@ -151,6 +151,15 @@ static const u16 sPRUKhangIconPalette[16] =
     RGB(24, 20, 25), RGB(23, 5, 19), RGB(12, 12, 11), RGB(8, 8, 8),
 };
 
+// The approved Kan icon uses all 16 colour indices; shared palette 2 discolours it.
+static const u16 sPRUKanIconPalette[16] =
+{
+    RGB(0, 0, 0), RGB(2, 2, 2), RGB(6, 6, 6), RGB(10, 10, 8),
+    RGB(10, 10, 13), RGB(14, 11, 8), RGB(16, 14, 11), RGB(16, 15, 14),
+    RGB(18, 17, 16), RGB(17, 17, 23), RGB(22, 18, 12), RGB(21, 21, 20),
+    RGB(24, 24, 29), RGB(28, 26, 19), RGB(29, 29, 29), RGB(31, 31, 18),
+};
+
 static const u16 sPRUNolaxIconPalette[16] =
 {
     RGB(12, 19, 16), RGB(14, 14, 14), RGB(23, 23, 23), RGB(31, 31, 31),
@@ -181,6 +190,7 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { sPRUAncientGuardianDragoniteIconPalette, POKE_ICON_BASE_PAL_TAG + 17 },
     { sPRUKhangIconPalette, POKE_ICON_BASE_PAL_TAG + 18 },
     { sPRUNolaxIconPalette, POKE_ICON_BASE_PAL_TAG + 19 },
+    { sPRUKanIconPalette, POKE_ICON_BASE_PAL_TAG + 20 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -307,6 +317,8 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
     if (species == SPECIES_HERACURION) return 3;
     if (species == SPECIES_KABLOWFISH) return 4;
     if (species == SPECIES_JOLLIBIRD) return 0;
+    if (species == SPECIES_KAN)
+        return 20;
     if (species == SPECIES_KHANG)
         return 18;
     if (species == SPECIES_NOLAX)

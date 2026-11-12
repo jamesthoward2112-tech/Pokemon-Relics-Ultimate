@@ -282,8 +282,8 @@ Route34_Text_Sign_DayCare:
 	.string "DAY-CARE\p"
 	.string "LET US RAISE YOUR POKéMON FOR YOU!$"
 
-@ PRU: Optional nursery rhyme clue giver. No mention of the Day-Care passwords.
-@ Four baby Pokémon wander around this NPC to give a purely visual hint.
+@ PRU: Optional single-word clue giver. No mention of the Day-Care passwords.
+@ Baby Pokémon wander around this NPC as a visual hint.
 Route34_EventScript_PRUNurseryRhymes::
 	lock
 	faceplayer
@@ -292,14 +292,15 @@ Route34_EventScript_PRUNurseryRhymes::
 	msgbox Route34_Text_PRUNurseryRhymesBird, MSGBOX_DEFAULT
 	msgbox Route34_Text_PRUNurseryRhymesCalf, MSGBOX_DEFAULT
 	msgbox Route34_Text_PRUNurseryRhymesGem, MSGBOX_DEFAULT
+	msgbox Route34_Text_PRUNurseryRhymesKan, MSGBOX_DEFAULT
 	msgbox Route34_Text_PRUNurseryRhymesOutro, MSGBOX_DEFAULT
 	release
 	end
 
 Route34_Text_PRUNurseryRhymesIntro:
-	.string "I collect strange little\n"
-	.string "nursery rhymes.\p"
-	.string "These four are my favourites!$"
+	.string "I keep a little list of\n"
+	.string "words for baby POKéMON.\p"
+	.string "Want to hear all five?$"
 
 Route34_Text_PRUNurseryRhymesBug:
 	.string "BABY BUG:\n"
@@ -317,6 +318,10 @@ Route34_Text_PRUNurseryRhymesGem:
 	.string "BABY GEM:\n"
 	.string "CRYSTAL$"
 
+Route34_Text_PRUNurseryRhymesKan:
+	.string "BABY KAN:\n"
+	.string "JOEY$"
+
 Route34_Text_PRUNurseryRhymesOutro:
-	.string "No idea who made them up...\n"
-	.string "But I can't forget them!$"
+	.string "Five little ones, five words.\n"
+	.string "I can remember them all!$"
