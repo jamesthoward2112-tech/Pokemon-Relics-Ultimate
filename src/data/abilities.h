@@ -2539,4 +2539,11 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 7,
     },
 
+    [ABILITY_RELIC_OVERDRIVE] =
+    {
+        .name = _("Relic Overdrive"),
+        .description = COMPOUND_STRING("Powers up Electric and\nDark moves by 20%."),
+        .aiRating = 8,
+    },
+
 };
