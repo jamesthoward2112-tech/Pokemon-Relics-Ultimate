@@ -197,7 +197,7 @@ AzaleaTown_Gym_SetGymTrainers_hns::
 	settrainerflag TRAINER_BENNY_HNS
 	settrainerflag TRAINER_AL_HNS
 	settrainerflag TRAINER_JOSH_HNS
-	settrainerflag TRAINER_AMY_AND_MAY_HNS
+	settrainerflag TRAINER_ARI_AND_SKYE_HNS
 	return
 
 GoldenrodCity_Gym_SetGymTrainers_hns::
