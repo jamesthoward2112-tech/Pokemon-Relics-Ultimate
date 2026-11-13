@@ -83,6 +83,26 @@ def exact_battle_palette(species: str) -> list[tuple[int, int, int]]:
     return colors + [(0, 0, 0)] * (16 - len(colors))
 
 
+
+def nearest_resize_compatible(image: Image.Image, size: tuple[int, int]) -> Image.Image:
+    """Nearest-neighbour resize with a fallback for hosted Pillow ImagingCore errors."""
+    try:
+        return image.resize(size, Image.Resampling.NEAREST)
+    except SystemError:
+        # Some hosted Pillow builds fail on otherwise valid small RGBA crops.
+        # Sample donor pixels at the exact nearest-neighbour centre coordinates.
+        assert image.width > 0 and image.height > 0
+        output = Image.new(image.mode, size)
+        src = image.load()
+        dst = output.load()
+        for y in range(size[1]):
+            sy = min(image.height - 1, ((2 * y + 1) * image.height) // (2 * size[1]))
+            for x in range(size[0]):
+                sx = min(image.width - 1, ((2 * x + 1) * image.width) // (2 * size[0]))
+                dst[x, y] = src[sx, sy]
+        return output
+
+
 def make_icon_source(species: str) -> Image.Image:
     donor = SRC / species / "icon.png"
     if donor.is_file():
@@ -102,7 +122,7 @@ def make_icon_source(species: str) -> Image.Image:
     cropped = rgba.crop(box)
     scale = min(30 / cropped.width, 30 / cropped.height)
     size = (max(1, round(cropped.width * scale)), max(1, round(cropped.height * scale)))
-    reduced = cropped.resize(size, Image.Resampling.NEAREST)
+    reduced = nearest_resize_compatible(cropped, size)
     frame = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
     frame.alpha_composite(reduced, ((32 - size[0]) // 2, 31 - size[1]))
     icon = Image.new("RGBA", (32, 64), (0, 0, 0, 0))
@@ -120,7 +140,7 @@ def make_icon_from_front(species: str) -> Image.Image:
     crop = rgba.crop(box)
     factor = min(30 / crop.width, 30 / crop.height)
     size = (max(1, round(crop.width * factor)), max(1, round(crop.height * factor)))
-    sprite = crop.resize(size, Image.Resampling.NEAREST)
+    sprite = nearest_resize_compatible(crop, size)
     frame = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
     frame.alpha_composite(sprite, ((32 - size[0]) // 2, 31 - size[1]))
     icon = Image.new("RGBA", (32, 64), (0, 0, 0, 0))
