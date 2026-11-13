@@ -41,7 +41,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_TWIN_HNS",
+      "graphics_id": "OBJ_EVENT_GFX_CAMPER_HNS",
       "x": 5,
       "y": 26,
       "elevation": 0,
@@ -50,11 +50,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "AzaleaTown_Gym_EventScript_Amy",
+      "script": "AzaleaTown_Gym_EventScript_Ari",
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_TWIN_HNS",
+      "graphics_id": "OBJ_EVENT_GFX_PICNICKER_HNS",
       "x": 6,
       "y": 26,
       "elevation": 0,
@@ -63,7 +63,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "AzaleaTown_Gym_EventScript_May",
+      "script": "AzaleaTown_Gym_EventScript_Skye",
       "flag": "0"
     },
     {

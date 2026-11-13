@@ -6977,12 +6977,12 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Will O Wisp
 - Knock Off
 
-=== TRAINER_AMY_AND_MAY_HNS ===
-Name: AMY&MAY
-Class: Twins Hns
-Pic: Twins Hns
+=== TRAINER_ARI_AND_SKYE_HNS ===
+Name: ARI & SKYE
+Class: Young Couple Hns
+Pic: Young Couple
 Gender: Male
-Music: Hg Girl 2
+Music: Hg Girl 1
 Double Battle: Yes
 AI: Check Bad Move
 

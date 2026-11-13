@@ -508,17 +508,17 @@ AzaleaTown_Gym_EventScript_Benny::
 	msgbox AzaleaTown_Gym_Text_BugCatcherBennyAfter, MSGBOX_AUTOCLOSE
 	end
 
-AzaleaTown_Gym_EventScript_Amy::
-	trainerbattle_double TRAINER_AMY_AND_MAY_HNS, AzaleaTown_Gym_Text_TwinsAmyMay1Seen, AzaleaTown_Gym_Text_TwinsAmyMay1Beaten, Route104_Text_GinaNotEnoughMons
+AzaleaTown_Gym_EventScript_Ari::
+	trainerbattle_double TRAINER_ARI_AND_SKYE_HNS, AzaleaTown_Gym_Text_YoungCoupleAriSkye1Seen, AzaleaTown_Gym_Text_YoungCoupleAriSkye1Beaten, Route104_Text_GinaNotEnoughMons
 	special GetPlayerBigGuyGirlString
-	msgbox AzaleaTown_Gym_Text_TwinsAmyMay1After, MSGBOX_DEFAULT
+	msgbox AzaleaTown_Gym_Text_YoungCoupleAriSkye1After, MSGBOX_DEFAULT
 	release
 	end
 	
-AzaleaTown_Gym_EventScript_May::
-	trainerbattle_double TRAINER_AMY_AND_MAY_HNS, AzaleaTown_Gym_Text_TwinsAmyMay2Seen, AzaleaTown_Gym_Text_TwinsAmyMay2Beaten, Route104_Text_GinaNotEnoughMons
+AzaleaTown_Gym_EventScript_Skye::
+	trainerbattle_double TRAINER_ARI_AND_SKYE_HNS, AzaleaTown_Gym_Text_YoungCoupleAriSkye2Seen, AzaleaTown_Gym_Text_YoungCoupleAriSkye2Beaten, Route104_Text_GinaNotEnoughMons
 	special GetPlayerBigGuyGirlString
-	msgbox AzaleaTown_Gym_Text_TwinsAmyMay2After, MSGBOX_DEFAULT
+	msgbox AzaleaTown_Gym_Text_YoungCoupleAriSkye2After, MSGBOX_DEFAULT
 	release
 	end
 
@@ -774,33 +774,33 @@ AzaleaTown_Gym_Text_BugCatcherJoshAfter:
 	.string "I guess I should teach them\n"
 	.string "better moves…$"
 
-AzaleaTown_Gym_Text_TwinsAmyMay1Seen:
-	.string "AMY: Hi! Are you challenging\n"
+AzaleaTown_Gym_Text_YoungCoupleAriSkye1Seen:
+	.string "ARI: Hi! Are you challenging\n"
 	.string "the LEADER? No way!$"
 
-AzaleaTown_Gym_Text_TwinsAmyMay1Beaten:
-	.string "AMY & MAY: Oh, double\n"
+AzaleaTown_Gym_Text_YoungCoupleAriSkye1Beaten:
+	.string "ARI & SKYE: Oh, double\n"
 	.string "goodness!$"
 
-AzaleaTown_Gym_Text_TwinsAmyMay1After:
-	.string "AMY: You're really strong!\p"
+AzaleaTown_Gym_Text_YoungCoupleAriSkye1After:
+	.string "ARI: You're really strong!\p"
 	.string "But BUGSY's even stronger!\n"
 	.string "His SCYTHER's CUT almost\l"
 	.string "always makes critical hits!$"
 
-AzaleaTown_Gym_Text_TwinsAmyMay2Seen:
-	.string "MAY: You want to see the\n"
+AzaleaTown_Gym_Text_YoungCoupleAriSkye2Seen:
+	.string "SKYE: You want to see the\n"
 	.string "LEADER? Good luck!\p"
 	.string "BUGSY is so strong!\n"
 	.string "His SCYTHER's CUT always\l"
 	.string "seems to crit!$"
 
-AzaleaTown_Gym_Text_TwinsAmyMay2Beaten:
-	.string "AMY & MAY: Oh, double\n"
+AzaleaTown_Gym_Text_YoungCoupleAriSkye2Beaten:
+	.string "ARI & SKYE: Oh, double\n"
 	.string "goodness!$"
 
-AzaleaTown_Gym_Text_TwinsAmyMay2After:
-	.string "MAY: Our bug POKéMON lost!\n"
+AzaleaTown_Gym_Text_YoungCoupleAriSkye2After:
+	.string "SKYE: Our bug POKéMON lost!\n"
 	.string "Oh, what a shame.\p"
 	.string "BUGSY's won't lose though!\p"
 	.string "His PINECO makes short work\n"

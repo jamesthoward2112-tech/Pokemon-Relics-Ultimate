@@ -399,7 +399,7 @@
 #define TRAINER_ZUKI_HNS                              386
 #define TRAINER_KUNI_HNS                              387
 #define TRAINER_MIKI_HNS                              388
-#define TRAINER_AMY_AND_MAY_HNS                       389
+#define TRAINER_ARI_AND_SKYE_HNS                       389
 #define TRAINER_ANN_AND_ANNE_HNS                      390
 #define TRAINER_JO_AND_ZOE_HNS                        391
 #define TRAINER_MEG_AND_PEG_HNS                       392
