@@ -101,7 +101,17 @@ def install() -> None:
         info = info.replace(old, new, 1)
         species_info.write_text(info)
     else:
-        assert new in info, "Charaxis icon palette must be #6"
+        # Modern species records include height, category and Dex biography.
+        # The approved Charaxis record already pins icon palette #6; do not
+        # reject it just because an older positional-string check no longer fits.
+        import re
+        start = info.index("PJR_RED_SPECIES(SPECIES_CHARAXIS,")
+        end = info.index("),", start) + 2
+        charaxis = info[start:end]
+        assert re.search(
+            r"sCharizardTeachableLearnset,\\s*\\d+,\\s*\\d+,\\s*\\d+,\\s*6,\\s*\\"",
+            charaxis,
+        ), "Charaxis icon palette must be #6"
 
     # Protect G-Max against the upstream pinned PRL asset sync on future builds.
     assert (DST / "front.png").read_bytes() == (SRC / "front.png").read_bytes()
