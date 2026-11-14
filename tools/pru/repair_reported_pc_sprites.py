@@ -110,65 +110,43 @@ def fix_mewduo() -> None:
     save_png(path, icon, target)
 
 def fix_mystynx_back_and_icon() -> None:
-    """Preserve the approved Hecs-style Mystynx while fixing GBA rendering.
+    """Preserve and validate the Elite Redux Sopranice donor as Mystynx.
 
-    This stage runs after the pinned PRL art import, which otherwise replaces
-    the checked-in sprites. Keep the gold hair, white cape and pink dress;
-    never substitute Jynx's old artwork or redraw the accepted front.
+    The original 32x64 two-frame party icon uses shared icon palette #3;
+    converting it to palette #2 would corrupt its colours. The PRL sync must
+    leave the full front/back/icon and normal/shiny palettes unchanged.
     """
     folder = POKEMON / "prl_authoritative/mystynx"
-    back_path = folder / "back.png"
-    with Image.open(back_path) as back:
-        assert back.mode == "P" and back.size == (64, 64), back_path
-        indices = list(back.getdata())
-        colors = back.getpalette()
-        assert colors and max(indices) < 16, "Mystynx back is not GBA 4bpp ready"
-        assert sum(index != 0 for index in indices) > 100, "Empty Mystynx back"
-        if back.info.get("transparency") != 0:
-            # In the game index 0 is transparent, regardless of PNG metadata.
-            # Set the same convention without altering one pixel of approved art.
-            unchanged = Image.new("P", (64, 64), 0)
-            unchanged.putdata(indices)
-            save_png(back_path, unchanged, [
-                tuple(colors[3 * index:3 * index + 3]) for index in range(16)
-            ])
+    battle_palette = read_palette(folder / "normal.pal")
+    shiny_palette = read_palette(folder / "shiny.pal")
+    icon_palette = read_palette(POKEMON / "icon_palettes/pal3.pal")
+    assert len(battle_palette) == len(shiny_palette) == len(icon_palette) == 16
 
-    icon_path = folder / "icon.png"
-    target = read_palette(POKEMON / "icon_palettes/pal2.pal")
-    target_flat = [component for rgb in target for component in rgb]
-    with Image.open(icon_path) as source:
-        assert source.size == (32, 64) and source.mode == "P", icon_path
-        original_indices = list(source.getdata())
-        # The battle-art PNG palette is not the shared party-icon palette.
-        # Loading its raw indices as icon palette #2 makes the icon garbled.
-        if (max(original_indices) < 16
-                and source.info.get("transparency") == 0
-                and source.getpalette()[:48] == target_flat):
-            print("MYSTYNX_ICON_OK: already palette #2 indexed")
-            return
-        source.info["transparency"] = 0
-        rgba = source.convert("RGBA")
+    for name, dimensions, correct_palette in (
+        ("front.png", (64, 64), battle_palette),
+        ("back.png", (64, 64), battle_palette),
+        ("icon.png", (32, 64), icon_palette),
+    ):
+        path = folder / name
+        with Image.open(path) as sprite:
+            assert sprite.mode == "P" and sprite.size == dimensions, path
+            indices = list(sprite.getdata())
+            assert max(indices) < 16, ("Mystynx image must be indexed 4bpp", path)
+            assert sum(px != 0 for px in indices) > 100, path
+            expected = [channel for rgb in correct_palette for channel in rgb]
+            assert sprite.getpalette()[:48] == expected, (
+                "Mystynx palette differs from original donor", path
+            )
+            assert sprite.info.get("transparency") in (None, 0), path
+            if name == "icon.png":
+                assert all(sum(px != 0 for px in indices[start:start + 1024]) > 50
+                           for start in (0, 1024)), (
+                    "Mystynx party icon must retain both animation frames", path
+                )
 
-    normalized = []
-    for red, green, blue, alpha in rgba.getdata():
-        if alpha < 128:
-            normalized.append(0)
-            continue
-        source_5bit = tuple(round(value * 31 / 255) for value in (red, green, blue))
-        best = min(range(1, 16), key=lambda k: sum(
-            (source_5bit[c] - round(target[k][c] * 31 / 255)) ** 2
-            for c in range(3)
-        ))
-        normalized.append(best)
+    print("MYSTYNX_SOPRANICE_OK: untouched original front/back,"
+          " both icon frames, normal/shiny palettes, icon palette #3")
 
-    # Both 32x32 animation frames must remain present and transparent.
-    assert max(normalized) < 16
-    assert all(sum(value != 0 for value in normalized[offset:offset + 1024]) > 50
-               for offset in (0, 1024)), "Mystynx icon has an empty frame"
-    icon = Image.new("P", (32, 64), 0)
-    icon.putdata(normalized)
-    save_png(icon_path, icon, target)
-    print("MYSTYNX_ICON_FIXED: original two-frame icon, palette #2, index 0 clear")
 
 
 def fix_golden_ho_oh_icon() -> None:

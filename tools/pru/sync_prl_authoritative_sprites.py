@@ -33,9 +33,9 @@ REQUIRED = {"noxichu", "edensaur", "charaxis", "fortotoise", "khang", "nolax", "
 # PRL species data uses GreatTusk symbols, NOT the older donphalanx art folder.
 # Do not overwrite approved Feralodon, Donphalanx or Tourmaline-Skarmet art on repeat builds.
 PRU_VISUAL_OVERRIDES = {"faeranium", "feralodon", "donphalanx", "skarmet", "pyroclast", "khang", "nolax"}
-# The checked-in Mystynx is the newer user-approved gold-haired/white-caped
-# sprite set. PRL_SHA still contains the retired donor artwork: never let the
-# pre-build import overwrite its front, back, icon or matching battle palettes.
+# Mystynx uses the original Elite Redux Sopranice front/back, two-frame
+# party icon and normal/shiny palettes. The pinned PRL donor must never
+# overwrite these newer approved graphics checked into the repository.
 REPO_ASSET_OVERRIDES = {"khang", "nolax", "mystynx"}
 PYROCLAST_ELITE_REDUX_SHA256 = "cc3193a3668381c6d83c0642e0ead50cbfae0553081f770e1ce316fdbf842773"
 NORMALIZED_EEVEE_ICONS = {

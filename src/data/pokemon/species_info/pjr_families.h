@@ -460,7 +460,7 @@
     .frontAnimFrames = sAnims_SingleFramePlaceHolder, .frontAnimId = ANIM_V_STRETCH,
     .backPic = gMonBackPic_Mystynx, .backPicSize = MON_COORDS_SIZE(64, 64), .backPicYOffset = 2, .backAnimId = BACK_ANIM_NONE,
     .palette = gMonPalette_Mystynx, .shinyPalette = gMonShinyPalette_Mystynx,
-    .iconSprite = gMonIcon_Mystynx, .iconPalIndex = 2, .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+    .iconSprite = gMonIcon_Mystynx, .iconPalIndex = 3, .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
     .levelUpLearnset = sMystynxLevelUpLearnset, .teachableLearnset = sMystynxInfinityTeachableLearnset,
 },
 
