@@ -109,6 +109,68 @@ def fix_mewduo() -> None:
     icon.putdata(indices)
     save_png(path, icon, target)
 
+def fix_mystynx_back_and_icon() -> None:
+    """Preserve the approved Hecs-style Mystynx while fixing GBA rendering.
+
+    This stage runs after the pinned PRL art import, which otherwise replaces
+    the checked-in sprites. Keep the gold hair, white cape and pink dress;
+    never substitute Jynx's old artwork or redraw the accepted front.
+    """
+    folder = POKEMON / "prl_authoritative/mystynx"
+    back_path = folder / "back.png"
+    with Image.open(back_path) as back:
+        assert back.mode == "P" and back.size == (64, 64), back_path
+        indices = list(back.getdata())
+        colors = back.getpalette()
+        assert colors and max(indices) < 16, "Mystynx back is not GBA 4bpp ready"
+        assert sum(index != 0 for index in indices) > 100, "Empty Mystynx back"
+        if back.info.get("transparency") != 0:
+            # In the game index 0 is transparent, regardless of PNG metadata.
+            # Set the same convention without altering one pixel of approved art.
+            unchanged = Image.new("P", (64, 64), 0)
+            unchanged.putdata(indices)
+            save_png(back_path, unchanged, [
+                tuple(colors[3 * index:3 * index + 3]) for index in range(16)
+            ])
+
+    icon_path = folder / "icon.png"
+    target = read_palette(POKEMON / "icon_palettes/pal2.pal")
+    target_flat = [component for rgb in target for component in rgb]
+    with Image.open(icon_path) as source:
+        assert source.size == (32, 64) and source.mode == "P", icon_path
+        original_indices = list(source.getdata())
+        # The battle-art PNG palette is not the shared party-icon palette.
+        # Loading its raw indices as icon palette #2 makes the icon garbled.
+        if (max(original_indices) < 16
+                and source.info.get("transparency") == 0
+                and source.getpalette()[:48] == target_flat):
+            print("MYSTYNX_ICON_OK: already palette #2 indexed")
+            return
+        source.info["transparency"] = 0
+        rgba = source.convert("RGBA")
+
+    normalized = []
+    for red, green, blue, alpha in rgba.getdata():
+        if alpha < 128:
+            normalized.append(0)
+            continue
+        source_5bit = tuple(round(value * 31 / 255) for value in (red, green, blue))
+        best = min(range(1, 16), key=lambda k: sum(
+            (source_5bit[c] - round(target[k][c] * 31 / 255)) ** 2
+            for c in range(3)
+        ))
+        normalized.append(best)
+
+    # Both 32x32 animation frames must remain present and transparent.
+    assert max(normalized) < 16
+    assert all(sum(value != 0 for value in normalized[offset:offset + 1024]) > 50
+               for offset in (0, 1024)), "Mystynx icon has an empty frame"
+    icon = Image.new("P", (32, 64), 0)
+    icon.putdata(normalized)
+    save_png(icon_path, icon, target)
+    print("MYSTYNX_ICON_FIXED: original two-frame icon, palette #2, index 0 clear")
+
+
 def fix_golden_ho_oh_icon() -> None:
     """Keep Ho-Oh's accepted icon silhouette and recolour its indexed feathers gold."""
     path = POKEMON / "ho_oh_relic/icon.png"
@@ -228,6 +290,7 @@ def main():
     fix_i_unown()
     fix_mewduo()
     fix_golden_ho_oh_icon()
+    fix_mystynx_back_and_icon()
     for name in ("tropisaur","torkaldera"):
         remove_donor_background(name)
     # These imported PC icons have no transparent pixels and show solid donor
