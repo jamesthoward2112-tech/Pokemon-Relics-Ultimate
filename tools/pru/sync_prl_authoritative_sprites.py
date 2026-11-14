@@ -32,11 +32,13 @@ REQUIRED = {"noxichu", "edensaur", "charaxis", "fortotoise", "khang", "nolax", "
 # Donphalanx is intentionally backed by Great Tusk's exact sprites: the pinned
 # PRL species data uses GreatTusk symbols, NOT the older donphalanx art folder.
 # Do not overwrite approved Feralodon, Donphalanx or Tourmaline-Skarmet art on repeat builds.
-PRU_VISUAL_OVERRIDES = {"faeranium", "feralodon", "donphalanx", "skarmet", "pyroclast", "khang", "nolax"}
+PRU_VISUAL_OVERRIDES = {"faeranium", "feralodon", "donphalanx", "skarmet", "pyroclast", "khang", "nolax", "edensaur"}
+# Edensaur uses the complete original Elite Redux Mega Venusaur X donor set.
+# Never restore old Edensaur art from pinned PRL during a source/ROM build.
 # Mystynx uses the original Elite Redux Sopranice front/back, two-frame
 # party icon and normal/shiny palettes. The pinned PRL donor must never
 # overwrite these newer approved graphics checked into the repository.
-REPO_ASSET_OVERRIDES = {"khang", "nolax", "mystynx"}
+REPO_ASSET_OVERRIDES = {"khang", "nolax", "mystynx", "edensaur"}
 PYROCLAST_ELITE_REDUX_SHA256 = "cc3193a3668381c6d83c0642e0ead50cbfae0553081f770e1ce316fdbf842773"
 NORMALIZED_EEVEE_ICONS = {
     "champeon", "lepideon", "guardeon", "obsideon", "toxeon",
