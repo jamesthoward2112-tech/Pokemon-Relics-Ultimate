@@ -2265,11 +2265,14 @@ u8 CreateVirtualObject(u16 graphicsId, u8 virtualObjId, s16 x, s16 y, u8 elevati
 struct Pokemon *GetFirstLiveMon(void)
 {
     u32 i;
-    for (i = 0; i < PARTY_SIZE; i++)
+    for (i = 0; i < 1; i++) // PRU: follower is ONLY the lead Pokémon
     {
         struct Pokemon *mon = &gPlayerParty[i];
         u32 species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
         if (species == SPECIES_NONE)
+            continue;
+
+        if (species != SPECIES_PIKACHU && species != SPECIES_NOXICHU)
             continue;
 
         if ((OW_FOLLOWERS_ALLOWED_SPECIES && species != VarGet(OW_FOLLOWERS_ALLOWED_SPECIES))
@@ -2508,11 +2511,74 @@ bool8 GetFollowerInfo(u32 *species, bool32 *shiny, bool32 *female)
     return GetMonInfo(GetFirstLiveMon(), species, shiny, female);
 }
 
-// PJR intentionally disables overworld Pokémon followers.
+// PRU Alpha 5: controlled Pikachu/Noxichu-only follower restoration.
 void UpdateFollowingPokemon(void)
 {
-    // Idempotently remove any follower object that may exist in an old/test save.
-    RemoveFollowingPokemon();
+    static bool8 sPRUFollowerInitialised = FALSE;
+    struct ObjectEvent *objEvent = GetFollowerObject();
+    struct Sprite *sprite;
+    u32 species;
+    bool32 shiny;
+    bool32 female;
+    // Migrate the old Alpha 5 disabled setting once per test-session startup.
+    if (!sPRUFollowerInitialised)
+    {
+        gSaveBlock3Ptr->challengeSettings.followerEnable = 0;
+        sPRUFollowerInitialised = TRUE;
+    }
+    // Don't spawn follower if:
+    // 1. GetFollowerInfo returns FALSE
+    // 2. Map is indoors and gfx is larger than 32x32
+    // 3. flag is set
+    // 4. a follower NPC is present
+    if (OW_POKEMON_OBJECT_EVENTS == FALSE
+     || OW_FOLLOWERS_ENABLED == FALSE
+     || gSaveBlock3Ptr->challengeSettings.followerEnable != 0
+     || FlagGet(B_FLAG_FOLLOWERS_DISABLED)
+     || !GetFollowerInfo(&species, &shiny, &female)
+     || SpeciesToGraphicsInfo(species, shiny, female) == NULL
+     || (gMapHeader.mapType == MAP_TYPE_INDOOR && SpeciesToGraphicsInfo(species, shiny, female)->oam->size > ST_OAM_SIZE_2)
+     || FlagGet(FLAG_TEMP_HIDE_FOLLOWER)
+     || PlayerHasFollowerNPC()
+     )
+    {
+        RemoveFollowingPokemon();
+        return;
+    }
+
+    if (objEvent == NULL)
+    {
+        // Spawn follower
+        u32 objId = gPlayerAvatar.objectEventId;
+        struct ObjectEventTemplate template =
+        {
+            .localId = OBJ_EVENT_ID_FOLLOWER,
+            .graphicsId = GetGraphicsIdForMon(species, shiny, female),
+            .flagId = 0,
+            .x = gSaveBlock1Ptr->pos.x,
+            .y = gSaveBlock1Ptr->pos.y,
+            // If player active, copy player elevation
+            .elevation = gObjectEvents[objId].active ? gObjectEvents[objId].currentElevation : 3,
+            .movementType = MOVEMENT_TYPE_FOLLOW_PLAYER,
+            // store form info in template
+            //.trainerRange_berryTreeId = (form & 0x1F) | (shiny << 5),   // ???? what?
+        };
+        if ((objId = SpawnSpecialObjectEvent(&template)) >= OBJECT_EVENTS_COUNT)
+            return;
+        objEvent = &gObjectEvents[objId];
+        objEvent->invisible = TRUE;
+    }
+    sprite = &gSprites[objEvent->spriteId];
+    // Follower appearance changed; move to player and set invisible
+    if (species != OW_SPECIES(objEvent) || shiny != OW_SHINY(objEvent) || female != OW_FEMALE(objEvent))
+    {
+        MoveObjectEventToMapCoords(objEvent,
+                                   gObjectEvents[gPlayerAvatar.objectEventId].currentCoords.x,
+                                   gObjectEvents[gPlayerAvatar.objectEventId].currentCoords.y);
+        FollowerSetGraphics(objEvent, species, shiny, female);
+        objEvent->invisible = TRUE;
+    }
+    sprite->data[6] = 0; // set animation data
 }
 
 // Remove follower object. Idempotent.
@@ -6177,6 +6243,22 @@ static bool32 UpdateMonMoveInPlace(struct ObjectEvent *objectEvent, struct Sprit
 
 bool8 FollowablePlayerMovement_Idle(struct ObjectEvent *objectEvent, struct Sprite *sprite, enum Direction playerDirection, bool8 tileCallback(u8))
 {
+    // PRU: Noxichu must stand still when the trainer stands still.
+    // The normal follower code repeatedly walks in place; replace that with a
+    // one-frame facing animation without affecting Pikachu or other scripts.
+    if (OW_SPECIES(objectEvent) == SPECIES_NOXICHU)
+    {
+        u8 faceAnim = GetFaceDirectionAnimNum(objectEvent->facingDirection);
+        if (sprite->animNum != faceAnim)
+            StartSpriteAnim(sprite, faceAnim);
+        // Facing animations are single-frame loops. Keep animation processing
+        // active so the selected standing frame actually replaces the last step.
+        sprite->animPaused = FALSE;
+        sprite->y2 = 0;
+        UpdateFollowerTransformEffect(objectEvent, sprite);
+        return FALSE;
+    }
+
     if (UpdateMonMoveInPlace(objectEvent, sprite))
     {
         sprite->sTypeFuncId = 1;

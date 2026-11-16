@@ -330,7 +330,7 @@ static u8 GetPruCustomIconPaletteIndex(u16 species, u8 original)
     if (species == SPECIES_TOXEON) return 4;
     if (species == SPECIES_OMEON) return 2;
     if (species == SPECIES_DRAKEON) return 4;
-    if (species == SPECIES_MOOTINY) return 2;
+    if (species == SPECIES_MOOTINY) return 0;
     if (species == SPECIES_CHEAUKING) return 1;
     if (species == SPECIES_GEMIGOYLE) return 2;
     if (species == SPECIES_HERACURION) return 3;

@@ -2896,6 +2896,9 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
 #include "data/pokemon/form_species_tables.h"
 #include "data/pokemon/form_change_tables.h"
 #include "data/pokemon/form_change_table_pointers.h"
+// PRU Alpha 5 isolated follower test: user-approved Noxichu 8-frame 32x32 art.
+const u32 gObjectEventPic_Noxichu[] = INCBIN_U32("graphics/pokemon/prl_authoritative/noxichu/follower.4bpp.smol");
+const u16 gOverworldPalette_Noxichu[] = INCBIN_U16("graphics/pokemon/prl_authoritative/noxichu/follower.gbapal");
 #include "data/object_events/object_event_pic_tables_followers.h"
 
 #include "data/pokemon/species_info.h"

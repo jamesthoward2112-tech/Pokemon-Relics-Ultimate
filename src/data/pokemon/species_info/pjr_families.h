@@ -702,7 +702,7 @@ PJR_FINAL_SPECIES(SPECIES_GHOULBAT, 95, 110, 90, 80, 95, 130, TYPE_GHOST, TYPE_F
 
 #undef PJR_FINAL_SPECIES
 
-#define PJR_RED_SPECIES(species, hp, atk, def, spa, spd, spe, type1, type2, ability, name, cry, natdex, color, front, back, pal, shiny, icon, levelMoves, teachMoves, weightKgTenths, frontY, backY, iconPal, dexCategory, dexHt, dexBio) \
+#define PJR_RED_SPECIES(species, hp, atk, def, spa, spd, spe, type1, type2, ability, name, cry, natdex, color, front, back, pal, shiny, icon, levelMoves, teachMoves, weightKgTenths, frontY, backY, iconPal, dexCategory, dexHt, dexBio, ...) \
 [species] = { \
     .baseHP = hp, .baseAttack = atk, .baseDefense = def, .baseSpAttack = spa, .baseSpDefense = spd, .baseSpeed = spe, \
     .types = MON_TYPES(type1, type2), .catchRate = 45, .expYield = 250, .genderRatio = PERCENT_FEMALE(50), \
@@ -715,7 +715,7 @@ PJR_FINAL_SPECIES(SPECIES_GHOULBAT, 95, 110, 90, 80, 95, 130, TYPE_GHOST, TYPE_F
     .frontAnimFrames = sAnims_SingleFramePlaceHolder, .frontAnimId = ANIM_V_STRETCH, \
     .backPic = back, .backPicSize = MON_COORDS_SIZE(64, 64), .backPicYOffset = backY, .backAnimId = BACK_ANIM_NONE, \
     .palette = pal, .shinyPalette = shiny, .iconSprite = icon, .iconPalIndex = iconPal, \
-    .pokemonJumpType = PKMN_JUMP_TYPE_NONE, .levelUpLearnset = levelMoves, .teachableLearnset = teachMoves, \
+    .pokemonJumpType = PKMN_JUMP_TYPE_NONE, .levelUpLearnset = levelMoves, .teachableLearnset = teachMoves, __VA_ARGS__ \
 }
 
 PJR_RED_SPECIES(SPECIES_EDENSAUR, 95, 80, 110, 135, 105, 55, TYPE_GRASS, TYPE_POISON,
@@ -746,7 +746,10 @@ PJR_RED_SPECIES(SPECIES_NOLAX, 100, 130, 80, 45, 90, 130, TYPE_NORMAL, TYPE_DARK
 PJR_RED_SPECIES(SPECIES_NOXICHU, 80, 115, 80, 115, 85, 125, TYPE_ELECTRIC, TYPE_DARK,
     ABILITY_RELIC_OVERDRIVE, "Noxichu", CRY_PIKACHU, NATIONAL_DEX_PIKACHU, BODY_COLOR_YELLOW,
     gMonFrontPic_Noxichu, gMonBackPic_Noxichu, gMonPalette_Noxichu, gMonShinyPalette_Noxichu, gMonIcon_Noxichu,
-    sNoxichuLevelUpLearnset, sPikachuTeachableLearnset, 180, 0, 20, 6, "Eclipse", 10, "Relic lightning races across\nits shadowy fur. It watches\nover allies without flinching."),
+    sNoxichuLevelUpLearnset, sPikachuTeachableLearnset, 180, 0, 20, 6, "Eclipse", 10, "Relic lightning races across\nits shadowy fur. It watches\nover allies without flinching.", OVERWORLD(
+        sPicTable_Noxichu, SIZE_32x32, SHADOW_SIZE_S, TRACKS_FOOT,
+        sAnimTable_Following_Asym, gOverworldPalette_Noxichu, gOverworldPalette_Noxichu
+    )),
 
 #undef PJR_RED_SPECIES
 

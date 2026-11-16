@@ -1,3 +1,7 @@
+// Eight contiguous 32x32 frames: front, back, left, right (idle/walk each).
+static const struct SpriteFrameImage sPicTable_Noxichu[] = {
+    overworld_ascending_frames(gObjectEventPic_Noxichu, 4, 4),
+};
 static const struct SpriteFrameImage sPicTable_Substitute[] = {
     overworld_ascending_frames(gObjectEventPic_Substitute, 4, 4),
 };

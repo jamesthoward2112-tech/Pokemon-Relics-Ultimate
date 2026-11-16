@@ -2992,6 +2992,14 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
             AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_ITEM);
     }
 
+    // Follower control is available ONLY on eligible, conscious Pikachu/Noxichu.
+    // Preserve the original actions[8] limit, including the CANCEL entry.
+    if ((GetMonData(&mons[slotId], MON_DATA_SPECIES) == SPECIES_PIKACHU
+      || GetMonData(&mons[slotId], MON_DATA_SPECIES) == SPECIES_NOXICHU)
+     && GetMonData(&mons[slotId], MON_DATA_HP) != 0
+     && sPartyMenuInternal->numActions < ARRAY_COUNT(sPartyMenuInternal->actions) - 1)
+        AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_PKMN_FOLLOWER);
+
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_CANCEL1);
 }
 

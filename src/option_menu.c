@@ -1050,8 +1050,8 @@ static void Task_Save(u8 taskId)
 
     // SaveBlock3 — HnS options plus
     struct ChallengeSettings *cs = &gSaveBlock3Ptr->challengeSettings;
-    // Pokémon followers are intentionally removed from PJR.
-    cs->followerEnable      = 1;
+    // PRU test: preserve the party-menu follower toggle when saving options.
+    // Only Pikachu and Noxichu are eligible; large followers remain restricted.
     cs->followerLargeEnable = 1;
     cs->autoRun             = *GetSelectionPtr(TAB_MAIN, ITEM_MAIN_AUTORUN);
     cs->autorunSurf        = *GetSelectionPtr(TAB_MAIN, ITEM_MAIN_AUTORUN_SURF);
@@ -1163,8 +1163,7 @@ void CB2_InitOptionMenu(void)
 
         // Load SaveBlock3 HnS options
         struct ChallengeSettings *cs = &gSaveBlock3Ptr->challengeSettings;
-        // Follower options are not exposed in PJR.
-        cs->followerEnable = 1;
+        // PRU test: loading Options must not turn off the follower setting.
         cs->followerLargeEnable = 1;
         *GetSelectionPtr(TAB_MAIN, ITEM_MAIN_AUTORUN)        = cs->autoRun;
         *GetSelectionPtr(TAB_MAIN, ITEM_MAIN_AUTORUN_SURF)   = cs->autorunSurf;

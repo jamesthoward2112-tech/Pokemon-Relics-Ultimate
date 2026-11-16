@@ -2851,6 +2851,7 @@ static void InitObjectEventsLocal(void)
 static void InitObjectEventsReturnToField(void)
 {
     SpawnObjectEventsOnReturnToField(0, 0);
+    UpdateFollowingPokemon(); // PRU: refresh following after returning from party menus
     RotatingGate_InitPuzzleAndGraphics();
     RunOnReturnToFieldMapScript();
 }
