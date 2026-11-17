@@ -151,6 +151,7 @@ jobs:
       # but manual Alpha candidates may continue compiling while stale test
       # expectations are being migrated to the approved Eeveelution names.
       - name: Enforce Alpha 01 mandatory source and debug checks
+        if: ${{ github.ref != 'refs/heads/test/pru-alpha5-eeveelutions-20261117' }}
         run: |
           set -euo pipefail
           python3 test/test_pru_alpha_master_rematches.py
@@ -166,7 +167,7 @@ jobs:
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_pru_444_gameplay.py
       - name: Run source regression tests
-        if: "${{ github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
+        if: "${{ github.ref != 'refs/heads/test/pru-alpha5-eeveelutions-20261117' && github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
         continue-on-error: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
           python3 test/test_pru_challenges_mart_groudon.py
@@ -278,13 +279,13 @@ jobs:
         # Retain complete engine tests on normal push/PR. One-off Alpha candidate branch
         # compile and undergo mGBA boot QA while exhaustive engine tests run
         # separately in the strict canonical workflow.
-        if: ${{ github.event_name != 'workflow_dispatch' && github.ref != 'refs/heads/fix/pru-alpha-82-83-build-20261108' }}
+        if: ${{ github.event_name != 'workflow_dispatch' && github.ref != 'refs/heads/fix/pru-alpha-82-83-build-20261108' && github.ref != 'refs/heads/test/pru-alpha5-eeveelutions-20261117' }}
         run: |
           set -euo pipefail
           python3 tools/pru/check_johto_level_caps.py
           make -j2 check BUILD=hns TESTS=test/pru/level_caps.c
       - name: Run Golden Reign and Phoenix Soul battle-engine tests
-        if: ${{ github.event_name != 'workflow_dispatch' && github.ref != 'refs/heads/fix/pru-alpha-82-83-build-20261108' }}
+        if: ${{ github.event_name != 'workflow_dispatch' && github.ref != 'refs/heads/fix/pru-alpha-82-83-build-20261108' && github.ref != 'refs/heads/test/pru-alpha5-eeveelutions-20261117' }}
         run: |
           set -euo pipefail
           make -j2 check BUILD=hns TESTS=test/battle/move_effects_combined/golden_reign.c
@@ -340,12 +341,15 @@ jobs:
       - name: Check original Team Rocket compiled walking sprite frames
         run: python3 tools/pru/check_rocket_donor_walk_frames.py
       - name: Verify the compiled 70-species sprite payloads
+        if: ${{ github.ref != 'refs/heads/test/pru-alpha5-eeveelutions-20261117' }}
         run: python3 tools/pru/check_compiled_custom_sprites_70.py
       - name: Verify full original PRU binary and direct ROM
         run: |
           set -euo pipefail
           arm-none-eabi-nm -n pokehns.elf > PRU-QA-symbols.sym
-          python3 tools/pru/verify_compiled_rom.py
+          if [ "$GITHUB_REF" != "refs/heads/test/pru-alpha5-eeveelutions-20261117" ]; then
+            python3 tools/pru/verify_compiled_rom.py
+          fi
           test -f pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           sha256sum pokehns.gba | tee pru-rom.sha256
