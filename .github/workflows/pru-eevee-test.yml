@@ -1,0 +1,51 @@
+name: PRU Alpha 5 Eeveelutions ROM test
+
+on:
+  push:
+    branches:
+      - test/pru-alpha5-eeveelutions-20261117
+    paths:
+      - '.github/workflows/pru-eevee-test.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    uses: ./.github/workflows/pru-clean-build.yml
+    permissions:
+      contents: write
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download compiled PRU ROM
+        uses: actions/download-artifact@v4
+        with:
+          name: PRU-CANONICAL-SOURCE-VALIDATED
+      - name: Validate and prepare direct ROM
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s pokehns.gba
+          test "$(stat -c%s pokehns.gba)" -eq 33554432
+          cp pokehns.gba PRU-Alpha5-Eeveelutions-Test.gba
+          sha256sum PRU-Alpha5-Eeveelutions-Test.gba > PRU-Alpha5-Eeveelutions-Test.sha256
+      - name: Publish direct test ROM, not a stable release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="pru-alpha5-eeveelutions-test-20261117"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" PRU-Alpha5-Eeveelutions-Test.gba PRU-Alpha5-Eeveelutions-Test.sha256 --clobber
+          else
+            gh release create "$tag" PRU-Alpha5-Eeveelutions-Test.gba PRU-Alpha5-Eeveelutions-Test.sha256               --target "$GITHUB_SHA"               --title "PRU Alpha 5 — Eeveelutions sprite test"               --prerelease               --notes "Isolated Alpha 5 Eeveelutions sprite test. Ten approved front/back sprite pairs, no intended changes to species data or events. Visual PC/battle QA remains to be done. Main PRU and PRR remain unchanged."
+          fi
+          echo "DIRECT_GBA=https://github.com/$GH_REPO/releases/download/$tag/PRU-Alpha5-Eeveelutions-Test.gba"
