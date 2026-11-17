@@ -213,10 +213,20 @@ def patch_title():
     print("TITLE_FLOW_PASS Last Wish black fade -> approved art with flashing sprite")
 
 def main():
+    # Alpha 5 already contains the approved intro/title flow. Keep that
+    # source unchanged, but still recreate generated intro graphics for CI.
     install_last_wish()
-    patch_boot_flow()
+    intro_text = Path("src/intro.c").read_text()
+    if "PRU test: use the native copyright/startup below." in intro_text and "CB2_InitPRUHwlScene0" in intro_text:
+        print("BOOT_FLOW_PASS: approved Alpha 5 intro already present")
+    else:
+        patch_boot_flow()
     install_title_art()
-    patch_title()
+    title_text = Path("src/title_screen.c").read_text()
+    if "LoadPalette(sPruTitlePalette, BG_PLTT_ID(0), sizeof(sPruTitlePalette));" in title_text:
+        print("TITLE_FLOW_PASS: approved Alpha 5 title flow already present")
+    else:
+        patch_title()
 
 if __name__ == "__main__":
     main()
