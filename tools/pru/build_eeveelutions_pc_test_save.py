@@ -12,6 +12,16 @@ SECTOR, DATA = 0x1000, 3968
 STORAGE_SIZE, SIGNATURE = 0x8560, 0x08012025
 BOX3 = 4 + 2 * 30 * 80
 IDS = (1638, 1578, 1583, 1637, 1580, 1579, 1600, 1584, 1581, 1582)
+# User-approved public names; the source records still contain old donor nicknames.
+# Order exactly matches IDS, for both normal and shiny members of Box 3.
+DISPLAY_NAMES = ("Champeon", "Moffeon", "Galveon", "Pebleon", "Toxeon",
+                 "Eartheon", "Obliveon", "Mytheon", "Eeveeon", "Aereon")
+
+def encode_nickname(name):
+    # GBA Gen III game text encoding: uppercase BB-D4, lowercase D5-EE.
+    assert len(name) <= 10 and name.isalpha(), name
+    return bytes((0xBB + ord(ch) - ord("A")) if ch.isupper()
+                 else (0xD5 + ord(ch) - ord("a")) for ch in name).ljust(10, b"\\xff")
 PERM0 = [0,0,0,0,0,0,1,1,2,3,2,3,1,1,2,3,2,3,1,1,2,3,2,3]
 
 def checksum(chunk):
@@ -74,7 +84,11 @@ def main():
             for idx, sid in enumerate(IDS):
                 slot = idx + (10 if shiny else 0)
                 start = BOX3 + slot * 80
-                storage[start:start+80] = lookup[(sid,shiny)]
+                record = bytearray(lookup[(sid,shiny)])
+                # Nickname is bytes 8..17, outside the encrypted/checksummed
+                # 48-byte species payload. Do not touch PID/OTID/shiny data.
+                record[8:18] = encode_nickname(DISPLAY_NAMES[idx])
+                storage[start:start+80] = record
         # Game character codes A=0xBB; title 'EEVEELUT'.
         storage[0x8344+2*9:0x8344+2*9+9] = bytes(
             [0xbf,0xbf,0xd0,0xbf,0xbf,0xc6,0xcf,0xce,0xff])
@@ -96,6 +110,7 @@ def main():
             for shiny, slot in ((False,ix),(True,ix+10)):
                 rec = storage[BOX3+80*slot:BOX3+80*(slot+1)]
                 assert species_from_record(rec) == (sid,shiny)
+                assert rec[8:18] == encode_nickname(DISPLAY_NAMES[ix]), (sid, shiny)
         for sid in range(5,14):
             physical = ids[sid]*SECTOR
             size = sizes[sid-5]
