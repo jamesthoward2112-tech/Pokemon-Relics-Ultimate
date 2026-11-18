@@ -59,8 +59,8 @@ def main():
                 assert check.mode == "P" and check.size == (64, 64), (name, side)
                 assert check.info.get("transparency") == 0, (name, side)
                 assert len(check.getcolors(4097) or []) <= 16, (name, side)
-        jasc = "JASC-PAL\\n0100\\n16\\n" + "".join(
-            f"{pal[i]} {pal[i+1]} {pal[i+2]}\\n" for i in range(0, 48, 3))
+        jasc = "JASC-PAL\n0100\n16\n" + "".join(
+            f"{pal[i]} {pal[i+1]} {pal[i+2]}\n" for i in range(0, 48, 3))
         (dest / "normal.pal").write_text(jasc)
         (dest / "shiny.pal").write_text(jasc)  # Test only, no invented shiny recolour
         print(f"PASS: {name}: approved front/back, exact rear silhouette, 64x64 4bpp/shared 16 palette")
