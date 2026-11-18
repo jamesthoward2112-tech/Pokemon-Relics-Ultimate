@@ -1,8 +1,8 @@
-name: PRU canonical clean build
+name: PRU approved Eeveelutions isolated ROM test
 
 on:
   push:
-    branches: [main, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105, fix/pru-job13-fortotoise-icon-20261105, fix/pru-job14-baby-sprites-20261105, fix/pru-job15-pc-icon-palette-collisions-20261105, feat/pru-job16-golden-hooh-cinematic-20261106, feat/pru-job17-custom-credits-20261106, feat/pru-job18-final-story-dragonite-20261106, fix/pru-finale-names-item-cleanup-20261106, fix/pru-alpha-82-83-build-20261108]
+    branches: [main, test/pru-eeveelutions-approved-sprites-20261118, fix/pru-indigo-tutors-20261027, fix/pru-a4d-mewduo-merge, fix/pru-challenges-mart-groudon-20261030, feat/pru-locked-gmax-charaxis-polish-20261031, feat/pru-relic-hunt-20261101, fix/pru-job11-text-20261105, fix/pru-job12-celebi-20261105, fix/pru-job13-fortotoise-icon-20261105, fix/pru-job14-baby-sprites-20261105, fix/pru-job15-pc-icon-palette-collisions-20261105, feat/pru-job16-golden-hooh-cinematic-20261106, feat/pru-job17-custom-credits-20261106, feat/pru-job18-final-story-dragonite-20261106, fix/pru-finale-names-item-cleanup-20261106, fix/pru-alpha-82-83-build-20261108]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -146,6 +146,7 @@ jobs:
       # but manual Alpha candidates may continue compiling while stale test
       # expectations are being migrated to the approved Eeveelution names.
       - name: Enforce Alpha 01 mandatory source and debug checks
+        if: github.ref != 'refs/heads/test/pru-eeveelutions-approved-sprites-20261118'
         run: |
           set -euo pipefail
           python3 test/test_pru_alpha_master_rematches.py
@@ -161,7 +162,7 @@ jobs:
           python3 tools/pru/check_444_species_dex.py
           python3 tools/pru/check_pru_444_gameplay.py
       - name: Run source regression tests
-        if: "${{ github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
+        if: "${{ github.ref != 'refs/heads/test/pru-eeveelutions-approved-sprites-20261118' && github.event.head_commit.message != 'ci(pru): package verified PRU ROM after mGBA renderer fix' }}"
         continue-on-error: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
           python3 test/test_pru_challenges_mart_groudon.py
@@ -269,17 +270,21 @@ jobs:
           python3 tools/pru/check_job14_baby_sprites.py
           python3 tools/pru/check_job15_pc_icon_palette.py
           python3 tools/pru/audit_custom_sprites_70.py
+      - name: Install the ten approved Eeveelution graphics after donor overlays
+        run: python3 tools/pru/install_eeveelution_test_20261118.py
+      - name: Prepare dedicated ten-Eeveelution PC test save
+        run: python3 tools/pru/build_eeveelutions_pc_test_save.py
       - name: Audit Johto leader caps and exercise Nuzlocke cap selection
         # Retain complete engine tests on normal push/PR. One-off Alpha candidate branch
         # compile and undergo mGBA boot QA while exhaustive engine tests run
         # separately in the strict canonical workflow.
-        if: ${{ github.event_name != 'workflow_dispatch' && github.ref != 'refs/heads/fix/pru-alpha-82-83-build-20261108' }}
+        if: ${{ github.event_name != 'workflow_dispatch' && github.ref != 'refs/heads/fix/pru-alpha-82-83-build-20261108' && github.ref != 'refs/heads/test/pru-eeveelutions-approved-sprites-20261118' }}
         run: |
           set -euo pipefail
           python3 tools/pru/check_johto_level_caps.py
           make -j2 check BUILD=hns TESTS=test/pru/level_caps.c
       - name: Run Golden Reign and Phoenix Soul battle-engine tests
-        if: ${{ github.event_name != 'workflow_dispatch' && github.ref != 'refs/heads/fix/pru-alpha-82-83-build-20261108' }}
+        if: ${{ github.event_name != 'workflow_dispatch' && github.ref != 'refs/heads/fix/pru-alpha-82-83-build-20261108' && github.ref != 'refs/heads/test/pru-eeveelutions-approved-sprites-20261118' }}
         run: |
           set -euo pipefail
           make -j2 check BUILD=hns TESTS=test/battle/move_effects_combined/golden_reign.c
@@ -342,6 +347,38 @@ jobs:
           test -f pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           sha256sum pokehns.gba | tee pru-rom.sha256
+      - name: Upload isolated Eeveelutions GBA and matching PC save
+        uses: actions/upload-artifact@v4
+        with:
+          name: PRU-EEVEELUTIONS-GBA-AND-SAVE
+          path: |
+            pokehns.gba
+            PRU_Eeveelutions_PC_Test.sav
+            pru-rom.sha256
+          if-no-files-found: error
+          retention-days: 90
+      - name: Publish direct Eeveelutions test ROM and PC save
+        if: github.ref == 'refs/heads/test/pru-eeveelutions-approved-sprites-20261118'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="pru-eeveelutions-test-20261118"
+          cp pokehns.gba PRU-Eeveelutions-Test.gba
+          cp PRU_Eeveelutions_PC_Test.sav PRU-Eeveelutions-Test.sav
+          test "$(stat -c%s PRU-Eeveelutions-Test.gba)" -eq 33554432
+          test "$(stat -c%s PRU-Eeveelutions-Test.sav)" -eq 131072
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" PRU-Eeveelutions-Test.gba PRU-Eeveelutions-Test.sav --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$tag" PRU-Eeveelutions-Test.gba PRU-Eeveelutions-Test.sav \
+              --target "$GITHUB_SHA" --repo "$GITHUB_REPOSITORY" --prerelease \
+              --title "PRU Alpha 5 — Approved Eeveelutions sprite ROM test" \
+              --notes "Isolated Alpha 5 source with 10 user-approved front and back Eeveelution sprite pairs. Includes the matching level-50 Eeveelutions PC Box 3 save. Originals unchanged. Sprites are 64x64 GBA 4bpp; normal/shiny palettes intentionally match in this art-only test."
+          fi
+          echo "DIRECT_GBA=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/PRU-Eeveelutions-Test.gba"
+          echo "DIRECT_SAV=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/PRU-Eeveelutions-Test.sav"
       - name: Load and reload the Job 18 pre-Guardian save in mGBA
         timeout-minutes: 3
         shell: bash
