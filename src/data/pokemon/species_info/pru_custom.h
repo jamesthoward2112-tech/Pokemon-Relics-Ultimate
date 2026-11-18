@@ -320,7 +320,7 @@
     .pokemonScale = 256, .pokemonOffset = 0, .trainerScale = 256, .trainerOffset = 0,
     .frontPic = gMonFrontPic_Nimbeon, .frontPicSize = MON_COORDS_SIZE(64, 64), .frontPicYOffset = 5,
     .frontAnimFrames = sAnims_SingleFramePlaceHolder, .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
-    .backPic = gMonBackPic_Nimbeon, .backPicSize = MON_COORDS_SIZE(64, 64), .backPicYOffset = 6, .backAnimId = BACK_ANIM_NONE,
+    .backPic = gMonBackPic_Nimbeon, .backPicSize = MON_COORDS_SIZE(64, 64), .backPicYOffset = 16, .backAnimId = BACK_ANIM_NONE,
     .palette = gMonPalette_Nimbeon, .shinyPalette = gMonShinyPalette_Nimbeon,
     .iconSprite = gMonIcon_Nimbeon, .iconPalIndex = 2,
     .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,

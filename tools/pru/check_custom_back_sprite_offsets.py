@@ -37,7 +37,6 @@ NEWLY_GROUNDED = {
     "MILTITAN",
     "MOOTINY",
     "MYSTYNX",
-    "NIMBEON",
     "OBSIDEON",
     "OMEON",
     "OSTEODIAN",
@@ -63,6 +62,7 @@ PRESERVED_OFFSETS = {
     "GEMLIN": 10,
     "NOLAX": 8,
     "NOXICHU": 20,
+    "NIMBEON": 16,  # Aereon: lower approved winged rear art by +10 battle pixels
     "PYROCLAST": 8,
     "RELIC_HO_OH": 1,
     "SCEPTITAN": 10,
