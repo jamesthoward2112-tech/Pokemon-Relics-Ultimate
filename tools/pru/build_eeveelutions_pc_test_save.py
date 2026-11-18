@@ -49,7 +49,12 @@ def species_from_record(record):
 def main():
     raw = bytearray(SOURCE.read_bytes())
     assert len(raw) == 0x20000
-    for ids in find_slots(raw):
+    # Only the newest GBA save slot is authoritative; the older slot may be a
+    # previous in-game save without the complete sprite QA PC box.
+    valid_slots = find_slots(raw)
+    latest = max(valid_slots, key=lambda sector_map:
+                 struct.unpack_from("<I", raw, sector_map[0]*SECTOR+0xffc)[0])
+    for ids in (latest,):
         sizes = [DATA]*8 + [STORAGE_SIZE - DATA*8]
         storage = bytearray().join(raw[ids[sid]*SECTOR:ids[sid]*SECTOR+sizes[sid-5]]
                                       for sid in range(5,14))
@@ -83,7 +88,7 @@ def main():
             offset += size
         assert offset == STORAGE_SIZE
     OUTPUT.write_bytes(raw)
-    for ids in find_slots(raw):
+    for ids in (latest,):
         sizes = [DATA]*8 + [STORAGE_SIZE-DATA*8]
         storage = b"".join(raw[ids[sid]*SECTOR:ids[sid]*SECTOR+sizes[sid-5]] for sid in range(5,14))
         assert storage[0] == 2
