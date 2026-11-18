@@ -21,7 +21,7 @@ def encode_nickname(name):
     # GBA Gen III game text encoding: uppercase BB-D4, lowercase D5-EE.
     assert len(name) <= 10 and name.isalpha(), name
     return bytes((0xBB + ord(ch) - ord("A")) if ch.isupper()
-                 else (0xD5 + ord(ch) - ord("a")) for ch in name).ljust(10, b"\\xff")
+                 else (0xD5 + ord(ch) - ord("a")) for ch in name).ljust(10, b"\xff")
 PERM0 = [0,0,0,0,0,0,1,1,2,3,2,3,1,1,2,3,2,3,1,1,2,3,2,3]
 
 def checksum(chunk):
