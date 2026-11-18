@@ -34,7 +34,9 @@ jobs:
           test -s pokehns.gba
           test "$(stat -c%s pokehns.gba)" -eq 33554432
           cp pokehns.gba PRU-Eeveelutions-Test-20261118.gba
-          sha256sum PRU-Alpha5-Eeveelutions-Test.gba > PRU-Eeveelutions-Test-20261118.sha256
+          sha256sum PRU-Eeveelutions-Test-20261118.gba > PRU-Eeveelutions-Test-20261118.sha256
+          test -s assets/test_saves/PRU_Eeveelutions_PC_Test.sav
+          cp assets/test_saves/PRU_Eeveelutions_PC_Test.sav PRU-Eeveelutions-Test-20261118.sav
       - name: Publish direct test ROM, not a stable release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -44,8 +46,9 @@ jobs:
           set -euo pipefail
           tag="pru-eeveelutions-approved-test-20261118"
           if gh release view "$tag" >/dev/null 2>&1; then
-            gh release upload "$tag" PRU-Alpha5-Eeveelutions-Test.gba PRU-Alpha5-Eeveelutions-Test.sha256 --clobber
+            gh release upload "$tag" PRU-Eeveelutions-Test-20261118.gba PRU-Eeveelutions-Test-20261118.sha256 PRU-Eeveelutions-Test-20261118.sav --clobber
           else
-            gh release create "$tag" PRU-Alpha5-Eeveelutions-Test.gba PRU-Alpha5-Eeveelutions-Test.sha256               --target "$GITHUB_SHA"               --title "PRU Alpha 5 — approved Eeveelutions sprite and PC save test"               --prerelease               --notes "Isolated Alpha 5 Eeveelutions sprite test. Approved Eeveelution sprite test with the dedicated Eeveelutions PC save. No intended changes to species data or events. Visual PC/battle QA remains to be done. Main PRU and PRR remain unchanged."
+            gh release create "$tag" PRU-Eeveelutions-Test-20261118.gba PRU-Eeveelutions-Test-20261118.sha256 PRU-Eeveelutions-Test-20261118.sav --target "$GITHUB_SHA"               --title "PRU Alpha 5 — approved Eeveelutions sprite and PC save test"               --prerelease               --notes "Isolated Alpha 5 Eeveelutions sprite test. Approved Eeveelution sprite test with the dedicated Eeveelutions PC save. No intended changes to species data or events. Visual PC/battle QA remains to be done. Main PRU and PRR remain unchanged."
           fi
-          echo "DIRECT_GBA=https://github.com/$GH_REPO/releases/download/$tag/PRU-Alpha5-Eeveelutions-Test.gba"
+          echo "DIRECT_GBA=https://github.com/$GH_REPO/releases/download/$tag/PRU-Eeveelutions-Test-20261118.gba"
+          echo "DIRECT_SAV=https://github.com/$GH_REPO/releases/download/$tag/PRU-Eeveelutions-Test-20261118.sav"
